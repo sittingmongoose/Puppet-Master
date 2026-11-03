@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6649-L7069
+Source lines: L6907-L7374
 
-Source SHA256: `9006bc4dadc370bafa320a238e20908f23ddab3d4885e367d6f80b1c0dda1e84`
+Source SHA256: `8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013`
 
 ---
 
@@ -54,10 +54,7 @@ Two scope systems coexist and MUST NOT be confused:
   plus the storage-owner `root_generation` and `logical_root_fingerprint` (§0.2). Project
   file identity is `(project_id, root generation/fingerprint, scope, name)`; a bare
   `(scope, name)` pair never identifies a project file.
-- Settings values are Project-only per SSYS-002, which supersedes the legacy `global` scope
-  vocabulary still printed on `extensions.commands.*` inventory rows. Every
-  settings-transaction binding in this census addresses a Project-scoped value and requires an
-  active project, including shortcut bindings, the hints toggle, and reset/backup rows.
+- Ordinary `extensions.commands.*` Settings rows use SSYS-059’s declared level/key ladder; legacy `global` means Everywhere only after compatibility normalization before policy. Device shortcuts and shared behavior keep their inventory-declared levels. A No project operation may use its offered level without a Project. Command-file roots remain separately `global|project`; global library mirroring/home/reach does not copy Computer paths or executable trust. Settings copy calls the exact eight-action Commands owner contribution rather than writing command files itself.
 
 ### Owned local file actions and their exact selected controls
 
@@ -258,7 +255,7 @@ save picker. F7 needs no idempotency key; it is a read.
 
 `commands.reset_all` restores factory state: it removes user command files (global always;
 project only with an active project) and restores shortcut/pref defaults through the S1–S7
-settings route. It requires project context (settings values are Project-bound), carries the
+settings route. It binds explicitly selected file roots and the exact offered Settings level/key; No project may reset the eligible global library and admitted values without inventing a Project. It carries the
 count confirmation above, and pre-reads all doomed file bytes within the bulk caps; any failure
 rolls back file removals from those bytes and rolls back the settings half through the
 transaction rollback token, so the error still attests `wrote: false` unless rollback itself
@@ -331,101 +328,151 @@ plan_unit_id: CS-081
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  The Settings Commands & Shortcuts manager routes eight Commands-owned typed local owner
-  actions over route:settings/commands-shortcuts: commands.create (Create command asserting
-  target absence), commands.update (immediate hero-sheet field mutation asserting exact current
-  content, with atomic cross-root Scope moves), commands.delete (Delete command with danger-modal
-  proof naming the target and §2.3 reveal), commands.preview (side-effect-free dry-run render:
-  sample-argument substitution only, inert file/shell placeholders, no bash/read ask-flow, no
-  read, no execution, no submit, identical in viewer and writer modes),
-  commands.import_preview/commands.import_commit (bound-plan import sharing the file-mutation
-  contract), commands.export (bounded nonsecret manifest collection), and commands.reset_all
-  (count-confirmed file + settings composite reset with rollback). Shortcut add/change/remove/
-  reset, shortcuts backup, the hints toggle, the clash-handling choice
-  (extensions.commands.conflict-handling), the keyboard layout select
-  (extensions.commands.keyboard-layout), and the palette toggle
-  (extensions.commands.command-palette-visibility) reuse the Settings-owned settings.transaction
-  route against registered Project-scoped inventory rows; remaining
-  selected controls are view-only. Every file mutation consumes actor plus permission snapshot,
-  binds project roots by id, generation, and fingerprint, resolves targets under FileSafe
-  containment with symlink guard, asserts expected content and list generation, fails closed on
-  stale or mismatched state with no automatic retry, replays only on idempotency-key plus
-  identical payload, validates the exact CS-033 set before any write, requires storage writer
-  mode, writes atomically with durable readback, and identifies files by root-bound non-secret
-  refs. The sole native owner handler is handlers::commands::apply_local_action; local actions
-  are not UICommand catalog entries.
+canonical_text: 'The Settings Commands & Shortcuts manager routes eight Commands-owned typed local owner actions
+  over route:settings/commands-shortcuts: commands.create (Create command asserting target absence), commands.update
+  (immediate hero-sheet field mutation asserting exact current content, with atomic cross-root Scope moves),
+  commands.delete (Delete command with danger-modal proof naming the target and §2.3 reveal), commands.preview
+  (side-effect-free dry-run render: sample-argument substitution only, inert file/shell placeholders, no bash/read
+  ask-flow, no read, no execution, no submit, identical in viewer and writer modes), commands.import_preview/commands.import_commit
+  (bound-plan import sharing the file-mutation contract), commands.export (bounded nonsecret manifest collection),
+  and commands.reset_all (count-confirmed file + settings composite reset with rollback). Shortcut add/change/remove/
+  reset, shortcuts backup, the hints toggle, the clash-handling choice (extensions.commands.conflict-handling),
+  the keyboard layout select (extensions.commands.keyboard-layout), and the palette toggle (extensions.commands.command-palette-visibility)
+  reuse the Settings-owned settings.transaction route against inventory-offered exact level/key rows through
+  SSYS-059; remaining selected controls are view-only. Every file mutation consumes actor plus permission snapshot,
+  binds applicable Project roots or the exact Computer/library root by id, generation, and fingerprint, resolves
+  targets under FileSafe containment with symlink guard, asserts expected content and list generation, fails
+  closed on stale or mismatched state with no automatic retry, replays only on idempotency-key plus identical
+  payload, validates the exact CS-033 set before any write, requires storage writer mode, writes atomically
+  with durable readback, and identifies files by root-bound non-secret refs. The sole native owner handler
+  is handlers::commands::apply_local_action; local actions are not UICommand catalog entries.
+
+
+  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single
+  resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere.
+  Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project
+  versions and sole owner. Computer installations, credentials and protected source trust never travel in copy.
+  Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.*
+  local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact
+  consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay
+  resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable
+  handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: The census routes every selected mutating control of the Commands & Shortcuts Settings manager, binds Settings-valued controls to their transaction route, and classifies presentation controls as view-only.
-depends_on: [CS-010, CS-011, CS-012, CS-013, CS-014, CS-026, CS-027, CS-028, CS-030, CS-031, CS-032, CS-033, CS-034, CS-035, CS-036, CS-041, CS-054, CS-079]
+gui_classification_reason: The census routes every selected mutating control of the Commands & Shortcuts Settings
+  manager, binds Settings-valued controls to their transaction route, and classifies presentation controls
+  as view-only.
+depends_on:
+- CS-010
+- CS-011
+- CS-012
+- CS-013
+- CS-014
+- CS-026
+- CS-027
+- CS-028
+- CS-030
+- CS-031
+- CS-032
+- CS-033
+- CS-034
+- CS-035
+- CS-036
+- CS-041
+- CS-054
+- CS-079
 unblocks: []
 acceptance_criteria:
-  - The census admits exactly commands.create, commands.update, commands.delete, commands.preview, commands.import_preview, commands.import_commit, commands.export, and commands.reset_all; no ninth action and no cmd.* route.
-  - Every F1-F3/F6/F8 request carries actor, permission snapshot, idempotency key, list generation, root binding for project scope, and its action-specific content assertion; stale_projection, stale_project_root, target_changed, target_exists, confirmation_mismatch, plan_mismatch, and idempotency_conflict fail closed with no write and no automatic retry.
-  - Every create, update, and import entry validates reserved name collision, invalid name format, missing description, invalid mode value, invalid model format, and override_builtin misuse, blocks on any failure, and writes nothing.
-  - Preview substitutes sample arguments only, renders @file and !shell as inert placeholders with no bash/read ask-flow, no file read, no execution, and no agent submission, and renders identically in viewer and writer modes.
-  - Mutations require storage writer mode, resolve targets under FileSafe containment with symlink guard, write atomically with durable readback and rollback, advance generation only after durable write plus re-list, and identify files by root-bound non-secret refs without raw paths.
-  - Shortcut, backup, hints, clash-handling, layout, and palette controls reuse the Settings-owned transaction route against Project-scoped values, with the layout select bound to extensions.commands.keyboard-layout and the palette toggle to extensions.commands.command-palette-visibility; per-binding-ID semantics stay with each action owner and conflicts pin the warn policy.
-  - Per-name cmd.user_command.* and per-binding cmd.keybinding.* aliases, the eight rejected packet tokens, the five retired draft spellings, and catalog lifecycle gain no route.
-  - The sole native owner handler for commands.* file actions is handlers::commands::apply_local_action; settings bindings execute only through the Settings-owned transaction handlers.
-  - Machine companions Plans/commands_shortcuts_contracts.schema.json and Plans/commands_shortcuts_contract_fixtures.json match this prose exactly, including cross-record semantic cases.
-  - No native runtime, EventRecord, storage-family, or readiness fact is claimed by this census or its fixtures.
+- The census admits exactly commands.create, commands.update, commands.delete, commands.preview, commands.import_preview,
+  commands.import_commit, commands.export, and commands.reset_all; no ninth action and no cmd.* route.
+- Every F1-F3/F6/F8 request carries actor, permission snapshot, idempotency key, list generation, root binding
+  for project scope, and its action-specific content assertion; stale_projection, stale_project_root, target_changed,
+  target_exists, confirmation_mismatch, plan_mismatch, and idempotency_conflict fail closed with no write and
+  no automatic retry.
+- Every create, update, and import entry validates reserved name collision, invalid name format, missing description,
+  invalid mode value, invalid model format, and override_builtin misuse, blocks on any failure, and writes
+  nothing.
+- Preview substitutes sample arguments only, renders @file and !shell as inert placeholders with no bash/read
+  ask-flow, no file read, no execution, and no agent submission, and renders identically in viewer and writer
+  modes.
+- Mutations require storage writer mode, resolve targets under FileSafe containment with symlink guard, write
+  atomically with durable readback and rollback, advance generation only after durable write plus re-list,
+  and identify files by root-bound non-secret refs without raw paths.
+- Shortcut, backup, hints, clash-handling, layout, and palette controls reuse the Settings-owned transaction
+  route against admitted level/key values, with the layout select bound to extensions.commands.keyboard-layout
+  and the palette toggle to extensions.commands.command-palette-visibility; per-binding-ID semantics stay with
+  each action owner and conflicts pin the warn policy.
+- Per-name cmd.user_command.* and per-binding cmd.keybinding.* aliases, the eight rejected packet tokens, the
+  five retired draft spellings, and catalog lifecycle gain no route.
+- The sole native owner handler for commands.* file actions is handlers::commands::apply_local_action; settings
+  bindings execute only through the Settings-owned transaction handlers.
+- Machine companions Plans/commands_shortcuts_contracts.schema.json and Plans/commands_shortcuts_contract_fixtures.json
+  match this prose exactly, including cross-record semantic cases.
+- No native runtime, EventRecord, storage-family, or readiness fact is claimed by this census or its fixtures.
+- No-project global-only create/import/export/reset uses the same eight local actions and actual library root;
+  only actual Project-root operations need Project identity. Copy/whole-version contribution reuses create/update/import
+  commit with exact immutable owner copy witness and eligible compensation, not a ninth action or cmd.* primary.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - Plans/commands_shortcuts_contracts.schema.json
-  - Plans/commands_shortcuts_contract_fixtures.json
+- Plans/commands_shortcuts_contracts.schema.json
+- Plans/commands_shortcuts_contract_fixtures.json
 risk_class: commands_shortcuts_routing_drift_or_alias_resurrection
 reasoning_tier: high
 context_scope: commands_shortcuts_mutation_routing
 implementation_surfaces:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 node_compile_hint:
   mode: commands_shortcuts_mutation_routing_contract_only
   create_worknodes: false
 source_lineage:
-  - Plans/Commands_System.md#GUI-COMMANDS
-  - Plans/Commands_System.md#DRY-RUN
-  - reports/concept-packet-integration-20260926/settings.md#G4
-  - Concepts/pm7-tools/settings_refresh/managers/24-commands.js (selected controls lead)
-  - Concepts/TestOpus5.5PmConcept.html (selected commands-shortcuts behavior leads)
+- Plans/Commands_System.md#GUI-COMMANDS
+- Plans/Commands_System.md#DRY-RUN
+- reports/concept-packet-integration-20260926/settings.md#G4
+- Concepts/pm7-tools/settings_refresh/managers/24-commands.js (selected controls lead)
+- Concepts/TestOpus5.5PmConcept.html (selected commands-shortcuts behavior leads)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "commands.create"
-  - "commands.update"
-  - "commands.delete"
-  - "commands.preview"
-  - "commands.import_preview"
-  - "commands.import_commit"
-  - "commands.export"
-  - "commands.reset_all"
-  - "handlers::commands::apply_local_action"
-  - "route:settings/commands-shortcuts"
-  - "Create command"
-  - "Delete command"
-  - "Preview (dry run)"
-  - "Reset commands and shortcuts"
-  - "Use these keys"
-  - "stale_projection"
-  - "stale_project_root"
-  - "target_changed"
-  - "target_exists"
-  - "confirmation_mismatch"
-  - "plan_mismatch"
-  - "idempotency_conflict"
-  - "storage_read_only"
-  - "no_project_context"
-  - "filesafe_denied"
-  - "permission_snapshot_stale"
-  - "recovery_required"
-  - "command_file:project:"
-  - "command_file:global:"
-  - "permission_snapshot_id"
+- commands.create
+- commands.update
+- commands.delete
+- commands.preview
+- commands.import_preview
+- commands.import_commit
+- commands.export
+- commands.reset_all
+- handlers::commands::apply_local_action
+- route:settings/commands-shortcuts
+- Create command
+- Delete command
+- Preview (dry run)
+- Reset commands and shortcuts
+- Use these keys
+- stale_projection
+- stale_project_root
+- target_changed
+- target_exists
+- confirmation_mismatch
+- plan_mismatch
+- idempotency_conflict
+- storage_read_only
+- no_project_context
+- filesafe_denied
+- permission_snapshot_stale
+- recovery_required
+- 'command_file:project:'
+- 'command_file:global:'
+- permission_snapshot_id
 negative_constraints:
-  - "Do not mint cmd.* routes for command-file mutations from this census."
-  - "Do not admit per-name cmd.user_command.* or per-binding cmd.keybinding.* aliases."
-  - "Do not resurrect rejected packet tokens cmd.commands.custom.* or cmd.shortcuts.*."
-  - "Do not reuse the retired first-draft commands.save_* spellings."
-  - "Do not infer shortcut behavior from heading-only §6.3; it is owned by this census from selected controls."
-  - "Do not evaluate permissions, read files, or execute shell in preview."
-  - "Do not claim a native runtime, EventRecord, storage family, or readiness fact."
+- Do not mint cmd.* routes for command-file mutations from this census.
+- Do not admit per-name cmd.user_command.* or per-binding cmd.keybinding.* aliases.
+- Do not resurrect rejected packet tokens cmd.commands.custom.* or cmd.shortcuts.*.
+- Do not reuse the retired first-draft commands.save_* spellings.
+- Do not infer shortcut behavior from heading-only §6.3; it is owned by this census from selected controls.
+- Do not evaluate permissions, read files, or execute shell in preview.
+- Do not claim a native runtime, EventRecord, storage family, or readiness fact.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 ```

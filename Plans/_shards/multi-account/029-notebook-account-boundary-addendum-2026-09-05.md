@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L5527-L5561
+Source lines: L5544-L5587
 
-Source SHA256: `7b49d74ae8d0974f1f9ad8bcca364f11f5cc39eaa18d8ac81ac05b9b3114764d`
+Source SHA256: `91bda34f087d7884b52e379c73490638301daebb0bf5aa77ffe6753611475195`
 
 ---
 
@@ -17,7 +17,14 @@ plan_unit_id: MA-072
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: On account or model change, PM note identities are retained while notebook scope, authorization, and route are revalidated against the effective account identity with requested/effective carry-through. Old dispatch receipts never authorize reconstructed bytes under a changed account; no credentials are inferred from note or checkpoint payloads; usage lineage remains attributed to the incurring accounts.
+canonical_text: >-
+  On account or model change, PM note identities are retained while notebook scope, authorization, and route are
+  revalidated against the effective account identity with requested/effective carry-through. Old dispatch receipts
+  never authorize reconstructed bytes under a changed account; no credentials are inferred from note or checkpoint
+  payloads; usage lineage remains attributed to the incurring accounts. Application notebook/chat/Goal/Plan/Crew
+  scope and conversion re-resolve against the destination account/Computer without recategorizing historical usage
+  or copying the source authority. A selected account change invalidates old readiness and active run snapshots
+  remain frozen.
 gui_related: false
 gui_classification_reason: Account boundary behavior is runtime behavior, not GUI work.
 depends_on: [MA-071, SIR-037]
@@ -33,8 +40,10 @@ context_scope: multi_account
 implementation_surfaces: [Plans/Multi-Account.md, Plans/Shared_Integration_Runtime.md, Plans/Permissions_System.md]
 node_compile_hint: {mode: account_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-I11
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-P04
+- source_packet:PM-WNC-2026-09-05-v1:WNC-I11
+- source_packet:PM-WNC-2026-09-05-v1:WNC-P04
+- 'source_ref:projects-pass2-20261103:S10/N25; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens: ["effective_account_id", "revalidated", "usage lineage"]
 negative_constraints:
   - Do not infer credentials from notes or checkpoints.

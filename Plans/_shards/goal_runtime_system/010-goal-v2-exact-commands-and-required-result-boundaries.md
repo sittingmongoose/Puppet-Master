@@ -4,7 +4,7 @@ Source: `Plans/Goal_Runtime_System.md`
 
 Source lines: L250-L268
 
-Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f`
+Source SHA256: `e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a`
 
 ---
 
@@ -22,7 +22,7 @@ Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f
 
 `cmd.chat.goal.start` and `cmd.chat.goal.update` are pre-existing registered command IDs. This wave revises their request and result contracts in place to `GoalStartRequestV2`/`GoalStartResultV2` and `GoalUpdateRequestV2`/`GoalUpdateResultV2`. They keep one registration, one sole future handler, and one wiring identity; no peer row, compatibility spelling, or second handler is minted for them.
 
-Every request carries `schema_id`, `schema_version`, command ID, command instance ID, `project_id`, `thread_id`, `goal_id` where applicable, expected revision, expected `currentness_hash`, actor, permission snapshot, idempotency key, source surface, and return route. Typed errors are `invalid_request`, `goal_not_found`, `stale_goal_revision`, `stale_currentness`, `objective_too_long`, `approval_required`, `approval_not_resolved`, `manual_stop_latched`, `blocked_condition_unresolved`, `command_not_registered`, `permission_denied`, `owner_unavailable`, or `cancelled`. A rejection or proven no-effect before original body admission writes no body/revision and emits no success-shaped receipt. For cmd.chat.goal.start, a later refusal or unresolved event/result step after a valid joined body commit preserves that accepted original revision and pending custody, emits no success-shaped receipt and creates no additional revision under GRS-066/SP-294. Other commands retain their existing atomic mutation and typed-error boundaries.
+Every request carries `schema_id`, `schema_version`, command ID, command instance ID, explicit app/Project scope, `project_id` (null for app), actual Server/Computer, `thread_id`, `goal_id` where applicable, expected revision, expected `currentness_hash`, actor, permission snapshot, idempotency key, source surface, and return route. Typed errors are `invalid_request`, `goal_not_found`, `stale_goal_revision`, `stale_currentness`, `objective_too_long`, `approval_required`, `approval_not_resolved`, `manual_stop_latched`, `blocked_condition_unresolved`, `command_not_registered`, `permission_denied`, `owner_unavailable`, or `cancelled`. A rejection or proven no-effect before original body admission writes no body/revision and emits no success-shaped receipt. For cmd.chat.goal.start, a later refusal or unresolved event/result step after a valid joined body commit preserves that accepted original revision and pending custody, emits no success-shaped receipt and creates no additional revision under GRS-066/SP-294. Other commands retain their existing atomic mutation and typed-error boundaries. GRS-086 selects a new exact app edition and source/result graph; old Project commands/results remain unchanged.
 
 Until the central command catalog, Event Authority, and production wiring rows close for a given ID, its controls render disabled with `command_not_registered`. No page-local handler, alias, fixture, or toast may simulate success.
 

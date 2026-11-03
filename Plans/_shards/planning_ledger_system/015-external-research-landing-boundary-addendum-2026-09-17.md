@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1411-L1452
+Source lines: L1435-L1538
 
-Source SHA256: `356d0b9f03bff75f1bd2b61c22d380c534a3624375c0b1868086a2122e768ffb`
+Source SHA256: `ea3396b615c786f56c2d4703fe14fd76f7963eb5964e596a02fdfe015da3c5a9`
 
 ---
 
@@ -50,3 +50,65 @@ owner_hints: [Plans/Planning_Ledger_System.md, Plans/External_Research.md]
 ```
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/External_Research.md
+
+### PLS-024 - Application Deep Plan Ledger Custody And Lineage
+
+```yaml
+plan_unit_id: PLS-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: The Assistant Deep Plan profile admits a DeepPlanLedgerSession in application scope with project_id=null,
+  actual Server/thread/Computer, exact assistant_plan_id/plan_version and source_hash. It reuses the existing design-atom/decision/question/correction/research/current-state
+  registry, statuses and question counter; regular Plan opens no ledger. Scope belongs to the session's execution/custody
+  wrapper and is not a Project sentinel. App canonical records use the same bounded retention/holds/backup owners.
+  A source app ledger stays immutable when sealed; N25 carries an explicit linked destination session/source map
+  or a separately owner-admitted binding and never reinterprets accepted source bytes. Runtime Deep Plan does not
+  run the PM bootstrap transfer pipeline or write product Plans/**, owner docs, shards, .plan_index, .evidence or
+  Spec_Lock.json. Scoped ledger/bundle details remain secondary to the readable Assistant Plan.
+gui_related: false
+gui_classification_reason: Defines identity, custody, admission or compiler boundaries; visual placement is consumed
+  from GUI owners.
+depends_on:
+- PLS-020
+- AI-069
+unblocks: []
+acceptance_criteria:
+- App Deep Plan session keeps exact Plan/version/source and shared question state through restart/export/backup.
+- Regular Plan creates no ledger; conversion preserves sealed source and exact destination lineage.
+- No runtime operation writes product canon or governance.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/Planning_Ledger_System.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#N21-N22; Plan-Deep-Plan
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
+preserved_exact_tokens:
+- DeepPlanLedgerSession
+- project_id=null
+- assistant_plan_id/plan_version
+- source_hash
+- N25
+- Plans/**
+- .plan_index
+- .evidence
+- Spec_Lock.json
+negative_constraints:
+- No bootstrap-ledger reuse, Project sentinel, duplicated question counter or canonical-product authority.
+owner_hints:
+- Plans/Planning_Ledger_System.md
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md#PLS-024, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md

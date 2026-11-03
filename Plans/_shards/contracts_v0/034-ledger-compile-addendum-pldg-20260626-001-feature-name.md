@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L18723-L19238
+Source lines: L18705-L19219
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -19,11 +19,8 @@ plan_unit_id: CV-295
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: History row, compare, export, open, reopen, send-forward, resume, retry, clone, rebuild, artifact,
-  and evidence flows use identity-native refs such as artifact_id, run_id, thread_id, attempt_id, PlanningRun or
-  pack identity, receipt refs, source record refs, manifest refs, archive state, and current-project scope. The
-  History projection carries action availability and stale/degraded state but never becomes authority for immutable
-  source records.
+canonical_text: |-
+  History row, compare, export, open, reopen, send-forward, resume, retry, clone, rebuild, artifact, and evidence flows use identity-native refs such as artifact_id, run_id, thread_id, attempt_id, PlanningRun or pack identity, receipt refs, source record refs, manifest refs, archive state, and current-project scope. The History projection carries action availability and stale/degraded state but never becomes authority for immutable source records. App History uses CV-365/SP-349’s exact app scope; explicit permitted cross-Project reads may compose result views only with T-185 coverage. Original source receipts, Usage and EventRecord bytes retain scope after conversion; destination history copies are fresh lineage-bearing records under CV-367.
 gui_related: false
 gui_classification_reason: Shared identity/action envelopes are contract data shapes, not GUI.
 depends_on: []
@@ -68,6 +65,8 @@ source_lineage:
 - chat:history-export-granularity-answer
 - chat:history-source-index-answer
 - chat:history-projection-lifecycle-answer
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F04,C-F10
 source_atom_ids:
 - atom-0012
 - atom-0035

@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L1077-L4628
+Source lines: L1077-L4632
 
-Source SHA256: `36868146ec9723c3ea4f4aeae69832073b237f8b00c0923dc41bec38d50a75c5`
+Source SHA256: `43574393aa5fba0f14ef58aa244d168ce7af634b201fe408f7fa286c55a98c8a`
 
 ---
 
@@ -1061,8 +1061,10 @@ plan_unit_id: 0PI-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
-canonical_text: >-
+canonical_text: |-
   The approval compatibility boundary preserves request_id to blocked_sequence as lineage routing, canonical blocked episode resolution before runtime mutation, approval_scope_key, ordered allowed_action_ids[], and the negative constraint that allowed_actions is not revived as a peer field family or generic approval widener.
+
+  The blocked_sequence/node form remains the Orchestrator compatibility branch. PS-145/148 and CV-365 define a separate scope-aware ordinary chat tool-approval envelope with real thread/run/Computer/tool/target; no fake node or blocked sequence is introduced for application work. Human, mode and build_grant authority stay distinct, and the owner's current approval/decline route is reused.
 gui_related: false
 gui_classification_reason: The unit records compatibility and runtime mutation boundary semantics rather than GUI behavior.
 split_recommended: false
@@ -1484,8 +1486,10 @@ plan_unit_id: 0PI-028
 unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
-canonical_text: >-
+canonical_text: |-
   The Plan map table widgets/config/media/wiring rows preserve Widget_System, Run_Graph_View, Orchestrator_Page, GUI checklist, Executor_Protocol, UI_Wiring_Rules, provider reference docs, BinaryLocator, Run_Modes, Personas, Permissions, Commands, Skills, Plugins, Formatters, Models, Media Generation, OpenCode Coverage Matrix, and Wiring Matrix scopes.
+
+  Current Settings, app workflow and Projects routing is registered by 0PI-069. Widget layouts and Home layout remain distinct owner records, now with explicit app/Project variants; app Goal/Crew/Plan/schedule availability does not admit Project-only Wizard/PRD/Orchestrator engines or change widget hostability.
 gui_related: true
 gui_classification_reason: The table rows cover widgets, graph view, orchestrator tabs, GUI checklist, UI wiring, permissions/settings, commands, skills/plugins/formatters/models/media GUI, and wiring matrix.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/Crosswalk.md`
 
-Source lines: L568-L3239
+Source lines: L568-L3236
 
-Source SHA256: `3fe991513bf85ef266c534b717fe05a3dec1ee220a3c3df294533445dcde0504`
+Source SHA256: `7f2dcd997fe0ad80b8427a6579596bd9120ccdf7088f07c9c3d66bb30a468824`
 
 ---
 
@@ -443,11 +443,10 @@ plan_unit_id: C-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Crosswalk.md
-canonical_text: >-
-  Assistant thread worktree binding is owned by assistant-chat-design, with the
-  owner table preserving binding data model, seglog events, commands, settings,
-  merge-back, pre-merge test gate, Source Control accordion/filter, worktree
-  record extension, FileManager toggle, and LSP root identity consumers.
+canonical_text: |-
+  Assistant thread worktree binding is owned by assistant-chat-design, with the owner table preserving binding data model, seglog events, commands, settings, merge-back, pre-merge test gate, Source Control accordion/filter, worktree record extension, FileManager toggle, and LSP root identity consumers.
+
+  Current cardinality is 0..1: genuine application threads have no Project worktree and use their actual Computer/chat-folder or granted root. Project worktree commands still need their real Project/repository/backend/lease. A missing binding never resolves to main or a synthetic Project.
 gui_related: true
 gui_classification_reason: The owner table includes settings, Source Control accordion/filter, FileManager toggle, and other user-visible controls.
 split_recommended: false
@@ -975,12 +974,10 @@ plan_unit_id: C-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Crosswalk.md
-canonical_text: >-
-  Rewrite-era cross-cutting field families, event names, account IDs,
-  account-routing semantics, requested/effective runtime resolution, stable
-  command IDs, command arguments, Glossary terms, and execution-core semantics
-  route to their owner docs, while UI_Command_Catalog does not own the deeper
-  route ontology by itself and structural owner-doc debt remains explicit.
+canonical_text: |-
+  Rewrite-era cross-cutting field families, event names, account IDs, account-routing semantics, requested/effective runtime resolution, stable command IDs, command arguments, Glossary terms, and execution-core semantics route to their owner docs, while UI_Command_Catalog does not own the deeper route ontology by itself and structural owner-doc debt remains explicit.
+
+  Application scope is the explicit CV-365/366 union, not a focus fallback. SSYS-059/060 owns level resolution/writers, ACD-508–511 owns No project and conversion, and GRS-086/087, CWR-045, APR-073/074 and SQR-019/020 own app workflows. Registry scope changes require selected versions and complete source/read/backup custody, not universal nullable codecs.
 gui_related: false
 gui_classification_reason: This unit defines owner routing and structural debt rather than UI presentation.
 split_recommended: true

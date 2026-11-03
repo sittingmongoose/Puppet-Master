@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2377-L2538
+Source lines: L2394-L2568
 
-Source SHA256: `6cbf9b3a7ad87b100a7c3bc1c712e41c9e29fd4df68636b207e934cabddf3ebd`
+Source SHA256: `f0493b3f44b352436041e7d206c70d7638402625d9ebba5acf3993556991abd2`
 
 ---
 
@@ -20,7 +20,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: >-
-  P1-MEMORY-TIERING-CONTRACT (P1) is compiled as canonical Puppet Master intent for Agent memory, goal memory, project memory, conversation history: Add MemoryTierContract: scope, writer authority, TTL, compaction policy, retrieval trigger, injection budget, causality/supersession link, stale/retired status, consolidation timeout, and failure semantics. The preserved PM gap/delta is: PM should explicitly separate memory tiers: transcript/history, operational goal state, project/spec ledger, assistant preference memory, tool/artifact memory, and ephemeral context working set. The observed external-repo signal remains source-lineage evidence: Agent Zero reports chat history bloat and memory-search/consolidation timeouts; Pi documents context persistence and handoff to other models; Codex Goals/skills show durable objective and progressive disclosure; Cline SDK moves task history/session handling into shared runtime.
+  P1-MEMORY-TIERING-CONTRACT (P1) is compiled as canonical Puppet Master intent for Agent memory, goal
+  memory, project memory, conversation history: Add MemoryTierContract: scope, writer authority, TTL,
+  compaction policy, retrieval trigger, injection budget, causality/supersession link, stale/retired
+  status, consolidation timeout, and failure semantics. The preserved PM gap/delta is: PM should
+  explicitly separate memory tiers: transcript/history, operational goal state, project/spec ledger,
+  assistant preference memory, tool/artifact memory, and ephemeral context working set. The observed
+  external-repo signal remains source-lineage evidence: Agent Zero reports chat history bloat and
+  memory-search/consolidation timeouts; Pi documents context persistence and handoff to other models;
+  Codex Goals/skills show durable objective and progressive disclosure; Cline SDK moves task
+  history/session handling into shared runtime. App scope preserves these tier boundaries with a
+  thread-only transcript/gist/capsule working set; a Goal, Plan, Crew, schedule, ledger or notebook is
+  never silently consolidated into personal memory.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -60,6 +71,8 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:12
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N16/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids:
 - atom-0070
 external_atom_id: extrepo-20260703-0066

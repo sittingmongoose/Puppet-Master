@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L4994-L5060
+Source lines: L4972-L5038
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 

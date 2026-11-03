@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L5362-L5483
+Source lines: L5373-L5500
 
-Source SHA256: `7b49d74ae8d0974f1f9ad8bcca364f11f5cc39eaa18d8ac81ac05b9b3114764d`
+Source SHA256: `91bda34f087d7884b52e379c73490638301daebb0bf5aa77ffe6753611475195`
 
 ---
 
@@ -74,9 +74,13 @@ status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
   ProviderInstallation is an exact-Host/Environment resource separate from account/profile/connection/product/model
-  identity. Provider CLI acquisition is explicit and official-source-only; post-consent lifecycle work targets the proven
-  installation and revalidates dependents. Live credential_ref values point only to OS credential-store items, while
-  CLI-owned auth uses non-secret profile refs and installation, authentication, and readiness remain separate.
+  identity. Provider CLI acquisition is explicit and official-source-only; post-consent lifecycle work targets
+  the proven installation and revalidates dependents. Live credential_ref values point only to OS credential-store
+  items, while CLI-owned auth uses non-secret profile refs and installation, authentication, and readiness remain
+  separate. Copy carries intended account choices only. Same-Computer reuse needs that explicit account choice,
+  the destination's own scope-bound connection and current verification on the exact Host/Environment. A matching
+  profile label or same provider never proves readiness. MA-074 supplies the single account_resolution vocabulary
+  for copy, Set up AI here like and onboarding, including No project.
 gui_related: true
 gui_classification_reason: Account/profile setup, installation binding, authentication ownership, readiness, and recovery states are visible in provider settings and setup flows.
 depends_on: [SIR-002, SIR-003, SIR-009, SIR-011, MA-013, MA-014, MA-015, MA-040, MA-045, MA-046, MA-047, MA-054, MA-067, MA-068, CBP-028, BS-028]
@@ -106,14 +110,16 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/06_INSTALLATION_AUTH_UPDATE_AND_CAPABILITY_PROVISIONING.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-001
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-013
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-014
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-016
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/06_INSTALLATION_AUTH_UPDATE_AND_CAPABILITY_PROVISIONING.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-001
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-013
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-014
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-016
+- 'source_ref:projects-pass2-20261103:S10/S11/N15/N17; Jared: "I approve the outstanding questions with their
+  recommended settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
   - "ProviderInstallation"
   - "installation and authentication remain separate"

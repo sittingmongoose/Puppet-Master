@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31251-L31291
+Source lines: L31342-L31388
 
-Source SHA256: `f932a74573f86d7dc4a4bfa3088531138d1c22add1185e7613ed76ae56a3abe9`
+Source SHA256: `d07e09bc0879a8662e29cc47c8fd3ef1b8d0520f0501c34823aa00caedf610b1`
 
 ---
 
@@ -23,7 +23,10 @@ canonical_text: >-
   actor/runtime_identity, project/run/account scope, extraction source, trigger reason, provenance,
   redaction/retention policy, replay/reconnect behavior, conflict/staleness handling, and storage refs
   owned by the canonical runtime storage path. `.puppet-master/memory` is rejected as an active storage
-  target for this continuity path.
+  target for this continuity path. Application continuity carries null Project plus real
+  Server/thread/run/account/Computer scope with the same
+  extraction/provenance/redaction/currentness/retention obligations. App storage is canonical Server-owned
+  custody, not a Project path.
 gui_related: false
 gui_classification_reason: Cross-run continuity extraction, storage, and handoff records are orchestration/runtime contracts, not visual presentation.
 depends_on: [CV-282, OSI-426]
@@ -41,8 +44,11 @@ context_scope: orchestrator_subagent_cross_run_continuity
 implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
 node_compile_hint: {mode: orchestrator_cross_run_continuity, create_worknodes: false}
 source_lineage:
-  - pldg-20260614-002-part-3-fable-cleanup:atom-0100
-  - pldg-20260614-002-part-3-fable-cleanup:atom-0101
+  - "pldg-20260614-002-part-3-fable-cleanup:atom-0100"
+  - "pldg-20260614-002-part-3-fable-cleanup:atom-0101"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens: ["Cross-run knowledge continuity", "orchestrator-subagent-integration §4", "no schema, no event family, no storage keys", ".puppet-master/memory"]
 negative_constraints:
   - Do not use `.puppet-master/memory` as active continuity storage.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Modes.md`
 
-Source lines: L728-L1010
+Source lines: L728-L1546
 
-Source SHA256: `10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144`
+Source SHA256: `b075a6bdaa47c419844faffa96ddcd921297c0cbdeb48300758aa14fb43d2948`
 
 ---
 
@@ -25,7 +25,70 @@ Source SHA256: `10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144
 ### RM-004 - Runtime Mode And Overlay Enum Separation
 
 ```yaml
-{plan_unit_id: "RM-004", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Runtime mode and workflow overlay are separate closed enums: runtime mode is ask|plan|regular|yolo, overlay is none|plan|deep_plan|debug|interview|brainstorm|crew, overlays never widen runtime authority, and children inherit or narrow the parent ceiling.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "ACD-006", "UCC-001"], unblocks: [], acceptance_criteria: ["RM-004 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "runtime_enum_drift", reasoning_tier: "standard", context_scope: "run_mode_definition", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "runtime_mode_overlay_enum_boundary", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0006", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0007"], preserved_exact_tokens: ["ask|plan|regular|yolo", "none|plan|deep_plan|debug|interview|brainstorm|crew", "debug", "deep_plan", "interview", "brainstorm", "crew"], negative_constraints: ["overlay choice must not widen runtime authority.", "children inherit the parent runtime ceiling and may narrow it only."], preserved_contractrefs: ["ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/orchestrator-subagent-integration.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/assistant-chat-design.md", "Plans/Commands_System.md", "Plans/orchestrator-subagent-integration.md"]}
+plan_unit_id: RM-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Modes.md
+canonical_text: Runtime modes stay ask|plan|regular|yolo and overlays none|plan|deep_plan|debug|interview|brainstorm|crew.
+  YOLO is runtime yolo, distinct from the Full permission profile. Overlay availability admits app Goal/Crew/Plan/Deep
+  Plan and scheduled work under RM-053; overlays, defaults, schedules and messages never widen parent/receiver
+  execution authority.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
+  rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- ACD-006
+- UCC-001
+- RM-053
+unblocks: []
+acceptance_criteria:
+- RM-004 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: runtime_enum_drift
+reasoning_tier: standard
+context_scope: run_mode_definition
+implementation_surfaces:
+- Plans/Run_Modes.md
+node_compile_hint:
+  mode: runtime_mode_overlay_enum_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0006
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0007
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Q11/N21/N22 reversals/Y1
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
+preserved_exact_tokens:
+- ask|plan|regular|yolo
+- none|plan|deep_plan|debug|interview|brainstorm|crew
+- debug
+- deep_plan
+- interview
+- brainstorm
+- crew
+negative_constraints:
+- overlay choice must not widen runtime authority.
+- children inherit the parent runtime ceiling and may narrow it only.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/orchestrator-subagent-integration.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Run_Modes.md
+- Plans/assistant-chat-design.md
+- Plans/Commands_System.md
+- Plans/orchestrator-subagent-integration.md
 ```
 
 ### RM-005 - GUI Workflow Affordance Boundary
@@ -43,7 +106,72 @@ Source SHA256: `10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144
 ### RM-007 - Execution-Capable Regular And Yolo Modes
 
 ```yaml
-{plan_unit_id: "RM-007", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "regular is the standard execution posture with normal approvals; yolo is the full-automation execution posture, still bounded by permissions, FileSafe, provider, and prompt-pipeline constraints.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "PS-001", "F2-086", "CBP-003"], unblocks: [], acceptance_criteria: ["RM-007 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "execution_mode_authority_drift", reasoning_tier: "standard", context_scope: "run_mode_definition", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "regular_yolo_execution_modes", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0010", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0011"], preserved_exact_tokens: ["regular", "yolo", "standard execution posture with normal approvals", "full-automation execution posture"], negative_constraints: ["yolo does not bypass child capability narrowing, provider restrictions, or FileSafe guardrails."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md", "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Permissions_System.md", "Plans/FileSafe.md", "Plans/Prompt_Pipeline.md"]}
+plan_unit_id: RM-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Modes.md
+canonical_text: regular retains ordinary approvals; yolo is task-scoped full automation including ordinary
+  git push/publication/needed repository creation without repeated human yes, composed through PS-146/148.
+  FileSafe, DAE/provider constraints, protected-human decisions and Y1 remain. Exact human-approved Project
+  build grants supply the hands-off Orchestrator authority in PS-147, never a synonym for Full or unconstrained
+  session approval.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
+  rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- PS-001
+- F2-086
+- CBP-003
+- RM-053
+- PS-146
+- PS-147
+- PS-148
+unblocks: []
+acceptance_criteria:
+- RM-007 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: execution_mode_authority_drift
+reasoning_tier: standard
+context_scope: run_mode_definition
+implementation_surfaces:
+- Plans/Run_Modes.md
+node_compile_hint:
+  mode: regular_yolo_execution_modes
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0010
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0011
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
+preserved_exact_tokens:
+- regular
+- yolo
+- standard execution posture with normal approvals
+- full-automation execution posture
+negative_constraints:
+- yolo does not bypass child capability narrowing, provider restrictions, or FileSafe guardrails.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md'
+- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Run_Modes.md
+- Plans/Permissions_System.md
+- Plans/FileSafe.md
+- Plans/Prompt_Pipeline.md
 ```
 
 ### RM-008 - HTE Hosted Tool Execution Strategy
@@ -55,7 +183,79 @@ Source SHA256: `10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144
 ### RM-009 - DAE Jail And Worktree Strategy
 
 ```yaml
-{plan_unit_id: "RM-009", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Delegated Agent Execution runs provider tools inside an isolated PM-managed jail or worktree context, records worktree identity in execution context, treats jail diff as authoritative, blocks direct canonical-workspace writes, requires dae_allowed policy, and reconciles only after scans and FileSafe checks.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CBP-003", "CBP-005", "T-001", "PS-001", "F2-086"], unblocks: [], acceptance_criteria: ["RM-009 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "dae_isolation_drift", reasoning_tier: "standard", context_scope: "execution_strategy", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "dae_jail_worktree_strategy", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0014", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0015"], preserved_exact_tokens: ["STRATEGY-DAE", "DAE — Delegated Agent Execution", "2.2.1 DAE worktree context", "working_directory", "worktree_id", "worktree_branch", "is_worktree", "dae_allowed = false", "actual jail diff"], negative_constraints: ["The canonical workspace MUST NOT be directly writable during DAE.", "Providers that cannot offer deterministic pre-spawn restriction / tool-policy injection MUST advertise dae_allowed = false and cannot be selected for DAE."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Executor_Protocol.md", "Plans/assistant-chat-design.md", "Plans/CLI_Bridged_Providers.md", "Plans/FileSafe.md"]}
+plan_unit_id: RM-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Modes.md
+canonical_text: DAE executes only inside an admitted isolated PM-managed jail, worktree or equivalent application-root
+  workspace, with exact scope/Computer/Host/Environment/working_directory identity. Canonical target roots
+  are not directly writable. Real jail diff and verified remote results are authoritative; provider reports
+  alone are correlation. App context does not invent a worktree/Project, disable dae_allowed, skip scans/FileSafe
+  or permit direct-host fallback. Mutations reconcile only after the same gates.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
+  rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- CBP-003
+- CBP-005
+- T-001
+- PS-001
+- F2-086
+- RM-053
+- F2-213
+unblocks: []
+acceptance_criteria:
+- RM-009 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: dae_isolation_drift
+reasoning_tier: standard
+context_scope: execution_strategy
+implementation_surfaces:
+- Plans/Run_Modes.md
+node_compile_hint:
+  mode: dae_jail_worktree_strategy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0014
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0015
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/Q11/N21 reversal
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
+preserved_exact_tokens:
+- STRATEGY-DAE
+- DAE — Delegated Agent Execution
+- 2.2.1 DAE worktree context
+- working_directory
+- worktree_id
+- worktree_branch
+- is_worktree
+- dae_allowed = false
+- actual jail diff
+negative_constraints:
+- The canonical workspace MUST NOT be directly writable during DAE.
+- Providers that cannot offer deterministic pre-spawn restriction / tool-policy injection MUST advertise dae_allowed
+  = false and cannot be selected for DAE.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Run_Modes.md
+- Plans/Executor_Protocol.md
+- Plans/assistant-chat-design.md
+- Plans/CLI_Bridged_Providers.md
+- Plans/FileSafe.md
 ```
 
 ### RM-010 - Surface State Runtime Normalization Table
@@ -67,7 +267,73 @@ Source SHA256: `10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144
 ### RM-011 - Deterministic Strategy Selection Algorithm
 
 ```yaml
-{plan_unit_id: "RM-011", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Strategy selection is a deterministic pure function of requested runtime mode, effective overlay, config, and policy: ask/plan always HTE, regular defaults HTE unless DAE is requested and allowed, and yolo selects DAE.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CBP-003", "CBP-005", "T-001", "PS-001"], unblocks: [], acceptance_criteria: ["RM-011 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "strategy_selection_drift", reasoning_tier: "standard", context_scope: "strategy_selection", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "deterministic_strategy_selection", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0016"], preserved_exact_tokens: ["Strategy selection is a pure function", "requested_runtime_mode", "effective_mode_overlay", "cli_bridged_strategy: \"dae\"", "dae_allowed == true", "strategy_resolution_reason"], negative_constraints: ["Given the same inputs, the same strategy MUST be selected.", "regular must not select DAE unless config requests it and provider policy allows it."], preserved_contractrefs: ["ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3", "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/CLI_Bridged_Providers.md", "Plans/Tools.md", "Plans/Decision_Policy.md"]}
+plan_unit_id: RM-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Modes.md
+canonical_text: 'Strategy remains the deterministic function of requested mode, overlay, config and policy:
+  ask/plan always HTE, regular HTE unless explicitly requested allowed DAE, yolo always DAE. A provider with
+  dae_allowed != true refuses before spawn with yolo_requires_dae_provider. App Goal/Crew/Plan builds/scheduled
+  work and grant-covered Orchestrator work use the same rule; there is no HTE downgrade or desktop/raw-shell
+  escape.'
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
+  rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- CBP-003
+- CBP-005
+- T-001
+- PS-001
+- RM-053
+unblocks: []
+acceptance_criteria:
+- RM-011 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: strategy_selection_drift
+reasoning_tier: standard
+context_scope: strategy_selection
+implementation_surfaces:
+- Plans/Run_Modes.md
+node_compile_hint:
+  mode: deterministic_strategy_selection
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0016
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
+preserved_exact_tokens:
+- Strategy selection is a pure function
+- requested_runtime_mode
+- effective_mode_overlay
+- 'cli_bridged_strategy: "dae"'
+- dae_allowed == true
+- strategy_resolution_reason
+negative_constraints:
+- Given the same inputs, the same strategy MUST be selected.
+- regular must not select DAE unless config requests it and provider policy allows it.
+preserved_contractrefs:
+- 'ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3'
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md'
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Run_Modes.md
+- Plans/CLI_Bridged_Providers.md
+- Plans/Tools.md
+- Plans/Decision_Policy.md
 ```
 
 ### RM-012 - Debug Overlay Runtime Resolution
@@ -79,7 +345,78 @@ Source SHA256: `10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144
 ### RM-013 - Runtime Governance Recovery Gap Register
 
 ```yaml
-{plan_unit_id: "RM-013", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "The P5 run-mode recovery section preserves implementation-blocking governance gaps around startup recovery, retry/backoff ownership, Contribute(PR) versus DAE isolation, DAE jail durability, external publish side effects, /event recovery, attention_required persistence, blocked semantics, account-switch invalidation, child-run account re-resolution, gate placement, and work-item posture.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "PS-001", "SP-001", "CV-215"], unblocks: [], acceptance_criteria: ["RM-013 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "governance_gap_loss", reasoning_tier: "standard", context_scope: "runtime_governance_gaps", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "runtime_governance_recovery_gap_register", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0017"], preserved_exact_tokens: ["P5 run-mode governance recovery requirements", "startup recovery", "Contribute(PR) vs DAE isolation", "DAE-jail durability", "external_publish_side_effect", "/event recovery", "attention_required", "blocked semantics", "account-switch invalidation", "GATE-007 / GATE-008"], negative_constraints: [], preserved_contractrefs: ["ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md"], compatibility_only_notes: [], stale_retired_dispositions: ["Runtime-governance docs continue to sharpen rather than stabilize."], owner_hints: ["Plans/Run_Modes.md", "Plans/Decision_Policy.md", "Plans/Progression_Gates.md", "Plans/storage-plan.md"]}
+plan_unit_id: RM-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Modes.md
+canonical_text: P5 recovery remains lineage for the independently unresolved startup/backoff, Contribute(PR)-isolation,
+  jail durability, Event recovery, attention, account-switch and gate-placement obligations. The former universal
+  publication-approval/YOLO ambiguity is superseded by PS-146/147/148 and RM-053. That policy resolution is
+  not evidence that providers, jails or remote interception already implement it.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
+  rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- PS-001
+- SP-001
+- CV-215
+- RM-053
+- PS-148
+unblocks: []
+acceptance_criteria:
+- RM-013 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: governance_gap_loss
+reasoning_tier: standard
+context_scope: runtime_governance_gaps
+implementation_surfaces:
+- Plans/Run_Modes.md
+node_compile_hint:
+  mode: runtime_governance_recovery_gap_register
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0017
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
+preserved_exact_tokens:
+- P5 run-mode governance recovery requirements
+- startup recovery
+- Contribute(PR) vs DAE isolation
+- DAE-jail durability
+- external_publish_side_effect
+- /event recovery
+- attention_required
+- blocked semantics
+- account-switch invalidation
+- GATE-007 / GATE-008
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Runtime-governance docs continue to sharpen rather than stabilize.
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: The P5 run-mode recovery section preserves implementation-blocking governance gaps
+  around startup recovery, retry/backoff ownership, Contribute(PR) versus DAE isolation, DAE jail durability,
+  external publish side effects, /event recovery, attention_required persistence, blocked semantics, account-switch
+  invalidation, child-run account re-resolution, gate placement, and work-item posture.'
+owner_hints:
+- Plans/Run_Modes.md
+- Plans/Decision_Policy.md
+- Plans/Progression_Gates.md
+- Plans/storage-plan.md
 ```
 
 ### RM-014 - Runtime Governance UI And Explanation Terminology
@@ -181,7 +518,80 @@ Source SHA256: `10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144
 ### RM-030 - Regular Yolo And Crew Authority Deltas
 
 ```yaml
-{plan_unit_id: "RM-030", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "regular allows full child-run behavior subject to permission, provider, and capability rules; yolo may broaden execution but cannot bypass child capability narrowing, provider restrictions, or Copilot-native routing; Crew is an overlay over the current parent mode rather than a separate runtime mode.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "T-001", "PS-001", "CBP-003", "ACD-006"], unblocks: [], acceptance_criteria: ["RM-030 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "execution_authority_drift", reasoning_tier: "standard", context_scope: "mode_tooling_deltas", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "regular_yolo_crew_authority_deltas", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0036", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0037", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0038"], preserved_exact_tokens: ["regular", "yolo", "Copilot-native routing exception", "Crew is an overlay", "FinalGUISpec"], negative_constraints: ["yolo still cannot bypass child capability narrowing, provider restrictions, or the Copilot-native routing exception.", "Crew is an overlay over the current parent mode, not a separate runtime mode."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md", "ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Permissions_System.md", "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Tools.md", "Plans/Models_System.md", "Plans/Permissions_System.md", "Plans/CLI_Bridged_Providers.md", "Plans/orchestrator-subagent-integration.md", "Plans/FinalGUISpec.md"]}
+plan_unit_id: RM-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Modes.md
+canonical_text: regular and yolo permit child work only under actual parent/receiver capability ceilings, provider
+  restrictions and the Copilot-native routing exception. Crew stays an overlay, including app Crew. A child
+  may consume the parent's exact build-grant subset for its admitted Project/run/task but cannot issue, widen
+  or transfer it; a message never changes the receiver mode.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
+  rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+- PS-001
+- CBP-003
+- ACD-006
+- RM-053
+- PS-148
+unblocks: []
+acceptance_criteria:
+- RM-030 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: execution_authority_drift
+reasoning_tier: standard
+context_scope: mode_tooling_deltas
+implementation_surfaces:
+- Plans/Run_Modes.md
+node_compile_hint:
+  mode: regular_yolo_crew_authority_deltas
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0036
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0037
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0038
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N4/Q11/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
+preserved_exact_tokens:
+- regular
+- yolo
+- Copilot-native routing exception
+- Crew is an overlay
+- FinalGUISpec
+negative_constraints:
+- yolo still cannot bypass child capability narrowing, provider restrictions, or the Copilot-native routing
+  exception.
+- Crew is an overlay over the current parent mode, not a separate runtime mode.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md'
+- 'ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Permissions_System.md'
+- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md,
+  ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Run_Modes.md
+- Plans/Tools.md
+- Plans/Models_System.md
+- Plans/Permissions_System.md
+- Plans/CLI_Bridged_Providers.md
+- Plans/orchestrator-subagent-integration.md
+- Plans/FinalGUISpec.md
 ```
 
 ### RM-031 - Strategy And Determinism Acceptance Criteria
@@ -235,7 +645,69 @@ Source SHA256: `10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144
 ### RM-039 - Safe-Point Applicability And Addendum Acceptance
 
 ```yaml
-{plan_unit_id: "RM-039", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Runtime safe points are required only for mutation-capable attempts: ask/plan remain read-only and need no mutation safe points for ordinary planning or inspection, while regular/yolo create safe points before risky mutation-capable attempts; addendum acceptance preserves retry taxonomy, explicit headless denial, blocked-counter exclusions, and safe-point creation by execution authority.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "F2-086", "T-001", "PS-001"], unblocks: [], acceptance_criteria: ["RM-039 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "safe_point_drift", reasoning_tier: "standard", context_scope: "safe_points", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "safe_point_applicability_addendum_acceptance", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0044", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0045"], preserved_exact_tokens: ["Runtime safe points", "mutation-capable attempts", "Run modes do not invent alternative retry taxonomies", "Safe-point creation follows execution authority"], negative_constraints: ["ask and plan do not require mutation safe points for ordinary planning/inspection work.", "Safe-point creation follows execution authority, not generic run existence."], preserved_contractrefs: [], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/FileSafe.md", "Plans/Tools.md", "Plans/Permissions_System.md"]}
+plan_unit_id: RM-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Modes.md
+canonical_text: Mutation-capable regular/yolo attempts use the same scope-bound pre-write safe points before
+  risky mutation, for application and Project roots alike. ask/plan need none for ordinary read-only planning/inspection.
+  Mode or build-grant authority never substitutes for a required safe point; permission/root/recovery gates
+  and blocked-counter semantics remain independent.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
+  rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- F2-086
+- T-001
+- PS-001
+- RM-053
+- F2-213
+unblocks: []
+acceptance_criteria:
+- RM-039 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: safe_point_drift
+reasoning_tier: standard
+context_scope: safe_points
+implementation_surfaces:
+- Plans/Run_Modes.md
+node_compile_hint:
+  mode: safe_point_applicability_addendum_acceptance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0044
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0045
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
+preserved_exact_tokens:
+- Runtime safe points
+- mutation-capable attempts
+- Run modes do not invent alternative retry taxonomies
+- Safe-point creation follows execution authority
+negative_constraints:
+- ask and plan do not require mutation safe points for ordinary planning/inspection work.
+- Safe-point creation follows execution authority, not generic run existence.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Run_Modes.md
+- Plans/FileSafe.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
 ```
 
 ### RM-040 - Worktree Binding Across Modes
@@ -253,7 +725,71 @@ Source SHA256: `10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144
 ### RM-042 - Blocked Classification Resume And Restore Rules
 
 ```yaml
-{plan_unit_id: "RM-042", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Runtime mode affects immediate recovery affordances but not blocked classification: interactive modes may present auth/approval/clarification, headless modes yield blocked_reason_code=headless_ask_denied, later mode/prerequisite changes may resume by creating a new attempt snapshot without rewriting original blocked classification, and restore-before-rerun safe-point policy still applies.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "PS-001", "F2-086", "SP-001"], unblocks: [], acceptance_criteria: ["RM-042 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "blocked_recovery_drift", reasoning_tier: "standard", context_scope: "blocked_recovery", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "blocked_classification_resume_restore_rules", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0048", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0049", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0050"], preserved_exact_tokens: ["blocked_reason_code = headless_ask_denied", "mode change plus prerequisite resolution", "new attempt snapshot", "restore-before-rerun"], negative_constraints: ["A later mode change does not rewrite the original blocked classification.", "Mode change alone is insufficient when policy requires restore-before-rerun."], preserved_contractrefs: ["ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/UI_Command_Catalog.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Permissions_System.md", "Plans/FileSafe.md", "Plans/storage-plan.md"]}
+plan_unit_id: RM-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Modes.md
+canonical_text: Mode changes do not rewrite original blocked classification. Interactive modes may present
+  retained approval/auth/clarification; an unsatisfied ask in headless work records headless_ask_denied rather
+  than executing. A later actual permission/grant/mode/prerequisite change creates fresh admission evidence
+  before retry, without clearing restore-required holds or Stop/pause. Ordinary YOLO publication never enters
+  this blocked path merely for a redundant publication yes.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
+  rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- PS-001
+- F2-086
+- SP-001
+- RM-053
+- PS-148
+unblocks: []
+acceptance_criteria:
+- RM-042 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: blocked_recovery_drift
+reasoning_tier: standard
+context_scope: blocked_recovery
+implementation_surfaces:
+- Plans/Run_Modes.md
+node_compile_hint:
+  mode: blocked_classification_resume_restore_rules
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0048
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0049
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0050
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
+preserved_exact_tokens:
+- blocked_reason_code = headless_ask_denied
+- mode change plus prerequisite resolution
+- new attempt snapshot
+- restore-before-rerun
+negative_constraints:
+- A later mode change does not rewrite the original blocked classification.
+- Mode change alone is insufficient when policy requires restore-before-rerun.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/UI_Command_Catalog.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Run_Modes.md
+- Plans/Permissions_System.md
+- Plans/FileSafe.md
+- Plans/storage-plan.md
 ```
 
 ### RM-043 - Deferred Waiting Run State

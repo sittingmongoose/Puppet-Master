@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2649-L2999
+Source lines: L2690-L3149
 
-Source SHA256: `6cbf9b3a7ad87b100a7c3bc1c712e41c9e29fd4df68636b207e934cabddf3ebd`
+Source SHA256: `f0493b3f44b352436041e7d206c70d7638402625d9ebba5acf3993556991abd2`
 
 ---
 
@@ -265,7 +265,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: >-
-  Export memory is the command cmd.chat.memory.export {scope}, with scope gists | teachings | all, registered by the owner's decision DL-130 (card p15, E-32). One command serves both producers, the Export action of the Memory surface and the Export action of the taught-rules document. It exports the gists, the taught rules, or both that Memory shows for the current project through the artifact owner and returns an ArtifactExportResult; it adds no memory store and never changes, verifies, pins or discards what it exports. Each gist goes out with its verification_state as stored, so an Unverified gist is never exported as Verified, and its EvidenceRef entries go out as the pointers they are (AMS-006), never as copies of the referenced content. The command is available when assistant memory and artifact export are both available (assistant_memory_available && artifact_export_available). Its catalog row belongs to Plans/UI_Command_Catalog.md.
+  Export memory is the command cmd.chat.memory.export {scope}, with scope gists | teachings | all,
+  registered by the owner's decision DL-130 (card p15, E-32). One command serves both producers, the
+  Export action of the Memory surface and the Export action of the taught-rules document. It exports
+  the gists, the taught rules, or both that Memory shows for the explicitly bound Project, or the
+  calling app thread with null project_id and actual Computer under AMS-054 through the artifact owner
+  and returns an ArtifactExportResult; it adds no memory store and never changes, verifies, pins or
+  discards what it exports. Each gist goes out with its verification_state as stored, so an Unverified
+  gist is never exported as Verified, and its EvidenceRef entries go out as the pointers they are
+  (AMS-006), never as copies of the referenced content. The command is available when assistant memory
+  and artifact export are both available (assistant_memory_available && artifact_export_available).
+  Its catalog row belongs to Plans/UI_Command_Catalog.md. No-project export cannot enumerate other app
+  threads or all Project memory.
 gui_related: true
 gui_classification_reason: Export is a user-visible action on the Memory surface and the taught-rules document.
 depends_on: [AMS-006, AMS-010, AMS-021]
@@ -284,11 +295,14 @@ context_scope: assistant_memory_gui
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/assistant_memory_contracts.schema.json]
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.10 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-07 (WAIT part N-7, card p15 E-32) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
-  - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
-  - Plans/Decision_Log.md#DL-130
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.10 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-07 (WAIT part N-7,
+  card p15 E-32) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
+- Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
+- Plans/Decision_Log.md#DL-130
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N16/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["Export memory", "cmd.chat.memory.export", "gists | teachings | all", "ArtifactExportResult", "verification_state", "DL-130"]
 negative_constraints:
   - Do not mutate memory while exporting it.
@@ -359,3 +373,98 @@ owner_hints: [Plans/assistant-memory-subsystem.md, Plans/assistant-chat-design.m
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Decision_Log.md#DL-116
+
+### AMS-054 - Thread-Private App Memory And Explicit Carry-Over
+
+```yaml
+plan_unit_id: AMS-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: 'No-project Assistant memory and its capsule are thread-only: application scope, project_id=null
+  and actual Computer/thread identify one working set, gist corpus and index view. The work Computer owns
+  local in-process custody under storage-plan, outside any Project Vault; another app chat never receives
+  it. Widest explicitly taught public_safe rules still apply through the rules owner, with Everywhere/Computer
+  and thread behavior preferences from Settings; rules and memory remain different tiers. Existing claim
+  verification, evidence pointers, Verified-only summary-first injection, 350-token capsule default, budgets,
+  retention/holds, provider exposure and NullMemoryProvider wiring for non-Assistant agents remain. Cross-Project
+  read grants, Crew membership and known gist IDs confer no memory access. MemoryProvider operations use
+  an explicit versioned Project-or-app-thread scope; no null or app string is interpolated as a Project
+  key. At conversion the destination Project memory is adopted for future work, and gist/capsule carry-over
+  is individually previewed, source-restricted and lineage-bound through its owner. Historical verification
+  and evidence are not upgraded, other chats'' memory is never merged, and a copied capsule grants no
+  authority. cmd.chat.memory.export keeps scope gists|teachings|all but exports only the bound Project
+  or app-thread view with nullable Project and actual thread/Computer metadata; no new command or memory
+  store is created. The selected app view is Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1,
+  logical pm.assistant_memory.view.application.v1 version 1.0.0, with OriginalMemoryMutationSource in
+  Plans/application_workflow_sources.schema.json and complete source-graph adoption under CV-366. SP-349
+  owns assistant_memory.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(memory_id)};
+  this is a separate family, never nullable reinterpretation of a Project key or a shared app corpus.
+  Parent/thread/Computer, source/currentness, verification, canonical retention and Full Server Backup
+  joins must all hold; missing native/source/policy registration remains unavailable.'
+gui_related: false
+gui_classification_reason: Defines runtime scope, data identity and custody without owning visual presentation.
+depends_on:
+- AMS-003
+- AMS-033
+- AMS-042
+- AMS-046
+- AMS-052
+- WN-021
+- CV-366
+- SP-349
+unblocks: []
+acceptance_criteria:
+- Two app chats on one Computer cannot retrieve, inject or export each other's gists by null scope or
+  shared preference.
+- Widest public_safe teachings still apply without forwarding private memory to workers or Crew.
+- Conversion and export retain source restrictions, stored verification_state and evidence pointers; absent
+  authority cannot become Verified or shared.
+validation_surfaces:
+- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
+- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+risk_class: scope_authority_or_custody_drift
+reasoning_tier: high
+context_scope: project_and_application_scope
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+- Plans/settings_system_contracts.schema.json
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N16/N24/N25/N26
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#5;7.12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- 'Jared, 2026-11-03: "Those look good, except goals and crew should be allowed in no project."'
+- 'Jared, 2026-11-03: "Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t."'
+- projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
+preserved_exact_tokens:
+- project_id=null
+- MemoryProvider
+- NullMemoryProvider
+- public_safe
+- 350-token
+- cmd.chat.memory.export
+- gists
+- teachings
+- all
+negative_constraints:
+- Do not share an app-wide personal-memory corpus, merge other chats, reconstruct facts from events or
+  wire workers to RealMemoryProvider.
+- Do not carry memory/notes in Saved setups or treat a moved capsule as new destination authority.
+- Do not infer an implemented handler, admitted event writer, native verification, WorkNode, NodeSeed
+  or governance clearance from this accepted contract.
+owner_hints:
+- Plans/assistant-memory-subsystem.md
+- Plans/Settings_System.md
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md#AMS-054, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365

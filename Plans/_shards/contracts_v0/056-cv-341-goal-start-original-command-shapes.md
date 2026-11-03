@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L22540-L22597
+Source lines: L22488-L22547
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -15,8 +15,8 @@ plan_unit_id: CV-341
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: Exact original Goal start request/result, content-free command custody, named logical-member resolution
-  and active-v3/whole-retained-v2 payload routes preserve distinct source/body/shared hash and authority domains.
+canonical_text: |-
+  Exact original Goal start request/result, content-free command custody, named logical-member resolution and active-v3/whole-retained-v2 payload routes preserve distinct source/body/shared hash and authority domains. The unchanged resources above remain the Project edition. CV-366 selects the independently versioned application Goal start/body/source/result graph; no old original request, receipt or hash is recast as app source.
 gui_related: false
 gui_classification_reason: Defines original internal command/source/body/event/result and retained audit authority
   without a visual surface.
@@ -56,6 +56,8 @@ node_compile_hint:
 source_lineage:
 - reports/event-authority-20260911/step-08-goal-start-validation.md
 - Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F06
 negative_constraints:
 - Do not infer original authority from unchanged invalid values, selected helper results, hashes, schema registration
   or installed-role declarations.

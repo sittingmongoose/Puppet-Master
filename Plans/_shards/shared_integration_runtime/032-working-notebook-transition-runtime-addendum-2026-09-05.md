@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L1988-L2061
+Source lines: L2007-L2089
 
-Source SHA256: `ae043ff101e9961383abd53c59f9f78f01314f3061ce0ea7039bbb1386ea9d35`
+Source SHA256: `0eb674f95b083572d08fa10b6506de4fb7e33e53dd80f2683155ea8f8e451cd1`
 
 ---
 
@@ -14,7 +14,7 @@ Packet `PM-WNC-2026-09-05-v1`. Transition policy is owned by `Plans/Prompt_Pipel
 
 Recovery around a transition reuses §14.2 reconciliation, not new semantics: startup reconciles nonterminal transitions and their in-flight operations against receipts, processes, lease generations, and owner truth, with outcomes `resumed | replayed | rolled_back | cleaned | quarantined | manual_recovery_required | terminal_unknown_with_disclosure`; absence of evidence never becomes success. The required cut points and their durable records are: before checkpoint (nothing durable to consult; request stays `requested`), mid-write (partial notebook writes stay uncommitted; commit barrier per `Plans/storage-plan.md`), after commit before admission (committed checkpoint is consulted; re-admission required), after admission before native activation (receipt re-validated against current generations and the current stop epoch; cancelled if a newer stop epoch exists), after native activation before PM observation (last valid PM checkpoint and authoritative history references are kept; the provider operation outcome is reconciled, never blindly replayed or promised as rollback), after PM observation before resumed turn (reconstructed request re-admitted against current state), and after partial resumed output (normal partial-turn reconciliation; no invented completion). A user Stop always wins over a pending fresh-window continuation, and late results are fenced by generation so they cannot reactivate cancelled work.
 
-Host transfer: notebook and checkpoint records are Project Vault data. After `Plans/Project_Sync_and_Backbone.md` cutover, the old host's lease expires into `expired_pending_reconciliation` and a stale holder cannot renew, release, or mutate notebook state; the destination resumes only after current access/route validation.
+Host transfer uses actual custody: Project notebooks/checkpoints remain Project Vault data and app scratch uses SIR-037/055 Server/thread-owned app custody. PSB-006/007 expires/fences the source lease into expired_pending_reconciliation and rejects stale renew/release/mutation; destination resumes only after current access/route/root/Stop checks. No app Vault is fabricated and no transfer auto-resumes paused work.
 
 ```yaml
 plan_unit_id: SIR-036
@@ -56,7 +56,13 @@ plan_unit_id: SIR-037
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
-canonical_text: Notebook and checkpoint records are Project Vault data under existing lease and topology authority. After Project Move cutover the previous host lease enters expired_pending_reconciliation and a stale holder cannot renew, release, or mutate notebook or checkpoint state; the destination host resumes only after current access and route validation. Notebook payloads never contain raw credentials, and account or machine changes revalidate notebook scope, authorization, and route without inferring credentials from notes.
+canonical_text: >-
+  Project notebook/checkpoint records remain in the one Project Vault under its existing lease/topology
+  authority. B's app notebook/checkpoint edition lives in the actual Server app store with thread/Computer
+  and app writer/lease, no Vault before conversion. PSB-006/007 fences old holders and stale
+  renewal/release/mutation; destination access/route/currentness verifies before resume. N25 maps carried
+  canonical records explicitly, preserving independently retained source history. Notes carry no raw
+  credentials or account/host authority.
 gui_related: false
 gui_classification_reason: Lease fencing is runtime behavior, not GUI work.
 depends_on: [SIR-036]
@@ -72,8 +78,11 @@ context_scope: shared_runtime
 implementation_surfaces: [Plans/Shared_Integration_Runtime.md, Plans/Project_Sync_and_Backbone.md, Plans/Multi-Account.md]
 node_compile_hint: {mode: runtime_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-I11
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A47
+  - "source_packet:PM-WNC-2026-09-05-v1:WNC-I11"
+  - "source_packet:PM-WNC-2026-09-05-v1:WNC-A47"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens: ["expired_pending_reconciliation", "stale holder", "Project Vault data"]
 negative_constraints:
   - Do not let an old host keep writing after lease transfer.

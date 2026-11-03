@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L2861-L3503
 
-Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6`
+Source SHA256: `f4e5a424ee6841b4988ce457166d26b762be0b3f0c4aa0c5d0d03132ef6be00f`
 
 ---
 
@@ -105,7 +105,7 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contra
 - The dropdown is hosted as a click-to-open corner-origin sprout popout with the theme-matched popout chrome shared by the other chat header menus (ACD-442); the trigger's state color is applied through stylesheet rules only (no inline style pinning), and trigger hover matches the Context Lens trigger hover treatment in all themes
 - Changing binding mid-thread is allowed; change applies to the next turn (same semantics as platform/model changes per §1.1)
 - While a turn is in-flight, the dropdown is read-only (no binding changes during execution)
-- `Unbind` sets thread binding to None; agent's next turn uses main project dir
+- `Unbind` sets the optional binding to None; the next turn resolves the owning Project root, or for an app thread the exact Computer/chat-folder/granted root. No current-focus/main-Project fallback is permitted.
 - `Remove Worktree` calls `WorktreeManager::remove_worktree`, then sets binding to None
 - Remove is blocked with error toast if worktree has an active run in any thread or orch tier
 - The button is visible in all chat modes (Ask, Agent, Debug, Plan, Deep Plan)
@@ -146,15 +146,15 @@ Thread-to-worktree binding is durable, explicit, and identity-bearing.
 **Startup revalidation:** After PM startup rehydrates thread state from redb/seglog, the next focus of a thread with `thread_state:{thread_id}:worktree_binding` lazily verifies that the recorded path exists and appears in `git worktree list`. If the path is missing, PM auto-unbinds by deleting the binding and reverse lookup, emits `chat.thread_worktree_unbound` with `reason=path_missing`, and notifies the user; it does not silently re-create the missing worktree.
 
 **Worktree-aware same-file identity rules:**
-- The canonical file identity for thread-bound chat, debug, Source Control, and GitHub pivots is `{ repo_id, worktree_id, relative_path }`; path alone is not sufficient.
+- Repository-backed pivots preserve `{repo_id, worktree_id, relative_path}`. App files without history use actual Host/Computer and canonical absolute root/path identity; historical cards and mutations stay pinned to their captured source (ACD-329).
 - The same relative path in two worktrees is treated as two different open subjects unless a compare session explicitly binds them together.
-- Thread-scoped opens default to the thread's bound `worktree_id`. If the thread has no bound worktree, the UI may fall back to the currently selected worktree but must label that fallback explicitly.
+- Thread-scoped opens use the frozen actual binding or explicit owning Project/app root. They never borrow another visible Project/worktree; any deliberate compare or cross-Project read names both identities and current grants.
 - Historical cards, receipts, and debug evidence remain pinned to the captured `worktree_id` even if the thread later rebinds to a different worktree.
 - Merge-back, compare, and PR creation flows may intentionally bridge the bound worktree to a base branch, but they must preserve both identities rather than collapsing them into one generic path.
 - At turn-start, Chat populates and freezes `execution_unit_context.worktree_id` plus `working_directory` for the whole turn; safe points include worktree snapshot fields `worktree_id`, `worktree_path`, `branch_name`, and `HEAD_sha`.
 - Project switch marks the worktree binding inactive rather than unbound; the button stays disabled until switch-back, then reactivates against the same binding.
 
-**1:1 enforcement:** One worktree per thread, one thread per worktree. If a user tries to bind a worktree already bound to another thread, the action is blocked with an explicit error and a deep link to the owning thread when available.
+**0..1 enforcement:** One optional managed worktree per thread and at most one owning thread per worktree. A PM Project worktree operation needs its real target/binding. An ordinary app chat creates no PM Project worktree; its permitted raw history folder remains actual source context. A duplicate binding refuses and links the owning thread when visible.
 
 **Mode-worktree invariant:** Worktree binding is thread-level state, orthogonal to Ask, Agent, Debug, Plan, and Deep Plan mode. Mode transitions never rebind, unbind, or change the frozen `working_directory` for an in-flight turn; the next turn observes the same bound worktree unless the user explicitly changes the binding.
 
@@ -194,7 +194,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Wiring_Matri
 
 ### W.4 Auto-create flow (when setting is on)
 
-**Trigger:** New thread creation while `branching.assistant_auto_worktree` is `true`.
+**Trigger:** New Project-bound thread with a real supported repository while the resolved `branching.assistant_auto_worktree` value is true. App chat alone never auto-creates a Project/worktree; explicit owner actions must bind their actual target.
 
 **Step by step:**
 1. User creates new thread (via `cmd.chat.new` or first message in fresh chat)
@@ -221,7 +221,7 @@ Title-less threads keep the temporary branch name `assistant/thread-{short_id}` 
 
 ### W.5 Settings — Branching tab
 
-**New settings (project-level, persisted in redb):**
+**Existing preference definitions:** exact logical key/type/default/label is retained. The config:project:{pid}: strings below preserve original Project own-key examples only; current consumers use Settings' admitted level resolver/transaction and Storage's versioned physical keys. No feature directly writes the examples or assumes every key permits every level.
 
 | Setting key (redb) | Type | Default | UI label | Description |
 |-----|------|---------|----------|-------------|
@@ -567,8 +567,8 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.
 - File manager search scope follows current file manager root
 - `@file` resolves relative to thread's `working_directory` (worktree root when bound)
 - MCP tools and `/providers` receive the thread worktree path as `working_directory` when a worktree binding is active.
-- Quick-open (Ctrl+P) remains project-scoped regardless of worktree context
-- If thread unbound mid-session: file manager falls back to project root with toast "Worktree unbound — showing project root."
+- Quick-open (Ctrl+P) follows the explicit Project or app Computer/root context; cross-Project sources remain separately grant-bound and read-only.
+- If unbound, show the owning Project root or app chat folder/granted root with a truthful note; no selected-main-Project fallback.
 
 File-edit card path semantics follow the same execution context: chat file-edit cards display paths relative to the active `working_directory`, so a bound thread naturally shows worktree-relative paths without rewriting captured absolute mutation-log paths.
 

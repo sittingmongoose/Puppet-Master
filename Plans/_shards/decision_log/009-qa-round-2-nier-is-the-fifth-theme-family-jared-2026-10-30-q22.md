@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L18594-L19385
+Source lines: L18678-L19471
 
-Source SHA256: `871d8c14649e5f994a06f4b9b68b9e58144fe262d175e5251c8dcb653f0c50ac`
+Source SHA256: `0c481af2073b0da7e199828b487c63f6080d5da8e92ce42f76db375dee982cb4`
 
 ---
 
@@ -51,6 +51,8 @@ canonical_text: >-
   binding and DRY owner follows this decision. Earlier ten-theme evidence remains historical evidence only; the
   current acceptance matrix contains ten variants. Q22 visible copy is Adjust NieR, or Adjust NieR… in the
   title-bar menu (foundations source confirmation 1030182542-5544).
+
+  Superseded in part by DL-281, DL-286 (2026-11-03). The exact family/mode pair resolves and writes its admitted Settings level atomically; five families/ten variants and the retired NieR toggle stay unchanged. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Defines the fifth selectable theme family and its shared Settings/onboarding presentation.
 split_recommended: false

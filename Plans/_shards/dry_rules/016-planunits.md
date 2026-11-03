@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L265-L2081
+Source lines: L265-L2087
 
-Source SHA256: `2ee9163141078a9ed56d59700128756b51cb1c18109a0f7fe60e02b9748b8245`
+Source SHA256: `f483b45c08ded2f8811a35ed53cd4b052d3b603b856084efdaba166705d30608`
 
 ---
 
@@ -589,7 +589,10 @@ plan_unit_id: DR-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: Permissions_System owns permission snapshot schema, enums, approval-surface expectations, and blocked-action semantics; storage owns only durable binding keys and cannot redefine nested permission snapshot schema.
+canonical_text: |-
+  Permissions_System owns permission snapshot schema, enums, approval-surface expectations, and blocked-action semantics; storage owns only durable binding keys and cannot redefine nested permission snapshot schema.
+
+  This split also governs application permission snapshots and Project build grants under PS-145/147/148. Permissions owns the selected version, authority kind, exact target and Stop/parent ceilings; storage binds and retains it without reshaping it. Exact historical Project snapshot keys and codecs remain unchanged. Application scope uses the explicit CV-365 contract, never an empty Project key or reconstruction from current Settings.
 gui_related: false
 gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
 split_recommended: false
@@ -1058,7 +1061,10 @@ plan_unit_id: DR-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: assistant-chat-design owns assistant worktree binding, seglog events, commands, settings, merge-back flow, and pre-merge test gate, while GitHub_Integration and storage-plan own SC accordion and owner_thread_id boundaries.
+canonical_text: |-
+  assistant-chat-design owns assistant worktree binding, seglog events, commands, settings, merge-back flow, and pre-merge test gate, while GitHub_Integration and storage-plan own SC accordion and owner_thread_id boundaries.
+
+  A thread has zero or one PM worktree binding. A No project thread has none; its actual chat-folder or granted directory is runtime working context, not a nullable Project worktree lease. The former 1:1 model applies only when a Project worktree is bound. Existing cmd.chat.worktree.* and cmd.git.worktree.* operations still require a real Project/repository/backend and their current lease; a null binding never selects main.
 gui_related: true
 gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
 split_recommended: false

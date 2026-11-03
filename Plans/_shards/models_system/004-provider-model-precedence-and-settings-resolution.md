@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L34-L201
+Source lines: L34-L203
 
-Source SHA256: `fca9d7c6d996b9cf16f6e377b75d46f9a458aa94f866374e8eb7f5961846eace`
+Source SHA256: `98cedbe72059189d8dedef8480350441120a92631e6e4ef4f973487aefcf68c4`
 
 ---
 
@@ -34,9 +34,11 @@ The canonical precedence chain is:
 2. scoped owner policy for the active execution unit (`run`, `seam`, `package`, `node`, `overseer`, or delegated subagent)
 3. Persona preference
 4. surface or stage default
-5. project or global config default
-6. last-used state where the surface explicitly permits it
-7. provider default
+5. Project own configuration default
+6. work Computer own configuration default
+7. Everywhere, then factory configuration default
+8. last-used state where explicitly permitted
+9. provider default
 
 Rules:
 - the same inputs and availability set MUST produce the same effective result
@@ -157,7 +159,7 @@ Model selection can be lane-aware when lane policy requires it. lane-level, secu
 
 Worktree visibility records may expose `/worktree/branch/tier` and `/lane`, but package/lane ownership, contamination, restore eligibility, and promotion posture must not stop at legacy tier status.
 
-Scope labels must distinguish app, project, surface, role, seam, package, node, manual, turn, session, run, task, and subagent sources. `/session/run/task/subagent` and `/package/node` are explicit override scopes.
+Scope labels must distinguish Everywhere, Computer, optional Project, application work, surface, role, seam, package, node, manual, turn, session, run, task, and subagent sources. `/session/run/task/subagent` and `/package/node` are explicit override scopes.
 
 Provider/model settings are never single-project by assumption: runtime-affecting overrides may be app, project, `/per-package`, seam, `/package/seam/node`, overseer, or delegated-subagent scoped, and the resolver must preserve the scope that selected or constrained the value.
 

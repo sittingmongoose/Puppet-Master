@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7143-L7199
+Source lines: L7448-L7549
 
-Source SHA256: `9006bc4dadc370bafa320a238e20908f23ddab3d4885e367d6f80b1c0dda1e84`
+Source SHA256: `8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013`
 
 ---
 
@@ -31,33 +31,78 @@ plan_unit_id: CS-083
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Commands System consumes seven Git-only Source Control primaries through the SCS-024 typed adapter
-  request/result and one sole future handler each. Whole-file stage/unstage, local remote update,
-  stash create/apply and branch create/delete retain exact currentness, permission, FileSafe,
-  preview, confirmation, idempotency and target guards. Existing canonical stash and branch-create
-  identities remain. Each row stays handler_unavailable with expected_event_types=[] until native proof.
+canonical_text: 'Commands System consumes seven Git-only Source Control primaries through the SCS-024 typed
+  adapter request/result and one sole future handler each. Whole-file stage/unstage, local remote update, stash
+  create/apply and branch create/delete retain exact currentness, permission, FileSafe, preview, confirmation,
+  idempotency and target guards. Existing canonical stash and branch-create identities remain. Each row stays
+  handler_unavailable with expected_event_types=[] until native proof.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Commands back visible Source Control controls and their disabled, confirmation and return states.
-depends_on: [SCS-024, UCC-167]
-unblocks: [WM-060]
+gui_classification_reason: Commands back visible Source Control controls and their disabled, confirmation and
+  return states.
+depends_on:
+- SCS-024
+- UCC-167
+unblocks:
+- WM-060
 acceptance_criteria:
-  - Each table primary has exactly one matching UCC-167 catalog and production-intent wiring row.
-  - Every request validates the owner schema branch and returns an owner result, including typed stale or denied outcomes.
-  - No hunk, Jujutsu or hosted transport route substitutes for a whole-file or local-configuration mutation.
-  - Static registration does not claim a native handler, EventRecord or runtime effect.
-validation_surfaces: [Plans/git_adapter_command_contracts.schema.json, Plans/git_adapter_command_contract_fixtures.json, Plans/Wiring_Matrix.production.json, scripts/pm_git_adapter_commands.py]
+- Each table primary has exactly one matching UCC-167 catalog and production-intent wiring row.
+- Every request validates the owner schema branch and returns an owner result, including typed stale or denied
+  outcomes.
+- No hunk, Jujutsu or hosted transport route substitutes for a whole-file or local-configuration mutation.
+- Static registration does not claim a native handler, EventRecord or runtime effect.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
+validation_surfaces:
+- Plans/git_adapter_command_contracts.schema.json
+- Plans/git_adapter_command_contract_fixtures.json
+- Plans/Wiring_Matrix.production.json
+- scripts/pm_git_adapter_commands.py
 risk_class: cross_target_git_mutation_or_false_effect
 reasoning_tier: high
 context_scope: packet_git_adapter_central_commands
-implementation_surfaces: [Plans/Commands_System.md, future UICommand dispatcher]
-node_compile_hint: {mode: static_command_consumer_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_report:packet-sweep-20260927/cross-contracts/report.md, source_report:packet-sweep-20260927/egolite/command_followup.json]
-preserved_exact_tokens: [cmd.git.stage, cmd.git.unstage, cmd.source_control.remote.update, cmd.source_control.stash.create, cmd.source_control.stash.apply, cmd.source_control.branch.create, cmd.source_control.branch.delete, handler_unavailable, "expected_event_types=[]"]
+implementation_surfaces:
+- Plans/Commands_System.md
+- future UICommand dispatcher
+node_compile_hint:
+  mode: static_command_consumer_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_report:packet-sweep-20260927/cross-contracts/report.md
+- source_report:packet-sweep-20260927/egolite/command_followup.json
+- source_ref:chat:2026-11-03-projects-pass2-approved
+preserved_exact_tokens:
+- cmd.git.stage
+- cmd.git.unstage
+- cmd.source_control.remote.update
+- cmd.source_control.stash.create
+- cmd.source_control.stash.apply
+- cmd.source_control.branch.create
+- cmd.source_control.branch.delete
+- handler_unavailable
+- expected_event_types=[]
 negative_constraints:
-  - Do not register historical candidate Git-prefixed stash or branch aliases as peer primaries.
-  - Do not dispatch a mutation from stale projection, focus, inferred remote or raw path text.
-  - Do not treat an acceptance or command response as terminal Git effect truth.
+- Do not register historical candidate Git-prefixed stash or branch aliases as peer primaries.
+- Do not dispatch a mutation from stale projection, focus, inferred remote or raw path text.
+- Do not treat an acceptance or command response as terminal Git effect truth.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/Commands_System.md
 ```
 
 ContractRef: ContractName:Plans/Source_Control_System.md#SCS-024, ContractName:Plans/UI_Command_Catalog.md#UCC-167, ContractName:Plans/Wiring_Matrix.md#WM-060

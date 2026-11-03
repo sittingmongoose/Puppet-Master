@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L448-L806
 
-Source SHA256: `36868146ec9723c3ea4f4aeae69832073b237f8b00c0923dc41bec38d50a75c5`
+Source SHA256: `43574393aa5fba0f14ef58aa244d168ce7af634b201fe408f7fa286c55a98c8a`
 
 ---
 
@@ -233,15 +233,15 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plan
 
 ### Settings System ownership map (2026-08-31)
 
-`Plans/Settings_System.md` is the sole owner for the Settings surface and information architecture, every persisted ordinary setting's Project binding, fresh/no-Project defaults, All Settings search/facets/variable-height virtualization, atomic mutation and Restore Defaults, one-time exact-ID Project transfer, Settings manager grammar, and Settings-to-owner routing.
+`Plans/Settings_System.md` SSYS-002/059–065 is the sole owner for the Settings surface, per-row declared levels and effective resolver, one-writer level records, fresh and No project defaults, All Settings search/facets/virtualization, atomic mutation/reset, detached exact-ID copy, manager home/reach/version grammar and Settings-to-owner routing. DR-084/085/089 keep the resolver, copy and account-readiness engines single.
 
 The owner split is strict:
 
-- `Plans/settings_inventory.json` and its schema retain the exact 1010 ordinary setting IDs and row metadata. Manager, action, status, diagnostic, setup, and unavailable-capability destinations are outside that denominator.
+- `Plans/settings_inventory.json` and its schema own the reviewed ordinary-setting census and row metadata. 1010 is the pre-pass baseline, not a fixed final denominator; accepted additions and dispositions are counted after registration. The 38 manager keys are unchanged. Managers, actions, status, diagnostics, setup and unavailable-capability destinations are outside the row denominator.
 - `Plans/FinalGUISpec.md` retains shared GUI/theme-token ownership and consumes Settings placement; its earlier Settings shell/global/inheritance clauses are superseded where SSYS-001..SSYS-023 adjudicate them.
 - Storage, Permissions/FileSafe/Multi-Account, Shared Integration Runtime, Commands/Catalog/Wiring, provider, Server, Project Sync, Browser, SCM, Docker Manager, Onboarding, Doctor, and testing docs retain their named domain contracts. Settings renders policy, compact projections, exact availability, owner commands, receipts, and routes without implementing peer runtimes.
 - K3 Tome Tabs and the PMConcept7 Settings illustration are geometry/concept lineage only, not production/runtime proof; later Server First Backbone, Egolite/Hermes/Origin/Browser/SCM, Full Thread Performance, Onboarding/Doctor Correction, and Settings Bakeoff decisions control content and behavior.
-- Every persisted ordinary setting is Project-scoped. An untouched fresh Project seeds Basic Dark only when no committed theme snapshot exists; an explicit saved selection or copied detached snapshot wins. A no-Project surface is ephemeral Basic Dark and rejects writes. The current inventory's non-Project scope vocabulary remains a deferred normalization, not contrary persistence authority.
+- Ordinary values use Default → Everywhere → the offered Computer or Device level → Project when present → existing owner/chat/run/tab levels, with Managed and protective combinations as SSYS-059 declares. No project omits Project and permits offered-level writes; it is not an ephemeral-only mode. Explicit stored values win over a fresh seed. The first frame reads the Settings-resolved look without a Basic Dark flash. q-035 is resolved by DL-281; no ledger source history is rewritten.
 
 ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
@@ -268,7 +268,7 @@ This table is an ownership router, not a peer product owner. Later accepted owne
 |---|---|
 | Project/Vault/app-content sync, move, source relocation, update, or Sync-bundle behavior attributed generically to “Project Sync/Backbone” | `Plans/Project_Sync_and_Backbone.md` PSB-001 through PSB-003. |
 | Runtime resource quotas/governor behavior in `storage-plan.md` SP-228/SP-229 | Retired as behavior authority; `Plans/Shared_Integration_Runtime.md` SIR-006 is sole governor owner and Storage persists values only. |
-| Settings inheritance-only, global-persistence, or no-import/export clauses | `Plans/Settings_System.md` SSYS-001, SSYS-002, SSYS-007, SSYS-008, and SSYS-009 own current behavior; `Plans/settings_inventory.json` remains the 1010-ID machine inventory, with non-Project scope vocabulary deferred for normalization rather than treated as persistence authority. |
+| Settings inheritance-only, global-persistence, or no-import/export clauses | SSYS-002/059–065 and DR-084/085 own the accepted ladder, single writers and detached copy. q-035 is resolved in canon. Inventory `layering` determines offered levels; census is recomputed after accepted additions. Source-memory ledgers remain lineage only. |
 | One broad onboarding flow | Product Onboarding: `Plans/Planning_Wizard.md`/Final GUI; Installation/Deployment: SIR-003 plus Release Supply Chain/domain installer; Server Claim/Bootstrap: SIR-013. Project-content movement remains the separate downstream PSB service; visible routing is SMPFS-146. |
 | Doctor behavior spread across feature owners | `Plans/newtools.md` N2-151 owns the registry/router; domain owners retain probe truth and remediation. |
 | Workspace cleanup attributed to Storage or Worktree | `Plans/MiscPlan.md` M-084 is sole cleanup manager; Storage persists and Worktree supplies lifecycle facts. |

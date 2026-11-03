@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L13581-L13687
+Source lines: L13754-L13864
 
-Source SHA256: `e3dd00aefe77af402142dc62c8838be67674b3d6204abfdd4b1caa9f78ae6c67`
+Source SHA256: `2d6da9a9eae44820501a3ab3b65d326476249c557a85e7d584e03761f54f7ce2`
 
 ---
 
@@ -19,23 +19,24 @@ plan_unit_id: F2-192
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: Vision bridge image source resolution may use chat/thread attachments, selected runtime artifacts/screenshots,
-  FileSafe-allowed project files, clipboard images, and recent OS screenshots. Clipboard and recent OS screenshot
-  support are MVP, not deferred, but PM must use explicit permissioned ingestion, visible source labeling, deterministic
-  source precedence, user choice for ambiguous recent screenshots, redaction/sensitivity policy, and no hidden Desktop/Downloads
-  scraping or FileSafe bypass.
+canonical_text: Vision sources remain attachments, selected artifacts/screenshots, FileSafe-allowed Project
+  files and explicitly admitted application files, clipboard and recent OS screenshots. Explicit ingestion,
+  source labels, deterministic precedence, ambiguous-source choice, sensitivity/redaction and provider disclosure
+  remain. Computer use adds no hidden Desktop/Downloads scan, protected-auth access, screenshot retention or
+  FileSafe bypass; PS-121 and PS-145 govern each actual target and transmission.
 gui_related: true
-gui_classification_reason: Image source selection, clipboard, screenshots, and project-file access are user-visible
-  safety surfaces.
+gui_classification_reason: Approval, scope, provenance or action feedback is visible on the owning GUI surface.
 depends_on:
 - PS-121
+- PS-145
+- F2-213
 unblocks:
 - ACD-425
 acceptance_criteria:
 - Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
 - Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build
+  tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -61,6 +62,9 @@ source_lineage:
 - chat:vision-pressure-test-request
 - chat:vision-pressure-test-defaults-answer
 - Plans/FileSafe.md
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/N10
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 source_atom_ids:
 - atom-0075
 - atom-0082
@@ -95,8 +99,8 @@ preserved_exact_tokens:
 - secrets
 negative_constraints:
 - Do not defer clipboard or recent OS screenshot support out of MVP.
-- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default without PM-owned permission
-  and ingestion rules.
+- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default without PM-owned
+  permission and ingestion rules.
 - Do not bypass FileSafe or artifact access policy when resolving project images.
 - Do not inline raw screenshots into prompts when artifact refs plus bounded summaries are required.
 - Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default.

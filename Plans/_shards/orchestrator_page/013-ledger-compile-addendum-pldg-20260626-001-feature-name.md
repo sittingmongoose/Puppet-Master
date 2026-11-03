@@ -2,9 +2,9 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L1919-L2324
+Source lines: L1925-L2338
 
-Source SHA256: `99709bfde0f92665acf3f3d28fd9e2691d5fad3749f3ec48a3afd1d6e9e8f723`
+Source SHA256: `3f0bd0e3fa8398a8ea4ed1b9d08656f9a51c268a9326c2bf4cf027986172829e`
 
 ---
 
@@ -19,12 +19,17 @@ plan_unit_id: OP-026
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Orchestrator_Page.md
-canonical_text: Orchestrator History is the current-project GUI home for historical wizard-created PRD/Plan documents
-  and historical Orchestrator runs. It provides Documents and Runs subviews, dense table rows, structured filter
-  chips plus text search, Approved only versus All history controls, an Include archived step inside All history,
-  visible archived labels, empty and degraded states, and a read-only stale/out-of-sync projection mode with a visible
-  warning. The default Documents view shows final/approved outputs; the user can expand to retained drafts, intermediate
-  outputs, superseded rows, exports, and other retained wizard artifacts.
+canonical_text: >-
+  Orchestrator History is the current-project GUI home for historical wizard-created PRD/Plan documents
+  and historical Orchestrator runs. It provides Documents and Runs subviews, dense table rows, structured
+  filter chips plus text search, Approved only versus All history controls, an Include archived step
+  inside All history, visible archived labels, empty and degraded states, and a read-only
+  stale/out-of-sync projection mode with a visible warning. The default Documents view shows
+  final/approved outputs; the user can expand to retained drafts, intermediate outputs, superseded rows,
+  exports, and other retained wizard artifacts. This wizard/Orchestrator History remains a real Project
+  feature. OP-038 app thread/Goal/Crew/Assistant Plan/schedule History consumes shared owner projections
+  outside this Project-only document/run collection and never fabricates a wizard record or mixes Projects
+  by default.
 gui_related: true
 gui_classification_reason: Defines the user-visible Orchestrator History tab, tables, filters, states, and rows.
 depends_on:
@@ -52,40 +57,43 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- pldg-20260626-001-feature-name:atom-0010
-- pldg-20260626-001-feature-name:atom-0011
-- pldg-20260626-001-feature-name:atom-0015
-- pldg-20260626-001-feature-name:atom-0016
-- pldg-20260626-001-feature-name:atom-0019
-- pldg-20260626-001-feature-name:atom-0023
-- pldg-20260626-001-feature-name:atom-0024
-- pldg-20260626-001-feature-name:atom-0025
-- pldg-20260626-001-feature-name:atom-0032
-- pldg-20260626-001-feature-name:atom-0033
-- pldg-20260626-001-feature-name:atom-0044
-- pldg-20260626-001-feature-name:atom-0045
-- pldg-20260626-001-feature-name:atom-0053
-- pldg-20260626-001-feature-name:atom-0056
-- pldg-20260626-001-feature-name:atom-0061
-- pldg-20260626-001-feature-name:atom-0063
-- pldg-20260626-001-feature-name:atom-0064
-- pldg-20260626-001-feature-name:atom-0152
-- pldg-20260626-001-feature-name:atom-0154
-- chat:misc-history-scope
-- Plans/Orchestrator_Page.md
-- Plans/Runtime_Artifacts_Panel.md
-- chat:history-defaults-answers
-- chat:history-scope-retention-actions-answers
-- chat:history-columns-toggle-deep-compare-answers
-- chat:history-export-compare-archive-answers
-- chat:history-projection-lifecycle-answer
-- chat:history-degraded-mode-answer
-- chat:history-pressure-test-request
-- chat:history-pressure-test-defaults-answer
-- chat:pmconcept-gui-reference
-- Concepts/PMConcept.html#orch-tab-history
-- Concepts/PMConcept.html#orch-panel-history
-- Concepts/PMConcept.html
+  - "pldg-20260626-001-feature-name:atom-0010"
+  - "pldg-20260626-001-feature-name:atom-0011"
+  - "pldg-20260626-001-feature-name:atom-0015"
+  - "pldg-20260626-001-feature-name:atom-0016"
+  - "pldg-20260626-001-feature-name:atom-0019"
+  - "pldg-20260626-001-feature-name:atom-0023"
+  - "pldg-20260626-001-feature-name:atom-0024"
+  - "pldg-20260626-001-feature-name:atom-0025"
+  - "pldg-20260626-001-feature-name:atom-0032"
+  - "pldg-20260626-001-feature-name:atom-0033"
+  - "pldg-20260626-001-feature-name:atom-0044"
+  - "pldg-20260626-001-feature-name:atom-0045"
+  - "pldg-20260626-001-feature-name:atom-0053"
+  - "pldg-20260626-001-feature-name:atom-0056"
+  - "pldg-20260626-001-feature-name:atom-0061"
+  - "pldg-20260626-001-feature-name:atom-0063"
+  - "pldg-20260626-001-feature-name:atom-0064"
+  - "pldg-20260626-001-feature-name:atom-0152"
+  - "pldg-20260626-001-feature-name:atom-0154"
+  - "chat:misc-history-scope"
+  - "Plans/Orchestrator_Page.md"
+  - "Plans/Runtime_Artifacts_Panel.md"
+  - "chat:history-defaults-answers"
+  - "chat:history-scope-retention-actions-answers"
+  - "chat:history-columns-toggle-deep-compare-answers"
+  - "chat:history-export-compare-archive-answers"
+  - "chat:history-projection-lifecycle-answer"
+  - "chat:history-degraded-mode-answer"
+  - "chat:history-pressure-test-request"
+  - "chat:history-pressure-test-defaults-answer"
+  - "chat:pmconcept-gui-reference"
+  - "Concepts/PMConcept.html#orch-tab-history"
+  - "Concepts/PMConcept.html#orch-panel-history"
+  - "Concepts/PMConcept.html"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids:
 - atom-0010
 - atom-0011

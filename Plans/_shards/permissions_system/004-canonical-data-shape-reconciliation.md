@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L34-L87
 
-Source SHA256: `a2f40fb89918b299f4b90af9d0d7d7c85b75ad57f8312f598490040ea1d74bca`
+Source SHA256: `30d3beb8e135f0dd30e7757570a3b6b7e2830c5655547b4ebb81b675b748cbed`
 
 ---
 
@@ -41,7 +41,7 @@ Worktree permission policy references `Plans/WorktreeGitImprovement.md`, `/Workt
 
 Decision policy integration preserves `Plans/Decision_Policy.md`, `/Decision_Policy.md`, and `/storage/runtime` deterministic policy ownership for executor, storage, and runtime surfaces that consume permission decisions.
 
-Remote side effects and mode-override semantics reconcile `ask/plan -> deny`, `/plan`, `/approval`, external_publish_side_effect, side-effect, and non-bypassable approval behavior so mutating remote publication cannot diverge by surface or mode.
+Remote side effects and mode override use PS-146 through PS-148: `ask/plan -> deny` task-file mutation, Regular exact-effect approvals, task-scoped YOLO ordinary push/publication and needed repository creation without another human yes, plus the exact human-approved build-grant exception. Retained FileSafe, trust, secrets, capability, target/currentness, receiver/parent and Stop checks remain. No surface may forge human approval or revive an ordinary YOLO publication ask.
 
 Provider-gap disclosure is separate from overrides: provider-gap states honored, skipped, and clamped describe requested/effective provider behavior and must not be collapsed into generic override wording.
 

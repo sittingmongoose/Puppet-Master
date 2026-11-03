@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L21353-L21423
+Source lines: L21304-L21368
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -17,16 +17,8 @@ plan_unit_id: CV-327
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  route_target retains exactly one subject or object primary selector while adding
-  explicit project/server/application/bootstrap/global resolver scope and bounded owner-issued
-  context refs for repository hosting, independent automation binding, immutable
-  Backup selection, Server endpoint and Remote Access provenance, exact filters,
-  semantic focus, currentness generation, and return-route restoration. Context
-  refs constrain the selected object and never become peer selectors, copied owner
-  records, secret transport, arbitrary argument bags, or evidence that a handler,
-  provider, connector, restore engine, route, trust decision, or native surface is
-  operational.
+canonical_text: |-
+  route_target retains exactly one subject or object primary selector while adding explicit project/server/application/bootstrap/global resolver scope and bounded owner-issued context refs for repository hosting, independent automation binding, immutable Backup selection, Server endpoint and Remote Access provenance, exact filters, semantic focus, currentness generation, and return-route restoration. Context refs constrain the selected object and never become peer selectors, copied owner records, secret transport, arbitrary argument bags, or evidence that a handler, provider, connector, restore engine, route, trust decision, or native surface is operational. The current resolver vocabulary includes application under reconciled CV-169. App route refinements bind real Server/thread/Computer/root/object refs and never a Project Vault/Home Server before conversion; exact currentness and return survive without copied credentials.
 gui_related: true
 gui_classification_reason: Exact object, filter, focus, return, provider-binding, snapshot, and endpoint identity controls every affected visible deep link and reverse-navigation flow.
 split_recommended: false
@@ -59,17 +51,19 @@ context_scope: forge_backup_tsnet_route_scope_and_exact_return
 implementation_surfaces: [Plans/Contracts_V0.md, Plans/Crosswalk.md, future canonical route schema and resolver]
 node_compile_hint: {mode: shared_route_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:GUI-005-GUI-007
-  - source_ref:packet:2026-09-01:REST-003-REST-009
-  - source_ref:packet:2026-09-01:TSX-001-TSX-004
-  - source_ref:packet:2026-09-01:CMDX-001-CMDX-004
-  - source_ref:packet:2026-09-01:AUTH-001-AUTH-008
-  - source_ref:packet:2026-09-01:PROC-001-PROC-002
-  - Plans/Forge_Integrations.md#FGI-012
-  - Plans/Backup_Restore_System.md#BRS-014
-  - Plans/Backup_Restore_System.md#BRS-016
-  - Plans/Remote_Access_System.md#RAS-015
-  - Plans/Server_System.md#SRV-013
+- source_ref:packet:2026-09-01:GUI-005-GUI-007
+- source_ref:packet:2026-09-01:REST-003-REST-009
+- source_ref:packet:2026-09-01:TSX-001-TSX-004
+- source_ref:packet:2026-09-01:CMDX-001-CMDX-004
+- source_ref:packet:2026-09-01:AUTH-001-AUTH-008
+- source_ref:packet:2026-09-01:PROC-001-PROC-002
+- Plans/Forge_Integrations.md#FGI-012
+- Plans/Backup_Restore_System.md#BRS-014
+- Plans/Backup_Restore_System.md#BRS-016
+- Plans/Remote_Access_System.md#RAS-015
+- Plans/Server_System.md#SRV-013
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F07,C-F01
 preserved_exact_tokens: [resolver_scope, project_id, server_id, repository_id, snapshot_id, capture_set_id, automation_binding_id, binding_generation, currentness_ref, automation_gate, automation_artifact, automation_runner, backup_policy_id, retention_preview_id, restore_preview_id, restore_run_id, server_endpoint_id, remote_route_id, connector_id, route_provenance_ref, filter_ref, focus_ref, return_route_ref, repository_automation, github_actions, outcome_unknown, observed_complete, handler_unavailable, "expected_event_types=[]"]
 negative_constraints:
   - "Do not add a generic extra-args bag, competing selector, copied domain record, or consumer-owned routing primitive."

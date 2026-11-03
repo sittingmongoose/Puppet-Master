@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41354-L42609
+Source lines: L40810-L42014
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -1001,35 +1001,8 @@ plan_unit_id: F3-579
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Teach is a standard sheet of F3-566 and the only capture form: the wand's Teach…, /teach,
-  natural-language intent and Save as a rule… all open it, prefilled with the rule text and its
-  source, and there is no inline capture card in the chat (DL-127, ACD-477). Head: the Teach mark,
-  Teach Puppet Master a rule and one lead sentence; in correct mode, Edit your rule. The hero is the
-  rule field, with example rules that fill it. Under it one safety line says either that no password
-  or key was spotted or, in the warm tone, that the text looks like a password or key and must be
-  removed to save. The plate is three nested rings, This thread inside This project inside Every project, each a button with a helper; Every project stays disabled with its reason until the tick
-  "It's safe to use in my other projects" is set, and in correct mode the wider rings are disabled
-  because an edit cannot widen a rule. A Locked tick says only the user can change the rule
-  (ACD-481). Beside them, the rule card shows the rule exactly as it will be saved, with its scope,
-  lock and source message; when a similar rule exists, the old and new wording are shown side by
-  side with a choice between Replace the old rule and Keep both, and saving waits for it. The foot
-  holds Cancel and one primary, Save rule, Save and replace or Save as version 2. In the chat each
-  change is one receipt line of F3-569's grammar: Rule saved, Rule updated to a new version, Rule
-  turned off, with several saves in a row coalesced into one line. Your rules is an editor document
-  (the taught memory document): one row per rule with its words, its scope, lock and version, a
-  state word (In use, In use · locked, Replaced by v2, Turned off) and the actions Edit, Lock or
-  Unlock, Turn off and From your message; Turn off asks inline (ACD-481), never in a modal. Teacher
-  stays a Persona, and the sheet says Teach isn't the Teacher Persona. The note a reply carries for
-  its taught rules is F3-570's rule note under DL-116 as AMS-053 defines following: it counts only
-  rules whose check the finished reply passed, a failed check reads "Missed 1 of your rules" with a
-  way to see which rule and a way to ask for a fix, and a check that could not run earns no tick.
-  DL-138 confirms the final wording. Persisted AMS-053 check results drive the note on reopen: passed
-  counts as Followed, failed counts as Missed and could_not_run earns no tick. A mixed result is one
-  line, Missed first, for example "Missed 1 of your rules · followed 2". See which rule opens the
-  saved check evidence as view state. Ask for a fix reuses cmd.review.send_findings_to_agent with
-  the taught_rule_check source variant (UCC-172): it fills the source thread's empty composer, returns
-  ComposerBufferResult, refuses composer_not_empty, and never sends or executes a fix. The user sends it.
+canonical_text: |-
+  Teach is a standard sheet of F3-566 and the only capture form: the wand's Teach…, /teach, natural-language intent and Save as a rule… all open it, prefilled with the rule text and its source, and there is no inline capture card in the chat (DL-127, ACD-477). Head: the Teach mark, Teach Puppet Master a rule and one lead sentence; in correct mode, Edit your rule. The hero is the rule field, with example rules that fill it. Under it one safety line says either that no password or key was spotted or, in the warm tone, that the text looks like a password or key and must be removed to save. The plate is three nested rings, This thread inside the available This project ring inside Everywhere, each a button with a helper; Everywhere stays disabled with its reason until the tick "It's safe to use in my other projects" is set, and in correct mode the wider rings are disabled because an edit cannot widen a rule. A Locked tick says only the user can change the rule (ACD-481). Beside them, the rule card shows the rule exactly as it will be saved, with its scope, lock and source message; when a similar rule exists, the old and new wording are shown side by side with a choice between Replace the old rule and Keep both, and saving waits for it. The foot holds Cancel and one primary, Save rule, Save and replace or Save as version 2. In the chat each change is one receipt line of F3-569's grammar: Rule saved, Rule updated to a new version, Rule turned off, with several saves in a row coalesced into one line. Your rules is an editor document (the taught memory document): one row per rule with its words, its scope, lock and version, a state word (In use, In use · locked, Replaced by v2, Turned off) and the actions Edit, Lock or Unlock, Turn off and From your message; Turn off asks inline (ACD-481), never in a modal. Teacher stays a Persona, and the sheet says Teach isn't the Teacher Persona. The note a reply carries for its taught rules is F3-570's rule note under DL-116 as AMS-053 defines following: it counts only rules whose check the finished reply passed, a failed check reads "Missed 1 of your rules" with a way to see which rule and a way to ask for a fix, and a check that could not run earns no tick. DL-138 confirms the final wording. Persisted AMS-053 check results drive the note on reopen: passed counts as Followed, failed counts as Missed and could_not_run earns no tick. A mixed result is one line, Missed first, for example "Missed 1 of your rules · followed 2". See which rule opens the saved check evidence as view state. Ask for a fix reuses cmd.review.send_findings_to_agent with the taught_rule_check source variant (UCC-172): it fills the source thread's empty composer, returns ComposerBufferResult, refuses composer_not_empty, and never sends or executes a fix. The user sends it. In No project omit the inapplicable Project ring; Everywhere is the existing public_safe user-taught scope, not a new Computer memory tier. Keep the public-safe checkbox, correction narrowing and source evidence; the display name changes no historical teaching record.
 gui_related: true
 gui_classification_reason: "Defines the Teach sheet, its chat receipts and the Your rules document."
 split_recommended: false
@@ -1057,12 +1030,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.11 (G-26, G-33, G-38)"
-  - "IMPACT-REGISTER B-FGS-08 (Teach part); cards p09 (E-12) and p15 (E-32)"
-  - "Plans/Decision_Log.md#DL-127"
-  - "Plans/Decision_Log.md#DL-130"
-  - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  section 8.11 (G-26, G-33, G-38)
+- IMPACT-REGISTER B-FGS-08 (Teach part); cards p09 (E-12) and p15 (E-32)
+- Plans/Decision_Log.md#DL-127
+- Plans/Decision_Log.md#DL-130
+- Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; B-F08,B-F13,C-F11
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"
@@ -1168,50 +1144,19 @@ plan_unit_id: F3-581
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  ELI5's GUI, as Jared confirmed it on 2026-09-27 (DL-126); the behaviour is assistant-chat-design
-  ACD-484. The wand's ELI5 row opens the ELI5 sheet and is not a check. The sheet is a compact sheet of F3-566 at 720 x 560 and never changes height while open (opening its disclosure fits
-  inside the 560). Its choices apply at once, so its foot shows only Done. Head: the ELI5 kind mark
-  (a speech bubble holding one short line), the title Explain things simply in this chat? and the
-  lead sentence "Answers use everyday words and explain terms as they go. Your code, plans and files
-  never change." The plate shows two voices side by side, Standard and Simple, each a short specimen
-  of the same answer, over one shared code line that spans both and never moves; choosing a voice
-  dispatches cmd.chat.eli5.set with off or on for this chat. Under the plate, Follow my usual setting dispatches cmd.chat.eli5.set with inherit, which deletes this chat's override. The one
-  disclosure, How it's decided, draws the resolution order as a trace, All chats, then Chats in this
-  project, then This chat, with the level that decides lit. The All chats node is the Explain Terms Everywhere setting and the Chats in this project node is that setting at project scope;
-  both require Settings-owned commits, never a chat command, and the This chat node is the same
-  cmd.chat.eli5.set as the plate. The project transaction is defined by SSYS-028. The retained All chats
-  edit remains disabled with the Settings owner's reason while its app-wide persistence route conflicts
-  with SSYS-002 and awaits pldg-20260927-001-wand-collab-workflows q-035; no global writer is inferred
-  from this GUI requirement. The foot reads "Takes effect from your next message. Answers already here keep their wording." and, while a reply streams, says that reply keeps its current
-  style. If the active chat changes while the sheet is open, the sheet changes nothing and reads
-  "You switched chats. Open this again from the chat you want to change." Closing it returns focus
-  to the wand trigger (UIW-025). The quick dot is the ELI5 kind mark among the composer's capability
-  glyphs inside the text field, present in both of its states: lit while Simple explanations are in
-  effect for the chat and muted while they are not. One click on it dispatches cmd.chat.eli5.set
-  with on or off for this chat and never opens the sheet, and its app hover card says whether
-  Simple explanations are on in this chat. In the transcript, a reply written in Simple carries the quiet Simple explanation tick in its meta row (F3-570), and a change-point divider reads
-  Simple explanations from here or Back to standard explanations between the last reply in the old
-  style and the first reply in the new one; no earlier reply changes. Each finished assistant reply's message actions may offer Explain this reply simply, which dispatches
-  cmd.chat.eli5.explain_reply with that reply's message id; while the reply is still streaming the
-  action is disabled and prints its reason. The one extra reply it writes lands at the end of the
-  thread as an ordinary assistant reply, carries the Simple explanation tick, names and links the
-  reply it explains, and adds no divider. The concept's fine print calling project defaults a
-  preview feature is not canon. The command catalog's surface id for the sheet is eli5_sheet.
-  The project-level general.interaction.eli5-default is persisted through Settings SSYS-028
-  (DL-138), so Chats in this project is a real editable level, resolved below This chat and above All chats.
+canonical_text: |-
+  ELI5's GUI, as Jared confirmed it on 2026-09-27 (DL-126); the behaviour is assistant-chat-design ACD-484. The wand's ELI5 row opens the ELI5 sheet and is not a check. The sheet is a compact sheet of F3-566 at 720 x 560 and never changes height while open (opening its disclosure fits inside the 560). Its choices apply at once, so its foot shows only Done. Head: the ELI5 kind mark (a speech bubble holding one short line), the title Explain things simply in this chat? and the lead sentence "Answers use everyday words and explain terms as they go. Your code, plans and files never change." The plate shows two voices side by side, Standard and Simple, each a short specimen of the same answer, over one shared code line that spans both and never moves; choosing a voice dispatches cmd.chat.eli5.set with off or on for this chat. Under the plate, Follow my usual setting dispatches cmd.chat.eli5.set with inherit, which deletes this chat's override. The one disclosure, How it's decided, draws the resolution order as a trace, Everywhere, then This computer, then Chats in this project when applicable, then This chat, with the level that decides lit. The All chats node is the Explain Terms Everywhere setting and the Chats in this project node is that setting at project scope; both require Settings-owned commits, never a chat command, and the This chat node is the same cmd.chat.eli5.set as the plate. The project transaction is defined by SSYS-028. All chats is the enabled Everywhere Settings transaction at its actual writer; q-035 is resolved in live canon. Computer and Project options appear only where offered, with honest offline/managed reasons. The foot reads "Takes effect from your next message. Answers already here keep their wording." and, while a reply streams, says that reply keeps its current style. If the active chat changes while the sheet is open, the sheet changes nothing and reads "You switched chats. Open this again from the chat you want to change." Closing it returns focus to the wand trigger (UIW-025). The quick dot is the ELI5 kind mark among the composer's capability glyphs inside the text field, present in both of its states: lit while Simple explanations are in effect for the chat and muted while they are not. One click on it dispatches cmd.chat.eli5.set with on or off for this chat and never opens the sheet, and its app hover card says whether Simple explanations are on in this chat. In the transcript, a reply written in Simple carries the quiet Simple explanation tick in its meta row (F3-570), and a change-point divider reads Simple explanations from here or Back to standard explanations between the last reply in the old style and the first reply in the new one; no earlier reply changes. Each finished assistant reply's message actions may offer Explain this reply simply, which dispatches cmd.chat.eli5.explain_reply with that reply's message id; while the reply is still streaming the action is disabled and prints its reason. The one extra reply it writes lands at the end of the thread as an ordinary assistant reply, carries the Simple explanation tick, names and links the reply it explains, and adds no divider. The concept's fine print calling project defaults a preview feature is not canon. The command catalog's surface id for the sheet is eli5_sheet. The project-level general.interaction.eli5-default is persisted through Settings SSYS-028 (DL-138), so Chats in this project is a real editable level, resolved below This chat and above All chats. No project omits the Project node and keeps its thread override. This supersedes the older q-035 disabled acceptance; one Settings engine and cmd.chat.eli5.set remain the owners.
 gui_related: true
 gui_classification_reason: "Defines the ELI5 sheet, the quick dot and ELI5's traces in the chat."
 split_recommended: false
 depends_on: [F3-566, F3-567, F3-570, F3-572, ACD-484, DL-126, UIW-025]
 unblocks: [ATS-065]
 acceptance_criteria:
-  - "The wand's ELI5 row opens a 720 x 560 compact sheet whose height never changes while open."
-  - "Standard, Simple and Follow my usual setting dispatch cmd.chat.eli5.set with off, on and inherit for the active chat."
-  - "The project node commits through Settings; the retained All chats edit requires its Settings-owned commit contract and stays disabled while ledger001 q-035 is open. Neither uses a chat command."
-  - "The quick dot is present lit or muted, and one click switches this chat's ELI5 without opening the sheet."
-  - "After any switch, every earlier reply's text is unchanged; only the divider and later replies show the new style."
-  - "Explain this reply simply is disabled while the reply streams, and on a finished reply adds exactly one reply at the end of the thread."
+- Everywhere/Computer/conditional Project/This chat trace is the actual resolver trace.
+- All chats uses the existing Settings transaction; This chat uses cmd.chat.eli5.set.
+- Current level/scope/write presentation follows SSYS-002/059, F3-670 and SP-348; old q-035 and universal inheritance/no-app-write
+  bans are superseded. Detached copies remain independent of their source Project. Exact owner/trust/permission/currentness
+  rules remain.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -1227,11 +1172,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 3.2 (the ELI5 compact height), 4.3 C23, 7.10, 8.13 and its amendments G-21 and G-34, 10.1 item f"
-  - "IMPACT-REGISTER B-FGS-02 (the ELI5 mark), B-FGS-03 (the ELI5 mark), B-FGS-08 (ELI5); card p08, E-11"
-  - "Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5) answer record p08"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  sections 3.2 (the ELI5 compact height), 4.3 C23, 7.10, 8.13 and its amendments G-21 and G-34, 10.1 item f
+- IMPACT-REGISTER B-FGS-02 (the ELI5 mark), B-FGS-03 (the ELI5 mark), B-FGS-08 (ELI5); card p08, E-11
+- Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5)
+  answer record p08
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F09,C-F11
 preserved_exact_tokens:
   - "DL-138"
   - "general.interaction.eli5-default"

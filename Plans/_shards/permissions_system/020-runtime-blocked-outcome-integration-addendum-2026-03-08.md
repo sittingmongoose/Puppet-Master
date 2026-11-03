@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L1104-L1271
+Source lines: L1089-L1256
 
-Source SHA256: `a2f40fb89918b299f4b90af9d0d7d7c85b75ad57f8312f598490040ea1d74bca`
+Source SHA256: `30d3beb8e135f0dd30e7757570a3b6b7e2830c5655547b4ebb81b675b748cbed`
 
 ---
 
@@ -44,7 +44,7 @@ Rules:
 - `blocked_preflight` is used for stale target, undeclared host, drift, or capability/preflight failures discovered before dispatch; these outcomes do not masquerade as `failure_class`
 - payload consumers must render blocked family + action ids without inventing local enum families or alias field names
 - Domain-sensitive operational sessions use permission classes instead of one generic run-command approval. Read-only inspection, interactive shell `/exec`, and network tunnel exposure are separate classes for `docker exec`, `docker attach`, `kubectl exec`, and `kubectl port-forward`; approvals for one class do not imply approval for another.
-- Tool permission and domain approval are separate: generic tool allow, `/session/YOLO`, or headless defaults never approve domain-sensitive Git push/force-push/prune/destructive discard (`/force-push/prune/destructive`), workflow `/cancel/rerun/admin` CRUD, image push/repo create/template push, or Kubernetes `/delete/exec/port-forward` operations. Protection-rule changes, `/namespace/workload` mutations, SCM destructive actions, `docker exec`, `docker attach`, `kubectl exec`, and `kubectl port-forward` require their own domain approval class.
+- Domain classes remain separate from generic tool allow. PS-146 permits task-scoped YOLO ordinary Git push/image/package/template publish/needed repo create, plus exact leased force-push on a PM-created work branch. Prune, remote branch/repository delete, destructive discard and Kubernetes delete/exec still ask unless explicitly within a human-approved PS-147 grant on verified grant-created resources. CI/workflow admin, Docker exec/attach, tunnels, protection changes and other classes keep their own exact authority; no namespace/name implies permission. PS-148 composes final admission and prohibits a duplicate ordinary YOLO publication yes.
 - `/queued` and background approval requests bind to the exact queued attempt, target, guard, and preflight snapshot. Approval may pause one node, block the whole run, or block only a follow-on step according to the blocked payload, but resumption always re-runs preflight when the target, policy, or permission snapshot may have changed.
 - Policy-denied, approval-missing, and preflight-failed outcomes remain distinct: `blocked_policy`, `blocked_approval`, and `blocked_preflight` choose different copy, recovery actions, and retry paths instead of collapsing into a generic blocked reason.
 - Mutating actions use a per-target in-flight operation key for `/dedupe` across the main window, detached windows, Dashboard, and Orchestrator shortcuts. Identical operations coalesce, while conflicting operations surface `operation_in_progress` with the owning target/action context.
@@ -69,7 +69,7 @@ A permission snapshot captures the resolved permission state at attempt start fo
 
 After any approval, policy, mode, or project change, a retry creates a new permission snapshot; the prior snapshot stays frozen for historical audit and never mutates in place.
 
-**Schema:**
+**Historical exact Project snapshot illustration:** The following shape and its original enum/hash recipe stay immutable for existing Project records. New Computer/Everywhere resolved sources use PS-144 versioned successor definitions; application evidence uses PS-145 separately versioned union. Do not rewrite historical payloads or make required node fields nullable to admit app work.
 ```json
 {
   "snapshot_id": "uuid",

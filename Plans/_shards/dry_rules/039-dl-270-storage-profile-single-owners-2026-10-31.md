@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L4927-L5075
+Source lines: L4744-L5380
 
-Source SHA256: `2ee9163141078a9ed56d59700128756b51cb1c18109a0f7fe60e02b9748b8245`
+Source SHA256: `f483b45c08ded2f8811a35ed53cd4b052d3b603b856084efdaba166705d30608`
 
 ---
 
@@ -157,3 +157,491 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-339, ContractName:Plans/storage-plan.md#SP-340, ContractName:Plans/DRY_Rules.md#DR-041, ContractName:Plans/DRY_Rules.md#DR-044
+
+### DR-084 - One Settings Resolver
+
+```yaml
+plan_unit_id: DR-084
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: |-
+  Every ordinary value, origin, requested/effective result, Changed, Varies, managed explanation and first-paint value comes from pm.settings_effective_value.v1 for the exact Project/Computer/tagged Host/Device/thing/thread/run context. SSYS-059 classifies rows; SSYS-060 owns writer/mirror/currentness and SSYS-063 owns presentation. Existing owner ladders are inputs, not peer resolvers. No project skips only Project. More-careful/custom fallback, Computer ceilings, theme_pair and Reduce motion/OS combinations remain declared, not guessed by a consumer. Rows, Details, search, hosted controls, Usage, terminal/editor, managers, copy, Doctor, first paint and agents consume the same result and as-of state. They cannot read layer records to reconstruct precedence or store a last-painted value. Models and account owners retain their own selection/merge semantics and frozen audit editions.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DL-281
+unblocks: []
+acceptance_criteria:
+- Every named consumer references the sole owner and selected edition rather than recreating its engine.
+- Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: duplicate_owner_or_scope_drift
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/DRY_Rules.md
+- Plans/Settings_System.md#SSYS-059
+- Plans/Settings_System.md#SSYS-060
+- Plans/Settings_System.md#SSYS-063
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#DR-084
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- pm.settings_effective_value.v1
+- Changed
+- Varies
+- theme_pair
+negative_constraints:
+- Do not create a peer resolver, runtime, storage, writer, command, event, native proof or unbounded bucket.
+owner_hints:
+- Plans/Settings_System.md#SSYS-059
+- Plans/Settings_System.md#SSYS-060
+- Plans/Settings_System.md#SSYS-063
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-059, ContractName:Plans/Settings_System.md#SSYS-060, ContractName:Plans/Settings_System.md#SSYS-063
+
+
+### DR-085 - One Detached Settings Copy Engine
+
+```yaml
+plan_unit_id: DR-085
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: |-
+  Onboarding, New Project, duplicate_configuration, Saved setups, Transfer, promotion, import and explicit join use the same Settings preview/apply/rollback engine and exact disjoint selector ID sets, including project_only_rows. Use settings from is one concept with new-Project and existing-Project routes. Own values are the default; effective_values/Keep them fixed is explicit. Manager things, profiles, commands and account choices contribute owner subtransactions with source/destination identities, expected revisions, truthful readback and eligible compensation. Settings never directly writes their records, installs tools, transfers keys/trust, merges fields against owner semantics or keeps a live link to the source. New-registry copy is committed only after real Project reservation/rebind; opening an already registered Project, Later and connect-only do not perform it. Failure and multi-Computer done/not_reached/refused outcomes stay honest and queue nothing. Custom commands use CS-081's existing commands.* local actions; no cmd.commands.custom.* peer family is admitted.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DL-284
+unblocks: []
+acceptance_criteria:
+- Every named consumer references the sole owner and selected edition rather than recreating its engine.
+- Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: duplicate_owner_or_scope_drift
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/DRY_Rules.md
+- Plans/Settings_System.md#SSYS-062
+- Plans/Project_System.md#PJCT-009
+- Plans/Commands_System.md#CS-081
+- Plans/Multi-Account.md#MA-074
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#DR-085
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- Use settings from
+- project_only_rows
+- effective_values
+- commands.*
+negative_constraints:
+- Do not create a peer resolver, runtime, storage, writer, command, event, native proof or unbounded bucket.
+owner_hints:
+- Plans/Settings_System.md#SSYS-062
+- Plans/Project_System.md#PJCT-009
+- Plans/Commands_System.md#CS-081
+- Plans/Multi-Account.md#MA-074
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-062, ContractName:Plans/Project_System.md#PJCT-009, ContractName:Plans/Commands_System.md#CS-081, ContractName:Plans/Multi-Account.md#MA-074
+
+
+### DR-086 - One Reviewed Setup Draft Engine
+
+```yaml
+plan_unit_id: DR-086
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: |-
+  PJCT-009 owns one reviewed setup draft, its applicability, currentness, commit, phase receipts and remote-create recovery. PWIZ-037's Onboarding/New Project and ACD-510's conversion-to-new render that owner; no second form engine, repository-create wrapper, success boolean or timer-driven progress is added. Current answers determine valid Back/Edit/forward/resume history, invalidate discarded branches and require fresh Review. Intake uses real source Computer/transport/read evidence before Project reservation. Exact per-forge create/fork/source/Settings/registry receipts control handoff and replay/resume; unknown remote effect reconciles before retry. Necessary source auth, protected trust, Backup and Settings rebind remain with their owners. N15 Later performs its explicit app setup without a fake Project. Existing FO-22, DL-273 and exact return fences remain product requirements; O55/PJX concept APIs are source history only.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DL-293
+- DL-294
+unblocks: []
+acceptance_criteria:
+- Every named consumer references the sole owner and selected edition rather than recreating its engine.
+- Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: duplicate_owner_or_scope_drift
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/DRY_Rules.md
+- Plans/Project_System.md#PJCT-009
+- Plans/Project_System.md#PJCT-010
+- Plans/Planning_Wizard.md#PWIZ-037
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#DR-086
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- PJCT-009
+- FO-22
+- DL-273
+negative_constraints:
+- Do not create a peer resolver, runtime, storage, writer, command, event, native proof or unbounded bucket.
+owner_hints:
+- Plans/Project_System.md#PJCT-009
+- Plans/Project_System.md#PJCT-010
+- Plans/Planning_Wizard.md#PWIZ-037
+```
+
+ContractRef: ContractName:Plans/Project_System.md#PJCT-009, ContractName:Plans/Project_System.md#PJCT-010, ContractName:Plans/Planning_Wizard.md#PWIZ-037
+
+
+### DR-087 - One Chat Conversion Engine
+
+```yaml
+plan_unit_id: DR-087
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: |-
+  ACD-510/511 owns one conversion manifest and preview/apply/resume/cancel/Undo engine for new or existing destinations, local or cross-Server, person Regular or guarded YOLO. It calls Project for registration, PSB for fenced copy/check/cutover, Settings and every content/Goal/Crew/Plan/notebook/scheduler owner for their exact subtransactions; it cannot privately rewrite immutable associations or copied approval as authority. Each family has an explicit moved/stayed/held/recreated disposition, including active tasks, full history and independently retained custody. New Project listing precedes cutover; source and destination have one live writer/index. N25 defaults linked new records; a rebind needs its complete separate owner contract. Timers stop/fence and exact replacements are explicitly re-admitted. Undo ends at first new work or seven days, revalidates both Computers, never deletes remote/changed work and does not clear Stop or independent retention. Project-to-Project chat movement remains later.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DL-291
+unblocks: []
+acceptance_criteria:
+- Every named consumer references the sole owner and selected edition rather than recreating its engine.
+- Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: duplicate_owner_or_scope_drift
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/DRY_Rules.md
+- Plans/assistant-chat-design.md#ACD-510
+- Plans/assistant-chat-design.md#ACD-511
+- Plans/Project_Sync_and_Backbone.md#PSB-007
+- Plans/Goal_Runtime_System.md#GRS-087
+- Plans/Assistant_Plan_Runtime.md#APR-074
+- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#DR-087
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- N25
+- Undo
+- seven days
+negative_constraints:
+- Do not create a peer resolver, runtime, storage, writer, command, event, native proof or unbounded bucket.
+owner_hints:
+- Plans/assistant-chat-design.md#ACD-510
+- Plans/assistant-chat-design.md#ACD-511
+- Plans/Project_Sync_and_Backbone.md#PSB-007
+- Plans/Goal_Runtime_System.md#GRS-087
+- Plans/Assistant_Plan_Runtime.md#APR-074
+- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-510, ContractName:Plans/assistant-chat-design.md#ACD-511, ContractName:Plans/Project_Sync_and_Backbone.md#PSB-007, ContractName:Plans/Goal_Runtime_System.md#GRS-087, ContractName:Plans/Assistant_Plan_Runtime.md#APR-074, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-019
+
+
+### DR-088 - One Read Coverage Object And Formatter
+
+```yaml
+plan_unit_id: DR-088
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: |-
+  All admitted explicit Project/chat list/search/read tools and their UI/answer surfaces consume the same coverage object and quiet expandable formatter: requested, looked_in, not_looked_in with reason, and partial with missing range/cursor/index coverage. Every requested source is accounted for subject to redaction of existence the person cannot access. Empty, filtered, partial, offline, denied, archived-skipped or missing/rebuilding-index results never collapse to an unqualified none. Source-Computer custody, per-read authority, source switch, currentness and provider exposure remain checked by Tools/Permissions. Bounded authorized result merging is the only cross-project exception; no physical index merge, ambient retrieval, private-memory/notebook read or current-focus fallback is admitted. The formatter owns disclosure only, not a second search engine, permission resolver, event stream or message transport.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DL-289
+unblocks: []
+acceptance_criteria:
+- Every named consumer references the sole owner and selected edition rather than recreating its engine.
+- Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: duplicate_owner_or_scope_drift
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/DRY_Rules.md
+- Plans/Tools.md#T-185
+- Plans/assistant-chat-design.md#ACD-509
+- Plans/Permissions_System.md#PS-145
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#DR-088
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- requested
+- looked_in
+- not_looked_in
+- partial
+negative_constraints:
+- Do not create a peer resolver, runtime, storage, writer, command, event, native proof or unbounded bucket.
+owner_hints:
+- Plans/Tools.md#T-185
+- Plans/assistant-chat-design.md#ACD-509
+- Plans/Permissions_System.md#PS-145
+```
+
+ContractRef: ContractName:Plans/Tools.md#T-185, ContractName:Plans/assistant-chat-design.md#ACD-509, ContractName:Plans/Permissions_System.md#PS-145
+
+
+### DR-089 - One Destination Account Readiness List
+
+```yaml
+plan_unit_id: DR-089
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: |-
+  Copy, onboarding AI, Set up AI here like, managers and model/Usage pickers resolve the same explicitly chosen provider/account ID on the same actual work Computer through MA-074/MACS-006. The one readiness list is ready_here, check_there, sign_in_there, key_needed, not_installed, expired, cannot_move. Installed, authenticated and ready are distinct. The destination resolves its own credential_ref/profile_ref and current Host/Environment/connection proof; matching labels or another host's sign-in cannot establish readiness. Same-Computer reuse requires the account choice. Keys, CLI profile bytes, pairings, executable trust and provider-native history never travel. Missing readiness is an honest action, not auto-install, guessed replacement or second account store. Protected sign-in retains its human-only owner and exact initiating Client/operation/return; app setup uses the deliberate app binding.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DL-284
+unblocks: []
+acceptance_criteria:
+- Every named consumer references the sole owner and selected edition rather than recreating its engine.
+- Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: duplicate_owner_or_scope_drift
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/DRY_Rules.md
+- Plans/Multi-Account.md#MA-074
+- Plans/Multi-Account_Connection_Spec.md#MACS-006
+- Plans/Settings_System.md#SSYS-062
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#DR-089
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- ready_here
+- check_there
+- sign_in_there
+- key_needed
+- not_installed
+- expired
+- cannot_move
+- credential_ref
+- profile_ref
+negative_constraints:
+- Do not create a peer resolver, runtime, storage, writer, command, event, native proof or unbounded bucket.
+owner_hints:
+- Plans/Multi-Account.md#MA-074
+- Plans/Multi-Account_Connection_Spec.md#MACS-006
+- Plans/Settings_System.md#SSYS-062
+```
+
+ContractRef: ContractName:Plans/Multi-Account.md#MA-074, ContractName:Plans/Multi-Account_Connection_Spec.md#MACS-006, ContractName:Plans/Settings_System.md#SSYS-062
+
+
+### DR-090 - One Automation Permission Admission
+
+```yaml
+plan_unit_id: DR-090
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: |-
+  Permissions alone composes human, mode and build_grant authority, actual task/target/resource ownership, current Plan/permission/account/capability/Stop/revocation and parent/receiver ceilings through final dispatch. UI/domain wrappers consume that result; they cannot add a second ordinary YOLO publication yes, claim human_confirmed=true for automation, mint durable Always/trust, bypass protected auth/secrets or expand another scope's authority. PS-147's verified created-resource identity is required for grant cleanup; a named pre-existing or replaced resource is not created ownership, and Y1 never permits main/default/protected force-push. One existing run-owner Stop fences children before new work. What the build did uses the shared ObservableWork/History receipt projection; no private action log, runner, grant engine or generic build.* event is created. True Undo/compensation and No safe Undo are distinguished by the actual effect owner.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DL-285
+- DL-298
+- DL-299
+unblocks: []
+acceptance_criteria:
+- Every named consumer references the sole owner and selected edition rather than recreating its engine.
+- Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: duplicate_owner_or_scope_drift
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/DRY_Rules.md
+- Plans/Permissions_System.md#PS-144
+- Plans/Permissions_System.md#PS-146
+- Plans/Permissions_System.md#PS-147
+- Plans/Permissions_System.md#PS-148
+- Plans/Shared_Integration_Runtime.md#SIR-055
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#DR-090
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- human
+- mode
+- build_grant
+- human_confirmed=true
+- No safe Undo
+negative_constraints:
+- Do not create a peer resolver, runtime, storage, writer, command, event, native proof or unbounded bucket.
+owner_hints:
+- Plans/Permissions_System.md#PS-144
+- Plans/Permissions_System.md#PS-146
+- Plans/Permissions_System.md#PS-147
+- Plans/Permissions_System.md#PS-148
+- Plans/Shared_Integration_Runtime.md#SIR-055
+```
+
+ContractRef: ContractName:Plans/Permissions_System.md#PS-144, ContractName:Plans/Permissions_System.md#PS-146, ContractName:Plans/Permissions_System.md#PS-147, ContractName:Plans/Permissions_System.md#PS-148, ContractName:Plans/Shared_Integration_Runtime.md#SIR-055
+
+
+### DR-091 - One Scope Model For Application Workflows
+
+```yaml
+plan_unit_id: DR-091
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: |-
+  No-project chat, Goals, all admitted collaboration kinds including Crew, Assistant Plan/Deep Plan and scheduled messages/tasks use real application scope under CV-365/366/368: project_id=null with actual Server/thread/Computer/roots and the exact admitted owner binding. They reuse existing runtime, coordination/board, custody, quota, backup, recovery, permission and Stop owners. One counterpart bucket per owning Server/family has the same limits and retention/hold rules, including a counterpart's explicit no-cap policy; no per-chat cap reset or invented infinite bucket. Only Planning Wizard, PRD Builder and Orchestrator retain no-project workflow gates; actual Project-target operations remain separately checked. Source/version/codec/hash/key/append/read/backup graphs must be selected coherently or that edge stays unavailable. Historical Project records remain exact, retired Goal events remain historical-only and conversion uses DR-087's linked birth or complete owner rebind. A null field does not prove a native app writer or Project workflow certification.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DL-287
+- DL-292
+unblocks: []
+acceptance_criteria:
+- Every named consumer references the sole owner and selected edition rather than recreating its engine.
+- Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: duplicate_owner_or_scope_drift
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/DRY_Rules.md
+- Plans/Contracts_V0.md#CV-365
+- Plans/Contracts_V0.md#CV-366
+- Plans/Contracts_V0.md#CV-368
+- Plans/Goal_Runtime_System.md#GRS-086
+- Plans/Collaborative_Workflows.md#CWR-045
+- Plans/Assistant_Plan_Runtime.md#APR-073
+- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#DR-091
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- project_id=null
+- application scope
+- historical-only
+negative_constraints:
+- Do not create a peer resolver, runtime, storage, writer, command, event, native proof or unbounded bucket.
+owner_hints:
+- Plans/Contracts_V0.md#CV-365
+- Plans/Contracts_V0.md#CV-366
+- Plans/Contracts_V0.md#CV-368
+- Plans/Goal_Runtime_System.md#GRS-086
+- Plans/Collaborative_Workflows.md#CWR-045
+- Plans/Assistant_Plan_Runtime.md#APR-073
+- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-365, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/Contracts_V0.md#CV-368, ContractName:Plans/Goal_Runtime_System.md#GRS-086, ContractName:Plans/Collaborative_Workflows.md#CWR-045, ContractName:Plans/Assistant_Plan_Runtime.md#APR-073, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-019
+
+
+### DR-092 - One Scheduler And Dispatch Eligibility Predicate
+
+```yaml
+plan_unit_id: DR-092
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: |-
+  App and Project scheduled messages/tasks, Build At, execution windows and quota resumes use the one Scheduling owner, SQR-019/020. The task's named Server owns timers; no Client timer, second app scheduler, silent Computer fallback or backlog burst exists. Commit freezes exact text/attachments/destination or exact target version/hash/topology/team, modes/account/runtime, zone/DST/missed/grace policy and original source/cancel custody. Build At performs one atomic schedule_build/window write and creates no run yet. Occurrence idempotency and twice-checked dispatch revalidate actual scope/roots/targets/permissions/capability/writer/consent and task/scope Stop epochs. App and Project pause are independent operational records with user-only clear, never Settings defaults. Conversion fences old authority and explicitly re-admits exact mapped targets without latest substitution, consent transfer, double dispatch or clearing Stop. Goal continuation/Crew Auto remain distinct kinds of automation and goal.scheduled stays historical-only.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DL-292
+- DR-091
+unblocks: []
+acceptance_criteria:
+- Every named consumer references the sole owner and selected edition rather than recreating its engine.
+- Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: duplicate_owner_or_scope_drift
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/DRY_Rules.md
+- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+- Plans/Scheduling_and_Quota_Resume.md#SQR-020
+- Plans/Assistant_Plan_Runtime.md#APR-074
+- Plans/Contracts_V0.md#CV-368
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#DR-092
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- Build At
+- schedule_build
+- Stop
+- goal.scheduled
+negative_constraints:
+- Do not create a peer resolver, runtime, storage, writer, command, event, native proof or unbounded bucket.
+owner_hints:
+- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+- Plans/Scheduling_and_Quota_Resume.md#SQR-020
+- Plans/Assistant_Plan_Runtime.md#APR-074
+- Plans/Contracts_V0.md#CV-368
+```
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-019, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-020, ContractName:Plans/Assistant_Plan_Runtime.md#APR-074, ContractName:Plans/Contracts_V0.md#CV-368

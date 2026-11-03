@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L19879-L20461
+Source lines: L19851-L20424
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -94,8 +94,8 @@ plan_unit_id: CV-307
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  P0-RUNTIME-SURFACE-READINESS-PROBE (P0) is compiled as canonical Puppet Master intent for Runtime surface readiness probe: Imported external-repo finding extrepo-20260703-0092 / P0-RUNTIME-SURFACE-READINESS-PROBE (P0). The preserved PM gap/delta is: Configured tool/browser/terminal/MCP surfaces must prove started, injected, model-visible, UI-visible, and roundtrip-ready after restart/restore. The observed external-repo signal remains source-lineage evidence: Browser port forwarding fails until restart; computer-use plugin unavailable after restart; WSL path/bridge mismatch; OpenCode V2 MCP lifecycle need.
+canonical_text: |-
+  P0-RUNTIME-SURFACE-READINESS-PROBE (P0) is compiled as canonical Puppet Master intent for Runtime surface readiness probe: Imported external-repo finding extrepo-20260703-0092 / P0-RUNTIME-SURFACE-READINESS-PROBE (P0). The preserved PM gap/delta is: Configured tool/browser/terminal/MCP surfaces must prove started, injected, model-visible, UI-visible, and roundtrip-ready after restart/restore. The observed external-repo signal remains source-lineage evidence: Browser port forwarding fails until restart; computer-use plugin unavailable after restart; WSL path/bridge mismatch; OpenCode V2 MCP lifecycle need. Application readiness probes use explicit real Computer/thread/root/namespace context and no fake Project. Configured, installed, authenticated, injected, model-visible and roundtrip-ready remain separate; unsupported computer-use or missing DAE remains unavailable.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -132,6 +132,8 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:5
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; B-F05,B-F10,C-F10
 source_atom_ids:
 - atom-0096
 external_atom_id: extrepo-20260703-0092
@@ -331,15 +333,8 @@ plan_unit_id: CV-310
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Contracts_V0 names the stable active-agent coordination EventRecord families consumed by Orchestrator and storage:
-  `coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`,
-  `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed`,
-  `coordination.agent_aborted`, and `coordination.debug_mirror_exported`. These events feed redb coordination projections;
-  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` paths are retired as live files
-  (SP-339, amended 2026-10-31, DL-270), JSON state exists only as on-request `pm export` output, and neither it nor any
-  export can drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash,
-  abort, receipt, or validation decisions.
+canonical_text: |-
+  Contracts_V0 names the stable active-agent coordination EventRecord families consumed by Orchestrator and storage: `coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`, `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed`, `coordination.agent_aborted`, and `coordination.debug_mirror_exported`. These events feed redb coordination projections; `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` paths are retired as live files (SP-339, amended 2026-10-31, DL-270), JSON state exists only as on-request `pm export` output, and neither it nor any export can drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions. Application Crew coordination gains only CV-366’s separately selected app payload/projection/reader/checkpoint graph and SP-351 keys. The existing Project families and exact source resources remain unchanged; debug export is non-authoritative and no second board or JSON mirror appears.
 gui_related: false
 gui_classification_reason: This unit defines runtime event contracts and storage authority, not GUI presentation.
 depends_on: [CV-309, SP-230, SP-232, OSI-432]
@@ -367,8 +362,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - fablereport.md
-  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6
+- fablereport.md
+- Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F07
 source_atom_ids: []
 preserved_exact_tokens:
   - "`coordination.agent_registered`"
@@ -458,16 +455,8 @@ plan_unit_id: CV-312
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for
-  filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied,
-  filesafe.destructive_override_requested, filesafe.destructive_override_granted,
-  filesafe.destructive_override_denied, and filesafe.policy_degraded. The payloads preserve
-  guard type, denial/diagnostic codes, normalized command/path identity, permission and FileSafe
-  scope refs, project/run/worktree scope, authenticated operator override request/grant/denial
-  fields, expiry, receipt refs, event refs, and redaction posture. policy_degraded is limited to
-  non-authoritative/advisory degradation or embedded fallback use where fail-closed enforcement
-  remains intact.
+canonical_text: |-
+  Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied, filesafe.destructive_override_requested, filesafe.destructive_override_granted, filesafe.destructive_override_denied, and filesafe.policy_degraded. The payloads preserve guard type, denial/diagnostic codes, normalized command/path identity, permission and FileSafe scope refs, project/run/worktree scope, authenticated operator override request/grant/denial fields, expiry, receipt refs, event refs, and redaction posture. policy_degraded is limited to non-authoritative/advisory degradation or embedded fallback use where fail-closed enforcement remains intact. App FileSafe/ChatToolApproval uses D’s PS-145/F2-213 and CV-366’s explicit successor envelopes with real Host/absolute root/thread/run evidence. Preserve exact Project security payloads and all fail-closed rules; approval.chat_tool_requested/resolved do not reuse Orchestrator node/blocked_sequence payloads with null fields.
 gui_related: false
 gui_classification_reason: This unit defines security event payload contracts, not visual presentation.
 depends_on: [CV-309, CV-081, F2-199]
@@ -494,8 +483,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - fablereport.md
-  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:10
+- fablereport.md
+- Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:10
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; D-F01,D-F05,D-F06
 source_atom_ids: []
 preserved_exact_tokens:
   - "`filesafe.guard_init_failed`"

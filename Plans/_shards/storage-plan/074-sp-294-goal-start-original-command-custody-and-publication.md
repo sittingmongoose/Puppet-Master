@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24170-L24232
+Source lines: L24098-L24160
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -15,10 +15,8 @@ plan_unit_id: SP-294
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Original Goal start authenticates source validity and complete original expectations before joining
-  five existing body values and one content-free command row. Actual original shared publication and first receipt
-  precede immutable command-result settlement; preserved earlier effects, exact retained audit and qualified installed-role/backup
-  boundaries remain explicit.
+canonical_text: |-
+  Original Goal start authenticates source validity and complete original expectations before joining five existing body values and one content-free command row. Actual original shared publication and first receipt precede immutable command-result settlement; preserved earlier effects, exact retained audit and qualified installed-role/backup boundaries remain explicit. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app Goal body/start/update/cancel/association operations require genuine original app source and retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation identity; N25 uses linked new birth.
 gui_related: false
 gui_classification_reason: Defines original internal command/source/body/event/result and retained audit authority
   without a visual surface.
@@ -63,6 +61,8 @@ node_compile_hint:
 source_lineage:
 - reports/event-authority-20260911/step-08-goal-start-validation.md
 - Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
 - Do not infer original authority from unchanged invalid values, selected helper results, hashes, schema registration
   or installed-role declarations.

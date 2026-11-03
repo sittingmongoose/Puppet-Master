@@ -2,9 +2,9 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L399-L547
+Source lines: L386-L528
 
-Source SHA256: `9aa7d954d0264e081d8647735683a7d0b9422b13891ceaae17bef41f4cc8bc4e`
+Source SHA256: `64b5a9a3310152bf3b30d972a4dd22c9db59ca42a1c6b53db7e851bc75fe306e`
 
 ---
 
@@ -91,8 +91,8 @@ Normative rules:
 - `push_policy = after_build` means Puppet Master automatically dispatches `cmd.orchestrator.push_image` **after** a successful local build result exists; it does **not** fold remote publish into `build_run`.
 - A direct user click on **Build** approves build only.
 - A direct user click on **Push image** approves image push only.
-- If the target DockerHub repository is missing, repository creation remains a separate side effect and requires its own confirmation/approval.
-- If managed Unraid template-repo push is later requested, that remote push is a separate side effect and requires its own approval.
+- Missing repository creation remains a separate admitted effect with Regular confirmation or exact PS-146/147 authority, without another ordinary YOLO yes.
+- Managed Unraid template push is a separate requested effect with its own target/receipt and Regular or PS-146/147 authority; it never creates a duplicate ordinary YOLO confirmation.
 - `docker.publish.failed` means Puppet Master attempted the publish operation and the operation failed at runtime.
 - `docker.publish.blocked` means Puppet Master intentionally did not execute the remote side effect because confirmation or permission approval was missing, rejected, or cancelled.
 
@@ -100,15 +100,11 @@ Normative rules:
 
 If `cmd.orchestrator.push_image` resolves a missing target repository:
 
-1. Puppet Master MUST preserve the local build result and enter `awaiting_repo_creation_confirmation`.
-2. Puppet Master MUST emit `docker.repository.create.confirmation_requested`.
-3. Confirming creation dispatches `cmd.docker.create_repository.confirm`.
-4. On successful repository creation, Puppet Master resumes the pending `cmd.orchestrator.push_image` attempt without forcing a rebuild.
-5. If repository creation is cancelled, rejected, or blocked by policy, Puppet Master MUST emit `docker.publish.blocked` with:
-   - `reason_code: repo_creation_not_confirmed`
-   - `blocked_step: create_repository`
-   - `allowed_action_ids[]`
-6. `docker.publish.blocked` MUST preserve the already-built local image/result so the user can retry without rebuilding.
+1. Preserve the already-built local image/result and evaluate the exact missing-repository create authority.
+2. Only an unsatisfied Regular human decision enters awaiting_repo_creation_confirmation and emits docker.repository.create.confirmation_requested; existing Confirm/Cancel remain person controls.
+3. Admitted task YOLO or current PS-147 grant calls the same domain creation writer with its true authority kind, not .confirm or human_confirmed=true.
+4. Resume the pending push without rebuild only after verified create success. Unknown remote outcomes reconcile before retry, never repeat a speculative create.
+5. Cancel/reject/policy/capability refusal emits docker.publish.blocked with the exact blocked_step, canonical reason and ordered allowed_action_ids[], preserving the local image/result. Only the actual missing human decision uses repo_creation_not_confirmed.
 
 - publish uses DockerHub-targeted image tags and namespace/repository selection
 - push policy remains `manual` by default with optional `after_build`
@@ -125,12 +121,10 @@ If `cmd.orchestrator.push_image` resolves a missing target repository:
 #### Auto-push approval and canonical publish-reference contract
 
 Approval rules:
-- `push_policy = after_build` does not grant standing approval for remote side effects.
-- Clicking **Build** approves only local build execution.
-- When a successful build reaches the auto-dispatch point, Puppet Master MUST evaluate `external_publish_side_effect` for `cmd.orchestrator.push_image`.
-- If publish approval is not satisfied at that point, Puppet Master MUST emit `docker.publish.blocked` with `blocked_step: push_image`, preserve the local build result, and surface **Push image** as the recovery CTA.
-- DockerHub repository creation and managed-template remote repo create/push remain separately approved side effects even when `push_policy = after_build` is enabled.
-
+- after_build selects timing only, and local Build approval remains local.
+- At actual publication dispatch, run PS-146/147/148 with exact image/registry/repository/namespace/currentness and actual authority.
+- Regular missing approval blocks with exact step and Push image recovery; task YOLO/grant-covered publication does not ask again.
+- Repository create and template create/push remain separate evaluated effects and receipts, not additional modals when authority already covers them.
 Canonical template source image selection:
 - If the project sets `primary_publish_tag`, use it.
 - Otherwise use the first tag emitted by the resolved tag-template list.

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L13993-L15137
+Source lines: L14670-L15929
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -60,28 +60,37 @@ plan_unit_id: UCC-169
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  The controls this unit covers add source surfaces, not commands; the redesign's nine new command
-  identities are registered in UCC-171 and UCC-174 (CDRY-022, CDRY-023). New surfaces: run_dock,
-  wonderer_workspace, memory_proposal_line, bsd_note, schedule_sheet, scheduled_message_card,
-  schedule_manager, memory_sheet, message_files_row, revert_confirm and chat_header. Existing surfaces join
-  more rows: mode_menu, natural_language and plan_schedule produce cmd.collaboration.configure; wand
-  produces cmd.chat.teach.open_memory and cmd.chat.teach.capture; brainstorm_card and run_dock produce
-  cmd.questionnaire.resume for BrainStorm "Answer now", disabled with command_not_registered while the
-  family is candidate_not_registered; workflow_card alone produces cmd.runtime.approve, cmd.runtime.decline
-  and cmd.permissions.review_request; review and Chat Room cards and panels produce cmd.chat.todos.open.
-  memory_sheet produces cmd.chat.memory.preview_capsule, a preview computation with no persisted domain
-  event. cmd.chat.plan.build_with_crew is produced by the Crew sheet in Build With Crew mode and never
-  decomposes into cmd.collaboration.start. cmd.chat.revert is dispatched only by revert_confirm, whose
-  expected_turn_manifest_sha256 is the hash of the manifest it shows; there is no kept or
-  conflict-dismissal outcome. chat_header produces cmd.chat.thread.regenerate_title, whose label UCC-173
-  sets. cmd.chat.teach.capture carries mode new or correct; the Teach sheet saves through
-  cmd.chat.teach.confirm and closes through cmd.chat.teach.cancel. Every added surface takes the UCC-156
-  availability and disabled-reason obligation. The Plan card's Cancel schedule control produces
-  cmd.execution_window.cancel from plan_card (SQR-013, DL-138), alongside schedule_manager; it cancels only
-  the future execution schedule through the existing request, never an already-running plan. PM7 S5: wand
-  Pip… is one Settings-editor producer, ui.settings.pip_editor.open; part/preset changes reuse UCC-120
-  Settings transactions, no chat capability or new mutation command.
+canonical_text: 'The controls this unit covers add source surfaces, not commands; the redesign''s nine new
+  command identities are registered in UCC-171 and UCC-174 (CDRY-022, CDRY-023). New surfaces: run_dock, wonderer_workspace,
+  memory_proposal_line, bsd_note, schedule_sheet, scheduled_message_card, schedule_manager, memory_sheet, message_files_row,
+  revert_confirm and chat_header. Existing surfaces join more rows: mode_menu, natural_language and plan_schedule
+  produce cmd.collaboration.configure; wand produces cmd.chat.teach.open_memory and cmd.chat.teach.capture;
+  brainstorm_card and run_dock produce cmd.questionnaire.resume for BrainStorm "Answer now", disabled with
+  command_not_registered while the family is candidate_not_registered; workflow_card alone produces cmd.runtime.approve,
+  cmd.runtime.decline and cmd.permissions.review_request; review and Chat Room cards and panels produce cmd.chat.todos.open.
+  memory_sheet produces cmd.chat.memory.preview_capsule, a preview computation with no persisted domain event.
+  cmd.chat.plan.build_with_crew is produced by the Crew sheet in Build With Crew mode and never decomposes
+  into cmd.collaboration.start. cmd.chat.revert is dispatched only by revert_confirm, whose expected_turn_manifest_sha256
+  is the hash of the manifest it shows; there is no kept or conflict-dismissal outcome. chat_header produces
+  cmd.chat.thread.regenerate_title, whose label UCC-173 sets. cmd.chat.teach.capture carries mode new or correct;
+  the Teach sheet saves through cmd.chat.teach.confirm and closes through cmd.chat.teach.cancel. Every added
+  surface takes the UCC-156 availability and disabled-reason obligation. The Plan card''s Cancel schedule control
+  produces cmd.execution_window.cancel from plan_card (SQR-013, DL-138), alongside schedule_manager; it cancels
+  only the future execution schedule through the existing request, never an already-running plan. PM7 S5: wand
+  Pip… is one Settings-editor producer, ui.settings.pip_editor.open; part/preset changes reuse UCC-120 Settings
+  transactions, no chat capability or new mutation command.
+
+
+  Current projects-refresh contract: The six existing cmd.chat.goal.* mutations, Goal editor, four collaboration
+  kinds, participant/message actions and Crew Auto admit explicit app siblings and original exact Project contracts.
+  Scope, original accepted source/hash, body/control/Stop, parent/receiver authority, roots, roster/config
+  revisions and canonical backup join at final dispatch. Ordinary updates never retarget immutable Goal/Plan/Crew
+  bindings. No retired goal.scheduled/degraded/child-state producer or Project Workflow/WorkNode certification
+  is revived. App Crew Auto uses an app-thread configuration revision, distinct from a thread override and
+  Project configuration; the same evaluator/coordination board remains sole owner. Conversion defaults to linked
+  new destination records after safe stop/fence. The exact consumer contract is UCC-218/WM-104 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Names the visible sheets, cards, dock lines and header that produce existing commands,
   and their disabled states.
@@ -114,6 +123,9 @@ acceptance_criteria:
 - Build With Crew mode dispatches cmd.chat.plan.build_with_crew and never cmd.collaboration.start.
 - cmd.chat.revert has no kept outcome and is dispatched only from revert_confirm.
 - BrainStorm Answer now renders disabled with command_not_registered while the questionnaire family is candidate_not_registered.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-218; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -136,6 +148,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493
   lines B-CMD-03, B-CMD-04, B-ACD-12
 - Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - cmd.execution_window.cancel
 - plan_card
@@ -173,6 +186,8 @@ negative_constraints:
 - This unit does not change the Crew Auto open-config surfaces, the Crew Auto set payload, the Regenerate Title
   label, the Teach lock field, what /teach opens, or the ELI5, Teach document, Teach receipt and Crew Auto
   receipt surfaces; UCC-172, UCC-173 and UCC-175 carry the owner's answers and the lead's rulings on these.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
 - Plans/UI_Command_Catalog.md
 - Plans/Wiring_Matrix.md
@@ -629,68 +644,101 @@ plan_unit_id: UCC-171
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  DL-130 adds seven command rows, each a domain_action with one owner, one request and result
-  contract and one sole future target, and each registered after an alias census over live Plans
-  found no collision: cmd.chat_room.end (Collaborative_Workflows; the room settles completed, not
-  cancelled), cmd.brainstorm.research_lead (Collaborative_Workflows; now the DL-218 alias of cmd.collaboration.research_lead), cmd.bsd.finding.dismiss and
-  cmd.bsd.catch_up.release (Back_Seat_Driver), and cmd.chat.teach.revoke, cmd.chat.teach.set_lock and
-  cmd.chat.memory.export (assistant-memory-subsystem). TeachLockRequest carries locked; MemoryExportRequest
-  carries scope gists, teachings or all. Each row starts handler_unavailable and its controls stay
-  disabled with command_not_registered until central registration, Event Authority, storage and
-  production wiring close. cmd.runtime.automation_stop.set, the audit's draft name for the pause, is
-  never registered; DL-136 registers the pause as cmd.runtime.automation_pause.set in UCC-174.
+canonical_text: 'DL-130 adds seven command rows, each a domain_action with one owner, one request and result
+  contract and one sole future target, and each registered after an alias census over live Plans found no collision:
+  cmd.chat_room.end (Collaborative_Workflows; the room settles completed, not cancelled), cmd.brainstorm.research_lead
+  (Collaborative_Workflows; now the DL-218 alias of cmd.collaboration.research_lead), cmd.bsd.finding.dismiss
+  and cmd.bsd.catch_up.release (Back_Seat_Driver), and cmd.chat.teach.revoke, cmd.chat.teach.set_lock and cmd.chat.memory.export
+  (assistant-memory-subsystem). TeachLockRequest carries locked; MemoryExportRequest carries scope gists, teachings
+  or all. Each row starts handler_unavailable and its controls stay disabled with command_not_registered until
+  central registration, Event Authority, storage and production wiring close. cmd.runtime.automation_stop.set,
+  the audit''s draft name for the pause, is never registered; DL-136 registers the pause as cmd.runtime.automation_pause.set
+  in UCC-174.
+
+
+  Current projects-refresh contract: All six Plan/Deep Plan strategies, exact approved versions, agent/goal_driven/Crew
+  Build, Build At and scheduled messages/tasks work in app scope through existing owners. Only Planning Wizard,
+  PRD Builder and Orchestrator retain no-project workflow gates; Project-native actions still require actual
+  targets. Build At atomically commits one frozen schedule/window, creates no run, and never dispatches execution_window.create
+  a second time. Server-owned timers preserve DST/grace/missed-policy/idempotency, frozen text/attachments/target
+  version and fresh authority/Stop checks. App operational pause has independent real Server custody and user-only
+  clear, never a Settings value or missing-as-off. N25 stops/fences source work and explicitly re-admits mapped
+  frozen targets with fresh consent/epochs; no automatic resume, latest-version substitution or duplicate occurrence.
+  The exact consumer contract is UCC-219/WM-105 and Plans/projects_refresh_command_bindings.json. Historical
+  schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified;
+  unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: "Registers the commands behind visible End discussion, Check it, Dismiss, Don't wait, Turn off, Lock and Export buttons and their disabled states."
+gui_classification_reason: Registers the commands behind visible End discussion, Check it, Dismiss, Don't wait,
+  Turn off, Lock and Export buttons and their disabled states.
 split_recommended: false
-depends_on: [UCC-169, UCC-156]
-unblocks: [UCC-170, UCC-172, UCC-173, UCC-174, CS-085, CDRY-022, WM-063]
+depends_on:
+- UCC-169
+- UCC-156
+unblocks:
+- UCC-170
+- UCC-172
+- UCC-173
+- UCC-174
+- CS-085
+- CDRY-022
+- WM-063
 acceptance_criteria:
-  - "Each of the seven rows names exactly one owner document, one request contract, one result contract and one sole future target."
-  - "Each row's controls render disabled with command_not_registered until its registration, Event Authority, storage and production wiring close."
-  - "No row, alias or wiring entry exists for cmd.runtime.automation_stop.set; the pause is registered only as cmd.runtime.automation_pause.set (UCC-174)."
-  - "cmd.chat_room.end never settles a room as cancelled."
+- Each of the seven rows names exactly one owner document, one request contract, one result contract and one
+  sole future target.
+- Each row's controls render disabled with command_not_registered until its registration, Event Authority,
+  storage and production wiring close.
+- No row, alias or wiring entry exists for cmd.runtime.automation_stop.set; the pause is registered only as
+  cmd.runtime.automation_pause.set (UCC-174).
+- cmd.chat_room.end never settles a room as cancelled.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-219; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 risk_class: command_identity_registration
 reasoning_tier: high
 context_scope: assistant_wand_module_commands
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Commands_System.md
-  - Plans/Wiring_Matrix.production.exclusions.json
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/Wiring_Matrix.production.exclusions.json
 node_compile_hint:
   mode: static_command_registration
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f section 3, N-1 to N-8"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-CMD-02"
-  - "Plans/Decision_Log.md#DL-130, #DL-136"
-  - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f
+  section 3, N-1 to N-8
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493
+  line B-CMD-02
+- 'Plans/Decision_Log.md#DL-130, #DL-136'
+- Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "cmd.chat_room.end"
-  - "cmd.brainstorm.research_lead"
-  - "cmd.bsd.finding.dismiss"
-  - "cmd.bsd.catch_up.release"
-  - "cmd.chat.teach.revoke"
-  - "cmd.chat.teach.set_lock"
-  - "cmd.chat.memory.export"
-  - "handler_unavailable"
-  - "command_not_registered"
-  - "TeachLockRequest"
-  - "MemoryExportRequest"
-  - "cmd.runtime.automation_stop.set"
-  - "cmd.runtime.automation_pause.set"
+- cmd.chat_room.end
+- cmd.brainstorm.research_lead
+- cmd.bsd.finding.dismiss
+- cmd.bsd.catch_up.release
+- cmd.chat.teach.revoke
+- cmd.chat.teach.set_lock
+- cmd.chat.memory.export
+- handler_unavailable
+- command_not_registered
+- TeachLockRequest
+- MemoryExportRequest
+- cmd.runtime.automation_stop.set
+- cmd.runtime.automation_pause.set
 negative_constraints:
-  - "Do not register cmd.runtime.automation_stop.set, and do not make it an alias of cmd.runtime.automation_pause.set."
-  - "Do not simulate success for any of the seven rows before admission."
-  - "Do not fold End discussion into cmd.collaboration.cancel or Lock and Turn off into one update command."
+- Do not register cmd.runtime.automation_stop.set, and do not make it an alias of cmd.runtime.automation_pause.set.
+- Do not simulate success for any of the seven rows before admission.
+- Do not fold End discussion into cmd.collaboration.cancel or Lock and Turn off into one update command.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md#CS-085, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Decision_Log.md#DL-130
@@ -943,7 +991,7 @@ Both rows follow the same rules as UCC-171:
 | Command ID | Label | Description | Preconditions | command_kind | Owner | Request → Result | Sole future target |
 |---|---|---|---|---|---|---|---|
 | `cmd.chat.eli5.explain_reply` | Explain This Reply Simply | Writes one extra assistant reply that explains one finished assistant reply more simply, only when the user asks. It never changes, re-sends or replaces the reply it explains, and it never changes the chat's ELI5 state. | `assistant_chat_available && target_message_role == assistant && target_message_finished` | `domain_action` | `Plans/assistant-chat-design.md` | `ELI5ExplainReplyRequest` → `ELI5ExplainReplyResult` | `handlers::assistant_chat::eli5_explain_reply` |
-| `cmd.runtime.automation_pause.set` | Pause All Automations | Sets or clears the project-wide automation pause. While it is set, every scheduled send and scheduled build in the project stays stopped. Only the user clears it. | `project_present && scheduling_available` | `domain_action` | `Plans/Scheduling_and_Quota_Resume.md` | `AutomationPauseSetRequest` → `AutomationPauseSetResult` | `handlers::scheduling::automation_pause_set` |
+| `cmd.runtime.automation_pause.set` | Pause All Automations | Sets/clears the exact app Server or Project operational pause; only the user clears it, missing app custody refuses and never means Off. | `exact_scope_owner && scheduling_available && current_pause_source` | `domain_action` | `Plans/Scheduling_and_Quota_Resume.md` | `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AutomationPauseSetRequestScopeV2` → `Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AutomationPauseSetResultScopeV2` | `handlers::scheduling::automation_pause_set` |
 
 Source surfaces for these rows:
 - `cmd.chat.eli5.explain_reply`: `message_chrome`, where the "Explain this reply simply" action sits on a finished assistant reply.
@@ -969,75 +1017,109 @@ plan_unit_id: UCC-174
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  DL-126 and DL-136 add two command rows, each a domain_action with one owner, one request and result
-  contract and one sole future target, registered after an alias census over live Plans found no
-  collision. cmd.chat.eli5.explain_reply (assistant-chat-design, ELI5ExplainReplyRequest to
-  ELI5ExplainReplyResult, handlers::assistant_chat::eli5_explain_reply) targets one finished assistant
-  reply by message_id and writes exactly one extra, simpler reply, only when the user asks; it is
-  refused while that reply is still streaming and never changes, re-sends or replaces the reply it
-  explains. Its producer is message_chrome. cmd.runtime.automation_pause.set (Scheduling_and_Quota_Resume,
-  AutomationPauseSetRequest to AutomationPauseSetResult, handlers::scheduling::automation_pause_set) is
-  project-scoped and carries paused true or false. Setting it true latches a manual stop at project
-  scope by advancing the user_stop_epoch the way Manual Stop does, so every scheduled send and
-  scheduled build in the project stays stopped. Setting it false is the only way to clear the pause,
-  and only a user does it. No automatic mechanism clears or bypasses it. Its producer is
-  schedule_manager. Both start handler_unavailable, and their controls stay disabled with
-  command_not_registered until central registration, Event Authority, storage and production wiring
-  close.
+canonical_text: 'DL-126 and DL-136 add two command rows, each a domain_action with one owner, one request and
+  result contract and one sole future target, registered after an alias census over live Plans found no collision.
+  cmd.chat.eli5.explain_reply (assistant-chat-design, ELI5ExplainReplyRequest to ELI5ExplainReplyResult, handlers::assistant_chat::eli5_explain_reply)
+  targets one finished assistant reply by message_id and writes exactly one extra, simpler reply, only when
+  the user asks; it is refused while that reply is still streaming and never changes, re-sends or replaces
+  the reply it explains. Its producer is message_chrome. cmd.runtime.automation_pause.set (Scheduling_and_Quota_Resume,
+  AutomationPauseSetRequest to AutomationPauseSetResult, handlers::scheduling::automation_pause_set) is project-scoped
+  and carries paused true or false. Setting it true latches a manual stop at project scope by advancing the
+  user_stop_epoch the way Manual Stop does, so every scheduled send and scheduled build in the project stays
+  stopped. Setting it false is the only way to clear the pause, and only a user does it. No automatic mechanism
+  clears or bypasses it. Its producer is schedule_manager. Both start handler_unavailable, and their controls
+  stay disabled with command_not_registered until central registration, Event Authority, storage and production
+  wiring close.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: "Registers the commands behind the visible Explain this reply simply action and the Pause all automations switch and Turn back on, and their disabled states."
+gui_classification_reason: Registers the commands behind the visible Explain this reply simply action and the
+  Pause all automations switch and Turn back on, and their disabled states.
 split_recommended: false
-depends_on: [UCC-171, UCC-156]
-unblocks: [UCC-170, UCC-175, CS-087, CDRY-023, WM-064, ATS-066]
+depends_on:
+- UCC-171
+- UCC-156
+unblocks:
+- UCC-170
+- UCC-175
+- CS-087
+- CDRY-023
+- WM-064
+- ATS-066
 acceptance_criteria:
-  - "Each of the two rows names exactly one owner document, one request contract, one result contract and one sole future target."
-  - "cmd.chat.eli5.explain_reply writes exactly one extra reply per request, and is refused while its target reply is still streaming."
-  - "cmd.runtime.automation_pause.set with paused false is accepted only from a user-originated dispatch, and no automatic producer dispatches it."
-  - "Each row's controls render disabled with command_not_registered until its registration, Event Authority, storage and production wiring close."
+- Each of the two rows names exactly one owner document, one request contract, one result contract and one
+  sole future target.
+- cmd.chat.eli5.explain_reply writes exactly one extra reply per request, and is refused while its target reply
+  is still streaming.
+- cmd.runtime.automation_pause.set with paused false is accepted only from a user-originated dispatch, and
+  no automatic producer dispatches it.
+- Each row's controls render disabled with command_not_registered until its registration, Event Authority,
+  storage and production wiring close.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 risk_class: command_identity_registration
 reasoning_tier: high
 context_scope: assistant_wand_module_commands
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Commands_System.md
-  - Plans/Wiring_Matrix.production.exclusions.json
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/Wiring_Matrix.production.exclusions.json
 node_compile_hint:
   mode: static_command_registration
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f section 3, N-6, and section 2.17"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-01, B-CMD-02"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json sha256:33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5 answers p08, p12"
-  - "Plans/Decision_Log.md#DL-126, #DL-136"
-  - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f
+  section 3, N-6, and section 2.17
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493
+  lines B-CMD-01, B-CMD-02
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json sha256:33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5
+  answers p08, p12
+- 'Plans/Decision_Log.md#DL-126, #DL-136'
+- Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "cmd.chat.eli5.explain_reply"
-  - "cmd.runtime.automation_pause.set"
-  - "ELI5ExplainReplyRequest"
-  - "ELI5ExplainReplyResult"
-  - "AutomationPauseSetRequest"
-  - "AutomationPauseSetResult"
-  - "handlers::assistant_chat::eli5_explain_reply"
-  - "handlers::scheduling::automation_pause_set"
-  - "paused"
-  - "user_stop_epoch"
-  - "message_chrome"
-  - "schedule_manager"
-  - "handler_unavailable"
-  - "command_not_registered"
+- cmd.chat.eli5.explain_reply
+- cmd.runtime.automation_pause.set
+- ELI5ExplainReplyRequest
+- ELI5ExplainReplyResult
+- AutomationPauseSetRequest
+- AutomationPauseSetResult
+- handlers::assistant_chat::eli5_explain_reply
+- handlers::scheduling::automation_pause_set
+- paused
+- user_stop_epoch
+- message_chrome
+- schedule_manager
+- handler_unavailable
+- command_not_registered
 negative_constraints:
-  - "Do not let cmd.chat.eli5.explain_reply replace, regenerate or re-send the reply it explains, or change the chat's ELI5 state."
-  - "Do not give cmd.runtime.automation_pause.set an automatic producer, or let any automatic mechanism clear or bypass the pause."
-  - "Do not register cmd.runtime.automation_stop.set or any other alias for the pause."
+- Do not let cmd.chat.eli5.explain_reply replace, regenerate or re-send the reply it explains, or change the
+  chat's ELI5 state.
+- Do not give cmd.runtime.automation_pause.set an automatic producer, or let any automatic mechanism clear
+  or bypass the pause.
+- Do not register cmd.runtime.automation_stop.set or any other alias for the pause.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md#CS-087, ContractName:Plans/assistant-chat-design.md#ACD-484, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-018, ContractName:Plans/Decision_Log.md#DL-126, ContractName:Plans/Decision_Log.md#DL-136
@@ -1075,29 +1157,52 @@ plan_unit_id: UCC-175
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'ELI5 has a project default that applies everywhere in the project, and a chat''s override replaces it
-  for that chat only. A chat''s ELI5 state resolves to the chat override, otherwise the project default, otherwise the
-  app default (DL-126). The app default is general.interaction.eli5-default and the chat override is general.interaction.chat-eli5.
-  The project level is the project scope of general.interaction.eli5-default, persisted by Settings SSYS-028 (DL-138).
-  cmd.chat.eli5.set takes on, off or inherit in ELI5ThreadOverrideRequest; inherit deletes the chat override so the chat
-  follows the project default. A switch changes only the replies written after it and never re-sends, regenerates or
-  rewrites an earlier reply, so it never produces a second response; a simpler version of a finished reply comes only
-  from cmd.chat.eli5.explain_reply, as one extra reply the user asks for, and the guided tour uses that command for its
-  same-answer ELI5. The new eli5_sheet surface and the ELI5 dot in composer produce cmd.chat.eli5.set, and the wand''s
-  ELI5 row only opens the sheet. Expert and ELI5 dual copy is limited to tooltips and help. DL-259, Jared 2026-10-31:
-  ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode through the Settings owner,
-  with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect the same effective
-  state. Every opened onboarding question tip and prose help section has useful Plain English and technical versions,
-  including FileSafe, service differences, storage, remote access and AI/auth choices, assuming no coding experience.
-  Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy is limited to tips/help
-  (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
-  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
-  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired.'
+canonical_text: 'ELI5 has a project default that applies everywhere in the project, and a chat''s override
+  replaces it for that chat only. A chat''s ELI5 state resolves to the chat override, otherwise the project
+  default, otherwise the app default (DL-126). The app default is general.interaction.eli5-default and the
+  chat override is general.interaction.chat-eli5. The project level is the project scope of general.interaction.eli5-default,
+  persisted by Settings SSYS-028 (DL-138). cmd.chat.eli5.set takes on, off or inherit in ELI5ThreadOverrideRequest;
+  inherit deletes the chat override so the chat follows the project default. A switch changes only the replies
+  written after it and never re-sends, regenerates or rewrites an earlier reply, so it never produces a second
+  response; a simpler version of a finished reply comes only from cmd.chat.eli5.explain_reply, as one extra
+  reply the user asks for, and the guided tour uses that command for its same-answer ELI5. The new eli5_sheet
+  surface and the ELI5 dot in composer produce cmd.chat.eli5.set, and the wand''s ELI5 row only opens the sheet.
+  Expert and ELI5 dual copy is limited to tooltips and help. DL-259, Jared 2026-10-31: ELI5: the wizard bar
+  and Guided Tour bar expose the same global general.interaction.mode through the Settings owner, with values
+  ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect the same effective
+  state. Every opened onboarding question tip and prose help section has useful Plain English and technical
+  versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming no
+  coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual
+  copy is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply.
+  Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5 is a compatibility
+  local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor tour_narration_only
+  tag is retired.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: "Names the visible ELI5 sheet, its choices, the ELI5 dot by the message box and the wand row that opens the sheet."
+gui_classification_reason: Names the visible ELI5 sheet, its choices, the ELI5 dot by the message box and the
+  wand row that opens the sheet.
 split_recommended: false
-depends_on: [UCC-172, UCC-174]
-unblocks: [UCC-170, CS-087, CDRY-023, WM-064, ATS-066]
+depends_on:
+- UCC-172
+- UCC-174
+unblocks:
+- UCC-170
+- CS-087
+- CDRY-023
+- WM-064
+- ATS-066
 acceptance_criteria:
 - cmd.chat.eli5.set accepts exactly on, off and inherit, and inherit leaves the chat with no override.
 - A chat's ELI5 state resolves to the chat override, then the project default, then the app default.
@@ -1105,51 +1210,61 @@ acceptance_criteria:
 - The wand's ELI5 row opens the sheet and dispatches no command.
 - The guided tour's same-answer ELI5 dispatches cmd.chat.eli5.explain_reply, never cmd.chat.eli5.set.
 - 'DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode
-  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars
-  reflect the same effective state. Every opened onboarding question tip and prose help section has useful Plain English
-  and technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming
-  no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy
-  is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
-  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
-  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired.'
+  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5.
+  Both bars reflect the same effective state. Every opened onboarding question tip and prose help section has
+  useful Plain English and technical versions, including FileSafe, service differences, storage, remote access
+  and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints, paths
+  and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip
+  without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5
+  is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command.
+  The predecessor tour_narration_only tag is retired.'
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 risk_class: wand_module_surface_drift
 reasoning_tier: high
 context_scope: assistant_wand_module_commands
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.production.json
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
 node_compile_hint:
   mode: static_command_catalog_surfaces
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f section 2.17 (E-01 to E-07) and section 4.1 REV-6"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-01, B-CMD-03"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json sha256:33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5 answer p08"
-  - "Plans/Decision_Log.md#DL-126"
-  - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f
+  section 2.17 (E-01 to E-07) and section 4.1 REV-6
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493
+  lines B-CMD-01, B-CMD-03
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json sha256:33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5
+  answer p08
+- Plans/Decision_Log.md#DL-126
+- Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "DL-138"
-  - "eli5_sheet"
-  - "cmd.chat.eli5.set"
-  - "ELI5ThreadOverrideRequest"
-  - "inherit"
-  - "general.interaction.eli5-default"
-  - "general.interaction.chat-eli5"
-  - "composer"
-  - "cmd.chat.eli5.explain_reply"
+- DL-138
+- eli5_sheet
+- cmd.chat.eli5.set
+- ELI5ThreadOverrideRequest
+- inherit
+- general.interaction.eli5-default
+- general.interaction.chat-eli5
+- composer
+- cmd.chat.eli5.explain_reply
 negative_constraints:
-  - "Do not add a new Settings key or write a Settings value for the ELI5 project default here."
-  - "Do not let an ELI5 switch re-send, regenerate or rewrite an earlier reply."
-  - "Do not give the wand's ELI5 row a command, or add Expert and ELI5 dual copy to every helper line."
+- Do not add a new Settings key or write a Settings value for the ELI5 project default here.
+- Do not let an ELI5 switch re-send, regenerate or rewrite an earlier reply.
+- Do not give the wand's ELI5 row a command, or add Expert and ELI5 dual copy to every helper line.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-484, ContractName:Plans/Settings_System.md, ContractName:Plans/Decision_Log.md#DL-126

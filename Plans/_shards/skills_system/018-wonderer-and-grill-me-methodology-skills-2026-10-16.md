@@ -2,9 +2,9 @@
 
 Source: `Plans/Skills_System.md`
 
-Source lines: L2690-L2851
+Source lines: L2716-L2972
 
-Source SHA256: `8beb0fcd8afb1cc6ddfcf7bc20710d2e41f07bb4059c08d5007d508804b3d0e6`
+Source SHA256: `3991b8ab1648e297aa22614fd680256e74b0f67915ae13cde762545eb44e50d8`
 
 ---
 
@@ -170,3 +170,98 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Personas.md, ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Decision_Log.md
+
+### SS-039 - Skill Library Reach, Computer Readiness And App Invocation
+
+```yaml
+plan_unit_id: SS-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: Skills retains the single SKILL.md registry, source vocabulary, canonical Project/user/global
+  discovery order and first-wins deduplication. Library home/reach, a whole Project version and Computer
+  installation/readiness are separate owner records. project_switch_ids=[extensions.skills.skill-on-off]
+  binds a switch to a stable skill_id; permission rules remain Permissions-owned. The project_enabled
+  stage retains independent policy checks. No project discovers only allowed global/user roots, offers
+  global-only create/import, and carries null project_root with real thread, Computer and working-root
+  identities into invoke_skill. A Computer-specific installation record suffices; no arbitrary Computer
+  skill-source roots are added. Source/version trust, package validation, permission_class, child ceilings,
+  dependency readiness and bounded L0-L3 selection remain. Copy contributes selected whole content/hash,
+  destination identity, switch/reach edits, first-load trust status and owner readback/rollback to the
+  same Settings transaction; copying does not install, execute, auto-trust or copy a credential. Conversion
+  reruns discovery and admission at the destination. SS-038 grilling keeps its complete frontier, user-decision
+  and confirmation rules in every admitted app chat or Crew; this pass changes neither the Skill nor its
+  interview contract. The owner contribution is named in owner_thing_previews; scope_model and project_switch_ids
+  describe its manager boundary. settings.follow never grants thing mutation or Project content authority.
+  The selected whole-version/copy operation is cmd.skill.copy through sole planned handler handlers::skills::copy,
+  with Plans/shared_integration_runtime.schema.json#/$defs/skill_copy_request and Plans/shared_integration_runtime.schema.json#/$defs/skill_copy_result.
+  The Settings batch invokes this owner contribution, including exact source hash/revision, destination
+  CAS, declared reach/switch deltas, readback and eligible compensation; it never writes owner records
+  directly. These registrations do not prove native availability; missing schema, handler, trust, installation
+  or currentness remains typed unavailable.
+gui_related: true
+gui_classification_reason: Owns user-visible manager, activity or control behavior.
+depends_on:
+- SS-006
+- SS-007
+- SS-011
+- SS-036
+- SS-038
+- SSYS-061
+- SSYS-062
+unblocks: []
+acceptance_criteria:
+- No-project discovery and global-only creation succeed without a Project; Project-only/shadowed/invalid
+  skills stay absent or blocked.
+- The same Skill on another Computer is not Ready until its dependencies and source/version trust pass
+  there.
+- Copy/rollback preserves exact package identity and reaches only previewed targets, with no hidden source
+  roots.
+validation_surfaces:
+- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
+- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+risk_class: scope_authority_or_custody_drift
+reasoning_tier: high
+context_scope: project_and_application_scope
+implementation_surfaces:
+- Plans/Skills_System.md
+- Plans/settings_system_contracts.schema.json
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/SETTINGS-PROPOSAL.md#4.1;4.5;5
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- 'Jared, 2026-11-03: "Those look good, except goals and crew should be allowed in no project."'
+- 'Jared, 2026-11-03: "Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t."'
+- projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-B02
+preserved_exact_tokens:
+- SKILL.md
+- skill_id
+- project_root
+- project_enabled
+- project_switch_ids
+- extensions.skills.skill-on-off
+- owner_thing_previews
+- scope_model
+- settings.follow
+- cmd.skill.copy
+- handlers::skills::copy
+negative_constraints:
+- Do not turn project_enabled into a policy bypass or inject all enabled Skill instructions.
+- Do not add an arbitrary Computer source-root tier, export secret resources or change grilling decisions.
+- Do not infer an implemented handler, admitted event writer, native verification, WorkNode, NodeSeed
+  or governance clearance from this accepted contract.
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Settings_System.md
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Skills_System.md#SS-039, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365

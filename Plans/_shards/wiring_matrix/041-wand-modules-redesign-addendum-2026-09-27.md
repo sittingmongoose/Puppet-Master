@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5479-L5735
+Source lines: L6014-L6297
 
-Source SHA256: `3f8150617657a7e9de14a5815e7cc3097714249b08ea146d6967ac8137771f7b`
+Source SHA256: `3899744314444527ed5abfa724f4abdb67822efa4d7b3852a2db461438fffebe`
 
 ---
 
@@ -101,76 +101,103 @@ plan_unit_id: WM-063
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: >-
-  The seven UCC-171 rows are exact candidate exclusions in Plans/Wiring_Matrix.production.exclusions.json
-  under the DL-035 convention until admission, rendering disabled with command_not_registered, and
-  admission removes each exclusion atomically with its registration and production wiring entry.
-  Existing production wiring entries gain exactly the UCC-172 surfaces:
-  assistant.redesign.cmd.chat_crew_auto_open_config gains workflow_modal and crew_auto_receipt (DL-135),
-  the Teach capture entry gains teach_document, assistant.redesign.cmd.chat_teach_open_memory gains
-  teach_receipt, and the capsule-preview entry gains teach_document. crew_auto_receipt raises only the
-  open-config entry and has no candidate exclusion; cmd.runtime.automation_stop.set is never wired and
-  is excluded only as deliberately not registered. eli5_sheet, settled by DL-126, is wired by WM-064.
-  The companion task writes the entries.
-  DL-138 requires the CS-085 request/result pairs and TeachConfirmRequest.locked to be defined
-  in their existing Collaboration, Back Seat Driver and Memory contract pairs before admission.
-  Schema completion does not admit a handler or remove an exclusion. The existing
-  assistant.redesign.cmd.chat_crew_auto_open_config entry includes crew_auto_receipt;
-  assistant.redesign.w_024.chat_crew_auto_set states project | thread, with the chat check writing
-  only its thread override and never opening the sheet. The existing cmd.review.send_findings_to_agent
-  entry also admits message_chrome for Ask for a fix with taught_rule_check; both source variants
-  retain ComposerBufferResult, composer_not_empty and the source-thread empty-composer/no-send rule
-  (UCC-172). These are revisions of existing entries, not new production rows.
+canonical_text: 'The seven UCC-171 rows are exact candidate exclusions in Plans/Wiring_Matrix.production.exclusions.json
+  under the DL-035 convention until admission, rendering disabled with command_not_registered, and admission
+  removes each exclusion atomically with its registration and production wiring entry. Existing production
+  wiring entries gain exactly the UCC-172 surfaces: assistant.redesign.cmd.chat_crew_auto_open_config gains
+  workflow_modal and crew_auto_receipt (DL-135), the Teach capture entry gains teach_document, assistant.redesign.cmd.chat_teach_open_memory
+  gains teach_receipt, and the capsule-preview entry gains teach_document. crew_auto_receipt raises only the
+  open-config entry and has no candidate exclusion; cmd.runtime.automation_stop.set is never wired and is excluded
+  only as deliberately not registered. eli5_sheet, settled by DL-126, is wired by WM-064. The companion task
+  writes the entries. DL-138 requires the CS-085 request/result pairs and TeachConfirmRequest.locked to be
+  defined in their existing Collaboration, Back Seat Driver and Memory contract pairs before admission. Schema
+  completion does not admit a handler or remove an exclusion. The existing assistant.redesign.cmd.chat_crew_auto_open_config
+  entry includes crew_auto_receipt; assistant.redesign.w_024.chat_crew_auto_set states project | thread, with
+  the chat check writing only its thread override and never opening the sheet. The existing cmd.review.send_findings_to_agent
+  entry also admits message_chrome for Ask for a fix with taught_rule_check; both source variants retain ComposerBufferResult,
+  composer_not_empty and the source-thread empty-composer/no-send rule (UCC-172). These are revisions of existing
+  entries, not new production rows.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: "Binds the visible Teach, Crew Auto and new-command controls to wiring entries or exclusions and their disabled states."
+gui_classification_reason: Binds the visible Teach, Crew Auto and new-command controls to wiring entries or
+  exclusions and their disabled states.
 split_recommended: false
-depends_on: [WM-062, UCC-170, UCC-171, UCC-172, CS-085]
-unblocks: [WM-064]
+depends_on:
+- WM-062
+- UCC-170
+- UCC-171
+- UCC-172
+- CS-085
+unblocks:
+- WM-064
 acceptance_criteria:
-  - "Each of the seven new rows has exactly one candidate exclusion until it is admitted, and none has a production wiring entry before then."
-  - "Only the surfaces UCC-172 names are added to existing entries."
-  - "crew_auto_receipt appears only on assistant.redesign.cmd.chat_crew_auto_open_config and has no candidate exclusion. No wiring entry or candidate exclusion exists for cmd.runtime.automation_stop.set; it is excluded only as deliberately not registered. eli5_sheet is wired only as WM-064 states."
+- Each of the seven new rows has exactly one candidate exclusion until it is admitted, and none has a production
+  wiring entry before then.
+- Only the surfaces UCC-172 names are added to existing entries.
+- crew_auto_receipt appears only on assistant.redesign.cmd.chat_crew_auto_open_config and has no candidate
+  exclusion. No wiring entry or candidate exclusion exists for cmd.runtime.automation_stop.set; it is excluded
+  only as deliberately not registered. eli5_sheet is wired only as WM-064 states.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 risk_class: wand_module_surface_drift
 reasoning_tier: medium
 context_scope: assistant_wand_module_wiring
 implementation_surfaces:
-  - Plans/Wiring_Matrix.md
-  - Plans/Wiring_Matrix.production.json
-  - Plans/Wiring_Matrix.production.exclusions.json
+- Plans/Wiring_Matrix.md
+- Plans/Wiring_Matrix.production.json
+- Plans/Wiring_Matrix.production.exclusions.json
 node_compile_hint:
   mode: static_wiring_intent_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f section 7.4 CC-9"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-CMP-02"
-  - "Plans/Decision_Log.md#DL-130, #DL-135"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f
+  section 7.4 CC-9
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493
+  line B-CMP-02
+- 'Plans/Decision_Log.md#DL-130, #DL-135'
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "composer_not_empty"
-  - "ComposerBufferResult"
-  - "taught_rule_check"
-  - "message_chrome"
-  - "cmd.review.send_findings_to_agent"
-  - "assistant.redesign.w_024.chat_crew_auto_set"
-  - "locked"
-  - "TeachConfirmRequest"
-  - "DL-138"
-  - "Plans/Wiring_Matrix.production.exclusions.json"
-  - "command_not_registered"
-  - "assistant.redesign.cmd.chat_crew_auto_open_config"
-  - "crew_auto_receipt"
-  - "teach_document"
-  - "teach_receipt"
+- composer_not_empty
+- ComposerBufferResult
+- taught_rule_check
+- message_chrome
+- cmd.review.send_findings_to_agent
+- assistant.redesign.w_024.chat_crew_auto_set
+- locked
+- TeachConfirmRequest
+- DL-138
+- Plans/Wiring_Matrix.production.exclusions.json
+- command_not_registered
+- assistant.redesign.cmd.chat_crew_auto_open_config
+- crew_auto_receipt
+- teach_document
+- teach_receipt
 negative_constraints:
-  - "Do not write a production wiring entry for a UCC-171 row before its admission."
-  - "Do not wire crew_auto_receipt to any entry but the Crew Auto open-config entry, and never wire cmd.runtime.automation_stop.set."
+- Do not write a production wiring entry for a UCC-171 row before its admission.
+- Do not wire crew_auto_receipt to any entry but the Crew Auto open-config entry, and never wire cmd.runtime.automation_stop.set.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/Wiring_Matrix.md
-  - Plans/Wiring_Matrix.production.exclusions.json
+- Plans/Wiring_Matrix.md
+- Plans/Wiring_Matrix.production.exclusions.json
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-171, ContractName:Plans/UI_Command_Catalog.md#UCC-172, ContractName:Plans/Commands_System.md#CS-085

@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L840-L4870
+Source lines: L840-L4881
 
-Source SHA256: `7b49d74ae8d0974f1f9ad8bcca364f11f5cc39eaa18d8ac81ac05b9b3114764d`
+Source SHA256: `91bda34f087d7884b52e379c73490638301daebb0bf5aa77ffe6753611475195`
 
 ---
 
@@ -175,12 +175,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  Multi-account auto-switching is on by default for provider-using roles unless policy disables it. Policy is
-  primarily project-owned, runs snapshot the effective policy space at run start, and each attempt or message records
-  the effective account actually used. Requested provider/model/effort/persona/auth mode/account policy and effective
-  provider/model/effort/persona/auth mode/account remain visible and queryable. Account selection and env/config
-  wiring belong to the Provider contract, state lives in seglog and redb, secrets stay outside canonical storage, GUI
-  requirements remain UX-only, and same-provider accounts are not interchangeable buckets.
+  Multi-account auto-switching is on by default for provider-using roles unless policy disables it. Ordinary policy
+  resolves Default → Everywhere → Computer → optional Project → provider → account under SSYS-002/059 and MA-073;
+  account-local rungs retain their existing owner semantics, runs snapshot the effective policy space at run start,
+  and each attempt or message records the effective account actually used. Requested provider/model/effort/persona/auth
+  mode/account policy and effective provider/model/effort/persona/auth mode/account remain visible and queryable.
+  Account selection and env/config wiring belong to the Provider contract, state lives in seglog and redb, secrets
+  stay outside canonical storage, GUI requirements remain UX-only, and same-provider accounts are not interchangeable
+  buckets.
 gui_related: true
 gui_classification_reason: The unit includes GUI requirements and user-visible requested/effective disclosure.
 split_recommended: true
@@ -207,6 +209,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0005
+- 'source_ref:projects-pass2-20261103:S2/S3/N12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - Default behavior
 - Policy ownership
@@ -851,16 +855,21 @@ plan_unit_id: MA-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: 'credential_ref is a non-secret pointer to credential storage, formatted as credential_store:key_path,
-  with supported stores os_keychain, env, file, and cli. auth_surface describes credential consumption through header_bearer,
-  header_api_key, deprecated query_param, cli_managed, or oauth_token. Each provider definition specifies supported auth_surface
-  values so the HTTP client can attach credentials correctly and account validation rejects incompatible pairings early.
-  DL-259, Jared 2026-10-31: D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected
-  execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys
-  are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share
-  stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns
-  are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or
-  route invalidates stale validation; another account of the same provider has a distinct identity.'
+canonical_text: >-
+  credential_ref is a non-secret pointer to credential storage, formatted as credential_store:key_path, with supported
+  stores os_keychain, env, file, and cli. auth_surface describes credential consumption through header_bearer,
+  header_api_key, deprecated query_param, cli_managed, or oauth_token. Each provider definition specifies supported
+  auth_surface values so the HTTP client can attach credentials correctly and account validation rejects incompatible
+  pairings early. DL-259, Jared 2026-10-31: D6 A: the human signs in on the initiating active device while the
+  AI/tool runs on the selected execution host. Official tool sign-ins and private account roots stay with that
+  tool on that host; direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding,
+  Settings, model selection and Usage share stable account/profile/host/environment references, never provider-name
+  booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation
+  and execution host. Changing account, host or route invalidates stale validation; another account of the same
+  provider has a distinct identity. SSYS-008/MA-070 remain authoritative: live PM credential_ref uses the OS store
+  and legacy env/file/cli spellings above are compatibility only. MA-074 resolves chosen account IDs on the actual
+  destination Computer/Host/Environment through its own connection. Approved app authentication uses explicit
+  application scope with null Project under MACS-006, never an inferred Project or copied credential.
 gui_related: false
 gui_classification_reason: The unit defines credential indirection and validation semantics rather than GUI presentation.
 split_recommended: true
@@ -893,6 +902,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0017
+- 'source_ref:projects-pass2-20261103:S10/S11/N15; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - credential_ref
 - credential_store

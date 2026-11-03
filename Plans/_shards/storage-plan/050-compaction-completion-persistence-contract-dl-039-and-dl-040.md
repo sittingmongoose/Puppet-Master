@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19551-L19608
+Source lines: L19498-L19557
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -34,8 +34,8 @@ plan_unit_id: SP-259
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Storage admits the one compaction-completion family using the exact bindings, logical seglog commit point, scoped idempotency, redb projection/checkpoint transaction, custody and indefinite content-free retention specified above.
+canonical_text: |-
+  Storage admits the one compaction-completion family using the exact bindings, logical seglog commit point, scoped idempotency, redb projection/checkpoint transaction, custody and indefinite content-free retention specified above. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound. App compaction requires exact canonical source/branch/head/deletion/lease/checkpoint proof in its new version; no event-source reconstruction.
 gui_related: false
 gui_classification_reason: This unit defines persisted-event contracts and owner boundaries.
 depends_on: []
@@ -57,8 +57,10 @@ node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-039
-  - Plans/Decision_Log.md#DL-040
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-040
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 negative_constraints:
   - No runtime, buildability, independent-validator clearance, governance seal, WorkNodes, or NodeSeeds follows from this contract.
 owner_hints:

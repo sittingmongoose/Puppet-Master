@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1514-L1552
+Source lines: L1379-L1420
 
-Source SHA256: `9839be74b1158b51b7e6c1699218bd0394a8ff60c2e22a6c7119124ed3a8abc8`
+Source SHA256: `6597b1aa624433b3663cf1cf6eeea686c0399ad7388e843578639c6c179a9508`
 
 ---
 
@@ -28,7 +28,10 @@ plan_unit_id: UIW-016
 unit_type: ui_wiring_rule
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: Server/Egolite controls use one exact primary dispatch route or one typed local UI action; aliases normalize before permission and dispatch, rejected spellings remain inert, and every route preserves availability, disabled reason, accessibility, exact return, reverse consumers, and static-versus-native truth.
+canonical_text: |-
+  Server/Egolite controls use one exact primary dispatch route or one typed local UI action; aliases normalize before permission and dispatch, rejected spellings remain inert, and every route preserves availability, disabled reason, accessibility, exact return, reverse consumers, and static-versus-native truth.
+
+  Application settings-home/account-readiness and No project Server controls retain the actual Server, tagged Host/Environment, initiating Client and exact return generation. settings.follow carries read-only Settings delivery only, never Project/content authority. New trust/home/copy routes must use the command/contract freezes of their existing owners, with handler_unavailable before native implementation.
 gui_related: true
 depends_on: [CS-073, UCC-151, WM-050]
 unblocks: []

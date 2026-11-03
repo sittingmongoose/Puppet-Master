@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L13861-L13991
+Source lines: L14517-L14668
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -84,58 +84,79 @@ plan_unit_id: UCC-168
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  cmd.chat.queue.send_now steers one queued, not-yet-dispatched message into the running turn
-  without stopping the answer and emits chat.message.submitted for that message with delivery_mode
-  steer; it never advances the rest of the queue. cmd.chat.send gains delivery_mode (queue or
-  steer), resolved from general.interaction.queue-behavior (default Queue, DL-108) unless the
-  composer's switch overrides it; a queued send becomes an outbox entry that later dispatches
-  through the same handler. The other chat controls of ACD-469 through ACD-475 reuse existing
-  identities and add none: Stop is cmd.chat.stop; Edit on a queued entry is cmd.chat.queue.remove
-  followed by a local composer restore; Remove is cmd.chat.queue.remove; the header sound mute is
-  cmd.settings.transaction.apply on general.interaction.sound-effects; approving or declining a
-  needs-you item is cmd.runtime.approve or cmd.runtime.decline; jump-to-latest, working card fold,
-  expand, subject pin and follow-live are local view state (CDRY-013).
+canonical_text: 'cmd.chat.queue.send_now steers one queued, not-yet-dispatched message into the running turn
+  without stopping the answer and emits chat.message.submitted for that message with delivery_mode steer; it
+  never advances the rest of the queue. cmd.chat.send gains delivery_mode (queue or steer), resolved from general.interaction.queue-behavior
+  (default Queue, DL-108) unless the composer''s switch overrides it; a queued send becomes an outbox entry
+  that later dispatches through the same handler. The other chat controls of ACD-469 through ACD-475 reuse
+  existing identities and add none: Stop is cmd.chat.stop; Edit on a queued entry is cmd.chat.queue.remove
+  followed by a local composer restore; Remove is cmd.chat.queue.remove; the header sound mute is cmd.settings.transaction.apply
+  on general.interaction.sound-effects; approving or declining a needs-you item is cmd.runtime.approve or cmd.runtime.decline;
+  jump-to-latest, working card fold, expand, subject pin and follow-live are local view state (CDRY-013).
+
+
+  Current projects-refresh contract: The six existing cmd.chat.goal.* mutations, Goal editor, four collaboration
+  kinds, participant/message actions and Crew Auto admit explicit app siblings and original exact Project contracts.
+  Scope, original accepted source/hash, body/control/Stop, parent/receiver authority, roots, roster/config
+  revisions and canonical backup join at final dispatch. Ordinary updates never retarget immutable Goal/Plan/Crew
+  bindings. No retired goal.scheduled/degraded/child-state producer or Project Workflow/WorkNode certification
+  is revived. App Crew Auto uses an app-thread configuration revision, distinct from a thread override and
+  Project configuration; the same evaluator/coordination board remains sole owner. Conversion defaults to linked
+  new destination records after safe stop/fence. The exact consumer contract is UCC-218/WM-104 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: "Registers the Send now command and maps every other chat control to an existing identity."
+gui_classification_reason: Registers the Send now command and maps every other chat control to an existing
+  identity.
 split_recommended: false
-depends_on: [ACD-219, ACD-471, DL-108, UCC-119]
-unblocks: [F3-563]
+depends_on:
+- ACD-219
+- ACD-471
+- DL-108
+- UCC-119
+unblocks:
+- F3-563
 acceptance_criteria:
-  - "cmd.chat.queue.send_now has one handler and a production wiring entry."
-  - "cmd.chat.send accepts delivery_mode queue or steer."
-  - "No new command exists for Edit, the header mute, approvals or view-state controls."
+- cmd.chat.queue.send_now has one handler and a production wiring entry.
+- cmd.chat.send accepts delivery_mode queue or steer.
+- No new command exists for Edit, the header mute, approvals or view-state controls.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-218; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 risk_class: chat_command_catalog_gap
 reasoning_tier: high
 context_scope: chat_composer_commands
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.production.json
-  - Plans/assistant-chat-design.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
+- Plans/assistant-chat-design.md
 node_compile_hint:
   mode: chat_composer_command_catalog
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-108"
-  - "Plans/assistant-chat-design.md#ACD-219"
+- Plans/Decision_Log.md#DL-108
+- Plans/assistant-chat-design.md#ACD-219
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "cmd.chat.queue.send_now"
-  - "delivery_mode"
-  - "cmd.chat.send"
-  - "cmd.chat.queue.remove"
-  - "cmd.runtime.approve"
-  - "cmd.runtime.decline"
+- cmd.chat.queue.send_now
+- delivery_mode
+- cmd.chat.send
+- cmd.chat.queue.remove
+- cmd.runtime.approve
+- cmd.runtime.decline
 negative_constraints:
-  - "Do not mint a separate edit, mute or steer command."
-  - "Do not let cmd.chat.queue.send_now stop the running answer or advance the rest of the queue."
+- Do not mint a separate edit, mute or steer command.
+- Do not let cmd.chat.queue.send_now stop the running answer or advance the rest of the queue.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/assistant-chat-design.md
+- Plans/UI_Command_Catalog.md
+- Plans/assistant-chat-design.md
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-471, ContractName:Plans/Decision_Log.md#DL-108

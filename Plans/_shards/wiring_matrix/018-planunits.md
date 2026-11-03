@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L649-L3002
+Source lines: L649-L3069
 
-Source SHA256: `3f8150617657a7e9de14a5815e7cc3097714249b08ea146d6967ac8137771f7b`
+Source SHA256: `3899744314444527ed5abfa724f4abdb67822efa4d7b3852a2db461438fffebe`
 
 ---
 
@@ -188,9 +188,24 @@ plan_unit_id: WM-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'The Markdown example rows remain `(EXAMPLE)` rows drawn from `Plans/UI_Command_Catalog.md`, preserving the listed command IDs for GitHub auth, LSP, widgets, graph selection/retry, orchestrator tab switching, and chat thread creation.'
+canonical_text: 'The Markdown example rows remain `(EXAMPLE)` rows drawn from `Plans/UI_Command_Catalog.md`,
+  preserving the listed command IDs for GitHub auth, LSP, widgets, graph selection/retry, orchestrator tab
+  switching, and chat thread creation.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: 'The unit preserves user-visible UI element example wiring rows.'
+gui_classification_reason: The unit preserves user-visible UI element example wiring rows.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -201,8 +216,13 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - WM-005 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -216,38 +236,43 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0006
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-- 'Example Entries'
-- '(EXAMPLE)'
-- 'btn.github.connect'
-- 'btn.github.disconnect'
-- 'menu.lsp.goto_def'
-- 'menu.lsp.find_refs'
-- 'btn.widget.add'
-- 'btn.widget.remove'
-- 'node.graph.select'
-- 'btn.graph.retry'
-- 'tab.orchestrator.switch'
-- 'btn.chat.new'
-- 'cmd.github.connect'
-- 'cmd.github.disconnect'
-- 'cmd.lsp.goto_definition'
-- 'cmd.lsp.find_references'
-- 'cmd.widget.add'
-- 'cmd.widget.remove'
-- 'cmd.graph.select_node'
-- 'cmd.graph.retry_node'
-- 'cmd.orchestrator.switch_tab'
-- 'cmd.chat.new'
-negative_constraints: []
+- Example Entries
+- (EXAMPLE)
+- btn.github.connect
+- btn.github.disconnect
+- menu.lsp.goto_def
+- menu.lsp.find_refs
+- btn.widget.add
+- btn.widget.remove
+- node.graph.select
+- btn.graph.retry
+- tab.orchestrator.switch
+- btn.chat.new
+- cmd.github.connect
+- cmd.github.disconnect
+- cmd.lsp.goto_definition
+- cmd.lsp.find_references
+- cmd.widget.add
+- cmd.widget.remove
+- cmd.graph.select_node
+- cmd.graph.retry_node
+- cmd.orchestrator.switch_tab
+- cmd.chat.new
+negative_constraints:
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, SchemaID:Wiring_Matrix.schema.json'
-- 'ContractRef: UICommand:cmd.github.connect, UICommand:cmd.github.disconnect, UICommand:cmd.lsp.goto_definition, UICommand:cmd.lsp.find_references, UICommand:cmd.widget.add, UICommand:cmd.widget.remove, UICommand:cmd.graph.select_node, UICommand:cmd.graph.retry_node, UICommand:cmd.orchestrator.switch_tab, UICommand:cmd.chat.new'
+- 'ContractRef: UICommand:cmd.github.connect, UICommand:cmd.github.disconnect, UICommand:cmd.lsp.goto_definition,
+  UICommand:cmd.lsp.find_references, UICommand:cmd.widget.add, UICommand:cmd.widget.remove, UICommand:cmd.graph.select_node,
+  UICommand:cmd.graph.retry_node, UICommand:cmd.orchestrator.switch_tab, UICommand:cmd.chat.new'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-- 'Plans/Wiring_Matrix.md'
-- 'Plans/UI_Command_Catalog.md'
+- Plans/Wiring_Matrix.md
+- Plans/UI_Command_Catalog.md
 ```
 
 ### WM-006 - Json Example Shape
@@ -1121,14 +1146,25 @@ plan_unit_id: WM-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: >-
-  Minimum required rows cover project switcher, thread details, compaction, restore branch, and related
-  shell/chat/history command wiring without losing canonical project/thread identity, including explicit
-  Compact Now dispatch, result/receipt-backed visible degraded-state wiring with no unregistered
-  context.compaction.* EventRecord, and command-result statuses for already_running, cancelled, no_op,
-  unavailable, retry_scheduled, completed, and failed. Amended 2026-10-29 (PM7): B1/B6: title-bar project
-  box adds producers for cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab, retaining
-  Projects view/palette as primary and the same project/workspace owner.
+canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch,
+  and related shell/chat/history command wiring without losing canonical project/thread identity, including
+  explicit Compact Now dispatch, result/receipt-backed visible degraded-state wiring with no unregistered context.compaction.*
+  EventRecord, and command-result statuses for already_running, cancelled, no_op, unavailable, retry_scheduled,
+  completed, and failed. Amended 2026-10-29 (PM7): B1/B6: title-bar project box adds producers for cmd.project.switch_active_tab
+  and cmd.project.open_in_new_workspace_tab, retaining Projects view/palette as primary and the same project/workspace
+  owner.
+
+
+  Current projects-refresh contract: One Permissions admission distinguishes actual human, task mode and human-approved
+  build_grant. YOLO permits ordinary push/publish and needed create without another ordinary yes; force-with-lease
+  only on a PM-created-for-this-work branch, never main/default/protected. Retain risky asks outside an exact
+  grant-created-resource exception and retain FileSafe/trust/secrets/DAE/capabilities/explicit Always. Approve/expand/renew
+  a Project build grant remains human-only and binds exact Plan/hash/build/resources/permission/Stop; cleanup
+  requires verified created UID/generation. What the build did is the existing ObservableWork/History projection;
+  Start/Stop stay with the run owner, no new build event/log engine. Preview, target/receipt links and truthful
+  Undo/No safe Undo remain visible. The exact consumer contract is UCC-217/WM-103 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: The unit defines user-visible project/thread command wiring rows.
 split_recommended: false
@@ -1150,6 +1186,9 @@ acceptance_criteria:
   owner.'
 - 'B1/B2/B6: project-box ordinary and Ctrl/Cmd+Enter activations select the switch/new-tab commands respectively;
   Ctrl+Shift+P opens only, retaining stable project/workspace identity and Projects view/palette as primary.'
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-217; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1165,6 +1204,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0030
 - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
 - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - Minimum required rows
 - project switcher
@@ -1187,6 +1227,8 @@ preserved_exact_tokens:
 negative_constraints:
 - The preserved context.compaction.failed token is historical source lineage and must not be emitted or registered
   as an EventRecord family.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions:
@@ -1648,9 +1690,24 @@ plan_unit_id: WM-026
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: Worktree binding wires Source Control, File Manager roots, LSP root_identity, and executor execution_unit_context.worktree_id / working_directory deterministically; Glossary keeps thread-worktree terminology as compatibility reference only while Wiring Matrix records producer/consumer edges.
+canonical_text: 'Worktree binding wires Source Control, File Manager roots, LSP root_identity, and executor
+  execution_unit_context.worktree_id / working_directory deterministically; Glossary keeps thread-worktree
+  terminology as compatibility reference only while Wiring Matrix records producer/consumer edges.
+
+
+  Current projects-refresh contract: One Permissions admission distinguishes actual human, task mode and human-approved
+  build_grant. YOLO permits ordinary push/publish and needed create without another ordinary yes; force-with-lease
+  only on a PM-created-for-this-work branch, never main/default/protected. Retain risky asks outside an exact
+  grant-created-resource exception and retain FileSafe/trust/secrets/DAE/capabilities/explicit Always. Approve/expand/renew
+  a Project build grant remains human-only and binds exact Plan/hash/build/resources/permission/Stop; cleanup
+  requires verified created UID/generation. What the build did is the existing ObservableWork/History projection;
+  Start/Stop stay with the run owner, no new build event/log engine. Preview, target/receipt links and truthful
+  Undo/No safe Undo remain visible. The exact consumer contract is UCC-217/WM-103 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: The unit covers visible Source Control, File Manager, chat, LSP, and execution context switching behavior.
+gui_classification_reason: The unit covers visible Source Control, File Manager, chat, LSP, and execution context
+  switching behavior.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -1662,8 +1719,13 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - WM-026 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-217; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1677,6 +1739,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0034
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - Chat ↔ Source Control wiring
 - Chat ↔ File Manager wiring
@@ -1692,11 +1755,15 @@ preserved_exact_tokens:
 - working_directory
 - Plans/Glossary.md
 - /Glossary.md
-negative_constraints: []
+negative_constraints:
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 preserved_contractrefs:
-- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Run_Modes.md'
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md,
+  ContractName:Plans/Run_Modes.md'
 compatibility_only_notes:
-- Terminology for thread worktree binding, accordion layout, working_directory, merge lock, and pre-merge test gate stays in Plans/Glossary.md; Wiring Matrix records producer/consumer edges only.
+- Terminology for thread worktree binding, accordion layout, working_directory, merge lock, and pre-merge test
+  gate stays in Plans/Glossary.md; Wiring Matrix records producer/consumer edges only.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Wiring_Matrix.md

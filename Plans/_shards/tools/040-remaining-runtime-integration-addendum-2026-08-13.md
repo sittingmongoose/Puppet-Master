@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L12391-L12565
+Source lines: L12476-L12655
 
-Source SHA256: `9f8f951e268b5a9642675d8bc16560174ee3265592aa1c7c4d77e345c3e8f504`
+Source SHA256: `ede2a7942ae8c531e17d141bb5f9b2c6f0a9e43c259bfe1fa9f102f70e9d0a67`
 
 ---
 
@@ -20,10 +20,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  Every tool, Skill, provider, and MCP capability progresses through independently receipted installed,
-  project_enabled, policy_available, selected_for_request, and invoked stages. Prompt-facing catalogs use deterministic
-  L0-L3 materialization, stable schema ordering, and bounded omission receipts; no complete large catalog or all full
-  schemas/instructions are injected eagerly.
+  Every tool, Skill, provider, and MCP capability progresses through independently receipted
+  installed, project_enabled, policy_available, selected_for_request, and invoked stages.
+  Prompt-facing catalogs use deterministic L0-L3 materialization, stable schema ordering, and bounded
+  omission receipts; no complete large catalog or all full schemas/instructions are injected eagerly.
+  With no Project, project_enabled records resolved Everywhere/Computer/thing enablement and the
+  absence of an inapplicable Project gate. Installation, policy_available, selection and invocation
+  must still independently pass; true is not an automatic allow.
 gui_related: false
 gui_classification_reason: Backend tool admission, prompt-materialization, and receipt contract; not GUI implementation work.
 depends_on: [T-170, T-172, PP-072]
@@ -50,9 +53,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
-  - ACCOUNTABILITY_MATRIX.json:CTX-015
-  - reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+- 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
+- ACCOUNTABILITY_MATRIX.json:CTX-015
+- reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8; N6/N12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: []
 preserved_exact_tokens:
   - installed

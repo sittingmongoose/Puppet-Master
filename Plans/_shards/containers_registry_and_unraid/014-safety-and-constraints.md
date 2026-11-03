@@ -2,14 +2,14 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L935-L941
+Source lines: L916-L922
 
-Source SHA256: `9aa7d954d0264e081d8647735683a7d0b9422b13891ceaae17bef41f4cc8bc4e`
+Source SHA256: `64b5a9a3310152bf3b30d972a4dd22c9db59ca42a1c6b53db7e851bc75fe306e`
 
 ---
 
 ## Safety and constraints
-- repository creation confirmation is mandatory and non-bypassable
+- repository creation uses Regular protected confirmation or typed PS-146/147 mode/build authority; protected auth/secrets/trust/target gates still apply
 - secrets must not be written to redb, project files, YAML, or evidence
 - publish/template-repo flows must redact secrets in logs/evidence
 - docs must distinguish DockerHub image distribution from Unraid template distribution

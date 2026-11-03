@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2575-L2885
+Source lines: L2579-L2893
 
-Source SHA256: `b73c7dd92c540a1fc7c7a978302bb3bd760b6d277c4f5b7a36e637a448122d77`
+Source SHA256: `7578becdd2f6be0c7aca52532f04b6d53d6e1bdfceadd11461d48312638d4439`
 
 ---
 
@@ -22,7 +22,7 @@ owner_doc: Plans/Planning_Wizard.md
 canonical_text: 'Product Onboarding keeps the four First Project intents new/existing_local/existing_online/restore,
   presenting New, Existing and Restore with the selected Existing card’s local/online/device choices joined underneath,
   independently selects Server, Storage and Client, and keeps local Git/Jujutsu Safe History independent from optional
-  forge hosting and complementary FileSafe. A durable reversible draft includes the Settings-owned Start fresh or Start
+  forge hosting and complementary FileSafe. A durable reversible draft includes the Settings-owned Your usual settings or Start
   like another Project preview. Selected-source read-only browsing/validation and individually consented source-account
   authentication may occur before Review; destination, repository, clone/history, Settings and Project mutations require
   the reviewed owner commit. Broad provider setup follows the actual committed Project. DL-259, Jared 2026-10-31: D1
@@ -140,7 +140,8 @@ canonical_text: 'Product Onboarding keeps the four First Project intents new/exi
   retired Source Control choice invalidates its current sign-in, details or repository-list step opens the service
   chooser; the first Back leaves that chooser for the preceding still-valid step instead of reopening an invalidated
   step or looping. The missing choice is presented as a service to choose again, not a raw empty-value label. Explicit
-  admitted selection and fresh owner validation remain required; redirecting supplies no service or authorization.'
+  admitted selection and fresh owner validation remain required; redirecting supplies no service or authorization.
+  PWIZ-037 is the common re-entry presentation. A new registry Project from unregistered folder/online/device content is eligible for detached settings copy; merely opening an existing Project, Later and connect-only are not. Every source route consumes SCS-025 inspection; work Computer and file source remain distinct. P7 preserves spaces in the local folder name. The exact per-service create/link fields use FGI-023 and PJCT-010, Standard backup uses BRS-032, and Jujutsu object-format choice remains only in Settings. Existing PM7 FO-22 current-answer applicability, valid Back history, invalidated abandoned branches, owner-result feedback, service admission and fresh Review behavior remain binding.'
 gui_related: true
 gui_classification_reason: Defines the visible First Project choices, connect-existing order, editable live Review projection,
   and defer behavior.
@@ -292,8 +293,8 @@ source_lineage:
 - Concepts/pm7-tools/onboarding_cinematic_source.py
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
   product behavior only.
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
-  sweep; source implementation serviceChoice and address map are lineage only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and
+  same-kind sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
@@ -301,6 +302,9 @@ source_lineage:
 - 'Jared 2026-11-01 via PM7 lead: hosted Forgejo is not offered; Forgejo repository-restricted tokens — we can leave
   it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
 - DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - Start a new project
 - Open a folder here

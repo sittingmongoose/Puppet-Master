@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L3546-L3658
+Source lines: L3559-L3681
 
-Source SHA256: `b73c7dd92c540a1fc7c7a978302bb3bd760b6d277c4f5b7a36e637a448122d77`
+Source SHA256: `7578becdd2f6be0c7aca52532f04b6d53d6e1bdfceadd11461d48312638d4439`
 
 ---
 
@@ -58,7 +58,9 @@ canonical_text: 'When the device holding a Project''s existing folder, its backu
   authentication limited to read-only browsing and validation of the chosen folder or backup; folder creation,
   writes and Project registration wait for the reviewed commit. QA2 follow-up N1, integration 6609384fd0; DL-258:
   A protected SSH key passphrase unlock belongs to that exact selected key; changing keys requires that key’s
-  own owner-proven access and never inherits another key’s unlock.'
+  own owner-proven access and never inherits another key’s unlock.
+  Paired Computer, SSH, SMB/NFS and mounted acquisition all consume the same read-only SCS-025 inspection and explicit source locator; inspection cannot manufacture trust, mount identity or hosted binding. Existing history wins the backend selection. A verified mounted source registers as mounted_existing; ordinary Git/JJ copies keep git_clone/jujutsu_clone with acquisition provenance.
+  SSH remains a separate selected transport. Its protected host-trust and public-key-install actions are exactly cmd.server.ssh.trust and cmd.server.ssh.public_key.install under SRV-018/RAS-017, each with preview|apply and human-only apply on the initiating active Client. Only the Server owner writes known-host trust or authorized_keys for the exact observed host/port/key and remote account. Changed host keys block until a fresh explicit replacement preview compares both fingerprints and the person approves; weak-key eligibility is checked before reuse and public-key-only installation preserves entries under observed authorized_keys CAS with readback/reconciliation. A selected key never inherits another key unlock. These operations do not pair a Client, claim/provision a Server, register a Project or expose SSH over public ingress; the PM transport still uses its distinct Server pairing. No private key/password/passphrase enters the setup draft, request, result or log. Missing native owner proof remains handler_unavailable with expected_event_types=[]; neither cmd.project.ssh.* nor cmd.ssh_connection.* is an alias.'
 gui_related: true
 gui_classification_reason: The identity check, the approval, code and QR choices, the waiting and expired states, the
   Use SSH instead choice, and the Review line naming the paired device are visible onboarding steps.
@@ -100,16 +102,24 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - user-instruction:2026-09-25-files-through-another-puppet-master
-  - Plans/Planning_Wizard.md#PWIZ-024
-  - Plans/Server_System.md#SRV-004
-  - Plans/Server_System.md#SRV-006
-  - Concepts/onboarding/opus-5.5/AUDIT.md
+- user-instruction:2026-09-25-files-through-another-puppet-master
+- Plans/Planning_Wizard.md#PWIZ-024
+- Plans/Server_System.md#SRV-004
+- Plans/Server_System.md#SRV-006
+- Concepts/onboarding/opus-5.5/AUDIT.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
+- 'Plans/Server_System.md#SRV-018; Plans/Remote_Access_System.md#RAS-017; A interface freeze pm-mail 1103211659-9a77 (2026-11-03)'
 preserved_exact_tokens:
-  - puppet_master
-  - cmd.client.pair.start
-  - source_access_authorization_refs
-  - Source Location
+- puppet_master
+- cmd.client.pair.start
+- source_access_authorization_refs
+- Source Location
+- cmd.server.ssh.trust
+- cmd.server.ssh.public_key.install
+- expected_event_types=[]
+- handler_unavailable
 negative_constraints:
   - Do not pair with a Puppet Master on a device without approval, code or QR.
   - Do not record a folder reached through another Puppet Master as ssh or as an SSH key install.

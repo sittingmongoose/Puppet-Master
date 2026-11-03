@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L474-L1387
+Source lines: L480-L1397
 
-Source SHA256: `14848fb74a4cec851913f354270a3e30a71dad6dd4ef753ade4e4d4158c3cd78`
+Source SHA256: `6e1ee908148cdf8fd6065f6e3121064753df6d5c65f7f56ab901f82d2ab71157`
 
 ---
 
@@ -273,9 +273,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/CLI_Bridged_Providers.md
 canonical_text: >-
-  CLI-bridged provider launches and MCP tool invocations use the frozen
-  execution-context working_directory as the worktree path, with cwd resolving
-  git-aware commands and no extra provider-specific worktree configuration.
+  CLI and MCP launches receive the frozen execution-context working_directory. It is the bound
+  worktree path when present; for No project it is the lazily created chat folder or an explicitly
+  admitted directory on the named Computer. cwd never falls back to home, focus or a synthetic main
+  Project. Conversion changes only future PM-owned context after destination admission;
+  provider-native historical state/profile is not rewritten to pretend it moved.
 gui_related: false
 gui_classification_reason: Worktree execution-context passthrough is runtime launch behavior.
 split_recommended: false
@@ -300,7 +302,9 @@ node_compile_hint:
   mode: cli_bridged_provider_worktree_execution_context
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0007
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0007
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N5/N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "working_directory"
   - "cwd"

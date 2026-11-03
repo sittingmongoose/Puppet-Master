@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6183-L6395
+Source lines: L6389-L6633
 
-Source SHA256: `9006bc4dadc370bafa320a238e20908f23ddab3d4885e367d6f80b1c0dda1e84`
+Source SHA256: `8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013`
 
 ---
 
@@ -176,48 +176,80 @@ plan_unit_id: CS-078
 unit_type: command_registry
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  The Puppet Master Assistant redesign registers eighty-four exact command contracts across eleven owner documents, each with one typed request, one typed result, and one sole future handler, plus a shared typed error vocabulary of invalid_request, owner_unavailable, command_not_registered, permission_denied, stale_revision, stale_currentness, target_not_found, precondition_failed, idempotency_conflict, quota_exhausted, manual_stop_latched, and cancelled. cmd.chat.goal.start, cmd.chat.goal.update, and cmd.bsd.set are pre-existing registrations whose contracts are revised in place with no peer row and no second handler. Sixty-seven semantic event names and thirty-nine runtime record families are proposed and remain requires_central_adjudication; no owner may emit an event or admit a storage writer until Event Authority and storage registration close for that name. Every route stays handler_unavailable, and a typed contract plus a catalog row plus a production-intent wiring row prove design closure and prove nothing about a native dispatcher, handler execution, rendered control, receipt, storage write, or runtime readiness.
+canonical_text: 'The Puppet Master Assistant redesign registers eighty-four exact command contracts across
+  eleven owner documents, each with one typed request, one typed result, and one sole future handler, plus
+  a shared typed error vocabulary of invalid_request, owner_unavailable, command_not_registered, permission_denied,
+  stale_revision, stale_currentness, target_not_found, precondition_failed, idempotency_conflict, quota_exhausted,
+  manual_stop_latched, and cancelled. cmd.chat.goal.start, cmd.chat.goal.update, and cmd.bsd.set are pre-existing
+  registrations whose contracts are revised in place with no peer row and no second handler. Sixty-seven semantic
+  event names and thirty-nine runtime record families are proposed and remain requires_central_adjudication;
+  no owner may emit an event or admit a storage writer until Event Authority and storage registration close
+  for that name. Every route stays handler_unavailable, and a typed contract plus a catalog row plus a production-intent
+  wiring row prove design closure and prove nothing about a native dispatcher, handler execution, rendered
+  control, receipt, storage write, or runtime readiness.
+
+
+  Current projects-refresh contract: All six Plan/Deep Plan strategies, exact approved versions, agent/goal_driven/Crew
+  Build, Build At and scheduled messages/tasks work in app scope through existing owners. Only Planning Wizard,
+  PRD Builder and Orchestrator retain no-project workflow gates; Project-native actions still require actual
+  targets. Build At atomically commits one frozen schedule/window, creates no run, and never dispatches execution_window.create
+  a second time. Server-owned timers preserve DST/grace/missed-policy/idempotency, frozen text/attachments/target
+  version and fresh authority/Stop checks. App operational pause has independent real Server custody and user-only
+  clear, never a Settings value or missing-as-off. N25 stops/fences source work and explicitly re-admits mapped
+  frozen targets with fresh consent/epochs; no automatic resume, latest-version substitution or duplicate occurrence.
+  The exact consumer contract is UCC-219/WM-105 and Plans/projects_refresh_command_bindings.json. Historical
+  schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified;
+  unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Every registered command has named GUI consumers whose availability and disabled reason depend on these contracts.
-depends_on: [CS-077, UCC-156]
+gui_classification_reason: Every registered command has named GUI consumers whose availability and disabled
+  reason depend on these contracts.
+depends_on:
+- CS-077
+- UCC-156
 unblocks: []
 acceptance_criteria:
-  - All eighty-four commands carry one owner, one typed request, one typed result, and one sole future handler.
-  - The three pre-existing IDs are revised in place with no duplicate registration or handler.
-  - A failure never advances a Goal, Plan, To-Do, workflow, BSD assignment, or schedule and never returns a success-shaped receipt.
-  - manual_stop_latched is terminal against every scheduled or quota-driven auto-resume path.
-  - All sixty-seven events and thirty-nine record families remain unregistered until central adjudication closes.
+- All eighty-four commands carry one owner, one typed request, one typed result, and one sole future handler.
+- The three pre-existing IDs are revised in place with no duplicate registration or handler.
+- A failure never advances a Goal, Plan, To-Do, workflow, BSD assignment, or schedule and never returns a success-shaped
+  receipt.
+- manual_stop_latched is terminal against every scheduled or quota-driven auto-resume path.
+- All sixty-seven events and thirty-nine record families remain unregistered until central adjudication closes.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-219; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-  - python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: unregistered_emission_or_simulated_command_success
 reasoning_tier: high
 context_scope: assistant_redesign_central_registration
 implementation_surfaces:
-  - Plans/Commands_System.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.production.json
-  - Plans/storage-plan.md
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
+- Plans/storage-plan.md
 node_compile_hint:
   mode: static_central_command_registration_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:machine/commands.json
-  - pm-assistant-implementation-2026-09-02-recovered:machine/events.json
-  - pm-assistant-implementation-2026-09-02-recovered:machine/runtime_records.json
-  - pm-assistant-implementation-2026-09-02-recovered:DRY-003
+- pm-assistant-implementation-2026-09-02-recovered:machine/commands.json
+- pm-assistant-implementation-2026-09-02-recovered:machine/events.json
+- pm-assistant-implementation-2026-09-02-recovered:machine/runtime_records.json
+- pm-assistant-implementation-2026-09-02-recovered:DRY-003
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "handler_unavailable"
-  - "command_not_registered"
-  - "requires_central_adjudication"
-  - "manual_stop_latched"
+- handler_unavailable
+- command_not_registered
+- requires_central_adjudication
+- manual_stop_latched
 negative_constraints:
-  - Do not emit a proposed event before Event Authority admits its name and payload schema.
-  - Do not admit a storage writer before the record family is registered.
-  - Do not return a success-shaped receipt for a failed command.
+- Do not emit a proposed event before Event Authority admits its name and payload schema.
+- Do not admit a storage writer before the record family is registered.
+- Do not return a success-shaped receipt for a failed command.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 ```

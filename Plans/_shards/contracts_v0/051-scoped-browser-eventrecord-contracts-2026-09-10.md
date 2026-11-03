@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L21698-L21777
+Source lines: L21645-L21725
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -17,12 +17,8 @@ plan_unit_id: CV-332
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Browser EventRecords consume the existing EventRecord 2.0 envelope and Case L identity/replay rules.
-  Fifty-three exact prepared event_type values each select one unique closed metadata payload schema from
-  browser_event_payloads.schema.json through browser_event_admission.json. Preparation does not register them;
-  only an admitted_static_contract row with its exact central family binding passes admission. Producer admission requires the
-  actual owner transition and verified exact scope, not a Client action or receipt-shaped object alone.
+canonical_text: |-
+  Browser EventRecords consume the existing EventRecord 2.0 envelope and Case L identity/replay rules. Fifty-three exact prepared event_type values each select one unique closed metadata payload schema from browser_event_payloads.schema.json through browser_event_admission.json. Preparation does not register them; only an admitted_static_contract row with its exact central family binding passes admission. Producer admission requires the actual owner transition and verified exact scope, not a Client action or receipt-shaped object alone. CV-366’s application browser sibling selects a distinct whole source/action/producer/index/read/reset/backup graph. Fifty-three prepared names are not fifty-three admitted app writers. Protected AuthBrowserSession remains separate, transient, human-only and excluded from app automation/capture/restore.
 gui_related: false
 gui_classification_reason: This is event envelope, payload, producer and replay authority.
 depends_on: [CV-317, SMPFS-147]
@@ -43,7 +39,12 @@ reasoning_tier: high
 context_scope: browser_eventrecord_contract
 implementation_surfaces: [Plans/event_record.schema.json, Plans/event_family_registry.json, Plans/browser_event_admission.json, Plans/browser_event_payloads.schema.json, Plans/storage-plan.md]
 node_compile_hint: {mode: static_event_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution, source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md, USER-PACKET-GAP-CLOSURE-20260910]
+source_lineage:
+- Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution
+- source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md
+- USER-PACKET-GAP-CLOSURE-20260910
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; B-F10,C-F10
 negative_constraints:
   - Do not create a second EventRecord envelope, idempotency algorithm, arbitrary event alias, payload body store, or protected-auth event route.
   - Do not infer producer execution, native checkpoint safety, storage-family admission, complete global event census, or readiness from static registration.

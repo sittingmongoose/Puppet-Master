@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L20463-L20531
+Source lines: L20426-L20489
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -19,15 +19,8 @@ plan_unit_id: CV-314
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Contracts_V0 closes the residual FABLE feature-contract gaps for owner-section bodies, remote/tunnel
-  WebSocket authentication, runtime-surface readiness probing, and session-prompt admission inbox events.
-  Remote or tunneled WebSocket setup uses a proof-of-possession bearer session token bound to
-  runtime_id, project_id, session_id, origin, csrf_nonce, and permission_snapshot_id; the server rejects
-  missing, expired, mismatched, replayed, or origin-invalid handshakes before initialize and emits redacted
-  auth receipts. Runtime readiness is a typed probe with request fields, result states, reasons, and roundtrip
-  evidence refs. Session-prompt admission is a typed inbox event family with idempotency derived from
-  session_id, prompt_id, target_thread_id, and normalized prompt hash.
+canonical_text: |-
+  Contracts_V0 closes the residual FABLE feature-contract gaps for owner-section bodies, remote/tunnel WebSocket authentication, runtime-surface readiness probing, and session-prompt admission inbox events. Remote or tunneled WebSocket setup uses a proof-of-possession bearer session token bound to runtime_id, project_id, session_id, origin, csrf_nonce, and permission_snapshot_id; the server rejects missing, expired, mismatched, replayed, or origin-invalid handshakes before initialize and emits redacted auth receipts. Runtime readiness is a typed probe with request fields, result states, reasons, and roundtrip evidence refs. Session-prompt admission is a typed inbox event family with idempotency derived from session_id, prompt_id, target_thread_id, and normalized prompt hash. An admitted app WebSocket session binds the explicit scope, owning Server, runtime/session/Client/origin/CSRF and permission refs through a versioned successor. Conversion reissues target-authorized credentials/routes; source tokens never carry across as destination authority. Historical Project auth bindings stay exact.
 gui_related: true
 gui_classification_reason: WebSocket/session readiness errors and session-prompt admission are visible to runtime/chat surfaces, while the fields themselves are backend contracts.
 depends_on: [CV-306, CV-307, CV-308, CV-313]
@@ -56,11 +49,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - fablereport.md:505
-  - fablereport.md:517
-  - fablereport.md:518
-  - fablereport.md:519
-  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+- fablereport.md:505
+- fablereport.md:517
+- fablereport.md:518
+- fablereport.md:519
+- Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F04,A-F07
 source_atom_ids: []
 preserved_exact_tokens:
   - "Canonical owner-section requirements"

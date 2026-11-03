@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34104-L34813
+Source lines: L33932-L34636
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -275,16 +275,8 @@ plan_unit_id: F3-475
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The dot-v1 panel-state key family gains four registrations:
-  docker_manager_panel_state.v1:{project_id}, testing_panel_state.v1:{project_id},
-  agents_panel_state.v1:{project_id}, and source_control_panel_state.v1:{project_id},
-  joining the existing search_panel_state.v1, gha_panel_state.v1, and
-  artifact_panel_state.v1 registrations (F3-217). Plans/storage-plan.md remains the
-  schema owner for every panel-state key; this unit is the GUI-side cross-registration
-  that names the keys and their per-project scope, and the storage plan must carry the
-  matching schema rows. The F3-162 source_control.project_state.{project_id} mention
-  remains a separate data-scope record and is not this panel UX-state key.
+canonical_text: |-
+  The dot-v1 panel-state key family gains four registrations: docker_manager_panel_state.v1:{project_id}, testing_panel_state.v1:{project_id}, agents_panel_state.v1:{project_id}, and source_control_panel_state.v1:{project_id}, joining the existing search_panel_state.v1, gha_panel_state.v1, and artifact_panel_state.v1 registrations (F3-217). Plans/storage-plan.md remains the schema owner for every panel-state key; this unit is the GUI-side cross-registration that names the keys and their per-project scope, and the storage plan must carry the matching schema rows. The F3-162 source_control.project_state.{project_id} mention remains a separate data-scope record and is not this panel UX-state key. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This unit registers the persistence keys behind visible panel UX state restoration.
 split_recommended: false
@@ -307,8 +299,11 @@ node_compile_hint:
   mode: side_panel_state_persistence_key_registrations
   create_worknodes: false
 source_lineage:
-- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
-- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves files concept; source-lineage-only)"
+- Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only
+  per Plans/usage-feature.md)
+- Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves files concept; source-lineage-only)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "docker_manager_panel_state.v1:{project_id}"
 - "testing_panel_state.v1:{project_id}"

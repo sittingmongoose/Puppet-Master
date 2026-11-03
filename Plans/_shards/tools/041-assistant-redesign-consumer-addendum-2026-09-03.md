@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L12567-L12796
+Source lines: L12657-L12891
 
-Source SHA256: `9f8f951e268b5a9642675d8bc16560174ee3265592aa1c7c4d77e345c3e8f504`
+Source SHA256: `ede2a7942ae8c531e17d141bb5f9b2c6f0a9e43c259bfe1fa9f102f70e9d0a67`
 
 ---
 
@@ -18,12 +18,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  The todowrite tool and every provider-native TodoWrite-style whole-list payload are proposal endpoints that Tools
-  normalizes, binds to exact thread, project, list revision, actor, permission snapshot, and idempotency key, and hands
-  to the ToDoController owned by Plans/ToDo_Runtime.md for reconciliation against the canonical list; whole-list
-  replacement is never live authority, per-item proposal outcomes are returned individually, and every canonical status
-  change is one receipted transition carrying item-level cause evidence with a satisfied expected outcome rather than a
-  bare tool success.
+  The todowrite tool and every provider-native TodoWrite-style whole-list payload are proposal
+  endpoints that Tools normalizes, binds to exact thread, explicit application-or-Project scope with
+  nullable project_id, Computer, list revision, actor, permission snapshot, and idempotency key, and
+  hands to the ToDoController owned by Plans/ToDo_Runtime.md for reconciliation against the canonical
+  list; whole-list replacement is never live authority, per-item proposal outcomes are returned
+  individually, and every canonical status change is one receipted transition carrying item-level
+  cause evidence with a satisfied expected outcome rather than a bare tool success. Conversion uses
+  the To-Do owner's explicit binding map and fresh admission, never a whole-list rewrite or completion
+  inference.
 gui_related: true
 gui_classification_reason: Determines what the Activity To-Do list and approval prompts may show as an applied change versus a proposal outcome.
 depends_on: [T-027, T-028, T-007, T-076]
@@ -47,11 +50,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:TODO-009
-  - pm-assistant-implementation-2026-09-02-recovered:TODO-010
-  - pm-assistant-implementation-2026-09-02-recovered:TODO-011
-  - pm-assistant-implementation-2026-09-02-recovered:TODO-012
-  - pm-assistant-implementation-2026-09-02-recovered:PROVIDER-007
+- pm-assistant-implementation-2026-09-02-recovered:TODO-009
+- pm-assistant-implementation-2026-09-02-recovered:TODO-010
+- pm-assistant-implementation-2026-09-02-recovered:TODO-011
+- pm-assistant-implementation-2026-09-02-recovered:TODO-012
+- pm-assistant-implementation-2026-09-02-recovered:PROVIDER-007
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: []
 preserved_exact_tokens:
   - todowrite

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7606-L7758
+Source lines: L7731-L7914
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -98,66 +98,97 @@ plan_unit_id: UCC-104
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  Under DL-041, the DRY Method toggle's eventual mutation path reuses cmd.settings.transaction.preview and
-  cmd.settings.transaction.apply from SSYS-018 and the Settings atomic mutation envelope. Until an owner-proven
+canonical_text: 'Under DL-041, the DRY Method toggle''s eventual mutation path reuses cmd.settings.transaction.preview
+  and cmd.settings.transaction.apply from SSYS-018 and the Settings atomic mutation envelope. Until an owner-proven
   mapping from the exact guard key to a valid ordinary setting_id and its writer exists, the toggle is disabled
-  with the existing owner_contract_missing reason and dispatches no mutation command or setting write. Preserve the exact guard identity
-  app.agent_rules.dry_method_default_guard and values enabled | disabled_by_user. The approved future event
-  identity for this change is settings.updated, carrying that exact setting key and the existing transaction_id
-  from pm.settings_transaction_result.v1, joined to request_id, project_id, changed_setting_ids, revisions and
-  receipt_ref under the current owner contract. Event Authority must independently admit a closed payload and
-  producer/consumer binding before emission; this naming choice does not register a family. The historical
-  settings.agent_rules.dry_method_default_guard.updated spelling is read-only source/history lineage, not an
-  automatic alias or permission to rewrite old payloads. cmd.settings.agent_rules.dry_method_default_guard.set
-  is retired source lineage, with no primary handler, production row or dispatch alias. Visible Settings > General >
-  Agent Rules and Assistant Chat DRY disclosure preserve their help copy: disabling the default reuse-first guard
-  does not disable explicit project/user instructions, safety, secrets, source authority, governance, permissions,
-  source-control hygiene, or receipt provenance.
+  with the existing owner_contract_missing reason and dispatches no mutation command or setting write. Preserve
+  the exact guard identity app.agent_rules.dry_method_default_guard and values enabled | disabled_by_user.
+  The approved future event identity for this change is settings.updated, carrying that exact setting key and
+  the existing transaction_id from pm.settings_transaction_result.v1, joined to request_id, project_id, changed_setting_ids,
+  revisions and receipt_ref under the current owner contract. Event Authority must independently admit a closed
+  payload and producer/consumer binding before emission; this naming choice does not register a family. The
+  historical settings.agent_rules.dry_method_default_guard.updated spelling is read-only source/history lineage,
+  not an automatic alias or permission to rewrite old payloads. cmd.settings.agent_rules.dry_method_default_guard.set
+  is retired source lineage, with no primary handler, production row or dispatch alias. Visible Settings >
+  General > Agent Rules and Assistant Chat DRY disclosure preserve their help copy: disabling the default reuse-first
+  guard does not disable explicit project/user instructions, safety, secrets, source authority, governance,
+  permissions, source-control hygiene, or receipt provenance.
+
+
+  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single
+  resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere.
+  Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project
+  versions and sole owner. Computer installations, credentials and protected source trust never travel in copy.
+  Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.*
+  local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact
+  consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay
+  resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable
+  handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Defines a user-visible Settings command, toggle payload, event, and help copy.
-depends_on: [CV-299, SP-223]
-unblocks: [WM-040, ATS-018]
+depends_on:
+- CV-299
+- SP-223
+unblocks:
+- WM-040
+- ATS-018
 acceptance_criteria:
-  - Until the exact guard-key/writer mapping is owner-proven, the toggle is disabled with owner_contract_missing and dispatches zero mutation commands and writes zero setting values. After that prerequisite, the existing preview/apply sequence and enabled | disabled_by_user values apply; no per-setting command or handler is reintroduced.
-  - Future settings.updated records preserve app.agent_rules.dry_method_default_guard and the existing committed transaction identity after independent Event Authority admission; historical dedicated spellings remain read-only without an assumed payload alias.
-  - The visible command copy explains that disabling DRY only disables the default reuse-first guard.
-  - Command handling preserves DRY receipt provenance and does not weaken non-DRY authority boundaries.
+- Until the exact guard-key/writer mapping is owner-proven, the toggle is disabled with owner_contract_missing
+  and dispatches zero mutation commands and writes zero setting values. After that prerequisite, the existing
+  preview/apply sequence and enabled | disabled_by_user values apply; no per-setting command or handler is
+  reintroduced.
+- Future settings.updated records preserve app.agent_rules.dry_method_default_guard and the existing committed
+  transaction identity after independent Event Authority admission; historical dedicated spellings remain read-only
+  without an assumed payload alias.
+- The visible command copy explains that disabling DRY only disables the default reuse-first guard.
+- Command handling preserves DRY receipt provenance and does not weaken non-DRY authority boundaries.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - DRY Method settings command fixture
+- python3 scripts/pm-plan-index.py validate
+- DRY Method settings command fixture
 risk_class: dry_method_settings_command_gap
 reasoning_tier: high
 context_scope: dry_method_settings_command
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - future Settings > General > Agent Rules commands
+- Plans/UI_Command_Catalog.md
+- future Settings > General > Agent Rules commands
 node_compile_hint:
   mode: dry_method_settings_command_catalog
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-app-default
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-001
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-002
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0073
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0089
-source_atom_ids: [atom-0073, atom-0089]
-decision_refs: [dec-0016, dec-0017]
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-app-default
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-001
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-002
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0073
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0089
+- source_ref:chat:2026-11-03-projects-pass2-approved
+source_atom_ids:
+- atom-0073
+- atom-0089
+decision_refs:
+- dec-0016
+- dec-0017
 preserved_exact_tokens:
-  - "cmd.settings.agent_rules.dry_method_default_guard.set"
-  - "app.agent_rules.dry_method_default_guard"
-  - "enabled"
-  - "disabled_by_user"
-  - "Settings > General > Agent Rules"
-  - "DRY Method is on by default. Turning it off disables only PM's default reuse-first guard; project/user instructions, safety, secrets, source authority, governance, permissions, and source-control rules still apply."
+- cmd.settings.agent_rules.dry_method_default_guard.set
+- app.agent_rules.dry_method_default_guard
+- enabled
+- disabled_by_user
+- Settings > General > Agent Rules
+- DRY Method is on by default. Turning it off disables only PM's default reuse-first guard; project/user instructions,
+  safety, secrets, source authority, governance, permissions, and source-control rules still apply.
 negative_constraints:
-  - Do not make DRY opt-in by default.
-  - Do not treat disabled DRY as permission to bypass explicit instructions, safety, secrets, source authority, governance, permissions, or source-control hygiene.
-  - Do not delete DRY receipt provenance when the user disables the default guard.
+- Do not make DRY opt-in by default.
+- Do not treat disabled DRY as permission to bypass explicit instructions, safety, secrets, source authority,
+  governance, permissions, or source-control hygiene.
+- Do not delete DRY receipt provenance when the user disables the default guard.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.md
-  - Plans/FinalGUISpec.md
-  - Plans/storage-plan.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+- Plans/FinalGUISpec.md
+- Plans/storage-plan.md
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/Skills_System.md`
 
-Source lines: L2586-L2649
+Source lines: L2607-L2675
 
-Source SHA256: `8beb0fcd8afb1cc6ddfcf7bc20710d2e41f07bb4059c08d5007d508804b3d0e6`
+Source SHA256: `3991b8ab1648e297aa22614fd680256e74b0f67915ae13cde762545eb44e50d8`
 
 ---
 
@@ -20,9 +20,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Skills_System.md
 canonical_text: >-
-  Skills preserve installed, project_enabled, policy_available, selected_for_request, and invoked as independent stages.
-  Persona defaults nominate eligible candidates instead of eagerly injecting them; bounded L0-L3 materialization admits
-  only request-selected instructions/resources in deterministic Skill-ID/hash order and emits explicit omission receipts.
+  Skills preserve installed, project_enabled, policy_available, selected_for_request, and invoked as
+  independent stages. Persona defaults nominate eligible candidates instead of eagerly injecting them;
+  bounded L0-L3 materialization admits only request-selected instructions/resources in deterministic
+  Skill-ID/hash order and emits explicit omission receipts. In No project, project_enabled records the
+  resolver result from library/Computer enablement with no applicable Project gate; it is never an
+  unconditional permission allow or evidence of a ready installation.
 gui_related: false
 gui_classification_reason: Backend Skill discovery, selection, prompt admission, and receipt contract; not GUI implementation work.
 depends_on: [SS-007, SS-009, SS-010, SS-013, T-176, PP-009]
@@ -49,10 +52,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
-  - ACCOUNTABILITY_MATRIX.json:CTX-012
-  - ACCOUNTABILITY_MATRIX.json:CTX-015
-  - reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+- 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
+- ACCOUNTABILITY_MATRIX.json:CTX-012
+- ACCOUNTABILITY_MATRIX.json:CTX-015
+- reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: []
 preserved_exact_tokens:
   - installed

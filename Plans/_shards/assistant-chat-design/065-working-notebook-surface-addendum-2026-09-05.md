@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25008-L25136
+Source lines: L25168-L25301
 
-Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6`
+Source SHA256: `f4e5a424ee6841b4988ce457166d26b762be0b3f0c4aa0c5d0d03132ef6be00f`
 
 ---
 
@@ -94,9 +94,11 @@ canonical_text: >-
   a trivial chat uses neither and produces no notebook or helper overhead. Debug flows keep Investigation
   Context authority: debug notes reference investigation/target/instrumentation/cleanup records, and
   transition or recovery rechecks active/redacted/revoked/blocked/expired/omitted evidence and
-  target/worktree/session drift before reuse; raw logs and media remain artifacts. Thread restore and model
-  change never silently rebind a notebook to a different target; provider-hidden content is never shown as
-  PM-authored notes (WNC-N17).
+  target/worktree/session drift before reuse; raw logs and media remain artifacts. Thread restore and
+  model change never silently rebind a notebook to a different target; provider-hidden content is never
+  shown as PM-authored notes (WNC-N17). No-project notebook eligibility consumes B's app scratch scope and
+  actual thread/Computer. Model changes/recovery retain the same canonical roots and evidence; conversion
+  explicitly re-homes through PSB-007 without a fabricated Vault before cutover.
 gui_related: true
 gui_classification_reason: This unit specifies chat eligibility and debug-note surface behavior.
 depends_on:
@@ -120,10 +122,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- source_packet:PM-WNC-2026-09-05-v1:WNC-I01
-- source_packet:PM-WNC-2026-09-05-v1:WNC-I09
-- source_packet:PM-WNC-2026-09-05-v1:WNC-N17
-- source_packet:PM-WNC-2026-09-05-v1:WNC-A02
+  - "source_packet:PM-WNC-2026-09-05-v1:WNC-I01"
+  - "source_packet:PM-WNC-2026-09-05-v1:WNC-I09"
+  - "source_packet:PM-WNC-2026-09-05-v1:WNC-N17"
+  - "source_packet:PM-WNC-2026-09-05-v1:WNC-A02"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - Investigation Context
 - trivial chat

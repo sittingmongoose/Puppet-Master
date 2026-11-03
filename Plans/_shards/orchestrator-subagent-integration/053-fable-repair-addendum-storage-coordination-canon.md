@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31513-L31579
+Source lines: L31610-L31683
 
-Source SHA256: `f932a74573f86d7dc4a4bfa3088531138d1c22add1185e7613ed76ae56a3abe9`
+Source SHA256: `d07e09bc0879a8662e29cc47c8fd3ef1b8d0520f0501c34823aa00caedf610b1`
 
 ---
 
@@ -20,12 +20,16 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Active-agent coordination canonical truth is the EventRecord seglog coordination family plus redb projections for agent
-  registration, status, operation, file-activity, unregister/crash/abort, and snapshots. Amended 2026-10-31 (DL-270, SP-339):
-  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` files are retired and are no longer
-  compatibility mirrors. Coordination state is read through pm db dump, pm inspect, pm tail and pm export (JSON or JSONL on
-  request); no always-on mirror file exists. Exports never drive scheduling, execution admission, conflict prevention,
-  prompt injection, unregister, crash, abort or cleanup decisions.
+  Active-agent coordination canonical truth is the EventRecord seglog coordination family plus redb
+  projections for agent registration, status, operation, file-activity, unregister/crash/abort, and
+  snapshots. Amended 2026-10-31 (DL-270, SP-339): `active-agents.json`, `agent-messages.json`, and
+  `.puppet-master/state/*.json` files are retired and are no longer compatibility mirrors. Coordination
+  state is read through pm db dump, pm inspect, pm tail and pm export (JSON or JSONL on request); no
+  always-on mirror file exists. Exports never drive scheduling, execution admission, conflict prevention,
+  prompt injection, unregister, crash, abort or cleanup decisions. OSI-440 introduces versioned
+  app-partition coordination keys/checkpoints and exact root/Host identity. Original Project keys/readers
+  remain valid. App and Project use one coordinator/store/governor with counterpart N24 limits, not new
+  JSON mirrors.
 gui_related: false
 gui_classification_reason: This unit defines backend coordination storage and projection authority, not GUI presentation.
 depends_on: [OSI-225, OSI-270, OSI-271, CV-309, SP-230]
@@ -54,8 +58,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - fablereport.md
-  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6
+  - "fablereport.md"
+  - "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids: []
 preserved_exact_tokens:
   - "active-agents.json"

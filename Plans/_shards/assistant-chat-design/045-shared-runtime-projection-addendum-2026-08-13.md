@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3617-L22472
+Source lines: L3617-L22619
 
-Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6`
+Source SHA256: `f4e5a424ee6841b4988ce457166d26b762be0b3f0c4aa0c5d0d03132ef6be00f`
 
 ---
 
@@ -421,16 +421,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant workflow identity is closed to ask, agent, debug, plan, and
-  deep_plan. Only runtime posture normalizes to the run-envelope mode, and
-  project-scoped capabilities require a selected project.
+  Assistant workflow identity stays ask, agent, debug, plan and deep_plan; only runtime posture normalizes
+  to the run-envelope mode. ACD-508 and AI-069 admit genuine app chat, Goal, Crew, Plan/Deep Plan and
+  scheduled-message/task workflows. Requires a project is a workflow gate only for Planning Wizard, PRD
+  Builder and Orchestrator. Other actions validate their actual permitted
+  folder/file/history/connection/target and capability, never infer a Project from focus.
 gui_related: true
 gui_classification_reason: Workflow identity, mode display, and project-gated capability disclosure are user-visible chat behavior.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Debug and deep_plan do not mint extra canonical runtime-mode enum values.
-  - Project-scoped capabilities are unavailable or gated when no project is selected.
+  - "Debug and deep_plan mint no extra runtime mode."
+  - "App Plan/Deep Plan/Goals/Crew/scheduled messages/tasks are positive cases; only the three named workflows show Requires a project."
+  - "Missing actual resource/authority remains a typed refusal without automatic conversion."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -445,7 +448,10 @@ node_compile_hint:
   mode: runtime_mode_normalization
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0013
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0013"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "ask | agent | debug | plan | deep_plan"
   - "run-envelope"
@@ -468,11 +474,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The chat header exposes model, reasoning/effort, and worktree
-  controls; requested platform/provider selection is owned by the assistant chat
-  surface rather than a standing header dropdown or a status-bar chip. Selections
-  apply to the next turn and do not interrupt a streaming
-  response.
+  The existing header runtime controls retain applies-next-turn behavior without interrupting streams. Add
+  ACD-508 Where/place and named Computer/folder disclosure, a New split action and No project
+  switcher/list context. Where chooses place only before the first message; afterward its
+  conversion/continuation routes preserve explicit identity. It is distinct from ACD-462 composer message
+  destination. Worktree chrome follows the actual admitted binding/backend and is absent for an ordinary
+  app chat; no standing provider header dropdown returns.
 gui_related: true
 gui_classification_reason: Header dropdowns, icons, and worktree visual states are direct UI controls.
 depends_on: []
@@ -495,7 +502,10 @@ node_compile_hint:
   mode: chat_header_controls
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0014
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0014"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Provider -> models"
   - "fallback_chain"
@@ -562,7 +572,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-Amended 2026-09-27: chat ELI5 is resolved from the chat's own override (`general.interaction.chat-eli5`), then the project default, then the app default, which is the Explain Terms Everywhere setting `general.interaction.eli5-default`; a switch changes only later replies; and the plain helper lines under controls are single copy, the Expert and ELI5 pair staying on tooltips and help (ACD-484, DL-126). The two toggles above stay separate: chat ELI5 and the app-level Interaction Mode (Expert/ELI5). The chat ELI5 app default is a level of chat ELI5's resolution, not the Interaction Mode toggle, which keeps its own default (section 2.2).
+Amended 2026-09-27: chat ELI5 is resolved from the chat's own override (`general.interaction.chat-eli5`), then applicable Project, Computer, Everywhere and factory (app skips Project), which is the Explain Terms Everywhere setting `general.interaction.eli5-default`; a switch changes only later replies; and the plain helper lines under controls are single copy, the Expert and ELI5 pair staying on tooltips and help (ACD-484, DL-126). The two toggles above stay separate: chat ELI5 and the app-level Interaction Mode (Expert/ELI5). The chat ELI5 app default is a level of chat ELI5's resolution, not the Interaction Mode toggle, which keeps its own default (section 2.2). Current SSYS-002/059 supersedes the old three-level source order; frozen reply style remains unchanged.
 
 ### ACD-011 - Permission Posture And Approval Ladder
 
@@ -2108,7 +2118,11 @@ plan_unit_id: ACD-044
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: todowrite and todoread use the normalized TODO schema; todowrite is not blanket auto-denied in ask or plan mode, and Deep Plan markdown edits resync TODO projection before execution begins.
+canonical_text: >-
+  todowrite and todoread use the normalized TODO schema; todowrite is not blanket auto-denied in ask or
+  plan mode, and Deep Plan markdown edits resync TODO projection before execution begins. Application
+  To-Dos retain the one thread-local controller/list and real nullable-Project execution bindings.
+  Conversion uses the exact target map and fresh work admission, never status copied from a transcript.
 gui_related: false
 gui_classification_reason: TODO tool mutation, read behavior, and execution gating are runtime/tool behavior, not GUI implementation.
 depends_on: [ACD-043]
@@ -2131,7 +2145,10 @@ node_compile_hint:
   mode: todo_tool_mutation_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0040
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0040"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "todowrite"
   - "todoread"
@@ -2676,9 +2693,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Chat file references are explicit visible composer chips inserted through the
-  canonical add-file-reference command, file-only for MVP, and never hidden
-  full-file context injection.
+  Chat file references are explicit visible composer chips inserted through the canonical
+  add-file-reference command, file-only for MVP, and never hidden full-file context injection. The command
+  accepts an explicit application thread/draft with null project_id and actual Computer/path identity;
+  Project or cross-Project chips require their exact granted source. No hidden full-file load or focus
+  fallback follows from a chip.
 gui_related: true
 gui_classification_reason: File chips, pickers, and Add to Assistant Chat handoff are visible chat/file-manager UI behavior.
 depends_on: [ACD-025]
@@ -2702,7 +2721,10 @@ node_compile_hint:
   mode: file_reference_handoff
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0045
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0045"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "@"
   - "cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }"
@@ -3011,17 +3033,19 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Smart auto-retrieval is project-only by default across chat history, project
-  workspace code, and project logs; it must not search other projects or
-  external sources unless the user explicitly requests external navigation or
-  import.
+  Automatic retrieval is local: current Project chat/code/log sources for a Project thread, or the app
+  thread's own messages and permitted chat-folder/working-root sources for No project. Explicit projects.*
+  reads use T-185/ACD-509 and D's source/time/provider grants, never ambient index or private-memory
+  merge. After the recorded grant or task-scoped YOLO admission, an explicit question about my projects or
+  my tasks may request all permitted Projects; every empty/partial result states coverage. An unspecified
+  cross-Project scope never silently falls back to current Project.
 gui_related: false
 gui_classification_reason: Retrieval scope is context-pipeline behavior, not GUI implementation.
 depends_on: [ACD-061, ACD-062]
 unblocks: [ACD-064, ACD-065, ACD-066]
 acceptance_criteria:
-  - Auto-retrieval searches only within the current project by default.
-  - External or cross-project retrieval requires explicit user request.
+  - "Auto-retrieval stays within the owning Project or app thread/roots; explicit cross-Project T-185 reads require recorded scope/authority and coverage."
+  - "External or cross-project retrieval requires explicit user request."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -3036,7 +3060,10 @@ node_compile_hint:
   mode: auto_retrieval_scope
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Project-only by default"
   - "current project"
@@ -3194,16 +3221,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Project-scoped agent search tools expose chatsearch, codesearch, logsearch,
-  logread, and grep contracts over project indices to support explicit agent
-  reasoning and smart retrieval.
+  chatsearch, codesearch, logsearch, logread and grep consume the Tools-owned admitted source/index
+  contracts. Project requests retain Project indexes; app requests bind real thread/Computer/roots and app
+  indexes, with source-bound payload dereference and current permissions. Explicit cross-Project tools are
+  T-185 with ACD-509 coverage, not silent widening of these local tools. Missing index/freshness/partial
+  results remain truthful.
 gui_related: false
 gui_classification_reason: Agent search tools and query contracts are backend/tool behavior.
 depends_on: [ACD-063]
 unblocks: [ACD-068, ACD-069]
 acceptance_criteria:
-  - chatsearch, codesearch, logsearch, logread, and grep expose project-scoped query contracts.
-  - logread payloads are bounded by size caps and stricter permission defaults.
+  - "The Tools-owned local search contracts accept exact Project or app thread/Computer/root source context without ambient merge."
+  - "logread payloads are bounded by size caps and stricter permission defaults."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -3219,7 +3248,10 @@ node_compile_hint:
   mode: agent_search_tool_contracts
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0048
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0048"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "chatsearch(query, filters={thread_id?, time_range?}, k)"
   - "codesearch(query, path?, mode={text|symbol}, k)"
@@ -3334,17 +3366,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Chat, code, and log Tantivy indices are stored per project under
-  storage/tantivy/projects/{project_id}/chat, /code, and /logs for project-only
-  search, performance, retention, cleanup, and future cross-project top-K merge.
+  Project chat/code/log Tantivy paths stay storage/tantivy/projects/{project_id}/chat, /code and /logs.
+  No-project chat uses the Server app/chat corpus under Storage's admitted app index home and the same
+  single-writer/build-slot/retention policies. Explicit T-185 queries may merge permitted source results
+  through one coverage formatter; ambient retrieval never merges corpora. Conversion removes the live app
+  entry only after destination publication, keeps source recoverable on reindex failure and does not index
+  a thread live in both scopes.
 gui_related: false
 gui_classification_reason: Per-project index storage and retention are storage architecture behavior.
 depends_on: [ACD-063, ACD-067]
 unblocks: []
 acceptance_criteria:
-  - Chat, code, and log indices are partitioned by project_id.
-  - Per-project storage supports cleanup and retention per project.
-  - The design does not block future cross-project top-K merge as an enhancement.
+  - "Project corpora retain Project keys and the Server-owned app corpus has explicit scope; no live thread is indexed in both after cutover."
+  - "Per-project storage supports cleanup and retention per project."
+  - "Explicit T-185 cross-Project top-K results are admitted with one coverage formatter; ambient retrieval remains local."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -3358,7 +3393,10 @@ node_compile_hint:
   mode: per_project_tantivy_indices
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0049
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0049"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "storage/tantivy/projects/{project_id}/chat"
   - "storage/tantivy/projects/{project_id}/code"
@@ -3376,7 +3414,11 @@ plan_unit_id: ACD-071
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Section 11 groups thread and chat management requirements for message taxonomy, lifecycle, identity, debug investigation state, shared navigation, branching, and session browser behavior.
+canonical_text: >-
+  Section 11 groups thread and chat management requirements for message taxonomy, lifecycle, identity,
+  debug investigation state, shared navigation, branching, and session browser behavior. The same
+  lifecycle applies to app threads. ACD-508 adds explicit place/Computer/lazy folder, Here/All chats
+  coverage and no auto-archive; ACD-510/511 own conversion/retention.
 gui_related: false
 gui_classification_reason: This is a scope/anchor unit for thread-management semantics, not GUI implementation by itself.
 depends_on: []
@@ -3396,7 +3438,10 @@ node_compile_hint:
   mode: thread_management_scope
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0050
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0050"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Threads and chat management"
 negative_constraints: []
@@ -3411,7 +3456,13 @@ plan_unit_id: ACD-072
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Canonical chat records use the closed message_type taxonomy with required senders, properties, and rendering categories for user, assistant, system, tool_result, operation_card, blocked_notice, subagent_card, and error records.
+canonical_text: >-
+  Canonical chat records retain user, assistant, system, tool_result, operation_card, blocked_notice,
+  subagent_card and error and add chat_message_in for an authenticated thread-request projection. The
+  latter names another chat as sender and never impersonates a user; source/target/request/reply lineage
+  stays with continuity owners. Computer notices and move dividers use system; conversion/read/send
+  results use existing operation-card/blocked/approval owners. ACD-469 maps these to existing transcript
+  families; no new runtime state store.
 gui_related: false
 gui_classification_reason: Message record taxonomy and persisted properties are data-contract behavior, not visual implementation.
 depends_on: [ACD-071]
@@ -3433,7 +3484,10 @@ node_compile_hint:
   mode: message_type_taxonomy
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0051
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0051"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "message_type"
   - "user"
@@ -4089,11 +4143,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat owns immutable conversation-boundary restore points. Explicit
-  creation freezes conversation and provenance refs without file bodies; applying
-  an available exact-hash record creates a new thread_id and branch_id while leaving
-  the source thread/worktree unchanged; holds govern delete/expiry eligibility; and
-  unavailable or source-deleted-content states refuse without fabricating a branch.
+  Assistant Chat owns immutable conversation-boundary restore points. Explicit creation freezes
+  conversation and provenance refs without file bodies; applying an available exact-hash record creates a
+  new thread_id and branch_id while leaving the source thread/worktree unchanged; holds govern
+  delete/expiry eligibility; and unavailable or source-deleted-content states refuse without fabricating a
+  branch. Application restore-point editions bind null Project plus real source thread/Computer/scope and
+  use restore_point_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}. All no-project threads on the Server share the counterpart 2,048 cap and
+  exact retention/hold rules; no per-chat limit reset. Creation/application/delete keep
+  exact-hash/custody/permission and new-branch semantics; conversion maps refs without rewriting old
+  points. Exact old Project records remain readable.
 gui_related: true
 gui_classification_reason: Conversation restore-point creation, status, unavailable reasons, branching, and source-preservation disclosure are user-visible behavior.
 depends_on: [ACD-071, CV-320, SP-242, CS-057]
@@ -4132,9 +4190,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056
-  - Case-L:L-022
-  - Case-L:PD-RSP-08
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056"
+  - "Case-L:L-022"
+  - "Case-L:PD-RSP-08"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "restore-and-branch"
   - "thread_id"
@@ -4160,11 +4221,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Restore-point controls disclose the exact source conversation boundary and new
-  target before branching, expose record/artifact status and unavailable reason,
-  and consume their current canonical command rows and one-handler wiring.
-  Branching is a new conversation branch and never source-thread undo or
-  filesystem restore.
+  Restore-point controls disclose the exact source conversation boundary and new target before branching,
+  expose record/artifact status and unavailable reason, and consume their current canonical command rows
+  and one-handler wiring. Branching is a new conversation branch and never source-thread undo or
+  filesystem restore. App restore controls disclose No project and the actual Computer, exact source
+  boundary and destination, preserving user-only branching choices and the same unavailable/hold reasons.
+  No safe-point substitution or Project fallback is permitted.
 gui_related: true
 gui_classification_reason: Branch labels and confirmation prompts are user-visible UI behavior.
 depends_on: [ACD-086]
@@ -4196,9 +4258,12 @@ node_compile_hint:
   mode: branch_conversation_ui_confirmation
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056
-  - Case-L:L-022
-  - Case-L:PD-RSP-08
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056"
+  - "Case-L:L-022"
+  - "Case-L:PD-RSP-08"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "branch labels"
   - "running or dirty thread"
@@ -8779,16 +8844,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The three context injectors are user-configurable per project with optional
-  per-run override and deterministic defaults.
+  The three context injectors consume the one Settings resolver at their declared
+  Everywhere/Computer/Project levels plus an existing explicit run override. App threads omit Project; no
+  new injector key or private memory tier is added. Defaults, budgets and run-start snapshots remain
+  deterministic, and changing a default never rewrites admitted context. Source-integrity/currentness and
+  exact app thread/Computer roots are independently required.
 gui_related: true
 gui_classification_reason: Context injector configuration and per-run override are user-facing settings/controls.
 depends_on: [ACD-178]
 unblocks: [ACD-182]
 acceptance_criteria:
-  - Three context injectors can be configured per project.
-  - Optional per-run override exists.
-  - Defaults are deterministic.
+  - "Each injector resolves one explicit context through Settings, omitting Project for app work."
+  - "Per-run overrides, deterministic defaults, source integrity and frozen snapshots remain unchanged."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8803,7 +8870,10 @@ node_compile_hint:
   mode: context_injector_user_configuration
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0088
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0088"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "per-project"
   - "per-run override"
@@ -9006,17 +9076,20 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant turns with a selected project call Assistant-memory SSOT interfaces
-  `build_capsule(project_id, now)` and `search(project_id, user_message, now,
-  k)` and enforce configured capsule and retrieval budgets.
+  Assistant memory capsule/search remains owned by assistant-memory-subsystem. Project turns use
+  build_capsule(project_id, now) and search(project_id, user_message, now, k) under their admitted
+  version. App siblings bind null Project plus real thread/Computer and only that thread's memory/capsule
+  plus admitted public_safe taught rules, under the same budgets. Conversion adopts destination memory
+  with explicit gist/capsule lineage, never another chat's private memory or event-reconstructed content.
 gui_related: false
 gui_classification_reason: Assistant memory capsule/retrieval injection is prompt/context pipeline behavior.
 depends_on: [ACD-178]
 unblocks: [ACD-187, ACD-188, ACD-189]
 acceptance_criteria:
-  - Assistant turns call build_capsule for selected project.
-  - Assistant turns call search with project_id, user_message, now, and k.
-  - Capsule and retrieval budgets are enforced.
+  - "Assistant turns call build_capsule for selected project."
+  - "Assistant turns call search with project_id, user_message, now, and k."
+  - "Capsule and retrieval budgets are enforced."
+  - "App capsule/search uses only that thread plus admitted public_safe taught rules, with no Project sentinel or other-thread private memory."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -9030,7 +9103,10 @@ node_compile_hint:
   mode: assistant_memory_capsule_retrieval_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "build_capsule(project_id, now)"
   - "search(project_id, user_message, now, k)"
@@ -12175,7 +12251,13 @@ plan_unit_id: ACD-259
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor validation loop selections are app settings only, not project artifacts, not emitted to seglog as project data, and not included in project exports.
+canonical_text: >-
+  Auditor validation-loop preferences are ordinary Settings values at exactly their inventory-admitted
+  Everywhere/Computer/Project/owner levels. They are not Project artifacts or event-built configuration.
+  App work skips Project; every consumer uses one resolver/transaction and freezes its actual run
+  selection. Source/export includes only the chosen permitted own configuration under Settings exclusions;
+  live loop progress/history is never copied as a default. No competing app-only preference store or
+  direct feature YAML writer is added.
 gui_related: false
 gui_classification_reason: Auditor validation settings storage scope is persistence/config behavior.
 depends_on: [ACD-257]
@@ -12197,7 +12279,10 @@ node_compile_hint:
   mode: app_settings_only
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "not stored in project artifacts"
   - "not emitted to seglog as project data"
@@ -14837,18 +14922,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Per-project Source Control accordion open/close state persists at
-  `config:project:{pid}:source_control.accordion_state` using the JSON shape `{
-  "Changes": true, "Worktrees": false, "Branches/Stash": false, "History":
-  false, "Graph": false }`, and inline diagnostics may render the same object.
+  Source Control accordion presentation consumes the Settings/UI-state owner for exact declared levels and
+  actual app or Project context. The original config:project:{pid}:source_control.accordion_state object
+  remains Project own-state lineage, not a universal physical key or second writer. Shared defaults and
+  any admitted Device/Computer/Project overrides resolve once; explicit context view choices stay
+  independent and conversion never merges target boards/panels.
+  Changes/Worktrees/Branches/Stash/History/Graph identities and diagnostics remain unchanged.
 gui_related: false
 gui_classification_reason: Accordion state persistence is storage/config behavior.
 depends_on: [ACD-319]
 unblocks: [ACD-321]
 acceptance_criteria:
-  - Source Control accordion open/close state persists per project at the specified config key.
-  - Persisted accordion state uses the specified JSON shape.
-  - Inline diagnostics may render the same persisted object.
+  - "Same panel state resolves by exact scope/Computer/Project through its owner, never current focus."
+  - "Original Project own-state remains valid; app state has a real explicit owner/key and no target-state merge."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -14863,7 +14949,10 @@ node_compile_hint:
   mode: source_control_accordion_state
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0147
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0147"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "config:project:{pid}:source_control.accordion_state"
   - "{\"Changes\": true, \"Worktrees\": false, \"Branches/Stash\": false, \"History\": false, \"Graph\": false}"
@@ -14881,19 +14970,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Source Control section order is Changes, Worktrees, Branches/Stash, History,
-  Graph; scroll position is not persisted; each project state is independent;
-  expanded sections may scroll internally while the outer accordion scrolls;
-  Worktrees filter is `All | Threads | Orchestrator | Manual`, persists as
-  `worktree_filter`, defaults to `All`, and is not shared across projects.
+  Source Control section order remains Changes, Worktrees, Branches/Stash, History, Graph; scroll position
+  is not persisted and expanded sections may scroll internally. Worktree filter retains All | Threads |
+  Orchestrator | Manual and default All, using exact owner-admitted preference/state levels and
+  app/Project root context. Independent explicit view choices are not silently shared across Projects or
+  overwritten on conversion; broader defaults exist only through the Settings-owned resolver/transaction.
+  No null Project key or fake Orchestrator target is created.
 gui_related: true
 gui_classification_reason: Source Control section order, scrolling, and Worktrees filter are visible UI behavior.
 depends_on: [ACD-319, ACD-320]
 unblocks: []
 acceptance_criteria:
-  - Source Control sections use the fixed order Changes, Worktrees, Branches/Stash, History, Graph.
-  - Scroll position is not persisted and each project's accordion state remains independent.
-  - Worktrees filter options, persistence key, default, and per-project scope match the source contract.
+  - "Section order/filter enums and nonpersisted scroll remain unchanged."
+  - "Owner-resolved defaults and explicit app/Project view state preserve independent contexts and target conversion state."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -14908,7 +14997,10 @@ node_compile_hint:
   mode: source_control_worktree_filter_state
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0147
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0147"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Changes, Worktrees, Branches/Stash, History, Graph"
   - "All | Threads | Orchestrator | Manual"
@@ -15267,18 +15359,20 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  File identity for chat/debug/Source Control/GitHub pivots is `{ repo_id,
-  worktree_id, relative_path }`; turn start freezes
-  `execution_unit_context.worktree_id` and `working_directory`; historical cards
-  remain pinned.
+  Repository-backed file pivots preserve {repo_id, worktree_id, relative_path}; an ordinary app file uses
+  execution Host/Computer plus canonical absolute root/path identity, with nullable repo/worktree only
+  where inapplicable. Turn start freezes execution_unit_context.working_directory and the actual worktree
+  if present; historical mutations/cards remain pinned. Cross-Project references are read-only grant-bound
+  sources, not current-focus file identities.
 gui_related: false
 gui_classification_reason: Worktree-aware file identity and turn-start freezing are runtime/contract behavior.
 depends_on: [ACD-326]
 unblocks: [ACD-330, ACD-367]
 acceptance_criteria:
-  - Worktree-aware file identity uses repo, worktree, and relative path.
-  - Turn start freezes worktree ID and working directory for the whole turn.
-  - Historical cards, receipts, and debug evidence remain pinned to captured worktree identity.
+  - "Worktree-aware file identity uses repo, worktree, and relative path."
+  - "Turn start freezes worktree ID and working directory for the whole turn."
+  - "Historical cards, receipts, and debug evidence remain pinned to captured worktree identity."
+  - "An app file without history uses actual Host/canonical absolute root/path, never an invented repository or focused Project."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -15294,7 +15388,10 @@ node_compile_hint:
   mode: worktree_aware_file_identity
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0149
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0149"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "{ repo_id, worktree_id, relative_path }"
   - "execution_unit_context.worktree_id"
@@ -15671,18 +15768,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Settings registry adds project-level worktree settings with exact keys, types,
-  defaults, labels, and descriptions for auto-create, cleanup default, base ref,
-  follow-thread, warning threshold, create timeout, pre-merge test, test
-  command, timeout, and test target.
+  The ten existing worktree preference keys/types/defaults/labels retain their Settings inventory identity
+  and exact admitted level classification. Each uses the one resolver/transaction for
+  Everywhere/Computer/Project/owner levels where allowed; no universal config:project:{pid}: writer
+  remains. Actual backend/repo/base-ref/path/resource prerequisites and Computer ceilings still govern.
+  App mode does not auto-create a PM Project worktree, and absence of a worktree uses only that app
+  thread's owned/granted root. Pre-merge tests remain real-target actions, never a mode-wide Project ban.
 gui_related: true
 gui_classification_reason: The settings registry includes visible labels and project settings UI values.
 depends_on: [ACD-335]
 unblocks: [ACD-339, ACD-340, ACD-369]
 acceptance_criteria:
-  - Project-level assistant worktree settings preserve their exact keys, types, defaults, labels, and descriptions.
-  - Cleanup default supports `ask`, `keep`, and `remove`.
-  - Pre-merge test target supports `merged_result` and `branch_only`.
+  - "All ten logical keys retain their types/defaults and exact inventory-declared levels."
+  - "No feature-local physical Settings write, fake Project worktree or main-Project fallback occurs."
+  - "Cleanup ask/keep/remove and pre-merge merged_result/branch_only remain unchanged."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -15697,7 +15796,10 @@ node_compile_hint:
   mode: assistant_worktree_settings_registry
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0152
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0152"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "config:project:{pid}:branching.assistant_auto_worktree"
   - "config:project:{pid}:branching.assistant_worktree_cleanup_default"
@@ -15848,10 +15950,12 @@ unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Status rendering preserves projection wording as compatibility lineage: icons
-  read `worktree_projection.v1:{project_id}:{worktree_id}` with `dirty_state`,
-  `conflict_state`, and stale freshness display, without making Assistant Chat
-  the storage projection owner.
+  Status rendering preserves projection wording as compatibility lineage: icons read
+  `worktree_projection.v1:{project_id}:{worktree_id}` with `dirty_state`, `conflict_state`, and stale
+  freshness display, without making Assistant Chat the storage projection owner. That key names the exact
+  original Project projection. App resource-bound editions use Storage's scope/Host/root identity and
+  current binding; an app thread without a real managed worktree has no worktree status, never the main
+  Project's status.
 gui_related: true
 gui_classification_reason: Stale projection status changes visible icon and tooltip behavior.
 depends_on: [ACD-341]
@@ -15874,7 +15978,10 @@ node_compile_hint:
   mode: worktree_projection_status_compatibility
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0153
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0153"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "worktree_projection.v1:{project_id}:{worktree_id}"
   - "dirty_state"
@@ -16973,7 +17080,11 @@ plan_unit_id: ACD-369
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Pre-merge test gate runs project tests before committing a merge to verify integration, controlled by the four settings listed in W.9.
+canonical_text: >-
+  Pre-merge test gate runs project tests before committing a merge to verify integration, controlled by
+  the four settings listed in W.9. Its four defaults resolve through Settings' declared levels and
+  Computer ceilings; the actual merge/test still binds a real repository/target/currentness under SCM
+  authority. App context alone neither disables these defaults nor fabricates a Project merge.
 gui_related: false
 gui_classification_reason: Pre-merge test gate purpose and settings are backend merge behavior.
 depends_on: [ACD-338]
@@ -16995,7 +17106,10 @@ node_compile_hint:
   mode: pre_merge_test_gate_settings
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0163
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0163"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "branching.assistant_worktree_pre_merge_test"
   - "branching.assistant_worktree_pre_merge_cmd"
@@ -17612,7 +17726,13 @@ plan_unit_id: ACD-384
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Command visibility and enablement follow binding, git, active-run, merge-lock, dirty, conflict, detached HEAD, and GitHub-remote conditions.
+canonical_text: >-
+  Worktree commands validate the actual supported backend/repository/binding, current roots,
+  run/merge/dirty/conflict/detached/remote predicates and owner authority. An app chat does not acquire a
+  PM Project worktree automatically; a PM Project operation still binds its explicit real target. Ordinary
+  commands against an explicitly permitted history folder are not blanket mode-gated by No project.
+  Missing history/folder/connection reports that actual prerequisite. Git/Jujutsu differences stay with
+  their owners.
 gui_related: true
 gui_classification_reason: Command visibility and enablement are visible UI state.
 depends_on: [ACD-383, ACD-351]
@@ -17634,7 +17754,10 @@ node_compile_hint:
   mode: worktree_command_visibility_enablement
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0168
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0168"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Visible when"
   - "Enabled when"
@@ -17697,16 +17820,20 @@ plan_unit_id: ACD-386
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: File manager UI scope rules preserve unaffected editor tabs, search under current root, project-scoped quick-open, and unbound fallback toast.
+canonical_text: >-
+  File-manager root follows the actual selected thread worktree or explicit Project root for Project work;
+  app work follows its Computer/chat folder/granted roots. Quick-open searches that explicit context and
+  marks cross-Project read-only sources; unbind falls back only within the owning context, never a
+  currently focused main Project. Editor tabs keep absolute/source identities and are unaffected by
+  root-switch presentation.
 gui_related: true
 gui_classification_reason: File manager search/root behavior, quick-open scope, and fallback toast are visible UI behavior.
 depends_on: [ACD-385]
 unblocks: []
 acceptance_criteria:
-  - Editor tabs are not affected by file manager root switches.
-  - File manager search follows the current file manager root.
-  - Quick-open remains project-scoped.
-  - Unbinding falls back to project root with the specified toast.
+  - "Editor tabs preserve their captured file identities across root switches."
+  - "Search and quick-open follow explicit owning Project or app Computer/root context."
+  - "Unbind resolves only that context and never a selected-main-Project fallback."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -17721,13 +17848,16 @@ node_compile_hint:
   mode: file_manager_worktree_ui_scope
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0169
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0169"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Open editor tabs NOT affected"
   - "Quick-open (Ctrl+P)"
   - "Worktree unbound — showing project root."
 negative_constraints:
-  - "Quick-open remains project-scoped regardless of worktree context."
+  - "Do not retarget an existing editor tab, cross-Project reference or in-flight turn through current focus."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FileManager.md
@@ -18202,13 +18332,20 @@ plan_unit_id: ACD-398
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: UI/MVP non-goals preserve no GUI emojis, no Bind Existing MVP, no inline chat history markers, main-repo Changes scope, and no thread export metadata.
+canonical_text: >-
+  Existing worktree UI non-goals remain: no GUI emoji, no unsupported Bind Existing route, and no invented
+  thread export authority. Changes uses actual mutation manifests and selected admitted
+  repository/worktree; an app chat without repository history shows its changed files or an honest
+  no-changes/no-history state, never an assumed main repository. Conversion lineage dividers are ACD-511
+  system notices, not inlined Git history.
 gui_related: true
 gui_classification_reason: UI/MVP non-goals constrain visible Worktree UI behavior.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Worktree UI excludes GUI emojis, Bind Existing MVP, inline chat history markers, worktree-scoped Changes, and thread export metadata.
+  - "No GUI emoji, unsupported Bind Existing or new export authority is added."
+  - "Changes uses exact mutations/actual repository context or a truthful app no-history state."
+  - "ACD-511 conversion divider is a system lineage record, not a Git history marker."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -18222,7 +18359,10 @@ node_compile_hint:
   mode: worktree_ui_mvp_non_goals
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0174
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0174"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "No emojis in the GUI"
   - "No \"Bind Existing\" in MVP"
@@ -18647,8 +18787,12 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Worker handoff and `/retry` memory are project-scoped structured runtime records, not vague JSON-like logs; projections and bounded worker packets stay separate from full raw history.
-  Amended 2026-10-31 (DL-270): the backing is one canonical redb family with typed fields or MessagePack values, not a JSONL file or JSONL mirror (SP-339). The family declares a maximum value size of at most 16 KiB; larger bodies are payload-store references (SP-337, SP-340). The preserved token /JSONL/redb-backed records the original question only.
+  Worker handoff and /retry memory are structured owner records with explicit Project or app
+  thread/Computer scope. They never use current Project focus, full raw history as a prompt, or
+  other-thread private memory. DL-270 backing remains canonical redb typed/MessagePack values at most 16
+  KiB with BLAKE3 payload references for larger bodies; /JSONL/redb-backed is preserved historical
+  wording, never an always-on JSON/JSONL mirror. Conversion creates destination refs and preserves
+  original history.
 gui_related: false
 gui_classification_reason: Worker handoff/retry memory records are runtime/storage behavior.
 depends_on: []
@@ -18671,7 +18815,10 @@ node_compile_hint:
   mode: worker_handoff_retry_memory_records
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0180
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0180"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "/retry"
   - "/JSONL/redb-backed"

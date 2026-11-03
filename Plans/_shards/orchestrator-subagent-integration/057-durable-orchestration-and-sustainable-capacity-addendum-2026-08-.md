@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31654-L31763
+Source lines: L31758-L31891
 
-Source SHA256: `f932a74573f86d7dc4a4bfa3088531138d1c22add1185e7613ed76ae56a3abe9`
+Source SHA256: `d07e09bc0879a8662e29cc47c8fd3ef1b8d0520f0501c34823aa00caedf610b1`
 
 ---
 
@@ -32,7 +32,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Orchestrator preserves durable source/target thread, Goal, Plan, run, parent/child agent, permission, request/reply, evidence, Usage, and restart lineage for thread request, spawn, and await operations while consuming shared runtime lifecycle and projection services. Await is non-blocking, cross-thread work may proceed concurrently, and child or cross-project authority never exceeds an explicit parent grant. The admitted operations remain thread.request, thread.spawn, and thread.await. The packet thread.branch clause for copy-on-write branching where applicable is deferred and unadmitted until the recorded owner target, lineage, permission ceiling, central contract, and restart/replay fixture gates are satisfied; Chat restore-point branching is distinct.
+  Orchestrator preserves durable source/target thread, Goal, Plan, run, parent/child agent, permission,
+  request/reply, evidence, Usage, and restart lineage for thread request, spawn, and await operations
+  while consuming shared runtime lifecycle and projection services. Await is non-blocking, cross-thread
+  work may proceed concurrently, and child or cross-project authority never exceeds an explicit parent
+  grant. The admitted operations remain thread.request, thread.spawn, and thread.await. The packet
+  thread.branch clause for copy-on-write branching where applicable is deferred and unadmitted until the
+  recorded owner target, lineage, permission ceiling, central contract, and restart/replay fixture gates
+  are satisfied; Chat restore-point branching is distinct. OSI-439 admits application targets and explicit
+  D-owned cross-Project read/request grants, with sender/receiver authority distinct and max-three
+  automatic round trips. One stable thread identity survives conversion; current source/target bindings
+  revalidate before delivery.
 gui_related: false
 gui_classification_reason: Durable orchestration lineage and authority are backend coordination semantics.
 depends_on: [OSI-410, OSI-428, GRS-044]
@@ -48,10 +58,13 @@ context_scope: durable_thread_agent_operations
 implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Shared_Integration_Runtime.md]
 node_compile_hint: {mode: durable_orchestration_consumer_policy, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/02_T3_DURABLE_THREADS_NETWORK_AND_OUTBOX.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/ASSISTANT_CHAT_SHARED_CONTRACTS.md
-  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/02_FINAL_DECISION_REGISTER.md
+  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/02_T3_DURABLE_THREADS_NETWORK_AND_OUTBOX.md"
+  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md"
+  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/ASSISTANT_CHAT_SHARED_CONTRACTS.md"
+  - "PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/02_FINAL_DECISION_REGISTER.md"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens: [thread.request, thread.spawn, thread.await, permission ceiling, thread.branch, where applicable, copy-on-write branching]
 negative_constraints: [Do not park an OS thread for await., Do not widen child authority., Do not make prompts a hidden cross-thread state bus.]
 owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Shared_Integration_Runtime.md, Plans/Goal_Runtime_System.md]
@@ -98,7 +111,15 @@ plan_unit_id: OSI-435
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: Any admitted agent may request another thread or bounded child through the same durable thread.request, thread.spawn, and thread.await contracts, subject to its authority ceiling, exact parent lineage, policy, resource admission, and stable idempotency; the request survives restart and client loss, preserves per-thread order, and yields a typed accepted, rejected, cancelled, expired, failed, or reconciled result without granting the requester scheduler or cross-project authority.
+canonical_text: >-
+  Any admitted agent may request another thread or bounded child through the same durable thread.request,
+  thread.spawn, and thread.await contracts, subject to its authority ceiling, exact parent lineage,
+  policy, resource admission, and stable idempotency; the request survives restart and client loss,
+  preserves per-thread order, and yields a typed accepted, rejected, cancelled, expired, failed, or
+  reconciled result without granting the requester scheduler or cross-project authority. OSI-439 defines
+  genuine app/cross-Project request forms and receiving-mode admission; this does not grant the sender
+  mutation, scheduler, receiver-mode, approval or build-grant authority. Regular unseen Ask me/Off,
+  explicit person-approved sends, saved ceilings, expiry and three-round-trip stop remain exact.
 gui_related: false
 depends_on: [OSI-433, SIR-005, SIR-006]
 unblocks: []
@@ -113,8 +134,11 @@ context_scope: agent_requested_thread_operations
 implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Shared_Integration_Runtime.md]
 node_compile_hint: {mode: agent_thread_operation_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-009
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-010
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-011
+  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-009"
+  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-010"
+  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-011"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints: [Do not let an agent bypass Orchestrator admission., Do not widen cross-project authority., Do not duplicate child effects on retry.]
 ```

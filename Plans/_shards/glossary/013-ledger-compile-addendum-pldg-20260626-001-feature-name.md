@@ -2,9 +2,9 @@
 
 Source: `Plans/Glossary.md`
 
-Source lines: L1710-L2190
+Source lines: L1710-L2192
 
-Source SHA256: `a4b33fa947801064b9d3e7d7d685bde66e7543e95b53558c79e4eb34fe3303f3`
+Source SHA256: `aaa7882123426666a9ae44cdab9761ed3715efaf857e59f964a31cb7e8492b61`
 
 ---
 
@@ -400,8 +400,10 @@ plan_unit_id: G-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Glossary.md
-canonical_text: >-
+canonical_text: |-
   Canonical Case L vocabulary distinguishes application and project EventRecord scope, global event and scoped idempotency identity, projector_replay_only and dedupe_unavailable, canonical non-rebuildable versus derived rebuildable state, safe points, Assistant Chat restore points, storage backups, migration journals, exact-replace restore, durable atomic replace, snapshot custody, recovery and legal holds, exact Worktree baseline targets, truthful restore aftermath, and the closed projection freshness and health axes.
+
+  Application Goal, Crew, Assistant Plan/schedule and chat recovery use their deliberately selected scope-aware record/source/hash editions; original Project bytes remain exact. App restore points share the counterpart Server-wide 2,048 limit and the same retention/hold rules. Moving a chat preserves immutable source scope and uses explicit linked destination records or a separately admitted owner rebind; a conversation branch is not conversion or file restoration.
 gui_related: true
 gui_classification_reason: This unit standardizes user-visible and implementer-facing recovery, trust, scope, and storage terms consumed by GUI and non-GUI surfaces.
 split_recommended: false

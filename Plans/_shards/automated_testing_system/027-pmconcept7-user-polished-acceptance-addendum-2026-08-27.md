@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L3462-L4149
+Source lines: L3594-L4273
 
-Source SHA256: `a45e6169936eb924348a5cd5d5a7a97d052569e51eb830818d6fafa8aeb0dbde`
+Source SHA256: `52b84e118d913b09958605654a56013041dad12a5bcbccabd796f3801e84246c`
 
 ---
 
@@ -509,18 +509,10 @@ plan_unit_id: ATS-043
 unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: >-
-  Automated Testing consumes the Forge, Source Control, and Product Onboarding contracts for distinct Forgejo
-  and Gitea identities, independent RepositoryForgeBinding and AutomationBinding authority, and the sole
-  repository_automation / Actions & Pipelines shell. Static schema and fixture validation covers closed types and
-  negative constraints. Runtime integration acceptance separately requires authorized provider instances/accounts,
-  exact versions and capability evidence, direct execution-time currentness and security checks, native owner
-  handlers/receipts, accessibility and visual evidence, and honest NOT_RUN status where those environments do not
-  exist. The nine newly admitted Forge commands remain handler_unavailable and event-silent with
-  expected_event_types=[] until their native and Event Authority evidence exists.
-  DL-273, Jared 2026-11-01: Current test obligations consume admitted Forge choices and prove retirement refusal;
-  no retired Source Control service or hosted variant remains an optional selection or automation provider.
+canonical_text: |-
+  Automated Testing consumes the Forge, Source Control, and Product Onboarding contracts for distinct Forgejo and Gitea identities, independent RepositoryForgeBinding and AutomationBinding authority, and the sole repository_automation / Actions & Pipelines shell. Static schema and fixture validation covers closed types and negative constraints. Runtime integration acceptance separately requires authorized provider instances/accounts, exact versions and capability evidence, direct execution-time currentness and security checks, native owner handlers/receipts, accessibility and visual evidence, and honest NOT_RUN status where those environments do not exist. The nine newly admitted Forge commands remain handler_unavailable and event-silent with expected_event_types=[] until their native and Event Authority evidence exists. DL-273, Jared 2026-11-01: Current test obligations consume admitted Forge choices and prove retirement refusal; no retired Source Control service or hosted variant remains an optional selection or automation provider.
 
+  P1 adds exact create/recovery chains for every currently offered API profile; P2 adds GitHub/GH Enterprise contribution only, with head/base/original/fork joins and a native local_reconcile_only sync composition. Generic Git remains transport-only; GHES host-policy, Dedicated unoffered status, self-managed-only Forgejo/Gitea and the deferred restricted-token route remain. Acceptance distinguishes human, mode and build_grant publication authority and tests currentness/unknown effects instead of treating a transport response or UI boolean as success. ATS-083/084 owns this added matrix; prior Project exact fixtures remain unchanged.
 gui_related: true
 gui_classification_reason: The matrix validates visible Source Control and Actions & Pipelines provider projection, migration, capability, disabled-reason, accessibility, and recovery behavior as well as non-GUI contract/security boundaries.
 depends_on: [ATS-020, ATS-041, FGI-012, FGI-013, SCS-013]

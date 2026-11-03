@@ -2,9 +2,9 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L6418-L6749
+Source lines: L6519-L6950
 
-Source SHA256: `9aa7d954d0264e081d8647735683a7d0b9422b13891ceaae17bef41f4cc8bc4e`
+Source SHA256: `64b5a9a3310152bf3b30d972a4dd22c9db59ca42a1c6b53db7e851bc75fe306e`
 
 ---
 
@@ -340,3 +340,103 @@ owner_hints:
   - Plans/Permissions_System.md
   - Plans/FileSafe.md
 ```
+
+### CRAU-104 - Mode-Aware Publication And Build-Granted Deployment
+
+```yaml
+plan_unit_id: CRAU-104
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: 'DockerHub repository creation/image push and managed template-repo create/push use Permissions
+  PS-146/147/148 with distinct effects and the existing domain writer. In Regular, missing authority enters
+  the real protected confirmation. Task YOLO and a current exact build grant may perform covered publication/create
+  without another human click, recording mode or build_grant provenance instead of human_confirmed=true. The
+  creation preview/report names namespace/repository/privacy with private default and capability limits. cmd.docker.create_repository
+  validates; its domain writer may execute directly only with typed current mode/grant evidence. Existing .confirm/.cancel
+  remain the human flow; a model cannot call .confirm to resolve a protected human wait. No confirmation_requested
+  event is emitted when no person decision is pending.
+
+
+  cmd.orchestrator.build_run remains local preparation and cmd.orchestrator.push_image a separate remote stage.
+  after_build determines timing, not authority. Each follow-on create/push/template step evaluates exact authority
+  once, so an admitted YOLO/grant build is not interrupted by duplicate publication modals. Preserve local
+  result on failure/block, resume without rebuild only after verified repository creation, and reconcile unknown
+  remote effects before retry. Result digest/tag/registry/namespace/platform and sanitized evidence remain
+  owner-proven, with truthful partial capability and blocked versus failed outcomes.
+
+
+  CI configuration/execution and Docker/Kubernetes deploy operations consume exact PS-147 resource/operation
+  selectors, account/runtime/cluster/namespace/UID, permission generation and Stop/revocation epoch at dispatch.
+  Listed non-destructive operations on named existing targets remain bounded; the risky-action no-repeat exception
+  is only for verified grant-created resources and explicitly allowed operations. A same-name replacement,
+  pre-existing/unrelated object, unlisted namespace child, broad prune or secret/paid-signup action gets no
+  automatic authority. Grant creation provenance comes from the real effect receipt, never a prefix or discovered
+  list item. FileSafe, DAE, network/trust/provider capability, scan/evidence and protected secret handling
+  still apply.
+
+
+  Every remote action feeds the existing ObservableWork/History What the build did projection with exact target/authority/outcome.
+  Reuse the run owner''s Stop and owner-provided true Undo/compensation, explicitly saying No safe Undo where
+  needed; stopping never erases or silently reverses in-flight effects. No parallel log, new build.* event
+  family, separate runner or runtime-evidence claim is introduced.'
+gui_related: true
+gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are user-visible.
+depends_on:
+- PS-146
+- PS-147
+- PS-148
+- F2-213
+- RM-053
+unblocks: []
+acceptance_criteria:
+- Regular protected confirm and YOLO/grant direct authority use the same sole creation writer and distinct
+  true receipts.
+- Successful build grants execute listed CI/deploy/publication without repeated prompts; unknown create preserves
+  result and reconciles before retry.
+- Grant-created exact-resource cleanup can pass; same-name/pre-existing/unrelated or unlisted resource refuses.
+- Stop/revoke/current target and capability drift prevents new effects and action rows remain honest.
+validation_surfaces:
+- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+risk_class: authority_scope_and_target_drift
+reasoning_tier: high
+context_scope: project_refresh_permissions_and_automation
+implementation_surfaces:
+- Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1/O2/O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards approval envelope
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
+- 'source_ref:chat:lane-D-phase-1-instruction; Jared: "The other risky actions still ask, unless they fall
+  inside an approved build grant over things the build itself created."'
+preserved_exact_tokens:
+- cmd.docker.create_repository
+- cmd.orchestrator.build_run
+- cmd.orchestrator.push_image
+- after_build
+- human_confirmed=true
+- ObservableWork/History
+- What the build did
+- No safe Undo
+negative_constraints:
+- No build/publish stage folding, fake click, forged human approver or blanket cleanup.
+- No secret values in previews, YAML, redb, receipts, logs or fixture data.
+- Acceptance of this specification creates no native handler, active EventRecord producer, WorkNode, NodeSeed,
+  executable queue, production build task, readiness certification or governance seal.
+owner_hints:
+- Plans/Containers_Registry_and_Unraid.md
+```
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md

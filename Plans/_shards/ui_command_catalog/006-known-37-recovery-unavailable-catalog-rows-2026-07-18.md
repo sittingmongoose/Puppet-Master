@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L133-L1157
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -209,11 +209,11 @@ These IDs are required by `Plans/GitHub_Integration.md` section D and the legacy
 
 | Command ID | Args schema (keys only) | Expected events | Affected surfaces |
 |---|---|---|---|
-| `cmd.project.add_existing` | `{ path?, ssh_remote_id?, ssh_path? }` | `project.added` | File menu, Dashboard, Add Existing Project flow |
-| `cmd.project.new_local` | `{ name, parent_path, init_git?, preset? }` | `project.created` | File menu, Dashboard, New Local Project flow |
-| `cmd.project.new_github_repo` | Project-owned `project_action_request` (`Plans/project_system_contracts.schema.json`); approved forge intent under GI-042 / PJCT-008 | `project_action_result`; send-only `github.repo.create_requested` intake and `project.github_repo_bound` committed-transition obligations, both `quarantined_not_admitted` under DL-039 | File menu, Dashboard, New GitHub Repo flow; existing consumers unchanged |
-| `cmd.project.open` | `{ project_id }` | no persisted domain event (navigation) | File Manager, Dashboard, project finish screens |
-| `cmd.project.chain_wizard_open_deferred` | `{ project_id, wizard_id, default_intent, project_path, remote_repo_ref?, deferred_wizard_payload_ref? }` | `wizard.opened`, `wizard.deferred_payload.loaded` | Project finish screens, Dashboard, Planning Wizard deferred intake (legacy command alias) |
+| `cmd.project.add_existing` | Versioned Project action request with captured source/repository owner refs, registration kind/acquisition provenance and exact reviewed project_setup_binding for a newly registered Project under PJCT-009/010 | Project action result and child receipts; no new EventRecord admission | File menu, Dashboard, New Project folder/online/computer/restore/contribution, Onboarding and conversion-to-new |
+| `cmd.project.new_local` | Versioned Project action request with exact reviewed project_setup_binding, destination/metadata, selected backend and optional typed Starter intent; no init_git flag or free-form preset | Project action result and child receipts; no new EventRecord admission | File menu, Dashboard, New Project, Onboarding and conversion-to-new |
+| `cmd.project.new_github_repo` | Project action request and exact reviewed setup binding; GitHub-only GI-042/PJCT-008 compatibility, never an all-forge wrapper | Project action result; send-only github.repo.create_requested and project.github_repo_bound both remain quarantined_not_admitted under DL-039 | Existing consumers plus New Project/conversion-to-new |
+| `cmd.project.open` | Existing exact Project navigation binding with real Project, verified current listing and caller return; no configuration copy or creation | no persisted domain event; no-persist navigation result | File Manager, Dashboard, Projects and finish screens |
+| `cmd.project.chain_wizard_open_deferred` | Existing typed canonical Wizard deferred-intake binding with real Project and required actual child identity/current refs; normalize compatibility alias before admission | Existing owner route/receipt and separately admitted event disposition only; no new admission | Existing Project finish/Dashboard/Wizard deferred intake; unavailable without a real Project |
 
 ContractRef: ContractName:Plans/GitHub_Integration.md#d-project-management-flows-no-chain-wizard-required, ContractName:Plans/chain-wizard-flexibility.md
 

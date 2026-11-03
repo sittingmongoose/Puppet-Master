@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L5242-L5381
+Source lines: L5362-L5505
 
-Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f`
+Source SHA256: `e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a`
 
 ---
 
@@ -30,7 +30,7 @@ Goal receipt, completion, degraded, stopped, blocked, recovery, evidence, and ce
 
 ### EventRecord 2.0 scope, idempotency, and replay consumption
 
-Every new canonical `goal.*` and `goal_run.*` event is project-scoped EventRecord `2.0.0` with `scope_kind = project` and a non-empty `project_id`. Goal Runtime never uses an application sentinel. Application-scoped storage/root/lock/recovery events that affect many goals remain `scope_kind = application`, `project_id = null`; Goal Runtime references their event/recovery IDs and proven affected project/goal refs from payload evidence instead of republishing them as fake project events.
+New canonical Goal events use the explicitly selected original Project or newly versioned live application contract (GRS-043/086). Project means nonempty actual `project_id`; application means `scope_kind=application`, `project_id=null` and real thread/Goal/run/Computer. No application sentinel, empty Project string or focus fallback is permitted. Preserve global event identity, reversible scope/lifetime idempotency, original semantic/hash/producer/custody editions and complete writer/read/backup joins. Root/lock/recovery events remain application-scoped under their own owners and are referenced as evidence, never republished as fake Project events. Historical-only goal.scheduled/goal.degraded/retired child events stay passive; real Project Workflow certification prerequisites remain intact.
 
 Goal history inspection of an EventRecord `2.0.0` root requires a reader that validates `2.0.0`; an unsupported reader refuses the live Goal view with `unsupported_schema_version` rather than projecting partial or best-effort history. Goal event routing consumes the storage-owned key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` with the registered reversible project partition. Goal Runtime does not derive this key from the selected project, omit `event_id`, or treat the index as lifecycle/receipt authority.
 
@@ -103,23 +103,24 @@ plan_unit_id: GRS-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: |-
-  Goal Runtime emits project-scoped EventRecord 2.0 goal and goal-run events, preserves global event identity and scoped lifetime idempotency, fails closed on dedupe_unavailable, and limits replay-only compatibility input to disposable projection effects. Scheduler admission additionally requires storage writer and continuity truth, resolved exact-restore or recovery-hold state, and current permission evidence; viewer, root, integrity, restore-recovery, and permission blockers cannot become failure or completion.
-
-  The admission and recovery safeguards do not authorize goal.scheduled: GRS-062/CV-336 make that exact row historical-only. Current run scheduling still applies every actual storage/permission/recovery/stop-epoch gate, while SP-280 reads cannot dispatch or mutate.
+canonical_text: >-
+  Goal Runtime emits only explicitly admitted application-or-project Goal event editions. Application
+  scope has null Project and real thread/Goal/run/Computer; exact original Project payload/wrapper/hash
+  domains stay valid. Preserve global event identity, reversible scope partition, lifetime idempotency,
+  dedupe_unavailable refusal and replay-only disposable projection effects. Admission still requires
+  current storage writer/continuity, exact-restore/recovery-hold resolution, permission and Stop truth;
+  viewer/root/integrity/recovery/permission blockers cannot become failure or completion. GRS-086 selects
+  complete app writer/read/backup graphs and GRS-087 controls immutable conversion. goal.scheduled,
+  goal.degraded and retired child-state writers remain historical-only; SP-280 passive reads cannot
+  dispatch or mutate.
 gui_related: true
 gui_classification_reason: Goal blocked, historical viewer, recovery, permission, and resume states are visible control-plane behavior.
 depends_on: [GRS-006, GRS-019, GRS-020, CV-317, CV-318, CV-320, SP-239, SP-240, SP-241, SP-242]
 unblocks: []
 acceptance_criteria:
-  - Goal and GoalRun events validate only with project scope and non-empty project identity; app storage events remain app scoped.
-  - A reader lacking EventRecord 2.0 validation refuses Goal-history inspection, and routing consumes the full storage-owned v2 scope, sequence, and event lookup key.
-  - Duplicate/idempotency conflicts or dedupe_unavailable append no transition and enable no dependent scheduling or certification.
-  - projector_replay_only input changes no canonical receipt, scheduler, permission, child, usage, or external state.
-  - Viewer/root/integrity fixtures expose historical or blocked posture and start no goal continuation or writer-capable subsystem.
-  - Exact-replace recovery-required or recovery-unavailable fixtures retain fencing, local work, and anchors until an explicit owner terminal action.
-  - Permission denial stays blocked with exact payload and a later resume revalidates current permission evidence.
-  - Goal recovery exposes no generic storage repair, salvage, force-open, or try-anyway path, and Retry storage cannot auto-resume a blocked goal.
+  - "Each live adopted app family joins explicit outer/inner app scope/null Project and actual owner identity; original Project editions remain exact."
+  - "Global event identity and scoped lifetime idempotency survive restart; dedupe_unavailable fences."
+  - "No historical-only Goal writer, app sentinel, passive-read dispatch or blocker-as-completion is introduced."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future EventRecord goal scope/dedupe/replay and Goal Runtime storage/restore/permission admission fixtures
@@ -133,14 +134,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Case-L:L-006
-  - Case-L:L-010
-  - Case-L:L-013
-  - Case-L:L-014
-  - Case-L:L-018
-  - Case-L:L-020
-  - Case-L:EVT-01..EVT-07
-  - Case-L:PD-RSP-01..PD-RSP-09
+  - "Case-L:L-006"
+  - "Case-L:L-010"
+  - "Case-L:L-013"
+  - "Case-L:L-014"
+  - "Case-L:L-018"
+  - "Case-L:L-020"
+  - "Case-L:EVT-01..EVT-07"
+  - "Case-L:PD-RSP-01..PD-RSP-09"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
   - Do not use application sentinel project identity for goal events.
   - Do not let viewer promotion, retry, timer, model switch, or child completion clear storage, restore, recovery, or permission blockers.

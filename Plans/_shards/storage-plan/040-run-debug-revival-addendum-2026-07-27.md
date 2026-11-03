@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18223-L18279
+Source lines: L18266-L18313
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -19,19 +19,8 @@ plan_unit_id: SP-244
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  The project-scoped persistence key family for classical debug state is registered as: launch profile
-  records under pm.debug.launch_profiles:v1 (project-scoped, survives restart, forward-only migration;
-  field schema owned by Plans/FinalGUISpec.md F3-489 and consumed by reference - this unit owns only
-  keys, lifetimes, and migration rules and never restates fields); breakpoint records under
-  pm.debug.breakpoints:v1 (project-scoped; records keyed by stable breakpoint id carrying
-  file/line/type/condition/hit-count/log-message/enabled - the breakpoint record truth that F3-488's
-  gutter and shelf renderers sync from, referenced); watch expressions under pm.debug.watches:v1
-  (project-scoped ordered list of expression strings); shelf collapse state follows the F3-475
-  side-panel persistence key discipline (referenced, not restated); runtime session state (paused
-  data, console scrollback) is never persisted - session-ephemeral per F3-483 (referenced); debug
-  session records link into the existing dev_session_record.v1 identity family (referenced) via
-  dap_session_id.
+canonical_text: |-
+  The project-scoped persistence key family for classical debug state is registered as: launch profile records under pm.debug.launch_profiles:v1 (project-scoped, survives restart, forward-only migration; field schema owned by Plans/FinalGUISpec.md F3-489 and consumed by reference - this unit owns only keys, lifetimes, and migration rules and never restates fields); breakpoint records under pm.debug.breakpoints:v1 (project-scoped; records keyed by stable breakpoint id carrying file/line/type/condition/hit-count/log-message/enabled - the breakpoint record truth that F3-488's gutter and shelf renderers sync from, referenced); watch expressions under pm.debug.watches:v1 (project-scoped ordered list of expression strings); shelf collapse state follows the F3-475 side-panel persistence key discipline (referenced, not restated); runtime session state (paused data, console scrollback) is never persisted - session-ephemeral per F3-483 (referenced); debug session records link into the existing dev_session_record.v1 identity family (referenced) via dap_session_id. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: Launch profiles, breakpoints, and watch expressions persist the state of user-visible Debug & Run panel shelves and gutter renderers.
 split_recommended: false
@@ -55,8 +44,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - user-decision:2026-07-27-run-debug-revival
-  - Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-496; referenced)
+- user-decision:2026-07-27-run-debug-revival
+- Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-496; referenced)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens: [pm.debug.launch_profiles:v1, pm.debug.breakpoints:v1, pm.debug.watches:v1]
 negative_constraints:
   - Do not restate F3-489 launch-profile fields; the schema is consumed by reference only.

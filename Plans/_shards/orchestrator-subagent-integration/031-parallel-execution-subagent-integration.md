@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L3627-L5663
+Source lines: L3627-L5670
 
-Source SHA256: `f932a74573f86d7dc4a4bfa3088531138d1c22add1185e7613ed76ae56a3abe9`
+Source SHA256: `d07e09bc0879a8662e29cc47c8fd3ef1b8d0520f0501c34823aa00caedf610b1`
 
 ---
 
@@ -284,24 +284,28 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Newly authored owner contract under DL-045 and the semantic owner text for coordination.agent_registered,
-  coordination.agent_status_updated, coordination.agent_operation_updated,
-  coordination.agent_file_ownership_updated, coordination.agent_unregistered, coordination.agent_crashed and
-  coordination.agent_aborted. AgentCoordinator is the only appender, through storage.coordination_append.v1:
-  register_agent, update_status, update_operation, update_file_ownership and unregister_agent(AgentTerminalUpdate),
-  plus the newly defined record_crash for the scheduler or crash detector only and record_abort for the component
-  that resolves the abort. The Gap #30 automatic-cleanup rule governs over the after-execution "Agent appends"
-  wording. An agent_id names one registration and is never registered again. The closed domains are status (the four
-  non-terminal members of the canonical child lifecycle enum, for every coordination agent), terminal_status
-  (complete, failed, cancelled), claim_kind (editing, reviewing, generated_output, read_dependency), claim_confidence
-  (high, medium), crash_reason (process_exit, heartbeat_expired, process_lost, worktree_lost) and abort_reason
+  Newly authored owner contract under DL-045 and the semantic owner text for
+  coordination.agent_registered, coordination.agent_status_updated, coordination.agent_operation_updated,
+  coordination.agent_file_ownership_updated, coordination.agent_unregistered, coordination.agent_crashed
+  and coordination.agent_aborted. AgentCoordinator is the only appender, through
+  storage.coordination_append.v1: register_agent, update_status, update_operation, update_file_ownership
+  and unregister_agent(AgentTerminalUpdate), plus the newly defined record_crash for the scheduler or
+  crash detector only and record_abort for the component that resolves the abort. The Gap #30
+  automatic-cleanup rule governs over the after-execution "Agent appends" wording. An agent_id names one
+  registration and is never registered again. The closed domains are status (the four non-terminal members
+  of the canonical child lifecycle enum, for every coordination agent), terminal_status (complete, failed,
+  cancelled), claim_kind (editing, reviewing, generated_output, read_dependency), claim_confidence (high,
+  medium), crash_reason (process_exit, heartbeat_expired, process_lost, worktree_lost) and abort_reason
   (parent, user, runtime). platform is the effective runtime platform ID that the Orchestrator takes from
-  node_config.platform (OSI-258), as Plans/Models_System.md section 1.2 names runtime platforms, and no list of
-  platforms is closed here. Events are appended at registration, on actual change and at termination. Heartbeats are
-  runtime liveness, and the heartbeat-expiry threshold is the runtime policy value coordination_heartbeat_expiry_ms,
-  with no number assigned here. The initial operation is its own agent_operation_updated event after registration.
-  Legacy sketch fields do not govern. Lost acknowledgement resolves through the adopted SP-286/CV-339
-  storage.first_append_receipt.resolve.v2. Nothing is admitted.
+  node_config.platform (OSI-258), as Plans/Models_System.md section 1.2 names runtime platforms, and no
+  list of platforms is closed here. Events are appended at registration, on actual change and at
+  termination. Heartbeats are runtime liveness, and the heartbeat-expiry threshold is the runtime policy
+  value coordination_heartbeat_expiry_ms, with no number assigned here. The initial operation is its own
+  agent_operation_updated event after registration. Legacy sketch fields do not govern. Lost
+  acknowledgement resolves through the adopted SP-286/CV-339 storage.first_append_receipt.resolve.v2.
+  Nothing is admitted. App children use the same coordinator operations and lifecycle under OSI-440, with
+  explicit scope/Server/thread/crew roots and one Server-wide app quota/retention bucket. This adds no
+  alternate appender, heartbeat threshold, export authority or native proof.
 gui_related: false
 gui_classification_reason: Defines backend coordination producers, identities and event semantics, not presentation.
 depends_on: [DL-045, OSI-432, CV-310, SP-232, SP-286, CV-339]
@@ -328,11 +332,14 @@ context_scope: coordination_event_authority_seven_families
 implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
 node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - Plans/Decision_Log.md#DL-045
-  - reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md
-  - Plans/orchestrator-subagent-integration.md#OSI-432
-  - Plans/Contracts_V0.md#CV-310
-  - Plans/storage-plan.md#SP-232
+  - "Plans/Decision_Log.md#DL-045"
+  - "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md"
+  - "Plans/orchestrator-subagent-integration.md#OSI-432"
+  - "Plans/Contracts_V0.md#CV-310"
+  - "Plans/storage-plan.md#SP-232"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens: [record_crash, record_abort, coordination_heartbeat_expiry_ms, coordination_unchanged, coordination_conflict]
 negative_constraints:
   - No admission, registry row, retention policy, payload field, Storage key or native proof.

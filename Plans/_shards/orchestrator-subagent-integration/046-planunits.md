@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6571-L31134
+Source lines: L6580-L31225
 
-Source SHA256: `f932a74573f86d7dc4a4bfa3088531138d1c22add1185e7613ed76ae56a3abe9`
+Source SHA256: `d07e09bc0879a8662e29cc47c8fd3ef1b8d0520f0501c34823aa00caedf610b1`
 
 ---
 
@@ -5354,7 +5354,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Project context, language, and framework detection should be cached by canonical workspace path, invalidated on config reload or workspace changes, exposed through get_project_context(workspace), and optionally TTL- or run-duration-scoped so long sessions do not hold stale data.
+  Project context, language, and framework detection should be cached by canonical workspace path,
+  invalidated on config reload or workspace changes, exposed through get_project_context(workspace), and
+  optionally TTL- or run-duration-scoped so long sessions do not hold stale data. App detection uses
+  explicit real Computer/Host/root identity or an honest no-folder context and invalidates on those
+  changes; it does not return a fabricated Project. Project cache semantics remain unchanged.
 gui_related: false
 gui_classification_reason: This unit covers backend detection caching, not GUI behavior.
 split_recommended: false
@@ -5383,7 +5387,10 @@ node_compile_hint:
   mode: project_context_detection_cache_boundary
   create_worknodes: false
 source_lineage:
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0079
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0079"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - 'cache key: canonical workspace path'
 - 'get_project_context(workspace) -> Result<ProjectContext>'
@@ -5408,7 +5415,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Config changes for global plan mode and subagent settings follow existing Config save behavior, mark dirty or prompt on leave as appropriate, and persist use_plan_mode_all_tiers, last_per_tier_plan_mode, and the full subagent block atomically through the same GuiConfig and gui_config::save_config call to the same YAML file.
+  Plan/subagent preferences use the Settings-owned resolver and atomic transaction at their declared
+  Everywhere/Computer/Project/owner levels. use_plan_mode_all_tiers and last_per_tier_plan_mode remain
+  compatibility keys only where their owners retain them; saved configuration never revives tier routing
+  or requires a user Project to edit app defaults. There is one settings writer, not a direct
+  feature-local GuiConfig/YAML writer. Frozen admitted run config changes only through its explicit owner
+  operation.
 gui_related: true
 gui_classification_reason: This unit covers user-visible Config save/dirty behavior and atomic persistence.
 split_recommended: false
@@ -5437,7 +5449,10 @@ node_compile_hint:
   mode: config_dirty_state_atomic_persistence
   create_worknodes: false
 source_lineage:
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0082
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0082"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - 'explicit Save'
 - 'mark dirty'
@@ -5635,7 +5650,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Main orchestrator run config must align with Config tab saves: the run loop uses ConfigManager::discover and get_config to load PuppetMasterConfig from disk, the Config tab saves GuiConfig to the same path, saved YAML must remain compatible for execution-affecting fields, and project-hinted runs should prefer discover_with_hint(project_path).
+  Main orchestrator run config must align with Config tab saves: the run loop uses ConfigManager::discover
+  and get_config to load PuppetMasterConfig from disk, the Config tab saves GuiConfig to the same path,
+  saved YAML must remain compatible for execution-affecting fields, and project-hinted runs should prefer
+  discover_with_hint(project_path). This Orchestrator route still needs its real Project. Ordinary app
+  chat/Goal/Crew/Plan dispatch reads Settings-owned Everywhere/Computer defaults and actual task context
+  through SIR-055, not an invented Project YAML or a second configuration writer.
 gui_related: true
 gui_classification_reason: This unit covers config-source behavior visible through the Config tab and run setup.
 split_recommended: false
@@ -5663,7 +5683,10 @@ node_compile_hint:
   mode: main_run_config_source_alignment
   create_worknodes: false
 source_lineage:
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0090
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0090"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - 'ConfigManager::discover()'
 - 'get_config()'
@@ -6487,7 +6510,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  End-tier quality verification requires agent-driven review of code or artifacts for maintainability, correctness, and project-standard alignment, including a dedicated reviewer subagent and required quality criteria in the gate, with no human-review path and no skip path.
+  End-tier quality verification requires agent-driven review of code or artifacts for maintainability,
+  correctness, and project-standard alignment, including a dedicated reviewer subagent and required
+  quality criteria in the gate, with no human-review path and no skip path. App chat review aligns against
+  its admitted task/source constraints and Everywhere/Computer defaults; the absence of a Project is not a
+  refusal of review, nor authority to skip actual required checks. Project Orchestrator end-tier rules
+  retain their original prerequisites.
 gui_related: false
 gui_classification_reason: This unit covers backend/verification quality policy, not GUI behavior.
 split_recommended: false
@@ -6517,7 +6545,10 @@ node_compile_hint:
   mode: required_agent_driven_quality_verification
   create_worknodes: false
 source_lineage:
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0097
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0097"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - 'review the code (or artifacts)'
 - 'maintainable, correct, and aligned with project standards'
@@ -6599,7 +6630,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Quality gate severity defaults classify linter/test/build/type errors as fail-worthy critical checks, linter warnings, formatter violations, and coverage delta as advisory warnings, load thresholds from .puppet-master/quality.json when present, and allow per-check fail/warn overrides through quality.gate.{check_name}.action.
+  Quality gate severity defaults classify linter/test/build/type errors as fail-worthy critical checks,
+  linter warnings, formatter violations, and coverage delta as advisory warnings, load thresholds from
+  .puppet-master/quality.json when present, and allow per-check fail/warn overrides through
+  quality.gate.{check_name}.action. The .puppet-master/quality.json override is a real-Project source
+  only. Ordinary app quality/review uses explicitly resolved Everywhere/Computer policy and the actual
+  task/files; no Project file/standards/WorkNode is invented.
 gui_related: false
 gui_classification_reason: This unit covers backend quality-gate policy, not GUI behavior.
 split_recommended: false
@@ -6627,7 +6663,10 @@ node_compile_hint:
   mode: quality_gate_severity_defaults_overrides
   create_worknodes: false
 source_lineage:
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0097
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0097"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - 'Linter errors'
 - 'Linter warnings'
@@ -12419,8 +12458,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Selector language-detection guardrails preserve multi-language project handling such as Rust + TypeScript for project context
-  and subagent selection.
+  Selector language-detection guardrails preserve multi-language project handling such as Rust +
+  TypeScript for project context and subagent selection. The same resource detector works on explicitly
+  permitted app files/roots with real Host identity and honest no-language/no-folder results, without
+  creating a Project.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend implementation-placement, compatibility, selector, parser, remediation, continuity, or orchestration
@@ -12454,10 +12495,11 @@ node_compile_hint:
   mode: multi_language_detection_guardrail
   create_worknodes: false
 source_lineage:
-- >-
-  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0121
-- >-
-  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0124
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0121"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0124"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - Language Detection
 - multi-language projects
@@ -12655,9 +12697,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Project context detection implements ProjectContext, DetectedLanguage, workspace-path scanning for Cargo.toml,
-  package.json, and similar markers, caches results per workspace path or in memory for the run, and exposes a
-  detect_project_context(workspace: &Path) -> Result<ProjectContext> style API.
+  Project context detection implements ProjectContext, DetectedLanguage, workspace-path scanning for
+  Cargo.toml, package.json, and similar markers, caches results per workspace path or in memory for the
+  run, and exposes a detect_project_context(workspace: &Path) -> Result<ProjectContext> style API.
+  No-project selection passes a typed app/optional-root detection context; only an actual permitted
+  directory is scanned, and missing workspace is explicit absence, not home scanning. Cache key includes
+  Host/root/scope.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend detection and caching behavior rather than GUI presentation.
@@ -12684,8 +12729,10 @@ node_compile_hint:
   mode: project_context_detection_cache_api
   create_worknodes: false
 source_lineage:
-- >-
-  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0127
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0127"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - ProjectContext
 - DetectedLanguage
@@ -12766,8 +12813,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  SubagentSelector exposes SubagentSelector::new(project_context) and select_for_tier(tier_type, tier_context) -> Vec<String>
-  over language, framework, and domain mappings from Tier-Level Subagent Strategy, with no platform calls in selector logic.
+  SubagentSelector exposes SubagentSelector::new(project_context) and select_for_tier(tier_type,
+  tier_context) -> Vec<String> over language, framework, and domain mappings from Tier-Level Subagent
+  Strategy, with no platform calls in selector logic. App child selection receives the same typed
+  optional-root/task context and current capability snapshot, not a fake Project. Legacy select_for_tier
+  wording remains compatibility only and cannot revive tier as authoritative runtime identity.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend selector API behavior rather than GUI presentation.
@@ -12793,8 +12843,10 @@ node_compile_hint:
   mode: pure_subagent_selector_api
   create_worknodes: false
 source_lineage:
-- >-
-  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0128
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0128"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - SubagentSelector::new(project_context)
 - "select_for_tier(tier_type, tier_context) -> Vec<String>"
@@ -14533,10 +14585,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  PM-managed multi-agent collaboration uses the child-run/event-store coordination record family for durable attributable
-  crew-board coordination that cannot be reduced to live status projection alone. Amended 2026-10-31 (DL-270, SP-339):
-  crew-board records are read through pm export (JSON on request) and the in-app record inspector; no
-  `.puppet-master/state/agent-messages.json` state file is written.
+  PM-managed multi-agent collaboration uses the child-run/event-store coordination record family for
+  durable attributable crew-board coordination that cannot be reduced to live status projection alone.
+  Amended 2026-10-31 (DL-270, SP-339): crew-board records are read through pm export (JSON on request) and
+  the in-app record inspector; no `.puppet-master/state/agent-messages.json` state file is written. App
+  boards/children are admitted by OSI-440 with explicit thread/crew/run/scope lineage and counterpart
+  caps; the same canonical event store/record inspector remains the owner.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend durable coordination records rather than GUI presentation.
@@ -14562,10 +14616,12 @@ node_compile_hint:
   mode: crew_board_persistence_boundary
   create_worknodes: false
 source_lineage:
-- >-
-  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
-- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
-- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142"
+  - "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8"
+  - "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - .puppet-master/state/agent-messages.json
 - canonical file-backed message board
@@ -14647,8 +14703,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The canonical crew message schema preserves message identity, sender and platform, optional direct/role/node/lane targets,
-  message type, priority, subject, content, execution context, thread linkage, creation time, read tracking, and resolution.
+  The canonical crew message schema preserves message identity, sender and platform, optional
+  direct/role/node/lane targets, message type, priority, subject, content, execution context, thread
+  linkage, creation time, read tracking, and resolution. The canonical AgentMessage app variant adds
+  explicit scope and crew/run/thread/Computer lineage with checked nullable target node/lane when
+  inapplicable. Payload limits and BLAKE3 references are OSI-299/440; no second schema copy may silently
+  omit these fields.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend record schema fields rather than GUI presentation.
@@ -14673,8 +14733,10 @@ node_compile_hint:
   mode: canonical_crew_message_schema
   create_worknodes: false
 source_lineage:
-- >-
-  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - message_id
 - from_platform
@@ -17460,9 +17522,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The communication system example extends coordination state with a message board/queue. Amended 2026-10-31 (DL-270, SP-339): both
-  `.puppet-master/state/active-agents.json` and `.puppet-master/state/agent-messages.json` are dropped from the example;
-  agent-to-agent message records are read through pm db dump, pm inspect or pm export.
+  The communication system example extends coordination state with a message board/queue. Amended
+  2026-10-31 (DL-270, SP-339): both `.puppet-master/state/active-agents.json` and
+  `.puppet-master/state/agent-messages.json` are dropped from the example; agent-to-agent message records
+  are read through pm db dump, pm inspect or pm export. The one board remains run-internal in application
+  and Project scope, governed by OSI-440; cross-thread requests use OSI-439 and never this board as a bus.
 gui_related: false
 gui_classification_reason: This unit covers backend coordination-state architecture rather than GUI presentation.
 split_recommended: false
@@ -17488,10 +17552,12 @@ node_compile_hint:
   mode: agent_message_board_architecture_example
   create_worknodes: false
 source_lineage:
-- >-
-  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
-- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
-- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153"
+  - "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8"
+  - "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - .puppet-master/state/
 - active-agents.json
@@ -17520,11 +17586,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The source preserves `AgentMessage` fields including `message_id`, `from_agent_id`, `from_platform`, `to_agent_id`,
-  `to_agent_type`, `to_node_id`, `message_type`, `subject`, `content`, `context`, `thread_id`, `in_reply_to`, `created_at`,
-  `read_by`, and `resolved`. Amended 2026-10-31 (DL-270): the crew.board_message_posted event carries at most 16 KiB of inline
-  `content` (SP-337); longer bodies go to the content-addressed payload store and the record keeps the BLAKE3 reference, and
-  replies, forks and summaries reference the payload instead of copying it.
+  The source preserves `AgentMessage` fields including `message_id`, `from_agent_id`, `from_platform`,
+  `to_agent_id`, `to_agent_type`, `to_node_id`, `message_type`, `subject`, `content`, `context`,
+  `thread_id`, `in_reply_to`, `created_at`, `read_by`, and `resolved`. Amended 2026-10-31 (DL-270): the
+  crew.board_message_posted event carries at most 16 KiB of inline `content` (SP-337); longer bodies go to
+  the content-addressed payload store and the record keeps the BLAKE3 reference, and replies, forks and
+  summaries reference the payload instead of copying it. Both AgentMessage schema copies adopt the same
+  explicit app/Project scope, actual crew/run/thread and optional-target joins under OSI-440; null Project
+  never makes boards cross-readable. Preserve the 16 KiB/BLAKE3 split, original Project history and
+  current read permissions.
 gui_related: false
 gui_classification_reason: This unit covers a backend message schema example rather than GUI presentation.
 split_recommended: false
@@ -17548,8 +17618,10 @@ node_compile_hint:
   mode: agentmessage_structure_example
   create_worknodes: false
 source_lineage:
-- >-
-  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - AgentMessage
 - message_id
@@ -19836,8 +19908,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Preserve `normalize_path`, `strip_prefix(project_root)`, `.puppet-master/worktrees/`, component stripping, and fallback
-  `path.to_path_buf()` evidence.
+  Preserve `normalize_path`, `strip_prefix(project_root)`, `.puppet-master/worktrees/`, component
+  stripping, and fallback `path.to_path_buf()` evidence. For app claims there is no project_root prefix:
+  use canonical absolute root/path plus actual Host identity through OSI-440. Preserve original
+  repository-relative normalization only for real repository bindings; string equality is not an ownership
+  join.
 gui_related: false
 gui_classification_reason: This unit covers backend path-normalization example code rather than GUI presentation.
 split_recommended: false
@@ -19861,8 +19936,10 @@ node_compile_hint:
   mode: normalize_path_rust_example
   create_worknodes: false
 source_lineage:
-- >-
-  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - normalize_path
 - strip_prefix(project_root)
@@ -23137,8 +23214,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  User-project plan graph consumption evidence preserves sharded-only plan graph execution from project index and node
-  shards, rejects a canonical monolithic graph file, and keeps derived monolithic export as noncanonical.
+  User-project plan graph consumption evidence preserves sharded-only plan graph execution from project
+  index and node shards, rejects a canonical monolithic graph file, and keeps derived monolithic export as
+  noncanonical. These sharded Plan graphs belong only to real Project Orchestrator runs. App
+  chat/Goal/Crew/Assistant Plan builds consume their own task/To-Do/ledger/bundle owners and create no
+  graph, .puppet-master tree or WorkNodes. No app graph home is added.
 gui_related: false
 gui_classification_reason: This unit covers graph/storage consumption, not GUI presentation.
 split_recommended: false
@@ -23162,8 +23242,10 @@ node_compile_hint:
   mode: sharded_user_project_plan_graph_consumption
   create_worknodes: false
 source_lineage:
-- >-
-  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0191
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0191"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - SHARDED-ONLY
 - .puppet-master/project/plan_graph/index.json

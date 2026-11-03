@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L1676-L1745
+Source lines: L1676-L1750
 
-Source SHA256: `244ef6d88c377b3416c039b2b877204fbb152accf376f3ac8bc21b84f30df2fd`
+Source SHA256: `6e6004f19709d7c9df7c211b786fbfa97cfa3e1dcf11e6befbf69fb621e7a77b`
 
 ---
 
@@ -35,12 +35,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
-  Every PlanCompileRun, NodeSeed candidate draft, WorkGraph draft, and WorkNodeRequest carries
-  an explicit immutable project_id plus named_plan_id parent edge resolved through the single
-  NPLAN-006 owner-join contract against the actual owner record and aggregate edges; scope
-  selection filters by resolved Plan identity and any rejected join fails certification closed.
-  The join proves lineage only and changes no compile, intake, activation, certification, or
-  buildability boundary.
+  Every PlanCompileRun, NodeSeed candidate draft, WorkGraph draft, and WorkNodeRequest carries an explicit
+  immutable project_id plus named_plan_id parent edge resolved through the single NPLAN-006 owner-join
+  contract against the actual owner record and aggregate edges; scope selection filters by resolved Plan
+  identity and any rejected join fails certification closed. The join proves lineage only and changes no
+  compile, intake, activation, certification, or buildability boundary. An AssistantDeepPlanUnitBundle
+  under PDS-021/023 is outside this product PlanCompile input family and may be application-owned without
+  project_id/named_plan_id. It maps directly to Assistant To-Dos and never creates NodeSeeds/WorkNodes;
+  this exclusion does not relax any real Project PlanCompile parent join.
 gui_related: false
 gui_classification_reason: Parent-edge lineage for compile artifacts is a compiler identity contract, not visual presentation.
 depends_on: [PNC-010, NPLAN-006]
@@ -65,6 +67,9 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08#PERF-001"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "PlanCompileRun"
   - "named_plan_id"

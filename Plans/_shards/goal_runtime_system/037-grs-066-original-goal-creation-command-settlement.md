@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6210-L6273
+Source lines: L6347-L6418
 
-Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f`
+Source SHA256: `e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a`
 
 ---
 
@@ -15,10 +15,15 @@ plan_unit_id: GRS-066
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: Original text-only Goal creation settles its accepted revision, original goal.created event/first
-  receipt and immutable command result once. A body accepted before later refusal remains preserved; successful
-  creation settlement plus all current Goal/run/thread/permission/Stop rules precedes first continuation without
-  a new Goal state or objective-completion claim.
+canonical_text: >-
+  Original text-only Goal creation settles its accepted revision, original goal.created event/first
+  receipt and immutable command result once. A body accepted before later refusal remains preserved;
+  successful creation settlement plus all current Goal/run/thread/permission/Stop rules precedes first
+  continuation without a new Goal state or objective-completion claim. The complete application sibling
+  selects explicit null-Project scope and actual thread/Computer under GRS-086, retaining original
+  acceptance/current source/control/Stop/partial-effect/replay predicates. GRS-087 conversion cannot
+  mutate ordinary immutable body or association inputs; each live writer/read/backup edge adopts the
+  selected app edition or stays disabled.
 gui_related: false
 gui_classification_reason: Defines original internal command/source/body/event/result and retained audit authority
   without a visual surface.
@@ -60,8 +65,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- reports/event-authority-20260911/step-08-goal-start-validation.md
-- Plans/Decision_Log.md#DL-047
+  - "reports/event-authority-20260911/step-08-goal-start-validation.md"
+  - "Plans/Decision_Log.md#DL-047"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
 - Do not infer original authority from unchanged invalid values, selected helper results, hashes, schema registration
   or installed-role declarations.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2689-L3182
+Source lines: L2717-L3294
 
-Source SHA256: `ae043ff101e9961383abd53c59f9f78f01314f3061ce0ea7039bbb1386ea9d35`
+Source SHA256: `0eb674f95b083572d08fa10b6506de4fb7e33e53dd80f2683155ea8f8e451cd1`
 
 ---
 
@@ -31,11 +31,15 @@ plan_unit_id: SIR-049
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
-canonical_text: The existing Goal update command retains its genuine original source and publishes authentic
-  typed result, SIR outcome, central response and terminal audit in one original atomic member boundary,
+canonical_text: >-
+  The existing Goal update command retains its genuine original source and publishes authentic typed
+  result, SIR outcome, central response and terminal audit in one original atomic member boundary,
   preserving immutable unknown and replay semantics while original effect recovery remains separate.
   Retained replay resolves the exact original terminal-selected epoch and members under current audit
-  authority through one complete after-helper disclosure boundary, independently of current body/event visibility.
+  authority through one complete after-helper disclosure boundary, independently of current body/event
+  visibility. The app Goal update sibling uses the same original accepted-operation/result/replay
+  discipline under its explicit scope-aware version map. Historical Project V2/V3 typed bytes and all
+  partial/unknown source predicates remain exact; null is not cast into their identity domains.
 gui_related: false
 gui_classification_reason: Defines existing-command source, event, storage and result publication without
   a new visual surface.
@@ -78,10 +82,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-039
-- Plans/Decision_Log.md#DL-045
-- Plans/Decision_Log.md#DL-047
-- Plans/Goal_Runtime_System.md#GRS-064
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "Plans/Goal_Runtime_System.md#GRS-064"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
 - Do not infer accepted source or native atomicity from a schema, copied owner map, result-shaped value
   or fixture.
@@ -417,40 +424,45 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
 canonical_text: >-
-  D2/D7–D13, G4/G5/G7; DL-255. OperationalAwareness consumes ObservableWork across all platform owners; add
-  thread Processes, two status items, Agents/Processes/Resources, tray/project badge and composer attention as
-  filtered consumers. Agent registry/lineage is the owner link, no view-private list or status. Extend process
-  work with owner_thread_id, completion_delivery agent|user|quiet, holds_reply, current input_request(prompt,
-  detected_at, generation, quick_answers), stopped_by, and process_facts_ref present in subject_refs. Keep
-  non-process work free of process payloads. Executor/terminal owns subordinate ProcessFacts: stable
-  process_facts_id, observable_work_id, Project/server/environment identity, pid, pid_start_time, process_group,
-  command, cwd, ports, exit_code, ended_reason exited|stopped_by_user|stopped_by_agent|stopped_with_owner|lost,
-  output_ref with bounded head/tail and omitted_line_count, stoppable and restartable. Bind stop/input/restart
-  to current identity/generation; whole-group SIGTERM then SIGKILL after 3 s, Stopping until observed exit,
-  ended stop idempotent. Input only safe-first plain yes/no, other prompts to Terminal; protect
-  secret/permission ownership. Host monitor owns ServerResourceSample: stable sample_id,
-  project_id/server_id/environment_id, sampled_at, freshness current|partial|stale|unavailable|conflicted,
-  cpu_percent, memory_used_bytes/memory_total_bytes, per-process CPU/memory and ports. Unknown values are null
-  with reason, never synthetic zero; process identity includes pid_start_time. Resources alone subscribes while
-  open and visible; close/hidden cancels sampling and stale generations never repaint a newer Project/tab. No
-  CPU/RAM status-bar indicator. D9 defaults scripts/tests/builds to agent, servers/watchers/databases to user;
-  quiet suppresses delivery. Delivery is idempotent per work completion generation, coalesces notices, never
-  wakes a user-stopped thread; holds_reply is independent. Detect/reconcile restart before Lost, tell owning
-  agent once, no silent kill on idle unload. System services are read-only and excluded from stop sets. New
-  completion/input semantic events remain non-emitting candidates pending Event Authority; existing owner
-  state/receipt families are reused without changing admitted event schemas. Static companion records are
-  specifications, not native handlers or evidence admission. G6: Clear Finished hides finished records in the
-  invoking view only and deletes no owner record, retention state or other view. Runtime record ownership and
-  completion delivery are unaffected. D2/D10/G4: ProcessFacts and ServerResourceSample inherit the authoritative
-  parent/source scope_kind and identity. Project scope requires a nonempty project_id; application scope uses
-  project_id null, including platform services and host samples with no active Project. A mismatched scope or
-  owner join refuses before display/control; never invent a default Project. Application-wide views do not grant
-  permission over their target Projects, servers or environments. QA2 Q12/Q13 (DL-258; GUI 7d586bad18):
-  read-only Resources projects shared This computer/Puppet Master service rows plus the current Project’s own
-  server/environment work. This does not infer a Project owner for shared services, expose another Project’s
-  private rows or widen WorkTarget mutations. Q13 expires only the dock projection’s non-needs process/scheduled
-  line after 60000 ms per thread/run; the work, source facts, availability and native commands remain owned
-  here. Source sampling is still Resources-visible-only and stale/currentness-fenced.
+  D2/D7–D13, G4/G5/G7; DL-255. OperationalAwareness consumes ObservableWork across all platform owners;
+  add thread Processes, two status items, Agents/Processes/Resources, tray/project badge and composer
+  attention as filtered consumers. Agent registry/lineage is the owner link, no view-private list or
+  status. Extend process work with owner_thread_id, completion_delivery agent|user|quiet, holds_reply,
+  current input_request(prompt, detected_at, generation, quick_answers), stopped_by, and process_facts_ref
+  present in subject_refs. Keep non-process work free of process payloads. Executor/terminal owns
+  subordinate ProcessFacts: stable process_facts_id, observable_work_id, Project/server/environment
+  identity, pid, pid_start_time, process_group, command, cwd, ports, exit_code, ended_reason
+  exited|stopped_by_user|stopped_by_agent|stopped_with_owner|lost, output_ref with bounded head/tail and
+  omitted_line_count, stoppable and restartable. Bind stop/input/restart to current identity/generation;
+  whole-group SIGTERM then SIGKILL after 3 s, Stopping until observed exit, ended stop idempotent. Input
+  only safe-first plain yes/no, other prompts to Terminal; protect secret/permission ownership. Host
+  monitor owns ServerResourceSample: stable sample_id, project_id/server_id/environment_id, sampled_at,
+  freshness current|partial|stale|unavailable|conflicted, cpu_percent,
+  memory_used_bytes/memory_total_bytes, per-process CPU/memory and ports. Unknown values are null with
+  reason, never synthetic zero; process identity includes pid_start_time. Resources alone subscribes while
+  open and visible; close/hidden cancels sampling and stale generations never repaint a newer Project/tab.
+  No CPU/RAM status-bar indicator. D9 defaults scripts/tests/builds to agent, servers/watchers/databases
+  to user; quiet suppresses delivery. Delivery is idempotent per work completion generation, coalesces
+  notices, never wakes a user-stopped thread; holds_reply is independent. Detect/reconcile restart before
+  Lost, tell owning agent once, no silent kill on idle unload. System services are read-only and excluded
+  from stop sets. New completion/input semantic events remain non-emitting candidates pending Event
+  Authority; existing owner state/receipt families are reused without changing admitted event schemas.
+  Static companion records are specifications, not native handlers or evidence admission. G6: Clear
+  Finished hides finished records in the invoking view only and deletes no owner record, retention state
+  or other view. Runtime record ownership and completion delivery are unaffected. D2/D10/G4: ProcessFacts
+  and ServerResourceSample inherit the authoritative parent/source scope_kind and identity. Project scope
+  requires a nonempty project_id; application scope uses project_id null, including platform services and
+  host samples with no active Project. A mismatched scope or owner join refuses before display/control;
+  never invent a default Project. Application-wide views do not grant permission over their target
+  Projects, servers or environments. QA2 Q12/Q13 (DL-258; GUI 7d586bad18): read-only Resources projects
+  shared This computer/Puppet Master service rows plus the current Project’s own server/environment work.
+  This does not infer a Project owner for shared services, expose another Project’s private rows or widen
+  WorkTarget mutations. Q13 expires only the dock projection’s non-needs process/scheduled line after
+  60000 ms per thread/run; the work, source facts, availability and native commands remain owned here.
+  Source sampling is still Resources-visible-only and stale/currentness-fenced. Approved app
+  Goal/Crew/Assistant Plan/scheduled targets also consume these authoritative app
+  ProcessFacts/ObservableWork rows with real thread/Computer and generation. Only later work after
+  conversion changes attribution; shared service reads grant no extra control.
 gui_related: false
 gui_classification_reason: Defines owner authority, record semantics or lifecycle.
 split_recommended: false
@@ -484,8 +496,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- reports/pm7-build-20261029/IDS.md
-- Concepts/background-activity/opus-5.5/README.md
+  - "reports/pm7-build-20261029/IDS.md"
+  - "Concepts/background-activity/opus-5.5/README.md"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - ProcessFacts
 - ServerResourceSample
@@ -502,3 +517,72 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/Executor_Protocol.md#EP-043
+
+### SIR-055 - Application Execution Custody Attribution And Fairness
+
+```yaml
+plan_unit_id: SIR-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: Application ordinary chat, Goal, Crew, Assistant Plan and scheduled-task work carries explicit application
+  scope, null project_id/project_home_server_id/named_plan_id, real server_id/thread_id/run or operation identity,
+  execution_host_id/execution_environment_id, topology generation, current permission evidence, working-root identity
+  and storage writer/lease. Absent repository/worktree/node is honest absence, not a fabricated target. The connected
+  Server owns canonical app content and timers before any Project Vault exists; losing it never elects another writer.
+  Fairness admits one app-scope peer alongside Projects and then thread/workflow children under the same physical-parent
+  budgets, weighted aging and anti-starvation; app work cannot bypass budgets through new chats. Detail targets
+  use {scope_partition}:{thread_id}:{generation}; a new versioned wrapper/checkpoint covers the app variant while
+  exact Project historical bindings remain readable. Compaction/revert/recovery and ObservableWork/ProcessFacts/Resources
+  preserve actual source scope and generation. Cross-project reads execute on the source Computer through existing
+  route/trust custody plus D's narrow read authority, never settings.follow or discovery authority. Full Server
+  Backup retains coherent canonical app bodies, history/control, notebook, Plan, schedule, consent and occurrence
+  custody under their owners; disposable projections stay rebuildable. Conversion consumes PSB-007 and the exact
+  destination bindings, re-admits dispatch and attributes only later work to the destination; old Usage and original
+  results are unchanged.
+gui_related: false
+gui_classification_reason: Defines identity, custody, admission or compiler boundaries; visual placement is consumed
+  from GUI owners.
+depends_on:
+- AI-069
+- PS-145
+unblocks: []
+acceptance_criteria:
+- App dispatch without a Project proves explicit Computer/roots/permission/writer joins; same-path foreign Host
+  fails.
+- Concurrent app and Project work obey one governor and scope-fenced detail publication.
+- Client close does not stop Server work; owner outage cannot create a second writer or optimistic completion.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#N1-N5-N17-N20-N24; Goals-Crew-Plan-schedules
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
+preserved_exact_tokens:
+- server_id
+- thread_id
+- project_home_server_id
+- '{scope_partition}:{thread_id}:{generation}'
+- settings.follow
+- PSB-007
+negative_constraints:
+- Do not create a Project Vault/Home Server lease for an app thread or infer authority from a read-only projection.
+- No current Settings reconstruction of frozen permission evidence, no offline write queue, no native-readiness
+  claim.
+owner_hints:
+- Plans/Shared_Integration_Runtime.md
+```
+
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-055, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/PRD_Builder.md`
 
-Source lines: L982-L1058
+Source lines: L1023-L1104
 
-Source SHA256: `4dd841cf723c7a8898c5c3bbf8c29540623152ebc4ce61cf95a8ee2243db8c70`
+Source SHA256: `26a07a9fe4ca1c3262915145e219cd0db5151f4143bcfc1e4bab67d7b917afdb`
 
 ---
 
@@ -40,12 +40,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/PRD_Builder.md
 canonical_text: >-
-  PRD Builder exposes a PRD switcher plus New Plan entry scoped by explicit immutable
-  project_id plus named_plan_id, with one current primary PRD per selected Named Plan,
-  independent background work across switches, and per-Plan restore of route, tab, filters,
-  inspector, scroll, and focus. Plan lifecycle actions reuse the existing six cmd.named_plan
-  commands with no new lifecycle, and every PRD parent edge resolves through the single
-  NPLAN-006 owner-join contract while PRD content, approval, and readiness stay owned here.
+  PRD Builder exposes a PRD switcher plus New Plan entry scoped by explicit immutable project_id plus
+  named_plan_id, with one current primary PRD per selected Named Plan, independent background work across
+  switches, and per-Plan restore of route, tab, filters, inspector, scroll, and focus. Plan lifecycle
+  actions reuse the existing six cmd.named_plan commands with no new lifecycle, and every PRD parent edge
+  resolves through the single NPLAN-006 owner-join contract while PRD content, approval, and readiness
+  stay owned here. No-project PRD navigation is typed Project-required with the two ACD-510 choices; no
+  null Project/named_plan_id or fake aggregate is admitted. A successful conversion is followed by
+  separate current intake, not implicit PRD creation.
 gui_related: true
 gui_classification_reason: The PRD switcher, New Plan entry, per-Plan restore, and scoped workspace are user-visible.
 depends_on: [PRDB-005, NPLAN-006]
@@ -71,6 +73,9 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08#PERF-001"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "primary PRD"
   - "New Plan"

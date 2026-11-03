@@ -4,16 +4,16 @@ Source: `Plans/Architecture_Invariants.md`
 
 Source lines: L325-L337
 
-Source SHA256: `aabdd384375f6ff5f75eac1ad5085ed9af05a5cebcf0dcbf4b5b3462eef1935e`
+Source SHA256: `480fac0bed813d64ffbc35f54515ef098785f04fd1b0893cdf132bba61a93e2b`
 
 ---
 
 ## INV-020 -- Project-driven capability activation
 
-**Rule:** Puppet Master MUST remain one extensible platform with project-driven capability activation, not separate hard-forked products or rigid personalities.
+**Rule:** Puppet Master remains one extensible platform with a no-project baseline (AI-069) plus explicit resource/Project capability activation, never separate products or invented Project identity.
 
-- The `bench-03` deep-dive benchmark signal is canonical as an architecture constraint: Puppet Master is one extensible platform whose capabilities activate from the current project context.
-- Project-open detection/import MUST run explicitly before capability activation. It reads project signals such as language markers, framework files, build/run metadata, hosted-repository state, remote-host state, provider/runtime capability reports, and user overrides.
+- The retained bench-03 constraint means one extensible platform. Baseline chat/Goals/Crew/Plan/scheduling activates in real app scope; Project-specific packs activate only from their actual Project signals and permissions.
+- Project-open detection/import MUST run explicitly before Project-specific capability activation; app baseline and explicit permitted-file detection require no Project. It reads project signals such as language markers, framework files, build/run metadata, hosted-repository state, remote-host state, provider/runtime capability reports, and user overrides. Missing actual resources remain explicit, never guessed.
 - Project capability packs/modules for language, framework, build, review, remote, LSP/search, and source-control behavior activate from those project signals. Ambiguity MUST be visible and overridable: when multiple plausible interpretations exist, Puppet Master shows the alternatives, records the chosen/default interpretation, and allows the user to override it rather than hiding the choice as implicit automation.
 - Indexing and `external-model sync` are first-class background subsystems. While indexes warm up or external model/capability reports are still synchronizing, affected features MUST disclose reduced-capability/degraded-mode state instead of pretending full readiness. Indexes, sync snapshots, and remote caches MUST be bounded/reused so startup and large-workspace responsiveness are not dominated by repeated full rebuilds or full syncs.
 - diff/review/hosted-repository workflows MUST live in the same shell as local editing. Source Control, hosted review state, editor markers, Problems, and Search may each keep their own owner boundaries, but they must compose inside the shared IDE shell rather than becoming separate ad hoc tools.

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12156-L12410
+Source lines: L12563-L12870
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -244,22 +244,75 @@ plan_unit_id: UCC-151
 unit_type: gui_command_catalog
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: The server/Egolite closure catalogs 103 unique primary commands with exact owner, sole future target, typed contracts, handler-unavailable projection, and complete intended consumers while keeping 43 aliases normalization-only, 38 predecessor spellings typed-local-only, and three rejections non-dispatchable; cmd.project.unarchive is the September 11 owner-backed registry mutation correction.
+canonical_text: 'The server/Egolite closure catalogs 103 unique primary commands with exact owner, sole future
+  target, typed contracts, handler-unavailable projection, and complete intended consumers while keeping 43
+  aliases normalization-only, 38 predecessor spellings typed-local-only, and three rejections non-dispatchable;
+  cmd.project.unarchive is the September 11 owner-backed registry mutation correction.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-depends_on: [CS-073]
-unblocks: [WM-050, UIW-016]
+depends_on:
+- CS-073
+unblocks:
+- WM-050
+- UIW-016
 acceptance_criteria:
-  - The 103 unique central obligations are covered by the 100 distinct primary definitions in this section and the three existing authentication primaries in CS-066/UCC-145; authentication start/cancel/resume are not duplicated.
-  - Each exact primary appears once in the catalog and at least once in production-intent wiring with the same command and sole target.
-  - Every intended GUI consumer is preserved in the catalog and receives exact availability, disabled reason, keyboard semantics, focus return, and receipt/result projection.
-  - Alias, typed-local predecessor, and rejected tokens have no primary catalog or production row.
-  - Restore Archived Project consumes cmd.project.unarchive through PJCT-002 and the existing Project action family. Its retained ui.project.restore_archived entry is only a pre-gate adapter; visible success requires the Project owner's persisted listed result, never an optimistic local-only row change or backup/runtime restoration.
-validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, scripts/pm-plans-verify.py, scripts/pm-touch-closure-verify.py]
+- The 103 unique central obligations are covered by the 100 distinct primary definitions in this section and
+  the three existing authentication primaries in CS-066/UCC-145; authentication start/cancel/resume are not
+  duplicated.
+- Each exact primary appears once in the catalog and at least once in production-intent wiring with the same
+  command and sole target.
+- Every intended GUI consumer is preserved in the catalog and receives exact availability, disabled reason,
+  keyboard semantics, focus return, and receipt/result projection.
+- Alias, typed-local predecessor, and rejected tokens have no primary catalog or production row.
+- Restore Archived Project consumes cmd.project.unarchive through PJCT-002 and the existing Project action
+  family. Its retained ui.project.restore_archived entry is only a pre-gate adapter; visible success requires
+  the Project owner's persisted listed result, never an optimistic local-only row change or backup/runtime
+  restoration.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
+validation_surfaces:
+- Plans/Wiring_Matrix.production.json
+- Plans/Wiring_Matrix.production.exclusions.json
+- Plans/touch_closure.json
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: catalog_reverse_coverage_or_alias_promotion_drift
 reasoning_tier: high
 context_scope: server_egolite_ui_command_catalog
-implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
-node_compile_hint: {mode: catalog_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:server-command-gap-adjudication:rows-1-171, source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator]
-negative_constraints: [No alias primary row., No typed-local domain command., No rejected dispatch., No native-handler claim from a target string.]
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: catalog_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:server-command-gap-adjudication:rows-1-171
+- source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator
+- source_ref:chat:2026-11-03-projects-pass2-approved
+negative_constraints:
+- No alias primary row.
+- No typed-local domain command.
+- No rejected dispatch.
+- No native-handler claim from a target string.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+preserved_exact_tokens:
+- handler_unavailable
 ```

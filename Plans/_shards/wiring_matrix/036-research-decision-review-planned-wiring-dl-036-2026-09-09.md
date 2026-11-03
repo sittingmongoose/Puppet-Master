@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L4949-L5251
+Source lines: L5308-L5675
 
-Source SHA256: `3f8150617657a7e9de14a5815e7cc3097714249b08ea146d6967ac8137771f7b`
+Source SHA256: `3899744314444527ed5abfa724f4abdb67822efa4d7b3852a2db461438fffebe`
 
 ---
 
@@ -229,34 +229,99 @@ plan_unit_id: WM-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: >-
-  The bounded gap-repair table adds exactly thirty-eight existing commands to partial Touch Closure.
-  Whole-production command accounting is separate from the packet denominator and cannot promote
-  structural coverage to semantic review or native proof. Excluded aliases and retired commands
-  have no peer production row, and each canonical command has one sole handler identity across surfaces.
+canonical_text: 'The bounded gap-repair table adds exactly thirty-eight existing commands to partial Touch
+  Closure. Whole-production command accounting is separate from the packet denominator and cannot promote structural
+  coverage to semantic review or native proof. Excluded aliases and retired commands have no peer production
+  row, and each canonical command has one sole handler identity across surfaces.
+
+
+  Current projects-refresh contract: The six existing cmd.chat.goal.* mutations, Goal editor, four collaboration
+  kinds, participant/message actions and Crew Auto admit explicit app siblings and original exact Project contracts.
+  Scope, original accepted source/hash, body/control/Stop, parent/receiver authority, roots, roster/config
+  revisions and canonical backup join at final dispatch. Ordinary updates never retarget immutable Goal/Plan/Crew
+  bindings. No retired goal.scheduled/degraded/child-state producer or Project Workflow/WorkNode certification
+  is revived. App Crew Auto uses an app-thread configuration revision, distinct from a thread override and
+  Project configuration; the same evaluator/coordination board remains sole owner. Conversion defaults to linked
+  new destination records after safe stop/fence. The exact consumer contract is UCC-218/WM-104 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Visible command controls retain exact owner, disabled, trigger and return coverage.
-depends_on: [WM-046, DR-040, DR-041, BSD-020, ACD-460, ACD-462, F-084]
+depends_on:
+- WM-046
+- DR-040
+- DR-041
+- BSD-020
+- ACD-460
+- ACD-462
+- F-084
 unblocks: []
 acceptance_criteria:
-  - The exact thirty-eight listed commands each have one partial Touch Closure row and the listed owner/profile; unrelated catalog or source tokens cannot expand that set.
-  - The September 10 repair moves the retained Touch inventory from 606 rows/93 profiles to 644 rows/131 profiles, preserves its then-current 58 exclusions and 64 alias bindings, and removes eleven forbidden peer production rows from the 1154-row predecessor. The September 11 unarchive correction keeps 644 rows/131 profiles and 64 alias bindings, removes one exclusion (57 remain), and adds one owner command row (1144 production entries); it does not restore a forbidden peer or promote native closure. These scoped counts are not native or semantic-review verdicts.
-  - The eleven excluded production spellings are cmd.actions.pin/unpin, seven cmd.github_actions compatibility spellings, retired cmd.chat.delete_message, and file-only cmd.chat.add_file_reference. The last retains its catalog signature and normalizes to cmd.chat.attachment.add before every gate; preserve its source identity and reject folder input without a peer handler.
-  - Existing Browser and BSD mode rows remain single; BSD mode request/result/error refs resolve to the existing shared-runtime schemas without a parallel contract family.
-  - Each new profile names its actual sole future handler and actual production placements plus intended family consumers; no native wiring status is inferred.
-  - Markdown declarations remain explicitly unmaterialized machine-contract gaps and cannot establish complete payload, result or error coverage.
-  - Every production row and unique command is separately accounted, including out-of-packet commands and missing machine bindings.
-  - Exact excluded tokens cannot reappear as peer production rows, and differing handler identities for one canonical command fail the standard gate.
-  - Historical source cases, superseded spellings and missing runtime findings remain retained; removal of a peer row cannot erase them from the audit.
-  - No native implementation, event family, storage family, WorkNode, NodeSeed, readiness unlock or governance seal is admitted by this repair.
-validation_surfaces: [scripts/pm-touch-closure-verify.py, scripts/pm-assistant-contract-check.py, scripts/pm_wiring_inventory.py, tests/test_pm_touch_closure_source.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
+- The exact thirty-eight listed commands each have one partial Touch Closure row and the listed owner/profile;
+  unrelated catalog or source tokens cannot expand that set.
+- The September 10 repair moves the retained Touch inventory from 606 rows/93 profiles to 644 rows/131 profiles,
+  preserves its then-current 58 exclusions and 64 alias bindings, and removes eleven forbidden peer production
+  rows from the 1154-row predecessor. The September 11 unarchive correction keeps 644 rows/131 profiles and
+  64 alias bindings, removes one exclusion (57 remain), and adds one owner command row (1144 production entries);
+  it does not restore a forbidden peer or promote native closure. These scoped counts are not native or semantic-review
+  verdicts.
+- The eleven excluded production spellings are cmd.actions.pin/unpin, seven cmd.github_actions compatibility
+  spellings, retired cmd.chat.delete_message, and file-only cmd.chat.add_file_reference. The last retains its
+  catalog signature and normalizes to cmd.chat.attachment.add before every gate; preserve its source identity
+  and reject folder input without a peer handler.
+- Existing Browser and BSD mode rows remain single; BSD mode request/result/error refs resolve to the existing
+  shared-runtime schemas without a parallel contract family.
+- Each new profile names its actual sole future handler and actual production placements plus intended family
+  consumers; no native wiring status is inferred.
+- Markdown declarations remain explicitly unmaterialized machine-contract gaps and cannot establish complete
+  payload, result or error coverage.
+- Every production row and unique command is separately accounted, including out-of-packet commands and missing
+  machine bindings.
+- Exact excluded tokens cannot reappear as peer production rows, and differing handler identities for one canonical
+  command fail the standard gate.
+- Historical source cases, superseded spellings and missing runtime findings remain retained; removal of a
+  peer row cannot erase them from the audit.
+- No native implementation, event family, storage family, WorkNode, NodeSeed, readiness unlock or governance
+  seal is admitted by this repair.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-218; no native/event/governance proof follows from
+  static closure.
+validation_surfaces:
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm_wiring_inventory.py
+- tests/test_pm_touch_closure_source.py
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 risk_class: omitted_touch_or_false_whole_command_closure
 reasoning_tier: high
 context_scope: bounded_packet_gap_accounting
-implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/touch_closure.json, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json]
-node_compile_hint: {mode: static_inventory_and_contract_references_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/UI_Command_Catalog.md#UCC-156, Plans/UI_Command_Catalog.md#UCC-158, Plans/Back_Seat_Driver.md, Plans/assistant-chat-design.md]
-negative_constraints: [No ambient-token denominator expansion., No fabricated machine schema or native evidence., No duplicate owner handler or alias production row., No audit-case deletion or false aggregate pass.]
+implementation_surfaces:
+- Plans/Wiring_Matrix.md
+- Plans/touch_closure.json
+- Plans/Wiring_Matrix.production.json
+- Plans/Wiring_Matrix.production.exclusions.json
+node_compile_hint:
+  mode: static_inventory_and_contract_references_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- USER-PACKET-GAP-CLOSURE-20260910
+- Plans/UI_Command_Catalog.md#UCC-156
+- Plans/UI_Command_Catalog.md#UCC-158
+- Plans/Back_Seat_Driver.md
+- Plans/assistant-chat-design.md
+- source_ref:chat:2026-11-03-projects-pass2-approved
+negative_constraints:
+- No ambient-token denominator expansion.
+- No fabricated machine schema or native evidence.
+- No duplicate owner handler or alias production row.
+- No audit-case deletion or false aggregate pass.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- handler_unavailable
 ```
 
 ContractRef: ContractName:Plans/DRY_Rules.md#DR-040, ContractName:Plans/DRY_Rules.md#DR-041, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/touch_closure.json

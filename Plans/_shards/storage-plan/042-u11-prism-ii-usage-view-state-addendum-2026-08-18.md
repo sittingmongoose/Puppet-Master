@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18457-L18568
+Source lines: L18491-L18583
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -28,30 +28,8 @@ plan_unit_id: SP-248
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  The current Usage workspace persists exactly nine current-value-only view/layout families: active `room`,
-  disclosure `detail`, date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget
-  `hidden` state, per-room settled widget `layout`, per-room widget `order`, and the Live / Paused choice `live`
-  (2026-10-09, Plans/Decision_Log.md#DL-177, Plans/usage-feature.md#UF-095), a view-only preference that is Live
-  by default, decides only whether arriving projection updates are shown at once or held, and is never a Settings
-  value. These are configuration/view records with no event history and no Settings-owned policy values. The layout family persists only through
-  `widget_layout:v1:usage` and the existing typed widget commands after a settled commit; pointer move,
-  held-resize preview, configuration preview, ghost, placeholder, animation state, and per-frame drafts never
-  write storage. A vanished room, scope, widget, or unsupported geometry migrates or evicts to its documented
-  current safe default. The U11 keys `u11:disclosure`, `u11:scope`, `u11:range`, `u11:settingsView`,
-  `u11:parked`, `u11:seeded`, `pmw:<pageId>`, and `pm.theme`, together with the PMConcept7 key family
-  `pm7:usage:v10:*`, are prototype/import lineage only and are not canonical key names. The redesigned
-  concept stores its prototype envelope under the product's own layout key name `widget_layout:v1:usage`, which
-  stays this family's canonical key; only the envelope's schema id `pm.usage.widget_layout.v1` and the concept's
-  Live key `pm7:usage:live:v1` are demo-only, noncanonical prototype lineage, and that schema id is not a product
-  schema. When that envelope is absent the concept considers
-  the prior `pm7:usage:prototype:workspace:v12` envelope once, else the v11 envelope, as a one-time import source,
-  and it considers the v10 family only through the bounded legacy import when no valid envelope is admitted.
-  None of these prototype keys, schema ids or prior envelopes becomes a canonical product store or continuing
-  dual-read source.
-  Amended 2026-10-17 (DL-228): the `more` family is retired: the redesigned rail of rooms scrolls and keeps no
-  overflow surface (UF-093, UF-095), so a stored `more` value is read once and ignored, and the remaining
-  eight families persist as above.
+canonical_text: |-
+  The current Usage workspace persists exactly nine current-value-only view/layout families: active `room`, disclosure `detail`, date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget `hidden` state, per-room settled widget `layout`, per-room widget `order`, and the Live / Paused choice `live` (2026-10-09, Plans/Decision_Log.md#DL-177, Plans/usage-feature.md#UF-095), a view-only preference that is Live by default, decides only whether arriving projection updates are shown at once or held, and is never a Settings value. These are configuration/view records with no event history and no Settings-owned policy values. The layout family persists only through `widget_layout:v1:usage` and the existing typed widget commands after a settled commit; pointer move, held-resize preview, configuration preview, ghost, placeholder, animation state, and per-frame drafts never write storage. A vanished room, scope, widget, or unsupported geometry migrates or evicts to its documented current safe default. The U11 keys `u11:disclosure`, `u11:scope`, `u11:range`, `u11:settingsView`, `u11:parked`, `u11:seeded`, `pmw:<pageId>`, and `pm.theme`, together with the PMConcept7 key family `pm7:usage:v10:*`, are prototype/import lineage only and are not canonical key names. The redesigned concept stores its prototype envelope under the product's own layout key name `widget_layout:v1:usage`, which stays this family's canonical key; only the envelope's schema id `pm.usage.widget_layout.v1` and the concept's Live key `pm7:usage:live:v1` are demo-only, noncanonical prototype lineage, and that schema id is not a product schema. When that envelope is absent the concept considers the prior `pm7:usage:prototype:workspace:v12` envelope once, else the v11 envelope, as a one-time import source, and it considers the v10 family only through the bounded legacy import when no valid envelope is admitted. None of these prototype keys, schema ids or prior envelopes becomes a canonical product store or continuing dual-read source. Amended 2026-10-17 (DL-228): the `more` family is retired: the redesigned rail of rooms scrolls and keeps no overflow surface (UF-093, UF-095), so a stored `more` value is read once and ignored, and the remaining eight families persist as above. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: These records decide what the Usage page shows on reopen, including disclosure level, scope, range, and widget layout.
 depends_on: [SP-222, UF-092, WS-016]
@@ -85,13 +63,16 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
-  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
-  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
-  - "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html (superseded prototype/import lineage)"
-  - Concepts/usage-concepts/QwenUsageConcept/u11-widgets.js
-  - "Concepts/usage-redesign/src/js/40-board.js and src/js/15-film.js (the redesigned concept's layout envelope and remembered Live choice; source-lineage-only)"
-  - Plans/Decision_Log.md#DL-177
+- Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)
+- Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)
+- Concepts/PMConcept7.html (look-and-behaviour reference only)
+- Concepts/usage-concepts/QwenUsageConcept/u11-prism.html (superseded prototype/import lineage)
+- Concepts/usage-concepts/QwenUsageConcept/u11-widgets.js
+- Concepts/usage-redesign/src/js/40-board.js and src/js/15-film.js (the redesigned concept's layout envelope and
+  remembered Live choice; source-lineage-only)
+- Plans/Decision_Log.md#DL-177
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
   - room
   - detail

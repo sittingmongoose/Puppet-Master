@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5503-L5586
+Source lines: L5481-L5572
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -12,22 +12,23 @@ Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac
 
 This addendum supersedes conflicting Settings and protected-browser presentation clauses without creating implementation or generated-governance artifacts.
 
-### F3-510 - Concrete Project Settings Resolution
+### F3-510 - Layered Settings Resolution And Detached Copy
 
 ```yaml
 plan_unit_id: F3-510
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: Project settings are concrete persisted project values with an explicit source and effective-value projection; Global values may seed a project only through a previewed one-time copy, and copied, explicitly set, reset, imported, invalid, and unavailable are distinguishable without any continuous inheritance state.
+canonical_text: |-
+  Settings presentation consumes the sparse own-value ladder in SSYS-002/059 and the effective-value result, not independently interpreted storage. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Setting Details separates origin, own value, requested/effective value, factory difference, variation elsewhere, managed restriction and stale source. A changed Everywhere value updates following contexts; an explicit Project own value still wins subject to declared safety/ceiling rules. Copy Settings From remains one previewed detached Settings transaction with owner contributions and atomic per-writer readback/rollback.
 gui_related: true
 gui_classification_reason: Settings source, scope, preview, override, reset, and effective-value disclosure are visible behavior.
 depends_on: [F3-439, F3-442]
 unblocks: []
 acceptance_criteria:
-  - SET-012 is owned here for behavior while Plans/settings_inventory.json remains the machine inventory.
-  - A Project value never changes merely because a Global value changed; there is no inherited Project state.
-  - One-time copy previews the exact keys and supports atomic read-back or rollback.
+- The one resolver supplies value, source, Changed and Varies for app and Project contexts.
+- A following Project changes when a wider value changes; a Project own value remains its own.
+- Copy stays detached; stale/offline sources do not fabricate a saved value.
 validation_surfaces: [settings inventory schema validation, project settings scope fixtures]
 risk_class: settings_scope_or_inheritance_drift
 reasoning_tier: high
@@ -35,8 +36,12 @@ context_scope: concrete_project_settings
 implementation_surfaces: [Plans/FinalGUISpec.md, Plans/settings_inventory.json]
 node_compile_hint: {mode: concrete_project_settings_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#SET-012
-negative_constraints: [Do not treat Settings inventory rows as behavior authority., Do not silently convert copied values into inheritance., Do not store or resolve an inherited Project state.]
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#SET-012
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F01,A-F08,A-F09,C-F11
+negative_constraints:
+- Do not implement a second settings resolver or continuous linking to the Project that was copied.
+- Do not retain the superseded universal inheritance/no-app-write ban.
 ```
 
 ### F3-511 - Settings Lifecycle And Recovery
@@ -46,7 +51,8 @@ plan_unit_id: F3-511
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: Settings lifecycle supports schema-versioned previewed import, export, backup, restore, reset, and migration with scope disclosure, secret exclusion, owner validation, atomic commit, read-back, rollback, and a durable result; unsupported versions or owner-invalid values fail closed without partial mutation.
+canonical_text: |-
+  Settings lifecycle supports schema-versioned previewed import, export, backup, restore, reset, and migration with scope disclosure, secret exclusion, owner validation, atomic commit, read-back, rollback, and a durable result; unsupported versions or owner-invalid values fail closed without partial mutation. A level transaction names level/key and per-setting revisions, includes owner whole-thing contributions and account readiness refs, and reports per-target done/not_reached/refused for a multi-Computer batch without queueing or claiming distributed atomicity. Join Undo lasts 30 days; ordinary change Undo follows its owner policy. Secret bytes, installations, pairings and trust grants are excluded.
 gui_related: true
 gui_classification_reason: Settings import, export, reset, migration, validation, recovery, and result disclosure are user-facing flows.
 depends_on: [F3-510]
@@ -62,7 +68,9 @@ context_scope: settings_lifecycle_recovery
 implementation_surfaces: [Plans/FinalGUISpec.md, Plans/settings_inventory.json, Plans/storage-plan.md]
 node_compile_hint: {mode: settings_lifecycle_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#SET-013
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#SET-013
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F01,A-F03,A-F08,B-F02
 negative_constraints: [Do not describe Settings as having no import or export lifecycle., Do not persist raw credentials in Settings exports.]
 ```
 

@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L1129-L1237
 
-Source SHA256: `f932a74573f86d7dc4a4bfa3088531138d1c22add1185e7613ed76ae56a3abe9`
+Source SHA256: `d07e09bc0879a8662e29cc47c8fd3ef1b8d0520f0501c34823aa00caedf610b1`
 
 ---
 
@@ -33,7 +33,7 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 ### 3. Doctor Gemini plan-mode check: source of tier config
 
 - **Gap:** The check must know "any tier has platform Gemini and plan_mode == true." Doctor checks currently have `async fn run(&self) -> CheckResult` with no parameters.
-- **Clarify:** The Gemini plan-mode check should **discover and load the project config** inside `run()`: use `config_discovery::discover_config_path(None)` then `gui_config::load_config(path)` (or the same loader the Config page uses). If the file is not GuiConfig-shaped, fall back to "skip check" or "warn: could not read tier config." This keeps the DoctorCheck trait unchanged and uses the same config file as the app.
+- **Clarify:** Doctor reads the Settings-owned effective plan-mode/subagent policy for the exact Computer and optional real Project. Project-specific config checks run only when their genuine Project exists; app checks use Everywhere/Computer context and disclose missing source/capability, never invent Project config or a second YAML writer. Retired tier vocabulary remains compatibility only.
 
 ### 4. Canonical list of subagent names
 
@@ -112,7 +112,7 @@ When a platform-specific parser fails:
 
 
 - **Resolved:** Persona storage layout, schema, validation, GUI management, and context-injection rules are canonically defined in `Plans/Personas.md` (SSOT). This gap is closed; do not restate those definitions here.
-- **Summary:** (1) **Storage:** `Plans/Personas.md` §2 — PM-owned protected built-ins resolve before project-local (`.puppet-master/personas/<id>/PERSONA.md`) and global (`~/.config/puppet-master/personas/<id>/PERSONA.md`) user Personas. (2) **Overrides:** User edits Personas via Agent Config > Personas; edits persist to Puppet Master Persona storage only -- never to `.claude/`, `.github/`, or other provider-native dirs (`Plans/Personas.md` §4.4). Protected core built-ins cannot be modified, deleted, disabled, or shadowed; bundled specialties can be modified, disabled, and restored to default. (3) **Injection:** The context compiler resolves the Persona and injects its Markdown body into the Instruction Bundle (`Plans/Personas.md` §5.2). Orchestrator and interview use the same injection logic. (4) **Interview:** Interview selects Personas dynamically by phase/tech stack; Persona overrides supply custom content for selected mutable Personas but do not change *which* Personas are selected (`Plans/Personas.md` §5.2).
+- **Summary:** (1) **Storage:** `Plans/Personas.md` §2 — the Persona owner resolves protected built-ins plus admitted library/whole Project versions by stable identity, consuming the Settings ladder and omitting Project in app work. Original Project/global source paths remain owner-defined lineage, never Computer credential transport or an alternate resolver. (2) **Overrides:** User edits Personas via Agent Config > Personas; edits persist to Puppet Master Persona storage only -- never to `.claude/`, `.github/`, or other provider-native dirs (`Plans/Personas.md` §4.4). Protected core built-ins cannot be modified, deleted, disabled, or shadowed; bundled specialties can be modified, disabled, and restored to default. (3) **Injection:** The context compiler resolves the Persona and injects its Markdown body into the Instruction Bundle (`Plans/Personas.md` §5.2). Orchestrator and interview use the same injection logic. (4) **Interview:** Interview selects Personas dynamically by phase/tech stack; Persona overrides supply custom content for selected mutable Personas but do not change *which* Personas are selected (`Plans/Personas.md` §5.2).
 
 ContractRef: ContractName:Plans/Personas.md#PERSONA-INJECTION, ContractName:Plans/Personas.md#STORAGE-LAYOUT
 

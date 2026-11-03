@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L1004-L5914
+Source lines: L1004-L5948
 
-Source SHA256: `d364a4e2236c3b386e30789a96e6fcd7ce8c47c8b47c778bff57fe0ac6156d60`
+Source SHA256: `e9b534b288cf26f8491197a8298235235d65c6627a7e4d86153934d9f313a8ca`
 
 ---
 
@@ -3643,7 +3643,13 @@ plan_unit_id: EP-073
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: execution_unit_context is the canonical runtime-facing context object and execution_unit_context plus execution_unit_type define authoritative runtime scope, replacing retired tier-era context as live runtime contract.
+canonical_text: >-
+  execution_unit_context is the canonical runtime-facing context object and execution_unit_context plus
+  execution_unit_type define authoritative runtime scope, replacing retired tier-era context as live
+  runtime contract. EP-132 app execution selects an explicit scope-aware sibling of the
+  context/source/identity contract, real thread/Computer/roots and Stop/writer/permission evidence.
+  Original Project exact context, hash/idempotency/accepted-source and passive replay resources remain
+  valid; no null Project is cast into an existing Project-only identity recipe.
 gui_related: false
 gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
 split_recommended: false
@@ -3666,8 +3672,11 @@ node_compile_hint:
   mode: canonical_runtime_scope_context
   create_worknodes: false
 source_lineage:
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0055
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0056
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0055"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0056"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - Unified Runtime Scheduler and Attempt Lifecycle Canonical Alignment
 - execution_unit_context
@@ -3690,7 +3699,13 @@ plan_unit_id: EP-074
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: Worker spawn, recovery, remediation, coordination services, scheduler joins, and UI inspection surfaces read one shared execution_unit_context so restart, approval, blocked-episode continuity, and audit views resolve the same runtime unit.
+canonical_text: >-
+  Worker spawn, recovery, remediation, coordination services, scheduler joins, and UI inspection surfaces
+  read one shared execution_unit_context so restart, approval, blocked-episode continuity, and audit views
+  resolve the same runtime unit. EP-132 app execution selects an explicit scope-aware sibling of the
+  context/source/identity contract, real thread/Computer/roots and Stop/writer/permission evidence.
+  Original Project exact context, hash/idempotency/accepted-source and passive replay resources remain
+  valid; no null Project is cast into an existing Project-only identity recipe.
 gui_related: true
 gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, setup copy, panels, or operational surfaces.
 split_recommended: false
@@ -3713,7 +3728,10 @@ node_compile_hint:
   mode: shared_context_for_worker_recovery_coordination_ui_inspection
   create_worknodes: false
 source_lineage:
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0056
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0056"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - Worker spawn
 - recovery
@@ -4453,11 +4471,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
-  Orchestrator sets worktree execution fields when launching a DAE in a
-  lane-owned worktree, Assistant Chat sets them for bound-thread agent-mode or
-  plan-mode work, and execution defaults to the project root when
-  execution_unit_context.worktree_id is absent and no bound worktree context is
-  present.
+  Orchestrator sets worktree execution fields when launching a DAE in a lane-owned worktree, Assistant
+  Chat sets them for bound-thread agent-mode or plan-mode work, and execution defaults to the project root
+  when execution_unit_context.worktree_id is absent and no bound worktree context is present. That
+  Project-root fallback applies only to a real Project context. EP-132 app requests freeze the owned chat
+  folder or explicitly granted root on the actual Computer; absent worktree never resolves to current
+  focus, home or a main Project.
 gui_related: false
 gui_classification_reason: This unit defines caller runtime responsibilities, not GUI presentation.
 split_recommended: false
@@ -4480,7 +4499,10 @@ node_compile_hint:
   mode: caller_worktree_handoff_responsibilities
   create_worknodes: false
 source_lineage:
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - Caller responsibilities
 - Orchestrator
@@ -4510,11 +4532,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
-  Assistant Chat turn-start resolves thread_state:{thread_id}:worktree_binding,
-  freezes execution_unit_context.worktree_id and working_directory for that
-  turn, applies mid-turn unbinds only to later turns or rotated follow-ups, and
-  propagates the frozen cwd to FileSafe, tools, shell cwd, MCP, @file,
-  auto-retrieval, provider CLI, and DAE execution-context payloads.
+  Assistant Chat turn-start resolves thread_state:{thread_id}:worktree_binding, freezes
+  execution_unit_context.worktree_id and working_directory for that turn, applies mid-turn unbinds only to
+  later turns or rotated follow-ups, and propagates the frozen cwd to FileSafe, tools, shell cwd, MCP,
+  @file, auto-retrieval, provider CLI, and DAE execution-context payloads. EP-132 app execution selects an
+  explicit scope-aware sibling of the context/source/identity contract, real thread/Computer/roots and
+  Stop/writer/permission evidence. Original Project exact context, hash/idempotency/accepted-source and
+  passive replay resources remain valid; no null Project is cast into an existing Project-only identity
+  recipe.
 gui_related: false
 gui_classification_reason: This unit defines backend/runtime turn context propagation, not GUI presentation.
 split_recommended: false
@@ -4538,7 +4563,10 @@ node_compile_hint:
   mode: assistant_chat_turn_worktree_freeze_and_cwd_propagation
   create_worknodes: false
 source_lineage:
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - thread_state:{thread_id}:worktree_binding
 - execution_unit_context.worktree_id
@@ -4630,11 +4658,14 @@ status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Executor Protocol owns the canonical execution_unit_context contract through
-  Plans/execution_unit_context.schema.json with schema_id pm.execution_unit_context
-  and schema_version 1.0.0. The contract defines a closed required field list,
-  closed optional field set, field types, nullability, closed enums, identity
-  and linkage fields, persistence and replay rules, redaction and no-secret
-  constraints, lifecycle ownership, and producer/consumer boundaries.
+  Plans/execution_unit_context.schema.json with schema_id pm.execution_unit_context and schema_version
+  1.0.0. The contract defines a closed required field list, closed optional field set, field types,
+  nullability, closed enums, identity and linkage fields, persistence and replay rules, redaction and
+  no-secret constraints, lifecycle ownership, and producer/consumer boundaries. EP-132 app execution
+  selects an explicit scope-aware sibling of the context/source/identity contract, real
+  thread/Computer/roots and Stop/writer/permission evidence. Original Project exact context,
+  hash/idempotency/accepted-source and passive replay resources remain valid; no null Project is cast into
+  an existing Project-only identity recipe.
 gui_related: false
 gui_classification_reason: This unit defines runtime identity schema and labels, not GUI presentation.
 split_recommended: false
@@ -4661,7 +4692,10 @@ node_compile_hint:
   mode: execution_unit_context_canonical_contract
   create_worknodes: false
 source_lineage:
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - run_id
 - node_id

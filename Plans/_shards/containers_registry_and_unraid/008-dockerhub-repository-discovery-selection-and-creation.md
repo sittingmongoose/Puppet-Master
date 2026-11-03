@@ -2,9 +2,9 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L354-L397
+Source lines: L354-L384
 
-Source SHA256: `9aa7d954d0264e081d8647735683a7d0b9422b13891ceaae17bef41f4cc8bc4e`
+Source SHA256: `64b5a9a3310152bf3b30d972a4dd22c9db59ca42a1c6b53db7e851bc75fe306e`
 
 ---
 
@@ -25,30 +25,17 @@ DockerHub API behavior must be documented clearly:
 - do not conflate image registry push with template distribution
 
 ### Missing repository behavior
-If the selected DockerHub repository does not exist:
-- Puppet Master may offer to create it automatically as part of first-push preparation
-- the creation step must be explicit and visible
-- the confirmation step must show:
-  - namespace
-  - repository name
-  - privacy
-- the confirmation step is mandatory and cannot be bypassed by YOLO modes, agent autonomy, or any other fast-path setting
+
+If the selected repository is missing, creation is a separate explicit visible effect naming namespace/repository/privacy and private default. It must be needed by the task or exactly selected in the current PS-147 grant.
 
 #### Repository creation confirmation flow
 
+`cmd.docker.create_repository` validates/preflights at its existing owner. In Regular, an unsatisfied create decision emits docker.repository.create.confirmation_requested and uses existing .confirm/.cancel human controls. In task YOLO or an exact approved build grant, typed current authority invokes the same domain creation writer directly and records actual mode/grant provenance; no fake click or model-call to .confirm resolves a protected human wait. No confirmation_requested is emitted unless waiting for a real person. Capability/auth/current target and private-by-default disclosure still apply.
 
-Repository creation is a two-step flow:
-
-1. `cmd.docker.create_repository` validates the proposed namespace/repository/privacy tuple and emits `docker.repository.create.confirmation_requested`.
-2. The confirmation modal shows namespace, repository name, privacy, and the private-by-default notice.
-3. Confirm dispatches `cmd.docker.create_repository.confirm`.
-4. Cancel dispatches `cmd.docker.create_repository.cancel`.
-
-This confirmation is distinct from image-push approval. Approving an image push MUST NOT implicitly approve creation of a missing DockerHub repository.
-
+Image-push and repository-create are separately evaluated effects. Regular Push image does not by itself approve a missing create. YOLO/grant authority may admit each needed effect without another human click, under CRAU-104/PS-146/147/148.
 ### Default repository privacy
 
 
 - default privacy for newly created repositories: private
-- the confirmation dialog must make this default explicit
-- the user may change privacy in the dialog before creation
+- the preview/result and any actual human confirmation make the private default explicit
+- the user may change privacy before creation through the reviewed target; task/grant execution cannot silently substitute destination or visibility

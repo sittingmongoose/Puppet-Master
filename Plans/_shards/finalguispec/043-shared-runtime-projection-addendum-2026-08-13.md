@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5588-L27225
+Source lines: L5574-L27152
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -1966,9 +1966,8 @@ plan_unit_id: F3-036
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The status bar shows project-sensitive sparse n-gram index build or refresh progress only when
-  useful, while Search results own the unindexed annotation for true raw-ripgrep fallback.
+canonical_text: |-
+  The status bar shows project-sensitive sparse n-gram index build or refresh progress only when useful, while Search results own the unindexed annotation for true raw-ripgrep fallback. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -1992,7 +1991,9 @@ node_compile_hint:
   mode: status_bar_indexing_indicator
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0030"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0030
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Building search index - first build may take several minutes"
 - "Indexing"
@@ -3045,10 +3046,8 @@ plan_unit_id: F3-055
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The command palette is transient project-scoped navigation and launcher search; Search owns
-  persistent find/replace result state, File Manager owns local tree search, LSP owns semantic
-  surfaces, and auto-retrieval remains project-scoped rather than active-worktree scoped.
+canonical_text: |-
+  The command palette is transient navigation and launcher search for the explicitly selected Project or No project context. App targets include app chats/files and admitted workflow controls. Search owns persistent find/replace state, File Manager local tree search, and LSP semantic surfaces. Auto-retrieval stays inside its actual Project or app thread/roots; explicit T-185 cross-Project reads carry grants and coverage. Commands intrinsically requiring a Project, repository or other resource require that actual target; focus never fabricates one.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -3056,10 +3055,9 @@ split_recommended: true
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Palette works in genuine app scope without a fake Project.
+- Local and explicit cross-Project search have distinct source/coverage contracts.
+- Actual target and permission requirements remain enforced.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -3072,7 +3070,9 @@ node_compile_hint:
   mode: command_palette_search_boundaries
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0041"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0041
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F11,B-F04
 preserved_exact_tokens:
 - "transient project-scoped"
 - "Search side panel"
@@ -3912,19 +3912,15 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-071 - Project Scoped Panel Persistence
+### F3-071 - Scoped Panel Persistence
 
 ```yaml
 plan_unit_id: F3-071
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Panel dock state, activity bar icon order, and last visible panel persist per project in redb
-  scoped by project_id and restore on startup or project switch, with disconnected-monitor
-  fallback.
-  Amended 2026-10-09 (DL-180): Home's panels, tabs and chat column persist in the v2 Home layout record (SP-330); this
-  unit's dock state covers the side panels and the popped-out chat's window only.
+canonical_text: |-
+  Panel dock state, activity bar icon order, and last visible panel persist per actual Project, or in the separately registered Server/app sibling when No project is selected and restore on startup or project switch, with disconnected-monitor fallback. Amended 2026-10-09 (DL-180): Home's panels, tabs and chat column persist in the v2 Home layout record (SP-330); this unit's dock state covers the side panels and the popped-out chat's window only. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -3948,7 +3944,9 @@ node_compile_hint:
   mode: project_scoped_panel_persistence
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0056"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0056
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "dock state"
 - "activity bar icon order"
@@ -4028,14 +4026,8 @@ plan_unit_id: F3-073
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The GUI exposes exactly ten built-in theme choices across five families, Basic Dark, Basic Light, Friendly
-  Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark and NieR Light, with Basic
-  Dark as the untouched first-open/fresh-project factory default. An existing explicit saved Project selection
-  survives, and a copied Project receives a detached selection snapshot. The former Friendly Dark default and
-  the earlier three-choice Retro Dark/Retro Light/Basic contract are superseded lineage kept findable; all ten
-  variants remain supported. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
-  independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+canonical_text: |-
+  The GUI exposes exactly ten built-in theme choices across five families, Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark and NieR Light, with Basic Dark as the bundled factory fallback when no applicable explicit value exists. An existing explicit saved Project selection survives, and a copied Project receives a detached selection snapshot. The former Friendly Dark default and the earlier three-choice Retro Dark/Retro Light/Basic contract are superseded lineage kept findable; all ten variants remain supported. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Resolve the atomic look pair before the first visible frame, including No project. Preserve Q22 migration, retired general.visual.nier-mode, the five-family/ten-variant set and all existing look/animation behavior.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -4043,11 +4035,10 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "Basic Dark is used only at the untouched first-open/fresh-project factory boundary; an existing saved Project selection and a copied Project's detached snapshot take precedence."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Five families and ten variants remain available; atomic look resolution precedes first paint in app and Project
+  contexts.
+- Existing explicit values survive; wider values feed only following contexts.
+- No extra paint hint or independent look writer; Q22 migration is idempotent.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -4060,7 +4051,9 @@ node_compile_hint:
   mode: theme_family_selector_contract
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0059"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0059
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F01,A-F09,C-F11
 preserved_exact_tokens:
 - "Retro Dark"
 - "Retro Light"
@@ -4068,7 +4061,7 @@ preserved_exact_tokens:
 - "exactly three built-in theme choices"
 - "fourth user-facing built-in theme promise"
 negative_constraints:
-- "Basic internal palette choice must not create a fourth user-facing built-in theme promise."
+- No retired NieR toggle, second theme store or first-frame Basic Dark flash when another effective look exists.
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Friendly Dark as the factory default is superseded by the later Basic Dark first-open/fresh-project contract; Friendly Dark remains a supported variant."
@@ -4653,13 +4646,8 @@ plan_unit_id: F3-083
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Terminal theme selection keeps preview before apply, fast switching, /search, /contrast readability
-  signals and instant apply/revert. Its palette is semantic, not raw ANSI-only. F3-642 owns the shared
-  catalog in place of the earlier /fun/funky and /expressive preset groups; F3-650 owns the full Customize
-  screen and both entry points, and F3-654 owns settled-text contrast. Every committed change applies live
-  with no restart and uses the scope writer owned by SSYS-051/UCC-201. The earlier popover-only entry is
-  superseded. F3-642 retains the user-selectable program-output floor; it never lowers interface contrast.
+canonical_text: |-
+  Terminal theme selection keeps preview before apply, fast switching, /search, /contrast readability signals and instant apply/revert. Its palette is semantic, not raw ANSI-only. F3-642 owns the shared catalog in place of the earlier /fun/funky and /expressive preset groups; F3-650 owns the full Customize screen and both entry points, and F3-654 owns settled-text contrast. Every committed change applies live with no restart and uses the scope writer owned by SSYS-051/UCC-201. The earlier popover-only entry is superseded. F3-642 retains the user-selectable program-output floor; it never lowers interface contrast. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible terminal theme, preview, palette, and readability behavior.
@@ -4686,9 +4674,12 @@ node_compile_hint:
   mode: terminal_theme_ownership_and_semantic_catalog
   create_worknodes: false
 source_lineage:
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064"
-- "Plans/Decision_Log.md#DL-183"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064
+- Plans/Decision_Log.md#DL-183
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "terminal color-scheme selection"
 - "preview before apply"
@@ -4714,8 +4705,10 @@ stale_retired_dispositions:
 - 'Amended 2026-10-14: F3-650 replaces the popover-only entry and F3-654 retires disabling the interface-text contrast
   floor.'
 owner_boundary_notes:
-- "Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls."
-- "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the Customize screen (F3-650) writes the tab's override or, through All terminals, the project layer by the same Settings transaction Settings uses (F3-642), and no surface writes an app-wide value until q-035 admits one."
+- Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls.
+- Current level/scope/write presentation follows SSYS-002/059, F3-670 and SP-348; old q-035 and universal inheritance/no-app-write
+  bans are superseded. Detached copies remain independent of their source Project. Exact owner/trust/permission/currentness
+  rules remain.
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -5985,10 +5978,8 @@ plan_unit_id: F3-107
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Indexing settings expose project-search index controls for enablement, thresholds, generated and
-  custom exclusions, follow-symlinks default OFF, partial remote cache controls, disk usage, cache
-  eviction confirmation, and rebuild.
+canonical_text: |-
+  Indexing settings expose project-search index controls for enablement, thresholds, generated and custom exclusions, follow-symlinks default OFF, partial remote cache controls, disk usage, cache eviction confirmation, and rebuild. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Settings controls for search indexing administration.
@@ -6012,7 +6003,9 @@ node_compile_hint:
   mode: indexing_settings_admin_surface
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0073"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0073
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "enable/disable index"
 - "large file threshold"
@@ -6667,10 +6660,8 @@ plan_unit_id: F3-119
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Panel-specific persistence and visibility controls live in Settings only when durable app or
-  project preferences, are grouped by owning surface, and Settings/inspector language names
-  Agent-Config and effective runtime concepts instead of generic provider settings.
+canonical_text: |-
+  Panel-specific persistence and visibility controls live in Settings only when durable app or project preferences, are grouped by owning surface, and Settings/inspector language names Agent-Config and effective runtime concepts instead of generic provider settings. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Settings grouping, persistence boundaries, and inspector naming.
@@ -6694,7 +6685,9 @@ node_compile_hint:
   mode: panel_settings_persistence_and_agent_config_naming
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0076"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0076
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Source Control / Branching"
 - "GitHub Actions"
@@ -6721,16 +6714,8 @@ plan_unit_id: F3-120
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Settings > Terminal is the in-product cheat sheet and durable preferences owner for terminal defaults,
-  high-frequency preview/change controls, shortcut mappings, conflict explanations, terminal appearance,
-  profile/cwd, transcript retention, performance, diagnostics, and project/workspace scope labels. Its
-  appearance rows bind the one terminal appearance model (F3-642, DR-068): the app default as Settings
-  rows (SSYS-051) and the project default in the Project's settings, which only Settings writes; the
-  per-tab override is not a Settings row but lives in the terminal tab and is written by the Customize
-  screen (F3-650)'s This terminal (SP-331). Every terminal appearance row applies live, with no restart
-  badge. Shell profiles and SSH hosts replace the retired per-tab role setting (DL-181), and the terminal
-  tab's own actions stay in the tab.
+canonical_text: |-
+  Settings > Terminal is the in-product cheat sheet and durable preferences owner for terminal defaults, high-frequency preview/change controls, shortcut mappings, conflict explanations, terminal appearance, profile/cwd, transcript retention, performance, diagnostics, and project/workspace scope labels. Its appearance rows bind the one terminal appearance model (F3-642, DR-068): the app default as Settings rows (SSYS-051) and the project default in the Project's settings, which only Settings writes; the per-tab override is not a Settings row but lives in the terminal tab and is written by the Customize screen (F3-650)'s This terminal (SP-331). Every terminal appearance row applies live, with no restart badge. Shell profiles and SSH hosts replace the retired per-tab role setting (DL-181), and the terminal tab's own actions stay in the tab. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Terminal Settings surfaces, labels, preferences, and explanations.
@@ -6755,8 +6740,10 @@ node_compile_hint:
   mode: terminal_settings_durable_preferences_owner
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0077"
-- "Plans/Decision_Log.md#DL-183"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0077
+- Plans/Decision_Log.md#DL-183
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F08,A-F09,C-F11,B-F13
 preserved_exact_tokens:
 - "Settings > Terminal"
 - "in-product cheat sheet"
@@ -7121,11 +7108,8 @@ plan_unit_id: F3-127
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The minimum concern record shape preserves concern identity, project/run/scope/source/evidence
-  references, severity, category, status, visibility, attention, chatworthy, owner, creator,
-  resolver, governance fields, and a blocking_effect separate from severity while compatibility
-  labels normalize to the concern/escalation/help model.
+canonical_text: |-
+  The minimum concern record shape preserves concern identity, project/run/scope/source/evidence references, severity, category, status, visibility, attention, chatworthy, owner, creator, resolver, governance fields, and a blocking_effect separate from severity while compatibility labels normalize to the concern/escalation/help model. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: false
 gui_classification_reason: This unit defines durable record shape and compatibility vocabulary rather than GUI layout.
 split_recommended: false
@@ -7148,7 +7132,9 @@ node_compile_hint:
   mode: minimum_concern_record_shape_and_compatibility_labels
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0081"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0081
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "system-notification"
 - "project-card"
@@ -7722,10 +7708,8 @@ plan_unit_id: F3-138
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  File Manager is the persistent project-tree side panel for tree navigation and file discovery,
-  defers detailed tree behavior to FileManager, and exposes local filtering, reveal disclosure,
-  read-only Git row badges, detached-panel alignment, and owner-boundary routing.
+canonical_text: |-
+  File Manager is the persistent file-tree side panel for the selected Project or permitted app Computer roots for tree navigation and file discovery, defers detailed tree behavior to FileManager, and exposes local filtering, reveal disclosure, read-only Git row badges, detached-panel alignment, and owner-boundary routing. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This unit defines visible File Manager side panel, tree, row, and reveal behavior.
 split_recommended: true
@@ -7748,7 +7732,9 @@ node_compile_hint:
   mode: file_manager_tree_owner_boundary_and_reveal_disclosure
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0087"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0087
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "File Manager Panel"
 - "Plans/FileManager.md"
@@ -8332,10 +8318,8 @@ plan_unit_id: F3-149
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The embedded document pane is a visible shared-buffer review/document surface for Interview,
-  Builder, and bundle-review workflows, with persisted selection, scroll, review stage, approval
-  state, shared File Editor buffers, and adjacent findings or approval gates.
+canonical_text: |-
+  The embedded document pane is a visible shared-buffer review/document surface for Interview, Builder, and bundle-review workflows, with persisted selection, scroll, review stage, approval state, shared File Editor buffers, and adjacent findings or approval gates. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Embedded document panes are visible review/document UI despite the source span inference being false.
 split_recommended: false
@@ -8358,7 +8342,9 @@ node_compile_hint:
   mode: embedded_document_pane
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0092"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0092
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "document_pane_state:v1:{project_id}:{page_context}"
 - "Interview"
@@ -8382,10 +8368,8 @@ plan_unit_id: F3-150
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved
-  notes as revision context, final approval blocked until notes are handled, status progression,
-  bundle registry persistence, and linked note records.
+canonical_text: |-
+  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved notes as revision context, final approval blocked until notes are handled, status progression, bundle registry persistence, and linked note records. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Bundle controls and review gates are visible controls despite the source span inference being false.
 split_recommended: false
@@ -8408,7 +8392,9 @@ node_compile_hint:
   mode: bundle_controls_and_review_gate
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0093"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0093
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Resubmit"
 - "draft -> in_review -> all_notes_resolved -> approved -> merged"
@@ -9002,16 +8988,8 @@ plan_unit_id: F3-162
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Persistence boundaries discard unpromoted ephemeral state, require stable keys and versioned
-  migrations, rewrite deprecated keys during forward migration, and keep shell persistence plus
-  Orchestrator Progress widget layout in narrow project shell records.
-  Amended 2026-10-09 (DL-180): Home's shell layout persists in its own record,
-  `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), and each dashboard board's widget layout in
-  `widget_layout:v1:dashboard:<board_id>` (WS-030); the Orchestrator Progress widget layout and the narrow project
-  shell records are unchanged.
-  Amended 2026-10-10 (DL-186): each dashboard board's widget layout is kept per project in
-  `widget_layout:v1:<project_id>:<board_id>` (WS-030), not in the per-board key above.
+canonical_text: |-
+  Persistence boundaries discard unpromoted ephemeral state, require stable keys and versioned migrations, rewrite deprecated keys during forward migration, and keep shell persistence plus Orchestrator Progress widget layout in narrow project shell records. Amended 2026-10-09 (DL-180): Home's shell layout persists in its own record, `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), and each dashboard board's widget layout in `widget_layout:v1:dashboard:<board_id>` (WS-030); the Orchestrator Progress widget layout and the narrow project shell records are unchanged. Amended 2026-10-10 (DL-186): each dashboard board's widget layout is kept per project in `widget_layout:v1:<project_id>:<board_id>` (WS-030), not in the per-board key above. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This unit defines GUI shell persistence, widget layout, and view-state storage behavior.
 split_recommended: true
@@ -9034,7 +9012,9 @@ node_compile_hint:
   mode: persistence_promotion_shell_records_and_widget_layout
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0105"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0105
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "stable keys"
 - "versioned migrations"
@@ -11184,13 +11164,8 @@ plan_unit_id: F3-202
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  All interactive elements are reachable by Tab; focus order follows Activity bar to primary
-  content to side panel to bottom panel to status bar; lists, tables, and trees support
-  Up/Down, Enter, Escape, Home/End, and type-ahead filtering where appropriate.
-  Amended 2026-10-09 (DL-180): the visual order is now the activity bar, the side panel, the primary content (on Home
-  the panels in tree order), the chat column and the status bar, so focus follows that order; F6 and Shift+F6 cycle the
-  rail, the panels and the chat (F3-635).
+canonical_text: |-
+  All interactive elements are reachable by Tab; focus order follows Activity bar to primary content to side panel to bottom panel to status bar; lists, tables, and trees support Up/Down, Enter, Escape, Home/End, and type-ahead filtering where appropriate. Amended 2026-10-09 (DL-180): the visual order is now the activity bar, the side panel, the primary content (on Home the panels in tree order), the chat column and the status bar, so focus follows that order; F6 and Shift+F6 cycle the rail, the panels and the chat (F3-635). For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines keyboard navigation and focus order.
@@ -11214,7 +11189,9 @@ node_compile_hint:
   mode: keyboard_navigation_contract
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0137"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0137
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Tab navigation"
 - "Activity bar -> primary content -> side panel -> bottom panel -> status bar"
@@ -11998,24 +11975,8 @@ plan_unit_id: F3-217
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  GUI shell persistence includes `layout:v1`, `widget_layout:v1:dashboard`,
-  `activity_bar_order:v1`, `theme:v1`, `editor_state:v1:{project_id}`,
-  `filetree_state:v1:{project_id}`, `search_panel_state.v1:{project_id}`,
-  `project_state:v1:{project_id}`, `gha_panel_state.v1:{project_id}`, and
-  `artifact_panel_state.v1:{project_id}` with their debounce/write frequencies and owner
-  ContractRefs. Shell theme and layout are Project-scoped snapshots: a genuinely absent
-  first-open/fresh-project snapshot receives Basic Dark and the factory layout, an existing
-  Project's explicit saved theme/layout survives every open and Project switch, and Project
-  copy materializes a detached destination snapshot with no continuing source inheritance.
-  Amended 2026-10-09 (DL-180): the Home layout persists in `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`,
-  the only Home layout authority (SP-330); `layout:v1` loses its Home part (center splits, the bottom runtime-panel
-  height, terminal section split ratios), which becomes a read-only migration input converted on first read and never
-  reset, and keeps only side-panel and detached-window geometry; each dashboard board keeps
-  `widget_layout:v1:dashboard:<board_id>` (WS-030).
-  Amended 2026-10-10 (DL-186): each dashboard board keeps its contents per project in `widget_layout:v1:<project_id>:<board_id>`,
-  and the person's dashboard presets live in `widget_presets:v1` (WS-030); `widget_layout:v1:dashboard` is no board's
-  key and nothing writes it now, so its write frequency is lineage (Plans/Widget_System.md#WS-009).
+canonical_text: |-
+  GUI shell persistence includes `layout:v1`, `widget_layout:v1:dashboard`, `activity_bar_order:v1`, `theme:v1`, `editor_state:v1:{project_id}`, `filetree_state:v1:{project_id}`, `search_panel_state.v1:{project_id}`, `project_state:v1:{project_id}`, `gha_panel_state.v1:{project_id}`, and `artifact_panel_state.v1:{project_id}` with their debounce/write frequencies and owner ContractRefs. Appearance is resolved through SSYS-002/059; compatibility theme:v1 is not an independent authority. Layout is exact-context UI state under SP-330/349, rather than an ordinary layered preference. Existing explicit appearance values and saved layouts are preserved; copy is detached from its source Project. Amended 2026-10-09 (DL-180): the Home layout persists in `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home layout authority (SP-330); `layout:v1` loses its Home part (center splits, the bottom runtime-panel height, terminal section split ratios), which becomes a read-only migration input converted on first read and never reset, and keeps only side-panel and detached-window geometry; each dashboard board keeps `widget_layout:v1:dashboard:<board_id>` (WS-030). Amended 2026-10-10 (DL-186): each dashboard board keeps its contents per project in `widget_layout:v1:<project_id>:<board_id>`, and the person's dashboard presets live in `widget_presets:v1` (WS-030); `widget_layout:v1:dashboard` is no board's key and nothing writes it now, so its write frequency is lineage (Plans/Widget_System.md#WS-009). For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI shell, layout, editor, search, project, GitHub Actions, and artifact
@@ -12041,7 +12002,9 @@ node_compile_hint:
   mode: shell_layout_and_editor_persistence_keys
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,A-F09,C-F11
 preserved_exact_tokens:
 - "layout:v1"
 - "widget_layout:v1:dashboard"
@@ -12076,11 +12039,8 @@ plan_unit_id: F3-218
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Chat, settings, and review persistence includes `settings:v1`, `config:v1`, `chat_state:v1`,
-  `wizard_state:v1:{project_id}`, document pane/checkpoint records, review finding/approval
-  records, debug investigation records, bundle/note records, slash command keys, and
-  `projects:v1`.
+canonical_text: |-
+  Chat, settings, and review persistence includes `settings:v1`, `config:v1`, `chat_state:v1`, `wizard_state:v1:{project_id}`, document pane/checkpoint records, review finding/approval records, debug investigation records, bundle/note records, slash command keys, and `projects:v1`. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI chat, settings, wizard, document, review, bundle, note, command, and
@@ -12105,7 +12065,9 @@ node_compile_hint:
   mode: chat_settings_review_persistence_keys
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "settings:v1"
 - "config:v1"
@@ -12138,16 +12100,8 @@ plan_unit_id: F3-219
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Preview, browser, LSP, account, MCP, skill, web operation, terminal, and remote GUI
-  persistence keys include preview state/source artifact, browser session/profile state,
-  canonical per-file editor buffer recovery, search query, LSP session/diagnostics, provider
-  account/server profile, pressure/switch records, MCP/skill records, `web_operation_payload`,
-  terminal layout/session summaries, and `ssh_remotes/{id}`. The former
-  `editor_unsaved_buffer.v1:{project_id}:{document_id}` token is source-lineage only; live
-  buffer recovery uses `editor_state.v1:{project_id}:{file_path_hash}`. Since DL-180 and DL-181,
-  `terminal_layout.v1:{project_id}` is a migration input only: terminal tabs and their panels are kept in the Home
-  layout record (SP-330) and the old sections and pane arrangement are read once (SP-332, F3-221).
+canonical_text: |-
+  Preview, browser, LSP, account, MCP, skill, web operation, terminal, and remote GUI persistence keys include preview state/source artifact, browser session/profile state, canonical per-file editor buffer recovery, search query, LSP session/diagnostics, provider account/server profile, pressure/switch records, MCP/skill records, `web_operation_payload`, terminal layout/session summaries, and `ssh_remotes/{id}`. The former `editor_unsaved_buffer.v1:{project_id}:{document_id}` token is source-lineage only; live buffer recovery uses `editor_state.v1:{project_id}:{file_path_hash}`. Since DL-180 and DL-181, `terminal_layout.v1:{project_id}` is a migration input only: terminal tabs and their panels are kept in the Home layout record (SP-330) and the old sections and pane arrangement are read once (SP-332, F3-221). For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI preview, browser, recovery, LSP, account, MCP, skill, web-operation,
@@ -12172,7 +12126,9 @@ node_compile_hint:
   mode: preview_browser_lsp_account_remote_keys
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "preview_state.v1:{project_id}:{preview_subject_id}"
 - "preview_source_artifact.v1:{project_id}:{artifact_id}"
@@ -12510,18 +12466,8 @@ plan_unit_id: F3-225
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order,
-  editor workspace and per-file dirty buffers, active project-facing shell state, historical
-  hot-reload state, project onboarding/tour state, and safe detached-window coordinates from
-  canonical persistence keys. Resettable corruption is secured before a disclosed reset;
-  canonical editor loss uses mandatory-backup recovery and never becomes a false empty project.
-  Amended 2026-10-09 (DL-180): Home's layout restores from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`
-  (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out
-  chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>`
-  (WS-030); section 15.4 gives the order.
-  Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>`
-  (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board.
+canonical_text: |-
+  On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order, editor workspace and per-file dirty buffers, active project-facing shell state, historical hot-reload state, project onboarding/tour state, and safe detached-window coordinates from canonical persistence keys. Resettable corruption is secured before a disclosed reset; canonical editor loss uses mandatory-backup recovery and never becomes a false empty project. Amended 2026-10-09 (DL-180): Home's layout restores from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>` (WS-030); section 15.4 gives the order. Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines startup restoration of visible shell state.
@@ -12545,7 +12491,9 @@ node_compile_hint:
   mode: startup_shell_state_restore
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0148"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0148
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "layout:v1"
 - "theme:v1"
@@ -12651,11 +12599,8 @@ plan_unit_id: F3-227
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Crash recovery restores provable nonterminal state including chat draft/active thread
-  selection, wizard form state, document pane selection and view, document checkpoints, review
-  findings and approval state, and active project, while not restoring transient queue
-  continuity.
+canonical_text: |-
+  Crash recovery restores provable nonterminal state including chat draft/active thread selection, wizard form state, document pane selection and view, document checkpoints, review findings and approval state, and active project, while not restoring transient queue continuity. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible nonterminal state recovery after crash or unexpected shutdown.
@@ -12679,7 +12624,9 @@ node_compile_hint:
   mode: crash_recovery_nonterminal_state
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0149"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0149
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "crash"
 - "unexpected shutdown"
@@ -14729,11 +14676,8 @@ plan_unit_id: F3-265
 unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The `Project switch state reload performance` risk is mitigated as follows: Project
-  switching loads config, file tree, editor tabs, LSP/Search/Source Control projections, then
-  chat threads in priority order with skeleton placeholders and a sub-500ms interactive
-  target.
+canonical_text: |-
+  The `Project switch state reload performance` risk is mitigated as follows: Selecting a Project loads config, file tree, editor tabs, LSP/Search/Source Control projections, then chat threads in priority order with skeleton placeholders and a sub-500ms interactive target. Selecting No project instead restores its app keys and reads only its admitted roots; absent LSP, SCM or debug targets stay unavailable without fabricating a Project. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -14757,7 +14701,9 @@ node_compile_hint:
   mode: project_switch_reload_performance_risk
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Project switch state reload performance"
 - "priority order"
@@ -18088,11 +18034,8 @@ plan_unit_id: F3-325
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Accepting the wizard recommendation switches to the Planning Wizard intake/interview flow, shows an
-  Imported from Assistant Chat or Imported from Deep Plan banner, shows whether a plan
-  artifact was included, shows imported goal and scope summary, and opens an existing project
-  on the preloaded feature/enhancement path instead of a blank intent picker.
+canonical_text: |-
+  Accepting the wizard recommendation switches to the Planning Wizard intake/interview flow, shows an Imported from Assistant Chat or Imported from Deep Plan banner, shows whether a plan artifact was included, shows imported goal and scope summary, and opens an existing project on the preloaded feature/enhancement path instead of a blank intent picker. A No project Wizard handoff first offers ACD-510’s two conversion choices or an explicit real Project selection. Cancellation leaves the app Plan/chat untouched. A subsequent Wizard entry uses its own current exact-version handoff; app Assistant Build is available independently and never creates a Wizard/PRD/Orchestrator run.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec GUI behavior.
@@ -18116,7 +18059,9 @@ node_compile_hint:
   mode: imported_context_wizard_handoff_surface
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0194"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0194
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F08,C-F11,E-F07
 preserved_exact_tokens:
 - "Imported from Assistant Chat"
 - "Imported from Deep Plan"
@@ -19117,12 +19062,8 @@ plan_unit_id: F3-344
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Safe points are runtime recovery anchors under the canonical sp identity and must not be
-  presented as Assistant Chat restore points under the separate rp identity; retry controls
-  distinguish Retry from safe point from Start fresh attempt; unavailable recovery disables
-  retry with an explanation; and exact-replace receipts preserve the closed Case L outcomes
-  without conflict-success or partial-success invention.
+canonical_text: |-
+  Safe points are runtime recovery anchors under the canonical sp identity and must not be presented as Assistant Chat restore points under the separate rp identity; retry controls distinguish Retry from safe point from Start fresh attempt; unavailable recovery disables retry with an explanation; and exact-replace receipts preserve the closed Case L outcomes without conflict-success or partial-success invention. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec GUI behavior.
@@ -19146,7 +19087,9 @@ node_compile_hint:
   mode: safe_point_recovery_control_language
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0222"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0222
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "safe points"
 - "runtime recovery anchors"
@@ -19777,12 +19720,8 @@ plan_unit_id: F3-356
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Queue semantics stay transient, stale chat_state:v1 restore residue must not rehydrate
-  queued work across reload or restart, and runtime identity carry-through includes
-  requested_account_binding, operational_identity, effective_account_label,
-  effective_provider_identity, and effective_project_id without reviving requested_persona_id
-  as GUI identity canon.
+canonical_text: |-
+  Queue semantics stay transient, stale chat_state:v1 restore residue must not rehydrate queued work across reload or restart, and runtime identity carry-through includes requested_account_binding, operational_identity, effective_account_label, effective_provider_identity, and effective_project_id without reviving requested_persona_id as GUI identity canon. effective_project_id is required-present null for app execution and remains nonempty for actual Project work; history never follows later conversion focus. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec GUI behavior.
@@ -19806,7 +19745,9 @@ node_compile_hint:
   mode: queue_and_runtime_identity_widget_carry_through
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0229"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0229
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "FID-038"
 - "Queue semantics stay transient"

@@ -2,9 +2,9 @@
 
 Source: `Plans/MCP_Integration.md`
 
-Source lines: L281-L2017
+Source lines: L281-L2024
 
-Source SHA256: `8334adc8510cc12885d4956906f9705cf38eeebb797c65d513f9b7bacfbd6d48`
+Source SHA256: `0a52a091b49079c0b61bdf412f30e374054b3af1276ea66acf479067b9c236b5`
 
 ---
 
@@ -1281,7 +1281,12 @@ plan_unit_id: MI-024
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
-canonical_text: DirectApi providers use PM-native MCP only, while CLI-provider bridge state is long-lived provider/profile configuration mapped into project-shared or profile-local MCP records; PM may configure, update, repair, or spawn-time regenerate derived provider files only where workspace visibility requires it.
+canonical_text: >-
+  DirectApi providers use PM-native MCP only. CLI-provider bridge state stays long-lived
+  provider/profile configuration; project-vs-user mappings consume central definition home/reach plus
+  Computer launch/auth readiness and optional Project bindings. A no-project launch uses its owned
+  chat working root and app-owned derived adapter area. Reconfiguration or conversion re-homes future
+  derived files explicitly, without making provider files canonical or moving live profile/auth state.
 gui_related: false
 gui_classification_reason: The unit defines MCP runtime, identity, config, auth, provider, storage, or ownership behavior rather than direct GUI presentation.
 split_recommended: true
@@ -1305,6 +1310,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MCP_Integration-S0006
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - DirectApi providers
 - Gemini

@@ -4,7 +4,7 @@ Source: `Plans/human-in-the-loop.md`
 
 Source lines: L168-L254
 
-Source SHA256: `67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237`
+Source SHA256: `47519c7d88d096b8adfe6c3d1bc0374a67bd88ac55c3779e1fcde821ddf1e6a4`
 
 ---
 
@@ -86,7 +86,7 @@ When the orchestrator is paused for HITL, the **Dashboard** must surface this as
 ContractRef: ContractName:Plans/assistant-chat-design.md
 
 - **Dashboard role:** The Dashboard shows **warnings** and **Calls to Action** that need or benefit from user attention. HITL approval is one such CtA: e.g. "Phase X complete -- approval required to continue" or "Task Y done -- approve to proceed."
-- **Addressable via Assistant:** These CtAs (including HITL prompts) can be **answered or addressed by the chat Assistant**. The user may:
+- **Addressable via Assistant:** The person may answer the exact current approval through an authenticated protected control hosted in chat. An agent may prepare a preview/summary but cannot issue/accept/confirm its own retained approval, build grant, source-loosening acceptance or durable Always. The user may:
   - Open the Assistant and respond there (e.g. "approve and continue," or ask for a summary before approving). The Assistant is the place where the user is prompted to interact with HITL when the Dashboard shows the CtA.
   - Or use a direct control on the Dashboard (e.g. "Approve & continue" button) if provided.
 - **Single concept:** Warnings/CtAs live on the Dashboard; the Assistant is one way to address them. So HITL prompts appear as Dashboard CtAs and are explicitly addressable via the Assistant. See **Plans/assistant-chat-design.md** for Dashboard warnings/CtAs and Assistant integration.

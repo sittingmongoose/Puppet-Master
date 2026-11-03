@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L954-L1022
 
-Source SHA256: `9839be74b1158b51b7e6c1699218bd0394a8ff60c2e22a6c7119124ed3a8abc8`
+Source SHA256: `6597b1aa624433b3663cf1cf6eeea686c0399ad7388e843578639c6c179a9508`
 
 ---
 
@@ -16,7 +16,7 @@ Settings wiring has exactly five canonical commands and six specialized route-on
 |---|---|---|---|
 | `cmd.settings.open` | `Plans/Settings_System.md` SSYS-018/SSYS-019 | Dispatch exactly once for one stable `setting_id` or one `manager_id` plus optional `detail_id`; never route by label, search text, or presentation selector. | `pm.settings_route_request.v1` -> `pm.settings_route_return.v1`; restores the opener only when route, continuation, context, and generations remain current; writes no setting value. |
 | `cmd.settings.transaction.preview` | `Plans/Settings_System.md` SSYS-007/SSYS-009/SSYS-018 | Resolve one immutable exact-ID proposal. Preview/cancel is not apply and dispatches no owner mutation. | `pm.settings_transaction_preview_request.v1` -> `pm.settings_transaction_preview.v1`; no write and no domain event. |
-| `cmd.settings.transaction.apply` | `Plans/Settings_System.md` SSYS-009/SSYS-018 | Dispatch only from the matching current preview with expected Project revision, preview generation/hash, permission, and idempotency identity. | `pm.settings_transaction_apply_request.v1` -> `pm.settings_transaction_result.v1`; terminal UI requires owner readback/receipt, not acknowledgement. |
+| `cmd.settings.transaction.apply` | `Plans/Settings_System.md` SSYS-009/SSYS-018 | Dispatch only from the matching current preview with the exact offered level/key, expected per-setting/owner revisions, preview generation/hash, permission/mode, writer and idempotency identity. | `pm.settings_transaction_apply_request.v1` -> `pm.settings_transaction_result.v1`; terminal UI requires owner readback/receipt, not acknowledgement. |
 | `cmd.settings.transaction.rollback` | `Plans/Settings_System.md` SSYS-009/SSYS-018 | Dispatch only for one eligible transaction and rollback token after required confirmation; stale, expired, or already-used recovery dispatches nothing. | `pm.settings_transaction_rollback_request.v1` -> `pm.settings_transaction_result.v1`; failed readback remains failed or recovery-required. |
 | `cmd.settings.export` | `Plans/Settings_System.md` SSYS-008/SSYS-018/SSYS-021 | Dispatch one detached exact-ID export under FileSafe/permission policy; credential and protected-session bytes are excluded. | `pm.settings_export_request.v1` -> `pm.settings_export_manifest.v1`; changes no setting value and returns only non-secret artifact/receipt identity. |
 

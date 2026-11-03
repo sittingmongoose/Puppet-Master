@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L5099-L5192
+Source lines: L5145-L5247
 
-Source SHA256: `e2fcd22d76721dfd61754927b7b31cc183466c24050f47090f0cf7d7f10bedbf`
+Source SHA256: `3996097e3ab9dbc61c391860625de9f78f78f263621da0b912a2faa4930ed44f`
 
 ---
 
@@ -73,11 +73,15 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   The eight existing cmd.chat.attachment commands add, remove, retry, open, download, details,
-  freeze_reference and save_to_project remain File Manager-owned. Their exact request/result
-  names and sole handlers are the existing UCC-156 declarations with UCC-158 corrections, not new chat-local file services.
-  Attachment identity, captured version, permissions, bounded folder materialization and originating
-  thread/composer identity survive every route. FileSafe alone owns project writes. Owner placement,
-  named contracts and production-intent rows are not proof that machine schemas or native effects exist.
+  freeze_reference and save_to_project remain File Manager-owned. Their exact request/result names and
+  sole handlers are the existing UCC-156 declarations with UCC-158 corrections, not new chat-local
+  file services. Attachment identity, captured version, permissions, bounded folder materialization
+  and originating thread/composer identity survive every route. FileSafe alone owns project writes.
+  Owner placement, named contracts and production-intent rows are not proof that machine schemas or
+  native effects exist. In app scope attachments bind the real thread/Computer and folder.
+  save_to_project requires a chosen real destination Project and its current owner authority;
+  otherwise offer the existing save-to-disk/download flow without inventing a Project. A foreign
+  Project read grant cannot authorize that write.
 gui_related: true
 gui_classification_reason: Attachment tray, details, viewers, downloads and save controls are visible file-owner consumers.
 depends_on: [F-048, UCC-156, UCC-158, DR-040, DR-041]
@@ -97,7 +101,12 @@ reasoning_tier: high
 context_scope: attachment_owner_reference_repair
 implementation_surfaces: [Plans/FileManager.md, Plans/touch_closure.json, Plans/Wiring_Matrix.production.json]
 node_compile_hint: {mode: owner_and_touch_accounting_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/UI_Command_Catalog.md#UCC-158, PM_Assistant_v2_Additive_Correction_v4:FOLDER-001..008]
+source_lineage:
+- USER-PACKET-GAP-CLOSURE-20260910
+- Plans/UI_Command_Catalog.md#UCC-158
+- PM_Assistant_v2_Additive_Correction_v4:FOLDER-001..008
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 negative_constraints: [No invented machine schema or native proof., No peer file or folder transfer owner., No loss of captured version or source identity., No event or readiness admission.]
 ```
 

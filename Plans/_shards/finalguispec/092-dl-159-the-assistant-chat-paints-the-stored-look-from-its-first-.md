@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44948-L45014
+Source lines: L44190-L44246
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -19,21 +19,8 @@ plan_unit_id: F3-612
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  When the assistant chat opens as a page of its own, its first painted frame is the viewer's stored look
-  (DL-159, F3-468): the stored theme in its family and mode, Basic Dark when nothing is stored, and with the
-  NieR family selected, Basic in the stored mode under NieR Mode's attributes with the installed parts listed,
-  so the ground of every family, NieR Mode's parchment or ink and Glass's backdrop are right before the chat's
-  content draws. A reader that runs before the first frame reads the chat's own look store and never writes it.
-  It stores nothing new, keeps no app-global copy of the theme, and writes only what the chat's renderer and
-  NieR Mode's engine write on their first render, which still own the look and write the same values. No large
-  surface changes colour between the first frame and the rendered chat. Reduced motion is the system's setting
-  and is not read from the store. NieR Mode's boot log plays only when the chat opens in NieR Mode with the Boot
-  sequence part installed and motion allowed, as it did; it arrives with the first render, so the chat never
-  shows before it, and the reboot moment never plays on a reload. A pinned history drawer is in place from the
-  first frame. When the chat is ported into PMConcept7 (the home redesign), PMConcept7's head boot script owns
-  first paint for the page and the chat's own reader is dropped (DR-054). Amended Q22, Jared 2026-10-30
-  (DL-257): the fifth family uses the existing theme owner; no separate override remains.
+canonical_text: |-
+  A standalone Assistant chat page paints its first frame from F3-468’s one resolved look, including app scope, and uses the same OS-plus-Settings motion result. It keeps no chat-private theme store. When hosted in PMConcept7 the shared host remains the first-paint owner. Keep the five-family/ten-variant choice, resolved NieR Light/Dark ground, eligible initial boot log, pinned History placement and no large-surface recolor or reboot replay on reload. The previous standalone private reader and no-app-global-value wording are historical source lineage.
 gui_related: true
 gui_classification_reason: Defines what the assistant chat paints in its first frame and which reader paints it.
 split_recommended: false
@@ -58,10 +45,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-159"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md, SHA-256 8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/MEASUREMENTS.md, SHA-256 edee5055e6a1ce894478b13a0c63a0103f5ef4ae0c20c615213a082b696469b7"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md, First paint: the stored look from the first frame (concept lineage only)"
+- Plans/Decision_Log.md#DL-159
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md, SHA-256 8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/MEASUREMENTS.md, SHA-256 edee5055e6a1ce894478b13a0c63a0103f5ef4ae0c20c615213a082b696469b7
+- 'Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md, First paint: the stored look from the first frame (concept
+  lineage only)'
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F09,C-F11
 preserved_exact_tokens:
   - "first frame"
   - "Boot sequence"

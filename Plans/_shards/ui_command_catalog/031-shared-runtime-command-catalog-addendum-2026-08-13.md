@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11792-L11888
+Source lines: L12160-L12295
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -37,8 +37,8 @@ The `Payload -> result` types, typed fields, result outcomes, receipt-only pendi
 | `cmd.environment.disconnect` | Disconnect Environment | Requests bounded drain and disconnect for the exact environment. | `EnvironmentConnectionCommandRequest` -> `EnvironmentConnectionCommandResult` | state is not `closed` | `stale_projection`, `already_in_state`, `operation_in_progress`, `permission_required` | `handlers::environment::disconnect` | `domain_action` | `none` | `EnvironmentConnectionSupervisor` | null |
 | `cmd.thread.outbox.retry` | Retry Queued Thread Command | Retries the same unacknowledged logical command under its existing idempotency identity. | `ThreadOutboxRetryRequest` -> `ThreadOutboxCommandResult` | retryable unacknowledged entry | `outbox_state_mismatch`, `stale_projection`, `deadline_expired`, `topology_unavailable`, `permission_required` | `handlers::thread_outbox::retry` | `domain_action` | `none` | `ThreadCommandOutbox` | null |
 | `cmd.thread.outbox.cancel` | Cancel Queued Thread Command | Records cancellation for a cancellable uncommitted outbox entry. | `ThreadOutboxCancelRequest` -> `ThreadOutboxCommandResult` | cancellable uncommitted entry | `outbox_state_mismatch`, `stale_projection`, `already_in_state`, `permission_required` | `handlers::thread_outbox::cancel` | `domain_action` | `none` | `ThreadCommandOutbox` | null |
-| `cmd.thread.request` | Request Thread | Durably requests a thread and reconciles its stable identity after acknowledgement. | `ThreadRequestCommandRequest` -> `ThreadRequestCommandResult` | target current and request admissible | `stale_projection`, `topology_unavailable`, `policy_denied`, `resource_blocked`, `permission_required` | `handlers::thread::request` | `domain_action` | `none` | `ThreadCommandOutbox` | null |
-| `cmd.thread.spawn` | Spawn Child Thread | Durably requests a bounded child thread under exact parent and role lineage. | `ThreadSpawnCommandRequest` -> `ThreadSpawnCommandResult` | parent current and spawn allowed | `stale_projection`, `policy_denied`, `resource_blocked`, `lease_conflict`, `permission_required` | `handlers::thread::spawn` | `domain_action` | `none` | `ThreadCommandOutbox` | null |
+| `cmd.thread.request` | Request Thread | Durably requests a thread and reconciles its stable identity after acknowledgement. | `Plans/application_workflow_contracts.schema.json#/$defs/ThreadRequestFacadeRequestV2` → `Plans/application_workflow_contracts.schema.json#/$defs/ThreadRequestFacadeResultV2`; original exact send codec remains a compatibility branch | target current and request admissible | `stale_projection`, `topology_unavailable`, `policy_denied`, `resource_blocked`, `permission_required` | `handlers::thread::request` | `domain_action` | `none` | `ThreadCommandOutbox` | null |
+| `cmd.thread.spawn` | Spawn Child Thread | Durably requests a bounded child thread under exact parent and role lineage. | `Plans/application_workflow_contracts.schema.json#/$defs/ThreadSpawnFacadeRequestV2` → `Plans/application_workflow_contracts.schema.json#/$defs/ThreadSpawnFacadeResultV2`; original exact send codec remains a compatibility branch | parent current and spawn allowed | `stale_projection`, `policy_denied`, `resource_blocked`, `lease_conflict`, `permission_required` | `handlers::thread::spawn` | `domain_action` | `none` | `ThreadCommandOutbox` | null |
 | `cmd.thread.await` | Await Thread Condition | Starts an observable asynchronous await without blocking the UI thread. | `ThreadAwaitCommandRequest` -> `ThreadAwaitCommandResult` | current nonterminal target | `stale_projection`, `already_in_state`, `deadline_expired`, `target_missing`, `policy_denied` | `handlers::thread::await_condition` | `domain_action` | `none` | `ObservableWork` | null |
 | `cmd.capability.ensure` | Ensure Capability | Resolves or provisions one exact-target capability under Off, Auto, or On policy. | `CapabilityEnsureRequest` -> `CapabilityEnsureResult` | exact target and current policy | `capability_unavailable`, `setup_required`, `approval_required`, `policy_denied`, `resource_blocked`, `permission_required` | `handlers::capability::ensure` | `domain_action` | `none` | `CapabilityProvisioner` | null |
 | `cmd.tool.discover` | Discover Tools | Advances bounded progressive capability discovery for the current need. | `ToolDiscoverRequest` -> `ToolDiscoverResult` | registry query allowed | `stale_projection`, `topology_unavailable`, `policy_denied`, `resource_blocked` | `handlers::tool::discover` | `domain_action` | `none` | `ProgressiveCapabilityRegistry` | null |
@@ -70,38 +70,77 @@ plan_unit_id: UCC-145
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  The catalog registers exactly 26 new canonical generalized shared-runtime
-  command rows from CS-066, records seven candidate compatibility intents over
-  existing IDs, rejects cmd.debug.session.action, and retains cmd.remote.reconnect
-  as a remote wrapper that resolves and dispatches cmd.environment.reconnect.
+canonical_text: 'The catalog registers exactly 26 new canonical generalized shared-runtime command rows from
+  CS-066, records seven candidate compatibility intents over existing IDs, rejects cmd.debug.session.action,
+  and retains cmd.remote.reconnect as a remote wrapper that resolves and dispatches cmd.environment.reconnect.
+
+
+  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single
+  resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere.
+  Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project
+  versions and sole owner. Computer installations, credentials and protected source trust never travel in copy.
+  Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.*
+  local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact
+  consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay
+  resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable
+  handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Catalog metadata governs visible labels, enabled and disabled state, handler dispatch, progress, recovery, and accessible activation.
+gui_classification_reason: Catalog metadata governs visible labels, enabled and disabled state, handler dispatch,
+  progress, recovery, and accessible activation.
 split_recommended: false
-depends_on: [CS-066, SIR-004, SIR-005, SIR-008, SIR-010]
+depends_on:
+- CS-066
+- SIR-004
+- SIR-005
+- SIR-008
+- SIR-010
 unblocks: []
 acceptance_criteria:
-  - Exactly 26 new canonical IDs have typed payload/result references, state selectors, disabled reasons, sole handlers, command_kind, and normalization metadata.
-  - Candidate aliases do not receive primary catalog rows and the generic debug action is rejected.
-  - cmd.remote.reconnect remains a wrapper and generalized reconnect is cmd.environment.reconnect.
-  - Effects are receipt/projection only and explicitly carry missing_event_registration until individual Event Authority admission.
-  - Keyboard and pointer activation, accessible disabled/busy/outcome announcements, idempotent replay, restart, CAS, and race fixtures consume CS-066.
+- Exactly 26 new canonical IDs have typed payload/result references, state selectors, disabled reasons, sole
+  handlers, command_kind, and normalization metadata.
+- Candidate aliases do not receive primary catalog rows and the generic debug action is rejected.
+- cmd.remote.reconnect remains a wrapper and generalized reconnect is cmd.environment.reconnect.
+- Effects are receipt/projection only and explicitly carry missing_event_registration until individual Event
+  Authority admission.
+- Keyboard and pointer activation, accessible disabled/busy/outcome announcements, idempotent replay, restart,
+  CAS, and race fixtures consume CS-066.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - command catalog 26-row census and exact-handler uniqueness fixture
-  - alias, accessibility, replay, restart, race, and missing-event-registration fixtures
+- python3 scripts/pm-plan-index.py validate
+- command catalog 26-row census and exact-handler uniqueness fixture
+- alias, accessibility, replay, restart, race, and missing-event-registration fixtures
 risk_class: catalog_command_or_event_authority_drift
 reasoning_tier: high
 context_scope: shared_runtime_command_catalog
-implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md]
-node_compile_hint: {mode: shared_runtime_command_catalog, create_worknodes: false}
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+node_compile_hint:
+  mode: shared_runtime_command_catalog
+  create_worknodes: false
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/CANDIDATE_COMMAND_ID_REGISTER.json
-  - Plans/Shared_Integration_Runtime.md#15.1
-preserved_exact_tokens: [cmd.environment.reconnect, cmd.remote.reconnect, cmd.run_debug.*, cmd.lsp.restart_server, cmd.git.worktree.create, cmd.nav.open_subject, missing_event_registration]
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/CANDIDATE_COMMAND_ID_REGISTER.json
+- Plans/Shared_Integration_Runtime.md#15.1
+- source_ref:chat:2026-11-03-projects-pass2-approved
+preserved_exact_tokens:
+- cmd.environment.reconnect
+- cmd.remote.reconnect
+- cmd.run_debug.*
+- cmd.lsp.restart_server
+- cmd.git.worktree.create
+- cmd.nav.open_subject
+- missing_event_registration
 negative_constraints:
-  - Do not register candidate aliases as primary rows or mint Chat, Settings, Onboarding, Doctor, provider, or panel-local clones.
-  - Do not name or emit a new EventRecord family while Event Authority remains UNKNOWN_OPEN.
-  - Do not treat accepted dispatch or UI acknowledgement as terminal domain success.
-owner_hints: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Shared_Integration_Runtime.md]
+- Do not register candidate aliases as primary rows or mint Chat, Settings, Onboarding, Doctor, provider, or
+  panel-local clones.
+- Do not name or emit a new EventRecord family while Event Authority remains UNKNOWN_OPEN.
+- Do not treat accepted dispatch or UI acknowledgement as terminal domain success.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/Shared_Integration_Runtime.md
 ```

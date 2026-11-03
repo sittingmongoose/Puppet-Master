@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25700-L25753
+Source lines: L25865-L25928
 
-Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6`
+Source SHA256: `f4e5a424ee6841b4988ce457166d26b762be0b3f0c4aa0c5d0d03132ef6be00f`
 
 ---
 
@@ -14,7 +14,7 @@ The following contract establishes the previously missing bindings under Jared's
 
 **Membership and producer.** `event-family-context-compaction-completed@1.0.0` has the sole exact event type `context.compaction.completed` and closed payload `pm.context_compaction_completed.schema.v1`, version `1.0.0`, in `Plans/event_payload_context_compaction_completed.schema.json`. Define producer binding ID `assistant_chat.compaction_commit.v1` for the existing bounded compaction transaction's commit step. Manual `cmd.chat.compact_context` reaches it through `handlers::chat::compact_context`; automatic and eligible micro-compaction reach the same commit step under PP-078. UI click, helper return, local progress and command-result rendering are not independent emitters.
 
-**Identity and scope.** This family is `project_only`, bound to the real owning Project of the existing `thr_{ulid}` Chat thread and the project-bound ThreadDetail schema. Worktree-unbound is not projectless. Resolve Project, Project Home Server, thread, execution environment and topology against their authorities before preparation/commit; application-scope generic operations do not authorize application-scoped Chat completion. Missing or ambiguous ownership, cross-Project thread, stale topology or deleted/hidden target fails closed. Payload `project_id` and `thread_id` equal the EventRecord envelope; the envelope remains exclusively Contracts-owned `pm.event.v0@2.0.0`. The existing operation carries `operation_id` and its current `operation_generation`; a lease retry keeps the logical operation ID. EventRecord `run_id`, `node_id`, `attempt_id`, account refs and causality refs are required-present null unless actually proven; never invent them from the focused UI. Actor and correlation identities come from that operation. `occurred_at_utc` equals payload `committed_at_utc`, frozen at the commit attempt, and no timestamp is an identity.
+**Identity and scope.** `context.compaction.completed` has explicit original Project and newly admitted application editions. A Project thread retains real Project/Home Server and the exact old ThreadDetail payload/codec. An app thread binds null `project_id`, real `thr_{ulid}`, Server/Computer/environment/topology and app storage writer; Worktree-unbound Project is a different case, not a prohibition of genuine app completion. Both outer/inner scope and thread agree; the EventRecord envelope remains Contracts-owned `pm.event.v0@2.0.0`. Resolve current owner, thread/deletion/head, roots, topology, writer/lease and complete currentness before commit; generic app work cannot emit Chat completion. `operation_id` and `operation_generation` stay exact across retry. Optional run/node/attempt/account/causality refs are required-present null unless genuinely proven. Actor/correlation come from the original operation and commit time is frozen, never identity. Unknown schema, cross-scope join, deleted/hidden target or missing evidence refuses; replay/checkpoint uses the explicitly adopted app sibling without changing original Project history.
 
 **Commit and state meaning.** A completion means a candidate passed every PP-078 fence and useful-gain predicate and the Storage commit marker durably committed. Input/output context revisions are monotonic integers; `output_context_revision > input_context_revision`, `input_tokens - output_tokens = reclaimed_tokens > 0`, and configured `min_reclaim_tokens` must also be met. The detailed CompactionReceipt records branch/head, retained obligations, redaction, hashes, artifacts, fences and policy proof; its opaque reference must resolve to this exact operation/thread/revision pair at commit. The permanent EventRecord is a bounded audit projection of that receipt, containing no transcript, summary, prompt, tool output, content-derived hash, title or arbitrary message. Required token/byte counts are measurements, not billed Usage. No-op, soft-defer, cancellation, stale/late result, policy denial, helper failure and precommit interruption emit no completion. `context.compaction.started` and `context.compaction.failed` remain unregistered, independently visible through existing result/receipt state.
 
@@ -31,7 +31,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Successful committed compaction produces one content-free context.compaction.completed EventRecord under the explicit owner contract above. The focused-thread detail consumer uses the existing replay path; retained transcript search and thread-deletion behavior remain unchanged.
+  Successful committed compaction produces one content-free context.compaction.completed EventRecord under
+  the explicit owner contract above. The focused-thread detail consumer uses the existing replay path;
+  retained transcript search and thread-deletion behavior remain unchanged. The app completion sibling
+  uses explicit application scope/null Project and the same content-free commit/result, original
+  operation, thread/deletion/head/generation fence, complete replay/checkpoint and unavailable-input
+  rules. The original Project Event/codec remains exact. Worktree-unbound Project completion and genuine
+  app completion are separately admitted forms; neither authorizes arbitrary generic app operations to
+  emit Chat completion.
 gui_related: true
 gui_classification_reason: This unit binds the visible focused-thread completion history to durable authority.
 depends_on: []
@@ -53,8 +60,11 @@ node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-039
-  - Plans/Decision_Log.md#DL-040
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-040"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
   - No runtime, buildability, independent-validator clearance, governance seal, WorkNodes, or NodeSeeds follows from this contract.
 owner_hints:

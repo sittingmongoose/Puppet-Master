@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L2487-L2659
+Source lines: L2486-L2664
 
-Source SHA256: `fe048767cd39d62ee7e90db30eefc91a6c7a6d35a4e06679ac041404fe28a050`
+Source SHA256: `b45561569a06ac308e7bed4f95971921c0d57cde2047701ec1004abb787af8ce`
 
 ---
 
@@ -48,14 +48,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
-  Runtime Artifacts owns exactly 19 Option 2 runtime_artifact.* semantic transitions and their
-  closed per-type payload schemas. Every transition is project-scoped, recommends
-  RP-AUTHORITY-INDEFINITE for later storage adjudication, uses the exact dedupe tuple
-  [event_type, project_id, artifact_id, schema_id], rejects unhandled secrets, inline previews,
-  private chain-of-thought, unknown fields, and generic subtype routing, and can be produced only
-  by the named domain owner after durable artifact materialization. This owner/schema closure does
-  not register a family or authorize EventRecord append, dispatch, projection, checkpoint advance,
-  replay, retention execution, runtime implementation, buildability, or PNC-019.
+  Runtime Artifacts owns exactly 19 Option 2 runtime_artifact.* semantic transitions and their closed
+  per-type payload schemas. Every transition is project-scoped, recommends RP-AUTHORITY-INDEFINITE for
+  later storage adjudication, uses the exact dedupe tuple [event_type, project_id, artifact_id,
+  schema_id], rejects unhandled secrets, inline previews, private chain-of-thought, unknown fields, and
+  generic subtype routing, and can be produced only by the named domain owner after durable artifact
+  materialization. This owner/schema closure does not register a family or authorize EventRecord append,
+  dispatch, projection, checkpoint advance, replay, retention execution, runtime implementation,
+  buildability, or PNC-019. The original 19 Project transition codecs/dedupe tuples are not relaxed.
+  Approved app artifacts require separate exact scope-aware payload/identity editions and explicit
+  per-family registration; absent native writer remains non-emitting. Scope extension never registers or
+  certifies an event by itself.
 gui_related: false
 gui_classification_reason: This unit closes semantic ownership and machine payload depth without changing the visible Runtime Artifacts surface.
 depends_on: [RAP-004, RAP-043]
@@ -102,10 +105,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Runtime_Artifacts_Panel.md:514-538
-  - scratchpad/pm-integration-20260831/event-authority-successor-20260901/aggregate-adjudication/owner-adjudication/CANONICAL_REPAIR_PROPOSAL.jsonl:158-177
-  - scripts/pm-plans-verify.py:2627-2647
-  - tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json
+  - "Plans/Runtime_Artifacts_Panel.md:514-538"
+  - "scratchpad/pm-integration-20260831/event-authority-successor-20260901/aggregate-adjudication/owner-adjudication/CANONICAL_REPAIR_PROPOSAL.jsonl:158-177"
+  - "scripts/pm-plans-verify.py:2627-2647"
+  - "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - Option 2 only
   - RP-AUTHORITY-INDEFINITE

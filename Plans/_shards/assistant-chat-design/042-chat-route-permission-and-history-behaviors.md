@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L3542-L3556
 
-Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6`
+Source SHA256: `f4e5a424ee6841b4988ce457166d26b762be0b3f0c4aa0c5d0d03132ef6be00f`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6
 
 Permission approval state must not leak across lanes, accounts, or shared-runtime actors just because they share a UI session. `always`, reject-cascade, and doom-loop behavior require a canonical actor/account/lane scope key; `Permissions_System.md` / `Permissions_System` default-deny hints for `todoread` and `todowrite` must narrow by execution-entity, actor-scoped context, and `/member/lane/account-bounded` permissions.
 
-Worker-facing handoff and `/retry` memory are project-scoped structured runtime records, not vague "JSON-like" logs. The design must say whether the backing records/projections are `/JSONL/redb-backed` (answered 2026-10-31, DL-270, SP-339: handoff and /retry records are typed redb or MessagePack records with no JSONL backing; JSONL appears only as on-demand pm export output), which concrete `/path/delivery` or storage domain owns them, and how a worker receives the bounded packet, while keeping `/projections` and worker-facing handoff separate from full raw history.
+Worker-facing handoff and `/retry` memory are explicit Project or application thread/Computer-scoped structured runtime records, not vague "JSON-like" logs. The design must say whether the backing records/projections are `/JSONL/redb-backed` (answered 2026-10-31, DL-270, SP-339: handoff and /retry records are typed redb or MessagePack records with no JSONL backing; JSONL appears only as on-demand pm export output), which concrete `/path/delivery` or storage domain owns them, and how a worker receives the bounded packet, while keeping `/projections` and worker-facing handoff separate from full raw history. ACD-408 and the conversion manifest preserve historical source and admit fresh destination refs.
 
 `History` remains chronological but windowed: initial load shows a recent slice, `load-older` or jump controls bring in older items, dense event bursts collapse low-level records, and initial viewports do not force every low-level record into the thread. Amended 2026-10-31 (DL-270): load-older paging is mandatory, not one option among jump controls. History opens from the thread's render-page store (thread_head, hot tail, newest sealed 50-item page) and loads older pages on demand (SP-338, ACD-242); jump controls are additional. `Settings` is source-axis heavy and must show inheritance plus override origin so the user can answer what will be requested from the current surface. `origin` is audit-only even when actor identity is first-class elsewhere; it must never become behavior-driving actor identity.
 

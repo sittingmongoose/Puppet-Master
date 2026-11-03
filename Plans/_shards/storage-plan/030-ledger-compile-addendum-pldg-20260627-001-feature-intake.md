@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L15989-L16206
+Source lines: L16052-L16254
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -19,15 +19,8 @@ plan_unit_id: SP-221
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Inline visualizer v2 persists source fragment, title/type/version, render config, approved bridge metadata,
-  PM-managed state outputs, visible fallback or error state, and replay/re-render lineage scoped by project, thread,
-  message, and visualizer artifact. Reload re-renders from source/config when practical; screenshot or snapshot
-  fallback is stored only when re-render is impractical. PM-managed bridge state uses the namespace
-  `visualizer_state.v1:{project_id}:{thread_id}:{message_id}:{visualizer_artifact_id}`, stores only
-  JSON-serializable values under quota, records the bridge method and schema version that wrote the state, and exposes
-  replay, export, and purge boundaries. Runtime heap, same-origin storage, raw parent localStorage, secrets, and
-  diagnostic payload leaks are never persistence sources.
+canonical_text: |-
+  Inline visualizer v2 persists source fragment, title/type/version, render config, approved bridge metadata, PM-managed state outputs, visible fallback or error state, and replay/re-render lineage scoped by project, thread, message, and visualizer artifact. Reload re-renders from source/config when practical; screenshot or snapshot fallback is stored only when re-render is impractical. PM-managed bridge state uses the namespace `visualizer_state.v1:{project_id}:{thread_id}:{message_id}:{visualizer_artifact_id}`, stores only JSON-serializable values under quota, records the bridge method and schema version that wrote the state, and exposes replay, export, and purge boundaries. Runtime heap, same-origin storage, raw parent localStorage, secrets, and diagnostic payload leaks are never persistence sources. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: Defines durable visualizer record scope and replay storage behavior; visible rendering is owned by GUI and Assistant Chat.
 depends_on: [ACD-427, CV-300]
@@ -51,9 +44,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-persistence-reload-security
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0060
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0088
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-persistence-reload-security
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0060
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0088
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids: [atom-0060, atom-0088]
 preserved_exact_tokens:
   - "source fragment"
@@ -82,20 +77,8 @@ plan_unit_id: SP-222
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Notification storage separates non-secret settings, destination definitions, sound mappings, sound asset manifests,
-  uploaded/imported sound blobs, and delivery attempt receipts. Record keys include `notification_settings.v1:global`,
-  project-scoped settings, `notification_destination.v1:{scope}:{destination_id}`,
-  `notification_sound_mapping.v1:{scope}:{event_category}`, and `sound_asset_manifest.v1:{scope}:{sound_id}`.
-  Destination records include provider_kind, scope, enabled state, display_name, event_category allowlist, quiet/focus
-  policy, rate_limit_profile, idempotency profile, last_test_receipt_ref, and provider-specific profile payloads for
-  Slack, Discord, generic webhook, ntfy, Pushover, and Telegram as defined by CV-298. Webhook and push tokens are stored
-  only as OS credential references; receipts store redacted request and response digests, provider kind, destination id,
-  event id, event category, status class, HTTP status, provider request/message id when available, retry count, next
-  retry time, redaction profile, idempotency key, and secret refs only. Built-in sound manifests include sound_id,
-  built_in/user_uploaded/imported source_kind, display_name, source_url_or_package_ref, license_ref, attribution,
-  version, format, duration_ms, loudness_normalization, sha256, disabled/hidden state, and default event_category
-  mappings.
+canonical_text: |-
+  Notification storage separates non-secret settings, destination definitions, sound mappings, sound asset manifests, uploaded/imported sound blobs, and delivery attempt receipts. Record keys include `notification_settings.v1:global`, project-scoped settings, `notification_destination.v1:{scope}:{destination_id}`, `notification_sound_mapping.v1:{scope}:{event_category}`, and `sound_asset_manifest.v1:{scope}:{sound_id}`. Destination records include provider_kind, scope, enabled state, display_name, event_category allowlist, quiet/focus policy, rate_limit_profile, idempotency profile, last_test_receipt_ref, and provider-specific profile payloads for Slack, Discord, generic webhook, ntfy, Pushover, and Telegram as defined by CV-298. Webhook and push tokens are stored only as OS credential references; receipts store redacted request and response digests, provider kind, destination id, event id, event category, status class, HTTP status, provider request/message id when available, retry count, next retry time, redaction profile, idempotency key, and secret refs only. Built-in sound manifests include sound_id, built_in/user_uploaded/imported source_kind, display_name, source_url_or_package_ref, license_ref, attribution, version, format, duration_ms, loudness_normalization, sha256, disabled/hidden state, and default event_category mappings. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: Defines durable settings, credential references, sound assets, and delivery receipt records; GUI renders them elsewhere.
 depends_on: [CV-298, PS-124]
@@ -121,17 +104,19 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-destination-record-schema
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-retry-rate-receipt-contract
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-global-project-overrides
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-catalog-default-mappings
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-upload-asset-lifecycle
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0061
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0063
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0064
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0065
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0066
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0067
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-destination-record-schema
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-retry-rate-receipt-contract
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-global-project-overrides
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-catalog-default-mappings
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-upload-asset-lifecycle
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0061
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0063
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0064
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0065
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0066
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0067
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids: [atom-0061, atom-0063, atom-0064, atom-0065, atom-0066, atom-0067]
 preserved_exact_tokens:
   - "notification_settings.v1:global"

@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_Integration.md`
 
-Source lines: L2540-L2640
+Source lines: L2544-L2653
 
-Source SHA256: `835e757b1488e0e0e083cae64d2081e41b92922a7ba91c9248dc668535339400`
+Source SHA256: `262c75f28aa55381f858b6da540084b3e0490881c137e356e8b8f4e199f640ef`
 
 ---
 
@@ -87,7 +87,9 @@ plan_unit_id: GI-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_Integration.md
-canonical_text: The existing GitHub Project-creation command joins approved application-scoped intake to PJCT-008 committed Project binding through the existing Project action family, explicit GitHub API authority and retained receipts; its two typed candidate event obligations remain quarantined_not_admitted under DL-039 and authorize no persisted append or replay.
+canonical_text: >-
+  The existing GitHub Project-creation command joins approved application-scoped intake to PJCT-008 committed Project binding through the existing Project action family, explicit GitHub API authority and retained receipts; its two typed candidate event obligations remain quarantined_not_admitted under DL-039 and authorize no persisted append or replay.
+  PJCT-008 keeps this exact GitHub compatibility handler and original application-scoped operation/event quarantine. Other services use PJCT-010 with FGI-023 and their own results, and never reuse this GitHub command as a generic wrapper. Protected sign-in and publication authority resolve through their existing owners, including PS-146/147.
 gui_related: false
 gui_classification_reason: Non-visual command, authority, event and replay integration.
 depends_on: [GI-032, PJCT-001, PJCT-002]
@@ -104,7 +106,14 @@ reasoning_tier: high
 context_scope: existing_github_creation_emit_obligations
 implementation_surfaces: [Plans/GitHub_Integration.md, Plans/Project_System.md, Plans/event_family_registry.json]
 node_compile_hint: {mode: static_owner_integration_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Decision_Log.md#DL-039, Plans/GitHub_Integration.md#GI-032, Plans/Project_System.md#3-actions-commands-and-results, Plans/Wiring_Matrix.production.json#/entries/catalog.project_new_github_repo]
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/GitHub_Integration.md#GI-032
+- Plans/Project_System.md#3-actions-commands-and-results
+- Plans/Wiring_Matrix.production.json#/entries/catalog.project_new_github_repo
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 negative_constraints: [No Copilot-as-GitHub-API authority., No credentials or content payloads., No provisional Project scope., No replayed effects., No event admission or persisted append/replay authorization., No holding-receipt or validator rewrite., No legacy admission or native/global certification claim.]
 ```
 

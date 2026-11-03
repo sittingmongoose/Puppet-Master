@@ -2,9 +2,9 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L950-L964
+Source lines: L931-L945
 
-Source SHA256: `9aa7d954d0264e081d8647735683a7d0b9422b13891ceaae17bef41f4cc8bc4e`
+Source SHA256: `64b5a9a3310152bf3b30d972a4dd22c9db59ca42a1c6b53db7e851bc75fe306e`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `9aa7d954d0264e081d8647735683a7d0b9422b13891ceaae17bef41f4cc8bc4e
 - The GUI exposes both browser login and PAT entry, with PAT-recommended helper text and clear guidance.
 - The GUI shows requested auth mode and effective capability separately.
 - DockerHub namespace and repository discovery works from supported auth inputs.
-- Missing DockerHub repo creation is guarded by a mandatory non-bypassable confirmation showing namespace, repo name, and privacy.
+- Missing DockerHub repository create shows namespace/repo/privacy and private default; Regular actual human confirm and YOLO/grant authority use the same writer with distinct truthful receipts and no duplicate ordinary yes.
 - New repository creation defaults to private.
 - Puppet Master can build and run project containers for testing and provide user-openable access points when available.
 - Docker publish results surface digest/tag/registry info without leaking credentials.

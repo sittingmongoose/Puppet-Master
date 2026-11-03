@@ -2,9 +2,9 @@
 
 Source: `Plans/MCP_Integration.md`
 
-Source lines: L2031-L2116
+Source lines: L2038-L2133
 
-Source SHA256: `8334adc8510cc12885d4956906f9705cf38eeebb797c65d513f9b7bacfbd6d48`
+Source SHA256: `0a52a091b49079c0b61bdf412f30e374054b3af1276ea66acf479067b9c236b5`
 
 ---
 
@@ -20,7 +20,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
 canonical_text: >-
-  P1-MCP-AND-THIRD-PARTY-CONFIG-IMPORT (P1) is compiled as canonical Puppet Master intent for MCP and external agent config import with trust boundaries: Add ImportedToolConfigSource records: source app/file, hash, cwd resolution, permission default, secret redaction, first-run review. The preserved PM gap/delta is: Need config-import provenance and trust policy: imported MCP config is a suggestion, not automatically executable. The observed external-repo signal remains source-lineage evidence: Cline emphasizes MCP/plugins and `.clinerules`; Warp changelog says MCP servers detected from third-party agents become visible/spawnable and project MCP servers spawn from repo root; Codex docs expose MCP/skills/plugins surfaces.
+  P1-MCP-AND-THIRD-PARTY-CONFIG-IMPORT (P1) is compiled as canonical Puppet Master intent for MCP and
+  external agent config import with trust boundaries: Add ImportedToolConfigSource records: source
+  app/file, hash, cwd resolution, permission default, secret redaction, first-run review. The
+  preserved PM gap/delta is: Need config-import provenance and trust policy: imported MCP config is a
+  suggestion, not automatically executable. The observed external-repo signal remains source-lineage
+  evidence: Cline emphasizes MCP/plugins and `.clinerules`; Warp changelog says MCP servers detected
+  from third-party agents become visible/spawnable and project MCP servers spawn from repo root; Codex
+  docs expose MCP/skills/plugins surfaces.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -28,9 +35,10 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Imported MCP server from `.claude`/Codex/Warp config defaults ask/disabled until reviewed.
-- Relative command cwd is project-root only when explicitly resolved and shown.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+- Imported MCP configuration defaults ask/disabled until exact source/hash review.
+- Relative command cwd resolves only against an explicitly selected and displayed Project root or app thread working
+  root; no-project launch never guesses a Project.
+- Import, copy and conversion do not transfer trust, secrets, account approval or live transport sessions.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
@@ -57,6 +65,8 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:13
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids:
 - atom-0017
 external_atom_id: extrepo-20260703-0013

@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L8955-L9013
+Source lines: L9324-L9382
 
-Source SHA256: `a2f40fb89918b299f4b90af9d0d7d7c85b75ad57f8312f598490040ea1d74bca`
+Source SHA256: `30d3beb8e135f0dd30e7757570a3b6b7e2830c5655547b4ebb81b675b748cbed`
 
 ---
 
@@ -17,7 +17,7 @@ This addendum is canonical permission spec text for deferred non-runtime FABLE r
 Repairs rows `sfk-344077d4e91d4dba8a844f8b`, `sfk-95212a02bf1d39bbc2883d92`, and `sfk-c2365f0841b6e3af70ad6310`.
 
 - The `always` response contract is owned by Section 3.4 and consumed by AC-PM06. Any older `§6.2` reference to `always` is a source-lineage alias for Section 3.4.
-- Durable rule creation is owned by Section 9 and command IDs `cmd.permissions.create_project_rule` and `cmd.permissions.create_global_rule`. Any older `§6.4A` reference is a source-lineage alias for Section 9 durable approvals.
+- Durable rule creation is owned by Section 9 and PS-144 through cmd.permissions.create_project_rule, cmd.permissions.create_computer_rule and cmd.permissions.create_global_rule (Everywhere after normalization). Older §6.4A remains a source-lineage alias.
 - Scope specificity is owned by Section 2.4 plus the deterministic resolution algorithm in Section 8. Any older `§2.4B` reference maps to Section 2.4 scope precedence.
 - New references must use these owner sections and command IDs rather than the retired aliases.
 
@@ -36,7 +36,7 @@ Repairs row `sfk-fdf444265abf92192b7160bd`.
 Repairs rows `sfk-57ac0d8ad5d91758f6c339a1` and `sfk-6f3fd08bf73eb3f910729299`.
 
 - Settings route: `settings.permissions`.
-- Command IDs: `cmd.permissions.open`, `cmd.permissions.create_project_rule`, `cmd.permissions.create_global_rule`, `cmd.permissions.update_rule`, `cmd.permissions.reorder_rule`, `cmd.permissions.delete_rule`, `cmd.permissions.revoke`, `cmd.permissions.pick_external_directory`, and `cmd.permissions.validate_rule`.
+- Command IDs: cmd.permissions.open, cmd.permissions.create_project_rule, cmd.permissions.create_computer_rule, cmd.permissions.create_global_rule, cmd.permissions.update_rule, cmd.permissions.reorder_rule, cmd.permissions.delete_rule, cmd.permissions.revoke, cmd.permissions.pick_external_directory and cmd.permissions.validate_rule. PS-144 supplies explicit target/CAS and no-path-Everywhere admission.
 - Directory picker dispatch name: `permissions.external_directory.pick`.
 - Duplicate path error code: `external_directory_duplicate_path`.
 - Invalid glob error code: `external_directory_invalid_glob`.
@@ -56,7 +56,7 @@ Repairs row `sfk-613f7652b32c4e3abfe4f6e2`.
 | `domain.workflow_admin` | workflow cancel, rerun, admin mutation | hosted-provider auth alone |
 | `domain.image_publish` | registry image push, repo create, template publish | local build approval |
 
-Each domain approval records `approval_scope_key`, `permission_snapshot_id`, `target_identity`, `operation_class`, `expires_at_utc?`, and `revocation_rule_id?`.
+Each domain decision records approval_scope_key, permission_snapshot_id, target_identity, operation_class, expires_at_utc? and revocation_rule_id?, plus PS-107/148 versioned actual authority. The table names classes, not universal human prompts: PS-146 YOLO publication/Y1 and PS-147 exact grant-created-resource exceptions apply before PS-148 retained gates. The generic tool/session column cannot veto already admitted ordinary YOLO publication or invent a human decision.
 
 ### Permission Snapshot Reason-Code Enums
 

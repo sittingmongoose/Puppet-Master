@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3275-L3352
+Source lines: L3246-L3308
 
-Source SHA256: `2ee9163141078a9ed56d59700128756b51cb1c18109a0f7fe60e02b9748b8245`
+Source SHA256: `f483b45c08ded2f8811a35ed53cd4b052d3b603b856084efdaba166705d30608`
 
 ---
 
@@ -19,24 +19,8 @@ plan_unit_id: DR-056
 unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable theme family (nier), ordered after Basic,
-  Friendly, Glass and Retro. NieR Light (nier-light) and NieR Dark (nier-dark) complete ten built-in variants. A
-  NieR family pick uses general.visual.theme and the existing mode through cmd.settings.transaction.preview then
-  cmd.settings.transaction.apply; no independent NieR switch or command remains. Exactly one NieR row editor
-  serves Settings, the title bar, the Guided Tour and onboarding. Preset, part and background lists have one
-  owner. Live edits use the existing Project Settings preview/apply pair; onboarding uses its existing
-  non-persistent ui.onboarding.choose_look preview and exact commit boundary. The retained local actions
-  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay add no command
-  or store. Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it
-  uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover.
-  Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local
-  rehearsal that changes no setting. One Project look store and one first-paint reader serve all five theme
-  families. No app-global or cross-Project copy, independent NieR boolean writer, local-storage hint, second
-  Reboot plate or per-surface family selector exists. Hero moments share one trigger, end state, snap and sound
-  path through DR-043; five family styles differ in presentation only. Pip keeps the SSYS-056 row editor, shared
-  parts/preset registry and Settings owner. Onboarding reads factory/Project Pip parts and has no Pip editor.
-  Legacy NieR Mode and Customize NieR Mode labels are source lineage, superseded by Q22.
+canonical_text: |-
+  Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable theme family (nier), ordered after Basic, Friendly, Glass and Retro. NieR Light (nier-light) and NieR Dark (nier-dark) complete ten built-in variants. A NieR family pick uses general.visual.theme and the existing mode through cmd.settings.transaction.preview then cmd.settings.transaction.apply; no independent NieR switch or command remains. Exactly one NieR row editor serves Settings, the title bar, the Guided Tour and onboarding. Preset, part and background lists have one owner. Live edits use the existing Settings preview/apply pair at the exact admitted level/key; onboarding uses its existing non-persistent ui.onboarding.choose_look preview and the exact SSYS-065/PWIZ-037 accepted-level commit boundary. The retained local actions ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay add no command or store. Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting. One Settings-owned look resolver and one first-paint reader serve all five theme families in the exact Project or application context. The family/mode pair is atomic at its admitted level. Everywhere/Device/Project values are genuine declared Settings records, never independent paint copies; there is no independent NieR boolean writer, local-storage hint, second Reboot plate or per-surface family selector. Hero moments share one trigger, end state, snap and sound path through DR-043; five family styles differ in presentation only. Pip keeps the SSYS-056 row editor, shared parts/preset registry and Settings owner. Onboarding reads the exact Settings-resolved Pip parts and has no Pip editor. Legacy NieR Mode and Customize NieR Mode labels are source lineage, superseded by Q22.
 gui_related: true
 gui_classification_reason: "Fixes single owners for the NieR Mode editor, the reboot plate, the look store and onboarding's hero moments."
 split_recommended: false
@@ -75,10 +59,11 @@ preserved_exact_tokens:
   - "ui.settings.nier_editor.replay"
   - "ui.onboarding.choose_look"
 negative_constraints:
-  - "Do not build a second NieR Mode editor, preset list, part list or background list for any surface."
-  - "Do not draw a reboot plate or transition of a surface's own."
-  - "Do not keep a theme copy or paint hint outside the current Project's Settings."
-  - "Do not give one family's hero moments a trigger, end state, snap or sound path of their own."
+- Do not build a second NieR Mode editor, preset list, part list or background list for any surface.
+- Do not draw a reboot plate or transition of a surface's own.
+- Do not keep a theme copy or paint hint outside the Settings owner's admitted level records and bounded read-only
+  resolver cache.
+- Do not give one family's hero moments a trigger, end state, snap or sound path of their own.
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/Settings_System.md

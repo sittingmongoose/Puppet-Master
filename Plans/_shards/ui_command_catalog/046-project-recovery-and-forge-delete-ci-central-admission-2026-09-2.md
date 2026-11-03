@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L13728-L13817
+Source lines: L14306-L14473
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -43,58 +43,136 @@ plan_unit_id: UCC-165
 unit_type: gui_command_catalog
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'The 2026-09-26 central admission registers exactly seven primaries -- cmd.project.resume_creation from
-  PJCT-007 and six Forge commands from FGI-021 -- each with one owner binding, one typed request/result/error contract
-  set, one sole future handler, handler_unavailable projection, expected_event_types=[], central response separation,
-  and complete reverse consumers with exact return; recovery open/delete routes reuse Forge owner routes and Commands
-  & Shortcuts local actions were outside that seven-primary batch; UCC-166 now admits their distinct local-action consumers
-  without additional primaries. DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s
-  current accepted owner result. Continue Setup retains the existing cmd.project.resume_creation owner route and its
-  fresh-attempt/retained-recovery fence, never the original creation key. Check again consumes the applicable current
-  owner observation/recovery result; neither action nor refresh may mark unexecuted phases complete or manufacture Project
-  publication. Checklist, block count and stage progress agree on verified settled effects. Existing fourteen local actions,
-  exact return, permission and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
+canonical_text: 'The 2026-09-26 central admission registers exactly seven primaries -- cmd.project.resume_creation
+  from PJCT-007 and six Forge commands from FGI-021 -- each with one owner binding, one typed request/result/error
+  contract set, one sole future handler, handler_unavailable projection, expected_event_types=[], central response
+  separation, and complete reverse consumers with exact return; recovery open/delete routes reuse Forge owner
+  routes and Commands & Shortcuts local actions were outside that seven-primary batch; UCC-166 now admits their
+  distinct local-action consumers without additional primaries. DL-259 FO-9 final, 2026-10-31: Creating’s recovery
+  feedback consumes PWIZ-021/PJCT-007’s current accepted owner result. Continue Setup retains the existing
+  cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery fence, never the original
+  creation key. Check again consumes the applicable current owner observation/recovery result; neither action
+  nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block count
+  and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
+  and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: These rows are the reverse-consumer identity for recovery Continue Setup, Delete Repository, CI artifact download/import, hosted secret/variable administration, and official-service navigation controls.
-depends_on: [UCC-164, PJCT-007, FGI-021]
-unblocks: [WM-058]
+gui_classification_reason: These rows are the reverse-consumer identity for recovery Continue Setup, Delete
+  Repository, CI artifact download/import, hosted secret/variable administration, and official-service navigation
+  controls.
+depends_on:
+- UCC-164
+- PJCT-007
+- FGI-021
+unblocks:
+- WM-058
 acceptance_criteria:
-- All seven IDs appear exactly once in the admission table with label, owner binding, sole future handler, and intended
-  consumers with exact return.
-- Each ID has exactly one production-intent row with the same command and sole target, typed request/result refs, expected_event_types=[],
-  and central response separation.
-- Every named consumer reads typed availability and disabled reason, renders handler_unavailable until native evidence,
-  and returns to the exact initiating route/focus/continuation.
-- Recovery open/delete dispatch through Forge owner routes only; no Project-local mutation, peer row, alias, or second
-  handler exists for any admitted ID.
+- All seven IDs appear exactly once in the admission table with label, owner binding, sole future handler,
+  and intended consumers with exact return.
+- Each ID has exactly one production-intent row with the same command and sole target, typed request/result
+  refs, expected_event_types=[], and central response separation.
+- Every named consumer reads typed availability and disabled reason, renders handler_unavailable until native
+  evidence, and returns to the exact initiating route/focus/continuation.
+- Recovery open/delete dispatch through Forge owner routes only; no Project-local mutation, peer row, alias,
+  or second handler exists for any admitted ID.
 - Commands & Shortcuts local actions gain no row here; no EventRecord, native handler, or runtime is claimed.
-- 'DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s current accepted owner result.
-  Continue Setup retains the existing cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery
-  fence, never the original creation key. Check again consumes the applicable current owner observation/recovery result;
-  neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block
-  count and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
-  and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
-validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-plan-index.py validate]
+- 'DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s current accepted
+  owner result. Continue Setup retains the existing cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery
+  fence, never the original creation key. Check again consumes the applicable current owner observation/recovery
+  result; neither action nor refresh may mark unexecuted phases complete or manufacture Project publication.
+  Checklist, block count and stage progress agree on verified settled effects. Existing fourteen local actions,
+  exact return, permission and owner-result adoption rules remain; no new phase, recheck or recovery command
+  is admitted.'
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
+validation_surfaces:
+- Plans/Wiring_Matrix.production.json
+- Plans/touch_closure.json
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plan-index.py validate
 risk_class: central_admission_alias_collision_or_simulated_success
 reasoning_tier: high
 context_scope: project_recovery_forge_delete_ci_central_admission
-implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
-node_compile_hint: {mode: static_command_catalog_registration_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: static_command_catalog_registration_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
 - Plans/Project_System.md#PJCT-007
 - Plans/Forge_Integrations.md#FGI-021
 - Plans/project_system_contracts.schema.json#x-project-recovery-command-contract
 - reports/packet-integration-completion-20260926/project-recovery.md
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
-  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
-  report FO-9 final.'
-preserved_exact_tokens: [cmd.project.resume_creation, cmd.forge.repository.delete, cmd.forge.pipeline.artifact.download, cmd.forge.pipeline.secret.set, cmd.forge.pipeline.secret.remove, cmd.forge.pipeline.variable.set, cmd.forge.pipeline.variable.remove, handlers::project::resume_creation, handlers::forge::repository_delete, handlers::forge::pipeline_artifact_download, handlers::forge::pipeline_secret_set, handlers::forge::pipeline_secret_remove, handlers::forge::pipeline_variable_set, handlers::forge::pipeline_variable_remove, handler_unavailable, "expected_event_types=[]", command_not_registered, creation_recovery_resume_binding, project_creation_recovery_context, ObservableWork, FileSafe, one-use protected human-broker ref, official_destination_kind, automation_run_artifacts, hosted_service_settings, automation_service_overview, automation_run_id, hosted_setting_scope_ref, AutomationBinding, "Open artifacts in service", "Open service settings", "Open in <provider>", download, import]
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1;
+  fields report FO-9 final.'
+- source_ref:chat:2026-11-03-projects-pass2-approved
+preserved_exact_tokens:
+- cmd.project.resume_creation
+- cmd.forge.repository.delete
+- cmd.forge.pipeline.artifact.download
+- cmd.forge.pipeline.secret.set
+- cmd.forge.pipeline.secret.remove
+- cmd.forge.pipeline.variable.set
+- cmd.forge.pipeline.variable.remove
+- handlers::project::resume_creation
+- handlers::forge::repository_delete
+- handlers::forge::pipeline_artifact_download
+- handlers::forge::pipeline_secret_set
+- handlers::forge::pipeline_secret_remove
+- handlers::forge::pipeline_variable_set
+- handlers::forge::pipeline_variable_remove
+- handler_unavailable
+- expected_event_types=[]
+- command_not_registered
+- creation_recovery_resume_binding
+- project_creation_recovery_context
+- ObservableWork
+- FileSafe
+- one-use protected human-broker ref
+- official_destination_kind
+- automation_run_artifacts
+- hosted_service_settings
+- automation_service_overview
+- automation_run_id
+- hosted_setting_scope_ref
+- AutomationBinding
+- Open artifacts in service
+- Open service settings
+- Open in <provider>
+- download
+- import
 negative_constraints:
-  - Do not create a second catalog row, peer control, or alternate handler for any admitted ID.
-  - Do not claim a native dispatcher, handler, rendered control, receipt, event, or runtime from static registration.
-  - Do not admit Commands & Shortcuts local actions or any EventRecord in this batch.
-owner_hints: [Plans/UI_Command_Catalog.md, Plans/Project_System.md, Plans/Forge_Integrations.md]
-owner_boundary_notes: [Project System owns resume semantics and recovery joins; Forge owns delete/CI semantics and official destinations; this catalog owns central row identity, reverse consumers, and return contracts only.]
+- Do not create a second catalog row, peer control, or alternate handler for any admitted ID.
+- Do not claim a native dispatcher, handler, rendered control, receipt, event, or runtime from static registration.
+- Do not admit Commands & Shortcuts local actions or any EventRecord in this batch.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+- Plans/Project_System.md
+- Plans/Forge_Integrations.md
+owner_boundary_notes:
+- Project System owns resume semantics and recovery joins; Forge owns delete/CI semantics and official destinations;
+  this catalog owns central row identity
+- reverse consumers
+- and return contracts only.
 ```
 
 ContractRef: ContractName:Plans/Project_System.md#PJCT-007, ContractName:Plans/Forge_Integrations.md#FGI-021, ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/ui_command_response.schema.json

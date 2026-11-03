@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4046-L4285
+Source lines: L4071-L4350
 
-Source SHA256: `9006bc4dadc370bafa320a238e20908f23ddab3d4885e367d6f80b1c0dda1e84`
+Source SHA256: `8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013`
 
 ---
 
@@ -47,8 +47,8 @@ Until Event Authority individually admits a producer family, these commands have
 | `cmd.environment.disconnect` | `EnvironmentConnectionCommandRequest{action=disconnect, environment_id, expected_supervisor_generation, expected_connection_epoch, drain_policy}` -> `EnvironmentConnectionCommandResult` | not `closed`; `stale_projection`, `already_in_state`, `operation_in_progress`, `permission_required` | `handlers::environment::disconnect` | closing/closed projection and work result; no EventRecord pending authority |
 | `cmd.thread.outbox.retry` | `ThreadOutboxRetryRequest{outbox_entry_id, thread_id, expected_outbox_revision, expected_target_generation}` -> `ThreadOutboxCommandResult` | retryable unacknowledged entry; `outbox_state_mismatch`, `stale_projection`, `deadline_expired`, `topology_unavailable`, `permission_required` | `handlers::thread_outbox::retry` | same logical command/idempotency identity, new bounded attempt; no EventRecord pending authority |
 | `cmd.thread.outbox.cancel` | `ThreadOutboxCancelRequest{outbox_entry_id, thread_id, expected_outbox_revision, cancellation_reason}` -> `ThreadOutboxCommandResult` | cancellable uncommitted entry; `outbox_state_mismatch`, `stale_projection`, `already_in_state`, `permission_required` | `handlers::thread_outbox::cancel` | durable cancellation intent/result; no EventRecord pending authority |
-| `cmd.thread.request` | `ThreadRequestCommandRequest{request_id, parent_thread_id?, requested_thread_kind, bounded_request_ref, target_generation}` -> `ThreadRequestCommandResult` | target current and request admissible; `stale_projection`, `topology_unavailable`, `policy_denied`, `resource_blocked`, `permission_required` | `handlers::thread::request` | durable outbox entry and stable request/thread reconciliation refs; no EventRecord pending authority |
-| `cmd.thread.spawn` | `ThreadSpawnCommandRequest{spawn_request_id, parent_thread_id, requested_role, bounded_context_ref, target_generation}` -> `ThreadSpawnCommandResult` | parent current and spawn allowed; `stale_projection`, `policy_denied`, `resource_blocked`, `lease_conflict`, `permission_required` | `handlers::thread::spawn` | stable spawn request and resulting child ref when committed; no EventRecord pending authority |
+| `cmd.thread.request` | `Plans/application_workflow_contracts.schema.json#/$defs/ThreadRequestFacadeRequestV2` → `Plans/application_workflow_contracts.schema.json#/$defs/ThreadRequestFacadeResultV2`; original exact send codec remains a compatibility branch | target current and request admissible; `stale_projection`, `topology_unavailable`, `policy_denied`, `resource_blocked`, `permission_required` | `handlers::thread::request` | durable outbox entry and stable request/thread reconciliation refs; no EventRecord pending authority |
+| `cmd.thread.spawn` | `Plans/application_workflow_contracts.schema.json#/$defs/ThreadSpawnFacadeRequestV2` → `Plans/application_workflow_contracts.schema.json#/$defs/ThreadSpawnFacadeResultV2`; original exact send codec remains a compatibility branch | parent current and spawn allowed; `stale_projection`, `policy_denied`, `resource_blocked`, `lease_conflict`, `permission_required` | `handlers::thread::spawn` | stable spawn request and resulting child ref when committed; no EventRecord pending authority |
 | `cmd.thread.await` | `ThreadAwaitCommandRequest{await_request_id, thread_id, condition_ref, timeout_utc, target_generation}` -> `ThreadAwaitCommandResult` | current nonterminal target; `stale_projection`, `already_in_state`, `deadline_expired`, `target_missing`, `policy_denied` | `handlers::thread::await_condition` | asynchronous wait as `ObservableWork`, never a blocked UI thread; no EventRecord pending authority |
 | `cmd.capability.ensure` | `CapabilityEnsureRequest{capability_id, provisioning_mode=Off,Auto,On, requirement_ref, origin_operation_id}` -> `CapabilityEnsureResult` | exact target and current policy; `capability_unavailable`, `setup_required`, `approval_required`, `policy_denied`, `resource_blocked`, `permission_required` | `handlers::capability::ensure` | `CapabilityProvisioningOperation`/readiness projection; provider first acquisition still requires explicit setup |
 | `cmd.tool.discover` | `ToolDiscoverRequest{capability_query_ref, stage_limit, expected_registry_generation}` -> `ToolDiscoverResult` | registry query allowed; `stale_projection`, `topology_unavailable`, `policy_denied`, `resource_blocked` | `handlers::tool::discover` | bounded progressive capability-stage projection and artifact refs; no EventRecord pending authority |
@@ -129,65 +129,105 @@ plan_unit_id: CS-058
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Command-originated persisted domain evidence consumes EventRecord 2.0 scope, global
-  event identity, exact scope-partitioned index identity, scoped lifetime idempotency,
-  dedupe catch-up, complete-reader admission, no-secret custody, and synced-receipt truth.
-  Project restore, worktree, attempt, receipt, and restore-point events require project
-  scope; app-root storage diagnostics use application scope without a fake project;
-  StorageCompatibilityStatus is not appended into an incompatible target; and normal
+canonical_text: 'Command-originated persisted domain evidence consumes EventRecord 2.0 scope, global event
+  identity, exact scope-partitioned index identity, scoped lifetime idempotency, dedupe catch-up, complete-reader
+  admission, no-secret custody, and synced-receipt truth. Project restore, worktree, attempt, receipt, and
+  restore-point events require their actual admitted scope; app-root storage diagnostics use application scope
+  without a fake project; StorageCompatibilityStatus is not appended into an incompatible target; and normal
   command dispatch can neither request projector_replay_only nor fabricate local events.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: false
-gui_classification_reason: Defines backend event identity, dedupe, durability, and scope constraints for command handlers.
+gui_classification_reason: Defines backend event identity, dedupe, durability, and scope constraints for command
+  handlers.
 split_recommended: false
-depends_on: [CS-006, CS-007, CV-317, CV-318, CV-320, CV-321, SP-241]
+depends_on:
+- CS-006
+- CS-007
+- CV-317
+- CV-318
+- CV-320
+- CV-321
+- SP-241
 unblocks: []
 acceptance_criteria:
-  - Every command-originated persisted event uses schema_version 2.0.0, exact scope_kind/project_id pairing, and a registered payload/event owner.
-  - EventRecord 2.0 root inspection refuses open unless the reader validates 2.0.0; partial or best-effort projection is impossible.
-  - Event index access uses exact app/project scope_partition encoding, zero-padded sequence_id_20, and the canonical event_record_index.v2 key; key/value scope mismatch is corruption.
-  - A replayed command identity returns the original only for the same semantic digest; conflict or dedupe_unavailable appends nothing.
-  - No command success that requires durability is authorized by persisted_at_utc without the matching synced AppendReceipt or owner receipt.
-  - Normal dispatch cannot construct projector_replay_only, and compatibility replay produces zero command/tool/provider/network/notification/usage/safe-point/external side effects.
-  - Unsupported/newer-store compatibility status remains diagnostic-only; secrets and local root/worktree/credential paths remain absent or local/redacted.
+- Every command-originated persisted event uses schema_version 2.0.0, exact scope_kind/project_id pairing,
+  and a registered payload/event owner.
+- EventRecord 2.0 root inspection refuses open unless the reader validates 2.0.0; partial or best-effort projection
+  is impossible.
+- Event index access uses exact app/project scope_partition encoding, zero-padded sequence_id_20, and the canonical
+  event_record_index.v2 key; key/value scope mismatch is corruption.
+- A replayed command identity returns the original only for the same semantic digest; conflict or dedupe_unavailable
+  appends nothing.
+- No command success that requires durability is authorized by persisted_at_utc without the matching synced
+  AppendReceipt or owner receipt.
+- Normal dispatch cannot construct projector_replay_only, and compatibility replay produces zero command/tool/provider/network/notification/usage/safe-point/external
+  side effects.
+- Unsupported/newer-store compatibility status remains diagnostic-only; secrets and local root/worktree/credential
+  paths remain absent or local/redacted.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - future Case L EventRecord scope, dedupe, replay-only, and command-receipt fixtures
-  - python3 -m json.tool Plans/event_record.schema.json
-  - python3 scripts/pm-plan-index.py validate
+- future Case L EventRecord scope, dedupe, replay-only, and command-receipt fixtures
+- python3 -m json.tool Plans/event_record.schema.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: command_event_identity_or_durability_drift
 reasoning_tier: high
 context_scope: case_l_command_eventrecord_v2
-implementation_surfaces: [Plans/Commands_System.md, Plans/Contracts_V0.md, Plans/event_record.schema.json, Plans/storage-plan.md]
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/Contracts_V0.md
+- Plans/event_record.schema.json
+- Plans/storage-plan.md
 node_compile_hint:
   mode: case_l_command_eventrecord_consumer
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Case-L:L-007
-  - Case-L:L-008
-  - Case-L:L-009
-  - Case-L:L-023
-  - Case-L:EVT-01..EVT-07
+- Case-L:L-007
+- Case-L:L-008
+- Case-L:L-009
+- Case-L:L-023
+- Case-L:EVT-01..EVT-07
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - EventRecord
-  - 2.0.0
-  - scope_kind
-  - scope_partition
-  - application
-  - project
-  - "event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}"
-  - sequence_id_20
-  - projector_replay_only
-  - replay_only_not_appendable
-  - dedupe_unavailable
-  - AppendReceipt
-  - synced
+- EventRecord
+- 2.0.0
+- scope_kind
+- scope_partition
+- application
+- project
+- event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}
+- sequence_id_20
+- projector_replay_only
+- replay_only_not_appendable
+- dedupe_unavailable
+- AppendReceipt
+- synced
 negative_constraints:
-  - Do not fabricate a project for application scope or emit into an incompatible store.
-  - Do not let command handlers create a peer event envelope, dedupe rule, or durability meaning.
-  - Do not infer successful persistence from timestamps or projection/UI state.
-  - Do not open an EventRecord 2.0 root with a reader that cannot validate 2.0.0 or persist raw secret/credential material in command evidence.
-owner_hints: [Plans/Commands_System.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+- Do not fabricate a project for application scope or emit into an incompatible store.
+- Do not let command handlers create a peer event envelope, dedupe rule, or durability meaning.
+- Do not infer successful persistence from timestamps or projection/UI state.
+- Do not open an EventRecord 2.0 root with a reader that cannot validate 2.0.0 or persist raw secret/credential
+  material in command evidence.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/Commands_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
 ```
 
 ### CS-059 - Storage Compatibility Maintenance Retention And Availability Gate

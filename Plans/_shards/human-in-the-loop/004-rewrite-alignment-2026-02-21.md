@@ -4,7 +4,7 @@ Source: `Plans/human-in-the-loop.md`
 
 Source lines: L28-L125
 
-Source SHA256: `67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237`
+Source SHA256: `47519c7d88d096b8adfe6c3d1bc0374a67bd88ac55c3779e1fcde821ddf1e6a4`
 
 ---
 
@@ -15,12 +15,12 @@ HITL semantics are part of the deterministic agent-loop core described in `Plans
 
 - HITL approvals should be represented as explicit **events** in the unified event model (seglog ledger)
 - "Pause for approval" must be reproducible/replayable (event stream + projections), not just an in-memory UI state
-- UI can change (Slint rewrite), but blocked-runtime, package-complete, seam-complete, and mandatory side-effect approval requirements must not
+- UI can change while owner approval identities remain: package/seam gates keep their settings; side effects use PS-146/147/148 actual human/mode/grant authority. Protected decisions remain human, and ordinary YOLO publication never acquires a duplicate yes.
 
 ### Canonical HITL request contract
 
 
-The canonical human-in-the-loop contract remains a blocked-runtime overlay.
+Orchestrator node HITL remains the existing blocked-runtime overlay below. Application chat/Goal/Crew/Plan/scheduled tool decisions use the separately typed PS-145 thread/run/Computer/request/target envelope through the same host. Grant issuance uses PS-147 exact Project/Plan/build identity. HITL-038 distinguishes human, mode and prior-grant authority; do not null required node fields in the historical Orchestrator shape.
 
 Required runtime-facing fields are:
 - `run_id`
@@ -41,7 +41,7 @@ Rules:
 ### Shared-runtime HITL request and command alignment
 HITL is the approval consumer for shared-runtime, multi-lane execution. Assistant chat, validation-pass output, wizard-handoff payloads, DAE side-effect interception, and tool-event records must preserve `effective_account_id`, `requested_account`, `requested_account_id`, `execution_role`, permission posture, actor identity, lane identity, and `attempt_id` so a later reviewer can tell who asked, who approved, under which `/account/role`, on which `/package/lane/attempt`, and whether an `/always` policy was scoped safely. Any rewrite-alignment or post-hoc explanation that omits these fields is under-attributed and lane-unsafe.
 
-Runtime HITL persistence is keyed by blocked episode identity first. `checkpoints.hitl.{run_id}` and `checkpoints.hitl` are compatibility paths only; `/runtime/storage` records must distinguish concurrent pending-HITL episodes in the same run by `run_id`, `node_id`, `blocked_sequence`, `attempt_id?`, `approval_scope_key`, actor/account/lane context, and approver identity. The event family must support a three-way join among the blocked episode, approval-identity record, and tool-level or /tool-definition request that triggered the wait.
+Orchestrator node HITL persistence is keyed by its blocked episode first. Application tool approvals have the PS-145 typed owner request identity through the shared host; no synthetic node/Project or second approval engine. `checkpoints.hitl.{run_id}` and `checkpoints.hitl` are compatibility paths only; `/runtime/storage` records must distinguish concurrent pending-HITL episodes in the same run by `run_id`, `node_id`, `blocked_sequence`, `attempt_id?`, `approval_scope_key`, actor/account/lane context, and approver identity. The event family must support a three-way join among the blocked episode, approval-identity record, and tool-level or /tool-definition request that triggered the wait.
 
 The request-era contract remains documented only as a compatibility bridge. A historical `HITLRequest` with `request_id`, `tier_id`, `tier_type`, `request_kind = tier_boundary_approval`, `request_kind`, `allowed_actions`, `allowed_actions[]`, `/tier/request_kind/allowed_actions`, and `hitl.approval_requested` is subordinate to the runtime blocked episode. `allowed_action_ids[]` owns the active action order; any request-era `allowed_actions` array is a derived alias for old consumers and must not become a second action family.
 
@@ -101,7 +101,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storag
 
 Scope rules:
 - the front-door grant may cover repeated low-risk evidence reads and declared-scope temporary instrumentation actions only
-- high-risk mutations, auth/state mutation, publish-side effects, and other explicit-confirmation actions still require their own confirmations
+- A Debug front-door grant never itself approves high-risk/auth/publication effects. Those use PS-146 mode or PS-147 build authority where applicable and PS-148 retained person/target guards, without a repeated ordinary YOLO publication yes.
 - target binding falls back to `agent_session` only when the request is explicitly about PM's own run or `/session` behavior, or when no project-backed target is available
 - revoking the grant or finishing the investigation revokes the front-door scope as well
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6445-L6577
+Source lines: L6464-L6603
 
-Source SHA256: `e07fbe5506fcc6e1da8d3ada4ddd38e31c6fc11cf6511534c5f15af5a35a6607`
+Source SHA256: `21e1d333c93b35fe546fd2a2e3fc88eaefd32aaadcddbf447b532daa50f266fa`
 
 ---
 
@@ -34,43 +34,47 @@ status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
   Usage is one widget-composed workspace with the exact user-facing rooms `Overview`, `Plans & limits`,
-  `Costs`, `Accounts`, `Free models`, `Context`, `Analytics`, `Ledger`, `Attention`, `Prompt cache`, `Tools`,
-  `Signals`, and `Source authority`. Its user-facing disclosure ladder is exactly `At a glance`, `Detailed`,
-  and `Diagnostics`. Disclosure changes the mounted card set and the useful facts inside eligible cards; it
-  is not decorative copy and it never deletes a widget instance or stored layout. Source authority mounts 7, 8 and 9
-  cards at those three disclosure levels in the redesign's default boards, each deeper level mounting at least the
-  shallower set (amended 2026-10-17, DL-228; it read: exactly 4, 6, and 8, the replaced page's count), and all thirteen
-  rooms remain reachable at every supported physical viewport width by scrolling the rail of rooms, which keeps no
-  overflow surface (amended 2026-10-17, DL-228; it read: even when the secondary rail collapses into an overflow
-  surface). Active room, scope, date
-  range, disclosure level, the expanded-room rail state, and the Live / Paused choice (UF-107) are local view
-  projections unless an existing canonical command owner explicitly requires a command; changing them does not
-  justify a new command family.
-  Usage refresh and object-backed Usage/Ledger drill-through continue through their existing authorities. A
-  PMConcept7 Ledger attempt row dispatches `cmd.nav.open_usage_subject` only with stable `attempt_id` and
-  `usage_event_ref`, normalizes to `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keeps
-  the event/provider/account/runtime refs as correlation, and carries no `OpenSubject`; event-primary callers
-  retain `usage_event` plus `usage_event_ref`, while aggregate provider/account/panel details remain local inspectors and dispatch no
-  command, receipt, or domain event. The Accounts room acts in place through explicit controls on its cards, never
-  through the card itself (UF-107, DL-174): an account's "Use this account" control dispatches the existing
-  `cmd.account.select_profile` as a labelled override and shows only where the provider's capability
-  `supports_manual_set_active` is true, a provider's Auto-switch toggle and switch level are bound Settings
-  controls that commit through `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with
-  `scope=provider`, and each account's own switch level is one that commits through the same pair with
-  `scope=account` (D43, 2026-10-10). Opening a card's Details stays a local inspector. When a selected provider
-  route cannot run because setup is absent, the exact state is `Provider Setup Required`; it shows explicit
+  `Costs`, `Accounts`, `Free models`, `Context`, `Analytics`, `Ledger`, `Attention`, `Prompt cache`,
+  `Tools`, `Signals`, and `Source authority`. Its user-facing disclosure ladder is exactly `At a glance`,
+  `Detailed`, and `Diagnostics`. Disclosure changes the mounted card set and the useful facts inside
+  eligible cards; it is not decorative copy and it never deletes a widget instance or stored layout.
+  Source authority mounts 7, 8 and 9 cards at those three disclosure levels in the redesign's default
+  boards, each deeper level mounting at least the shallower set (amended 2026-10-17, DL-228; it read:
+  exactly 4, 6, and 8, the replaced page's count), and all thirteen rooms remain reachable at every
+  supported physical viewport width by scrolling the rail of rooms, which keeps no overflow surface
+  (amended 2026-10-17, DL-228; it read: even when the secondary rail collapses into an overflow surface).
+  Active room, scope, date range, disclosure level, the expanded-room rail state, and the Live / Paused
+  choice (UF-107) are local view projections unless an existing canonical command owner explicitly
+  requires a command; changing them does not justify a new command family. Usage refresh and object-backed
+  Usage/Ledger drill-through continue through their existing authorities. A PMConcept7 Ledger attempt row
+  dispatches `cmd.nav.open_usage_subject` only with stable `attempt_id` and `usage_event_ref`, normalizes
+  to `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keeps the
+  event/provider/account/runtime refs as correlation, and carries no `OpenSubject`; event-primary callers
+  retain `usage_event` plus `usage_event_ref`, while aggregate provider/account/panel details remain local
+  inspectors and dispatch no command, receipt, or domain event. The Accounts room acts in place through
+  explicit controls on its cards, never through the card itself (UF-107, DL-174): an account's "Use this
+  account" control dispatches the existing `cmd.account.select_profile` as a labelled override and shows
+  only where the provider's capability `supports_manual_set_active` is true, a provider's Auto-switch
+  toggle and switch level are bound Settings controls that commit through
+  `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=provider`, and each
+  account's own switch level is one that commits through the same pair with `scope=account` (D43,
+  2026-10-10). Opening a card's Details stays a local inspector. When a selected provider route cannot run
+  because setup is absent, the exact state is `Provider Setup Required`; it shows explicit
   `Host/Environment`, preserves operation and continuation identity, and reuses `cmd.settings.open` with
-  `target_type=setting` and `setting_id=ai.accounts.provider-connections`. UF-090, UF-092, and CBP-028 remain the policy
-  owners: installation and authentication stay separate, and Usage neither starts an automatic acquisition nor
-  silently reroutes the request.
-  Amended 2026-10-17 (DL-228): the expanded-room rail state is retired with the overflow surface: the
-  redesigned rail scrolls and nothing sets `more`, so a stored value is ignored on read (UF-095, SP-248).
-  Details opens Curated by default and Raw shows every field as recorded, credential handles masked ("Every
-  field as recorded. Credential handles are masked."; F3-514's Raw and Curated redaction); the choice is view
-  state; focus moves into Details on opening and returns to the opening control on Close details or Escape;
-  its Ledger attempt drill-through stays as above.
-  Amended 2026-10-17 (DL-230, Jared): a Usage widget is a card everywhere, so this unit's mounted card set,
-  eligible cards and the cards each level mounts read "panel" before (G-030).
+  `target_type=setting` and `setting_id=ai.accounts.provider-connections`. UF-090, UF-092, and CBP-028
+  remain the policy owners: installation and authentication stay separate, and Usage neither starts an
+  automatic acquisition nor silently reroutes the request. Amended 2026-10-17 (DL-228): the expanded-room
+  rail state is retired with the overflow surface: the redesigned rail scrolls and nothing sets `more`, so
+  a stored value is ignored on read (UF-095, SP-248). Details opens Curated by default and Raw shows every
+  field as recorded, credential handles masked ("Every field as recorded. Credential handles are masked.";
+  F3-514's Raw and Curated redaction); the choice is view state; focus moves into Details on opening and
+  returns to the opening control on Close details or Escape; its Ledger attempt drill-through stays as
+  above. Amended 2026-10-17 (DL-230, Jared): a Usage widget is a card everywhere, so this unit's mounted
+  card set, eligible cards and the cards each level mounts read "panel" before (G-030). The Accounts room
+  and Usage-hosted settings controls consume the same A-owned Everywhere/Computer/Project/provider/account
+  resolver and Settings transaction at the exact admitted level; app context omits Project. Read-only
+  Usage views and the remembered Live/Pause projection are still view state, and a changed default never
+  rewrites historical attribution or a frozen run.
 gui_related: true
 gui_classification_reason: This unit defines the visible Usage room taxonomy, disclosure labels, and view-state behavior.
 depends_on: [CBP-028, UF-044, UF-055, UF-090, UF-092, WS-016]
@@ -104,6 +108,9 @@ source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
   - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
   - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - Overview
   - "Plans & limits"

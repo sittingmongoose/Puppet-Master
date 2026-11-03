@@ -2,9 +2,9 @@
 
 Source: `Plans/Plugins_System.md`
 
-Source lines: L4221-L4424
+Source lines: L4253-L4456
 
-Source SHA256: `0b754bd9e29239becb917810f8b63479913ea56b425d53e00386acc65174f6da`
+Source SHA256: `d9a210e3a709ee17b5fd624480bcbe73969fee68d37c1c90113b20217cf23809`
 
 ---
 
@@ -37,7 +37,7 @@ Package classification remains exactly `portable_conformant | portable_partial |
 
 Archive extraction and local-directory admission validate every entry before writing. Absolute paths, drive/UNC roots, parent traversal, alternate data streams, device names, hard links outside the package, and symlinks that resolve outside the normalized package root are rejected. The final extracted tree is re-walked without following untrusted links, hashed, and compared with the signed package manifest before activation.
 
-`PLUGIN_ROOT` is a read-only content root for the verified package generation. `PLUGIN_DATA` is a separate writable per-plugin data root with owner/scope/quota/retention identity; it cannot shadow executable content or escape to Project, config, credential, socket, or another plugin's data. GUI projections show safe source class, package identity, and redacted relative component labels; they do not expose private absolute entry/data paths, credential-store keys, internal sockets, or raw environment values.
+`PLUGIN_ROOT` is a read-only content root for the verified package generation. `PLUGIN_DATA` is a separate writable per-plugin data root with owner/scope/quota/retention identity; in app scope it additionally binds actual user/Server/thread/session and cannot use a common null-Project directory. It cannot shadow executable content or escape to Project, config, credential, socket, or another plugin's data. GUI projections show safe source class, package identity, and redacted relative component labels; they do not expose private absolute entry/data paths, credential-store keys, internal sockets, or raw environment values.
 
 A subprocess entry is represented as one exact executable token plus a bounded argv array; it is never reconstructed through a shell string. Environment variables are allowlisted and secret references remain broker-owned. Every external process uses a private runtime directory, bounded stdout/stderr/log capture, process-tree cancellation, timeout, crash budget, and `RuntimeResourceGovernor` admission. Off-loopback outbound transport is HTTPS-only and requires a declared allowlist plus Permissions/FileSafe/security approval. Plugins cannot open public ingress, debug/CDP, control, or callback sockets unless a named existing endpoint owner provides an authenticated, rate-gated, generation-fenced capability; possession of a plugin permission is not endpoint authority.
 

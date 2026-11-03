@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L27168-L27390
+Source lines: L27099-L27313
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -175,24 +175,8 @@ plan_unit_id: SP-320
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Newly authored Storage owner contract under DL-045 for the seven coordination agent families.
-  storage.coordination_append.v1@1.0.0 is the only append admission and storage.coordination_projector.v1@1.0.0 the
-  only direct event consumer; five versioned readers (scheduler, agent_coordinator, prompt_context, mirror_export and
-  inspection) read projections only after checking checkpoint coverage. The kept key
-  projector.checkpoint.coordination:{project_id} holds pm.storage_value.coordination_projector_checkpoint.v1@1.0.0,
-  with schema, projector identity and version, admitted event types, SP-278's nine-field durable read token
-  (DL-076), examined bounds, an inclusive cursor, filter completeness, state, health and same-key generation
-  custody. Projection rows and the checkpoint advance in one redb transaction under prior-value compare-and-swap.
-  agent_revision advances by exactly 1; the idempotency key is
-  coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, with the recovery epoch its
-  event ID uses; the event ID is evt_coordination_ plus a SHA-256 over RFC 8785 identity strings; stale writes return
-  coordination_conflict. The transition table admits registration first and exactly one terminal event, releases
-  claims at the terminal event and makes replay after it a no-op. The append path adopts SP-286/CV-339
-  storage.first_append_receipt.resolve.v2. Custody keeps refs, hashes, IDs and bounded text, with an exact path_hash
-  recipe. RP-COORDINATION-180D binds its run_completion anchor to the Run's terminal canonical record and keeps
-  records of unresolved Runs unexpired. Replay, recovery, admission growth and per-family withdrawal are fenced and
-  rebuild from seglog. Nothing is admitted.
+canonical_text: |-
+  Newly authored Storage owner contract under DL-045 for the seven coordination agent families. storage.coordination_append.v1@1.0.0 is the only append admission and storage.coordination_projector.v1@1.0.0 the only direct event consumer; five versioned readers (scheduler, agent_coordinator, prompt_context, mirror_export and inspection) read projections only after checking checkpoint coverage. The kept key projector.checkpoint.coordination:{project_id} holds pm.storage_value.coordination_projector_checkpoint.v1@1.0.0, with schema, projector identity and version, admitted event types, SP-278's nine-field durable read token (DL-076), examined bounds, an inclusive cursor, filter completeness, state, health and same-key generation custody. Projection rows and the checkpoint advance in one redb transaction under prior-value compare-and-swap. agent_revision advances by exactly 1; the idempotency key is coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, with the recovery epoch its event ID uses; the event ID is evt_coordination_ plus a SHA-256 over RFC 8785 identity strings; stale writes return coordination_conflict. The transition table admits registration first and exactly one terminal event, releases claims at the terminal event and makes replay after it a no-op. The append path adopts SP-286/CV-339 storage.first_append_receipt.resolve.v2. Custody keeps refs, hashes, IDs and bounded text, with an exact path_hash recipe. RP-COORDINATION-180D binds its run_completion anchor to the Run's terminal canonical record and keeps records of unresolved Runs unexpired. Replay, recovery, admission growth and per-family withdrawal are fenced and rebuild from seglog. Nothing is admitted. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app agent/file/operation/snapshot/board/checkpoint keys include Server/crew/run/root identity. The same coordinator is the sole appender; read tokens/checkpoint coverage and 16 KiB/BLAKE3 bounds apply. No second crew database or live active-agents.json.
 gui_related: false
 gui_classification_reason: Defines backend persistence, identity, replay and checkpoint authority, not presentation.
 depends_on: [DL-045, DL-076, SP-232, SP-278, SP-286, CV-339, OSI-438, CV-353]
@@ -222,7 +206,15 @@ reasoning_tier: high
 context_scope: coordination_event_persistence_seven_families
 implementation_surfaces: [Plans/storage-plan.md, Plans/storage_value_registry.json, Plans/Contracts_V0.md, Plans/orchestrator-subagent-integration.md]
 node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Decision_Log.md#DL-045, Plans/Decision_Log.md#DL-076, Plans/storage-plan.md#SP-232, Plans/storage-plan.md#SP-278, Plans/storage-plan.md#SP-286, reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md]
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-076
+- Plans/storage-plan.md#SP-232
+- Plans/storage-plan.md#SP-278
+- Plans/storage-plan.md#SP-286
+- reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens: [storage.coordination_append.v1, storage.coordination_projector.v1, projector.checkpoint.coordination, RP-COORDINATION-180D, RP-PROJECTION-3GEN, coordination_conflict, coordination_unchanged]
 negative_constraints:
   - No event admission, registry row, retention policy change, sibling binding reuse, runtime capability or native proof.

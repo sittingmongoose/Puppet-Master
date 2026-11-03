@@ -4,13 +4,13 @@ Source: `Plans/FileManager.md`
 
 Source lines: L20-L120
 
-Source SHA256: `e2fcd22d76721dfd61754927b7b31cc183466c24050f47090f0cf7d7f10bedbf`
+Source SHA256: `3996097e3ab9dbc61c391860625de9f78f78f263621da0b912a2faa4930ed44f`
 
 ---
 
 ## Summary
 
-The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below. Amended 2026-10-09 (DL-180): the editor is the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `Plans/FinalGUISpec.md#F3-639`); the File Editor strip is lineage (section 2.1).
+The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the exact Project or app Computer/working-root context, while foreign read references keep their own source identity; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below. Amended 2026-10-09 (DL-180): the editor is the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `Plans/FinalGUISpec.md#F3-639`); the File Editor strip is lineage (section 2.1).
 
 This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets**; and the editor enhancement set. **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** remains in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**. Amended 2026-10-09 (DL-180): the editor is now the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `Plans/FinalGUISpec.md#F3-639`); the File Editor strip, dragging the editor out to its own window and back, and split editor panes as editor-only groups are lineage (section 2.1), and split panes are the panels' own splits (`Plans/FinalGUISpec.md#F3-630`).
 

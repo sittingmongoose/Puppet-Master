@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L4420-L5240
+Source lines: L4529-L5360
 
-Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f`
+Source SHA256: `e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a`
 
 ---
 
@@ -113,7 +113,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  P1-INTERRUPT-CANCEL-SETTLEMENT (P1) is compiled as canonical Puppet Master intent for User stop/interrupt halts active agent and tools safely: Imported external-repo finding extrepo-20260703-0028 / P1-INTERRUPT-CANCEL-SETTLEMENT (P1). The preserved PM gap/delta is: Define cancellation propagation and settlement: provider stream, subprocess, MCP call, browser/device, child run; no conversion to success/failure; history interruption boundary. The observed external-repo signal remains source-lineage evidence: Agent Zero issue requests stop/interrupt for active chat/tool calls without container restart and with history preserved; OpenCode v2 includes sessions.interrupt and Effect interruption.
+  P1-INTERRUPT-CANCEL-SETTLEMENT (P1) is compiled as canonical Puppet Master intent for User
+  stop/interrupt halts active agent and tools safely: Imported external-repo finding extrepo-20260703-0028
+  / P1-INTERRUPT-CANCEL-SETTLEMENT (P1). The preserved PM gap/delta is: Define cancellation propagation
+  and settlement: provider stream, subprocess, MCP call, browser/device, child run; no conversion to
+  success/failure; history interruption boundary. The observed external-repo signal remains source-lineage
+  evidence: Agent Zero issue requests stop/interrupt for active chat/tool calls without container restart
+  and with history preserved; OpenCode v2 includes sessions.interrupt and Effect interruption. App
+  cancellation binds the real thread/Computer and same tool/child/session settlement owners; Stop before
+  conversion fences all old-scope follow-on dispatch, without converting interruption into completion.
 gui_related: true
 gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
 depends_on:
@@ -144,13 +152,16 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- pldg-20260703-001-feature-intake:atom-0032
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0032
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0028/P1-INTERRUPT-CANCEL-SETTLEMENT@line=28
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0028/P1-INTERRUPT-CANCEL-SETTLEMENT
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:8
+  - "pldg-20260703-001-feature-intake:atom-0032"
+  - "Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0032"
+  - "Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0028/P1-INTERRUPT-CANCEL-SETTLEMENT@line=28"
+  - "Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0028/P1-INTERRUPT-CANCEL-SETTLEMENT"
+  - "Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md"
+  - "Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json"
+  - "Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:8"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids:
 - atom-0032
 external_atom_id: extrepo-20260703-0028

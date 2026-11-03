@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L5493-L5712
+Source lines: L5553-L5788
 
-Source SHA256: `d88bd32eee2d947b3b4f63806d74c34f24399e24967033c200d31e08c9da97b9`
+Source SHA256: `a3c7716ed889591e15bb6bcf68dd481d1a49e1ff1e0d23594603c70960db6c11`
 
 ---
 
@@ -105,13 +105,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
-  A child-worktree lease is a typed durable resource with exact owner/runtime, repository, worktree, branch, baseline,
-  topology/source, write-mode, time, policy, cleanup, result, integration, and reconciliation identity coordinated by
-  the shared LeaseCoordinator. Holder, generation, epoch, topology generation, and Source Location fence every create,
-  attach, renew, capture, merge, release, and cleanup. Renewal is an atomic same-holder compare-and-swap that cannot
-  widen scope. Expiry blocks new dispatch/mutation and starts reconciliation; it never proves owner death or authorizes
-  cleanup. Release is idempotent, fence-checked, requires terminal child and durable result/integration disposition,
-  and is distinct from physical prune/remove.
+  A child-worktree lease is a typed durable resource with exact owner/runtime, repository, worktree,
+  branch, baseline, topology/source, write-mode, time, policy, cleanup, result, integration, and
+  reconciliation identity coordinated by the shared LeaseCoordinator. Holder, generation, epoch,
+  topology generation, and Source Location fence every create, attach, renew, capture, merge, release,
+  and cleanup. Renewal is an atomic same-holder compare-and-swap that cannot widen scope. Expiry
+  blocks new dispatch/mutation and starts reconciliation; it never proves owner death or authorizes
+  cleanup. Release is idempotent, fence-checked, requires terminal child and durable
+  result/integration disposition, and is distinct from physical prune/remove. PM Project worktree
+  leases keep actual Project/repository/backend identity. A rootless app attempt has an app execution
+  lease/context under SIR, not a nullable Project worktree lease or main-worktree allocation.
 gui_related: false
 gui_classification_reason: This is a backend typed lease and concurrency-control contract.
 depends_on: [SIR-007, W-015, W-016, W-017, W-080, W-081]
@@ -131,7 +134,9 @@ context_scope: child_worktree_typed_lease
 implementation_surfaces: [Plans/WorktreeGitImprovement.md, Plans/Shared_Integration_Runtime.md, future Source Control lease store]
 node_compile_hint: {mode: child_worktree_typed_lease, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Child-worktrees
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Child-worktrees
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["LeaseCoordinator", "lease_id", "holder", "generation", "epoch", "TopologyGeneration", "SourceLocationId", "expires_at", "renew_by", "cmd.git.worktree.release"]
 negative_constraints:
   - Never infer lease release from process exit, timestamp expiry, branch name, or path absence.
@@ -148,14 +153,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
-  Startup reconciliation precedes child dispatch, lease renewal, integration, and cleanup, comparing durable lease and
-  owner records with exact topology/source identity, Git common-dir inventory, worktree/gitdir/branch/OIDs,
-  baseline/result hashes, active Git operation, FileSafe journals and holds, runtime liveness, resource admission, and
-  permission visibility. Domain findings feed the shared bounded recovery outcomes rather than inventing peer terminal
-  states. Persisted child cold revival is allowed only after exact durable context and workspace identity,
-  non-conflicting ownership, current permissions/capabilities, and remaining budget/deadline verify. Revival advances
-  the lease generation and creates a new runtime identity; expired credentials, PIDs, terminals, language servers, MCP
-  sessions, streams, in-memory locks, and hidden provider state are never revived.
+  Startup reconciliation precedes child dispatch, lease renewal, integration, and cleanup, comparing
+  durable lease and owner records with exact topology/source identity, Git common-dir inventory,
+  worktree/gitdir/branch/OIDs, baseline/result hashes, active Git operation, FileSafe journals and
+  holds, runtime liveness, resource admission, and permission visibility. Domain findings feed the
+  shared bounded recovery outcomes rather than inventing peer terminal states. Persisted child cold
+  revival is allowed only after exact durable context and workspace identity, non-conflicting
+  ownership, current permissions/capabilities, and remaining budget/deadline verify. Revival advances
+  the lease generation and creates a new runtime identity; expired credentials, PIDs, terminals,
+  language servers, MCP sessions, streams, in-memory locks, and hidden provider state are never
+  revived. Rootless app continuation reconciles its own exact Computer/root/attempt record and never
+  enters a main worktree; conversion only admits a new destination backend route after its owner
+  checks.
 gui_related: false
 gui_classification_reason: This is backend restart recovery and safe runtime reconstruction behavior.
 depends_on: [SIR-007, SIR-011, W-008, W-052, W-064, W-082]
@@ -176,7 +185,9 @@ context_scope: child_worktree_restart_revival
 implementation_surfaces: [Plans/WorktreeGitImprovement.md, Plans/Shared_Integration_Runtime.md, future Source Control reconciler]
 node_compile_hint: {mode: child_worktree_restart_and_cold_revival, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Child-worktrees
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Child-worktrees
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["cleanup/reconcile after restart", "persisted child cold revival", "ObservableWork", "manual_recovery_required", "terminal_unknown_with_disclosure", "new runtime identity"]
 negative_constraints:
   - Never settle an interrupted transaction from path existence, PID absence, branch name, or expiry alone.
@@ -194,12 +205,15 @@ status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
   Project-scope child worktree operations reuse cmd.git.worktree.create, cmd.git.worktree.merge, and
-  cmd.git.worktree.release; no cmd.worktree.* peer namespace is minted. cmd.chat.worktree.* remains a thread-scoped
-  wrapper only for a real Assistant thread binding. Permissions admits the exact actor/runtime, action class,
-  repository/worktree/branch target, generation, and write mode. FileSafe independently owns canonical path/scope and
-  filesystem mutation admission, fencing, safe points, rollback, equality, and recovery. Source Control owns Git
-  identity, lease/materialization binding, administrative serialization, result capture, integration, and Git
-  postconditions; neither owner's success substitutes for the other.
+  cmd.git.worktree.release; no cmd.worktree.* peer namespace is minted. cmd.chat.worktree.* remains a
+  thread-scoped wrapper only for a real Assistant thread binding. Permissions admits the exact
+  actor/runtime, action class, repository/worktree/branch target, generation, and write mode. FileSafe
+  independently owns canonical path/scope and filesystem mutation admission, fencing, safe points,
+  rollback, equality, and recovery. Source Control owns Git identity, lease/materialization binding,
+  administrative serialization, result capture, integration, and Git postconditions; neither owner's
+  success substitutes for the other. A no-project chat is allowed independently, but PM Project
+  worktree commands require a real destination Project and Git/JJ-supported owner route. Conversion
+  grants no automatic bind, merge, cleanup or copied lease authority.
 gui_related: false
 gui_classification_reason: This defines backend command namespace and cross-owner security boundaries, not a visual surface.
 depends_on: [SIR-007, W-005, W-022, W-080, W-081, W-082]
@@ -220,7 +234,9 @@ context_scope: child_worktree_command_filesafe_permissions
 implementation_surfaces: [Plans/WorktreeGitImprovement.md, Plans/UI_Command_Catalog.md, Plans/FileSafe.md, Plans/Permissions_System.md]
 node_compile_hint: {mode: child_worktree_command_security_boundary, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Child-worktrees
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Child-worktrees
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["cmd.git.worktree.create", "cmd.git.worktree.merge", "cmd.git.worktree.release", "cmd.chat.worktree.*", "FileSafe", "Permissions"]
 negative_constraints:
   - Do not mint cmd.worktree.* commands.

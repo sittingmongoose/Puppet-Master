@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L927-L5028
+Source lines: L927-L5047
 
-Source SHA256: `e07fbe5506fcc6e1da8d3ada4ddd38e31c6fc11cf6511534c5f15af5a35a6607`
+Source SHA256: `21e1d333c93b35fe546fd2a2e3fc88eaefd32aaadcddbf447b532daa50f266fa`
 
 ---
 
@@ -126,7 +126,13 @@ plan_unit_id: UF-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage storage and routing are scoped by canonical project, run, package, lane, UsageRecord, runtime object identity, usage_event_ref, and Ledger/Usage route targets rather than legacy timestamp/thread/tier shortcuts.
+canonical_text: >-
+  Usage storage and routing are scoped by canonical project, run, package, lane, UsageRecord, runtime
+  object identity, usage_event_ref, and Ledger/Usage route targets rather than legacy
+  timestamp/thread/tier shortcuts. Approved app chat/Goal/Crew/Assistant Plan/schedule Usage has explicit
+  null Project plus real thread/run/Computer and the same UsageRecord/object/event identities. Historical
+  app Usage stays at original scope after conversion; only later admitted work accrues at the destination.
+  No empty Project interpolation or duplicate charge.
 gui_related: true
 gui_classification_reason: The unit governs user-visible deep-links and route targets in Usage surfaces.
 split_recommended: true
@@ -152,7 +158,10 @@ node_compile_hint:
   mode: usage_storage_routing_identity
   create_worknodes: false
 source_lineage:
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0014
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0014"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - project
 - run
@@ -294,7 +303,14 @@ plan_unit_id: UF-007
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage attribution preserves account switch and pressure history through actor-scoped snapshots, account_switch_event and account_pressure_episode records, and explicit bridge precedence where attempt_id is the local runtime anchor, provider_attempt_ref? is provider/runtime trace, usage_event_ref is the Usage bridge, and receipt refs are external side-effect lineage.
+canonical_text: >-
+  Usage attribution preserves account switch and pressure history through actor-scoped snapshots,
+  account_switch_event and account_pressure_episode records, and explicit bridge precedence where
+  attempt_id is the local runtime anchor, provider_attempt_ref? is provider/runtime trace, usage_event_ref
+  is the Usage bridge, and receipt refs are external side-effect lineage. Application attribution
+  preserves the same actor/account/pressure/switch and attempt/provider/usage bridge precedence with real
+  scope and Computer. Global views and cross-Project coverage confer no current target control; conversion
+  never recategorizes old cost or invents a switch.
 gui_related: false
 gui_classification_reason: The unit preserves backend/runtime identity and attribution rather than visual presentation.
 split_recommended: false
@@ -320,11 +336,14 @@ node_compile_hint:
   mode: account_switch_pressure_and_bridge_identity
   create_worknodes: false
 source_lineage:
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0005
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0006
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0007
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0008
-- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0014
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0005"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0006"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0007"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0008"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0014"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - Execution role and operational identity
 - Account switch and pressure history

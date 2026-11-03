@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L5241-L5491
+Source lines: L5291-L5551
 
-Source SHA256: `d88bd32eee2d947b3b4f63806d74c34f24399e24967033c200d31e08c9da97b9`
+Source SHA256: `a3c7716ed889591e15bb6bcf68dd481d1a49e1ff1e0d23594603c70960db6c11`
 
 ---
 
@@ -20,27 +20,35 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
-  The persisted worktree panel filters mandated by section 4.0 filter on exactly four dimensions: lifecycle state
-  (reserved, active, blocked_preserved, released, orphaned), owner class (thread, orchestrator-lane, manual, agent-role),
-  row flags (locked, prunable, dirty, repairable), and blocked-reason family (approval-gated, policy-blocked,
-  preflight-blocked, auth-blocked, governance-blocked, stale-data-blocked). Owner class is a display/filter
-  classification projected from the canonical package/lane ownership and effective-scope precedence truth; it never
-  replaces those vocabularies as ownership canon. Filters present as toggleable chips above the worktree list;
-  multi-select within a dimension is OR, across dimensions is AND; active chip selection persists per project with the
-  panel state alongside the existing sort mode, hide-stale toggle, and ownership display mode, and rehydrates on
-  startup. A zero-result filter state shows an explicit filtered-empty explainer with a clear-filters action, distinct
-  from the true zero-worktrees empty state. Amended 2026-10-09 (DL-162): in the left rail each filter dimension presents
-  as one dropdown in the chat picker style, the owner-class one labelled Owner, instead of a row of chips
-  (FinalGUISpec F3-622); the dimensions, the OR and AND rules and the persistence above are unchanged.
+  The persisted worktree panel filters mandated by section 4.0 filter on exactly four dimensions:
+  lifecycle state (reserved, active, blocked_preserved, released, orphaned), owner class (thread,
+  orchestrator-lane, manual, agent-role), row flags (locked, prunable, dirty, repairable), and
+  blocked-reason family (approval-gated, policy-blocked, preflight-blocked, auth-blocked,
+  governance-blocked, stale-data-blocked). Owner class is a display/filter classification projected
+  from the canonical package/lane ownership and effective-scope precedence truth; it never replaces
+  those vocabularies as ownership canon. Filters present as toggleable chips above the worktree list;
+  multi-select within a dimension is OR, across dimensions is AND; active chip selection persists per
+  project with the panel state alongside the existing sort mode, hide-stale toggle, and ownership
+  display mode, and rehydrates on startup. A zero-result filter state shows an explicit filtered-empty
+  explainer with a clear-filters action, distinct from the true zero-worktrees empty state. Amended
+  2026-10-09 (DL-162): in the left rail each filter dimension presents as one dropdown in the chat
+  picker style, the owner-class one labelled Owner, instead of a row of chips (FinalGUISpec F3-622);
+  the dimensions, the OR and AND rules and the persistence above are unchanged. Ordinary
+  sort/hide/filter presentation defaults use admitted Everywhere/Computer/Project settings; selected
+  worktree, viewport, exact compare targets and conflict content remain owner runtime/view records.
+  Per-Project panel state remains isolated and No project has no invented worktree inventory.
 gui_related: true
 gui_classification_reason: This defines the visible filter controls and persisted filter behavior of the Worktrees topology panel.
 depends_on: [W-032, W-070]
 unblocks: []
 acceptance_criteria:
-  - Filters cover exactly the four dimensions with the enumerated values and no invented lifecycle states.
-  - Filter selection persists per project and rehydrates with the worktree panel state.
-  - Filtered-empty and zero-worktrees states render distinct explainers.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+- Filters cover exactly the four dimensions with the enumerated values and no invented lifecycle states.
+- Filter selection persists per project and rehydrates with the worktree panel state.
+- Filtered-empty and zero-worktrees states render distinct explainers.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this
+  PlanUnit.
+- Layered presentation defaults cannot copy runtime selection, compare identity or conflict contents to another
+  Project.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Future worktree panel filter persistence and filtered-empty tests.
@@ -50,12 +58,14 @@ context_scope: worktree_panel_filters
 implementation_surfaces: [Plans/WorktreeGitImprovement.md, future Source Control Worktrees panel]
 node_compile_hint: {mode: worktree_panel_filter_taxonomy, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)
-  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
-  - Plans/WorktreeGitImprovement.md:437-439
-  - Plans/WorktreeGitImprovement.md:297
-  - user decision 2026-07-27
-  - Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; filters present as dropdowns, FinalGUISpec F3-622)
+- Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)
+- Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
+- Plans/WorktreeGitImprovement.md:437-439
+- Plans/WorktreeGitImprovement.md:297
+- user decision 2026-07-27
+- Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; filters present as dropdowns, FinalGUISpec F3-622)
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: []
 preserved_exact_tokens: ["persisted worktree panel filters", "hide-stale", "blocked_preserved", "owner class", "filtered-empty"]
 negative_constraints:

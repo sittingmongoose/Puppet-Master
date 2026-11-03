@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1431-L7475
+Source lines: L1444-L7530
 
-Source SHA256: `fca9d7c6d996b9cf16f6e377b75d46f9a458aa94f866374e8eb7f5961846eace`
+Source SHA256: `98cedbe72059189d8dedef8480350441120a92631e6e4ef4f973487aefcf68c4`
 
 ---
 
@@ -183,9 +183,14 @@ plan_unit_id: MS-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Settings resolve on source, request, and execution axes. Deterministic precedence is explicit override, scoped
-  policy, Persona preference, surface or stage default, project or global default, last-used when permitted, and provider
-  default.
+canonical_text: >-
+  Settings retain source, request and execution axes. Model selection consumes SSYS-002/059 for ordinary defaults.
+  The canonical source order is 1 explicit run-envelope override, 2 scoped owner policy, 3 Persona preference,
+  4 surface/stage default, 5 Project own default, 6 work Computer own default, 7 Everywhere (then factory configuration
+  default), 8 permitted last-used state, 9 provider fallback. Skip missing/inapplicable rungs, including Project
+  for app work; preserve every applicable parent/managed ceiling, supported capability, account/route/currentness
+  and requested/effective reason. The one Settings resolver supplies default values; the existing Models owner
+  applies its selection policy. No model option/variant field merge is invented.
 gui_related: false
 gui_classification_reason: The unit covers resolver policy and precedence rather than direct GUI presentation.
 split_recommended: false
@@ -211,6 +216,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0008
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0009
+- 'source_ref:projects-pass2-20261103:S2/S3/N12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - manual_override
 - persona_preference
@@ -4087,9 +4094,15 @@ plan_unit_id: MS-075
 unit_type: selection_policy
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Effective model/runtime selection resolves deterministically through explicit run-envelope override, Persona
-  preference, surface/tier/phase defaults, global/project config defaults, supported last-used state, and internal/provider
-  defaults.
+canonical_text: >-
+  Model selection consumes SSYS-002/059 for ordinary defaults. The canonical source order is 1 explicit run-envelope
+  override, 2 scoped owner policy, 3 Persona preference, 4 surface/stage default, 5 Project own default, 6 work
+  Computer own default, 7 Everywhere (then factory configuration default), 8 permitted last-used state, 9 provider
+  fallback. Skip missing/inapplicable rungs, including Project for app work; preserve every applicable parent/managed
+  ceiling, supported capability, account/route/currentness and requested/effective reason. The one Settings resolver
+  supplies default values; the existing Models owner applies its selection policy. No model option/variant field
+  merge is invented. Former six-tier summaries and 1-7 indexes are historical shorthand for this canonical order,
+  never competing ladders.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -4115,6 +4128,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0052
+- 'source_ref:projects-pass2-20261103:S2/S3/N12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - Explicit run-envelope override
 - Persona preference
@@ -5463,9 +5478,11 @@ plan_unit_id: MS-098
 unit_type: audit_policy
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: The provider/model selection policy and audit addendum surfaces canonical provider/model precedence through
-  user-facing policy, capability gating, audit trail details, Persona axis, execution-unit type axis, and worktree/project/global
-  scope axis.
+canonical_text: >-
+  The provider/model policy and audit surfaces preserve Persona and execution-unit axes and distinguish Everywhere,
+  work Computer, optional Project and narrower worktree/run scopes. Device is relevant only to screen rows, never
+  model execution. In No project, omit Project/worktree when absent; record the actual Server/Host/Environment.
+  Local-model capacity rows consume the declared Computer ceiling after requested defaults resolve.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -5492,6 +5509,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0072
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0073
+- 'source_ref:projects-pass2-20261103:S1–S3/N12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - Provider/model selection policy and audit addendum
 - user-facing policy
@@ -5526,8 +5545,15 @@ plan_unit_id: MS-099
 unit_type: selection_policy
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Provider/model selection resolves through the ordered 1-7 precedence chain from explicit run-envelope override
-  through provider default, preserving scoped owner policy, Persona, surface/stage, project/global, and last-used semantics.
+canonical_text: >-
+  Model selection consumes SSYS-002/059 for ordinary defaults. The canonical source order is 1 explicit run-envelope
+  override, 2 scoped owner policy, 3 Persona preference, 4 surface/stage default, 5 Project own default, 6 work
+  Computer own default, 7 Everywhere (then factory configuration default), 8 permitted last-used state, 9 provider
+  fallback. Skip missing/inapplicable rungs, including Project for app work; preserve every applicable parent/managed
+  ceiling, supported capability, account/route/currentness and requested/effective reason. The one Settings resolver
+  supplies default values; the existing Models owner applies its selection policy. No model option/variant field
+  merge is invented. The former 1-7 tier numbering is superseded by this explicit 1-9 order; no owner scope loses
+  its permission ceiling.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model/runtime selection, UI surface defaults, or inspector/audit presentation
   behavior.
@@ -5554,6 +5580,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0074
+- 'source_ref:projects-pass2-20261103:S2/S3; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - --provider=X --model=Y
 - Scoped owner policy
@@ -5585,8 +5613,13 @@ plan_unit_id: MS-100
 unit_type: settings_policy
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Settings resolution supports Conservative, Standard, and Aggressive policies with explicit tier inclusion
-  rules and default Standard behavior.
+canonical_text: >-
+  The expanded 1-9 order in MS-005/099 keeps Standard as default: Standard uses tiers 1–7. Aggressive admits 1–9
+  and retains its existing capability/cost tie handling. Conservative obeys the explicit existing exclusion of
+  Persona and surface/stage defaults: tiers 1, 2, 5, 6, 7 and 9, while never bypassing scoped/parent/managed ceilings.
+  The older numeric shorthand tier 1 or tier 3+ conflicts with that explicit exclusion and is superseded; it does
+  not authorize Persona or stage values. No new recommendation, quality-ranking or variant-merge algorithm is
+  added.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
   rather than direct GUI presentation.
@@ -5612,6 +5645,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0075
+- 'source_ref:projects-pass2-20261103:S2/S3; model-tier reconciliation; Jared: "I approve the outstanding questions
+  with their recommended settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - Conservative policy
 - Standard policy
@@ -5875,8 +5910,13 @@ plan_unit_id: MS-105
 unit_type: data_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Provider/model selection emits a selection_reason object carrying selected provider/model, precedence tier,
-  optional fallback reason, alternatives considered, selection timestamp, and execution unit identity.
+canonical_text: >-
+  Provider/model selection emits a selection_reason object carrying selected provider/model, precedence tier,
+  optional fallback reason, alternatives considered, selection timestamp, and execution unit identity. precedence_tier
+  uses the MS-005/099 1–9 order and names the source level/key; include actual work Server/Host/Environment and
+  null Project in app scope. Original historical audit records retain their original tier version/bytes; a number
+  from an older recipe is never silently reinterpreted. Computer capacity limits retain requested/effective and
+  clamp reasons.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
   rather than direct GUI presentation.
@@ -5902,6 +5942,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0077
+- 'source_ref:projects-pass2-20261103:S2/S3/N12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - selection_reason
 - selected_provider

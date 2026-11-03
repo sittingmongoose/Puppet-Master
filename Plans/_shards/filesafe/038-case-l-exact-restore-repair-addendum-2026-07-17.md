@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L14247-L14516
+Source lines: L14424-L14707
 
-Source SHA256: `e3dd00aefe77af402142dc62c8838be67674b3d6204abfdd4b1caa9f78ae6c67`
+Source SHA256: `2d6da9a9eae44820501a3ab3b65d326476249c557a85e7d584e03761f54f7ce2`
 
 ---
 
@@ -238,43 +238,57 @@ plan_unit_id: F2-204
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  After Assistant Chat resolves cmd.chat.revert to one immutable eligible assistant-turn mutation
-  record, FileSafe exact-replaces the complete recorded whole-turn path scope through the same
-  manifest verification, rollback snapshot, durable journal, CAS, equality, truthful outcome,
-  restart, remote-custody, and recovery-hold rules as safe-point restore. It uses recorded canonical
-  absolute identities, never reinterprets paths through the current working_directory, never
-  applies a partial multi-file turn, and never rewinds conversation state.
+canonical_text: Whole-turn Chat revert keeps the existing exact-replace manifest/journal/CAS/equality/rollback/restart/remote-custody/recovery-hold
+  protocol for Project and application turns. It uses the turn's recorded canonical absolute identities plus
+  original Host/Environment/root scope, never current cwd or a guessed main root, and does not partly restore
+  a multi-file turn or rewind conversation. Conversion creates a destination mapping/fresh authority under
+  F2-213; an old outside-root mutation never becomes a destination Project restore target.
 gui_related: false
 gui_classification_reason: This unit defines backend FileSafe mechanics consumed by a Chat command.
-depends_on: [F2-200, F2-201, F2-202, F2-203]
+depends_on:
+- F2-200
+- F2-201
+- F2-202
+- F2-203
+- F2-213
 unblocks: []
 acceptance_criteria:
-  - A multi-file turn is restored as one complete manifest scope or rolled back/recovery-required as one transaction.
-  - Failure or kill after file N of M cannot report partial success.
-  - Recorded canonical absolute identities are used; current working_directory cannot retarget the restore.
-  - No eligible mutating turn creates no FileSafe transaction and changes no file, worktree, queue, or transcript.
-  - Chat revert never emits restored_with_conflicts and never changes conversation history.
+- A multi-file turn is restored as one complete manifest scope or rolled back/recovery-required as one transaction.
+- Failure or kill after file N of M cannot report partial success.
+- Recorded canonical absolute identities are used; current working_directory cannot retarget the restore.
+- No eligible mutating turn creates no FileSafe transaction and changes no file, worktree, queue, or transcript.
+- Chat revert never emits restored_with_conflicts and never changes conversation history.
 validation_surfaces:
-  - RSP-CHAT-001
-  - RSP-ATOMIC-001
-  - RSP-ATOMIC-002
-  - RSP-ATOMIC-003
+- RSP-CHAT-001
+- RSP-ATOMIC-001
+- RSP-ATOMIC-002
+- RSP-ATOMIC-003
 risk_class: chat_revert_partial_or_weaker_restore
 reasoning_tier: high
 context_scope: filesafe_chat_revert_transaction_parity
-implementation_surfaces: [Plans/FileSafe.md, Plans/assistant-chat-design.md, Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md]
-node_compile_hint: {mode: filesafe_chat_revert_parity, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/FileSafe.md
+- Plans/assistant-chat-design.md
+- Plans/UI_Command_Catalog.md
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: filesafe_chat_revert_parity
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - Case L finding L-006
-  - Case L approved decision PD-RSP-09
+- Case L finding L-006
+- Case L approved decision PD-RSP-09
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/N25
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
 preserved_exact_tokens:
-  - "cmd.chat.revert"
-  - "no_eligible_mutating_turn"
-  - "whole-turn mutation manifest"
-  - "working_directory"
+- cmd.chat.revert
+- no_eligible_mutating_turn
+- whole-turn mutation manifest
+- working_directory
 negative_constraints:
-  - Do not make Chat revert a conversation rewind, merge, or partial per-file success path.
-  - Do not let FileSafe select the assistant turn or own conversation restore-point lifecycle.
-owner_hints: [Plans/FileSafe.md]
+- Do not make Chat revert a conversation rewind, merge, or partial per-file success path.
+- Do not let FileSafe select the assistant turn or own conversation restore-point lifecycle.
+owner_hints:
+- Plans/FileSafe.md
 ```

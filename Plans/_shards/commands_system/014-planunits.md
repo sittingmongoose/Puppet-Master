@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L788-L3521
+Source lines: L789-L3546
 
-Source SHA256: `9006bc4dadc370bafa320a238e20908f23ddab3d4885e367d6f80b1c0dda1e84`
+Source SHA256: `8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013`
 
 ---
 
@@ -947,49 +947,73 @@ plan_unit_id: CS-018
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Command execution resolves the active working directory to the bound worktree
-  root when execution context has is_worktree true and otherwise to the active
-  project root, applying consistently to Assistant Chat, Orchestrator DAE,
-  terminal sessions, and file operations.
+canonical_text: 'Command execution resolves the active working directory to the captured bound worktree root
+  when is_worktree is true, the captured Project root for Project execution otherwise, or the exact app chat/granted
+  Computer root for application execution, applying consistently to Assistant Chat, Orchestrator DAE, terminal
+  sessions, and file operations.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: false
 gui_classification_reason: Working directory resolution is command execution runtime behavior.
 split_recommended: true
-split_recommendation_reason: Source span S0026 also includes visible path-card and terminal cwd behavior covered by CS-019.
-depends_on: [CS-014]
-unblocks: [CS-019, CS-020]
+split_recommendation_reason: Source span S0026 also includes visible path-card and terminal cwd behavior covered
+  by CS-019.
+depends_on:
+- CS-014
+unblocks:
+- CS-019
+- CS-020
 acceptance_criteria:
-  - EXECUTION remains the anchor for command execution semantics.
-  - If active context has a bound worktree with is_worktree true, commands use the worktree root path.
-  - Otherwise commands use the active project root.
-  - Assistant Chat, Orchestrator DAE, terminal sessions, and file operations share this resolution rule.
-  - cmd.chat.* commands execute against the worktree root when a thread has a bound worktree, and against project root otherwise.
+- EXECUTION remains the anchor for command execution semantics.
+- If active context has a bound worktree with is_worktree true, commands use the worktree root path.
+- Otherwise Project commands use their captured Project root, while application commands require their captured
+  chat/granted Computer root.
+- Assistant Chat, Orchestrator DAE, terminal sessions, and file operations share this resolution rule.
+- cmd.chat.* commands execute against the worktree root when a thread has a bound worktree, and against the
+  captured Project root otherwise; app execution instead requires its captured chat/granted root.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: command_working_directory_drift
 reasoning_tier: high
 context_scope: command_execution_context
 implementation_surfaces:
-  - Plans/Commands_System.md
-  - Plans/Executor_Protocol.md
-  - Plans/assistant-chat-design.md
-  - Plans/Run_Modes.md
+- Plans/Commands_System.md
+- Plans/Executor_Protocol.md
+- Plans/assistant-chat-design.md
+- Plans/Run_Modes.md
 node_compile_hint:
   mode: command_working_directory_resolution
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0025
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0026
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0025
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0026
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "EXECUTION"
-  - "is_worktree"
-  - "worktree root path"
-  - "active project root"
-  - "cmd.chat.*"
-negative_constraints: []
+- EXECUTION
+- is_worktree
+- worktree root path
+- active project root
+- cmd.chat.*
+negative_constraints:
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 ```
 
 ### CS-019 - Assistant Worktree Naming Path Display and Terminal CWD

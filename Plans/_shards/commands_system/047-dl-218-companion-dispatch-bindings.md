@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L8218-L8755
+Source lines: L8589-L9216
 
-Source SHA256: `9006bc4dadc370bafa320a238e20908f23ddab3d4885e367d6f80b1c0dda1e84`
+Source SHA256: `8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013`
 
 ---
 
@@ -207,17 +207,29 @@ plan_unit_id: CS-105
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  B1/B2/B6. cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab are canonical owner
-  commands of the workspace/project router, not aliases of opening the menu. Stable project_id and current
-  workspace identity/generation are required; stale/not-found/not-permitted refuse without changing the
-  active tab. Ctrl+Shift+P binds typed local ui.project_switcher.open (registered ui.project_switcher.*
-  prefix); ui.project_switcher.close restores opener focus. Ctrl/Cmd+Enter on a row chooses the new-workspace-tab command;
-  keyboard/pointer send identical typed payloads. Opening/closing/filtering a picker does not dispatch a
-  domain command. Existing project open/switch receipts and events stay owner-authoritative, no new event
-  emission by these producers.
-  B2, PM7 companion review fix1, 2026-10-30: ui.project_switcher.all_projects is the no-write route to the
-  existing Projects primary view; it does not dispatch the side-panel switch command.
+canonical_text: 'B1/B2/B6. cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab are canonical
+  owner commands of the workspace/project router, not aliases of opening the menu. A discriminated Project
+  target with stable project_id or no_project target with actual app Server/Computer and null Project, plus
+  current workspace identity/generation, is required; stale/not-found/not-permitted refuse without changing
+  the active tab. Ctrl+Shift+P binds typed local ui.project_switcher.open (registered ui.project_switcher.*
+  prefix); ui.project_switcher.close restores opener focus. Ctrl/Cmd+Enter on a row chooses the new-workspace-tab
+  command; keyboard/pointer send identical typed payloads. Opening/closing/filtering a picker does not dispatch
+  a domain command. Existing project open/switch receipts and events stay owner-authoritative, no new event
+  emission by these producers. B2, PM7 companion review fix1, 2026-10-30: ui.project_switcher.all_projects
+  is the no-write route to the existing Projects primary view; it does not dispatch the side-panel switch command.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -231,6 +243,9 @@ acceptance_criteria:
 - Ctrl+Shift+P/open/close/All projects are typed local menu/page actions; Ctrl/Cmd+Enter dispatches the new-workspace
   command.
 - Keyboard/pointer requests match and menu visibility emits no runtime event or duplicate lifecycle.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -248,6 +263,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - ui.project_switcher.all_projects
 - cmd.project.switch_active_tab
@@ -256,6 +272,8 @@ preserved_exact_tokens:
 - ui.project_switcher.close
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
 - Plans/Commands_System.md
 ```
@@ -272,85 +290,106 @@ plan_unit_id: CS-106
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: 'D8–D13, G5–G7/G10. UCC-210 declares cmd.work.stop, cmd.work.restart, cmd.work.send_input, cmd.work.set_completion_delivery,
-  cmd.work.clear_finished, cmd.work.quit, cmd.chat.processes.open, cmd.agents_and_processes.show and cmd.agents_and_processes.pop_out.
-  Runtime commands bind project/server/environment, stable work/owner and process identity, expected projection/input
-  generation, actor/permission and idempotency key, return an owner receipt or typed rejection, and never optimistically
-  manufacture success. Unknown/stale/unavailable owner refuses. Navigation and view-local clear do not write runtime
-  state or emit events. Stop all is cmd.work.stop with scope thread/platform and the reviewed target list, never a second
-  handler; process-group semantics are EP-043/SIR-054. Input is current safe yes/no only; other input reveals terminal.
-  Restart is eligible owner-controlled new invocation, no PID-only replay. Completion policy writes one owner value;
-  delivery does not wake stopped threads. Quit defaults keep_running; stop_selected excludes services and binds the reviewed
-  current target set. Registered local prefixes: ui.work_panel.* (close/select_tab/filter/sort/expand/select), ui.work_quit.*
-  (select/cancel), ui.project_switcher.* (open/close), ui.settings.pip_editor.* (open/close/replay), plus ui.work_quit.open
-  to draft the quit dialog. They write no durable/runtime state, carry return focus/scope and release timers/subscriptions/copies.
-  cmd.work.clear_finished is a navigation_wrapper with view-local hiding, not record deletion. All settings hosts use
-  preview/apply. No Home panel-tab command or panel shortcut in this build. ProcessFacts and command request/result/error
-  fixtures are static contracts; new input/completion event candidates remain non-emitting until Event Authority. B2:
-  ui.project_switcher.all_projects is the typed local action that focuses the existing Projects page route tab_id projects.
-  It never misuses cmd.panel.switch, which is only a rail side-panel shell action. D10/D13/G4: Requests carry explicit
-  scope_kind under the existing application/project policy. Quit and platform Stop all are application-scoped with project_id
-  null; thread Processes is project-scoped with a real Project. A global panel or local editor/navigation action works
-  without an active Project. Every reviewed target still carries its actual Project/server/environment and current owner
-  permission. Dispatch verifies source/target scope rather than inferring a default Project; a mismatch refuses before
-  effects. This adds no Settings store or event family. G1 B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin
-  action (binding chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and reprojects
-  the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only: one full-size docked-or-full-height-cover
-  view, no small form. A switch cancels stale subscriptions and never leaves the previous thread’s rows/actions in the
-  new thread. A missing domain shows its truthful empty/unavailable state. Pin is session view state, not a Settings
-  row, durable layout field or runtime mutation. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay
-  popover, reached from the existing status-bar System status item and the Processes System services link. ui.system_status.open
-  and ui.system_status.close are typed local visibility actions, with statusbar.system_status, work.open_system_status
-  and system_status.close binding families. Service owner links use the existing ui.settings.route.open action and system_status.service.open_settings
-  binding, selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
-  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or controlling
-  a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass plate; unavailable
-  owner navigation says why. System status open/close and owner-Settings navigation carry the same explicit source scope,
-  view and return-focus identity as other no-write local actions. G6 Clear finished is a Processes-view action; it never
-  clears finished agents. Concept thread Stop all reviews processes/scheduled runs, while platform Stop all may include
-  agents after review; the canonical cmd.work.stop identity and per-owner permission/identity checks remain. D2/D7, PM7
-  Step4 final-source alignment, 2026-10-30: cmd.chat.processes.open accepts optional work_id for a dock Review/Show route
-  selecting one process or scheduled row. A bar open may omit it. Resolve that ID only within the signed Project/thread
-  scope and current expected generation; missing, stale or foreign selection cannot retarget to a title match or another
-  thread. This remains navigation with no process effect. Agent dock Review selects its existing Subagents detail locally
-  and never opens a child transcript by this route. D7/D8/D13, PM7 companion review fix1, 2026-10-30 (Astra A2/A3): work.open_owner
-  is ui.work_panel.select with an owner-row value, owner_id, destination agents|subagents, invoking view and focus; Subagents
-  also binds its exact thread_id. It never opens a transcript. Actual Open thread uses cmd.chat.open_thread for the item’s
-  bound Assistant thread; actual Open surface is ui.work_panel.open_surface, a local navigation request to the resolved
-  owner surface with work identity and focus, unavailable if that owner cannot be reached. Copy command is ui.work_panel.copy_command,
-  a local clipboard request over the selected current command; clipboard refusal cannot report success. Open port reuses
-  cmd.browser.open_workspace_preview with a server/environment-authoritative URL and CV-360 placement, never an assumed
-  client localhost. A scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the exact schedule identity/revision
-  and owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new invocation
-  through the terminal owner, with an explicit new-session request when needed; Restart keeps cmd.work.restart for restartable
-  live server/db/watcher work. Concept W.restart/W.stop adapters do not replace those native owner routes. G4/D7/D10,
-  PM7 companion review fix1, 2026-10-30 (Astra A4): local_action_request requires a closed action-specific value. select_tab
-  is agents|processes|resources. sort is {column: title|rank|time|cpu|mem|ports|where, direction: -1|1}. filter distinguishes
-  owner, agent_group and process_grouping; expand distinguishes item, subagents and group plus boolean expanded. select
-  distinguishes an item work_id from owner_id with destination agents|subagents; exact thread_id is required for Subagents.
-  Quit draft selection is one closed choice keep_running|stop_selected, one work_id/expected_generation/selected checkbox,
-  or the Stop-list scope procs|all. Missing values, unknown fields, arbitrary enums and cross-branch fields refuse before
-  view or owner effects. Pin and System status retain their separate restrictions. None of these draft/view changes creates
-  a runtime mutation or saved setting. D7/D8/D13, PM7 final-review direct correction, 2026-10-30 (Astra r2 N1): reused-owner
-  Touch routes retain separate contracts, never PM7 command_result. Browser open and Terminal rerun retain UCC-063/UCC-201
-  catalog payload contracts and the existing CV-333 UICommandResponse v2 projection/error/receipt; their per-command
-  identity fence checks common dispatch identity only, not an uncompiled owner request body or terminal effect. Scheduling
-  Cancel directly consumes ScheduledMessageCancelRequest and ScheduledMessageCancelResult plus the scheduling owner’s
-  closed error code. Its admitted source_surface vocabulary is unchanged; Work delegates to the scheduling-owned cancellation
-  context rather than inventing a source or PID target. Precise per-command profiles and fixtures bind these distinctions;
-  no owner adopts a new PM7 result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider
-  gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that
-  thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning
-  to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs
-  line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry
-  timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work.
-  Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through
-  Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services,
-  which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that
-  nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work
-  as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry;
-  the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure
-  remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority.'
+canonical_text: 'D8–D13, G5–G7/G10. UCC-210 declares cmd.work.stop, cmd.work.restart, cmd.work.send_input,
+  cmd.work.set_completion_delivery, cmd.work.clear_finished, cmd.work.quit, cmd.chat.processes.open, cmd.agents_and_processes.show
+  and cmd.agents_and_processes.pop_out. Runtime commands bind project/server/environment, stable work/owner
+  and process identity, expected projection/input generation, actor/permission and idempotency key, return
+  an owner receipt or typed rejection, and never optimistically manufacture success. Unknown/stale/unavailable
+  owner refuses. Navigation and view-local clear do not write runtime state or emit events. Stop all is cmd.work.stop
+  with scope thread/platform and the reviewed target list, never a second handler; process-group semantics
+  are EP-043/SIR-054. Input is current safe yes/no only; other input reveals terminal. Restart is eligible
+  owner-controlled new invocation, no PID-only replay. Completion policy writes one owner value; delivery does
+  not wake stopped threads. Quit defaults keep_running; stop_selected excludes services and binds the reviewed
+  current target set. Registered local prefixes: ui.work_panel.* (close/select_tab/filter/sort/expand/select),
+  ui.work_quit.* (select/cancel), ui.project_switcher.* (open/close), ui.settings.pip_editor.* (open/close/replay),
+  plus ui.work_quit.open to draft the quit dialog. They write no durable/runtime state, carry return focus/scope
+  and release timers/subscriptions/copies. cmd.work.clear_finished is a navigation_wrapper with view-local
+  hiding, not record deletion. All settings hosts use preview/apply. No Home panel-tab command or panel shortcut
+  in this build. ProcessFacts and command request/result/error fixtures are static contracts; new input/completion
+  event candidates remain non-emitting until Event Authority. B2: ui.project_switcher.all_projects is the typed
+  local action that focuses the existing Projects page route tab_id projects. It never misuses cmd.panel.switch,
+  which is only a rail side-panel shell action. D10/D13/G4: Requests carry explicit scope_kind under the existing
+  application/project policy. Quit and platform Stop all are application-scoped with project_id null; thread
+  Processes is project-scoped with a real Project. A global panel or local editor/navigation action works without
+  an active Project. Every reviewed target still carries its actual Project/server/environment and current
+  owner permission. Dispatch verifies source/target scope rather than inferring a default Project; a mismatch
+  refuses before effects. This adds no Settings store or event family. G1 B (Jared 2026-10-30): Pin/unpin is
+  the view-local ui.activity_detail.pin action (binding chat.activity.pin), default false. Pinned Activity
+  Detail stays open across thread switches and reprojects the selected thread’s data; unpinned detail closes
+  on a thread switch. Pin changes lifetime only: one full-size docked-or-full-height-cover view, no small form.
+  A switch cancels stale subscriptions and never leaves the previous thread’s rows/actions in the new thread.
+  A missing domain shows its truthful empty/unavailable state. Pin is session view state, not a Settings row,
+  durable layout field or runtime mutation. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only
+  overlay popover, reached from the existing status-bar System status item and the Processes System services
+  link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with statusbar.system_status,
+  work.open_system_status and system_status.close binding families. Service owner links use the existing ui.settings.route.open
+  action and system_status.service.open_settings binding, selecting code.editing.lsp-server-catalog for language
+  servers, system.mcp.server-list for MCP servers or web.index.enable for the search index. They open Settings
+  and reveal the owner row without writing a value or controlling a service. The popover has close/Escape/outside
+  closure, return focus and the common overlay/Glass plate; unavailable owner navigation says why. System status
+  open/close and owner-Settings navigation carry the same explicit source scope, view and return-focus identity
+  as other no-write local actions. G6 Clear finished is a Processes-view action; it never clears finished agents.
+  Concept thread Stop all reviews processes/scheduled runs, while platform Stop all may include agents after
+  review; the canonical cmd.work.stop identity and per-owner permission/identity checks remain. D2/D7, PM7
+  Step4 final-source alignment, 2026-10-30: cmd.chat.processes.open accepts optional work_id for a dock Review/Show
+  route selecting one process or scheduled row. A bar open may omit it. Resolve that ID only within the signed
+  Project/thread scope and current expected generation; missing, stale or foreign selection cannot retarget
+  to a title match or another thread. This remains navigation with no process effect. Agent dock Review selects
+  its existing Subagents detail locally and never opens a child transcript by this route. D7/D8/D13, PM7 companion
+  review fix1, 2026-10-30 (Astra A2/A3): work.open_owner is ui.work_panel.select with an owner-row value, owner_id,
+  destination agents|subagents, invoking view and focus; Subagents also binds its exact thread_id. It never
+  opens a transcript. Actual Open thread uses cmd.chat.open_thread for the item’s bound Assistant thread; actual
+  Open surface is ui.work_panel.open_surface, a local navigation request to the resolved owner surface with
+  work identity and focus, unavailable if that owner cannot be reached. Copy command is ui.work_panel.copy_command,
+  a local clipboard request over the selected current command; clipboard refusal cannot report success. Open
+  port reuses cmd.browser.open_workspace_preview with a server/environment-authoritative URL and CV-360 placement,
+  never an assumed client localhost. A scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the
+  exact schedule identity/revision and owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses
+  cmd.terminal.rerun for a new invocation through the terminal owner, with an explicit new-session request
+  when needed; Restart keeps cmd.work.restart for restartable live server/db/watcher work. Concept W.restart/W.stop
+  adapters do not replace those native owner routes. G4/D7/D10, PM7 companion review fix1, 2026-10-30 (Astra
+  A4): local_action_request requires a closed action-specific value. select_tab is agents|processes|resources.
+  sort is {column: title|rank|time|cpu|mem|ports|where, direction: -1|1}. filter distinguishes owner, agent_group
+  and process_grouping; expand distinguishes item, subagents and group plus boolean expanded. select distinguishes
+  an item work_id from owner_id with destination agents|subagents; exact thread_id is required for Subagents.
+  Quit draft selection is one closed choice keep_running|stop_selected, one work_id/expected_generation/selected
+  checkbox, or the Stop-list scope procs|all. Missing values, unknown fields, arbitrary enums and cross-branch
+  fields refuse before view or owner effects. Pin and System status retain their separate restrictions. None
+  of these draft/view changes creates a runtime mutation or saved setting. D7/D8/D13, PM7 final-review direct
+  correction, 2026-10-30 (Astra r2 N1): reused-owner Touch routes retain separate contracts, never PM7 command_result.
+  Browser open and Terminal rerun retain UCC-063/UCC-201 catalog payload contracts and the existing CV-333
+  UICommandResponse v2 projection/error/receipt; their per-command identity fence checks common dispatch identity
+  only, not an uncompiled owner request body or terminal effect. Scheduling Cancel directly consumes ScheduledMessageCancelRequest
+  and ScheduledMessageCancelResult plus the scheduling owner’s closed error code. Its admitted source_surface
+  vocabulary is unchanged; Work delegates to the scheduling-owned cancellation context rather than inventing
+  a source or PID target. Precise per-command profiles and fixtures bind these distinctions; no owner adopts
+  a new PM7 result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider
+  gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure
+  in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint
+  or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At
+  elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input
+  is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry
+  never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility
+  gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s
+  Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual
+  Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running,
+  above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines
+  show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only
+  2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative;
+  shared read scope creates no Stop/Restart/Stop all or service-control authority.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -363,22 +402,26 @@ acceptance_criteria:
 - Every command has one sole handler and closed typed request/result; explicit source scope, target owner/permission/storage/currentness
   reject before effects, including application controls with no active Project.
 - Stop all reuses cmd.work.stop; pid/start/group/descendant targeting and 3 s grace are enforced by the owner.
-- Prompt input is current safe yes/no only, quit defaults keep-running, clear is view-local and candidate events remain
-  non-emitting.
+- Prompt input is current safe yes/no only, quit defaults keep-running, clear is view-local and candidate events
+  remain non-emitting.
 - All declared local prefixes write no runtime state and release focus/subscriptions/copies on close.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and
-  the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection.
-  Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not
-  restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you
-  lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw;
-  it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three
-  budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends
-  G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong
-  to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project
-  is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines
-  show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2
-  s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared
-  read scope creates no Stop/Restart/Stop all or service-control authority.'
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process
+  and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s
+  dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning
+  to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000
+  the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered.
+  One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes
+  work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains
+  reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer
+  and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s
+  own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does
+  not look empty or report another Project’s work as its own. Shared machines show only environments with running
+  work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains.
+  Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope
+  creates no Stop/Restart/Stop all or service-control authority.'
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -396,10 +439,13 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
-- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
 - Plans/Commands_System.md
 ```
@@ -428,57 +474,81 @@ plan_unit_id: CS-107
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  DL-270 commands part. pm db dump, pm inspect, pm tail and pm export are command-line reads, not User
-  Commands or UICommands, and mint no cmd.* id, catalog row or wiring row; SP-339 owns their read semantics.
-  The record inspector is a read-only record tab opened through the existing cmd.storage.open_value. The SP-340
-  verified reclaim is the existing cmd.storage.compaction.request, one owner-routed maintenance request for the
-  whole storage instance under writer posture, permission and the maintenance lease, with results shown per
-  storage group; there is no cmd.storage.reclaim. cmd.chat.load_older is registered in UCC-212 as a shell_view
-  command with the sole handler handlers::chat::load_older that reads one older sealed 50-item page of a thread
-  from the render-page store with no write; scrolling near the top dispatches it and a Load 50 older row
-  stays as the fallback. Detail usage.event records are governed by ai.usage.usage-retention and daily usage
-  totals are kept whatever it says (UF-108).
+canonical_text: 'DL-270 commands part. pm db dump, pm inspect, pm tail and pm export are command-line reads,
+  not User Commands or UICommands, and mint no cmd.* id, catalog row or wiring row; SP-339 owns their read
+  semantics. The record inspector is a read-only record tab opened through the existing cmd.storage.open_value.
+  The SP-340 verified reclaim is the existing cmd.storage.compaction.request, one owner-routed maintenance
+  request for the whole storage instance under writer posture, permission and the maintenance lease, with results
+  shown per storage group; there is no cmd.storage.reclaim. cmd.chat.load_older is registered in UCC-212 as
+  a shell_view command with the sole handler handlers::chat::load_older that reads one older sealed 50-item
+  page of a thread from the render-page store with no write; scrolling near the top dispatches it and a Load
+  50 older row stays as the fallback. Detail usage.event records are governed by ai.usage.usage-retention and
+  daily usage totals are kept whatever it says (UF-108).
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Rules the reclaim action in storage health, the chat's load-older control and the record inspector's command route.
+gui_classification_reason: Rules the reclaim action in storage health, the chat's load-older control and the
+  record inspector's command route.
 split_recommended: false
-depends_on: [CS-059, SP-338, SP-339, SP-340, SP-341]
+depends_on:
+- CS-059
+- SP-338
+- SP-339
+- SP-340
+- SP-341
 unblocks: []
 acceptance_criteria:
-  - No catalog row, wiring row or cmd.* id exists for pm db dump, pm inspect, pm tail or pm export.
-  - Reclaim dispatches cmd.storage.compaction.request and never compacts inline; no cmd.storage.reclaim exists.
-  - cmd.chat.load_older has one handler, writes nothing and never replays events.
-  - No command prunes usage.event beyond ai.usage.usage-retention.
+- No catalog row, wiring row or cmd.* id exists for pm db dump, pm inspect, pm tail or pm export.
+- Reclaim dispatches cmd.storage.compaction.request and never compacts inline; no cmd.storage.reclaim exists.
+- cmd.chat.load_older has one handler, writes nothing and never replays events.
+- No command prunes usage.event beyond ai.usage.usage-retention.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: storage_command_boundary_drift
 reasoning_tier: high
 context_scope: dl270_storage_profile_commands
 implementation_surfaces:
-  - Plans/Commands_System.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.production.json
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
 node_compile_hint:
   mode: owner_contract_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-270
-  - Plans/storage-plan.md#SP-338
-  - Plans/storage-plan.md#SP-339
-  - Plans/storage-plan.md#SP-340
+- Plans/Decision_Log.md#DL-270
+- Plans/storage-plan.md#SP-338
+- Plans/storage-plan.md#SP-339
+- Plans/storage-plan.md#SP-340
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - cmd.chat.load_older
-  - cmd.storage.compaction.request
-  - cmd.storage.open_value
-  - usage.event
+- cmd.chat.load_older
+- cmd.storage.compaction.request
+- cmd.storage.open_value
+- usage.event
 negative_constraints:
-  - Do not mint a cmd.* id for a command-line verb.
-  - Do not add a cmd.storage.reclaim command or a ui.chat_thread.* prefix.
-  - Do not add a standalone verify, repair or salvage command.
+- Do not mint a cmd.* id for a command-line verb.
+- Do not add a cmd.storage.reclaim command or a ui.chat_thread.* prefix.
+- Do not add a standalone verify, repair or salvage command.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-339, ContractName:Plans/storage-plan.md#SP-340, ContractName:Plans/UI_Command_Catalog.md#UCC-212
@@ -491,17 +561,30 @@ plan_unit_id: CS-108
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: CS-108. DL-272 Free Models Turn off is cmd.free_models.route.disable, a canonical domain_action with
-  sole future handler handlers::models::disable_free_route. It resolves route_id, underlying_provider_id and policy_scope_ref
-  against the current Models catalog and policy, preserving actor_id, origin, idempotency_key, catalog_generation and
-  expected_generation. Display labels or a caller success flag are not owner identity. Availability requires a known
-  eligible target and owner/permission/writer/currentness proof; missing handler stays handler_unavailable. The owner
-  changes only that route’s future eligibility, preserving credentials, account identities, other routes, top-10 order
-  and in-flight snapshots (EP-107). A replay is idempotent. A successful/already-disabled result names the same route/provider/scope,
-  resulting generation and receipt; refusal carries its closed reason and no accepted change. No new EventRecord family,
-  secret field or credential-revoke command is admitted. Request/result/fixtures live in Plans/free_models_route_contracts.schema.json
-  and Plans/free_models_route_contract_fixtures.json. Only the actual Models owner effect and receipt prove an accepted
-  policy change.
+canonical_text: 'CS-108. DL-272 Free Models Turn off is cmd.free_models.route.disable, a canonical domain_action
+  with sole future handler handlers::models::disable_free_route. It resolves route_id, underlying_provider_id
+  and policy_scope_ref against the current Models catalog and policy, preserving actor_id, origin, idempotency_key,
+  catalog_generation and expected_generation. Display labels or a caller success flag are not owner identity.
+  Availability requires a known eligible target and owner/permission/writer/currentness proof; missing handler
+  stays handler_unavailable. The owner changes only that route’s future eligibility, preserving credentials,
+  account identities, other routes, top-10 order and in-flight snapshots (EP-107). A replay is idempotent.
+  A successful/already-disabled result names the same route/provider/scope, resulting generation and receipt;
+  refusal carries its closed reason and no accepted change. No new EventRecord family, secret field or credential-revoke
+  command is admitted. Request/result/fixtures live in Plans/free_models_route_contracts.schema.json and Plans/free_models_route_contract_fixtures.json.
+  Only the actual Models owner effect and receipt prove an accepted policy change.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Defines user-visible setup/feedback or its exact owner-routed control.
 split_recommended: false
@@ -511,16 +594,20 @@ depends_on:
 - MA-045
 unblocks: []
 acceptance_criteria:
-- DL-272 Free Models Turn off is cmd.free_models.route.disable, a canonical domain_action with sole future handler handlers::models::disable_free_route.
-  It resolves route_id, underlying_provider_id and policy_scope_ref against the current Models catalog and policy, preserving
-  actor_id, origin, idempotency_key, catalog_generation and expected_generation. Display labels or a caller success flag
-  are not owner identity. Availability requires a known eligible target and owner/permission/writer/currentness proof;
-  missing handler stays handler_unavailable. The owner changes only that route’s future eligibility, preserving credentials,
-  account identities, other routes, top-10 order and in-flight snapshots (EP-107). A replay is idempotent. A successful/already-disabled
-  result names the same route/provider/scope, resulting generation and receipt; refusal carries its closed reason and
-  no accepted change. No new EventRecord family, secret field or credential-revoke command is admitted. Request/result/fixtures
-  live in Plans/free_models_route_contracts.schema.json and Plans/free_models_route_contract_fixtures.json. Only the
-  actual Models owner effect and receipt prove an accepted policy change.
+- DL-272 Free Models Turn off is cmd.free_models.route.disable, a canonical domain_action with sole future
+  handler handlers::models::disable_free_route. It resolves route_id, underlying_provider_id and policy_scope_ref
+  against the current Models catalog and policy, preserving actor_id, origin, idempotency_key, catalog_generation
+  and expected_generation. Display labels or a caller success flag are not owner identity. Availability requires
+  a known eligible target and owner/permission/writer/currentness proof; missing handler stays handler_unavailable.
+  The owner changes only that route’s future eligibility, preserving credentials, account identities, other
+  routes, top-10 order and in-flight snapshots (EP-107). A replay is idempotent. A successful/already-disabled
+  result names the same route/provider/scope, resulting generation and receipt; refusal carries its closed
+  reason and no accepted change. No new EventRecord family, secret field or credential-revoke command is admitted.
+  Request/result/fixtures live in Plans/free_models_route_contracts.schema.json and Plans/free_models_route_contract_fixtures.json.
+  Only the actual Models owner effect and receipt prove an accepted policy change.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm7-canon-check.py
 - python3 scripts/pm-plan-index.py validate
@@ -537,12 +624,15 @@ node_compile_hint:
 source_lineage:
 - Lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01
 - Concepts/onboarding/opus-5.5 at7d2dd568be76874ff8b4d3e82bad3701226d248c (source lineage only)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - CS-108
 - cmd.free_models.route.disable
 negative_constraints:
-- Do not infer native handlers, trust, success, credential authority or governance readiness from a concept or static
-  fixture.
+- Do not infer native handlers, trust, success, credential authority or governance readiness from a concept
+  or static fixture.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
 - Plans/Commands_System.md
 ```

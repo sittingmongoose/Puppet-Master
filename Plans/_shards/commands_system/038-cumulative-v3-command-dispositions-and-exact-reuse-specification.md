@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6509-L6647
+Source lines: L6747-L6905
 
-Source SHA256: `9006bc4dadc370bafa320a238e20908f23ddab3d4885e367d6f80b1c0dda1e84`
+Source SHA256: `8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013`
 
 ---
 
@@ -46,46 +46,66 @@ plan_unit_id: CS-079
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: 'Product operations enforce canonical command reuse: BSD mode uses cmd.bsd.set; BSD policy uses cmd.bsd.configure
-  / cmd.bsd.workflow.configure; collaboration uses cmd.collaboration.configure / cmd.collaboration.start; Crew Auto uses
-  cmd.chat.crew_auto.open_config / cmd.chat.crew_auto.set; Plan Build uses cmd.chat.plan.build with topology discriminator
-  (prohibiting build_as_goal); Plan schedule uses cmd.chat.plan.schedule_build; scheduled messages use cmd.chat.schedule_message[.update|.cancel];
-  execution windows use cmd.execution_window.create/update/cancel; quota consent uses cmd.runtime.quota_resume.set. View
-  toggles are classified as LOCAL_PRESENTATION view state. Amended DL-260, Jared 2026-10-31: only real product behavior
-  remains an implementation requirement.'
+canonical_text: 'Product operations enforce canonical command reuse: BSD mode uses cmd.bsd.set; BSD policy
+  uses cmd.bsd.configure / cmd.bsd.workflow.configure; collaboration uses cmd.collaboration.configure / cmd.collaboration.start;
+  Crew Auto uses cmd.chat.crew_auto.open_config / cmd.chat.crew_auto.set; Plan Build uses cmd.chat.plan.build
+  with topology discriminator (prohibiting build_as_goal); Plan schedule uses cmd.chat.plan.schedule_build;
+  scheduled messages use cmd.chat.schedule_message[.update|.cancel]; execution windows use cmd.execution_window.create/update/cancel;
+  quota consent uses cmd.runtime.quota_resume.set. View toggles are classified as LOCAL_PRESENTATION view state.
+  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.
+
+
+  Current projects-refresh contract: All six Plan/Deep Plan strategies, exact approved versions, agent/goal_driven/Crew
+  Build, Build At and scheduled messages/tasks work in app scope through existing owners. Only Planning Wizard,
+  PRD Builder and Orchestrator retain no-project workflow gates; Project-native actions still require actual
+  targets. Build At atomically commits one frozen schedule/window, creates no run, and never dispatches execution_window.create
+  a second time. Server-owned timers preserve DST/grace/missed-policy/idempotency, frozen text/attachments/target
+  version and fresh authority/Stop checks. App operational pause has independent real Server custody and user-only
+  clear, never a Settings value or missing-as-off. N25 stops/fences source work and explicitly re-admits mapped
+  frozen targets with fresh consent/epochs; no automatic resume, latest-version substitution or duplicate occurrence.
+  The exact consumer contract is UCC-219/WM-105 and Plans/projects_refresh_command_bindings.json. Historical
+  schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified;
+  unavailable handlers remain handler_unavailable.'
 gui_related: false
 gui_classification_reason: Governs command catalog dispositions, canonical ID reuse, and demo separation.
-depends_on: [CS-078]
+depends_on:
+- CS-078
 unblocks: []
 acceptance_criteria:
 - Specified operations reuse canonical command IDs without minting parallel commands.
 - Plan Build uses topology discriminator; build_as_goal is prohibited.
 - View toggles are classified as LOCAL_PRESENTATION without domain commands.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-219; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: command_duplication_or_demo_command_leak
 reasoning_tier: high
 context_scope: command_dispositions
 implementation_surfaces:
-  - Plans/Commands_System.md
-  - Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
 node_compile_hint:
   mode: command_disposition_specification
   create_worknodes: false
 source_lineage:
-  - APR-014
-  - APR-019
-  - APR-023
+- APR-014
+- APR-019
+- APR-023
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - cmd.chat.plan.build
 - cmd.bsd.configure
 - cmd.collaboration.start
 - LOCAL_PRESENTATION
 negative_constraints:
-  - Do not mint cmd.chat.plan.build_as_goal.
-  - Do not register demo fixtures in the product command catalog.
+- Do not mint cmd.chat.plan.build_as_goal.
+- Do not register demo fixtures in the product command catalog.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md

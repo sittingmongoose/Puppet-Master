@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8824-L10034
+Source lines: L9044-L10378
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -591,47 +591,67 @@ plan_unit_id: UCC-118
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  Projects list lifecycle commands are `cmd.project.archive` (reversible, never a disk delete),
-  `cmd.project.remove` (removes the list entry without touching the working tree), `cmd.project.refresh`
-  (rescans the projects list projection), and `cmd.project.open_settings` (opens the F3-442 Project Settings
-  Modal through the route/open contract). Archive and remove carry confirmation_strength in their command
-  contracts; their confirmation surfaces remain view state.
+canonical_text: 'Projects list lifecycle commands are `cmd.project.archive` (reversible, never a disk delete),
+  `cmd.project.remove` (removes the list entry without touching the working tree), `cmd.project.refresh` (rescans
+  the projects list projection), and `cmd.project.open_settings` (opens the F3-442 Project Settings Modal through
+  the route/open contract). Archive and remove carry confirmation_strength in their command contracts; their
+  confirmation surfaces remain view state.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Registers user-visible projects list archive, remove, refresh, and settings commands.
-depends_on: [F3-442, UCC-032]
+depends_on:
+- F3-442
+- UCC-032
 unblocks: []
 acceptance_criteria:
-  - Archive is reversible and performs no disk deletion; remove never touches the working tree.
-  - Refresh re-reads the list projection without mutating project records.
-  - open_settings routes through route/open identity to the Project Settings Modal.
+- Archive is reversible and performs no disk deletion; remove never touches the working tree.
+- Refresh re-reads the list projection without mutating project records.
+- open_settings routes through route/open identity to the Project Settings Modal.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 risk_class: project_command_catalog_gap
 reasoning_tier: standard
 context_scope: projects_list_commands
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/FinalGUISpec.md
-  - Plans/Wiring_Matrix.md
+- Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
+- Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: projects_list_command_catalog
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/FinalGUISpec.md (F3-442)"
-  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md (F3-442)
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "cmd.project.archive"
-  - "cmd.project.remove"
-  - "cmd.project.refresh"
-  - "cmd.project.open_settings"
+- cmd.project.archive
+- cmd.project.remove
+- cmd.project.refresh
+- cmd.project.open_settings
 negative_constraints:
-  - Do not delete project data from archive or remove; both are list-scope operations.
+- Do not delete project data from archive or remove; both are list-scope operations.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
 ```
 
 ### UCC-119 - Chat Composer Selector Queue And Web Operation Commands
@@ -705,86 +725,116 @@ plan_unit_id: UCC-120
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  Settings navigation uses cmd.settings.open with the typed pm.settings_route_request.v1 target and exact-return
-  contract owned by SSYS-018; the K3 Settings host chooses the current presentation and the command encodes no
-  bloom-specific geometry. The historical cmd.settings.open_notifications, cmd.settings.category.reset, and
-  cmd.settings.suggestion.dismiss spellings are retained only as retired, non-alias local-affordance lineage.
-  Notifications navigation emits cmd.settings.open. Category reset and suggestion dismissal each compose
-  cmd.settings.transaction.preview followed by cmd.settings.transaction.apply, and so do the live look controls
-  (DL-153): the title-bar theme selector's five family rows including NieR (Q22), the Guided Tour bar's Look
-  menu and sound control, and every live edit in the NieR Mode editor (SSYS-043, F3-082). The historical
-  spellings receive no primary handler, production-wiring row, or alias. SSYS-023's hash-bound 80-token
-  disposition registry is transitive catalog input: its canonical targets retain their existing rows, its seven
-  typed local actions receive no command rows, and retired or rejected packet spellings remain non-actionable.
-  The earlier 72 non-primary source-spelling count is historical after DL-200; the live direct/non-primary sets
-  are derived from the same fixture. Amended Q22, Jared 2026-10-30 (DL-257): the fifth family uses the existing
-  theme owner; no separate override remains.
+canonical_text: 'Settings navigation uses cmd.settings.open with the typed pm.settings_route_request.v1 target
+  and exact-return contract owned by SSYS-018; the K3 Settings host chooses the current presentation and the
+  command encodes no bloom-specific geometry. The historical cmd.settings.open_notifications, cmd.settings.category.reset,
+  and cmd.settings.suggestion.dismiss spellings are retained only as retired, non-alias local-affordance lineage.
+  Notifications navigation emits cmd.settings.open. Category reset and suggestion dismissal each compose cmd.settings.transaction.preview
+  followed by cmd.settings.transaction.apply, and so do the live look controls (DL-153): the title-bar theme
+  selector''s five family rows including NieR (Q22), the Guided Tour bar''s Look menu and sound control, and
+  every live edit in the NieR Mode editor (SSYS-043, F3-082). The historical spellings receive no primary handler,
+  production-wiring row, or alias. SSYS-023''s hash-bound 80-token disposition registry is transitive catalog
+  input: its canonical targets retain their existing rows, its seven typed local actions receive no command
+  rows, and retired or rejected packet spellings remain non-actionable. The earlier 72 non-primary source-spelling
+  count is historical after DL-200; the live direct/non-primary sets are derived from the same fixture. Amended
+  Q22, Jared 2026-10-30 (DL-257): the fifth family uses the existing theme owner; no separate override remains.
+
+
+  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single
+  resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere.
+  Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project
+  versions and sole owner. Computer installations, credentials and protected source trust never travel in copy.
+  Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.*
+  local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact
+  consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay
+  resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable
+  handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Registers user-visible typed Settings routing and the transaction composition used by reset and dismissal affordances.
-depends_on: [SSYS-018, SSYS-023, F3-436, F3-437, F3-441]
+gui_classification_reason: Registers user-visible typed Settings routing and the transaction composition used
+  by reset and dismissal affordances.
+depends_on:
+- SSYS-018
+- SSYS-023
+- F3-436
+- F3-437
+- F3-441
 unblocks: []
 acceptance_criteria:
-  - cmd.settings.open accepts only the Settings-owned typed setting or manager/detail target and preserves its exact-return contract; presentation and motion remain Final GUI concerns.
-  - The local Notifications affordance emits cmd.settings.open with the typed Settings target; cmd.settings.open_notifications is neither registered nor aliased.
-  - Category reset never applies without a current preview, the required confirmation, and exact owner readback.
-  - Suggestion dismissal previews and then applies a typed Settings transaction with the F3-437 scoping and expiry and makes no network calls.
-  - All three retired local-affordance spellings receive no primary handler, wiring row, or alias.
-  - "The complete 80-token Settings packet partition is derived from SSYS-023's authoritative fixture; catalog consumers use its current disposition and replacement target for every source token."
-  - "Every canonical replacement target has one existing catalog identity or remains explicitly blocked; every source spelling classified by the fixture as replaced, superseded, retired or rejected stays non-primary and gains no command or alias."
-  - "`cmd.artifacts.open_panel` remains command_not_registered until Runtime Artifacts and Commands admit an exact typed route, sole handler, and production-intent row."
+- cmd.settings.open accepts only the Settings-owned typed setting or manager/detail target and preserves its
+  exact-return contract; presentation and motion remain Final GUI concerns.
+- The local Notifications affordance emits cmd.settings.open with the typed Settings target; cmd.settings.open_notifications
+  is neither registered nor aliased.
+- Category reset never applies without a current preview, the required confirmation, and exact owner readback.
+- Suggestion dismissal previews and then applies a typed Settings transaction with the F3-437 scoping and expiry
+  and makes no network calls.
+- All three retired local-affordance spellings receive no primary handler, wiring row, or alias.
+- The complete 80-token Settings packet partition is derived from SSYS-023's authoritative fixture; catalog
+  consumers use its current disposition and replacement target for every source token.
+- Every canonical replacement target has one existing catalog identity or remains explicitly blocked; every
+  source spelling classified by the fixture as replaced, superseded, retired or rejected stays non-primary
+  and gains no command or alias.
+- '`cmd.artifacts.open_panel` remains command_not_registered until Runtime Artifacts and Commands admit an
+  exact typed route, sole handler, and production-intent row.'
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 risk_class: settings_command_catalog_gap
 reasoning_tier: standard
 context_scope: settings_route_and_home_commands
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/FinalGUISpec.md
-  - Plans/Wiring_Matrix.md
+- Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
+- Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: settings_home_command_catalog
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/FinalGUISpec.md:28854-28900 (F3-434)"
-  - "Plans/Settings_System.md#SSYS-018 (current typed route owner; supersedes bloom-specific routing)"
-  - "Plans/Settings_System.md#SSYS-023 (exact 80-token transitive disposition registry)"
-  - "Plans/settings_system_contract_fixtures.json#/packet_command_dispositions"
-  - "Plans/FinalGUISpec.md:29031-29080 (F3-437)"
-  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:28854-28900 (F3-434)
+- Plans/Settings_System.md#SSYS-018 (current typed route owner; supersedes bloom-specific routing)
+- Plans/Settings_System.md#SSYS-023 (exact 80-token transitive disposition registry)
+- Plans/settings_system_contract_fixtures.json#/packet_command_dispositions
+- Plans/FinalGUISpec.md:29031-29080 (F3-437)
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "cmd.settings.open"
-  - "cmd.settings.transaction.preview"
-  - "cmd.settings.transaction.apply"
-  - "cmd.settings.open_notifications"
-  - "cmd.settings.category.reset"
-  - "cmd.settings.suggestion.dismiss"
-  - "settings_suggestions_dismissed:v1"
-  - "settings.search.focus"
-  - "settings.search.result.activate"
-  - "settings.category.select"
-  - "settings.subcategory.select"
-  - "settings.setting.focus"
-  - "settings.scope.details.open"
-  - "settings.provider.installation.select"
+- cmd.settings.open
+- cmd.settings.transaction.preview
+- cmd.settings.transaction.apply
+- cmd.settings.open_notifications
+- cmd.settings.category.reset
+- cmd.settings.suggestion.dismiss
+- settings_suggestions_dismissed:v1
+- settings.search.focus
+- settings.search.result.activate
+- settings.category.select
+- settings.subcategory.select
+- settings.setting.focus
+- settings.scope.details.open
+- settings.provider.installation.select
 negative_constraints:
-  - Do not mint a second Settings mutation command for reset, dismissal, or presentation behavior.
-  - Do not perform a category reset without the completed two-step confirmation.
-  - Do not encode a bloom, breadcrumb, Back control, or other presentation geometry into cmd.settings.open.
-  - Do not register or alias any of the three retired local-affordance spellings.
-  - Do not copy packet replacement spellings into the catalog or promote typed local actions into domain commands.
-  - Do not treat a prose mention of cmd.artifacts.open_panel as catalog admission or handler evidence.
+- Do not mint a second Settings mutation command for reset, dismissal, or presentation behavior.
+- Do not perform a category reset without the completed two-step confirmation.
+- Do not encode a bloom, breadcrumb, Back control, or other presentation geometry into cmd.settings.open.
+- Do not register or alias any of the three retired local-affordance spellings.
+- Do not copy packet replacement spellings into the catalog or promote typed local actions into domain commands.
+- Do not treat a prose mention of cmd.artifacts.open_panel as catalog admission or handler evidence.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 compatibility_only_notes:
-  - The retired open-notifications, category-reset, and suggestion-dismiss spellings are searchable local-affordance lineage only and never normalize to current commands.
+- The retired open-notifications, category-reset, and suggestion-dismiss spellings are searchable local-affordance
+  lineage only and never normalize to current commands.
 stale_retired_dispositions:
-  - "cmd.settings.open_notifications: local affordance emits cmd.settings.open with a typed target; no alias or handler."
-  - "cmd.settings.category.reset: local affordance composes transaction preview then apply; no alias or handler."
-  - "cmd.settings.suggestion.dismiss: local affordance composes transaction preview then apply; no alias or handler."
+- 'cmd.settings.open_notifications: local affordance emits cmd.settings.open with a typed target; no alias
+  or handler.'
+- 'cmd.settings.category.reset: local affordance composes transaction preview then apply; no alias or handler.'
+- 'cmd.settings.suggestion.dismiss: local affordance composes transaction preview then apply; no alias or handler.'
 owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
 ```
 
 ### UCC-121 - Docker Container Start And Unraid Template Commands
@@ -991,72 +1041,110 @@ plan_unit_id: UCC-124
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  Case L registers cmd.storage.legal_hold.manage with the distinct protected authorization
-  token storage.legal_hold.manage, cmd.storage.compaction.request as an owner-admitted request,
-  cmd.settings.open_storage_retention as navigation, and cmd.project.delete_data as the strongly
-  confirmed project-content purge intent distinct from cmd.project.remove. Existing cmd.chat.delete
-  immediately performs logical deletion and requests physical content purge within 24 hours unless
-  held while preserving a content-free tombstone and owner-governed receipts.
-  The legal-hold command consumes SP-288 strict same-row transition/result custody and SIR-047
-  original pending/terminal delegation; acknowledgement never publishes held/cleared success before
-  complete durable row/result/outcome readback, and original replay never repeats a hold action.
+canonical_text: 'Case L registers cmd.storage.legal_hold.manage with the distinct protected authorization token
+  storage.legal_hold.manage, cmd.storage.compaction.request as an owner-admitted request, cmd.settings.open_storage_retention
+  as navigation, and cmd.project.delete_data as the strongly confirmed project-content purge intent distinct
+  from cmd.project.remove. Existing cmd.chat.delete immediately performs logical deletion and requests physical
+  content purge within 24 hours unless held while preserving a content-free tombstone and owner-governed receipts.
+  The legal-hold command consumes SP-288 strict same-row transition/result custody and SIR-047 original pending/terminal
+  delegation; acknowledgement never publishes held/cleared success before complete durable row/result/outcome
+  readback, and original replay never repeats a hold action.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Registers visible retention, legal-hold, compaction-request, settings, and destructive deletion controls and confirmations.
-depends_on: [UIW-002, UIW-003, SP-237, CV-319, UCC-056, UCC-118, SP-288, SIR-047, CV-333]
+gui_classification_reason: Registers visible retention, legal-hold, compaction-request, settings, and destructive
+  deletion controls and confirmations.
+depends_on:
+- UIW-002
+- UIW-003
+- SP-237
+- CV-319
+- UCC-056
+- UCC-118
+- SP-288
+- SIR-047
+- CV-333
 unblocks: []
 acceptance_criteria:
-  - Hold set and clear require storage.legal_hold.manage, actor identity, reason, expected state when supplied, and a durable retention_hold_record plus EventRecord v2 receipt.
-  - Legal-hold owner storage.legal_hold_transition.v2 binds the exact Plans/storage_retention_hold_contracts.schema.json#/$defs/OwnerResult, schema pm.storage.legal_hold_result.v1 version 1.0.0, to the original command instance, hold key/ID, action, committed held/cleared status, event/receipt and core hash.
-  - SIR-047 delegates actual original request/nonterminal and terminal custody through owner.sir.storage_legal_hold_pending_custody@1.0.0; CV-333 joins its separately hashed typed owner result only after SP-288 final authority guards and complete commit/readback.
-  - Pending set/clear remains protective and never success; same original replay preserves request/outcome/result/receipt/event with zero repeated effects, and history does no cleanup or hold action.
-  - Compaction request never directly compacts or bypasses holds, recovery/recent-run/live/backup/rollback/maintenance refs, registry policy, or the maintenance lease.
-  - Storage and Retention settings navigation creates no peer setting command; registry-owned values enforce owner minima.
-  - cmd.chat.delete discloses immediate logical removal, the 24-hour purge target, legal-hold delay, and content-free tombstone retention.
-  - cmd.project.remove remains list-only and cmd.project.delete_data remains a separate strongly confirmed, project-scoped data-purge intent.
+- Hold set and clear require storage.legal_hold.manage, actor identity, reason, expected state when supplied,
+  and a durable retention_hold_record plus EventRecord v2 receipt.
+- Legal-hold owner storage.legal_hold_transition.v2 binds the exact Plans/storage_retention_hold_contracts.schema.json#/$defs/OwnerResult,
+  schema pm.storage.legal_hold_result.v1 version 1.0.0, to the original command instance, hold key/ID, action,
+  committed held/cleared status, event/receipt and core hash.
+- SIR-047 delegates actual original request/nonterminal and terminal custody through owner.sir.storage_legal_hold_pending_custody@1.0.0;
+  CV-333 joins its separately hashed typed owner result only after SP-288 final authority guards and complete
+  commit/readback.
+- Pending set/clear remains protective and never success; same original replay preserves request/outcome/result/receipt/event
+  with zero repeated effects, and history does no cleanup or hold action.
+- Compaction request never directly compacts or bypasses holds, recovery/recent-run/live/backup/rollback/maintenance
+  refs, registry policy, or the maintenance lease.
+- Storage and Retention settings navigation creates no peer setting command; registry-owned values enforce
+  owner minima.
+- cmd.chat.delete discloses immediate logical removal, the 24-hour purge target, legal-hold delay, and content-free
+  tombstone retention.
+- cmd.project.remove remains list-only and cmd.project.delete_data remains a separate strongly confirmed, project-scoped
+  data-purge intent.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - Plans/storage_retention_hold_contracts.schema.json
-  - Plans/storage_retention_hold_evidence.schema.json
-  - Plans/storage_retention_hold_version_routes.json
-  - reports/event-authority-20260911/step-08-hold-validation.md
-  - future RET, CMP, DEL, and legal-hold command fixtures
-  - future thread/project deletion confirmation and hold-blocked snapshots
-  - python3 scripts/pm-plan-index.py validate
+- Plans/storage_retention_hold_contracts.schema.json
+- Plans/storage_retention_hold_evidence.schema.json
+- Plans/storage_retention_hold_version_routes.json
+- reports/event-authority-20260911/step-08-hold-validation.md
+- future RET, CMP, DEL, and legal-hold command fixtures
+- future thread/project deletion confirmation and hold-blocked snapshots
+- python3 scripts/pm-plan-index.py validate
 risk_class: case_l_retention_or_deletion_command_bypass
 reasoning_tier: high
 context_scope: case_l_retention_hold_compaction_deletion_commands
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/storage-plan.md
-  - Plans/Contracts_V0.md
-  - Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: case_l_retention_deletion_command_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Case-L:L-005
-  - Case-L:L-010
-  - Case-L:L-015
-  - Case-L:PD-L005-01..PD-L005-07
-  - Case-L:PD-L015-01..PD-L015-05
+- Case-L:L-005
+- Case-L:L-010
+- Case-L:L-015
+- Case-L:PD-L005-01..PD-L005-07
+- Case-L:PD-L015-01..PD-L015-05
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - storage.legal_hold.manage
-  - cmd.storage.legal_hold.manage
-  - cmd.storage.compaction.request
-  - cmd.settings.open_storage_retention
-  - cmd.chat.delete
-  - cmd.project.remove
-  - cmd.project.delete_data
-  - storage.retention_hold_changed
-  - storage.compaction_lifecycle_changed
-  - storage.deletion_lifecycle_changed
+- storage.legal_hold.manage
+- cmd.storage.legal_hold.manage
+- cmd.storage.compaction.request
+- cmd.settings.open_storage_retention
+- cmd.chat.delete
+- cmd.project.remove
+- cmd.project.delete_data
+- storage.retention_hold_changed
+- storage.compaction_lifecycle_changed
+- storage.deletion_lifecycle_changed
 negative_constraints:
-  - Do not make legal hold an ordinary setting toggle or clear it automatically.
-  - Do not make request mean direct compaction or infer destructive eligibility from names, paths, times, ordering, or focus.
-  - Do not collapse Remove project from list into Delete Puppet Master project data or add message-level delete.
+- Do not make legal hold an ordinary setting toggle or clear it automatically.
+- Do not make request mean direct compaction or infer destructive eligibility from names, paths, times, ordering,
+  or focus.
+- Do not collapse Remove project from list into Delete Puppet Master project data or add message-level delete.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/UI_Command_Catalog.md
+- Plans/UI_Command_Catalog.md
 ```
 
 ### UCC-125 - Case L Exact Baseline And Restore Command Contract
@@ -1143,79 +1231,115 @@ plan_unit_id: UCC-126
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  cmd.chat.revert resolves one immutable whole-turn mutation manifest and then uses FileSafe exact-
-  replace, verified rollback, equality, restart, custody, and hold truth without transcript rewind or
-  partial success. Conversation lifecycle separately registers cmd.chat.create_restore_point,
-  cmd.chat.branch_from_restore, and cmd.chat.delete_restore_point against restore_point_record;
-  branching creates new conversation thread/branch identity from one verified inclusive boundary,
-  preserves source thread/branch/worktree/files/Git/index/queue/safe points, and treats optional
-  safe_point_id as lineage only without file restore. Current policy is
-  RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0: expiry eligibility is inclusive at owner-proven
-  reference_release + 7,776,000 seconds; the maximum is 2,048 restore points per project; count
-  pressure deletes only the oldest eligible restore point; and descendant branch/application refs,
-  preserve/legal holds, in-flight application, source-lineage, live, recovery, backup, rollback, and
-  maintenance refs override age and count eligibility and block deletion until their owner-defined
+canonical_text: 'cmd.chat.revert resolves one immutable whole-turn mutation manifest and then uses FileSafe
+  exact- replace, verified rollback, equality, restart, custody, and hold truth without transcript rewind or
+  partial success. Conversation lifecycle separately registers cmd.chat.create_restore_point, cmd.chat.branch_from_restore,
+  and cmd.chat.delete_restore_point against restore_point_record; branching creates new conversation thread/branch
+  identity from one verified inclusive boundary, preserves source thread/branch/worktree/files/Git/index/queue/safe
+  points, and treats optional safe_point_id as lineage only without file restore. Current policy is RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0:
+  expiry eligibility is inclusive at owner-proven reference_release + 7,776,000 seconds; the maximum is 2,048
+  restore points per project; count pressure deletes only the oldest eligible restore point; and descendant
+  branch/application refs, preserve/legal holds, in-flight application, source-lineage, live, recovery, backup,
+  rollback, and maintenance refs override age and count eligibility and block deletion until their owner-defined
   release evidence is durable.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Registers user-facing Chat revert and restore-point create, branch, and delete controls with disclosures and outcomes.
-depends_on: [UCC-075, F2-200, F2-201, F2-202, F2-204, CV-320, SP-242]
+gui_classification_reason: Registers user-facing Chat revert and restore-point create, branch, and delete controls
+  with disclosures and outcomes.
+depends_on:
+- UCC-075
+- F2-200
+- F2-201
+- F2-202
+- F2-204
+- CV-320
+- SP-242
 unblocks: []
 acceptance_criteria:
-  - Chat revert restores the complete multi-file turn or proves rollback/recovery-required as one transaction; no eligible turn creates no transaction.
-  - Restore-point create persists an immutable available record and project-scoped restore_point.created EventRecord 2.0 with stable idempotency.
-  - Create freezes one inclusive message boundary; equal identity/content returns the original and conflicting content is refused without overwrite.
-  - Branch consumes the expected record hash and discloses source boundary/state/new target; only branched creates identity and emits exactly one restore_point.applied, while replay returns the same recorded target without a duplicate event.
-  - Refused and failed return no target IDs and no restore_point.applied event; first execution and replay preserve source thread/branch/worktree/files/Git/index/queue/safe points.
-  - Delete transitions only unprotected exact-hash available state, follows every hold/ref, never clears a hold, and never deletes the source thread, worktree, safe point, or descendant branch.
-  - Restore-point status remains available, expired, deleted, or corrupt; successful application does not consume it, and RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0 expires only at the inclusive owner-proven release boundary or oldest-eligible count pressure after every overriding ref is released.
-  - A deleted source remains hidden; missing retained boundary content returns source_deleted_content_unavailable without new identity or reconstruction.
+- Chat revert restores the complete multi-file turn or proves rollback/recovery-required as one transaction;
+  no eligible turn creates no transaction.
+- Restore-point create persists an immutable available record and project-scoped restore_point.created EventRecord
+  2.0 with stable idempotency.
+- Create freezes one inclusive message boundary; equal identity/content returns the original and conflicting
+  content is refused without overwrite.
+- Branch consumes the expected record hash and discloses source boundary/state/new target; only branched creates
+  identity and emits exactly one restore_point.applied, while replay returns the same recorded target without
+  a duplicate event.
+- Refused and failed return no target IDs and no restore_point.applied event; first execution and replay preserve
+  source thread/branch/worktree/files/Git/index/queue/safe points.
+- Delete transitions only unprotected exact-hash available state, follows every hold/ref, never clears a hold,
+  and never deletes the source thread, worktree, safe point, or descendant branch.
+- Restore-point status remains available, expired, deleted, or corrupt; successful application does not consume
+  it, and RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0 expires only at the inclusive owner-proven release boundary
+  or oldest-eligible count pressure after every overriding ref is released.
+- A deleted source remains hidden; missing retained boundary content returns source_deleted_content_unavailable
+  without new identity or reconstruction.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - RSP-CHAT-001
-  - RSP-RP-001
-  - RSP-RP-002
-  - RSP-RP-003
-  - RSP-RP-004
-  - RSP-CMD-001
-  - python3 scripts/pm-plan-index.py validate
+- RSP-CHAT-001
+- RSP-RP-001
+- RSP-RP-002
+- RSP-RP-003
+- RSP-RP-004
+- RSP-CMD-001
+- python3 scripts/pm-plan-index.py validate
 risk_class: case_l_chat_restore_identity_or_atomicity_drift
 reasoning_tier: high
 context_scope: case_l_chat_revert_restore_point_commands
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/assistant-chat-design.md
-  - Plans/FileSafe.md
-  - Plans/Contracts_V0.md
-  - Plans/storage-plan.md
+- Plans/UI_Command_Catalog.md
+- Plans/assistant-chat-design.md
+- Plans/FileSafe.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
 node_compile_hint:
   mode: case_l_chat_restore_command_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Case-L:L-006
-  - Case-L:L-022
-  - Case-L:PD-RSP-08
-  - Case-L:PD-RSP-09
+- Case-L:L-006
+- Case-L:L-022
+- Case-L:PD-RSP-08
+- Case-L:PD-RSP-09
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - cmd.chat.revert
-  - cmd.chat.create_restore_point
-  - cmd.chat.branch_from_restore
-  - cmd.chat.delete_restore_point
-  - restore_point.created
-  - restore_point.applied
-  - available
-  - expired
-  - deleted
-  - corrupt
-  - branched
-  - refused
-  - failed
-  - no_eligible_mutating_turn
-  - source_deleted_content_unavailable
-  - RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0
+- cmd.chat.revert
+- cmd.chat.create_restore_point
+- cmd.chat.branch_from_restore
+- cmd.chat.delete_restore_point
+- restore_point.created
+- restore_point.applied
+- available
+- expired
+- deleted
+- corrupt
+- branched
+- refused
+- failed
+- no_eligible_mutating_turn
+- source_deleted_content_unavailable
+- RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0
 negative_constraints:
-  - Do not combine conversation branch with FileSafe restore or treat a restore point as a baseline target.
-  - Do not rewind transcript state, restore only part of a turn, consume a successful restore-point application, resurrect a deleted source, invent expiry, or mutate source conversation/worktree/file/SCM/queue/runtime-safe-point state.
+- Do not combine conversation branch with FileSafe restore or treat a restore point as a baseline target.
+- Do not rewind transcript state, restore only part of a turn, consume a successful restore-point application,
+  resurrect a deleted source, invent expiry, or mutate source conversation/worktree/file/SCM/queue/runtime-safe-point
+  state.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/UI_Command_Catalog.md
+- Plans/UI_Command_Catalog.md
 ```

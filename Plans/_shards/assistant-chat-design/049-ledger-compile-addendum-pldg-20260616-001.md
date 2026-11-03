@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L22695-L23013
+Source lines: L22842-L23167
 
-Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6`
+Source SHA256: `f4e5a424ee6841b4988ce457166d26b762be0b3f0c4aa0c5d0d03132ef6be00f`
 
 ---
 
@@ -18,9 +18,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat must expose visible Goal Mode activation and control paths without re-owning Goal Runtime policy. Users can start goals through a button, chip, icon, `/goal`, or natural-language activation. Assistant Chat supports a pre-goal shaping flow where the assistant helps create a goal prompt, acceptance criteria, constraints, and stop conditions before the user switches to Goal Mode. A visible active-goal indicator shows goal state labels including Running, Stopped, Paused, Blocked, and Complete, with Blocked carrying the precise blocker reason when available. Thread controls support pause, resume, stop, clear, edit, and update; stopped_by_user and cleared_from_thread remain distinct runtime states. The active Goal chip/status opens a menu or drawer with View goal, Edit goal, Pause, Resume, Stop, Clear, Show tasks, Show subgoals, and Show evidence/logs. Active-goal updates can be initiated with `/goal again`, asking for an update, or clicking a little icon next to the goal status. The Goal chip is separate from chat mode so Ask, Agent, Debug, Plan, Deep Plan, Agent + Goal, Debug + Goal, Plan + Goal, and Crew + Goal remain compatible presentation concepts. Goal UI reuses PMConcept cues including chat mode dropdown, slash command menu, sticky plan tracker, thread working pulse, context usage, active subagent indicator, files touched, message blocks, and hover/runtime popovers.
-  Amended 2026-10-09 (DL-180): View goal shows the Goal in Activity Detail's Goal panel
-  (Plans/FinalGUISpec.md#F3-593); there is no Goal tab (DL-147, ACD-500).
+  Goal activation and controls consume GRS-048/050/051/054/055/086 in Project and app threads. An explicit
+  request starts one concise Goal; Activity/Goal Detail shows its objective, four-state lifecycle, exact
+  direct Save or approved proposal and revision History. Pause/Resume/Cancel/Stop keep their actual owner
+  semantics and currentness. No title, phase, tranche, child Goal, task drawer, budget field, extra Goal
+  tab/card or implicit long-task Goal is restored. App context names the real Computer and working roots;
+  conversion uses GRS-087.
 gui_related: true
 gui_classification_reason: This unit defines user-visible chat activation paths, chips, indicators, and thread controls.
 depends_on:
@@ -29,15 +32,9 @@ depends_on:
   - ACD-500
 unblocks: []
 acceptance_criteria:
-  - Assistant Chat exposes button/chip/icon, `/goal`, and natural-language activation paths.
-  - Running goals have a visible indicator and do not disappear into ordinary chat mode state.
-  - Pause/resume/stop/clear/edit/update controls project canonical Goal Runtime state.
-  - Goal status labels include Running, Stopped, Paused, Blocked, and Complete, with Blocked preserving a precise blocker reason when known.
-  - Goal menu or drawer actions include View goal, Edit goal, Pause, Resume, Stop, Clear, Show tasks, Show subgoals, and Show evidence/logs.
-  - Pre-goal shaping can turn a rough request into a goal prompt, acceptance criteria, constraints, and stop conditions before switching to Goal Mode.
-  - Goal remains an additive wrapper compatible with Ask, Agent, Debug, Plan, Deep Plan, Agent + Goal, Debug + Goal, Plan + Goal, and Crew + Goal.
-  - stopped_by_user and cleared_from_thread remain distinct states in visible controls and runtime projection.
-  - Goal UI alignment preserves PMConcept cues for chat mode dropdown, slash command menu, sticky plan tracker, thread working pulse, context usage, active subagent indicator, files touched, message blocks, and hover/runtime popovers.
+  - "An explicit request creates one concise Goal in app or Project scope."
+  - "Activity/Goal Detail uses the exact four states and direct Save/approved-update owner routes."
+  - "No child Goal/title/phase/budget/drawer or alternate stopped/cleared lifecycle is revived."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Assistant Chat Goal UI review
@@ -51,17 +48,20 @@ node_compile_hint:
   mode: assistant_chat_goal_controls
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0017
-  - pldg-20260616-001-goal-runtime-system:atom-0018
-  - pldg-20260616-001-goal-runtime-system:atom-0019
-  - pldg-20260616-001-goal-runtime-system:atom-0020
-  - pldg-20260616-001-goal-runtime-system:atom-0021
-  - pldg-20260616-001-goal-runtime-system:atom-0024
-  - pldg-20260616-001-goal-runtime-system:atom-0025
-  - pldg-20260616-001-goal-runtime-system:atom-0026
-  - pldg-20260616-001-goal-runtime-system:atom-0027
-  - pldg-20260616-001-goal-runtime-system:atom-0030
-  - pldg-20260616-001-goal-runtime-system:dec-0008
+  - "pldg-20260616-001-goal-runtime-system:atom-0017"
+  - "pldg-20260616-001-goal-runtime-system:atom-0018"
+  - "pldg-20260616-001-goal-runtime-system:atom-0019"
+  - "pldg-20260616-001-goal-runtime-system:atom-0020"
+  - "pldg-20260616-001-goal-runtime-system:atom-0021"
+  - "pldg-20260616-001-goal-runtime-system:atom-0024"
+  - "pldg-20260616-001-goal-runtime-system:atom-0025"
+  - "pldg-20260616-001-goal-runtime-system:atom-0026"
+  - "pldg-20260616-001-goal-runtime-system:atom-0027"
+  - "pldg-20260616-001-goal-runtime-system:atom-0030"
+  - "pldg-20260616-001-goal-runtime-system:dec-0008"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "button/chip/icon"
   - "/goal"
@@ -134,7 +134,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat projects Goal Runtime task state through a goal task/TODO tracker with item states, update entry points, and visible replan feedback. Material mid-goal changes produce Goal Replan Event feedback in the visible task list. Blocked goal status must show the exact blocker instead of a generic failure label, including blocker_class, cause, affected scope, last attempted recovery, why autonomous recovery cannot continue safely, and next safe action when available.
+  Goal progress uses the one thread-local To-Do list and actual outcome receipts, never Goal-owned
+  child-task state or an invented percentage. Goal Activity Detail and ordinary transcript show owner
+  blockers/current state for Project and app threads; scope changes are GRS-087 owner operations, never
+  automatic replan metadata.
 gui_related: true
 gui_classification_reason: This unit defines visible task tracker, TODO state, replan feedback, and blocked-state presentation.
 depends_on:
@@ -142,10 +145,8 @@ depends_on:
   - GRS-019
 unblocks: []
 acceptance_criteria:
-  - Goal task items show current state and remain stable while updates occur.
-  - Replan events visibly update the task list after impact analysis.
-  - Blocked goals name the exact blocker in the chat surface.
-  - Blocked goal projections expose blocker_class, cause, affected scope, last attempted recovery, why autonomous recovery cannot continue safely, and next safe action when available.
+  - "The thread-local To-Do controller owns progress and per-item accepted outcomes."
+  - "App/Project Goal blockers and history use exact owner state without child Goal replans or copied completion."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Assistant Chat task tracker review
@@ -159,12 +160,15 @@ node_compile_hint:
   mode: assistant_chat_goal_task_tracker
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0022
-  - pldg-20260616-001-goal-runtime-system:atom-0023
-  - pldg-20260616-001-goal-runtime-system:atom-0036
-  - pldg-20260616-001-goal-runtime-system:atom-0072
-  - pldg-20260616-001-goal-runtime-system:atom-0095
-  - pldg-20260616-001-goal-runtime-system:dec-0014
+  - "pldg-20260616-001-goal-runtime-system:atom-0022"
+  - "pldg-20260616-001-goal-runtime-system:atom-0023"
+  - "pldg-20260616-001-goal-runtime-system:atom-0036"
+  - "pldg-20260616-001-goal-runtime-system:atom-0072"
+  - "pldg-20260616-001-goal-runtime-system:atom-0095"
+  - "pldg-20260616-001-goal-runtime-system:dec-0014"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Goal task / todo tracker"
   - "Goal task item states"
@@ -203,7 +207,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat displays goal evidence and activity disclosure through runtime popovers, metadata, activity cards, message blocks, thread-sidebar goal summaries, and final goal completion reports. Thread-sidebar goal summaries preserve exact formats such as Running · 8/14 tasks · 3 subgoals active and equivalent subagent-count wording. Runtime popovers/metadata preserve labels Mode, Provider, Model, Effort, Subagents, Tokens, Context, Est. Cost, Worktree, Merge Status, and takeover_state. Activity cards/message blocks preserve examples such as Automation, Starting login flow verification, Agent took control, and user_paused -> resumed. These displays summarize Goal Runtime receipts and evidence without becoming the canonical evidence store.
+  Goal evidence/activity and exact revision/continuation/Stop receipts are projected through
+  Activity/History/ordinary transcript and shared agent/work surfaces. App scope/Computer is explicit and
+  missing evidence stays unavailable. No child-goal counts, subgoal summaries or noncanonical
+  Running/Stopped lifecycle fields are introduced; completion follows authentic owner evidence, never a
+  model report.
 gui_related: true
 gui_classification_reason: This unit defines user-visible evidence, activity, metadata, thread summary, and completion-report displays.
 depends_on:
@@ -211,12 +219,8 @@ depends_on:
   - GRS-014
 unblocks: []
 acceptance_criteria:
-  - Users can inspect goal activity and evidence summaries from the chat surface.
-  - Thread-sidebar goal summaries can show exact progress and child/subagent counts such as Running · 8/14 tasks · 3 subgoals active.
-  - Runtime metadata labels include Mode, Provider, Model, Effort, Subagents, Tokens, Context, Est. Cost, Worktree, Merge Status, and takeover_state.
-  - Activity cards or message blocks can represent Automation, Starting login flow verification, Agent took control, and user_paused -> resumed examples.
-  - Completion reports disclose checks, changed artifacts, blockers, skipped checks, degraded status, and evidence references where relevant.
-  - Chat presentation links to runtime evidence instead of duplicating raw uncapped logs.
+  - "Evidence and completion come from authentic owner refs and remain scoped to the real thread/Computer."
+  - "Retired child-goal counts and Goal-owned progress/status fields are not rendered."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Assistant Chat evidence display review
@@ -231,11 +235,14 @@ node_compile_hint:
   mode: assistant_chat_goal_evidence_display
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0028
-  - pldg-20260616-001-goal-runtime-system:atom-0029
-  - pldg-20260616-001-goal-runtime-system:atom-0077
-  - pldg-20260616-001-goal-runtime-system:atom-0078
-  - pldg-20260616-001-goal-runtime-system:atom-0088
+  - "pldg-20260616-001-goal-runtime-system:atom-0028"
+  - "pldg-20260616-001-goal-runtime-system:atom-0029"
+  - "pldg-20260616-001-goal-runtime-system:atom-0077"
+  - "pldg-20260616-001-goal-runtime-system:atom-0078"
+  - "pldg-20260616-001-goal-runtime-system:atom-0088"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Thread sidebar goal summaries"
   - "Running · 8/14 tasks · 3 subgoals active"

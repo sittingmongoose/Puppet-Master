@@ -2,9 +2,9 @@
 
 Source: `Plans/MCP_Integration.md`
 
-Source lines: L2621-L2799
+Source lines: L2638-L2825
 
-Source SHA256: `8334adc8510cc12885d4956906f9705cf38eeebb797c65d513f9b7bacfbd6d48`
+Source SHA256: `0a52a091b49079c0b61bdf412f30e374054b3af1276ea66acf479067b9c236b5`
 
 ---
 
@@ -84,9 +84,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
 canonical_text: >-
-  MCP catalogs use compatibility-keyed stale-while-refresh with one in-flight refresh, deterministic underscore-only
-  projection order, deferred schema proxies, shared rich-result settlement, and deterministic lowest-canonical-server-id
-  ownership for normalized tool-name collisions. Suppressed and omitted tools remain receipted and inspectable.
+  MCP catalogs use compatibility-keyed stale-while-refresh with one in-flight refresh, deterministic
+  underscore-only projection order, deferred schema proxies, shared rich-result settlement, and
+  deterministic lowest-canonical-server-id ownership for normalized tool-name collisions. Suppressed
+  and omitted tools remain receipted and inspectable. Compatibility and catalog eligibility also bind
+  the resolved home/reach/Project-switch revision and exact work Computer; a cached library catalog
+  does not prove installation or authority there.
 gui_related: false
 gui_classification_reason: Backend MCP catalog/projection/collision contract; visible managers consume but do not own it.
 depends_on: [MI-003, MI-033, MI-036, MI-038, T-176]
@@ -112,9 +115,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
-  - 04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#MCP-lifecycle
-  - reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+- 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
+- 04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#MCP-lifecycle
+- reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: []
 preserved_exact_tokens:
   - stale-while-refresh
@@ -139,10 +144,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
 canonical_text: >-
-  MCP resource subscription setup is transactional and rolls acquired handles back in reverse deterministic order on
-  partial failure. Protocol/version/extension/auth/cache compatibility is explicit, while all config, catalog, cache,
-  receipt, artifact, debug, and projection surfaces remain no-secret, no-SQLite, and outside any PM-owned external
-  browser-test MCP or compatibility surface.
+  MCP resource subscription setup is transactional and rolls acquired handles back in reverse
+  deterministic order on partial failure. Protocol/version/extension/auth/cache compatibility is
+  explicit, while all config, catalog, cache, receipt, artifact, debug, and projection surfaces remain
+  no-secret, no-SQLite, and outside any PM-owned external browser-test MCP or compatibility surface.
+  Copy and rollback use only non-secret owner definition/binding references; host launch/auth
+  readiness stays on its Computer, and no-project derived output stays in the app thread owned area.
 gui_related: false
 gui_classification_reason: Backend transaction, compatibility, storage, and security boundary; not GUI implementation work.
 depends_on: [MI-014, MI-035, MI-039, MI-040]
@@ -168,9 +175,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - 04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#MCP-lifecycle
-  - SHARED_PROCESS_RULES.md#Shared-non-negotiable-rules
-  - REFERENCE_SUPERSESSIONS.md
+- 04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#MCP-lifecycle
+- SHARED_PROCESS_RULES.md#Shared-non-negotiable-rules
+- REFERENCE_SUPERSESSIONS.md
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: []
 preserved_exact_tokens:
   - resource subscription rollback

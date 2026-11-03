@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L1544-L3520
 
-Source SHA256: `f932a74573f86d7dc4a4bfa3088531138d1c22add1185e7613ed76ae56a3abe9`
+Source SHA256: `d07e09bc0879a8662e29cc47c8fd3ef1b8d0520f0501c34823aa00caedf610b1`
 
 ---
 
@@ -321,7 +321,7 @@ ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014
 | Build errors | Critical | **Fail** — block tier completion |
 | Type check errors | Critical | **Fail** — block tier completion |
 
-Threshold source: per-project `.puppet-master/quality.json` (if exists). If file is missing, use built-in defaults (no coverage threshold, linter/test/build errors fail, everything else warns).
+Thresholds consume one Settings effective policy at declared Everywhere/Computer/Project levels. A real Project .puppet-master/quality.json may contribute its owner-admitted Project input; app checks have no such file and use explicit Computer/task context. Existing fail/warn defaults and capability evidence remain, without a second policy writer.
 Config: `quality.gate.{check_name}.action` — override per check (`"fail"` or `"warn"`).
 
 **BeforeTierEnd verification responsibilities:**

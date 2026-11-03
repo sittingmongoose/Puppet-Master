@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1347-L1423
+Source lines: L1358-L1436
 
-Source SHA256: `fca9d7c6d996b9cf16f6e377b75d46f9a458aa94f866374e8eb7f5961846eace`
+Source SHA256: `98cedbe72059189d8dedef8480350441120a92631e6e4ef4f973487aefcf68c4`
 
 ---
 
@@ -17,7 +17,7 @@ This addendum elaborates how the canonical provider/model precedence owner secti
 
 1. **Persona axis**: Users select a Persona (e.g., "Code Analyzer", "Documentation Writer") which carries default preferences for model, provider, and mutation_policy.
 2. **Execution Unit Type axis**: Different execution unit types (run, node, delegated_subagent) can have scoped policies (e.g., "use GPT-4 for run-level analysis, but Claude for node-level code generation").
-3. **Scope axis**: Settings can be scoped to worktree, project, or global level; settings at a tighter scope override broader scopes.
+3. **Scope axis**: Ordinary defaults consume Everywhere → Computer → optional Project through SSYS-002/059; worktree/run/owner policies remain their existing narrower inputs and ceilings, not another ordinary store.
 
 ### Precedence chain for provider/model selection
 
@@ -27,16 +27,18 @@ When a unit needs to select a provider and model, resolve in this order:
 2. **Scoped owner policy**: If the active execution_unit_type has a policy (e.g., "node-type uses Copilot"), apply it.
 3. **Persona preference**: Use the active Persona's default model and provider.
 4. **Surface or stage default**: If the UI surface or execution stage has a default (e.g., "code review prefers GPT-4"), use it.
-5. **Project or global config default**: Fallback to project-wide or global settings.
-6. **Last-used state**: If permitted by settings, use the model/provider from the previous run of the same type.
-7. **Provider default**: Use the provider's canonical default model.
+5. **Project own default**: omit for No project.
+6. **Computer own default**: actual work Computer.
+7. **Everywhere/factory configuration default**: consume the one Settings resolver.
+8. **Last-used state**: only where permitted.
+9. **Provider default**: after capability/account filtering.
 
 ### Settings resolution and override semantics
 
 
-- **Conservative policy**: Use only settings tier 1 (explicit override) or tier 3+ (canonical defaults); do not apply stage defaults or persona preferences.
-- **Standard policy** (default): Use tiers 1-5 (explicit override through project defaults); respect all configuration.
-- **Aggressive policy**: Use all tiers 1-7; auto-select the cheapest or fastest model if multiple are available and equally suitable.
+- **Conservative policy**: tiers 1, 2, 5, 6, 7, 9 under MS-100; exclude Persona/stage defaults and preserve scoped/parent ceilings. The old numeric shorthand is superseded.
+- **Standard policy** (default): Use tiers 1–7 (explicit override through Everywhere/factory defaults); respect all configuration.
+- **Aggressive policy**: Use all tiers 1–9; auto-select the cheapest or fastest model if multiple are available and equally suitable.
 
 ### Provider capability and cost gating
 
@@ -74,7 +76,7 @@ When a provider and model are selected, emit a `selection_reason` object:
 selection_reason {
   selected_provider: string,           // e.g., 'openai', 'anthropic', 'github'
   selected_model: string,              // e.g., 'gpt-4', 'claude-3-opus'
-  precedence_tier: number,             // 1-7 indicating which tier was applied
+  precedence_tier: number,             // 1–9, using the versioned MS-005/099 source order
   fallback_reason?: string,            // If a fallback was triggered (capability, cost, unavailability)
   alternatives: Array,                 // Other models that were considered and why they were skipped
   selection_time_utc: string,          // When the decision was made

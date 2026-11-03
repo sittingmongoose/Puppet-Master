@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26825-L27556
+Source lines: L27008-L27731
 
-Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6`
+Source SHA256: `f4e5a424ee6841b4988ce457166d26b762be0b3f0c4aa0c5d0d03132ef6be00f`
 
 ---
 
@@ -122,41 +122,43 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Teach capture and confirm (section 6). The wand's Teach…, /teach, natural-language intent and
-  Save as a rule… in a message's More row each dispatch cmd.chat.teach.capture with mode new,
-  prefilled with the proposed rule text and a reference to its source message; the user's message
-  stays in the chat as sent. Editing a taught rule dispatches cmd.chat.teach.capture with mode
-  correct. Capture only opens the capture step, and the capture step is the Teach sheet (FinalGUISpec
-  F3-579) for every entry point, /teach and natural-language intent included: there is no inline capture card in the chat (DL-127). The save action is cmd.chat.teach.confirm, and
-  Cancel, close and Escape are cmd.chat.teach.cancel, which persists nothing. Scope is exactly one
-  of thread, project and user, shown nested from narrowest to widest as This thread, This project
-  and Every project. The user scope needs public_safe: the user's explicit statement that the rule
-  holds no private names, links or code; without it confirm refuses user scope and says why. In
-  correct mode the scope may stay or narrow but never widen; a wider rule is a new rule. Before
-  confirm the capture step screens the text for passwords, keys and tokens; when one is found it
-  says so in words and confirm stays refused until it is removed. When a similar taught rule is in
-  reach, the capture step shows the old and the new wording side by side and confirm waits for the
-  user's choice: replace the old rule, which records supersedes_memory_id and keeps the old version
-  in history, or keep both. The user may also mark the rule locked at confirm (ACD-481). The confirm
-  request is TeachConfirmRequest {scope, public_safe, locked, conflict_resolution:
-  replace:<memory_id> | keep_both, supersedes_memory_id?}. Each confirmed change leaves one receipt
-  line in the chat (saved, or updated to a new version), and consecutive saves coalesce into one
-  line. The reply's note about taught rules follows DL-116 as the design lead's ruling of
-  2026-09-27 applied it and AMS-053 of assistant-memory-subsystem defines it. A rule counts as
-  followed only when it was given to the assistant for that reply and the finished reply passed
-  that rule's check; inclusion alone is never shown as following. The note counts only rules that
-  passed, for example "Followed 1 of your rules". When any included rule failed its check the
-  reply shows "Missed 1 of your rules" (the number is how many failed), with a way to see which
-  rule was missed and a way to ask for a fix; the fix starts only when the user asks, and a failed
-  check is never hidden behind a Followed count. A rule whose check could not run earns no tick,
-  and a reply with no passed or failed check shows no rule note. Used is never shown in place of
-  either note. Section 6's user-locked sentence is unchanged.
-  DL-138 confirms the final wording. Persisted AMS-053 check results drive the note on reopen: passed
-  counts as Followed, failed counts as Missed and could_not_run earns no tick. A mixed result is one
-  line, Missed first, for example "Missed 1 of your rules · followed 2". See which rule opens the
-  saved check evidence as view state. Ask for a fix reuses cmd.review.send_findings_to_agent with
-  the taught_rule_check source variant (UCC-172): it fills the source thread's empty composer, returns
-  ComposerBufferResult, refuses composer_not_empty, and never sends or executes a fix. The user sends it.
+  Teach capture and confirm (section 6). The wand's Teach…, /teach, natural-language intent and Save as a
+  rule… in a message's More row each dispatch cmd.chat.teach.capture with mode new, prefilled with the
+  proposed rule text and a reference to its source message; the user's message stays in the chat as sent.
+  Editing a taught rule dispatches cmd.chat.teach.capture with mode correct. Capture only opens the
+  capture step, and the capture step is the Teach sheet (FinalGUISpec F3-579) for every entry point,
+  /teach and natural-language intent included: there is no inline capture card in the chat (DL-127). The
+  save action is cmd.chat.teach.confirm, and Cancel, close and Escape are cmd.chat.teach.cancel, which
+  persists nothing. Scope is exactly one of thread, project and user, shown nested from narrowest to
+  widest as This thread, This project and Every project. The user scope needs public_safe: the user's
+  explicit statement that the rule holds no private names, links or code; without it confirm refuses user
+  scope and says why. In correct mode the scope may stay or narrow but never widen; a wider rule is a new
+  rule. Before confirm the capture step screens the text for passwords, keys and tokens; when one is found
+  it says so in words and confirm stays refused until it is removed. When a similar taught rule is in
+  reach, the capture step shows the old and the new wording side by side and confirm waits for the user's
+  choice: replace the old rule, which records supersedes_memory_id and keeps the old version in history,
+  or keep both. The user may also mark the rule locked at confirm (ACD-481). The confirm request is
+  TeachConfirmRequest {scope, public_safe, locked, conflict_resolution: replace:<memory_id> | keep_both,
+  supersedes_memory_id?}. Each confirmed change leaves one receipt line in the chat (saved, or updated to
+  a new version), and consecutive saves coalesce into one line. The reply's note about taught rules
+  follows DL-116 as the design lead's ruling of 2026-09-27 applied it and AMS-053 of
+  assistant-memory-subsystem defines it. A rule counts as followed only when it was given to the assistant
+  for that reply and the finished reply passed that rule's check; inclusion alone is never shown as
+  following. The note counts only rules that passed, for example "Followed 1 of your rules". When any
+  included rule failed its check the reply shows "Missed 1 of your rules" (the number is how many failed),
+  with a way to see which rule was missed and a way to ask for a fix; the fix starts only when the user
+  asks, and a failed check is never hidden behind a Followed count. A rule whose check could not run earns
+  no tick, and a reply with no passed or failed check shows no rule note. Used is never shown in place of
+  either note. Section 6's user-locked sentence is unchanged. DL-138 confirms the final wording. Persisted
+  AMS-053 check results drive the note on reopen: passed counts as Followed, failed counts as Missed and
+  could_not_run earns no tick. A mixed result is one line, Missed first, for example "Missed 1 of your
+  rules · followed 2". See which rule opens the saved check evidence as view state. Ask for a fix reuses
+  cmd.review.send_findings_to_agent with the taught_rule_check source variant (UCC-172): it fills the
+  source thread's empty composer, returns ComposerBufferResult, refuses composer_not_empty, and never
+  sends or executes a fix. The user sends it. In No project omit the project choice, retain thread and
+  user with the user label Everywhere, and preserve public_safe, screening, conflict, locked-rule and
+  no-widening checks. Settings' Computer layer changes behavior defaults, not a new Teach memory scope.
+  Conversion keeps thread rules thread-wide and does not widen them.
 gui_related: true
 gui_classification_reason: "Defines what the user sets and sees when teaching Puppet Master a rule."
 split_recommended: false
@@ -193,6 +195,9 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-130"
   - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
   - "Plans/assistant-memory-subsystem.md#AMS-053"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"
@@ -380,18 +385,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The Plan tab rules of v3 item 15 (APR-036, APR-037, APR-038) are one editor-document mechanism
-  that the collaboration run views reuse. Open Panel on a Crew, Chat Room, BrainStorm or Review card
-  or receipt opens that run's view as one document per run identity in the editor tab system, beside
-  the chat, focusing an already open tab instead of duplicating it. At narrow widths it follows the
-  same full-width presentation with a persistent Return to chat affordance, without mutating saved
-  preferences. The chat and the composer destination stay visible while the view is open, and a
-  control that changes the run is rendered in one place at a time (Collaborative_Workflows CWR-020
-  owns what the view contains). This unit does not change the minimum chat width.
-  Amended 2026-10-09 (DL-180): the editor tab system beside the chat is the home centre's panels. Open Panel opens or
-  reveals the run's run tab through ACD-500 and Plans/FinalGUISpec.md#F3-634, one tab per run identity, and it takes
-  focus because the user clicked it; in a narrow window it shows through F3-636's panel switcher beside the chat.
-  Return to chat retires for Home, because no tab covers the chat (ACD-500). The chat's width is F3-637's.
+  The Plan tab rules of v3 item 15 (APR-036, APR-037, APR-038) are one editor-document mechanism that the
+  collaboration run views reuse. Open Panel on a Crew, Chat Room, BrainStorm or Review card or receipt
+  opens that run's view as one document per run identity in the editor tab system, beside the chat,
+  focusing an already open tab instead of duplicating it. At narrow widths it follows the same full-width
+  presentation with a persistent Return to chat affordance, without mutating saved preferences. The chat
+  and the composer destination stay visible while the view is open, and a control that changes the run is
+  rendered in one place at a time (Collaborative_Workflows CWR-020 owns what the view contains). This unit
+  does not change the minimum chat width. Amended 2026-10-09 (DL-180): the editor tab system beside the
+  chat is the home centre's panels. Open Panel opens or reveals the run's run tab through ACD-500 and
+  Plans/FinalGUISpec.md#F3-634, one tab per run identity, and it takes focus because the user clicked it;
+  in a narrow window it shows through F3-636's panel switcher beside the chat. Return to chat retires for
+  Home, because no tab covers the chat (ACD-500). The chat's width is F3-637's. The same exact run/Plan
+  identity routes operate in app scope with No project/Computer context and owner currentness. No
+  Project-focused lookup or second tab runtime is added.
 gui_related: true
 gui_classification_reason: "Places collaboration run views in the editor tab system."
 split_recommended: false
@@ -419,6 +426,9 @@ source_lineage:
   - "IMPACT-REGISTER B-ACD-05 (item 15)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/assistant-chat-design.md#ACD-500"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Open Panel"
   - "Return to chat"
@@ -641,37 +651,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  ELI5 in a chat, as Jared confirmed it on 2026-09-27 (DL-126). A chat's ELI5 state is resolved in
-  this order: the chat override, otherwise the project default, otherwise the app default. The chat
-  override is the per-conversation setting `general.interaction.chat-eli5`, written only by
-  cmd.chat.eli5.set with on, off or inherit; inherit deletes the override, so the chat follows the
-  project default again. The app default is `general.interaction.eli5-default` (Explain Terms Everywhere), whose value Settings owns and registers as off. The project default is that same
-  setting at project scope and applies to every chat in the project that has no override of its
-  own. Settings owns and persists that project scope under DL-138 (SSYS-028). Each assistant reply resolves the style once, when it starts, and records the style it was written in, Standard or Simple; a retry the user
-  asks for resolves the style again when the retry starts. Switching ELI5 changes only the replies
-  that start after the switch. It never re-sends, regenerates or rewrites an earlier reply, and a
-  reply still streaming at the moment of the switch finishes in the style it started with, so a switch never produces a second response. Each finished assistant reply may offer
-  Explain this reply simply. It dispatches cmd.chat.eli5.explain_reply with that reply's message id
-  and writes one extra reply, a simpler explanation of that reply, only when the user asks; the
-  command is refused while that reply is still streaming. The extra reply is an ordinary assistant
-  reply at the end of the thread that names the reply it explains and is written in Simple; it
-  never rewrites or replaces the reply it explains and changes no ELI5 setting. ELI5 is its own
-  small popup, the ELI5 sheet, opened from the wand's ELI5 row, and the quick dot by the message
-  box is the one-click on and off for the chat; FinalGUISpec F3-581 is their GUI contract. ELI5
-  changes only how answers are worded: code, plans, files and generated documents never change,
-  and Crew, Review and BrainStorm results stay technical. Dual copy: the Expert and ELI5 pair exists only for tooltips and help (section 2.2, FinalGUISpec F3-572), and the plain helper lines
-  under controls are single copy. The app-level Interaction Mode of section 2.2 is a separate
-  setting with its own default and is not one of the three levels. Obligation on the guided tour
-  owner: the guided tour teaches the retired one-click toggle and applies ELI5 to the same answer.
-  It must be re-pointed to the ELI5 popup and the quick dot, and because a switch never rewrites a
-  reply, a tour step that shows an answer explained simply may do so only through Explain this
-  reply simply, which adds one reply. The obligation covers the Planning_Wizard guided tour
-  chapter, FinalGUISpec F3-521, the Wiring_Matrix tour consumer rows, the Automated_Testing_System
-  tour acceptance items and the guided tour contract schema and fixtures; this unit edits none of
-  them. They carry the re-point as of 2026-09-27: Planning_Wizard PWIZ-023 and its tour chapter,
-  FinalGUISpec F3-521, Automated_Testing_System ATS-020, Wiring_Matrix WM-041 and the guided tour
-  contract pair. What still teaches the old behaviour is the touch closure tour action pin and the
-  concept tour source, which the tour owner changes together.
+  ELI5 consumes the one Settings resolver: This chat override, then applicable Project, then Computer,
+  then Everywhere, then factory; app chat skips Project. general.interaction.chat-eli5 remains the
+  per-conversation on/off/inherit value written only by cmd.chat.eli5.set, while
+  general.interaction.eli5-default is the Settings-owned layered default. Inherit removes the chat
+  override and follows that resolver; Everywhere edits use the existing Settings transaction and q-035 is
+  resolved in current canon. Each reply freezes style at start, a retry resolves afresh and no switch
+  rewrites a streaming or old answer. Explain this reply simply adds one requested Simple reply only after
+  the source finished and changes no preference. ELI5 popup/quick dot, dual tooltip/help versus single
+  helper copy and technical Crew/Review/BrainStorm outputs remain unchanged. App Interaction Mode is a
+  separate setting. Guided Tour consumes these same owners and never rewrites an old reply.
 gui_related: true
 gui_classification_reason: "Defines what a person's ELI5 choice changes in a chat, and the per-reply simpler explanation they can ask for."
 split_recommended: false
@@ -705,6 +694,9 @@ source_lineage:
   - "IMPACT-REGISTER B-ACD-01 (card p08, E-11), C-21 (the guided tour), D-30 (retry re-resolves the style)"
   - "Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5) answer record p08"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "DL-138"
   - "the chat override, otherwise the project default, otherwise the app default"

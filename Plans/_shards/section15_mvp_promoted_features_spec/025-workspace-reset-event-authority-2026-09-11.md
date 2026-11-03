@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11926-L12141
+Source lines: L12151-L12372
 
-Source SHA256: `0ae93e5637dcb0b333516aecf071c145ac679bc77caae51c7bade24ccf79f1dc`
+Source SHA256: `0398aca0a8d02e356ae284700fb6b1b57992a6eb3b3aa08ed90180c6a9cebda5`
 
 ---
 
@@ -193,14 +193,16 @@ status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
   Newly define the browser.workspace.reset-only resolved owner transition and
-  browser.workspace_inventory.reset.v1@1.0.0 consumer under DL-046. The authenticated
-  original owner joins revision, strictly advancing generation, controller fencing,
-  request/result/receipt and scope before publishing the committed reset fact.
-  Failed or uncertain append after the reset effect requires original-operation
-  recovery, never a second reset, no-effect claim or generation rollback. That recovery
-  resolves an issued original reset append only through the explicitly adopted SP-286/CV-339
-  storage.first_append_receipt.resolve.v2 and, when no original event exists, retries only the
-  original append identity through the unchanged shared idempotency route.
+  browser.workspace_inventory.reset.v1@1.0.0 consumer under DL-046. The authenticated original owner
+  joins revision, strictly advancing generation, controller fencing, request/result/receipt and scope
+  before publishing the committed reset fact. Failed or uncertain append after the reset effect
+  requires original-operation recovery, never a second reset, no-effect claim or generation rollback.
+  That recovery resolves an issued original reset append only through the explicitly adopted
+  SP-286/CV-339 storage.first_append_receipt.resolve.v2 and, when no original event exists, retries
+  only the original append identity through the unchanged shared idempotency route. App reset uses an
+  explicitly versioned application scope/owner/controller/request/result/receipt graph. It retains the
+  original-operation lost-append and generation rules; original Project exact bytes/codecs stay
+  accepted unchanged and no client Boolean or documentation edit admits an app writer.
 gui_related: false
 gui_classification_reason: Defines ownership, identity, replay and recovery, not presentation.
 depends_on: [DL-046, SMPFS-166, CV-332, SP-278, SP-286, CV-339]
@@ -217,7 +219,11 @@ reasoning_tier: high
 context_scope: browser_workspace_reset_single_family
 implementation_surfaces: [Plans/browser_event_admission.json, Plans/browser_event_payloads.schema.json, Plans/storage-plan.md]
 node_compile_hint: {mode: static_single_family_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Decision_Log.md#DL-046, Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution]
+source_lineage:
+- Plans/Decision_Log.md#DL-046
+- Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 negative_constraints:
   - No sibling admission, new feature, protected-auth access, new retention policy, Browser physical owner family or current live generation inferred from event history.
   - No native authentication, receipt custody, end-to-end indexed-reset, durability, runtime, readiness, historical-audit closure or governance seal follows from synthetic checks.

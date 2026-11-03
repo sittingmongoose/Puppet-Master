@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L94-L231
+Source lines: L94-L237
 
-Source SHA256: `14848fb74a4cec851913f354270a3e30a71dad6dd4ef753ade4e4d4158c3cd78`
+Source SHA256: `6e1ee908148cdf8fd6065f6e3121064753df6d5c65f7f56ab901f82d2ab71157`
 
 ---
 
@@ -20,14 +20,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/CLI_Bridged_Providers.md
 canonical_text: >-
-  CLI-backed and bridged provider request envelopes may carry containerized-host capability context so provider tools can
-  understand the selected worktree/runtime environment, but that context is not direct host authority and does not make a
-  provider bridge the owner of containerized-host execution. ProviderRequestEnvelope-style payloads may include
-  host_capability_ref, host_profile_id, runtime_family, working_directory, requested/effective runtime, provider, model,
-  account descriptors, blocked/degraded state, and required receipt refs. Any host operation still resolves through
-  HostCapabilityCommand, Executor intake, Tools policy, Run Modes, Permissions, FileSafe, and cleanup/retention receipt
-  paths. OpenCode remains reference-only for this compile unless a later OpenCode-specific host hook is explicitly
-  accepted.
+  CLI-backed and bridged provider request envelopes may carry containerized-host capability context so
+  provider tools can understand the selected worktree/runtime environment, but that context is not
+  direct host authority and does not make a provider bridge the owner of containerized-host execution.
+  ProviderRequestEnvelope-style payloads may include host_capability_ref, host_profile_id,
+  runtime_family, working_directory, requested/effective runtime, provider, model, account
+  descriptors, blocked/degraded state, and required receipt refs. Any host operation still resolves
+  through HostCapabilityCommand, Executor intake, Tools policy, Run Modes, Permissions, FileSafe, and
+  cleanup/retention receipt paths. OpenCode remains reference-only for this compile unless a later
+  OpenCode-specific host hook is explicitly accepted. The app variant binds explicit application
+  scope, null Project, actual thread/Computer/working roots and the same host/capability/permission
+  envelope. Conversion reissues future context only; provider-native historical sessions, profiles,
+  auth and live processes retain original ownership.
 gui_related: false
 gui_classification_reason: Provider bridge context is backend/provider routing behavior, not GUI presentation.
 depends_on: [T-166, MI-031, EP-109, RM-048, PS-126]
@@ -51,16 +55,18 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0029
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0034
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0044
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0047
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0053
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0069
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#execution_lane_matrix
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-005-host-capability-command
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0029
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0034
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0044
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0047
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0053
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0069
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#execution_lane_matrix
+- Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-005-host-capability-command
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N5/N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: [atom-0029, atom-0034, atom-0040, atom-0044, atom-0047, atom-0053, atom-0069, atom-0081]
 preserved_exact_tokens:
   - "provider bridges"
@@ -85,9 +91,9 @@ ContractRef: Primitive:Provider, ContractName:Plans/Contracts_V0.md, ContractNam
 
 `ProviderRequestEnvelope` is the canonical provider-facade handoff record above provider-specific command-line or HTTP encodings. The expanded identity bundle in `ProviderRequestEnvelope` MUST include run/thread/parent/child lineage, attempt identity when present, execution role, requested/effective runtime/provider/model/account descriptors, permission/tool-policy snapshot refs, working-directory or worktree identity, prompt parts, and retry/approval context. Provider-specific projections such as `BRIDGE_INVOKE_OPTIONS` may encode a subset for launch, but they must remain derivable from `ProviderRequestEnvelope` and must not replace it as the ownership boundary.
 
-The existing `working_directory` passthrough is sufficient for assistant worktree context: when the executor launches a CLI-bridged provider from a bound thread, `working_directory` is the worktree path and no provider-specific worktree field is required beyond the canonical runtime envelope.
+The existing `working_directory` passthrough is sufficient for assistant worktree context: when the executor launches a CLI-bridged provider from a bound thread, `working_directory` is the worktree path when bound, otherwise the explicit app chat/granted root on its named Computer. The scope-aware canonical envelope supplies identity; no provider-specific worktree field or synthetic Project is required.
 
-When a thread has a worktree binding, MCP tools and CLI-bridged provider launches receive the frozen execution-context `working_directory`; tool invocations that use `cwd` run in that worktree path, and git-aware commands such as `git status` resolve git context from that cwd. No additional provider-specific worktree configuration is required.
+When a thread has a worktree binding, MCP tools and CLI-bridged provider launches receive the frozen execution-context `working_directory`; tool invocations that use `cwd` run in that worktree path, and git-aware commands such as `git status` resolve git context from that cwd. An unbound app thread uses its chat/granted cwd under CBP-006/023. Conversion changes only future PM context, not provider-native historical state, profile, trust or live process. No additional provider-specific worktree configuration is required.
 
 <a id="PROVIDER-TRANSFORM"></a>
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L7003-L7693
+Source lines: L7172-L7888
 
-Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f`
+Source SHA256: `e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a`
 
 ---
 
@@ -317,9 +317,14 @@ plan_unit_id: GRS-077
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: Original Workflow source, association and current activation custody. The actual T0 binding reservation,
-  T1 original joint birth/metadata/association publication and later T2 materialization preserve exact whole sources
-  and original owner identity.
+canonical_text: >-
+  Original Workflow source, association and current activation custody. The actual T0 binding reservation,
+  T1 original joint birth/metadata/association publication and later T2 materialization preserve exact
+  whole sources and original owner identity. This exact historical/Project Workflow source edition remains
+  Project-bound and unchanged in its schema, hashes and original predicates. Ordinary application Goal
+  continuation is GRS-086 and cannot synthesize this Workflow/WorkGraph/WorkNode/certification evidence.
+  An app-needed source/event requires its own complete admitted sibling rather than casting a null Project
+  into this contract; native proof remains separate.
 gui_related: false
 gui_classification_reason: Defines original source, owner, storage and verification semantics without a visual surface.
 split_recommended: false
@@ -356,11 +361,14 @@ node_compile_hint:
   create_nodeseeds: false
   runtime_enabled: false
 source_lineage:
-- Plans/Decision_Log.md#DL-039
-- Plans/Decision_Log.md#DL-045
-- Plans/Decision_Log.md#DL-047
-- Plans/workflow_activation_contracts/methods.json
-- Plans/workflow_activation_contracts/physical-families.json
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "Plans/workflow_activation_contracts/methods.json"
+  - "Plans/workflow_activation_contracts/physical-families.json"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids: []
 negative_constraints:
 - No public command, event or Goal lifecycle expansion and no fabricated original source or receipt.
@@ -513,7 +521,13 @@ plan_unit_id: GRS-079
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: Complete original started-v3 source and bounded consumer ownership; native execution remains unproved.
+canonical_text: >-
+  Complete original started-v3 source and bounded consumer ownership; native execution remains unproved.
+  This exact historical/Project Workflow source edition remains Project-bound and unchanged in its schema,
+  hashes and original predicates. Ordinary application Goal continuation is GRS-086 and cannot synthesize
+  this Workflow/WorkGraph/WorkNode/certification evidence. An app-needed source/event requires its own
+  complete admitted sibling rather than casting a null Project into this contract; native proof remains
+  separate.
 gui_related: false
 gui_classification_reason: Defines original runtime source, custody, replay and retention contracts without a visual surface.
 split_recommended: false
@@ -546,9 +560,12 @@ node_compile_hint:
   create_nodeseeds: false
   runtime_enabled: false
 source_lineage:
-- Plans/Executor_Protocol.md#EP-118
-- Plans/storage-plan.md#SP-309
-- Plans/Backup_Restore_System.md#BRS-025
+  - "Plans/Executor_Protocol.md#EP-118"
+  - "Plans/storage-plan.md#SP-309"
+  - "Plans/Backup_Restore_System.md#BRS-025"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids: []
 ```
 
@@ -578,7 +595,13 @@ plan_unit_id: GRS-080
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: Complete positive original cancelled-v3 source consumer and bounded versioned projector ownership; native execution remains unproved.
+canonical_text: >-
+  Complete positive original cancelled-v3 source consumer and bounded versioned projector ownership;
+  native execution remains unproved. This exact historical/Project Workflow source edition remains
+  Project-bound and unchanged in its schema, hashes and original predicates. Ordinary application Goal
+  continuation is GRS-086 and cannot synthesize this Workflow/WorkGraph/WorkNode/certification evidence.
+  An app-needed source/event requires its own complete admitted sibling rather than casting a null Project
+  into this contract; native proof remains separate.
 gui_related: false
 gui_classification_reason: Original runtime custody and derived source currentness contract without visual presentation.
 split_recommended: false
@@ -615,9 +638,12 @@ node_compile_hint:
   create_nodeseeds: false
   runtime_enabled: false
 source_lineage:
-- Plans/Executor_Protocol.md#EP-118
-- Plans/storage-plan.md#SP-309
-- Plans/Backup_Restore_System.md#BRS-025
+  - "Plans/Executor_Protocol.md#EP-118"
+  - "Plans/storage-plan.md#SP-309"
+  - "Plans/Backup_Restore_System.md#BRS-025"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids: []
 ```
 

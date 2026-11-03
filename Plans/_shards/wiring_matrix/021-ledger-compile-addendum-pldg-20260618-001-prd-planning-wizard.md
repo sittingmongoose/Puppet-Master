@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3188-L3279
+Source lines: L3255-L3379
 
-Source SHA256: `3f8150617657a7e9de14a5815e7cc3097714249b08ea146d6967ac8137771f7b`
+Source SHA256: `3899744314444527ed5abfa724f4abdb67822efa4d7b3852a2db461438fffebe`
 
 ---
 
@@ -19,16 +19,46 @@ plan_unit_id: WM-038
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Approve And Build atomically writes the immutable pack, user approval receipt, and PlanApproved transactional-outbox event so approval cannot be committed without a recoverable downstream trigger. PlanApproved uses a deterministic idempotency key derived from project_id, pack_id, pack version, and pack hash; duplicate delivery returns the existing PlanCompileRun rather than creating another run. After provisioning acceptance, one activation transaction creates or binds the GoalRun in activating state, installs the certified WorkGraph revision, materializes all WorkNodes, queues runnable entrypoints, records the activation receipt, and writes GoalRunStarted or BuildStarted through a transactional outbox. Commands for topic navigation, reopen, defer, annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect evidence, inspect assignment, request bounded recompile, and open resulting
-  build define permission, enablement, disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery. Run a doc-impact pass over Assistant Chat, Goal Runtime, Planning Ledger, Plan Document, Plan Compile, Automated Testing, Executor, Orchestrator, Personas, Models, FileSafe, Git/worktree, GitHub, permissions, contracts, commands, GUI, wiring, artifacts, indexes, and reference docs.'
+canonical_text: 'Approve And Build atomically writes the immutable pack, user approval receipt, and PlanApproved
+  transactional-outbox event so approval cannot be committed without a recoverable downstream trigger. PlanApproved
+  uses a deterministic idempotency key derived from project_id, pack_id, pack version, and pack hash; duplicate
+  delivery returns the existing PlanCompileRun rather than creating another run. After provisioning acceptance,
+  one activation transaction creates or binds the GoalRun in activating state, installs the certified WorkGraph
+  revision, materializes all WorkNodes, queues runnable entrypoints, records the activation receipt, and writes
+  GoalRunStarted or BuildStarted through a transactional outbox. Commands for topic navigation, reopen, defer,
+  annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect
+  evidence, inspect assignment, request bounded recompile, and open resulting build define permission, enablement,
+  disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery. Run a doc-impact pass
+  over Assistant Chat, Goal Runtime, Planning Ledger, Plan Document, Plan Compile, Automated Testing, Executor,
+  Orchestrator, Personas, Models, FileSafe, Git/worktree, GitHub, permissions, contracts, commands, GUI, wiring,
+  artifacts, indexes, and reference docs.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
-- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
-- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical
+  product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits
+  through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts,
+  or production build tasks are created by this compile.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
@@ -60,6 +90,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
 - Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
 - Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/10-doc-and-contract-impact.md#SRC-IMPACT
+- source_ref:chat:2026-11-03-projects-pass2-approved
 source_atom_ids:
 - atom-0104
 - atom-0105
@@ -86,7 +117,9 @@ preserved_exact_tokens:
 - resume
 - inspect evidence
 - doc-impact pass
-negative_constraints: []
+negative_constraints:
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
 - Plans/Contracts_V0.md
 - Plans/Goal_Runtime_System.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L22756-L22957
+Source lines: L22692-L22890
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -148,13 +148,8 @@ plan_unit_id: SP-275
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage executes the existing expiry predicate through status-only E1, original barrier
-  append E2 and complete receipt/result E3. New E1 uses SP-285 retained-created admission and full fresh expiry gates;
-  later passive native reads explicitly adopt SP-285 retained_custody with complete current SP-278 source
-  and no disposed original or nested creation controls; later holds preserve terminal custody. Checkpoint
-  refresh preserves current holds and generation history. Independent retirement uses SP-269 v2 custody
-  and coordinated codec admission without changing retained v1.
-  SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication, authenticating the original complete event and actual v2 receipt custody before the complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+canonical_text: |-
+  Storage executes the existing expiry predicate through status-only E1, original barrier append E2 and complete receipt/result E3. New E1 uses SP-285 retained-created admission and full fresh expiry gates; later passive native reads explicitly adopt SP-285 retained_custody with complete current SP-278 source and no disposed original or nested creation controls; later holds preserve terminal custody. Checkpoint refresh preserves current holds and generation history. Independent retirement uses SP-269 v2 custody and coordinated codec admission without changing retained v1. SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication, authenticating the original complete event and actual v2 receipt custody before the complete owner-local guard; no dependent resolver intervenes before atomic terminal publication. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App restore lifecycle has its own complete original create/expiry/delete/source/checkpoint/result wrappers under CV-366, the same shared 2,048 app bucket, 7,776,000-second reference-release threshold and every current hold; immutable historical Project source predicates stay exact.
 gui_related: false
 gui_classification_reason: Defines backend custody, source validation and owner-result authority.
 split_recommended: false
@@ -209,4 +204,6 @@ source_lineage:
 - RSE-N01
 - RSE-N02
 - RSE-N03
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 ```

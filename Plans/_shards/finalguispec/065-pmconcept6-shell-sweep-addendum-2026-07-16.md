@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32585-L33242
+Source lines: L32431-L33087
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -479,11 +479,8 @@ plan_unit_id: F3-451
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The Testing side panel joins the canonical side-panel inventory. The occupant displays
-  the project's test policy, the last test run status and results, and a run-tests control
-  wired to the test runner subsystem so runs started from the panel execute through the
-  canonical test execution path.
+canonical_text: |-
+  The Testing side panel joins the canonical side-panel inventory. The occupant displays the project's test policy, the last test run status and results, and a run-tests control wired to the test runner subsystem so runs started from the panel execute through the canonical test execution path. A runnable test action needs the actual admitted test target/root and capability; a missing Project test policy is not an app chat mode prohibition. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This unit defines a visible side panel and its displayed testing surface.
 split_recommended: false
@@ -506,9 +503,11 @@ node_compile_hint:
   mode: testing_side_panel
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:5854"
-- "Plans/FinalGUISpec.md:5482"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:5854
+- Plans/FinalGUISpec.md:5482
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Testing"
 - "test policy"

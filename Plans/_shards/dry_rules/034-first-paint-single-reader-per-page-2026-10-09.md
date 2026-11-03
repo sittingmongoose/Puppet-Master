@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3354-L3406
+Source lines: L3310-L3360
 
-Source SHA256: `2ee9163141078a9ed56d59700128756b51cb1c18109a0f7fe60e02b9748b8245`
+Source SHA256: `f483b45c08ded2f8811a35ed53cd4b052d3b603b856084efdaba166705d30608`
 
 ---
 
@@ -19,13 +19,10 @@ plan_unit_id: DR-054
 unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  A page paints its stored look before its first frame through exactly one first-paint reader (F3-468). The look's
-  one store and the reader's read-only access are DR-056's; this rule adds only the count. The reader writes nothing
-  but the attributes the look owner's first render writes, so the owner rewrites the same values, and no surface on
-  the page adds a reader of its own. The assistant chat keeps its reader (F3-612) only while it is a page of its own;
-  when it is ported into PMConcept7, PMConcept7's head boot script is the page's one reader and the chat's reader is
-  removed rather than kept beside it.
+canonical_text: |-
+  A page paints its stored look before its first frame through exactly one first-paint reader (F3-468). The look's one store and the reader's read-only access are DR-056's; this rule adds only the count. The reader writes nothing but the attributes the look owner's first render writes, so the owner rewrites the same values, and no surface on the page adds a reader of its own. The assistant chat keeps its reader (F3-612) only while it is a page of its own; when it is ported into PMConcept7, PMConcept7's head boot script is the page's one reader and the chat's reader is removed rather than kept beside it.
+
+  Before a Project opens, the same reader consumes the Settings owner's locally available resolved application/Device look; a valid saved resolution is never replaced with an ephemeral Basic Dark flash. Basic Dark is only the factory or pre-claim fallback. The family/mode atomic pair and effective Reduce motion/OS result arrive together before first paint. Offline/as-of readback stays truthful and never creates a write queue, last-painted hint or extra per-page reader.
 gui_related: true
 gui_classification_reason: "Keeps one first-paint reader per page, reading the look owner's store."
 split_recommended: false
@@ -54,7 +51,8 @@ preserved_exact_tokens:
   - "F3-468"
   - "F3-612"
 negative_constraints:
-  - "Do not add a second first-paint reader to a page, or a stored or global copy of the theme for one."
+- Do not add a second first-paint reader or an independent theme copy/last-painted hint; shared Settings level records
+  remain owner-authoritative.
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L2907-L3003
+Source lines: L2912-L3016
 
-Source SHA256: `fe048767cd39d62ee7e90db30eefc91a6c7a6d35a4e06679ac041404fe28a050`
+Source SHA256: `b45561569a06ac308e7bed4f95971921c0d57cde2047701ec1004abb787af8ce`
 
 ---
 
@@ -31,15 +31,20 @@ plan_unit_id: RAP-059
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
-canonical_text: Runtime Artifacts defines one passive restore-point record reader using Chat native or
-  supported historical completion proof, or the separate typed terminal-retention-summary result, and
-  Storage current snapshot authority. It preserves existing status/permission/hold/source visibility and
-  branch preflight, emits no runtime_artifact.restore_point event, and never treats a projection as canonical
+canonical_text: >-
+  Runtime Artifacts defines one passive restore-point record reader using Chat native or supported
+  historical completion proof, or the separate typed terminal-retention-summary result, and Storage
+  current snapshot authority. It preserves existing status/permission/hold/source visibility and branch
+  preflight, emits no runtime_artifact.restore_point event, and never treats a projection as canonical
   point or custody authority. For restore_point.created only, current read publication explicitly adopts
   the named 2.0.0 reader successors under SP-281/SP-278; v1 bindings are compatibility-only and original
-  creation controls remain required at admission; the current native branch explicitly adopts SP-285 retained_creation
-  for available and retained_custody for supported expired/deleted points without disposed original controls.
-  Creation, fresh lifecycle admission, admitted pending recovery and passive retained inspection follow their distinct SP-285 routes.
+  creation controls remain required at admission; the current native branch explicitly adopts SP-285
+  retained_creation for available and retained_custody for supported expired/deleted points without
+  disposed original controls. Creation, fresh lifecycle admission, admitted pending recovery and passive
+  retained inspection follow their distinct SP-285 routes. App restore-point inspection selects its
+  admitted app source/custody/index sibling and exact thread/Computer, retaining the same passive
+  proof/hold/visibility/branch-preflight boundaries. Conversion lineage never rewrites a historical record
+  or fabricates current custody.
 gui_related: true
 gui_classification_reason: This unit governs existing visible restore-point history and branch availability.
 split_recommended: false
@@ -85,9 +90,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-045
-- reports/event-authority-20260911/step-08-depth-binding-work-records.md#ea-s8-restore-binding--restore-consumercheckpoint-evidence
-- Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption
+  - "Plans/Decision_Log.md#DL-045"
+  - "reports/event-authority-20260911/step-08-depth-binding-work-records.md#ea-s8-restore-binding--restore-consumercheckpoint-evidence"
+  - "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - restore_point.created
 - event-family-restore-point-created

@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L1298-L1557
+Source lines: L1308-L1576
 
-Source SHA256: `ae043ff101e9961383abd53c59f9f78f01314f3061ce0ea7039bbb1386ea9d35`
+Source SHA256: `0eb674f95b083572d08fa10b6506de4fb7e33e53dd80f2683155ea8f8e451cd1`
 
 ---
 
@@ -190,9 +190,14 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
 canonical_text: >-
-  ProjectHostBinding and SourceLocationRegistry own the eight exact Project topology operations in the inventory.
-  Home Server, execution Host, execution policy, and Source Location are separate typed bindings; changing one does
-  not silently change routes, move a Project, delete external source payloads, or select another binding.
+  ProjectHostBinding and SourceLocationRegistry own the eight exact Project topology operations in the
+  inventory. Home Server, execution Host, execution policy, and Source Location are separate typed
+  bindings; changing one does not silently change routes, move a Project, delete external source payloads,
+  or select another binding. Repointing a Project after its folder was moved outside Puppet Master uses
+  cmd.project.source_location.test then cmd.project.source_location.update with verified stable identity;
+  it moves no content. Moving content uses PSB-005 cmd.project.move.preflight and cmd.project.move.start
+  with verified copy/cutover/rollback; app chat transfer consumes PSB-007. Read-only repository inspection
+  consumes this topology and stays with Source Control, never the topology owner.
 gui_related: true
 depends_on: [SIR-004, SIR-015, SIR-025]
 unblocks: []
@@ -207,7 +212,11 @@ reasoning_tier: high
 context_scope: project_topology_commands
 implementation_surfaces: [Plans/Shared_Integration_Runtime.md, future ProjectHostBinding and SourceLocationRegistry]
 node_compile_hint: {mode: shared_runtime_static_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [server-command-gap-adjudication rows 106-108 and 122-127]
+source_lineage:
+  - "server-command-gap-adjudication rows 106-108 and 122-127"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints: [No implicit Project Move., No implicit route change., No external payload deletion.]
 ```
 

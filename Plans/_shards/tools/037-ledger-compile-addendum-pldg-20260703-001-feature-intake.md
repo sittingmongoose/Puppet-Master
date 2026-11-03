@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L11648-L12334
+Source lines: L11720-L12419
 
-Source SHA256: `9f8f951e268b5a9642675d8bc16560174ee3265592aa1c7c4d77e345c3e8f504`
+Source SHA256: `ede2a7942ae8c531e17d141bb5f9b2c6f0a9e43c259bfe1fa9f102f70e9d0a67`
 
 ---
 
@@ -419,7 +419,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  P0-SESSION-TOOL-NAMESPACE-ACTIVATION (P0) is compiled as canonical Puppet Master intent for Runtime-valid plugins/tools that are not actually injected into the session: Imported external-repo finding extrepo-20260703-0078 / P0-SESSION-TOOL-NAMESPACE-ACTIVATION (P0). The preserved PM gap/delta is: Capability catalogs and tool registries were covered, but not the final active-session namespace proof that a tool family is both configured and injected into this run. The observed external-repo signal remains source-lineage evidence: Codex issue #31023 described a Computer Use/plugin/cache/runtime configuration that was valid, but session tools were not injected and node_repl did not start. | Warp and Codex changelogs show explicit tool/plugin/runtime capability stages and immediate tool refreshes. | Cline and Warp both expose imported third-party agent/tool configs and custom model/provider flows.
+  P0-SESSION-TOOL-NAMESPACE-ACTIVATION (P0) is compiled as canonical Puppet Master intent for
+  Runtime-valid plugins/tools that are not actually injected into the session: Imported external-repo
+  finding extrepo-20260703-0078 / P0-SESSION-TOOL-NAMESPACE-ACTIVATION (P0). The preserved PM
+  gap/delta is: Capability catalogs and tool registries were covered, but not the final active-session
+  namespace proof that a tool family is both configured and injected into this run. The observed
+  external-repo signal remains source-lineage evidence: Codex issue #31023 described a Computer
+  Use/plugin/cache/runtime configuration that was valid, but session tools were not injected and
+  node_repl did not start. | Warp and Codex changelogs show explicit tool/plugin/runtime capability
+  stages and immediate tool refreshes. | Cline and Warp both expose imported third-party agent/tool
+  configs and custom model/provider flows. T-186 computer use is offered only when this same
+  active-session namespace proves the selected model/provider can receive it and its signed-in desktop
+  and DAE-safe path are admitted; concept/test drivers are not product capability evidence.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -454,6 +465,8 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:5
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N10
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids:
 - atom-0082
 external_atom_id: extrepo-20260703-0078

@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L9341-L9637
+Source lines: L9431-L9853
 
-Source SHA256: `0ae93e5637dcb0b333516aecf071c145ac679bc77caae51c7bade24ccf79f1dc`
+Source SHA256: `0398aca0a8d02e356ae284700fb6b1b57992a6eb3b3aa08ed90180c6a9cebda5`
 
 ---
 
@@ -19,38 +19,77 @@ plan_unit_id: SMPFS-139
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: >-
-  Classical DAP debugging uses the shared DebugSessionRecord and DebugSessionBroker lifecycle bound to exact
-  ExecutionHostId, ExecutionEnvironmentId, SourceLocationId, adapter capability snapshot, owner, LeaseId,
-  generation, permission grant, policy, logs, artifacts, and cleanup. Typed protocol behavior covers launch and
-  attach, breakpoints, continue/pause/step, threads/stack/scopes/variables, evaluate,
-  modules/sources/disassembly/memory, output, disconnect/terminate, restart, and cleanup. Immediate-event waiters
-  are armed before triggering operations. Classical UI dispatch uses only concrete cmd.run_debug.* verbs;
-  cmd.debug.* remains assistant-investigation scoped and is never a DAP alias.
+canonical_text: Classical DAP debugging uses the shared DebugSessionRecord and DebugSessionBroker lifecycle
+  bound to exact ExecutionHostId, ExecutionEnvironmentId, SourceLocationId, adapter capability snapshot,
+  owner, LeaseId, generation, permission grant, policy, logs, artifacts, and cleanup. Typed protocol behavior
+  covers launch and attach, breakpoints, continue/pause/step, threads/stack/scopes/variables, evaluate,
+  modules/sources/disassembly/memory, output, disconnect/terminate, restart, and cleanup. Immediate-event
+  waiters are armed before triggering operations. Classical UI dispatch uses only concrete cmd.run_debug.*
+  verbs; cmd.debug.* remains assistant-investigation scoped and is never a DAP alias. No-project use,
+  where the exact debug target/capability is supported, binds explicit app scope, thread/Computer/working
+  root and real adapter/source identity. Project-specific presets still require their real Project; no
+  ghost target or hidden Orchestrator run is fabricated. The application sibling uses Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1,
+  CV-366's exact whole app source graph and SP-349's distinct application physical family; creation/reset
+  consumes OriginalBrowserTransitionSource in Plans/application_workflow_sources.schema.json. Retain every
+  original Project source/hash/codec unchanged. Missing app native-source, writer/read/checkpoint/backup
+  or controller proof stays unavailable; protected-auth capture, profile migration and focus-based fallback
+  are forbidden.
 gui_related: false
-gui_classification_reason: This is the promoted debugger runtime and command-namespace boundary, not debugger surface presentation.
-depends_on: [SIR-008, ATS-030]
+gui_classification_reason: This is the promoted debugger runtime and command-namespace boundary, not debugger
+  surface presentation.
+depends_on:
+- SIR-008
+- ATS-030
+- CV-366
+- SP-349
 unblocks: []
 acceptance_criteria:
-  - DebugSessionRecord preserves exact topology, source, adapter, owner, lease/generation/epoch, permission, policy, log, artifact, and cleanup identity.
-  - Immediate stopped, output, exited, and terminated events cannot race ahead of their waiters, and late prior-generation events cannot mutate current state.
-  - cmd.run_debug.* is the only classical DAP family and every cmd.debug.* substitution or generic action alias is rejected.
-  - Restart and client-loss paths reconcile or terminate truthfully and never fabricate a live adapter.
-validation_surfaces: [python3 scripts/pm-plan-index.py validate, Plans/Automated_Testing_System.md ATS-030 future executable matrix]
+- DebugSessionRecord preserves exact topology, source, adapter, owner, lease/generation/epoch, permission,
+  policy, log, artifact, and cleanup identity.
+- Immediate stopped, output, exited, and terminated events cannot race ahead of their waiters, and late
+  prior-generation events cannot mutate current state.
+- cmd.run_debug.* is the only classical DAP family and every cmd.debug.* substitution or generic action
+  alias is rejected.
+- Restart and client-loss paths reconcile or terminate truthfully and never fabricate a live adapter.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- Plans/Automated_Testing_System.md ATS-030 future executable matrix
 risk_class: classical_debug_namespace_or_lifecycle_drift
 reasoning_tier: high
 context_scope: promoted_typed_debugsession
-implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md, Plans/Commands_System.md]
-node_compile_hint: {mode: promoted_debugsession_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
+- Plans/Commands_System.md
+node_compile_hint:
+  mode: promoted_debugsession_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
-preserved_exact_tokens: [DebugSessionRecord, DebugSessionBroker, cmd.run_debug.*, cmd.debug.*, ExecutionHostId, ExecutionEnvironmentId, SourceLocationId]
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule
+  rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
+preserved_exact_tokens:
+- DebugSessionRecord
+- DebugSessionBroker
+- cmd.run_debug.*
+- cmd.debug.*
+- ExecutionHostId
+- ExecutionEnvironmentId
+- SourceLocationId
 negative_constraints:
-  - Do not mint or alias commands in this consumer PlanUnit.
-  - Do not route classical DAP operations through cmd.debug.*.
-  - Do not claim runtime proof from this PlanUnit or a schema alone.
-owner_hints: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md, Plans/Commands_System.md]
+- Do not mint or alias commands in this consumer PlanUnit.
+- Do not route classical DAP operations through cmd.debug.*.
+- Do not claim runtime proof from this PlanUnit or a schema alone.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
+- Plans/Commands_System.md
 ```
 
 ### SMPFS-140 - Persistent EvalSession Policy Boundary
@@ -60,38 +99,80 @@ plan_unit_id: SMPFS-140
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: >-
-  Persistent evaluation uses EvalSessionRecord and EvalSessionBroker for product-approved sandboxed Python,
-  JavaScript, Ruby, and Julia kernels. Retained variables, bounded streaming output, redacted artifact spills,
-  restart, and cleanup are scoped to exact Project, Goal/run, worktree, ExecutionHostId,
-  ExecutionEnvironmentId, SourceLocationId, owner, LeaseId, runtime installation, policy, and artifact root; hidden
-  global kernels are prohibited. Local compute and external wait are accounted separately. Nested PM tool or
-  agent calls require explicit policy and independent single-use ProviderDispatchAdmissionReceipt consumption;
-  idle-time pause never suspends other resource, security, recursion, provider, output, or artifact limits.
+canonical_text: Persistent evaluation uses EvalSessionRecord and EvalSessionBroker for product-approved
+  sandboxed Python, JavaScript, Ruby, and Julia kernels. Retained variables, bounded streaming output,
+  redacted artifact spills, restart, and cleanup are scoped to exact Project, Goal/run, worktree, ExecutionHostId,
+  ExecutionEnvironmentId, SourceLocationId, owner, LeaseId, runtime installation, policy, and artifact
+  root; hidden global kernels are prohibited. Local compute and external wait are accounted separately.
+  Nested PM tool or agent calls require explicit policy and independent single-use ProviderDispatchAdmissionReceipt
+  consumption; idle-time pause never suspends other resource, security, recursion, provider, output, or
+  artifact limits. An app EvalSession instead binds application scope, real thread/Goal/run/Computer and
+  admitted roots under the same kernel limits and owner/session isolation; nullable Project does not create
+  a hidden global kernel. The application sibling uses Plans/application_workflow_contracts.schema.json#/$defs/BrowserSessionApplicationV1,
+  CV-366's exact whole app source graph and SP-349's distinct application physical family; creation/reset
+  consumes OriginalBrowserTransitionSource in Plans/application_workflow_sources.schema.json. Retain every
+  original Project source/hash/codec unchanged. Missing app native-source, writer/read/checkpoint/backup
+  or controller proof stays unavailable; protected-auth capture, profile migration and focus-based fallback
+  are forbidden.
 gui_related: false
-gui_classification_reason: This unit defines evaluator sandbox, scope, accounting, and authority rather than a visible evaluator surface.
-depends_on: [SIR-008, SIR-009, ATS-031]
+gui_classification_reason: This unit defines evaluator sandbox, scope, accounting, and authority rather
+  than a visible evaluator surface.
+depends_on:
+- SIR-008
+- SIR-009
+- ATS-031
+- CV-366
+- SP-349
 unblocks: []
 acceptance_criteria:
-  - Kernel state cannot cross its explicit Project/run/worktree/topology/owner/session scope.
-  - Nested provider/tool/agent work independently satisfies policy and consumes valid dispatch admission without widening parent or session authority.
-  - CPU, memory, wall, idle, output, artifact, recursion, provider, FileSafe, permission, credential, and network limits remain independently enforceable.
-  - Crash, restart, lease loss, and cleanup fence late results and retain explicit variable/artifact disposition.
-validation_surfaces: [python3 scripts/pm-plan-index.py validate, Plans/Automated_Testing_System.md ATS-031 future executable matrix]
+- Kernel state cannot cross its explicit Project/run/worktree/topology/owner/session scope.
+- Nested provider/tool/agent work independently satisfies policy and consumes valid dispatch admission
+  without widening parent or session authority.
+- CPU, memory, wall, idle, output, artifact, recursion, provider, FileSafe, permission, credential, and
+  network limits remain independently enforceable.
+- Crash, restart, lease loss, and cleanup fence late results and retain explicit variable/artifact disposition.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- Plans/Automated_Testing_System.md ATS-031 future executable matrix
 risk_class: persistent_eval_scope_or_authority_escape
 reasoning_tier: high
 context_scope: promoted_persistent_evalsession
-implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md, Plans/Tools.md, Plans/Permissions_System.md, Plans/FileSafe.md]
-node_compile_hint: {mode: promoted_evalsession_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
+- Plans/FileSafe.md
+node_compile_hint:
+  mode: promoted_evalsession_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
-preserved_exact_tokens: [EvalSessionRecord, EvalSessionBroker, ProviderDispatchAdmissionReceipt, Python, JavaScript, Ruby, Julia, hidden global kernels are prohibited]
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule
+  rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
+preserved_exact_tokens:
+- EvalSessionRecord
+- EvalSessionBroker
+- ProviderDispatchAdmissionReceipt
+- Python
+- JavaScript
+- Ruby
+- Julia
+- hidden global kernels are prohibited
 negative_constraints:
-  - Do not collapse persistent EvalSession into DAP frame evaluation.
-  - Do not inherit or reuse provider dispatch admission.
-  - Do not pause non-idle safety/resource limits during external wait.
-owner_hints: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md, Plans/Tools.md]
+- Do not collapse persistent EvalSession into DAP frame evaluation.
+- Do not inherit or reuse provider dispatch admission.
+- Do not pause non-idle safety/resource limits during external wait.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
+- Plans/Tools.md
 ```
 
 ### SMPFS-141 - Test Debug Lease And Awareness Consumption
@@ -101,38 +182,77 @@ plan_unit_id: SMPFS-141
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: >-
-  Testing, classical debug, Eval, device, and browser work consume RuntimeResourceGovernor admission,
-  ObservableWork truth, LeaseCoordinator CAS lifecycles, and OperationalAwarenessService bounded projections.
-  Every executable request binds exact Project/Home Server, ExecutionHostId, ExecutionEnvironmentId,
+canonical_text: Testing, classical debug, Eval, device, and browser work consume RuntimeResourceGovernor
+  admission, ObservableWork truth, LeaseCoordinator CAS lifecycles, and OperationalAwarenessService bounded
+  projections. Every executable request binds exact Project/Home Server, ExecutionHostId, ExecutionEnvironmentId,
   SourceLocationId where applicable, topology generation, capability snapshot, holder, epoch, lease generation,
   policy, operation/attempt, and ObservableWorkId. Host-local enforcement may reject or reduce a coordinator
   proposal. Awareness is freshness-labeled and read-only; it never authorizes action or injects raw registries,
-  secrets, transcripts, page bodies, stacks, variables, or captures into prompts.
+  secrets, transcripts, page bodies, stacks, variables, or captures into prompts. The app form for admitted
+  chat/Goal/Crew/Assistant Plan/scheduled work binds null Project, its actual Server storage writer and
+  exact Computer/thread/roots. It has no Project Home Server/Vault lease; actual target/capability/permission
+  gates still apply. Only Planning Wizard, PRD Builder and Orchestrator retain no-project workflow gates.
+  The application sibling uses Plans/application_workflow_contracts.schema.json#/$defs/BrowserProgramApplicationV1,
+  CV-366's exact whole app source graph and SP-349's distinct application physical family; creation/reset
+  consumes OriginalBrowserTransitionSource in Plans/application_workflow_sources.schema.json. Retain every
+  original Project source/hash/codec unchanged. Missing app native-source, writer/read/checkpoint/backup
+  or controller proof stays unavailable; protected-auth capture, profile migration and focus-based fallback
+  are forbidden.
 gui_related: false
-gui_classification_reason: This unit defines shared runtime admission and projection consumption rather than a visible surface.
-depends_on: [SIR-006, SIR-007, ATS-032]
+gui_classification_reason: This unit defines shared runtime admission and projection consumption rather
+  than a visible surface.
+depends_on:
+- SIR-006
+- SIR-007
+- ATS-032
+- CV-366
+- SP-349
 unblocks: []
 acceptance_criteria:
-  - Consumers do not create feature-local global governors, work state machines, lease authorities, or awareness registries.
-  - Stale holder, epoch, generation, topology, capability, or source identity cannot renew, release, publish, or mutate through a replacement lease.
-  - Awareness states current, partial, stale, unavailable, and conflicted carry source cursors/observed time and confer no authority.
-  - Queued, admitted, reduced, lease-held, awareness-current, or visible never means test/debug success.
-validation_surfaces: [python3 scripts/pm-plan-index.py validate, Plans/Automated_Testing_System.md ATS-032 future executable matrix]
+- Consumers do not create feature-local global governors, work state machines, lease authorities, or awareness
+  registries.
+- Stale holder, epoch, generation, topology, capability, or source identity cannot renew, release, publish,
+  or mutate through a replacement lease.
+- Awareness states current, partial, stale, unavailable, and conflicted carry source cursors/observed
+  time and confer no authority.
+- Queued, admitted, reduced, lease-held, awareness-current, or visible never means test/debug success.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- Plans/Automated_Testing_System.md ATS-032 future executable matrix
 risk_class: shared_runtime_consumer_authority_fork
 reasoning_tier: high
 context_scope: promoted_test_debug_shared_runtime_consumption
-implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md]
-node_compile_hint: {mode: promoted_test_debug_runtime_consumption_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: promoted_test_debug_runtime_consumption_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
-preserved_exact_tokens: [RuntimeResourceGovernor, ObservableWork, LeaseCoordinator, OperationalAwarenessService, ExecutionHostId, ExecutionEnvironmentId, SourceLocationId]
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule
+  rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
+preserved_exact_tokens:
+- RuntimeResourceGovernor
+- ObservableWork
+- LeaseCoordinator
+- OperationalAwarenessService
+- ExecutionHostId
+- ExecutionEnvironmentId
+- SourceLocationId
 negative_constraints:
-  - Do not create a second shared resource, lease, progress, or awareness owner.
-  - Do not inject raw operational registries into prompts.
-  - Do not convert admission or visibility into verification proof.
-owner_hints: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md]
+- Do not create a second shared resource, lease, progress, or awareness owner.
+- Do not inject raw operational registries into prompts.
+- Do not convert admission or visibility into verification proof.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
 ```
 
 ### SMPFS-142 - PM-Native Browser Program Architecture
@@ -232,13 +352,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  Concurrent agents or browser-test tasks use isolated BrowserWorkspaces and dedicated BrowserPages unless an
-  owner-authorized read-only observer contract applies. Each action carries exact Server, ExecutionHostId,
-  ExecutionEnvironmentId, Project, Plan, Goal, run, attempt, agent, operation, BrowserSession, BrowserWorkspace,
-  BrowserPage, LeaseId/generation/epoch/holder, expected PageGeneration, and sequence. Exactly one mutating
-  LeaseCoordinator Browser page-controller lease is valid per BrowserPage PageGeneration. Navigation, redirect,
-  reload, crash/restore, and explicit handoff advance or revalidate PageGeneration; stale actions are rejected.
-  Read-only observation, focus, visibility, or tab selection never confers mutation authority.
+  Concurrent agents or browser-test tasks use isolated BrowserWorkspaces and dedicated BrowserPages
+  unless an owner-authorized read-only observer contract applies. Each action carries exact Server,
+  ExecutionHostId, ExecutionEnvironmentId, Project, Plan, Goal, run, attempt, agent, operation,
+  BrowserSession, BrowserWorkspace, BrowserPage, LeaseId/generation/epoch/holder, expected
+  PageGeneration, and sequence. Exactly one mutating LeaseCoordinator Browser page-controller lease is
+  valid per BrowserPage PageGeneration. Navigation, redirect, reload, crash/restore, and explicit
+  handoff advance or revalidate PageGeneration; stale actions are rejected. Read-only observation,
+  focus, visibility, or tab selection never confers mutation authority. App browser actions carry an
+  explicit application parent and real thread/Computer/root/session/lease identity; Project, Named
+  Plan and Goal refs are absent only when not applicable. This is a separately versioned app request,
+  never a nullable shortcut into protected sessions or an existing exact Project codec.
 gui_related: true
 gui_classification_reason: This unit governs concurrent visible/watchable pages, controller handoff, and user-observable mutation ownership.
 depends_on: [SMPFS-141, SMPFS-142, ATS-034]
@@ -255,8 +379,10 @@ context_scope: promoted_multi_agent_browser_fencing
 implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md]
 node_compile_hint: {mode: promoted_browser_controller_fencing_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: [BrowserWorkspace, BrowserPage, PageGeneration, LeaseCoordinator, one mutating controller lease per page generation]
 negative_constraints:
   - Do not share mutable BrowserWorkspace or BrowserPage state across agents by default.

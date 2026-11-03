@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19117-L19256
+Source lines: L19094-L19203
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -29,40 +29,8 @@ plan_unit_id: SP-254
 unit_type: storage_security_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: '`Plans/storage_value_registry.json` registers the September 1 Forge, Backup v2, and Go tsnet contract
-  groups as public durable metadata or explicit nonpersisted transport without claiming physical materialization. Backup
-  v2 retains destination/repository/policy/run/manifest, capture-barrier and phase-journal refs, schedule occurrence
-  and outbox refs, retention/browse/health, RecoverySet public, no-store Recovery Kit delivery-session metadata, migration,
-  restore, and receipt records while snapshot/repository/export bytes remain in Backup-owned external custody and raw
-  Recovery Key/Kit/session payloads never persist. StorageMigrationCoordinator performs the explicit v1-to-v2 disposition
-  without manufacturing a key, source closure, verification, runtime, or provider readiness; Backup''s `pm.backup_restore_system.recovery_set_public.v2`
-  is never Storage boot recovery `recovery_set_id`. Forge retains provider-instance, repository-binding, independent
-  automation-binding/shell, provider-native object, currentness, and receipt refs without duplicating PAT/OAuth/SSH/private-CA/credential
-  content; canonical shell state uses `repository_automation.project_state.{project_id}` and reads the two GitHub predecessor
-  keys only through an idempotent fail-closed migration. Remote Access retains PM-owned connector/Server identity, configuration,
-  generations, version/build/protocol facts, redacted authorization-operation metadata, route/health/migration/receipt
-  refs, and an opaque `secure_state_ref`; connector IPC, protected URLs, raw tsnet state, tailnet identity, and node/auth/
-  pre-auth/IPC keys are nonpersisted or external to ordinary redb/seglog. The registered transforms cover public requests,
-  results, errors, availability, receipts, and health/currentness projections and reject key/token/code, protected/browser,
-  private path/host, unsafe SCM configuration, and capture content. All three domains remain receipt-only and Event Authority
-  silent with `runtime_evidence=false`. DL-259, Jared 2026-10-31: D7 B supersedes the former no-per-Client-node restriction.
-  Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale connection and sign in once
-  through the shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned Go tsnet
-  helper is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native Client
-  installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and Server
-  endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references
-  prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only
-  to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private
-  listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable
-  connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale
-  connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It
-  cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. D6 A: the
-  human signs in on the initiating active device while the AI/tool runs on the selected execution host. Official tool
-  sign-ins and private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s secure
-  credential store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment
-  references, never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating
-  Client/session/generation and execution host. Changing account, host or route invalidates stale validation; another
-  account of the same provider has a distinct identity.'
+canonical_text: |-
+  `Plans/storage_value_registry.json` registers the September 1 Forge, Backup v2, and Go tsnet contract groups as public durable metadata or explicit nonpersisted transport without claiming physical materialization. Backup v2 retains destination/repository/policy/run/manifest, capture-barrier and phase-journal refs, schedule occurrence and outbox refs, retention/browse/health, RecoverySet public, no-store Recovery Kit delivery-session metadata, migration, restore, and receipt records while snapshot/repository/export bytes remain in Backup-owned external custody and raw Recovery Key/Kit/session payloads never persist. StorageMigrationCoordinator performs the explicit v1-to-v2 disposition without manufacturing a key, source closure, verification, runtime, or provider readiness; Backup's `pm.backup_restore_system.recovery_set_public.v2` is never Storage boot recovery `recovery_set_id`. Forge retains provider-instance, repository-binding, independent automation-binding/shell, provider-native object, currentness, and receipt refs without duplicating PAT/OAuth/SSH/private-CA/credential content; canonical shell state uses `repository_automation.project_state.{project_id}` and reads the two GitHub predecessor keys only through an idempotent fail-closed migration. Remote Access retains PM-owned connector/Server identity, configuration, generations, version/build/protocol facts, redacted authorization-operation metadata, route/health/migration/receipt refs, and an opaque `secure_state_ref`; connector IPC, protected URLs, raw tsnet state, tailnet identity, and node/auth/ pre-auth/IPC keys are nonpersisted or external to ordinary redb/seglog. The registered transforms cover public requests, results, errors, availability, receipts, and health/currentness projections and reject key/token/code, protected/browser, private path/host, unsafe SCM configuration, and capture content. All three domains remain receipt-only and Event Authority silent with `runtime_evidence=false`. DL-259, Jared 2026-10-31: D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or route invalidates stale validation; another account of the same provider has a distinct identity. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound. Backup app/converted history manifests include independent canonical task/schedule custody and lineage under BRS-033, with no native certification or new receipt family.
 gui_related: false
 gui_classification_reason: The unit defines storage custody, migration, redaction, and event-admission boundaries rather than visible presentation.
 depends_on: [SP-251, SP-253, BRS-012, BRS-016, FGI-012, RAS-015]
@@ -124,10 +92,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_backup_reconciliation.md
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_backup_reconciliation.md
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 preserved_exact_tokens:
   - pm.backup_restore_system.recovery_set_public.v2
   - recovery_set_id

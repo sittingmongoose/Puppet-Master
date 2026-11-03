@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L8787-L8993
+Source lines: L8828-L9103
 
-Source SHA256: `d364a4e2236c3b386e30789a96e6fcd7ce8c47c8b47c778bff57fe0ac6156d60`
+Source SHA256: `e9b534b288cf26f8491197a8298235235d65c6627a7e4d86153934d9f313a8ca`
 
 ---
 
@@ -215,3 +215,72 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-128, ContractName:Plans/Collaborative_Workflows.md#CWR-040, ContractName:Plans/Decision_Log.md#DL-137
+
+### EP-132 - Application Dispatch And Historical Project Source Boundaries
+
+```yaml
+plan_unit_id: EP-132
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Ordinary chat, Goal, Crew, Assistant Plan and scheduled-message/task dispatch accepts the shared
+  explicit application execution wrapper with null Project, real Server/thread/run/operation, actual Computer/roots,
+  current permission evidence, storage writer/lease and Stop/pause epochs. It freezes working_directory, effective
+  route/model/account/tool snapshots and any real repo/worktree identity; missing actual target capability blocks,
+  while a legitimate absent Project does not. No-worktree app cwd is the owned chat folder or explicitly granted
+  root, never home/current focus/a main Project. Planning is read-only toward task files; execution is separately
+  admitted. Hash/idempotency/preimage/currentness and complete source/control/backup/retention graphs are selected
+  under explicit app editions; historical Project codecs, exact Goal/Plan associations, original accepted/cancel/result
+  custody and native all-writers.v6/v7 Workflow contracts remain unchanged. App Goal/Plan execution cannot manufacture
+  Planning Wizard activation, a NamedPlan, WorkNodes, Standard certification or missing source evidence. Conversion
+  settles/fences in-flight work and timers before linked destination admission; old source Stop and results remain
+  authentic. Replay reads cannot dispatch, repair missing canonical state, synthesize completion or charge Usage
+  again. Any genuine Project grant-authorized local/remote action additionally consumes OSI-441/Permissions BuildGrant/current
+  Plan/task/resource/permission/Stop/revocation at final dispatch; app work receives none by inheritance. All schema/source
+  adoptions remain contract specifications until native owner admission/evidence is complete.
+gui_related: false
+gui_classification_reason: Defines identity, custody, admission or compiler boundaries; visual placement is consumed
+  from GUI owners.
+depends_on:
+- SIR-055
+- GRS-086
+- CWR-045
+- APR-073
+- SQR-019
+unblocks: []
+acceptance_criteria:
+- App dispatch distinguishes absent Project from a dangling actual target and rechecks Stop/permission/root/writer
+  at final dispatch.
+- Old Workflow/Project exact source fixtures remain accepted unchanged and cannot be cast as app evidence.
+- A conversion racing Stop, cancel or a schedule produces one authentic settled result or typed recovery hold.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#Q11-Goals-Crew; N21-N22; N25
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
+preserved_exact_tokens:
+- working_directory
+- all-writers.v6/v7
+- WorkNodes
+- Usage
+negative_constraints:
+- No application sentinel, implicit cwd, copied certification, fake WorkNode or re-enrollment of historical sources.
+- No schema/fixture result is native authority or readiness proof.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-132, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md

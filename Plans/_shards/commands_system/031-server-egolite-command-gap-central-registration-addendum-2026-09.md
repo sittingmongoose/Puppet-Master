@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L5392-L5704
+Source lines: L5521-L5856
 
-Source SHA256: `9006bc4dadc370bafa320a238e20908f23ddab3d4885e367d6f80b1c0dda1e84`
+Source SHA256: `8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013`
 
 ---
 
@@ -243,24 +243,37 @@ plan_unit_id: CS-073
 unit_type: command_registration
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: 'The 171-row server command-gap adjudication and six retained Egolite gaps resolve to 103 unique exact
-  primary command registrations, 43 pre-policy aliases, 38 typed local UI actions, and three non-dispatchable rejections,
-  with one sole planned target per primary and no fabricated native or event proof; the September 11 user correction
-  admits cmd.project.unarchive through the existing Project action family.
+canonical_text: 'The 171-row server command-gap adjudication and six retained Egolite gaps resolve to 103 unique
+  exact primary command registrations, 43 pre-policy aliases, 38 typed local UI actions, and three non-dispatchable
+  rejections, with one sole planned target per primary and no fabricated native or event proof; the September
+  11 user correction admits cmd.project.unarchive through the existing Project action family.
 
 
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
-  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
-  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is
+  unchanged. generic_git and generic_host remain transport-only, never aliases that restore retired provider,
+  review, CI, auth or mirror authority.
 
-  DL-273, Jared 2026-11-01: Source Control provider-aware command and auth consumers recheck current
-  Forge-owner admission against the effective request selection before dispatch. Saved rendering, transient
-  control state or a different unpicked draft grants no provider authority and cannot start work for a
-  retired service or variant; existing command ids, sole handlers, typed results and exact returns remain.'
+  DL-273, Jared 2026-11-01: Source Control provider-aware command and auth consumers recheck current Forge-owner
+  admission against the effective request selection before dispatch. Saved rendering, transient control state
+  or a different unpicked draft grants no provider authority and cannot start work for a retired service or
+  variant; existing command ids, sole handlers, typed results and exact returns remain.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: The registrations supply Settings, Product Onboarding, Doctor, project, hosting, update, Browser,
-  Forge, Source Control, and palette consumers with exact availability and disabled reasons.
+gui_classification_reason: The registrations supply Settings, Product Onboarding, Doctor, project, hosting,
+  update, Browser, Forge, Source Control, and palette consumers with exact availability and disabled reasons.
 depends_on:
 - CS-070
 - CS-071
@@ -270,27 +283,30 @@ unblocks:
 - WM-050
 - UIW-016
 acceptance_criteria:
-- Exact current denominators are 171 = 87 + 43 + 38 + 3, packet primaries are 93 = 87 + 6, and 104 obligation references
-  collapse to 103 unique central rows through the one workspace-create overlap; only row 128 changes disposition under
-  USER-PROJECT-UNARCHIVE-REGISTRY-20260911.
+- Exact current denominators are 171 = 87 + 43 + 38 + 3, packet primaries are 93 = 87 + 6, and 104 obligation
+  references collapse to 103 unique central rows through the one workspace-create overlap; only row 128 changes
+  disposition under USER-PROJECT-UNARCHIVE-REGISTRY-20260911.
 - cmd.project.unarchive has one Project owner, existing Project request/result family and sole handlers::project::unarchive
-  target. The retained ui.project.restore_archived entry constructs the command before every gate and receives no independent
-  handler or production row; predecessor local requests cannot replay as mutation authority.
-- The 103 unique central obligations are covered by the 100 distinct primary definitions in this section and the three
-  existing authentication primaries in CS-066/UCC-145; authentication start/cancel/resume are not duplicated.
-- Every primary resolves one owner, exact request/result contracts, one planned target, handler_unavailable state, receipt/projection-only
-  effect, and complete reverse consumers.
-- Every alias normalizes before permission and dispatch with no source registration or peer route; every local predecessor
-  and rejection has no production row.
-- Static plans, schemas, fixtures, target strings, catalogs, wiring rows, and concepts confer no native, security, visual,
-  performance, or runtime proof.
+  target. The retained ui.project.restore_archived entry constructs the command before every gate and receives
+  no independent handler or production row; predecessor local requests cannot replay as mutation authority.
+- The 103 unique central obligations are covered by the 100 distinct primary definitions in this section and
+  the three existing authentication primaries in CS-066/UCC-145; authentication start/cancel/resume are not
+  duplicated.
+- Every primary resolves one owner, exact request/result contracts, one planned target, handler_unavailable
+  state, receipt/projection-only effect, and complete reverse consumers.
+- Every alias normalizes before permission and dispatch with no source registration or peer route; every local
+  predecessor and rejection has no production row.
+- Static plans, schemas, fixtures, target strings, catalogs, wiring rows, and concepts confer no native, security,
+  visual, performance, or runtime proof.
 - 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
-  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
-  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
-- 'DL-273: A request for a retired provider or variant fails before provider or auth work regardless of
-  selection provenance; the current admitted routes keep their existing commands and fences.'
-
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is
+  unchanged. generic_git and generic_host remain transport-only, never aliases that restore retired provider,
+  review, CI, auth or mirror authority.'
+- 'DL-273: A request for a retired provider or variant fails before provider or auth work regardless of selection
+  provenance; the current admitted routes keep their existing commands and fences.'
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - Plans/UI_Command_Catalog.md
 - Plans/Wiring_Matrix.production.json
@@ -316,8 +332,15 @@ source_lineage:
 - source_ref:server-command-gap-adjudication:rows-1-171
 - source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator
 - DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+- source_ref:chat:2026-11-03-projects-pass2-approved
 negative_constraints:
 - Do not register an alias, typed local predecessor, or rejected spelling as a primary command.
 - Do not treat a sole future handler path or production-intent row as native implementation proof.
 - Do not emit an unadmitted EventRecord family.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/Commands_System.md
+preserved_exact_tokens:
+- handler_unavailable
 ```

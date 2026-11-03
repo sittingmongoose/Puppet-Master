@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L3692-L17647
+Source lines: L3692-L17636
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -751,11 +751,8 @@ plan_unit_id: CV-024
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Wizard, interview, Source Control, and worktree handoff payloads consume shared
-  runtime identity rather than alternate tier_id = None, interview-phase-*,
-  pseudo-tier, stable-branch, base_branch, git-hook, ad hoc state, or
-  lineage-thin payloads.
+canonical_text: |-
+  Wizard, interview, Source Control, and worktree handoff payloads consume shared runtime identity rather than alternate tier_id = None, interview-phase-*, pseudo-tier, stable-branch, base_branch, git-hook, ad hoc state, or lineage-thin payloads. For an owner-admitted app feature, CV-365/366 selects explicit application scope and the exact application envelope/source/physical-key/append/read/retention graph; required-present project_id is null and actual thread/Server/Host/root identities remain. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge.
 gui_related: false
 gui_classification_reason: This unit defines runtime lineage and handoff identity contracts rather than visual presentation.
 split_recommended: true
@@ -778,7 +775,9 @@ node_compile_hint:
   mode: runtime_lineage_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,B-F06,D-F06
 preserved_exact_tokens:
   - "`tier_id = None`"
   - "`interview-phase-*`"
@@ -852,10 +851,8 @@ plan_unit_id: CV-026
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Runtime event rows and EventRecord alignment claims carry project, thread,
-  run, attempt, and account identity directly or by complete
-  requested_effective_snapshot_ref?; compatibility-era subsets are insufficient.
+canonical_text: |-
+  Runtime event rows and EventRecord alignment claims carry project, thread, run, attempt, and account identity directly or by complete requested_effective_snapshot_ref?; compatibility-era subsets are insufficient. For an owner-admitted app feature, CV-365/366 selects explicit application scope and the exact application envelope/source/physical-key/append/read/retention graph; required-present project_id is null and actual thread/Server/Host/root identities remain. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge.
 gui_related: false
 gui_classification_reason: This unit defines runtime event and EventRecord identity completeness.
 split_recommended: true
@@ -877,7 +874,9 @@ node_compile_hint:
   mode: event_snapshot_identity
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,B-F06,D-F06
 preserved_exact_tokens:
   - "`EventRecord`"
   - "`run.started`"
@@ -943,10 +942,8 @@ plan_unit_id: CV-028
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Orchestrator, Source Control, graph, usage, verifier, live-status, command
-  pivot, and inspector surfaces preserve requested/effective account, account
-  policy, switch reason, trust, worker identity, and project-scoped derivation.
+canonical_text: |-
+  Orchestrator, Source Control, graph, usage, verifier, live-status, command pivot, and inspector surfaces preserve requested/effective account, account policy, switch reason, trust, worker identity, and project-scoped derivation. For an owner-admitted app feature, CV-365/366 selects explicit application scope and the exact application envelope/source/physical-key/append/read/retention graph; required-present project_id is null and actual thread/Server/Host/root identities remain. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge.
 gui_related: true
 gui_classification_reason: This unit controls user-visible projections, live status, command pivots, graph, usage, verifier, and inspector surfaces.
 split_recommended: true
@@ -969,7 +966,9 @@ node_compile_hint:
   mode: identity_projection_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,B-F06,D-F06
 preserved_exact_tokens:
   - "`live-status`"
   - "`/switch`"
@@ -1232,11 +1231,8 @@ plan_unit_id: CV-034
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Canonical record/help anchors such as canonical_record.v1:{project_id}:{record_id},
-  /help, /open, record_id, projection-health, gap-003, and gap-006 are
-  route/runtime identity obligations; Glossary terms and Crosswalk names do not
-  become alternate runtime owners.
+canonical_text: |-
+  Canonical record/help anchors such as canonical_record.v1:{project_id}:{record_id}, /help, /open, record_id, projection-health, gap-003, and gap-006 are route/runtime identity obligations; Glossary terms and Crosswalk names do not become alternate runtime owners. For an owner-admitted app feature, CV-365/366 selects explicit application scope and the exact application envelope/source/physical-key/append/read/retention graph; required-present project_id is null and actual thread/Server/Host/root identities remain. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge.
 gui_related: false
 gui_classification_reason: This unit defines record/help route identity and owner boundaries.
 split_recommended: true
@@ -1260,7 +1256,9 @@ node_compile_hint:
   mode: record_anchor_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,B-F06,D-F06
 preserved_exact_tokens:
   - "`canonical_record.v1:{project_id}:{record_id}`"
   - "`/help`"
@@ -1853,11 +1851,8 @@ plan_unit_id: CV-047
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Shared records expose record_id, record_kind, schema_version, project_id,
-  optional run/scope fields, status/timestamps, summary/detail/source/artifact/
-  related/lineage refs, actor refs, and requested_effective_snapshot_refs; detail
-  opens must not drop joins.
+canonical_text: |-
+  Shared records expose record_id, record_kind, schema_version, project_id, optional run/scope fields, status/timestamps, summary/detail/source/artifact/ related/lineage refs, actor refs, and requested_effective_snapshot_refs; detail opens must not drop joins. For an owner-admitted app feature, CV-365/366 selects explicit application scope and the exact application envelope/source/physical-key/append/read/retention graph; required-present project_id is null and actual thread/Server/Host/root identities remain. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge.
 gui_related: false
 gui_classification_reason: This unit defines shared record envelope joins and detail-open integrity.
 split_recommended: true
@@ -1879,7 +1874,9 @@ node_compile_hint:
   mode: shared_record_join_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,B-F06,D-F06
 preserved_exact_tokens:
   - "`record_id`"
   - "`record_kind`"
@@ -1989,10 +1986,8 @@ plan_unit_id: CV-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Durable account_switch_event carries switch_event_id, project_id, provider_id,
-  requested/from/to account fields, switch_reason, closed decision_kind, source
-  episode, run/attempt/thread IDs, and ts.
+canonical_text: |-
+  Durable account_switch_event carries switch_event_id, project_id, provider_id, requested/from/to account fields, switch_reason, closed decision_kind, source episode, run/attempt/thread IDs, and ts. For an owner-admitted app feature, CV-365/366 selects explicit application scope and the exact application envelope/source/physical-key/append/read/retention graph; required-present project_id is null and actual thread/Server/Host/root identities remain. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge.
 gui_related: false
 gui_classification_reason: This unit defines durable account switch audit records.
 split_recommended: false
@@ -2014,7 +2009,9 @@ node_compile_hint:
   mode: account_switch_event_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,B-F06,D-F06
 preserved_exact_tokens:
   - "`account_switch_event`"
   - "`switch_event_id`"
@@ -2168,12 +2165,8 @@ plan_unit_id: CV-054
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  route_target requires resolver_scope, required-present project_id, and one primary
-  selector. project_id is non-null for project/run/thread resolution and null
-  only for server, application, bootstrap, or global resolution. Reject missing or contradictory scope,
-  competing subject_id and object_kind/object_id, object halves, inspector_target
-  without object selector, conflicting tab_id, line/range, or per-surface state.
+canonical_text: |-
+  route_target requires resolver_scope, required-present project_id and exactly one primary selector. Project and Project-bound run/thread resolution require the actual nonempty Project. Application resolution, including app-bound run/thread routes, requires project_id=null and CV-365’s explicit Server/scope/object binding; never infer scope from the selector alone. Server/bootstrap/global routes retain their existing identity rules. Reject missing or contradictory scope, competing subject_id versus object_kind/object_id, half objects, inspector_target without object selector, conflicting tab_id/line/range/state or active-focus substitution. Historical route bytes retain their original reader, never rehashed as the new scope edition.
 gui_related: false
 gui_classification_reason: This unit defines route_target validation and reject rules.
 split_recommended: true
@@ -2196,7 +2189,9 @@ node_compile_hint:
   mode: route_target_validation
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F07,C-F01,C-F11
 preserved_exact_tokens:
   - "`route_target`"
   - "`project_id`"
@@ -2565,11 +2560,8 @@ plan_unit_id: CV-062
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Concern is a first-class durable record distinct from review finding,
-  annotation, blocked episode, and graph patch request, with concern identity,
-  project/run/scope refs, evidence/source refs, lineage refs,
-  severity/category/status, and governance metadata.
+canonical_text: |-
+  Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request, with concern identity, project/run/scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata. For an owner-admitted app feature, CV-365/366 selects explicit application scope and the exact application envelope/source/physical-key/append/read/retention graph; required-present project_id is null and actual thread/Server/Host/root identities remain. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge.
 gui_related: false
 gui_classification_reason: This unit defines the durable concern record schema.
 split_recommended: true
@@ -2592,7 +2584,9 @@ node_compile_hint:
   mode: concern_record_schema_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0028
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0028
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,B-F06,D-F06
 preserved_exact_tokens:
   - "Concern is a first-class durable record"
   - "concern_id"
@@ -7516,19 +7510,17 @@ plan_unit_id: CV-159
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Six assistant worktree UICommand registrations are canonical with their
-  command IDs, labels, icons, chat category, when clauses, and shared guard
-  activeThreadExists && projectIsGitRepo && !projectIsRemoteNonSSH.
+canonical_text: |-
+  The existing six cmd.chat.worktree.* UICommand registrations keep their exact IDs, labels, icons, chat category and sole owners. Admission requires an active thread bound to an actual Project/repository and the backend-supported worktree/change/review capability, current lease and permission. projectIsGitRepo is retained as the original Git-reader guard token, not a universal capability test that excludes an admitted Jujutsu route. Preserve unsupported remote/backend reasons and forbid direct Git fallback when JJ authority is absent. Ordinary app chat modes remain available, while these PM Project worktree actions require their real target; never synthesize one.
 gui_related: true
 gui_classification_reason: This unit defines user-visible command registrations for assistant worktree actions.
 split_recommended: true
 depends_on: [CV-031, CV-052]
 unblocks: [CV-160, CV-161, CV-162]
 acceptance_criteria:
-  - "The six assistant worktree command IDs are preserved."
-  - "Command labels, icons, category, and extra when clauses are preserved."
-  - "All six commands require activeThreadExists && projectIsGitRepo && !projectIsRemoteNonSSH."
+- Git and admitted JJ use the actual backend capability/lease/target rather than display state.
+- Missing Project-native target is an action refusal, not an app mode ban.
+- Original exact Git guards/readers and command identities remain compatible.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -7544,8 +7536,10 @@ node_compile_hint:
   mode: assistant_worktree_uicommand_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0057
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0058
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0057
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0058
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; E-F08,B-F12,C-F01
 preserved_exact_tokens:
   - "`cmd.chat.worktree.create`"
   - "`cmd.chat.worktree.unbind`"
@@ -7719,13 +7713,8 @@ plan_unit_id: CV-163
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  route_target is the canonical navigation-and-focus contract requiring
-  target_kind, resolver_scope, and required-present project_id, with project_id
-  nullable only for explicit non-Project scopes and target_kind remaining a
-  destination class only. Amended 2026-10-09 (DL-180): bottom_panel is a legacy
-  destination class read on old routes only; a route to a home panel tab uses
-  primary_view and is placed by CV-360's fields.
+canonical_text: |-
+  route_target is the canonical navigation-and-focus contract requiring target_kind, resolver_scope, and required-present project_id, with project_id nullable only for explicit non-Project scopes and target_kind remaining a destination class only. Amended 2026-10-09 (DL-180): bottom_panel is a legacy destination class read on old routes only; a route to a home panel tab uses primary_view and is placed by CV-360's fields. CV-365 reconciles application routes and required-present null Project; explicit app run/thread targets retain real Server/object binding. Original Project serialization remains a historical reader, not a nullable rewrite.
 gui_related: false
 gui_classification_reason: This unit defines route_target required fields and destination classes.
 split_recommended: true
@@ -7753,8 +7742,11 @@ node_compile_hint:
   mode: routetarget_required_scope_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
-  - "Plans/Decision_Log.md#DL-180 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-180 already depends on this unit through DL-147)"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+- Plans/Decision_Log.md#DL-180 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-180 already
+  depends on this unit through DL-147)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01
 preserved_exact_tokens:
   - "`route_target`"
   - "`target_kind`"
@@ -7901,10 +7893,8 @@ plan_unit_id: CV-166
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Route activation restores destination surface plus scope, selected object, and
-  focus fields, while shell realization details remain view state and resume_url
-  is serialized transport that decodes to route_target.
+canonical_text: |-
+  Route activation restores destination surface plus scope, selected object, and focus fields, while shell realization details remain view state and resume_url is serialized transport that decodes to route_target. Return bindings also capture application/Project scope, work Server, context revision and initiating Client/continuation generation. Conversion issues a fresh target-authorized route/session; a stale return cannot select another place or steal focus.
 gui_related: true
 gui_classification_reason: This unit affects route activation and visible destination surface restoration.
 split_recommended: true
@@ -7929,7 +7919,9 @@ node_compile_hint:
   mode: route_activation_boundary_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F04
 preserved_exact_tokens:
   - "`focused_run_id`"
   - "`thread_id`"
@@ -8060,22 +8052,17 @@ plan_unit_id: CV-169
 unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Route resolver refinement uses resolver_scope, route_recipe_id?, tab_family?,
-  and open_disposition?, with resolver_scope closed across project, server,
-  bootstrap, run, thread, and global resolution and legacy tab-family and
-  open-disposition labels normalized to canonical underscore field names.
+canonical_text: |-
+  The current resolver_scope vocabulary is project, server, application, bootstrap, run, thread and global, aligning CV-054/163/327 before new routes. Application uses explicit CV-365 Server/scope with null Project. Run/thread routes carry the actual referenced binding and cannot infer a Project or application scope from focus. route_recipe_id?, tab_family? and open_disposition? remain owner refinements; legacy tab-family/open-disposition normalize to underscore fields before current policy. The old closed list without application is superseded for current routes, retained only in exact historical route readers. open_disposition remains reuse_existing, open_new, split_group or focus_only.
 gui_related: false
 gui_classification_reason: This unit defines route resolver fields and alias normalization.
 split_recommended: true
 depends_on: [CV-163]
 unblocks: [CV-170, CV-172]
 acceptance_criteria:
-  - "resolver_scope closes to project, server, bootstrap, run, thread, and global."
-  - "project_id pairing agrees with resolver_scope; bootstrap cannot fabricate a Project or Server identity."
-  - "open_disposition closes to reuse_existing, open_new, split_group, and focus_only."
-  - "route_recipe_id? and tab_family? remain owner-defined refinement fields."
-  - "Legacy tab-family and open-disposition labels normalize to tab_family and open_disposition."
+- Current routes accept explicit application without a synthetic Project.
+- Outer route/scope/object bindings agree, with no active-focus fallback.
+- Compatibility underscore normalization and exact old readers remain.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8090,7 +8077,9 @@ node_compile_hint:
   mode: route_resolver_alias_disposition
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F07,C-F01
 preserved_exact_tokens:
   - "`resolver_scope`"
   - "`route_recipe_id?`"

@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L7285-L8471
+Source lines: L7319-L8512
 
-Source SHA256: `d364a4e2236c3b386e30789a96e6fcd7ce8c47c8b47c778bff57fe0ac6156d60`
+Source SHA256: `e9b534b288cf26f8491197a8298235235d65c6627a7e4d86153934d9f313a8ca`
 
 ---
 
@@ -45,18 +45,22 @@ plan_unit_id: EP-116
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: 'Executor newly defines executor.run_start_recovery_evidence.v2@2.0.0 through SP-265 and
-  keeps its existing complete immutable runtime-snapshot barrier before attributable execution. A genuinely
-  new logical start uses idempotency_key run-start: plus lowercase SHA-256 of RFC8785([project_id,run_id])
-  and event_id evt_run_start_ plus lowercase SHA-256 of RFC8785([storage_instance_id,project_id,run_id]).
+canonical_text: >-
+  Executor newly defines executor.run_start_recovery_evidence.v2@2.0.0 through SP-265 and keeps its
+  existing complete immutable runtime-snapshot barrier before attributable execution. A genuinely new
+  logical start uses idempotency_key run-start: plus lowercase SHA-256 of RFC8785([project_id,run_id]) and
+  event_id evt_run_start_ plus lowercase SHA-256 of RFC8785([storage_instance_id,project_id,run_id]).
   Historical committed identities take precedence; retained-tail absence after lawful removal never proves
   a new run. Equal semantic retries return original durable results and preserve authored bytes, while
   conflicting or uncertain identity fails idempotency_conflict or dedupe_unavailable. The recovery reader
-  supplies verified historical start evidence only; canonical intake, attempt, permissions, safe-point
-  and currentness authority remain independently required, with no replay dispatch, resume, canonical
-  reconstruction or Usage charge. The v1 reader is compatibility-only for this family; current v2 publication
-  requires the explicitly admitted SP-265/SP-278 successor and complete current source/index token, with
-  unchanged owner behavior.'
+  supplies verified historical start evidence only; canonical intake, attempt, permissions, safe-point and
+  currentness authority remain independently required, with no replay dispatch, resume, canonical
+  reconstruction or Usage charge. The v1 reader is compatibility-only for this family; current v2
+  publication requires the explicitly admitted SP-265/SP-278 successor and complete current source/index
+  token, with unchanged owner behavior. EP-132 app execution selects an explicit scope-aware sibling of
+  the context/source/identity contract, real thread/Computer/roots and Stop/writer/permission evidence.
+  Original Project exact context, hash/idempotency/accepted-source and passive replay resources remain
+  valid; no null Project is cast into an existing Project-only identity recipe.
 gui_related: false
 gui_classification_reason: Defines storage or execution contracts, not a new visual surface.
 depends_on:
@@ -94,9 +98,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-045
-- reports/event-authority-20260911/step-08-run-started-depth.json
-- Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption
+  - "Plans/Decision_Log.md#DL-045"
+  - "reports/event-authority-20260911/step-08-run-started-depth.json"
+  - "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids: []
 negative_constraints:
 - No event membership, retention-policy definition, frozen accounting, runtime-proof or governance change.

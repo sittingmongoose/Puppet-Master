@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33244-L34102
+Source lines: L33089-L33930
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -230,13 +230,8 @@ plan_unit_id: F3-462
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  On non-retro themes, the Orchestrator, Usage, and Planning Wizard workspace page headers
-  match the Projects page top layout: title cluster left, actions and meta right, open
-  flex, and no dense full-bleed IDE chrome bar. The friendly theme family renders rounded
-  inset header boxes using radius-lg and the cozy card surface; the glass and basic
-  families render the open Projects-like layout; the retro family keeps its existing
-  chrome bars.
+canonical_text: |-
+  Orchestrator, Usage and Planning Wizard headers use their existing shared page-header primitives: title left, actions/meta right, open flex, with Friendly inset boxes and its radius-lg/cozy surface; Retro retains its chrome bars. The old Projects header is retired as the template for other pages. F3-668 owns the new quiet Split Projects library/detail composition; it changes no unrelated header, look, motion or overlay rule.
 gui_related: true
 gui_classification_reason: This unit defines visible page-header layout and theme box presentation.
 split_recommended: false
@@ -258,8 +253,10 @@ node_compile_hint:
   mode: page_header_projects_like_layout
   create_worknodes: false
 source_lineage:
-- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
-- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)
+- Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; E-F08,C-F11
 preserved_exact_tokens:
 - "radius-lg"
 negative_constraints:
@@ -690,33 +687,17 @@ plan_unit_id: F3-468
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Theme boot stamps a pre-paint layer with the persisted theme's solid background color
-  and color-scheme before heavy styles and assets settle, fonts load non-blocking via
-  preload then swap, and page-enter transitions are gated until after first paint so boot
-  never runs an opacity-zero enter animation or a double flash. The persisted theme is the look
-  stored in the Settings of the Project the application opens on, NieR Mode included (its
-  ground, and while NieR's boot log is coming the page waits under the log's own paper), so
-  the first frame is already that look and no default look shows before it. The pre-paint only
-  reads it: it stores no theme of its own, and the Project's Settings stay the one owner and the
-  one store of the theme (DL-153). A new install's onboarding paints Basic Dark instead (F3-520).
-  Amended 2026-10-29 (A1, L1; PM7): First-paint look owner also feeds the static Pip brand and splash loader, with no second theme reader, store or paint hint. App release icon stays fixed Basic Dark rather than following a Project.
+canonical_text: |-
+  Before the first visible frame, read the one SSYS-002/059 effective atomic look pair for the exact Computer/Host/Device and actual Project, omitting Project in No project. Stamp its solid ground and color-scheme; the same result feeds static Pip and the splash. Keep no theme hint, last-painted store or second reader/writer. Basic Dark is the bundled fallback for absence or the authorized pre-claim onboarding preview only; never flash it over another effective look. Fonts load non-blocking through preload/swap; page-enter transitions start after first paint and cannot produce opacity-zero boot or double flash. NieR shows its resolved Light/Dark paper under its eligible boot log; five families and ten variants remain. The release icon remains fixed Basic Dark. OS Reduce motion and admitted Everywhere/Device/Project requests combine more carefully through the resolver, rather than reading a private boot preference.
 gui_related: true
 gui_classification_reason: This unit defines visible boot paint, font loading, and first-paint transition gating behavior.
 split_recommended: false
 depends_on: [DL-153]
 unblocks: []
 acceptance_criteria:
-- Boot stamps the persisted theme's solid background and color-scheme on a pre-paint layer before heavy styles and assets
-  settle.
-- The first frame of an ordinary open is the look stored for the Project the application opens on, in all ten built-in
-  variants across five families, including NieR Light and NieR Dark (DL-257/Q22); no default look shows before it, and
-  with NieR's boot log coming the page shows only the log's paper before the log (DL-153).
-- 'The pre-paint reads the Project''s stored Settings and writes no theme anywhere: no global or cross-Project theme
-  key exists (DL-153).'
-- Fonts load non-blocking via preload then swap.
-- Page-enter transitions gate until after first paint; boot never runs an opacity-zero enter animation or a double flash.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- First frame, Pip and splash consume the same exact resolved look, including No project.
+- No extra theme store/hint or forced factory flash; font/transition gates remain.
+- Atomic look pair and more-careful motion retain all Q22/RM1 constraints.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -729,12 +710,14 @@ node_compile_hint:
   mode: boot_paint_and_first_paint_transition_gate
   create_worknodes: false
 source_lineage:
-- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
-- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)
+- Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F09,C-F11
 preserved_exact_tokens:
 - "color-scheme"
 negative_constraints:
-- "Do not render-block first paint on font loading and do not run an enter animation on first paint."
+- No separate pre-paint theme writer or old Project-only look ban.
 compatibility_only_notes:
 - "Slint portability: the pre-paint layer maps to painting the persisted theme's solid background at window creation before content loads; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:

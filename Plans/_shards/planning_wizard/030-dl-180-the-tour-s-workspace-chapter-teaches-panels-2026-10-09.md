@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L3660-L3888
+Source lines: L3683-L3924
 
-Source SHA256: `b73c7dd92c540a1fc7c7a978302bb3bd760b6d277c4f5b7a36e637a448122d77`
+Source SHA256: `7578becdd2f6be0c7aca52532f04b6d53d6e1bdfceadd11461d48312638d4439`
 
 ---
 
@@ -86,6 +86,7 @@ canonical_text: >-
   cmd.workspace_layout.restore (UCC-200) whose snapshot carries the dashboard boards it held, as a saved named
   layout carries them (SP-330), so the Home board returns with the panels in one command; no separate
   board-restore command is minted, and the concept's removal of added widgets is lineage.
+  The published Project-bound Tour keeps its accepted chapter/step semantics. A no-project tour binds application layout and chat-owner snapshots; Project-required planning practice remains gated until explicit selection/conversion to a real Project, and an unexecuted gated step is never reported completed. Finish/Skip restores that actual scope and lands in the No project chat where applicable, without a fake practice Project or overwriting Project boards.
 gui_related: true
 gui_classification_reason: Defines the workspace chapter's steps, copy, owner commands, completion observation, and saved-position and restore rules.
 split_recommended: false
@@ -127,11 +128,15 @@ source_lineage:
 - 'Concepts/home-redesign/src/panels/js/52-tour.js at 339203bd76 on concept/home-panels-20261009, SHA-256 456375285dbe1462e78167c21be04bf6a9b37e13fba17fc54ce9725566cf8afd
   (the widget step as built: Upcoming resets, its done rule and Show Me; concept lineage only)'
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md,
-  SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (section 5, option B; design lineage only)
+  SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (section 5, option B; design lineage
+  only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
   SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
 - /mnt/Cursor/share/puppet-master/2026-10-13-panel-dnd-resize/NOTES.md, SHA-256 03a80f0dea3235ea637149bbec63626c4a4be8521078f9dd601f2b691f03d2d6
   (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
   - move_or_dock_chat
   - workspace_orientation
@@ -198,7 +203,8 @@ canonical_text: 'The chat port preserves the accepted Guided Tour and the later 
   redo. This does not revise its chapter or saved-checkpoint contract. Amended 2026-10-29 (O10/O11; PM7): Ready’s Pip
   hands strings to the existing first Tour callout. Leave Tour steps/characters unchanged until the Planning Wizard redo;
   base Tour has no character, NieR keeps Pod 042. No Pip Tour work in this build. Amended DL-260, Jared 2026-10-31: only
-  real product behavior remains an implementation requirement.'
+  real product behavior remains an implementation requirement.
+  N15 changes only the applicable scope and terminal landing when no Project exists, as specified by PWIZ-022/035/037; it does not perform the unrelated Tour redo or restore two simultaneous chat surfaces.'
 gui_related: true
 gui_classification_reason: Keeps the visible Guided Tour teaching surface and the hosted chat mutually exclusive until the accepted redo.
 split_recommended: false
@@ -220,10 +226,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
+- Plans/Decision_Log.md#DL-185
+- /mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D3, D4, D7, D8, D9, D26, D27, D28)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b
+  (concept integration lineage, not native API authority)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md,
+  SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated
+  against concept source; not native or final visual verification)
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: []
 negative_constraints:
   - "Do not mark the tour redo complete before the Planning Wizard redesign."

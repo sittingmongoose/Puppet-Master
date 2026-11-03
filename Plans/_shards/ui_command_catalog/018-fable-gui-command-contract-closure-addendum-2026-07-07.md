@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8351-L8520
+Source lines: L8543-L8740
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -103,78 +103,106 @@ plan_unit_id: UCC-108
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  The FABLE GUI command repair registers missing theme, persona, alert, concern, model, chat send/stop, panel
-  undock/redock, Orchestrator pause/resume, Dashboard widget, Free Models onboarding, launch-chain, runtime
-  recovery, and FileManager command contracts with field-level payload, result, error, and receipt/event
+canonical_text: 'The FABLE GUI command repair registers missing theme, persona, alert, concern, model, chat
+  send/stop, panel undock/redock, Orchestrator pause/resume, Dashboard widget, Free Models onboarding, launch-chain,
+  runtime recovery, and FileManager command contracts with field-level payload, result, error, and receipt/event
   requirements. Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain canonical and
-  are strengthened by the shared UICommandResponse and no fabricated command_applied event rule. In the
-  cmd.theme.* family the title bar's Light/Dark/Auto segmented control (amended 2026-10-17, DL-228, no longer
-  dispatching cmd.theme.set_mode, as the census row shell.theme.mode and SSYS-010 say), its five family rows,
-  including NieR (Q22), the Guided Tour bar's Look menu and the NieR Mode editor compose
-  cmd.settings.transaction.preview then cmd.settings.transaction.apply as UCC-120's local affordances do; no
-  theme family or NieR command is added. The application's start and onboarding's look previews
-  (ui.onboarding.start, ui.onboarding.choose_look) dispatch no cmd.theme.* and emit no settings.theme.updated:
-  the pre-paint reads the stored theme of the Project the application opens on (F3-468, DL-153). Amended
-  2026-10-09 (DL-180): from the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat,
-  into a window (UCC-203); cmd.dashboard.add_widget becomes an alias of cmd.widget.add (UCC-202). Amended Q22,
-  Jared 2026-10-30 (DL-257): the fifth family uses the existing theme owner; no separate override remains.
+  are strengthened by the shared UICommandResponse and no fabricated command_applied event rule. In the cmd.theme.*
+  family the title bar''s Light/Dark/Auto segmented control (amended 2026-10-17, DL-228, no longer dispatching
+  cmd.theme.set_mode, as the census row shell.theme.mode and SSYS-010 say), its five family rows, including
+  NieR (Q22), the Guided Tour bar''s Look menu and the NieR Mode editor compose cmd.settings.transaction.preview
+  then cmd.settings.transaction.apply as UCC-120''s local affordances do; no theme family or NieR command is
+  added. The application''s start and onboarding''s look previews (ui.onboarding.start, ui.onboarding.choose_look)
+  dispatch no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the one resolved Everywhere/Device/actual-Project
+  theme pair; No project omits Project and never flashes a forced Basic Dark, while owner-declared factory/pre-claim
+  fallback and nonpersistent onboarding preview remain (F3-468, DL-153). Amended 2026-10-09 (DL-180): from
+  the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat, into a window (UCC-203);
+  cmd.dashboard.add_widget becomes an alias of cmd.widget.add (UCC-202). Amended Q22, Jared 2026-10-30 (DL-257):
+  the fifth family uses the existing theme owner; no separate override remains.
+
+
+  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single
+  resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere.
+  Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project
+  versions and sole owner. Computer installations, credentials and protected source trust never travel in copy.
+  Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.*
+  local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact
+  consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay
+  resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable
+  handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Defines user-visible GUI command families, command payloads, responses, disabled states, and receipts.
-depends_on: [UCC-089, UCC-097, DL-180]
-unblocks: [WM-042, PG-061]
+gui_classification_reason: Defines user-visible GUI command families, command payloads, responses, disabled
+  states, and receipts.
+depends_on:
+- UCC-089
+- UCC-097
+- DL-180
+unblocks:
+- WM-042
+- PG-061
 acceptance_criteria:
-  - All command families named by the FABLE GUI repair have stable `cmd.*` IDs or explicit compatibility dispositions.
-  - Every listed command declares payload fields, result fields, closed error handling through UICommandResponse, and receipt or event effects.
-  - Runtime allowed_action_ids map only to canonical `cmd.runtime.*` commands.
-  - FileManager CRUD commands are not duplicated; existing rows remain canonical and gain the shared response/receipt acceptance bar.
-  - No command in this addendum uses or authorizes fabricated `*.command_applied` events.
-  - No PM7 look control dispatches a cmd.theme.* command (amended 2026-10-17, DL-228, from only the title bar's Light/Dark/Auto control); Light/Dark/Auto, family, NieR Mode and NieR editor changes use the Settings transaction pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated (F3-468, DL-153).
+- All command families named by the FABLE GUI repair have stable `cmd.*` IDs or explicit compatibility dispositions.
+- Every listed command declares payload fields, result fields, closed error handling through UICommandResponse,
+  and receipt or event effects.
+- Runtime allowed_action_ids map only to canonical `cmd.runtime.*` commands.
+- FileManager CRUD commands are not duplicated; existing rows remain canonical and gain the shared response/receipt
+  acceptance bar.
+- No command in this addendum uses or authorizes fabricated `*.command_applied` events.
+- No PM7 look control dispatches a cmd.theme.* command (amended 2026-10-17, DL-228, from only the title bar's
+  Light/Dark/Auto control); Light/Dark/Auto, family, NieR Mode and NieR editor changes use the Settings transaction
+  pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated
+  (F3-468, DL-153).
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plan-index.py validate
 risk_class: gui_command_contract_gap
 reasoning_tier: high
 context_scope: fable_gui_command_wiring_gate_repair
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.production.json
-  - future UI command dispatcher fixtures
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
+- future UI command dispatcher fixtures
 node_compile_hint:
   mode: gui_command_contract_closure
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md:fable-20260706-p1-ui-command-catalog-missing-families
+- Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md:fable-20260706-p1-ui-command-catalog-missing-families
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - cmd.theme.*
-  - cmd.persona.*
-  - cmd.alert.*
-  - cmd.concern.*
-  - cmd.model.refresh
-  - cmd.model.list
-  - cmd.chat.send
-  - cmd.chat.stop
-  - cmd.panel.undock
-  - cmd.panel.redock
-  - cmd.orchestrator.pause
-  - cmd.orchestrator.resume
-  - cmd.dashboard.add_widget
-  - cmd.dashboard.catalog
-  - resume_after_prerequisite
-  - restore_safe_point_then_retry
-  - start_fresh_attempt
-  - replan
-  - skip_node
-  - abort_run
+- cmd.theme.*
+- cmd.persona.*
+- cmd.alert.*
+- cmd.concern.*
+- cmd.model.refresh
+- cmd.model.list
+- cmd.chat.send
+- cmd.chat.stop
+- cmd.panel.undock
+- cmd.panel.redock
+- cmd.orchestrator.pause
+- cmd.orchestrator.resume
+- cmd.dashboard.add_widget
+- cmd.dashboard.catalog
+- resume_after_prerequisite
+- restore_safe_point_then_retry
+- start_fresh_attempt
+- replan
+- skip_node
+- abort_run
 negative_constraints:
-  - Do not duplicate existing FileManager CRUD command rows.
-  - Do not treat command-catalog or wiring rows as runtime certification evidence.
-  - Do not emit fabricated `*.command_applied` events.
+- Do not duplicate existing FileManager CRUD command rows.
+- Do not treat command-catalog or wiring rows as runtime certification evidence.
+- Do not emit fabricated `*.command_applied` events.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-180): undock is the chat's Pop out only; cmd.dashboard.add_widget is an alias."
+- 'Amended 2026-10-09 (DL-180): undock is the chat''s Pop out only; cmd.dashboard.add_widget is an alias.'
 owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.md
-  - Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+- Plans/Contracts_V0.md
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2642-L2699
+Source lines: L2638-L2690
 
-Source SHA256: `2ee9163141078a9ed56d59700128756b51cb1c18109a0f7fe60e02b9748b8245`
+Source SHA256: `f483b45c08ded2f8811a35ed53cd4b052d3b603b856084efdaba166705d30608`
 
 ---
 
@@ -17,15 +17,10 @@ plan_unit_id: DR-041
 unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  Touch Closure extends DR-040 through exact command_id, profile_id, sole_handler,
-  schema_ref, and reverse-consumer keys. Each actionable primary command has one
-  canonical identity, one typed owner contract, and exactly one sole future-handler
-  identity. A compatibility alias normalizes before dispatch to its exact primary
-  target and must not receive a peer production row, peer handler, peer schema, or
-  peer state machine. Typed local UI actions remain local, blocked tokens remain
-  excluded from production wiring, and reverse coverage must use real GUI consumers
-  rather than synthetic controls. Both dedicated validators fail closed on drift.
+canonical_text: |-
+  Touch Closure extends DR-040 through exact command_id, profile_id, sole_handler, schema_ref, and reverse-consumer keys. Each actionable primary command has one canonical identity, one typed owner contract, and exactly one sole future-handler identity. A compatibility alias normalizes before dispatch to its exact primary target and must not receive a peer production row, peer handler, peer schema, or peer state machine. Typed local UI actions remain local, blocked tokens remain excluded from production wiring, and reverse coverage must use real GUI consumers rather than synthetic controls. Both dedicated validators fail closed on drift.
+
+  Exact-key and no-peer rules apply before mode and scope admission. New Project, onboarding, Transfer and existing-Project copying are presentations of DR-085's single detached Use settings from concept and its new-Project/existing-Project routes; they do not add a Settings primary. Existing cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab gain the explicit No project target in place. commands.* stays the eight typed local actions of CS-081/DR-042; rejected cmd.commands.custom.* spellings are not primaries.
 gui_related: true
 gui_classification_reason: The invariant prevents duplicate GUI actions, fabricated controls, and divergent command behavior across PMConcept7 consumers.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L20751-L21158
+Source lines: L20709-L21109
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -112,13 +112,8 @@ plan_unit_id: CV-317
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  EventRecord 2.0 requires scope_kind application or project and conditionally
-  null/non-empty project_id; enforces app-root-global event identity and
-  scope-partition/event-type lifetime idempotency; normalizes admitted
-  EventEnvelopeV1 values deterministically in memory only; and makes
-  projector_replay_only non-appendable, idempotent, checkpoint-atomic, and
-  incapable of external or canonical side effects.
+canonical_text: |-
+  EventRecord 2.0 requires scope_kind application or project and conditionally null/non-empty project_id; enforces app-root-global event identity and scope-partition/event-type lifetime idempotency; normalizes admitted EventEnvelopeV1 values deterministically in memory only; and makes projector_replay_only non-appendable, idempotent, checkpoint-atomic, and incapable of external or canonical side effects. CV-366’s exact per-family scope/version table selects current app payloads; historical normalization remains registry-revision bound and replay-only. Existing scope policies are not globally flipped and no original Project event is restamped.
 gui_related: false
 gui_classification_reason: Defines durable event identity, compatibility normalization, and replay safety.
 depends_on: [CV-087, CV-088, CV-309]
@@ -145,11 +140,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Case-L:L-008
-  - Case-L:L-009
-  - Case-L:L-023
-  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/EVENT_RECORD_REPAIR_PLAN.md
-  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
+- Case-L:L-008
+- Case-L:L-009
+- Case-L:L-023
+- PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/EVENT_RECORD_REPAIR_PLAN.md
+- PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F06,C-F10
 preserved_exact_tokens:
   - scope_kind
   - application
@@ -173,13 +170,8 @@ plan_unit_id: CV-318
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  AppendReceipt proves a synced frame-plus-in-segment-watermark durability boundary (one data sync per ordinary group, full flush for barrier-class events, SP-336) with
-  SP-286/CV-339 durable first-receipt custody before exposure, and
-  application-scoped storage.integrity_detected, storage.recovery_applied, and
-  storage.boot_recovery payloads carry deterministic recovery identity, proven
-  impact, survivor/checkpoint aftermath, and truthful disclosure references
-  without fabricating a project or re-owning storage algorithms.
+canonical_text: |-
+  AppendReceipt proves a synced frame-plus-in-segment-watermark durability boundary (one data sync per ordinary group, full flush for barrier-class events, SP-336) with SP-286/CV-339 durable first-receipt custody before exposure, and application-scoped storage.integrity_detected, storage.recovery_applied, and storage.boot_recovery payloads carry deterministic recovery identity, proven impact, survivor/checkpoint aftermath, and truthful disclosure references without fabricating a project or re-owning storage algorithms. App workflow events use the same actual synced append/first-receipt owner. An application wrapper cannot manufacture genuine native receipt custody or relax original EventRecord/codec predicates.
 gui_related: false
 gui_classification_reason: Defines shared durability and recovery payloads; GUI consumes disclosure separately.
 depends_on: [CV-309, CV-317, SP-230]
@@ -201,11 +193,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Case-L:L-004
-  - Case-L:L-007
-  - Case-L:L-013
-  - Case-L:L-019
-  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/SEGLOG_RECOVERY_REPAIR_PLAN.md
+- Case-L:L-004
+- Case-L:L-007
+- Case-L:L-013
+- Case-L:L-019
+- PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/SEGLOG_RECOVERY_REPAIR_PLAN.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F06,D-F06
 negative_constraints:
   - Do not treat write or buffer-flush completion as durable acknowledgement.
   - Do not use timestamps or projections to invent lost event identity.
@@ -221,11 +215,8 @@ plan_unit_id: CV-319
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Contracts registers closed retention-hold, compaction, deletion, quarantine,
-  and recovery-unavailable event payload envelopes using semantic scope and
-  policy/anchor refs, while storage and FileSafe retain ownership of policy
-  values, custody, eligibility, recovery anchors, and lifecycle mechanics.
+canonical_text: |-
+  Contracts registers closed retention-hold, compaction, deletion, quarantine, and recovery-unavailable event payload envelopes using semantic scope and policy/anchor refs, while storage and FileSafe retain ownership of policy values, custody, eligibility, recovery anchors, and lifecycle mechanics. Application lifecycle/hold/recovery payload successors are selected only under CV-366’s full source/append/read/retention graph; original Project lifecycle codecs and all hold/recovery guards remain exact.
 gui_related: false
 gui_classification_reason: Defines backend event envelopes consumed by later settings, recovery, and audit presentation.
 depends_on: [CV-083, CV-309, CV-317]
@@ -248,11 +239,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Case-L:L-005
-  - Case-L:L-010
-  - Case-L:L-015
-  - Case-L:L-033
-  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/RETENTION_COMPACTION_REPAIR_PLAN.md
+- Case-L:L-005
+- Case-L:L-010
+- Case-L:L-015
+- Case-L:L-033
+- PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/RETENTION_COMPACTION_REPAIR_PLAN.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F05,D-F06
 negative_constraints:
   - Do not let this envelope table re-own storage retention or compaction mechanics.
 owner_hints:

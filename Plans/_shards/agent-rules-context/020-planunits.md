@@ -2,9 +2,9 @@
 
 Source: `Plans/agent-rules-context.md`
 
-Source lines: L309-L2286
+Source lines: L309-L2306
 
-Source SHA256: `af088bfdefbd05fb66d86da2f524238b1f51e9006f900ca84a88fc982b910b97`
+Source SHA256: `4678a9510ad12ec8ecb86b8035f2180b66caf762f79ad23e77d2f24722ff87a0`
 
 ---
 
@@ -228,9 +228,13 @@ plan_unit_id: ARC-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: 'Every Puppet Master agent invocation must receive Application-level rules and Project-level rules through
-  the DRY single rules pipeline: application rules apply to every agent everywhere and project rules apply to every agent
-  working on that project.'
+canonical_text: >-
+  Every Puppet Master invocation uses the DRY single rules pipeline. Application rules consume the
+  Everywhere source plus the work Computer's applicable application context even when
+  project_path=None; Project-level rules are included only for the exact bound Project. Computer
+  context is not a Project identity or a new node/attempt rule hierarchy. ARC-008 keeps
+  application-instruction precedence; Settings layering resolves behavior/source choices without
+  reversing that priority.
 gui_related: false
 gui_classification_reason: This unit covers durable rules scope and injection policy, not GUI behavior.
 split_recommended: false
@@ -256,6 +260,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0004
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Executive Summary
 - Application-level rules (Puppet Master)
@@ -451,9 +457,14 @@ plan_unit_id: ARC-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: Rule order and precedence preserves that application rules are always included first, project rules are included
-  only when project context exists, application rules win over project rules on conflict, and node/work-package/attempt-specific
-  context is not another rules layer because it belongs to Work Bundle and Memory Bundle.
+canonical_text: >-
+  Rule order and precedence preserves that application rules are always included first, project rules
+  are included only when project context exists, application rules win over project rules on conflict,
+  and node/work-package/attempt-specific context is not another rules layer because it belongs to Work
+  Bundle and Memory Bundle. Everywhere and Computer application context remain within the application
+  block; the Settings value resolver's narrower-wins policy cannot make Project instructions override
+  that block. Conversion performs a fresh rules assembly and drops inapplicable source-Project/sidecar
+  context.
 gui_related: false
 gui_classification_reason: This unit covers precedence and context-layer boundaries, not GUI behavior.
 split_recommended: false
@@ -479,6 +490,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0009
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Order and precedence
 - Application rules are always included first.
@@ -506,10 +519,15 @@ plan_unit_id: ARC-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: 'Feeding rules into every agent uses one rules pipeline API such as get_agent_rules_context(application_config,
-  project_path: Option<&Path>) -> String to return one formatted Application rules plus Project rules block; Orchestrator,
-  Interview, and Assistant all call it with their project context and avoid copy-pasting Context7 or DRY into multiple prompt
-  builders.'
+canonical_text: >-
+  Feeding rules into every agent uses one rules pipeline API such as
+  get_agent_rules_context(application_config, project_path: Option<&Path>) -> String to return one
+  formatted Application rules plus Project rules block; Orchestrator, Interview, and Assistant all
+  call it with their project context and avoid copy-pasting Context7 or DRY into multiple prompt
+  builders. The scope-aware input also names the actual work Computer, application/thread identity and
+  source revisions; project_path=None omits Project rules only. App sidecars use the owned app
+  thread/run area. Conversion re-resolves future context with lineage and never leaks unrelated-run
+  journals.
 gui_related: false
 gui_classification_reason: This unit covers prompt assembly API and callers, not GUI behavior.
 split_recommended: false
@@ -536,6 +554,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0010
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0011
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Feeding Rules Into Every Agent
 - Single Rules Pipeline (DRY)

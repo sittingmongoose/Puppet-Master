@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L12414-L13111
+Source lines: L12645-L13361
 
-Source SHA256: `0ae93e5637dcb0b333516aecf071c145ac679bc77caae51c7bade24ccf79f1dc`
+Source SHA256: `0398aca0a8d02e356ae284700fb6b1b57992a6eb3b3aa08ed90180c6a9cebda5`
 
 ---
 
@@ -55,44 +55,55 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  The terminal is one tab kind of the universal panels (`Plans/FinalGUISpec.md#F3-635`), and each terminal tab
-  holds exactly one terminal session. Presentation and `terminal_session_id` stay separate (SMPFS-015): the
-  terminal kind mints a new session when it opens a tab, the tab id is `terminal:<session>` taken from that first
-  session and stays the same for the life of the tab, and the tab's domain reference is the session it shows now.
-  There are no splits inside a terminal: Split opens a new panel beside this one with a new session in the same
-  folder and shell profile. Terminal sections, workgroups, sub-tabs, in-tab pane splits, the editor terminal stack,
-  the Quadrant layout, the pane layout families and the four-section and four-pane caps are retired; Terminals 2x2
-  is a named layout of four panels (`Plans/FinalGUISpec.md#F3-630`). A session survives every view change: moving
-  a terminal tab to another panel, collapsing or maximizing its panel, hiding it behind another tab or in the "+N"
-  list, applying a named layout and narrowing the window never end, restart or mint a session. Closing the tab ends
-  its session, after the tab first says what is still running ("Close this terminal? <process> is still running
-  and will be stopped."). When a session ends by itself the tab stays and shows an inline "Session ended" row (with
-  the exit code when it is not zero), Restart and Close tab, and its screen dims (the rows and the 72 % dim are
-  `Plans/FinalGUISpec.md#F3-640`'s); Restart starts a new session in the same tab. Reopen closed tab opens a new session in the same folder and profile. After Puppet Master restarts, a
-  terminal tab never pretends to be the old session (F3-226, F3-228): a session verified live is reattached
-  (`restored_live`, SMPFS-063, SMPFS-128); otherwise the tab loads its saved scrollback (SMPFS-181,
-  `Plans/storage-plan.md#SP-332`) before a new local session starts in the same folder and profile, draws the dim rule
-  `── Restored <time> · the earlier session ended ──`, then the new prompt, and says so in an inline notice: "This
-  terminal was restored with its scrollback (N images were not kept). Its earlier session ended when the page
-  reloaded; this is a new session." The part in parentheses appears only when images were not kept; a reopened tab's
-  notice says it was reopened and that the earlier session ended when the tab closed; a local terminal tab whose saved copy did not load within SP-332's load budget starts without its scrollback and says so. The restore outcome of SMPFS-063
-  is recorded for the earlier session: `restored_live` only for a verified reattach; `restored_exited` when that
-  session had already ended before the restart, `restored_disconnected` when it was still running and did not
-  survive, and `restored_without_history` when its saved scrollback did not load. For local profiles in those three cases the restored scrollback is the review part, the new session below it is live with its own `terminal_session_id`, and the tab
-  is never left review-only; Restart and rerun stay the actions for a session that ends while the tab is open. A
-  command still running when the
-  earlier session ended comes back ended and indeterminate ("ended with the earlier session"), never done, through
-  this document's abnormal or indeterminate finalisation of command blocks. There is no broadcast input to several
-  terminals. The per-tab role setting `code.terminal.tab-role` retires; shell profiles (zsh, bash, pwsh and SSH
-  hosts) replace it. No AI feature lives in the terminal surface: no explain, fix, suggest, ask or completion
-  action. Explaining commands is the Teacher persona's job in the chat (`Plans/Personas.md` section 11.8), and
-  `code.terminal.explanations` retires.
-  Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
-  Amended 2026-10-10 (DL-187): when the saved copy left secrets out (D36, Plans/storage-plan.md#SP-332), the
-  restore notice ends "N secrets were left out of the saved copy."; the restored lines show each left-out secret's
-  label, while a program's output in the new session is shown as printed. The shell profiles a terminal can start
-  are the shells installed on the computer and the SSH hosts (D39); the "+" menu lists them
-  (Plans/FinalGUISpec.md#F3-632).
+  The terminal is one tab kind of the universal panels (`Plans/FinalGUISpec.md#F3-635`), and each
+  terminal tab holds exactly one terminal session. Presentation and `terminal_session_id` stay
+  separate (SMPFS-015): the terminal kind mints a new session when it opens a tab, the tab id is
+  `terminal:<session>` taken from that first session and stays the same for the life of the tab, and
+  the tab's domain reference is the session it shows now. There are no splits inside a terminal: Split
+  opens a new panel beside this one with a new session in the same folder and shell profile. Terminal
+  sections, workgroups, sub-tabs, in-tab pane splits, the editor terminal stack, the Quadrant layout,
+  the pane layout families and the four-section and four-pane caps are retired; Terminals 2x2 is a
+  named layout of four panels (`Plans/FinalGUISpec.md#F3-630`). A session survives every view change:
+  moving a terminal tab to another panel, collapsing or maximizing its panel, hiding it behind another
+  tab or in the "+N" list, applying a named layout and narrowing the window never end, restart or mint
+  a session. Closing the tab ends its session, after the tab first says what is still running ("Close
+  this terminal? <process> is still running and will be stopped."). When a session ends by itself the
+  tab stays and shows an inline "Session ended" row (with the exit code when it is not zero), Restart
+  and Close tab, and its screen dims (the rows and the 72 % dim are `Plans/FinalGUISpec.md#F3-640`'s);
+  Restart starts a new session in the same tab. Reopen closed tab opens a new session in the same
+  folder and profile. After Puppet Master restarts, a terminal tab never pretends to be the old
+  session (F3-226, F3-228): a session verified live is reattached (`restored_live`, SMPFS-063,
+  SMPFS-128); otherwise the tab loads its saved scrollback (SMPFS-181, `Plans/storage-plan.md#SP-332`)
+  before a new local session starts in the same folder and profile, draws the dim rule `── Restored
+  <time> · the earlier session ended ──`, then the new prompt, and says so in an inline notice: "This
+  terminal was restored with its scrollback (N images were not kept). Its earlier session ended when
+  the page reloaded; this is a new session." The part in parentheses appears only when images were not
+  kept; a reopened tab's notice says it was reopened and that the earlier session ended when the tab
+  closed; a local terminal tab whose saved copy did not load within SP-332's load budget starts
+  without its scrollback and says so. The restore outcome of SMPFS-063 is recorded for the earlier
+  session: `restored_live` only for a verified reattach; `restored_exited` when that session had
+  already ended before the restart, `restored_disconnected` when it was still running and did not
+  survive, and `restored_without_history` when its saved scrollback did not load. For local profiles
+  in those three cases the restored scrollback is the review part, the new session below it is live
+  with its own `terminal_session_id`, and the tab is never left review-only; Restart and rerun stay
+  the actions for a session that ends while the tab is open. A command still running when the earlier
+  session ended comes back ended and indeterminate ("ended with the earlier session"), never done,
+  through this document's abnormal or indeterminate finalisation of command blocks. There is no
+  broadcast input to several terminals. The per-tab role setting `code.terminal.tab-role` retires;
+  shell profiles (zsh, bash, pwsh and SSH hosts) replace it. No AI feature lives in the terminal
+  surface: no explain, fix, suggest, ask or completion action. Explaining commands is the Teacher
+  persona's job in the chat (`Plans/Personas.md` section 11.8), and `code.terminal.explanations`
+  retires. Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab),
+  as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
+  Amended 2026-10-10 (DL-187): when the saved copy left secrets out (D36,
+  Plans/storage-plan.md#SP-332), the restore notice ends "N secrets were left out of the saved copy.";
+  the restored lines show each left-out secret's label, while a program's output in the new session is
+  shown as printed. The shell profiles a terminal can start are the shells installed on the computer
+  and the SSH hosts (D39); the "+" menu lists them (Plans/FinalGUISpec.md#F3-632). This same
+  one-session tab model works in No project with an exact Computer/chat or granted cwd and host-local
+  shell profile. Settings resolves future defaults; a chat conversion never moves its PTY, process,
+  port or scrollback owner to another Computer, and future sessions resolve the destination. Protected
+  remote reconnect and every earlier restore/secret notice rule remain.
 gui_related: true
 gui_classification_reason: Owns the terminal's session and tab model that every visible terminal surface presents.
 split_recommended: false
@@ -137,12 +148,20 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - Plans/Decision_Log.md#DL-181
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D11, D19)"
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1 and 7; concept lineage only)"
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (worklist)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D11, D19)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1 and 7; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3
+  (worklist)
 - Plans/Decision_Log.md#DL-187
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D36, D39)"
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (sections 1 and 7: the restore notice's secrets sentence, the shell list; concept lineage only)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D36, D39)
+- '/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md,
+  SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (sections 1 and 7: the restore notice''s
+  secrets sentence, the shell list; concept lineage only)'
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "SMPFS-180"
 - "N secrets were left out of the saved copy."

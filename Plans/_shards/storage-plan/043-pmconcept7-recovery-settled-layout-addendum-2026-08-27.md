@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18570-L18771
+Source lines: L18585-L18767
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -35,36 +35,8 @@ plan_unit_id: SP-249
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  The sole widget-layout schema family uses separate host namespaces `widget_layout:v1:usage` and
-  `widget_layout:v1:dashboard`. Usage records are scoped to the exact `usage` host and `room_id`; Dashboard
-  records are scoped by Dashboard host. The named public Usage record is `UsageWidgetLayoutRecord`; it serializes exactly the
-  WS-020-owned required fields `layout_schema_version`, `default_set_version`, `host_id`, `room_id`, `widget_id`,
-  `visible`, `order_index`, `slot_id`, `geometry_id`, `semantic_tier_id`, `preset_id`, `configuration_refs`, and
-  `committed_revision` needed for deterministic restore. It forbids preview
-  rectangles, pointers or pointer coordinates, ghosts, placeholders, animation state, and drafts or per-frame
-  drafts. Migration validates identities and
-  maps retired geometry to supported current sizes before admission; an unversioned, incompatible, corrupt, or
-  unmappable layout is quarantined or reset to the corrected current default and cannot silently override it.
-  Existing `cmd.widget.*` commit paths are the only mutation seam; storage is written once after a successful
-  settled commit and cancellation writes nothing.
-  Amended 2026-10-10 (DL-186): dashboard boards keep their envelopes per project under
-  `widget_layout:v1:<project_id>:<board_id>` (family `dashboard_board_layout`; host `home.dashboard`, `room_id` the
-  board id; the envelope also keeps the board's view, a non-default `set_id` and a custom dashboard's name), set an
-  unreadable envelope aside under `:quarantine`, adopt an unscoped `widget_layout:v1:<board_id>` once and remove it,
-  and forget a custom board's key, quarantine copy and name when it is deleted or leaves the reopen list unopened.
-  The old `widget_layout:v1:dashboard` converts into no board and is never written again. Presets are per user
-  under `widget_presets:v1` (family `widget_presets`), saved, renamed and deleted by typed local actions; applying
-  one is `cmd.widget.reset_layout` with `set_id` `user:<preset_id>`. View, preset and board-forgetting writes are
-  not `cmd.widget.*` commits and take no receipt or event; every widget change on a board still is one.
-  Board contents are scoped per project and per board; custom dashboard names are kept per project, with
-  whitespace collapsed, trimmed to at most 80 characters and made unique against that project's dashboards
-  and the built-ins by suffixes 2, 3 and so on. An empty or default Dashboard <n> name removes its stored
-  entry. A project switch saves the old project's boards and rebinds every mounted board whose tab is
-  retained, including hidden boards, then reloads that project's custom names. No concept-only custom-name
-  storage key is admitted by this rule.
-  Amended 2026-10-31 (DL-270): a redb value is at most 16 KiB (SP-340), so a widget-layout record larger than that
-  keeps its one record and holds the oversized layout body by payload reference (SP-337).
+canonical_text: |-
+  The sole widget-layout schema family uses separate host namespaces `widget_layout:v1:usage` and `widget_layout:v1:dashboard`. Usage records are scoped to the exact `usage` host and `room_id`; Dashboard records are scoped by Dashboard host. The named public Usage record is `UsageWidgetLayoutRecord`; it serializes exactly the WS-020-owned required fields `layout_schema_version`, `default_set_version`, `host_id`, `room_id`, `widget_id`, `visible`, `order_index`, `slot_id`, `geometry_id`, `semantic_tier_id`, `preset_id`, `configuration_refs`, and `committed_revision` needed for deterministic restore. It forbids preview rectangles, pointers or pointer coordinates, ghosts, placeholders, animation state, and drafts or per-frame drafts. Migration validates identities and maps retired geometry to supported current sizes before admission; an unversioned, incompatible, corrupt, or unmappable layout is quarantined or reset to the corrected current default and cannot silently override it. Existing `cmd.widget.*` commit paths are the only mutation seam; storage is written once after a successful settled commit and cancellation writes nothing. Amended 2026-10-10 (DL-186): dashboard boards keep their envelopes per project under `widget_layout:v1:<project_id>:<board_id>` (family `dashboard_board_layout`; host `home.dashboard`, `room_id` the board id; the envelope also keeps the board's view, a non-default `set_id` and a custom dashboard's name), set an unreadable envelope aside under `:quarantine`, adopt an unscoped `widget_layout:v1:<board_id>` once and remove it, and forget a custom board's key, quarantine copy and name when it is deleted or leaves the reopen list unopened. The old `widget_layout:v1:dashboard` converts into no board and is never written again. Presets are per user under `widget_presets:v1` (family `widget_presets`), saved, renamed and deleted by typed local actions; applying one is `cmd.widget.reset_layout` with `set_id` `user:<preset_id>`. View, preset and board-forgetting writes are not `cmd.widget.*` commits and take no receipt or event; every widget change on a board still is one. Board contents are scoped per project and per board; custom dashboard names are kept per project, with whitespace collapsed, trimmed to at most 80 characters and made unique against that project's dashboards and the built-ins by suffixes 2, 3 and so on. An empty or default Dashboard <n> name removes its stored entry. A project switch saves the old project's boards and rebinds every mounted board whose tab is retained, including hidden boards, then reloads that project's custom names. No concept-only custom-name storage key is admitted by this rule. Amended 2026-10-31 (DL-270): a redb value is at most 16 KiB (SP-340), so a widget-layout record larger than that keeps its one record and holds the oversized layout body by payload reference (SP-337). The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. No project boards have one Server/app namespace; presets stay per person. Named-layout board snapshots apply only to the exact saved scope and Server/Project, so app null is never a wildcard. Conversion loads the destination Project boards without merging app boards.
 gui_related: true
 gui_classification_reason: The persisted record determines restored visible widget order, geometry, semantic content tier, and safe default fallback.
 depends_on: [SP-248, WS-009, WS-020, UF-095, DL-186]
@@ -99,15 +71,24 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
-  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
-  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
-  - "Plans/Decision_Log.md#DL-186"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P4, P5, P6; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1; the panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e)"
-  - "Concepts/home-redesign/CONTRACT.md at c4e32ec0b7, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9 (section 3.1, the Dashboard kind's keys, adoption, names and forgetting; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
+- Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)
+- Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)
+- Concepts/PMConcept7.html (look-and-behaviour reference only)
+- Plans/Decision_Log.md#DL-186
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md,
+  SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P4, P5, P6; Jared's answers relayed
+  by the planning thread, pm-mail 1010191613-9ce1; the panels thread's build facts, pm-mail 1010221905-e13e and
+  1010223444-a10e)
+- Concepts/home-redesign/CONTRACT.md at c4e32ec0b7, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9
+  (section 3.1, the Dashboard kind's keys, adoption, names and forgetting; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
   - widget_layout:v1:usage
   - widget_layout:v1:dashboard

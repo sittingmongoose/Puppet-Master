@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14517-L18589
+Source lines: L14589-L18673
 
-Source SHA256: `871d8c14649e5f994a06f4b9b68b9e58144fe262d175e5251c8dcb653f0c50ac`
+Source SHA256: `0c481af2073b0da7e199828b487c63f6080d5da8e92ce42f76db375dee982cb4`
 
 ---
 
@@ -39,6 +39,8 @@ canonical_text: >-
   the files have landed. His later round-three bezel review requires another revision or a removal
   recommendation; F3-643 records that direction and keeps the final effect/control contract held.
   Round two is not accepted as the final bezel.
+
+  Superseded in part by DL-281, DL-283 (2026-11-03). All terminals now targets Everywhere through the same transaction; This terminal and the one Customize/catalog/editor owner remain unchanged. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Terminal Customize from the panel and Settings.
 split_recommended: false
@@ -785,7 +787,9 @@ canonical_text: 'Recorded 2026-10-16. Jared approved Glass after round-three cor
   and ad37be9a23 published Glass together with the wallpaper gallery. F3-652/F3-653, SSYS-054 and SP-333
   now consume that publication: the six NieR scene prints ship, Mesh/Depth/Minimal retires, and the most
   recent accepted gallery or NieR background change still wins through the one Project transaction. This
-  closes the publication holds in DL-191/DL-192 without a native certification claim.'
+  closes the publication holds in DL-191/DL-192 without a native certification claim.
+
+  Superseded in part by DL-281 (2026-11-03). The single wallpaper choice now resolves declared Settings levels; catalog, publication, print preparation and newest-choice semantics remain. Earlier ruling text and quoted user words are retained as history.'
 gui_related: true
 gui_classification_reason: Liquid Glass And Wallpaper Publication.
 split_recommended: false
@@ -983,6 +987,8 @@ canonical_text: >-
   with typed local Save/Rename/Delete/Undo library actions. This closes DL-189's preset-contract
   hold. Coordinator confirmation 1016001056-4c95 on 2026-10-16 resolves the custody boundary by the
   existing widget-preset precedent; q-035 remains open for app-wide appearance defaults.
+
+  Superseded in part by DL-281, DL-284 (2026-11-03). q-035 is resolved by the ordinary Everywhere store; reusable preset custody/caps stay with their owner and copying remains detached, not another appearance layer. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Personal Terminal Presets.
 split_recommended: false
@@ -1411,6 +1417,8 @@ canonical_text: >-
   (SSYS-009); NieR's rail wipe stays (F3-621); and the NieR reboot cover's exit is smoothed (F3-598). The
   Retro chip over the notch is DL-214's. The motion fix lanes' own contract changes are recorded as they
   land.
+
+  Superseded in part by DL-281, DL-284 (2026-11-03). Reset chooses its offered level/target explicitly and uses the single transaction; one confirmation/result and accounts/keys/history exclusions plus the motion bar remain. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Motion Acceptance Bar And Jared's Motion Calls.
 split_recommended: false
@@ -2910,6 +2918,8 @@ canonical_text: >-
   running NieR process marks move in their existing material language. The 2200 ms category-head breath remains
   distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner
   is added.
+
+  Superseded in part by DL-286 (2026-11-03). RM1 now combines Everywhere, Device and Project own values more carefully, OR the OS motion request; safe reduced-motion feedback and all loop/rest gates remain. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -3074,6 +3084,8 @@ canonical_text: >-
   packet rows on 2026-10-30; every unmodified recommendation is confirmed as his decision, and
   the decision IDs remain the amendment keys. X1, L1, S9, O11 and G4 retain his earlier
   explicit rulings.
+
+  Superseded in part by DL-281, DL-286 (2026-11-03). Pip parts use declared Settings levels and one resolved value, not a universal Project-only location; the one editor, brand/loader/notification exclusions and parts vocabulary remain. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false

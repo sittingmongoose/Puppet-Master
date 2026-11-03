@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L783-L856
+Source lines: L863-L946
 
-Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f`
+Source SHA256: `e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a`
 
 ---
 
@@ -21,7 +21,7 @@ Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f
 
 All six are `handler_unavailable` until central registration, schema binding, the named sole native handler, permission/FileSafe route, production wiring, and receipt-or-admitted-event disposition are current. No fixture or Plan text makes a handler available. Source token `cmd.goal.handoff.open_details` is retained only as the adjudicated spelling for `ui.goal.handoff.open_details`, a typed, bounded, redacted, lazy local projection with no domain handler and no domain EventRecord. Its exact consumers are Goal/Assistant status, Project activity, Goal handoff modal, status bar, and Doctor.
 
-Checkpoint and pause serialize only a durable continuation boundary, source/worktree identity, artifact refs, owner state, generations, and non-secret credential refs; they never freeze, serialize, or migrate a live process. Continue and resume revalidate exact Goal/GoalRun/Project/source location/current Host/target Host, topology, source, worktree, capability, credential, permission, and checkpoint generations. Retry keeps the same idempotent handoff identity but revalidates the typed failure and all currentness inputs. Cancel targets only the exact cancellable handoff operation. Restart converges from the durable handoff journal to resume, rollback, or `recovery_required`; duplicated, stale, or racing requests cannot produce two continuations. Results restore the exact initiating surface, route, focus, and invocation generation or report `caller_unavailable` without redirecting to a convenient fallback. Requests, results, receipts, logs, details projections, and ObservableWork expose no raw secret, protected authentication content, credential value, or unrestricted filesystem path.
+Checkpoint and pause serialize only a durable continuation boundary, source/worktree identity, artifact refs, owner state, generations, and non-secret credential refs; they never freeze, serialize, or migrate a live process. Continue and resume revalidate exact Goal/GoalRun, explicit application or Project scope, source location/current Host/target Host, topology, source, worktree, capability, credential, permission, and checkpoint generations. Retry keeps the same idempotent handoff identity but revalidates the typed failure and all currentness inputs. Cancel targets only the exact cancellable handoff operation. Restart converges from the durable handoff journal to resume, rollback, or `recovery_required`; duplicated, stale, or racing requests cannot produce two continuations. Results restore the exact initiating surface, route, focus, and invocation generation or report `caller_unavailable` without redirecting to a convenient fallback. Requests, results, receipts, logs, details projections, and ObservableWork expose no raw secret, protected authentication content, credential value, or unrestricted filesystem path. App handoff uses GRS-086 current scope/roots/writer and does not invent a Project; source and destination authority are independent.
 
 ### GRS-047 - Goal Handoff Command And Local-Projection Closure
 
@@ -64,7 +64,14 @@ plan_unit_id: GRS-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: A GoalRun freezes its requested and effective provider, model, account, route, Persona, mode, topology, policy generations, and resolver evidence at admission. Replan, provider rotation, fallback, or user route change creates an explicit revisioned rebind with reason, authority/currentness checks, prior/new snapshots, and owner epoch; focus, thread selection, reconnect, compaction, or current Settings never silently retarget an admitted GoalRun.
+canonical_text: >-
+  A GoalRun freezes its requested and effective provider, model, account, route, Persona, mode, topology,
+  policy generations, and resolver evidence at admission. Replan, provider rotation, fallback, or user
+  route change creates an explicit revisioned rebind with reason, authority/currentness checks, prior/new
+  snapshots, and owner epoch; focus, thread selection, reconnect, compaction, or current Settings never
+  silently retarget an admitted GoalRun. App admission uses real thread/Computer/roots with null Project;
+  scope conversion cannot use this ordinary runtime rebind to change Goal identity. GRS-087 requires
+  linked birth or its separate association transaction.
 gui_related: false
 depends_on: [GRS-044, MS-137]
 unblocks: []
@@ -79,6 +86,9 @@ context_scope: frozen_goal_route
 implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Models_System.md, Plans/Multi-Account.md]
 node_compile_hint: {mode: goal_route_binding_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-003
+  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-003"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints: [Do not retarget a Goal from focus or current settings., Do not commit late prior-binding work.]
 ```

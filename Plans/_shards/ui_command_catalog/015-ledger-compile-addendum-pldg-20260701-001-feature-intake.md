@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7760-L8134
+Source lines: L7916-L8326
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -19,110 +19,132 @@ plan_unit_id: UCC-106
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'UCC-106 retains eleven historical cmd.onboarding.* identifiers as searchable command-era source lineage
-  only; none is a current command, alias, primary handler, or production-wiring row. Current Product Onboarding uses
-  exactly fourteen typed owner-local actions ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close,
-  ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path,
-  ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish,
-  and ui.onboarding.choose_look. These are local UI actions, not semantic commands or catalog registrations, and use
-  the closed pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2 contracts. ui.onboarding.choose_look
-  (DL-153) is a local look preview, and so is the look ui.onboarding.start opens in (Basic Dark for first_run, the look
-  on screen for settings_rerun): neither dispatches cmd.theme.* or a Settings transaction, and the look is written with
-  the Project at commit. Every request consumes PWIZ-021''s closed, normalized, secret-free local_context, including
-  phase-specific draft/preflight/commit bindings as defined by the owner schema; arbitrary/raw payload fields and secret-bearing
-  values are rejected. An action that launches owner work carries a typed owner route or intent and maps to that owner''s
-  existing canonical command and sole handler. The command-era reference to cmd.health.provider_setup.open does not give
-  Product Onboarding a Health/Doctor handler. Teacher links continue to use the existing Teacher/Teach command routes
-  from UCC-102 and CS-053. The packet candidates cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue,
-  cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip
-  are source-lineage candidate tokens only; each is rejected as a command, alias, and handler because its semantics are
-  owned by typed local ui.onboarding.* actions. The bell''s setup Continue entry forwards the original prompt''s own
-  typed action, ui.onboarding.start with admitted resume intent and the same closed owner context; it adds no fifteenth
-  onboarding action and never revives cmd.onboarding.resume. The separate Guided Tour Continue entry belongs to PWIZ-023
-  and forwards ui.guided_tour.resume under pm.guided_tour.action_request.v3; it is not an onboarding action. QA round
-  2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: the unchanged fourteen typed onboarding actions route the
-  selected source and protected owner unlock. A Kit is not a destination/authentication command. Screen seeds/under trays
-  add no action or payload field. DL-259, Jared 2026-10-31: D1 A: the online-service step creates or selects a code repository;
-  onboarding does not publish a website, GitHub Pages, GitLab Pages or another site. Local-only Project choices remain
-  valid. D2 A: explicit always-on Server setup on this computer, manual private HTTPS, a self-hosted Remote Link gateway,
-  rarer SSH key types, China-region AI variants and local AI servers live in Settings, with a clear context-correct pointer
-  from onboarding. The ordinary This computer choice remains the easy local-work default. The wizard says AI accounts
-  available in this setup, not every AI. Existing Settings routes and owners retain the advanced capabilities. D3 A:
-  generated proxy settings support Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only:
-  it can be selected as an existing proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv
-  C1, Jared 2026-10-31: onboarding offers Make the settings file or I have one already. The first generates/exports Caddy,
-  NGINX or Traefik configuration for the person to add on their own system before the owner’s DNS, reachability and live-connection
-  checks; Caddy is the default. The second only checks the existing proxy route and live connection, with nothing generated.
-  Set it up for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
-  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
-  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
-  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
-  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
-  a family. D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected execution
-  host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by
-  Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share stable
-  account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns are
-  bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or route
-  invalidates stale validation; another account of the same provider has a distinct identity. D7 B supersedes the former
-  no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale
-  connection and sign in once through the shared protected auth owner, with no separate Tailscale app install. The same
-  signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id;
-  a native Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions
+canonical_text: 'UCC-106 retains eleven historical cmd.onboarding.* identifiers as searchable command-era source
+  lineage only; none is a current command, alias, primary handler, or production-wiring row. Current Product
+  Onboarding uses exactly fourteen typed owner-local actions ui.onboarding.start, ui.onboarding.next, ui.onboarding.back,
+  ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways,
+  ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation,
+  ui.onboarding.choose_first_project, ui.onboarding.finish, and ui.onboarding.choose_look. These are local
+  UI actions, not semantic commands or catalog registrations, and use the closed pm.product_onboarding.action_request.v2
+  and pm.product_onboarding.action_result.v2 contracts. ui.onboarding.choose_look (DL-153) is a local look
+  preview, and so is the look ui.onboarding.start opens in (Basic Dark for first_run, the look on screen for
+  settings_rerun): neither dispatches cmd.theme.* or a Settings transaction, and the look is written with the
+  Project at commit. Every request consumes PWIZ-021''s closed, normalized, secret-free local_context, including
+  phase-specific draft/preflight/commit bindings as defined by the owner schema; arbitrary/raw payload fields
+  and secret-bearing values are rejected. An action that launches owner work carries a typed owner route or
+  intent and maps to that owner''s existing canonical command and sole handler. The command-era reference to
+  cmd.health.provider_setup.open does not give Product Onboarding a Health/Doctor handler. Teacher links continue
+  to use the existing Teacher/Teach command routes from UCC-102 and CS-053. The packet candidates cmd.onboarding.back,
+  cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details,
+  cmd.onboarding.resume, and cmd.onboarding.skip are source-lineage candidate tokens only; each is rejected
+  as a command, alias, and handler because its semantics are owned by typed local ui.onboarding.* actions.
+  The bell''s setup Continue entry forwards the original prompt''s own typed action, ui.onboarding.start with
+  admitted resume intent and the same closed owner context; it adds no fifteenth onboarding action and never
+  revives cmd.onboarding.resume. The separate Guided Tour Continue entry belongs to PWIZ-023 and forwards ui.guided_tour.resume
+  under pm.guided_tour.action_request.v3; it is not an onboarding action. QA round 2, Jared 2026-10-30; DL-258;
+  GUI 7d586bad18: Q6/Q7/H1/H5: the unchanged fourteen typed onboarding actions route the selected source and
+  protected owner unlock. A Kit is not a destination/authentication command. Screen seeds/under trays add no
+  action or payload field. DL-259, Jared 2026-10-31: D1 A: the online-service step creates or selects a code
+  repository; onboarding does not publish a website, GitHub Pages, GitLab Pages or another site. Local-only
+  Project choices remain valid. D2 A: explicit always-on Server setup on this computer, manual private HTTPS,
+  a self-hosted Remote Link gateway, rarer SSH key types, China-region AI variants and local AI servers live
+  in Settings, with a clear context-correct pointer from onboarding. The ordinary This computer choice remains
+  the easy local-work default. The wizard says AI accounts available in this setup, not every AI. Existing
+  Settings routes and owners retain the advanced capabilities. D3 A: generated proxy settings support Caddy,
+  NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an
+  existing proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31:
+  onboarding offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX
+  or Traefik configuration for the person to add on their own system before the owner’s DNS, reachability and
+  live-connection checks; Caddy is the default. The second only checks the existing proxy route and live connection,
+  with nothing generated. Set it up for me is removed: Puppet Master does not install or host the proxy. The
+  onboarding draft carries proxy_hosting=generate_only or existing_proxy for this new-Server proxy branch and
+  keeps proxy_tls null; it collects no certificate choice. Generating a file proves neither installation nor
+  consent, identity, secure reachability or a live route. For generation, onboarding proxy_kind is exactly
+  caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may
+  record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  a family. D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected
+  execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct
+  API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection
+  and Usage share stable account/profile/host/environment references, never provider-name booleans or copied
+  secrets. Protected returns are bound to the exact operation, initiating Client/session/generation and execution
+  host. Changing account, host or route invalidates stale validation; another account of the same provider
+  has a distinct identity. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master
+  apps on Windows, macOS and Linux have their own built-in Tailscale connection and sign in once through the
+  shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned Go tsnet helper
+  is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native Client
+  installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions
   and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state
   references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream
-  access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic
-  private listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval
-  and reusable connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded
-  Tailscale connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection.
-  It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. D8 A:
-  onboarding has one FileSafe switch, default on, covering command blocklist, write scope, security filter and pre-write
-  safe points together. Individual controls remain in Settings. The switch expresses a requested owner configuration,
-  never approval to bypass a required guard, an absent allowlist/baseline, failed canonical-path resolution, failed initialization
-  or failed safe-point persistence. Mandatory policy and effective guard state win; a refused change stays refused with
-  a clear reason. No failure silently turns a guard off. ELI5: the wizard bar and Guided Tour bar expose the same global
-  general.interaction.mode through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert,
-  and default ELI5. Both bars reflect the same effective state. Every opened onboarding question tip and prose help section
-  has useful Plain English and technical versions, including FileSafe, service differences, storage, remote access and
-  AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt
-  data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a
-  chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5 is a compatibility
-  local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor tour_narration_only
-  tag is retired. DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result
-  and its actual prerequisites. It does not run optional remote-access configuration. After that owner settlement, a
-  separate postcommit remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before
-  the normal provider/Free Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization,
-  new Remote Link output, and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing
-  domain owners, approvals and truthful results. Later always finishes onboarding and leaves the committed Project intact:
-  it does not wait for optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred;
-  any already-started work obeys the owner’s existing cancel/background rules, and the app shows its actual result or
-  pending state. Existing whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.
-  DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and validation
-  result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
-  restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
-  and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
-  fences remain unchanged. DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered
-  pairing create no new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
-  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004);
-  Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.
+  access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain
+  the automatic private listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale.
+  Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain
+  browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through
+  the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed
+  host Tailscale stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering
+  command blocklist, write scope, security filter and pre-write safe points together. Individual controls remain
+  in Settings. The switch expresses a requested owner configuration, never approval to bypass a required guard,
+  an absent allowlist/baseline, failed canonical-path resolution, failed initialization or failed safe-point
+  persistence. Mandatory policy and effective guard state win; a refused change stays refused with a clear
+  reason. No failure silently turns a guard off. ELI5: the wizard bar and Guided Tour bar expose the same global
+  general.interaction.mode through the Settings owner, with values ELI5 and Expert, labels Plain English and
+  Expert, and default ELI5. Both bars reflect the same effective state. Every opened onboarding question tip
+  and prose help section has useful Plain English and technical versions, including FileSafe, service differences,
+  storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact
+  fingerprints, paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change
+  updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns
+  the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not
+  a tour-only setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. DL-259 srv
+  final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
+  prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate
+  postcommit remote-setup view inside automatic_preparation runs any requested Remote Access continuation,
+  before the normal provider/Free Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale
+  authorization, new Remote Link output, and configuration-file/export or existing-proxy checks (CERT-1 / srv
+  C1) use their existing domain owners, approvals and truthful results. Later always finishes onboarding and
+  leaves the committed Project intact: it does not wait for optional setup, certify it, undo owner effects
+  or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing cancel/background
+  rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
+  semantics supply this exit without a new mutation command. DL-259 late integration, 2026-10-31: consume PWIZ-024’s
+  one current resolved service/variant/address and validation result for the online-copy/import view, its Continue
+  availability/reason and activation. Recheck Protect Connect and restore Continue prerequisites through the
+  same existing owners at activation. Invalid or stale input advances nothing and dispatches no owner action.
+  Existing local onboarding IDs, reviewed commit, protected auth, permission and return fences remain unchanged.
+  DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered pairing
+  create no new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
+  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request
+  (SRV-004); Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial
+  GitHub recovery.
 
 
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
-  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
-  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is
+  unchanged. generic_git and generic_host remain transport-only, never aliases that restore retired provider,
+  review, CI, auth or mirror authority.
 
-  DL-273, Jared 2026-11-01: Onboarding local actions that could start Source Control service work consume
-  PWIZ-024 admission before the existing owner handoff, including a choice not yet committed into the main
-  draft. Unpicked draft state never authorizes stale control state. Existing typed disabled or rejected
-  settlement carries no service operation, owner call or auth handoff for a retired choice.
+  DL-273, Jared 2026-11-01: Onboarding local actions that could start Source Control service work consume PWIZ-024
+  admission before the existing owner handoff, including a choice not yet committed into the main draft. Unpicked
+  draft state never authorizes stale control state. Existing typed disabled or rejected settlement carries
+  no service operation, owner call or auth handoff for a retired choice.
 
   FO-22, 2026-11-02: The existing ui.onboarding.back and forward local actions consume PWIZ-021/PWIZ-024’s
   current-answer path, fresh-Review return and retired-service resume rules. Navigation cannot revive an abandoned
   branch or owner authorization. This refines existing local choreography without a new action, command, handler,
-  result field or production row.'
+  result field or production row.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed owner-local
-  Product Onboarding actions.
+gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed
+  owner-local Product Onboarding actions.
 depends_on:
 - PWIZ-021
 - PWIZ-022
@@ -133,107 +155,117 @@ unblocks: []
 acceptance_criteria:
 - The eleven retained cmd.onboarding.* tokens are searchable source lineage only and receive no command registration,
   alias, primary handler, or production-wiring row.
-- Every current Product Onboarding control emits exactly one of the fourteen ui.onboarding.* typed local action IDs owned
-  by PWIZ-021 through PWIZ-023.
+- Every current Product Onboarding control emits exactly one of the fourteen ui.onboarding.* typed local action
+  IDs owned by PWIZ-021 through PWIZ-023.
 - The onboarding look choice, its NieR Mode controls and its start look are local previews through ui.onboarding.choose_look
   and ui.onboarding.start; neither dispatches cmd.theme.* or a Settings transaction (DL-153).
-- The eight packet candidate cmd.onboarding.* tokens are durably rejected as commands, aliases, primary handlers, and
-  production-wiring rows; they do not normalize to the typed local action set.
-- Defer durably preserves exact stage, path, active branch, bounded history, revision/continuation, initiating Client,
-  and focus return; Close is a non-completion dismissal; Skip records an explicit skipped session; Details is ephemeral,
-  same-stage, non-persistent, and owner-command-free.
-- OnboardingActionRequest/OnboardingActionResult close the request/result vocabulary. Applied, disabled, and rejected
-  results are distinct; disabled/rejected results have no local effect, session write, continuation, owner route, or
-  production receipt and expose exact reasons.
-- Required local_context consumes the exact closed v2 owner schema rather than a catalog-owned field list; nullable owner_phase/owner_command_id/precommit_authorization_ref/project_commit_ref/setup_commit_binding
+- The eight packet candidate cmd.onboarding.* tokens are durably rejected as commands, aliases, primary handlers,
+  and production-wiring rows; they do not normalize to the typed local action set.
+- Defer durably preserves exact stage, path, active branch, bounded history, revision/continuation, initiating
+  Client, and focus return; Close is a non-completion dismissal; Skip records an explicit skipped session;
+  Details is ephemeral, same-stage, non-persistent, and owner-command-free.
+- OnboardingActionRequest/OnboardingActionResult close the request/result vocabulary. Applied, disabled, and
+  rejected results are distinct; disabled/rejected results have no local effect, session write, continuation,
+  owner route, or production receipt and expose exact reasons.
+- Required local_context consumes the exact closed v2 owner schema rather than a catalog-owned field list;
+  nullable owner_phase/owner_command_id/precommit_authorization_ref/project_commit_ref/setup_commit_binding
   have phase-gated requirements, and additional/raw/free-form/secret-bearing values are rejected.
-- Uncreated Project drafts and Settings copy previews consume PWIZ-021/SSYS-036. Only owner-authorized read-only preflight
-  or selected-source authentication may run before commit; first-time sign-in consumes MACS-005 with no fabricated identities.
-  Review carries PJCT-007's exact Project-owned commit binding, and paid/free-provider owner routes require that real
-  committed Project. Neither phase adds a command or handler.
-- more_ways setup/project disclosure and branch-local state updates have distinct intent/scope/choice/branch combinations;
-  Skip whole-session and optional Project/Remote-Access variants have distinct intent/scope/choice/branch plus session_skipped
-  versus optional_scope_skipped results.
+- Uncreated Project drafts and Settings copy previews consume PWIZ-021/SSYS-036. Only owner-authorized read-only
+  preflight or selected-source authentication may run before commit; first-time sign-in consumes MACS-005 with
+  no fabricated identities. Review carries PJCT-007's exact Project-owned commit binding, and paid/free-provider
+  owner routes require that real committed Project. Neither phase adds a command or handler.
+- more_ways setup/project disclosure and branch-local state updates have distinct intent/scope/choice/branch
+  combinations; Skip whole-session and optional Project/Remote-Access variants have distinct intent/scope/choice/branch
+  plus session_skipped versus optional_scope_skipped results.
 - Skip and Close never mark Health, Doctor, provider, Server, Project, backup, or any other owner Ready.
-- Owner-flow actions carry typed owner route or intent and map to the target owner's existing canonical command and sole
-  handler without replaying owner work.
+- Owner-flow actions carry typed owner route or intent and map to the target owner's existing canonical command
+  and sole handler without replaying owner work.
 - Teacher actions reuse existing Teacher/Teach command contracts and preserve current-surface context.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: the unchanged fourteen typed onboarding actions
-  route the selected source and protected owner unlock. A Kit is not a destination/authentication command. Screen seeds/under
-  trays add no action or payload field.'
-- 'DL-259, Jared 2026-10-31: D1 A: the online-service step creates or selects a code repository; onboarding does not
-  publish a website, GitHub Pages, GitLab Pages or another site. Local-only Project choices remain valid. D2 A: explicit
-  always-on Server setup on this computer, manual private HTTPS, a self-hosted Remote Link gateway, rarer SSH key types,
-  China-region AI variants and local AI servers live in Settings, with a clear context-correct pointer from onboarding.
-  The ordinary This computer choice remains the easy local-work default. The wizard says AI accounts available in this
-  setup, not every AI. Existing Settings routes and owners retain the advanced capabilities. D3 A: generated proxy settings
-  support Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected
-  as an existing proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31:
-  onboarding offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik
-  configuration for the person to add on their own system before the owner’s DNS, reachability and live-connection checks;
-  Caddy is the default. The second only checks the existing proxy route and live connection, with nothing generated.
-  Set it up for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
-  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
-  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
-  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
-  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
-  a family. D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected execution
-  host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by
-  Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share stable
-  account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns are
-  bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or route
-  invalidates stale validation; another account of the same provider has a distinct identity. D7 B supersedes the former
-  no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale
-  connection and sign in once through the shared protected auth owner, with no separate Tailscale app install. The same
-  signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id;
-  a native Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions
-  and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state
-  references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream
-  access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic
-  private listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval
-  and reusable connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded
-  Tailscale connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection.
-  It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. D8 A:
-  onboarding has one FileSafe switch, default on, covering command blocklist, write scope, security filter and pre-write
-  safe points together. Individual controls remain in Settings. The switch expresses a requested owner configuration,
-  never approval to bypass a required guard, an absent allowlist/baseline, failed canonical-path resolution, failed initialization
-  or failed safe-point persistence. Mandatory policy and effective guard state win; a refused change stays refused with
-  a clear reason. No failure silently turns a guard off. ELI5: the wizard bar and Guided Tour bar expose the same global
-  general.interaction.mode through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert,
-  and default ELI5. Both bars reflect the same effective state. Every opened onboarding question tip and prose help section
-  has useful Plain English and technical versions, including FileSafe, service differences, storage, remote access and
-  AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt
-  data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a
-  chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5 is a compatibility
-  local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor tour_narration_only
-  tag is retired.'
-- 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
-  prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
-  remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
-  Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
-  and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing domain owners, approvals
-  and truthful results. Later always finishes onboarding and leaves the committed Project intact: it does not wait for
-  optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started
-  work obeys the owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing
-  whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
-- 'DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and validation
-  result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
-  restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
-  and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
-  fences remain unchanged.'
-- 'DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered pairing create no
-  new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
-  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004);
-  Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.'
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: the unchanged fourteen typed onboarding
+  actions route the selected source and protected owner unlock. A Kit is not a destination/authentication command.
+  Screen seeds/under trays add no action or payload field.'
+- 'DL-259, Jared 2026-10-31: D1 A: the online-service step creates or selects a code repository; onboarding
+  does not publish a website, GitHub Pages, GitLab Pages or another site. Local-only Project choices remain
+  valid. D2 A: explicit always-on Server setup on this computer, manual private HTTPS, a self-hosted Remote
+  Link gateway, rarer SSH key types, China-region AI variants and local AI servers live in Settings, with a
+  clear context-correct pointer from onboarding. The ordinary This computer choice remains the easy local-work
+  default. The wizard says AI accounts available in this setup, not every AI. Existing Settings routes and
+  owners retain the advanced capabilities. D3 A: generated proxy settings support Caddy, NGINX and Traefik,
+  with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing proxy but
+  never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding
+  offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik
+  configuration for the person to add on their own system before the owner’s DNS, reachability and live-connection
+  checks; Caddy is the default. The second only checks the existing proxy route and live connection, with nothing
+  generated. Set it up for me is removed: Puppet Master does not install or host the proxy. The onboarding
+  draft carries proxy_hosting=generate_only or existing_proxy for this new-Server proxy branch and keeps proxy_tls
+  null; it collects no certificate choice. Generating a file proves neither installation nor consent, identity,
+  secure reachability or a live route. For generation, onboarding proxy_kind is exactly caddy, nginx or traefik
+  and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record nginx_proxy_manager
+  but never emits a generated-configuration record; neither branch silently substitutes a family. D6 A: the
+  human signs in on the initiating active device while the AI/tool runs on the selected execution host. Official
+  tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by Puppet
+  Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share stable
+  account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns
+  are bound to the exact operation, initiating Client/session/generation and execution host. Changing account,
+  host or route invalidates stale validation; another account of the same provider has a distinct identity.
+  D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and
+  Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner,
+  with no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning
+  PM process. A Server keeps one active node per stable server_id; a native Client installation keeps one active
+  node per stable client_id, independent of Projects, windows, tabs, sessions and Server endpoint selection.
+  Owner-qualified configuration, process, IPC, authorization, egress and secure-state references prevent identity/key
+  sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only to verified
+  PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private
+  listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval
+  and reusable connection identity do not grant PM pairing/trust or work permission. A plain browser tab has
+  no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the device’s
+  own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale
+  stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering command blocklist,
+  write scope, security filter and pre-write safe points together. Individual controls remain in Settings.
+  The switch expresses a requested owner configuration, never approval to bypass a required guard, an absent
+  allowlist/baseline, failed canonical-path resolution, failed initialization or failed safe-point persistence.
+  Mandatory policy and effective guard state win; a refused change stays refused with a clear reason. No failure
+  silently turns a guard off. ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode
+  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5.
+  Both bars reflect the same effective state. Every opened onboarding question tip and prose help section has
+  useful Plain English and technical versions, including FileSafe, service differences, storage, remote access
+  and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints, paths
+  and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip
+  without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5
+  is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command.
+  The predecessor tour_narration_only tag is retired.'
+- 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and
+  its actual prerequisites. It does not run optional remote-access configuration. After that owner settlement,
+  a separate postcommit remote-setup view inside automatic_preparation runs any requested Remote Access continuation,
+  before the normal provider/Free Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale
+  authorization, new Remote Link output, and configuration-file/export or existing-proxy checks (CERT-1 / srv
+  C1) use their existing domain owners, approvals and truthful results. Later always finishes onboarding and
+  leaves the committed Project intact: it does not wait for optional setup, certify it, undo owner effects
+  or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing cancel/background
+  rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
+  semantics supply this exit without a new mutation command.'
+- 'DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and
+  validation result for the online-copy/import view, its Continue availability/reason and activation. Recheck
+  Protect Connect and restore Continue prerequisites through the same existing owners at activation. Invalid
+  or stale input advances nothing and dispatches no owner action. Existing local onboarding IDs, reviewed commit,
+  protected auth, permission and return fences remain unchanged.'
+- 'DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered pairing
+  create no new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
+  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request
+  (SRV-004); Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial
+  GitHub recovery.'
 - 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
-  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
-  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is
+  unchanged. generic_git and generic_host remain transport-only, never aliases that restore retired provider,
+  review, CI, auth or mirror authority.'
 - 'DL-273: The same current admitted choice is checked before service-owner routing for restored controls and
   incoming actions; no retired selection reaches sign-in or service work through a local Next action.'
 - 'FO-22: Existing Back/forward local actions consume the current-answer and resume navigation rules in PWIZ-021/PWIZ-024;
-  no abandoned branch or discarded attempt becomes a new owner operation, and the fourteen-action census remains unchanged.'
-
+  no abandoned branch or discarded attempt becomes a new owner operation, and the fourteen-action census remains
+  unchanged.'
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - Plans/product_onboarding_contracts.schema.json
@@ -265,15 +297,16 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
 - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
 - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
-  rules, no hints.
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
-  product behavior only.
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
-  sweep; source implementation serviceChoice and address map are lineage only.
-- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
-  visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31;
+  product-only rules, no hints.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at
+  7aafb35322; product behavior only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation
+  and same-kind sweep; source implementation serviceChoice and address map are lineage only.
+- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback
+  immediately visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 - DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+- source_ref:chat:2026-11-03-projects-pass2-approved
 source_atom_ids:
 - atom-0032
 - atom-0033
@@ -356,24 +389,27 @@ negative_constraints:
 - Do not register, alias, normalize, wire, or assign a handler to any of the eight packet candidate cmd.onboarding.*
   tokens.
 - Do not treat ui.onboarding.* typed local actions as semantic commands or catalog rows.
-- Do not let Skip, Close, Defer, Details, or Ready-screen arrival mark Doctor/Health or any owner subsystem Ready.
+- Do not let Skip, Close, Defer, Details, or Ready-screen arrival mark Doctor/Health or any owner subsystem
+  Ready.
 - Do not create an Onboarding-owned backend or replay owner work through a generic wrapper.
-- Do not accept an absent/open-ended local_context, arbitrary/raw payload copy, secret-bearing value, or ambiguous more_ways/skip
-  variant.
-- Do not turn Product Onboarding into a routed page or add browser/route Back or breadcrumb chrome; typed Back remains
-  local modal choreography.
-- Do not claim native dispatcher, native Slint controller, persistence adapter, or runtime proof from schemas, fixtures,
-  static gates, PMConcept7, or browser verification.
+- Do not accept an absent/open-ended local_context, arbitrary/raw payload copy, secret-bearing value, or ambiguous
+  more_ways/skip variant.
+- Do not turn Product Onboarding into a routed page or add browser/route Back or breadcrumb chrome; typed Back
+  remains local modal choreography.
+- Do not claim native dispatcher, native Slint controller, persistence adapter, or runtime proof from schemas,
+  fixtures, static gates, PMConcept7, or browser verification.
 - Do not make Teacher discovery depend on slash-command knowledge.
 - Do not create a second Teacher command payload language separate from UCC-102 and CS-053.
 - Do not generate wiring JSON, WorkNodes, NodeSeeds, or executable queues during this compile phase.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 compatibility_only_notes:
-- The eleven cmd.onboarding.* identifiers are retained for source search, audit, and one-time migration only; they are
-  not aliases for ui.onboarding.* actions or owner commands.
-- The eight packet candidate cmd.onboarding.* tokens are separate source-lineage candidates rejected as commands, aliases,
-  and handlers because typed local ui.onboarding.* actions own their semantics.
-- The command-era cmd.health.provider_setup.open reference grants Product Onboarding no Health/Doctor ownership; current
-  owner work is launched only through typed owner route or intent.
+- The eleven cmd.onboarding.* identifiers are retained for source search, audit, and one-time migration only;
+  they are not aliases for ui.onboarding.* actions or owner commands.
+- The eight packet candidate cmd.onboarding.* tokens are separate source-lineage candidates rejected as commands,
+  aliases, and handlers because typed local ui.onboarding.* actions own their semantics.
+- The command-era cmd.health.provider_setup.open reference grants Product Onboarding no Health/Doctor ownership;
+  current owner work is launched only through typed owner route or intent.
 stale_retired_dispositions:
 - The registered onboarding command-family interpretation, provider-first choreography, legacy onboarding_setup_state
   mutation path, and generic Onboarding handler are retired by PWIZ-021 through PWIZ-023.

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L15258-L15336
+Source lines: L16050-L16160
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -19,71 +19,103 @@ plan_unit_id: UCC-176
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  cmd.chat.plan.open_version (Open Plan Version, navigation_wrapper, owner Plans/Assistant_Plan_Runtime.md, request
-  AssistantPlanVersionRoute, result RouteResult, sole future target handlers::assistant_plan::plan_open_version) opens
-  the document of one exact Plan version in the editor. The request carries the assistant_plan_id, plan_version and
-  plan_hash of the Goal's GoalPlanBinding. While that version is still the Plan's version the route opens the Plan's
-  own tab, focusing it when it is already open (APR-014); once a later version exists it opens that version's retained
-  read-only document. It never opens Plan Details, never substitutes a newer version, and changes no Plan, run, Goal,
-  To-Do or artifact state. A version that is not retained, or whose hash no longer matches, returns a typed error and
-  opens nothing. Its producers are exactly a bound Goal's Open exact Plan · Vn in Goal Activity Detail (goal_activity)
-  and in the activity bar's Goal preview (goal_hover), a press from the preview closing the preview, and, by the
-  owner's answer of 2026-10-10, every Open plan button: the Plan card's action row and its Build-started and
-  Plan-revised receipt lines (plan_card), each with the version it names, and a build schedule's row in the
-  Scheduled manager (schedule_manager), with the schedule's bound version. The Plan title, Expand and Details links
-  keep their existing route. Plan Details stays cmd.chat.plan.open_details, which no Goal surface raises. The command
-  emits exactly one workspace.layout_changed when its route adds a tab and none when it reveals an open tab
-  (DL-188; amended 2026-10-17, DL-228, it read: emits no event, expected_event_types=[]).
+canonical_text: 'cmd.chat.plan.open_version (Open Plan Version, navigation_wrapper, owner Plans/Assistant_Plan_Runtime.md,
+  request AssistantPlanVersionRoute, result RouteResult, sole future target handlers::assistant_plan::plan_open_version)
+  opens the document of one exact Plan version in the editor. The request carries the assistant_plan_id, plan_version
+  and plan_hash of the Goal''s GoalPlanBinding. While that version is still the Plan''s version the route opens
+  the Plan''s own tab, focusing it when it is already open (APR-014); once a later version exists it opens
+  that version''s retained read-only document. It never opens Plan Details, never substitutes a newer version,
+  and changes no Plan, run, Goal, To-Do or artifact state. A version that is not retained, or whose hash no
+  longer matches, returns a typed error and opens nothing. Its producers are exactly a bound Goal''s Open exact
+  Plan · Vn in Goal Activity Detail (goal_activity) and in the activity bar''s Goal preview (goal_hover), a
+  press from the preview closing the preview, and, by the owner''s answer of 2026-10-10, every Open plan button:
+  the Plan card''s action row and its Build-started and Plan-revised receipt lines (plan_card), each with the
+  version it names, and a build schedule''s row in the Scheduled manager (schedule_manager), with the schedule''s
+  bound version. The Plan title, Expand and Details links keep their existing route. Plan Details stays cmd.chat.plan.open_details,
+  which no Goal surface raises. The command emits exactly one workspace.layout_changed when its route adds
+  a tab and none when it reveals an open tab (DL-188; amended 2026-10-17, DL-228, it read: emits no event,
+  expected_event_types=[]).
+
+
+  Current projects-refresh contract: All six Plan/Deep Plan strategies, exact approved versions, agent/goal_driven/Crew
+  Build, Build At and scheduled messages/tasks work in app scope through existing owners. Only Planning Wizard,
+  PRD Builder and Orchestrator retain no-project workflow gates; Project-native actions still require actual
+  targets. Build At atomically commits one frozen schedule/window, creates no run, and never dispatches execution_window.create
+  a second time. Server-owned timers preserve DST/grace/missed-policy/idempotency, frozen text/attachments/target
+  version and fresh authority/Stop checks. App operational pause has independent real Server custody and user-only
+  clear, never a Settings value or missing-as-off. N25 stops/fences source work and explicitly re-admits mapped
+  frozen targets with fresh consent/epochs; no automatic resume, latest-version substitution or duplicate occurrence.
+  The exact consumer contract is UCC-219/WM-105 and Plans/projects_refresh_command_bindings.json. Historical
+  schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified;
+  unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: "Gives every Open plan button and the bound Goal's Open exact Plan · Vn their own command, distinct from Plan Details."
+gui_classification_reason: Gives every Open plan button and the bound Goal's Open exact Plan · Vn their own
+  command, distinct from Plan Details.
 split_recommended: false
-depends_on: [DL-157, F3-593, APR-014]
-unblocks: [CS-088, WM-065, UIW-026]
+depends_on:
+- DL-157
+- F3-593
+- APR-014
+unblocks:
+- CS-088
+- WM-065
+- UIW-026
 acceptance_criteria:
-  - "Open exact Plan · Vn on a bound Goal dispatches cmd.chat.plan.open_version with the binding's plan id, version and hash."
-  - "Every Open plan button (Plan card action row, Build-started and Plan-revised receipts, a build schedule's row) dispatches cmd.chat.plan.open_version with the version its surface names; producers are exactly plan_card, schedule_manager, goal_activity and goal_hover."
-  - "The route opens Vn's document: the Plan's own tab while Vn is current, otherwise Vn's retained read-only document; it never opens Plan Details or a newer version."
-  - "An unretained or hash-mismatched version returns a typed error and opens nothing."
-  - "No Goal surface raises cmd.chat.plan.open_details."
+- Open exact Plan · Vn on a bound Goal dispatches cmd.chat.plan.open_version with the binding's plan id, version
+  and hash.
+- Every Open plan button (Plan card action row, Build-started and Plan-revised receipts, a build schedule's
+  row) dispatches cmd.chat.plan.open_version with the version its surface names; producers are exactly plan_card,
+  schedule_manager, goal_activity and goal_hover.
+- 'The route opens Vn''s document: the Plan''s own tab while Vn is current, otherwise Vn''s retained read-only
+  document; it never opens Plan Details or a newer version.'
+- An unretained or hash-mismatched version returns a typed error and opens nothing.
+- No Goal surface raises cmd.chat.plan.open_details.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-219; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-  - python3 scripts/pm-plans-verify.py validate-ui-command-response
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plans-verify.py validate-ui-command-response
 risk_class: chat_command_catalog_gap
 reasoning_tier: high
 context_scope: goal_bound_plan_open_20261009
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Commands_System.md
-  - Plans/Assistant_Plan_Runtime.md
-  - Plans/Wiring_Matrix.md
-  - Plans/Wiring_Matrix.production.json
-  - Plans/UI_Wiring_Rules.md
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Wiring_Matrix.md
+- Plans/Wiring_Matrix.production.json
+- Plans/UI_Wiring_Rules.md
 node_compile_hint:
   mode: chat_composer_command_catalog
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-157"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISION_20261010.md, SHA-256 49590354c89d8c6bae54ff77eea7fc252a70d27716fccdc3a46086057c2df498"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; data-action goal-open-plan-version and pd-open-version)"
+- Plans/Decision_Log.md#DL-157
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISION_20261010.md, SHA-256
+  49590354c89d8c6bae54ff77eea7fc252a70d27716fccdc3a46086057c2df498
+- Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; data-action goal-open-plan-version
+  and pd-open-version)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "cmd.chat.plan.open_version"
-  - "AssistantPlanVersionRoute"
-  - "handlers::assistant_plan::plan_open_version"
-  - "Open exact Plan · Vn"
-  - "goal_activity"
-  - "goal_hover"
-  - "Open plan"
+- cmd.chat.plan.open_version
+- AssistantPlanVersionRoute
+- handlers::assistant_plan::plan_open_version
+- Open exact Plan · Vn
+- goal_activity
+- goal_hover
+- Open plan
 negative_constraints:
-  - "Do not bind Open exact Plan · Vn or an Open plan button to cmd.chat.plan.open_details."
-  - "Do not open a newer Plan version in place of the bound one."
-  - "Do not add a chat-local alias for opening a Plan version."
+- Do not bind Open exact Plan · Vn or an Open plan button to cmd.chat.plan.open_details.
+- Do not open a newer Plan version in place of the bound one.
+- Do not add a chat-local alias for opening a Plan version.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Assistant_Plan_Runtime.md
+- Plans/UI_Command_Catalog.md
+- Plans/Assistant_Plan_Runtime.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-157, ContractName:Plans/FinalGUISpec.md#F3-593, ContractName:Plans/Assistant_Plan_Runtime.md#APR-014, ContractName:Plans/Commands_System.md#CS-088, ContractName:Plans/Wiring_Matrix.md#WM-065

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2540-L2647
+Source lines: L2570-L2688
 
-Source SHA256: `6cbf9b3a7ad87b100a7c3bc1c712e41c9e29fd4df68636b207e934cabddf3ebd`
+Source SHA256: `f0493b3f44b352436041e7d206c70d7638402625d9ebba5acf3993556991abd2`
 
 ---
 
@@ -89,7 +89,16 @@ plan_unit_id: AMS-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: "The Assistant-only memory boundary holds against every notebook path: notebook sharing, summaries, tool outputs, checkpoints, and handoffs never forward Assistant-only memory into disallowed agents, directly or through derived notes or paraphrase, and notebook absence is never a reason to wire workers to Assistant memory. Promotion from Working Notebook content runs only through the existing trigger contracts and evidence gates; notebook retrieval and memory injection are deduplicated and separately attributed in prompt assembly, and note-derived detail never becomes default memory injection because it was once a note. The verified-only, summary-first model and configured budgets are retained."
+canonical_text: >-
+  The Assistant-only memory boundary holds against every notebook path: notebook sharing, summaries,
+  tool outputs, checkpoints, and handoffs never forward Assistant-only memory into disallowed agents,
+  directly or through derived notes or paraphrase, and notebook absence is never a reason to wire
+  workers to Assistant memory. Promotion from Working Notebook content runs only through the existing
+  trigger contracts and evidence gates; notebook retrieval and memory injection are deduplicated and
+  separately attributed in prompt assembly, and note-derived detail never becomes default memory
+  injection because it was once a note. The verified-only, summary-first model and configured budgets
+  are retained. App Crew membership and explicit cross-Project read permission do not relax
+  Assistant-only or thread-private memory boundaries, including during conversion.
 gui_related: false
 gui_classification_reason: Memory boundaries are runtime behavior, not GUI work.
 depends_on: [AMS-044]
@@ -105,9 +114,11 @@ context_scope: assistant_memory
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/Working_Notebook.md, Plans/orchestrator-subagent-integration.md]
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-M01
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-M04
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A08
+- source_packet:PM-WNC-2026-09-05-v1:WNC-M01
+- source_packet:PM-WNC-2026-09-05-v1:WNC-M04
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A08
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N16/N25/N26
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["NullMemoryProvider", "Assistant-only", "evidence gates", "separately attributed"]
 negative_constraints:
   - Do not wire workers to Assistant memory because a notebook is absent.

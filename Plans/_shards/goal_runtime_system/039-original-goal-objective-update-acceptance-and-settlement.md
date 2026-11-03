@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6348-L7000
+Source lines: L6493-L7169
 
-Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f`
+Source SHA256: `e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a`
 
 ---
 
@@ -35,11 +35,16 @@ plan_unit_id: GRS-068
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: The existing complete Goal objective replacement accepts authentic direct Save or the
-  existing original approved agent source, uses only the shared Goal body writer and preserves each original
-  accepted effect through later event/result settlement without granting continuation or changing approved
-  Plan behavior. Current updated-v3 consumer composition follows the separately adopted canonical body/control/history,
+canonical_text: >-
+  The existing complete Goal objective replacement accepts authentic direct Save or the existing original
+  approved agent source, uses only the shared Goal body writer and preserves each original accepted effect
+  through later event/result settlement without granting continuation or changing approved Plan behavior.
+  Current updated-v3 consumer composition follows the separately adopted canonical body/control/history,
   selected-event/audit/input and immutable original replay owners without deriving state from an event.
+  The complete application sibling selects explicit null-Project scope and actual thread/Computer under
+  GRS-086, retaining original acceptance/current source/control/Stop/partial-effect/replay predicates.
+  GRS-087 conversion cannot mutate ordinary immutable body or association inputs; each live
+  writer/read/backup edge adopts the selected app edition or stays disabled.
 gui_related: false
 gui_classification_reason: Defines existing-command source, event, storage and result publication without
   a new visual surface.
@@ -86,10 +91,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-039
-- Plans/Decision_Log.md#DL-045
-- Plans/Decision_Log.md#DL-047
-- Plans/Goal_Runtime_System.md#GRS-064
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "Plans/Goal_Runtime_System.md#GRS-064"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
 - Do not infer accepted source or native atomicity from a schema, copied owner map, result-shaped value
   or fixture.
@@ -478,11 +486,16 @@ plan_unit_id: GRS-073
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: The original explicit Cancel operation preserves the exact four-state Goal body and revision,
-  latches the actual host Stop before cancellation effects, publishes a content-free minimal receipt and current
-  v3 fact, then changes only hidden control to remove active display. Whole v2 D-R02 remains historical only.
-  All existing body writers and current readers use the shared v2 control; genuine partial effects and original
-  SIR replay remain immutable.
+canonical_text: >-
+  The original explicit Cancel operation preserves the exact four-state Goal body and revision, latches
+  the actual host Stop before cancellation effects, publishes a content-free minimal receipt and current
+  v3 fact, then changes only hidden control to remove active display. Whole v2 D-R02 remains historical
+  only. All existing body writers and current readers use the shared v2 control; genuine partial effects
+  and original SIR replay remain immutable. The complete application sibling selects explicit null-Project
+  scope and actual thread/Computer under GRS-086, retaining original acceptance/current
+  source/control/Stop/partial-effect/replay predicates. GRS-087 conversion cannot mutate ordinary
+  immutable body or association inputs; each live writer/read/backup edge adopts the selected app edition
+  or stays disabled.
 gui_related: true
 gui_classification_reason: Defines truthful current Goal Activity removal, pending visibility and retained
   history.
@@ -518,9 +531,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-039
-- Plans/Decision_Log.md#DL-045
-- Plans/Decision_Log.md#DL-047
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
 - No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
 - No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
@@ -569,10 +585,15 @@ plan_unit_id: GRS-074
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: Actual Goal, Plan and Workflow association owners share an exhaustively enrolled writer domain
-  and canonical immutable binding origin/revision with current control. Genuine Goal birth and association
-  custody publish together. Cancellation reads complete current original association and pending state; null
-  active_run_ref, cache absence or retained metadata cannot establish no execution association.
+canonical_text: >-
+  Actual Goal, Plan and Workflow association owners share an exhaustively enrolled writer domain and
+  canonical immutable binding origin/revision with current control. Genuine Goal birth and association
+  custody publish together. Cancellation reads complete current original association and pending state;
+  null active_run_ref, cache absence or retained metadata cannot establish no execution association. The
+  complete application sibling selects explicit null-Project scope and actual thread/Computer under
+  GRS-086, retaining original acceptance/current source/control/Stop/partial-effect/replay predicates.
+  GRS-087 conversion cannot mutate ordinary immutable body or association inputs; each live
+  writer/read/backup edge adopts the selected app edition or stays disabled.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -606,9 +627,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-039
-- Plans/Decision_Log.md#DL-045
-- Plans/Decision_Log.md#DL-047
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
 - No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
 - No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original

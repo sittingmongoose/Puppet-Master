@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L1273-L1299
+Source lines: L1258-L1284
 
-Source SHA256: `a2f40fb89918b299f4b90af9d0d7d7c85b75ad57f8312f598490040ea1d74bca`
+Source SHA256: `30d3beb8e135f0dd30e7757570a3b6b7e2830c5655547b4ebb81b675b748cbed`
 
 ---
 
@@ -26,7 +26,7 @@ Provider/LLM exposure rules apply before any diff, conflict hunk, workflow log, 
 
 Review, diff, export, `/evidence/history`, and provider features distinguish ephemeral in-memory view, scrubbed persisted blob, and user-exported file. Anything persisted, indexed, screenshotted through `/screenshots`, exported, or included in evidence/history records the redaction profile, whether mandatory scrub ran, and whether display may hide details.
 
-Remote-side-effect receipts include `approval_source`, `executing_subsystem`, and effective account / credential handle. `approval_source` values include `explicit confirm`, `cached permission`, `policy auto-allow`, and `browser fallback`. `executing_subsystem` values include `git`, `GitHub API`, `docker CLI`, `kubectl`, and `SSH remote`. This applies to push, dispatch, admin changes, publish, repo creation, apply, rollout, and equivalent remote-side-effect actions.
+Remote receipts keep approval_source = explicit confirm/cached permission/policy auto-allow/browser fallback and executing_subsystem = git/GitHub API/docker CLI/kubectl/SSH remote with effective account and opaque credential handle. The PS-107/148 versioned authority supplement distinguishes actual human decision, task mode and prior build grant; policy auto-allow in YOLO never means a human clicked. Bind grant/issuer/revision/ownership refs where applicable, exact target/request/preflight/currentness, and truthful attempted/blocked/unknown/reconciled outcomes. Historical receipts are not rewritten.
 
 Sensitive metadata minimization covers remote URLs, private repo names, registry namespaces, Docker Hub account identity, kube context names, namespace/workload names, discovered service URLs, port-forward endpoints, screenshots, and downloaded scrubbed artifacts. Exports and screenshots mask sensitive metadata by default unless the user explicitly chooses a fuller export profile. Amended 2026-10-31 (DL-270): pm export, pm db dump, pm inspect, pm tail and the in-app record inspector (SP-339) apply this same default masking and redaction profile; a fuller view needs the explicit fuller profile.
 

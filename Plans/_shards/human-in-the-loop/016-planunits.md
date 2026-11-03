@@ -2,9 +2,9 @@
 
 Source: `Plans/human-in-the-loop.md`
 
-Source lines: L421-L2401
+Source lines: L421-L2460
 
-Source SHA256: `67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237`
+Source SHA256: `47519c7d88d096b8adfe6c3d1bc0374a67bd88ac55c3779e1fcde821ddf1e6a4`
 
 ---
 
@@ -180,16 +180,21 @@ plan_unit_id: HITL-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/human-in-the-loop.md
-canonical_text: HITL is the approval consumer for shared-runtime multi-lane execution and must preserve effective_account_id, requested account fields, execution_role, permission posture, actor identity, lane identity, attempt_id, account/role, package/lane/attempt, and safely scoped always policy so later review can attribute who asked and who approved.
+canonical_text: The shared approval host preserves actual scope, thread/run/Computer/actor/account/attempt
+  and present lane/package identities. It renders actual human decisions, Permissions mode authority and previously
+  human-approved build grants distinctly under HITL-038. Missing Orchestrator node identity is not fabricated
+  for application tool approvals; receiving messages never answer protected approvals or impersonate a person.
 gui_related: false
 gui_classification_reason: This unit defines attribution and provenance fields, not GUI presentation.
 split_recommended: true
-depends_on: []
+depends_on:
+- HITL-038
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - This behavior is addressable through HITL-005 instead of broad HITL-001 source-preserving coverage.
-- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions,
+  owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -204,6 +209,10 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0010
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N1/Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
 preserved_exact_tokens:
 - shared-runtime
 - multi-lane execution
@@ -223,12 +232,14 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep
+  their own SSOT boundaries.
 owner_hints:
 - Plans/human-in-the-loop.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'
-split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage
+  preserves exact source provenance without inventing subspans.
 ```
 
 ### HITL-006 - Blocked-Episode Persistence And Approval Identity Join
@@ -238,16 +249,23 @@ plan_unit_id: HITL-006
 unit_type: requirement
 status: accepted
 owner_doc: Plans/human-in-the-loop.md
-canonical_text: Runtime HITL persistence is keyed by blocked episode identity first; checkpoints.hitl.{run_id} and checkpoints.hitl are compatibility paths only, and runtime storage must distinguish concurrent pending HITL episodes by run_id, node_id, blocked_sequence, optional attempt_id, approval_scope_key, actor/account/lane context, and approver identity while supporting a three-way join among the blocked episode, approval identity record, and triggering tool request.
+canonical_text: Orchestrator node HITL persistence remains keyed by run_id/node_id/blocked_sequence plus current
+  attempt, approval scope, actor/account/lane and actual approver, with its three-way tool-request join and
+  existing compatibility paths. Ordinary application chat/Goal/Crew/Plan/scheduled tool approval is the distinct
+  typed Permissions approval contract in PS-145/HITL-038, using real thread/run/Computer/target and request
+  identity, never nullable-node surgery on the historical Orchestrator codec.
 gui_related: false
 gui_classification_reason: This unit defines persistence and join semantics, not GUI presentation.
 split_recommended: true
-depends_on: []
+depends_on:
+- HITL-038
+- PS-145
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - This behavior is addressable through HITL-006 instead of broad HITL-001 source-preserving coverage.
-- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions,
+  owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -262,6 +280,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0010
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N1/Q11/N21/N22 reversals
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
 preserved_exact_tokens:
 - checkpoints.hitl.{run_id}
 - checkpoints.hitl
@@ -279,12 +300,14 @@ compatibility_only_notes:
 - checkpoints.hitl.{run_id} and checkpoints.hitl are compatibility paths only.
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep
+  their own SSOT boundaries.
 owner_hints:
 - Plans/human-in-the-loop.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'
-split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage
+  preserves exact source provenance without inventing subspans.
 ```
 
 ### HITL-007 - Request-Era Compatibility Bridge And Axis Separation
@@ -767,16 +790,22 @@ plan_unit_id: HITL-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/human-in-the-loop.md
-canonical_text: Tier boundaries are not a co-equal execution model; approvals do not bind to tier_id, surviving tier or phase labels are derived grouping/view concepts only, and approval and recovery bind to blocked runtime episodes anchored by run_id, node_id, blocked_sequence, and optional attempt_id.
+canonical_text: Tier/phase labels remain display groupings. Orchestrator node approvals bind the existing run_id/node_id/blocked_sequence/current
+  attempt contract. Application tool decisions instead use the PS-145 thread/run/Computer request envelope
+  through the same host, while build-grant issuance binds exact Project/Plan/build/currentness in PS-147. Neither
+  creates a competing tier approval model.
 gui_related: true
-gui_classification_reason: This unit governs displayed phase/task/subtask grouping labels and their non-authority over runtime scope.
+gui_classification_reason: This unit governs displayed phase/task/subtask grouping labels and their non-authority
+  over runtime scope.
 split_recommended: false
-depends_on: []
+depends_on:
+- HITL-038
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - This behavior is addressable through HITL-015 instead of broad HITL-001 source-preserving coverage.
-- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions,
+  owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -791,6 +820,10 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0015
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
 preserved_exact_tokens:
 - Derived Grouping Boundaries (DRY)
 - Tier boundaries
@@ -805,7 +838,8 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep
+  their own SSOT boundaries.
 owner_hints:
 - Plans/human-in-the-loop.md
 preserved_contractrefs:
@@ -1318,16 +1352,22 @@ plan_unit_id: HITL-025
 unit_type: requirement
 status: accepted
 owner_doc: Plans/human-in-the-loop.md
-canonical_text: Legacy tier-era runtime context, identifier, type, collection labels, and Phase-Task-Subtask wording are retired compatibility-only display/grouping aliases that must not appear in runtime-owned blocked payloads, approval events, persistence records, cache keys, or recovery state; canonical blocked-episode identity is run_id plus node_id plus blocked_sequence and owns lookup, replay, restart recovery, audit joins, and resolver routing.
+canonical_text: Legacy tier-era aliases remain retired for runtime payloads, keys, events and recovery. Orchestrator
+  node approval uses its existing blocked episode; application chat-tool approval uses PS-145 real scope/thread/run/Computer/request
+  identity without invented nodes. The shared approval host and canonical action semantics remain single; mode/grant
+  receipts are provenance, not a new human approval transport.
 gui_related: false
-gui_classification_reason: This unit defines runtime payload identity and retired compatibility vocabulary rather than GUI presentation.
+gui_classification_reason: This unit defines runtime payload identity and retired compatibility vocabulary
+  rather than GUI presentation.
 split_recommended: true
-depends_on: []
+depends_on:
+- HITL-038
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - This behavior is addressable through HITL-025 instead of broad HITL-001 source-preserving coverage.
-- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions,
+  owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1342,6 +1382,10 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0029
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
 preserved_exact_tokens:
 - Tier-era compatibility retirement
 - legacy tier-era runtime canon
@@ -1356,15 +1400,18 @@ preserved_exact_tokens:
 - audit joins
 - resolver routing
 negative_constraints:
-- Legacy tier-era labels must not appear in runtime-owned blocked payloads, approval events, persistence records, cache keys, or recovery state.
+- Legacy tier-era labels must not appear in runtime-owned blocked payloads, approval events, persistence records,
+  cache keys, or recovery state.
 compatibility_only_notes: []
 stale_retired_dispositions:
 - The legacy tier-era runtime canon is retired.
 owner_boundary_notes:
-- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep
+  their own SSOT boundaries.
 owner_hints:
 - Plans/human-in-the-loop.md
-split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage
+  preserves exact source provenance without inventing subspans.
 ```
 
 ### HITL-026 - Blocked Classification, Action Enumeration, And Approval Outcome Identity
@@ -1817,16 +1864,22 @@ plan_unit_id: HITL-034
 unit_type: requirement
 status: accepted
 owner_doc: Plans/human-in-the-loop.md
-canonical_text: HITL-specific affordances consume the shared permission ladder instead of defining a shorter local approval menu; approval choices are deny, once, for session, and always, batch web review may present one domain-grouped approval surface, question defaults to allow only when HITL is available and otherwise remains ask-gated, and HITL surfaces do not create a competing approval vocabulary.
+canonical_text: HITL consumes deny/once/for session/always without inventing local choices. Durable Always
+  requires explicit non-preselected admissible scope under PS-144; mode/grant automation creates no durable
+  rule. Batch/domain and question semantics remain owner-routed. Approval control producers act only on actual
+  current human decisions, not on ordinary YOLO publication already admitted by PS-146.
 gui_related: true
-gui_classification_reason: This unit governs user-visible HITL approval affordances, permission/question prompts, terminal blocked-state handling, or approval labels.
+gui_classification_reason: This unit governs user-visible HITL approval affordances, permission/question prompts,
+  terminal blocked-state handling, or approval labels.
 split_recommended: true
-depends_on: []
+depends_on:
+- HITL-038
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - This behavior is addressable through HITL-034 instead of broad HITL-001 source-preserving coverage.
-- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions,
+  owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1841,6 +1894,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0044
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S16/Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
 - Shared approval-ladder alignment (2026-04-04)
 - HITL-specific affordances
@@ -1865,12 +1921,15 @@ compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Plans/human-in-the-loop.md owns HITL consumer alignment only.
-- Plans/Permissions_System.md and Plans/Tools.md remain owners for the shared permission ladder and tool permission behavior.
+- Plans/Permissions_System.md and Plans/Tools.md remain owners for the shared permission ladder and tool permission
+  behavior.
 owner_hints:
 - Plans/human-in-the-loop.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md'
-split_recommendation_reason: The source span contains separable approval-ladder vocabulary and ask-flow/terminal-block consumer-alignment requirements; repeated source lineage preserves exact source provenance without inventing subspans.
+split_recommendation_reason: The source span contains separable approval-ladder vocabulary and ask-flow/terminal-block
+  consumer-alignment requirements; repeated source lineage preserves exact source provenance without inventing
+  subspans.
 ```
 
 ### HITL-035 - Ask-Flow And Terminal Block Consumer Alignment

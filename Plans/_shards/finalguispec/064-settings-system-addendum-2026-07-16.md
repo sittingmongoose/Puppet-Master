@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31616-L32583
+Source lines: L31515-L32429
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -413,12 +413,11 @@ canonical_text: >-
   set is: toggle, select, radio, slider with a value bubble showing the current value, number, text,
   path with a Browse control, color, action with working-then-done verb states on invocation,
   multiselect, list, and keyvalue, where multiselect, list, and keyvalue render as expandable
-  editors that open in place beneath the row. The 824-setting inventory's rows resolve across eleven
+  editors that open in place beneath the row. The live inventory’s reviewed rows resolve across eleven
   of these renderer types at promotion; the color renderer is part of the contract and serves
   color-typed rows. Rows show badges from the vocabulary restart, adjudication, and new; status
-  marks for ok, needs-setup, and attention from the derived-status feed; and scope tags from the six
-  scopes global, project, run, persona, account, and provider. A Project row discloses its concrete
-  origin (copied, explicit, reset or imported) under SSYS-002 without continuous global inheritance.
+  marks for ok, needs-setup, and attention from the derived-status feed; and offered-level origin words from SSYS-059/063. Default, Everywhere, Computer or Device, Project
+  and applicable owner levels consume one resolver; legacy global metadata normalizes before policy.
   Amended 2026-10-10 (DL-184, F3-648): a status renders as a mark and a word, the mark in a 1em
   glyph slot with no container, never a pill; the toggle renderer follows the approved switch
   grammar below; Glass has F3-652's later curved lens variant. A Settings switch has a gripped key
@@ -428,7 +427,7 @@ canonical_text: >-
   meters have square ends and Retro counts in blocks. Non-label switch keys are outside the
   label-pill detector. The general.visual.wallpaper select renderer is the catalog-backed radio
   gallery of F3-653; this is a registered presentation of select, not a new inventory type. Scope
-  metadata such as global is interpreted by SSYS-002, never as continuous app-global inheritance.
+  metadata such as global is compatibility input; layering determines offered levels under SSYS-059.
   Settings shell navigation, retained updates and first-frame width consume SSYS-053. One shared
   one-of-several selector grammar applies in Settings, Customize, Usage, the Wizard and other
   consumers. Choices never wrap while sharing a sliding highlight. First stack neighbouring fields,
@@ -447,23 +446,14 @@ canonical_text: >-
   square key, never a radius of half its height, and Glass alone takes F3-652's curved lens variant. SSYS-029
   and F3-656 consume it. The concept's capsule switches in Basic and Friendly onboarding are not adopted.
 gui_related: true
-gui_classification_reason: This unit defines visible setting row control renderers, badge and status mark vocabulary, scope tags, and the inherit-origin line.
+gui_classification_reason: This unit defines visible setting row control renderers, badge and status mark vocabulary, offered-level origin words, and the Details/Changed presentation.
 split_recommended: false
 depends_on: [F3-432, F3-441]
 unblocks: []
 acceptance_criteria:
-- Renderer selection maps the inventory type field to the renderer set toggle, select, radio, slider, number,
-  text, path, color, action, multiselect, list, and keyvalue; multiselect, list, and keyvalue render as expandable
-  editors.
-- The slider renderer shows a value bubble, the path renderer includes a Browse control, and the action renderer
-  shows working-then-done verb states on invocation.
-- Rows render badges only from the vocabulary restart, adjudication, and new, and status marks (a mark and a
-  word, no pill) only from ok, needs-setup, and attention.
-- Scope tags render from the six scopes global, project, run, persona, account, and provider, and Project rows
-  disclose their concrete source such as copied, explicitly set, reset, or imported without continuous inheritance.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
-- Settings Spacing, Light/Dark/Auto, Customize choices, Usage ranges and Wizard work types fit without wrapped
-  highlight tracks, clipped words or lost accessible names; control focus survives an in-place update.
+- Renderer types and all existing switch/selector/material/motion/accessibility rules remain as stated.
+- F3-670 adds Changed plus a 1px control outline and origin-word Details; default rows stay quiet.
+- Offer only inventory-declared levels and keep requested/effective values and reasons distinct.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -484,12 +474,13 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/EDITOR-QUICKSETS.js, SHA-256 3e41e8ae1594be81401985bebaa2a4917e066593236fca04e54f02f9b7e7f7f6
   (decision/source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016075014-d904.txt, SHA-256
-  c47ba9668ab4537387f255ce3c05384c84c114d4f27eb04a1572a1adf337dcf6 (Jared's stepped-motion ruling;
-  decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016075014-d904.txt, SHA-256 c47ba9668ab4537387f255ce3c05384c84c114d4f27eb04a1572a1adf337dcf6
+  (Jared's stepped-motion ruling; decision lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--liquid-glass--opus-5.5--src--glass.js,
-  SHA-256 782352b2f604875dcb16ae6683a033b5a8bd0bbd0af39d3de70300b4dadc6593 (Q16 landed on main as
-  aec2916c94, Retro's two-jump step and NieR's cut; source lineage; not native certification)
+  SHA-256 782352b2f604875dcb16ae6683a033b5a8bd0bbd0af39d3de70300b4dadc6593 (Q16 landed on main as aec2916c94, Retro's
+  two-jump step and NieR's cut; source lineage; not native certification)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F02,A-F09,A-F10
 preserved_exact_tokens:
 - "toggle"
 - "select"
@@ -533,24 +524,17 @@ plan_unit_id: F3-439
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Ordinary settings rows apply instantly on change. The settings experience exposes no global Save control,
-  no undo history, no per-setting copy-id affordance, and no favorites surface. Schema-versioned
-  import/export/backup/restore/reset/migration is a separate previewed transaction surface under F3-511,
-  not an ordinary row-edit mode. Exactly two
-  exceptions to instant apply exist: the Permissions surface keeps its existing dirty/save
-  review model, and the Project Settings Modal keeps an explicit Save with Cancel (F3-442),
-  which is the only Save in the settings experience.
+canonical_text: |-
+  Ordinary settings rows apply instantly through the existing Settings transaction owner, with one outcome note, origin and narrow Undo under SSYS-063. There is no global Save, per-setting copy-id or favorites surface. Settings History, Recent changes, Differences and explicit Reset are available under SSYS-009/018/060/063. Permissions keeps its existing dirty/save review. The Project Settings modal keeps its explicit Save and Cancel for the pending batch under F3-442; its Save is local to that modal. Schema-versioned lifecycle previews and owner readback/rollback remain F3-511.
 gui_related: true
 gui_classification_reason: This unit defines the user-facing apply model for settings changes.
 split_recommended: false
 depends_on: [F3-432]
 unblocks: []
 acceptance_criteria:
-- "Ordinary setting changes take effect immediately with no global Save, undo history, copy-id, or favorites surface; F3-511 lifecycle transactions remain previewed and atomic."
-- "Per-category two-step Reset and the F3-511 lifecycle transactions are the only bulk settings operations."
-- "The only exceptions to instant apply are the Permissions dirty/save review model and the Project Settings Modal explicit Save."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Ordinary row edits apply once at the shown origin with truthful outcome and Undo.
+- History/Recent changes are available without a second writer.
+- Permissions and Project Settings retain their scoped review/Save exceptions.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -563,13 +547,15 @@ node_compile_hint:
   mode: instant_apply_model_and_save_exceptions
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:1329"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:1329
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F10
 preserved_exact_tokens:
 - "Reset"
 - "dirty/save"
 negative_constraints:
-- "Do not add a global Save, undo history, per-setting copy-id, or favorites surface; do not bypass the previewed F3-511 lifecycle transaction for import/export/backup/restore/reset/migration."
+- No fake success, global Save, or second transaction engine.
 compatibility_only_notes:
 - "Slint portability: instant apply maps to typed state setters invoked on control change; no arbitrary-content backdrop blur, no SVG filters, and color styling is precomputed rather than runtime-mixed."
 stale_retired_dispositions: []
@@ -586,17 +572,8 @@ plan_unit_id: F3-440
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives
-  the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through
-  SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer;
-  the glass alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists
-  at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state;
-  and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10,
-  DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column,
-  F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050).
-  Each binding applies on change with no reload. The concept's interface-density live-apply hook had
-  no consumer and is demo residue excluded from this canonical wiring map.
+canonical_text: |-
+  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer; the glass alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10, DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies on change with no reload. The concept's interface-density live-apply hook had no consumer and is demo residue excluded from this canonical wiring map. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Existing theme:v1/glass_alpha:v1 names are compatibility/reader bindings, not additional independent writers; SP-348 owns level storage.
 gui_related: true
 gui_classification_reason: This unit defines visible live-apply bindings between settings and shell surfaces.
 split_recommended: false
@@ -621,9 +598,11 @@ node_compile_hint:
   mode: settings_live_apply_wiring_map
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:1329"
-- "Plans/FinalGUISpec.md:2291"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:1329
+- Plans/FinalGUISpec.md:2291
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F01,A-F08,A-F09
 preserved_exact_tokens:
 - "theme:v1"
 - "glass_background_mode:v1"
@@ -649,33 +628,8 @@ plan_unit_id: F3-441
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  `Plans/settings_inventory.json` is the canonical inventory registry of all 1010 settings across 12 categories.
-  Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`.
-  Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search,
-  badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation
-  service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded
-  by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was
-  concept scaffolding. Registry provenance pins the concept sidecar extraction
-  `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256
-  9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces,
-  including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind
-  to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc
-  and option words in this inventory are the one wording the product renders for it, on every surface that draws
-  the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording,
-  such as the onboarding Settings kit's plain-language rows.d labels and help, is a proposal until adopted here.
-  Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it
-  rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as
-  "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label
-  stays one of its search aliases, and its option words are option_labels, display words for stored option
-  values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill
-  and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain",
-  "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels
-  beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and
-  general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one
-  row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or
-  sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede
-  earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage.
+canonical_text: |-
+  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain-language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. F-d’s seven canonical additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false
@@ -698,10 +652,12 @@ node_compile_hint:
   mode: settings_inventory_registry_binding
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:1329"
-- "Plans/FinalGUISpec.md:1359"
-- "Concepts/pm6-build/sidecar/pm_settings_data.json (sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d)"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:1329
+- Plans/FinalGUISpec.md:1359
+- Concepts/pm6-build/sidecar/pm_settings_data.json (sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d)
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F02,A-F10,B-F01,E-F05
 preserved_exact_tokens:
 - "Plans/settings_inventory.json"
 - "Plans/settings_inventory.schema.json"
@@ -789,28 +745,17 @@ plan_unit_id: F3-442
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The Project Settings Modal shows project-scope settings derived from the settings inventory
-  registry: every registry row whose scope includes project is eligible, and the modal's rows
-  are generated from the registry rather than authored separately. Rows group into three
-  tabs: General, Environment, and Agent behavior. Each row edits one concrete project value
-  and shows whether that value was copied, explicitly set, reset, imported, invalid, or unavailable.
-  `Copy Settings From...` is a separate one-time previewed transaction and never establishes
-  continuous inheritance. The modal provides its own scoped substring search over
-  its rows. Changes commit through an explicit Save with a Cancel that discards pending
-  changes; per F3-439 this is the only Save in the settings experience. The concept's 12
-  hardcoded modal rows are a demo shim, not the canonical row set.
+canonical_text: |-
+  The Project Settings modal is an exact-Project view over inventory layering.may_differ_by, not a second inventory. Eligible rows offer the Project level through SSYS-059; unoffered levels show their owner reason. General, Computer and Agent behavior are the visible groups; Environment is a retained historical label, not a new settings level or synonym for Execution Environment. Rows show effective value and origin, Project own value when set, and the same Details/Changed/Varies grammar as F3-670. Explicit Save commits the pending exact-Project transaction; Cancel discards pending changes. Copy Settings From is the detached preview/apply/rollback flow and does not link the destination to the source Project. Wider level changes reach only rows that continue to follow them. The old twelve hardcoded rows are demo lineage.
 gui_related: true
 gui_classification_reason: This unit defines the visible Project Settings Modal rows, tabs, search, and save model.
 split_recommended: false
 depends_on: [F3-439, F3-441]
 unblocks: []
 acceptance_criteria:
-- "Project Settings Modal rows are derived from inventory registry rows whose scope includes project; the concept's 12 hardcoded rows are not promoted."
-- "Rows group into the General, Environment, and Agent behavior tabs, each row stores a concrete project value with source disclosure, and the modal offers scoped substring search."
-- "Copy Settings From... previews and atomically copies selected values once; later Global changes cannot mutate the Project."
-- "The modal commits through an explicit Save with Cancel discarding pending changes, and this remains the only Save in the settings experience."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Rows are derived from offered Project levels and exact Project identity.
+- Pending batch Save/Cancel preserves origin, revisions, preview and owner readback/rollback.
+- Detached copy and legitimate wider-level inheritance are distinguishable.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -823,9 +768,11 @@ node_compile_hint:
   mode: project_settings_modal_reconciliation
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:1329"
-- "Plans/FinalGUISpec.md:1363"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:1329
+- Plans/FinalGUISpec.md:1363
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F01,A-F09,A-F10
 preserved_exact_tokens:
 - "General"
 - "Environment"
@@ -833,8 +780,8 @@ preserved_exact_tokens:
 - "Save"
 - "Cancel"
 negative_constraints:
-- "PSM rows must not be hardcoded independently of the inventory registry."
-- "Do not expose inherit-vs-override or continuously resolve a Project value from later Global changes."
+- Do not hardcode modal rows or restore the inheritance ban.
+- Do not interpret Computer as Execution Environment.
 compatibility_only_notes:
 - "Slint portability: the modal renders as an opaque precomputed surface with typed row models; no arbitrary-content backdrop blur, no SVG filters, and color styling is precomputed rather than runtime-mixed."
 stale_retired_dispositions: []

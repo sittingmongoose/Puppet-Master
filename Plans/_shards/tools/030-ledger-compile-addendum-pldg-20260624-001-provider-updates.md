@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2620-L11099
+Source lines: L2620-L11156
 
-Source SHA256: `9f8f951e268b5a9642675d8bc16560174ee3265592aa1c7c4d77e345c3e8f504`
+Source SHA256: `ede2a7942ae8c531e17d141bb5f9b2c6f0a9e43c259bfe1fa9f102f70e9d0a67`
 
 ---
 
@@ -105,8 +105,12 @@ plan_unit_id: T-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Tools summarizes permission actions, precedence, and persistence for registry context only; canonical permission
-  semantics remain in Plans/Permissions_System.md.
+canonical_text: >-
+  Tools summarizes permission actions, precedence and persistence for registry context only;
+  Permissions_System remains the sole owner. Computer rules sit between Project and Everywhere, while
+  Settings provides only declared default values through its resolver. In app context the Project tier
+  is absent; mode, session, Persona, specificity/deny behavior, retained guards and FileSafe keep
+  their owner-defined order.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -133,6 +137,8 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0005
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0006
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0007
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S3/S8; N6/N12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - 'ContractRef: ContractName:Plans/Permissions_System.md, Primitive:DRYRules'
 - allow
@@ -2329,18 +2335,22 @@ plan_unit_id: T-044
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: '`chatsearch` is project-scoped with `query: string`, optional `filters: { thread_id?, time_range? }`, optional
-  `k?: number`, hit shape `{ thread_id, message_id, ts, role, snippet, score }`, project Tantivy scope, strict secret scrubbing,
-  and Context Lens muted-message exclusion or annotation.'
+canonical_text: >-
+  chatsearch keeps query: string, optional filters: { thread_id?, time_range? }, optional k?: number
+  and hit shape { thread_id, message_id, ts, role, snippet, score }. A Project call searches only its
+  authorized Project Tantivy corpus; an app call uses the explicit app partition and calling thread
+  scope, with real Computer identity and no Project fallback. Other-thread or cross-Project reads
+  require T-185, never automatic retrieval. Strict secret scrubbing and Context Lens muted-message
+  exclusion/annotation apply in both scopes.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Input and output schema are preserved.
-- Per-project Tantivy scope is enforced.
-- Muted `message_ids` do not enter agent context.
+- Project and app local search retain the same bounded hit shape and exact source refs.
+- An app search cannot silently read other app threads or a currently focused Project.
+- Muted message_ids never enter agent context; explicit cross-scope queries disclose T-185 coverage.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2354,6 +2364,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - chatsearch
 - 'query: string'
@@ -2437,9 +2449,13 @@ plan_unit_id: T-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Tools owns `grep` fallback, `/sparse-n-gram`, degradation, filtering, freshness, and event-field semantics
-  while external callers keep `{ pattern, path?, glob? }`, the 1000 result limit, the 30s timeout, read-only posture, and
-  final ripgrep verification.
+canonical_text: >-
+  Tools owns `grep` fallback, `/sparse-n-gram`, degradation, filtering, freshness, and event-field
+  semantics while external callers keep `{ pattern, path?, glob? }`, the 1000 result limit, the 30s
+  timeout, read-only posture, and final ripgrep verification. Ordinary grep never merges Project
+  indexes; T-185 is the sole explicit-grant exception for merging already authorized bounded results,
+  not an ambient combined index. App grep uses the exact chat/granted root and cannot infer a main
+  Project.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -2453,9 +2469,10 @@ unblocks:
 - T-051
 - T-052
 acceptance_criteria:
-- No new user-facing or agent-facing tool name is introduced.
-- Sparse index candidate narrowing never changes final correctness.
-- Project indexes are not merged across projects.
+- No new grep tool name or compatibility signature is introduced.
+- Sparse candidate narrowing never changes final ripgrep correctness.
+- Ordinary Project indexes remain separate; only T-185 explicitly authorized results can be merged with complete
+  coverage.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2469,6 +2486,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - grep
 - /sparse-n-gram
@@ -2845,8 +2864,12 @@ plan_unit_id: T-053
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: '`logsearch` indexes summaries and snippets; `logread` fetches bounded full payloads by `event_id` or `blob_ref`;
-  full payload remains out of the index and all persisted or returned log material is strictly scrubbed.'
+canonical_text: >-
+  `logsearch` indexes summaries and snippets; `logread` fetches bounded full payloads by `event_id` or
+  `blob_ref`; full payload remains out of the index and all persisted or returned log material is
+  strictly scrubbed. App logsearch/logread resolve their authorized exact event/payload references
+  through storage-plan rather than interpolating an empty Project into a legacy logs path; DL-270
+  payload custody and scrub remain.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -2869,6 +2892,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - logsearch
 - logread
@@ -3512,8 +3537,12 @@ plan_unit_id: T-066
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Custom tool schemas use JSON Schema or equivalent and discovery comes from project config, enabled lists,
-  or explicit scans without arbitrary disk loading.
+canonical_text: >-
+  Custom tool schemas use JSON Schema or equivalent. Discovery reads the resolved owner definitions,
+  enabled lists or explicit permitted scans for the frozen work Computer and optional Project; app
+  discovery uses only admitted user/global definitions. Computer-local installation/executable
+  readiness is separate from definition home. No arbitrary disk loading, repository walk-up, new org
+  layer or copied executable-source trust is implied.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -3535,6 +3564,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0043
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8; N6/N12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - JSON Schema
 - description for model prompt
@@ -3869,8 +3900,13 @@ plan_unit_id: T-073
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Tool permissions persist under `tool_permissions` in config with app defaults and project overrides; active
-  runs use immutable snapshots and settings changes affect only the next run.
+canonical_text: >-
+  Tool permission defaults consume the Settings resolver through Everywhere, Computer and optional
+  Project, while exact rules and TOML/redb projection remain Permissions-owned. Active runs keep
+  immutable snapshots; new runs recompute after place/Computer/Project changes and conversion. Live
+  revocation, Stop and other retained dispatch gates still apply; no settings default grants execution
+  authority. tool_permissions remains the compatibility view; ordinary preference edits are taken by
+  the next run.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -3892,6 +3928,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0050
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S3/S8; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - GuiConfig
 - redb
@@ -4915,16 +4953,21 @@ plan_unit_id: T-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Durable permission config uses global and project TOML files and projects the merged set to redb `tool_permissions`
-  in `config:v1` for backward compatibility.
+canonical_text: >-
+  Durable permissions consume the Everywhere library rules, Computer-local rules and optional Project
+  TOML rules from Permissions_System. Existing global ~/.config/puppet-master/permissions.toml and
+  Project .puppet-master/permissions.toml are owner-managed sources/projections; Computer rules use
+  D's exact admitted key/path. redb tool_permissions in config:v1 remains a derived compatibility
+  view, never a second writer. That projection preserves backward compatibility.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Global and project TOML locations are preserved.
-- Merged permission projection to redb remains backward-compatible.
+- Existing source paths remain recognized by their owner and no new org layer exists.
+- No-project resolution skips Project and a stale or read-only mirror cannot accept a write.
+- Merged permission projection remains backward compatible and secret-free.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -4938,6 +4981,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0064
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8; N6/N12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - ~/.config/puppet-master/permissions.toml
 - <project_root>/.puppet-master/permissions.toml
@@ -5017,8 +5062,11 @@ plan_unit_id: T-095
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Permission resolution order is summarized as Mode override, Session cache, Persona, Project, Global, Defaults,
-  Special guards, then FileSafe post-resolution application.
+canonical_text: >-
+  Permission resolution is summarized as Mode override, Session cache, Persona, optional Project,
+  Computer, Everywhere, Defaults, then Special guards and post-resolution FileSafe. Permissions_System
+  owns specificity, deny behavior, mode authority and all exceptions; the Settings ladder supplies
+  values but never changes instruction precedence or creates an approval.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -5040,6 +5088,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0066
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S3/S8; N6/N12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Mode override
 - Session cache
@@ -8004,8 +8054,12 @@ plan_unit_id: T-152
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Action requests bypass read-time cache but may store final results; PM cache precedes Firecrawl cache, and
-  change tracking compares fresh content to prior entries.
+canonical_text: >-
+  Action requests bypass read-time cache but may store final results; PM cache precedes Firecrawl
+  cache, and change tracking compares fresh content to prior entries. The app partition has a separate
+  per-Computer cache bucket shared by its no-project chats, with the same 500 MB default, TTL/LRU and
+  payload-store rules. The budget resolves through web.fetch.cache-size under the Settings ladder; a
+  new chat does not reset the bucket or borrow a Project cache.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -8013,9 +8067,10 @@ depends_on:
 - T-151
 unblocks: []
 acceptance_criteria:
-- Per-project 500 MB, TTL, LRU, stable ordering, and change detection persistence are preserved.
-- Amended 2026-10-31 (DL-270): the 500 MB per-project limit is registered as a per-family disk budget (SP-340) and cached bodies are payload-store references (SP-337); see section 14. The setting is `web.fetch.cache-size`.
-- Question/questionnaire and TODO storage carry-through are not overwritten by web cache/activity payloads.
+- Project and app cache buckets retain the same 500 MB default, TTL/LRU and stable-key/change-tracking rules.
+- DL-270/SP-337/SP-340 keep cached bodies in the payload store and metadata bounded; no raw-body redb values or
+  unlimited app bucket.
+- Question/questionnaire and To-Do custody is independent of web cache/activity data.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -8029,6 +8084,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0108
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - actions
 - always fresh-execute

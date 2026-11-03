@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Modes.md`
 
-Source lines: L1106-L1111
+Source lines: L1642-L1647
 
-Source SHA256: `10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144`
+Source SHA256: `b075a6bdaa47c419844faffa96ddcd921297c0cbdeb48300758aa14fb43d2948`
 
 ---
 
@@ -13,4 +13,4 @@ Source SHA256: `10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144
 This addendum repairs non-runtime run-mode rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-f6bc657026c94cc22b43a8b1`: unresolved P5 run-mode governance recovery requirements are tracked as owner-routed blockers, not live mode behavior. Fields are `blocker_id`, `owner_doc_ref`, `conflict_summary`, `status`, `reopen_condition`, and `created_at_utc`.
-- Repairs `sfk-bc255c3a3c2b772302812837`: YOLO is never approval-free for non-bypassable guards. It skips only optional prompts; FileSafe, permissions, policy, secret, protected-branch, and remote-side-effect guards still block or require approval.
+- Repairs sfk-bc255c3a3c2b772302812837 under current PS-146/147/148 and RM-053: YOLO skips ordinary asks including publication; exact Y1 and grant-created-resource exceptions apply. FileSafe, permission ceilings, secrets/trust, protected targets, disclosure, capability, currentness and Stop remain. This line no longer imposes a universal human publication approval.

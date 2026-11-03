@@ -2,9 +2,9 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L462-L1473
+Source lines: L462-L1479
 
-Source SHA256: `99709bfde0f92665acf3f3d28fd9e2691d5fad3749f3ec48a3afd1d6e9e8f723`
+Source SHA256: `3f0bd0e3fa8398a8ea4ed1b9d08656f9a51c268a9326c2bf4cf027986172829e`
 
 ---
 
@@ -430,7 +430,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
-  Project summary, project attention item, account pressure episode, and account switch event records remain durable, project-scoped, and split between current-state and historical-state facts.
+  Project summary, attention, account pressure and account-switch records preserve their real Project
+  identity and current/history distinction. OP-038 shared Home/Agents/Usage projections add genuine app
+  thread/Computer editions using the same owners, current permissions and scope-partitioned storage; this
+  does not create an Orchestrator Named Plan/card or default cross-Project history merge.
 gui_related: false
 gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
 split_recommended: true
@@ -454,13 +457,16 @@ node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0019
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0020
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0021
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0047
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0056
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0057
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0019"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0020"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0021"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0047"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0056"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0057"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "project_state:v1:{project_id}"
   - "project_summary"

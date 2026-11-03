@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L17988-L18125
+Source lines: L17969-L18108
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -101,7 +101,7 @@ canonical_text: |-
 
   For exactly goal.child_status_changed, the registered schema preserves authoritative historical validation under GRS-060/CV-334 and admits no current child-state transition or new writer.
 
-  For exactly goal.created, the common-v2 and structured-objective minima above remain authoritative only for the complete retained v2 resource. CV-341/GRS-066 define the active content-free v3 payload and SP-294 its original body/command/shared composition. This single version successor changes no other event row, alias, schema or admission disposition.
+  For exactly goal.created, the common-v2 and structured-objective minima above remain authoritative only for the complete retained v2 resource. CV-341/GRS-066 define the active content-free v3 payload and SP-294 its original body/command/shared composition. This single version successor changes no other event row, alias, schema or admission disposition. For an owner-admitted app feature, CV-365/366 selects explicit application scope and the exact application envelope/source/physical-key/append/read/retention graph; required-present project_id is null and actual thread/Server/Host/root identities remain. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge. CV-366’s family table supersedes older unqualified goal event-name lists: historical-only and certified/Workflow exclusions remain zero-write in app scope.
 gui_related: false
 gui_classification_reason: Event schema registration and owner boundaries are contract/governance behavior, not visual presentation.
 depends_on:
@@ -128,9 +128,11 @@ node_compile_hint:
   mode: goal_event_schema_registered
   create_worknodes: false
 source_lineage:
-  - source_ref:audit-20260616-006-goal-runtime-system:SR-019
-  - Plans/Goal_Runtime_System.md:Goal event log
-  - Plans/storage-plan.md:SP-214
+- source_ref:audit-20260616-006-goal-runtime-system:SR-019
+- Plans/Goal_Runtime_System.md:Goal event log
+- Plans/storage-plan.md:SP-214
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,B-F06,D-F06
 preserved_exact_tokens:
   - "Concrete persisted Goal Runtime event names"
   - "payload schemas"

@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L12798-L12887
+Source lines: L12893-L12982
 
-Source SHA256: `9f8f951e268b5a9642675d8bc16560174ee3265592aa1c7c4d77e345c3e8f504`
+Source SHA256: `ede2a7942ae8c531e17d141bb5f9b2c6f0a9e43c259bfe1fa9f102f70e9d0a67`
 
 ---
 
@@ -14,7 +14,7 @@ Packet `PM-WNC-2026-09-05-v1`. Logical notebook semantics are owned by `Plans/Wo
 
 ### Registered tool contracts
 
-**`chatread` — exact bounded history read.** Complements `chatsearch` (T-044): a search hit (`thread_id`, `message_id`, `ts`, `role`, `snippet`, `score`) can be followed by an exact read of the retained source. Input: `{ thread_id, message_id | item_id, revision?, range?, include_neighbors?, include_tool_pair? }`. The range convention is exactly one of `unicode_char_offsets` or `utf8_byte_offsets` per request, never mixed; ranges are UTF-8-safe and explicit truncation is reported. Optional bounded neighboring-message or tool-pair expansion names what was added and stays inside the same aggregate output budget (default 8 KiB, hard 32 KiB per response, plus the live token-budget limit). Direct reads apply the same project/thread/actor/phase permission, redaction, visibility, Context Lens, retention, and lineage checks as search at read time: knowledge of an opaque ID is not permission. Denied visibility, pruned sources, not-yet-indexed state, stale indexes, and incomplete pagination stay distinct internally; user/model-facing responses do not leak forbidden existence. Direct reads use durable authoritative source where authorized, so a search watermark lag never fabricates absence, and a bounded lag/retry or scan fallback never fabricates recollection.
+**`chatread` — exact bounded history read.** Complements `chatsearch` (T-044): a search hit (`thread_id`, `message_id`, `ts`, `role`, `snippet`, `score`) can be followed by an exact read of the retained source. Input: `{ thread_id, message_id | item_id, revision?, range?, include_neighbors?, include_tool_pair? }`. The range convention is exactly one of `unicode_char_offsets` or `utf8_byte_offsets` per request, never mixed; ranges are UTF-8-safe and explicit truncation is reported. Optional bounded neighboring-message or tool-pair expansion names what was added and stays inside the same aggregate output budget (default 8 KiB, hard 32 KiB per response, plus the live token-budget limit). Direct reads apply the same explicit place/Computer/thread/actor/phase permission, redaction, visibility, Context Lens, retention, and lineage checks as search at read time: knowledge of an opaque ID is not permission. Denied visibility, pruned sources, not-yet-indexed state, stale indexes, and incomplete pagination stay distinct internally; user/model-facing responses do not leak forbidden existence. Direct reads use durable authoritative source where authorized, so a search watermark lag never fabricates absence, and a bounded lag/retry or scan fallback never fabricates recollection.
 
 **`notebook_search` — scoped notebook search.** Input: `{ query?, scope, filters?, cursor?, limit? }`. Default 5 hits, hard 10 per page; snippets at most 512 bytes each; total response at most 8 KiB including metadata; current token budget may narrow output. Hits carry `notebook_id`, `entry_id`, `revision`, `epistemic_kind`, `freshness`, `snippet`, `score`. Query success does not imply exhaustive corpus review. Lexical retrieval is the default; optional semantic retrieval is a distinguished mode, never silently blended.
 

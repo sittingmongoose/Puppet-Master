@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L4294
+Source lines: L13-L4330
 
-Source SHA256: `871d8c14649e5f994a06f4b9b68b9e58144fe262d175e5251c8dcb653f0c50ac`
+Source SHA256: `0c481af2073b0da7e199828b487c63f6080d5da8e92ce42f76db375dee982cb4`
 
 ---
 
@@ -709,6 +709,8 @@ SourceRef: Jared, direction of 2026-09-16.
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Forge_Integrations.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitLab_Integration.md, ContractName:Plans/Automated_Testing_System.md
 
 ### DL-051: New repositories may choose their object format, gated by current capability evidence
+
+> Superseded in part by DL-297 (2026-11-03). Only object-format picker placement changes: Settings owns it; permanent-format, capability evidence and no cross-format migration rules remain. Earlier ruling text and quoted user words are retained as history.
 
 Decided on 2026-09-16 by Jared.
 
@@ -2101,6 +2103,8 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/C
 
 ### DL-092: Collaborative workflow history is kept as long as its chat exists
 
+> Superseded in part by DL-292 (2026-11-03). Collaboration history also belongs to admitted application chats; the chat-lifetime/deletion/hold policy is unchanged and conversion cannot erase independently retained custody. Earlier ruling text and quoted user words are retained as history.
+
 Answered on 2026-09-25 by Jared, in the Event Authority program's host session, from the card page: **Approve** on `EA-S09B2-COLLAB-RETENTION-001`, which selects option 1.
 
 **Name:** How long collaborative workflow history is kept.
@@ -2474,6 +2478,8 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/a
 
 ### DL-120: Crews are summonable by the agent, and Crew Auto is the project-wide default that lets it use them (E-02)
 
+> Superseded in part by DL-281, DL-292 (2026-11-03). Crew Auto defaults use declared Settings levels and application chats are admitted; CWR-021 evaluator/parent ceilings and user-triggered Build With Crew remain. Earlier ruling text and quoted user words are retained as history.
+
 Answered on 2026-09-27 by Jared on wand-modules decision card `p02` (register E-02), declining every option and giving his own instruction.
 
 **Question:** What should happen to the old per-chat Crew on/off switch?
@@ -2590,6 +2596,8 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/a
 
 ### DL-126: ELI5 has a project default that a chat can override, and switching it never rewrites a reply (E-11)
 
+> Superseded in part by DL-281, DL-292 (2026-11-03). The ELI5 default uses the declared ladder with no Project rung in app scope; a chat override and the prohibition on rewriting old replies remain. Earlier ruling text and quoted user words are retained as history.
+
 Answered on 2026-09-27 by Jared on wand-modules decision card `p08` (register E-11), asking a question back instead of choosing an option.
 
 **Question:** Three parts. (1) Keep ELI5 as its own small popup, with the dot by the message box as the quick on/off, or go back to a one-click toggle? (2) Keep the "this project" level the Plans don't have? (3) Do the new helper lines under controls also need an "expert" and a "simple" version, or only tooltips and help?
@@ -2690,6 +2698,8 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/B
 
 ### DL-131: A Crew's own time and cost limit overrides the general run limit (E-33)
 
+> Superseded in part by DL-281 (2026-11-03). A kind-specific run limit remains its requested value, bounded by declared Computer/hard/parent ceilings; this creates no new terminal state. Earlier ruling text and quoted user words are retained as history.
+
 Answered on 2026-09-27 by Jared on wand-modules decision card `p16` (register E-33), choosing **"The Crew's own limit overrides the general one"**, which is not the recommended option.
 
 **Question:** A Crew's own limit (say 45 minutes or $6) versus the app's general run limit (say 20 minutes): which wins, and how does a run that hits its limit end?
@@ -2769,6 +2779,8 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/a
 
 ### DL-135: Crew Auto leaves a one-line note in the chat, worded for the project (E-15)
 
+> Superseded in part by DL-292 (2026-11-03). Project notes stay Project-worded; saving app Crew Auto configuration uses the separate thread-bound note and retains override-only no-note behavior. Earlier ruling text and quoted user words are retained as history.
+
 Answered on 2026-09-27 by Jared on wand-modules decision card `p11` (register E-15), choosing **"Keep the note, worded for the project"**, the recommended option.
 
 **Question:** When you turn Crew Auto on, may it leave a one-line note in the chat, even though it's a project-wide setting?
@@ -2789,6 +2801,8 @@ SourceRef: decision card `p11` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm5
 ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/UI_Command_Catalog.md
 
 ### DL-136: A project-wide "Pause all automations" switch stops every scheduled send and build until the user turns it back on (E-19)
+
+> Superseded in part by DL-292 (2026-11-03). The original Project pause/epoch is unchanged; an independent application/Server pause/epoch now covers app automations through the same operational owner. Earlier ruling text and quoted user words are retained as history.
 
 Answered on 2026-09-27 by Jared on wand-modules decision card `p12` (register E-19), approving **"Build a project-wide pause"**, the recommended option. The approval was given in chat on 2026-09-27.
 
@@ -2829,6 +2843,8 @@ SourceRef: decision card `p14` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm5
 ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md
 
 ### DL-138: Resolve the 29 wand-modules questions and adopt all five theme font faces
+
+> Superseded in part by DL-281, DL-292 (2026-11-03). Questions 13–15/25 gain the Settings ladder and app Crew configuration; questions 7–9 gain app scheduling/pause editions without waiving Event Authority or changing old bytes. Earlier ruling text and quoted user words are retained as history.
 
 Jared answered all 29 distinct wand-modules questions (33 ledger question records) on 2026-09-29 with their recommended options, including engineering defaults and follow-up routing, and amended question 22 to include both NieR Mode fonts. The answer source is the owner authorization for this compile.
 
@@ -3074,6 +3090,8 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handof
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-587, ContractName:Plans/FinalGUISpec.md#F3-563, ContractName:Plans/assistant-chat-design.md#ACD-471, ContractName:Plans/Decision_Log.md#DL-108
 
 ### DL-144: NieR Mode covers the whole assistant chat, and scene changes cross-fade
+
+> Superseded in part by DL-286 (2026-11-03). Current five-family look selection uses the shared Settings resolver and accepted levels; the quoted scene/motion ruling and Q22 retirement of a separate NieR switch remain. Earlier ruling text and quoted user words are retained as history.
 
 **Question:** How should the assistant chat look under NieR Mode, and what happens when the background scene changes?
 
@@ -3339,6 +3357,8 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-597, ContractName:Plans/Final
 
 ### DL-152: NieR Mode is turned on where a look is chosen, setup and the tour get a NieR look of their own, and their sounds get a pass
 
+> Superseded in part by DL-281, DL-286 (2026-11-03). Look selection is no longer universally Project-only; the same non-persistent onboarding preview has an explicit accepted-level commit and saved resolution wins before first paint. Earlier ruling text and quoted user words are retained as history.
+
 **Question:** How does someone turn on NieR Mode while choosing a look, and how should setup, the Guided Tour and their sounds look and sound with it?
 
 **Why it came up:** NieR Mode (2026-09-28) could only be turned on in Settings. The theme menu in the title bar and setup's "Pick a look" page could not reach it, setup and the tour only recoloured the Basic puppets under it, and the setup and tour sounds were one fixed sound per moment, with no NieR sounds and no place in the sound library. Jared asked for all of this on 2026-10-07.
@@ -3376,6 +3396,8 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-RE
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/Settings_System.md#SSYS-043
 
 ### DL-153: The app opens in its own look, setup's starting look is decided, the tour stays quiet as it tidies up, and the four looks get their own hero moments
+
+> Superseded in part by DL-281, DL-286, DL-287 (2026-11-03). The ordinary Everywhere store and application first paint are admitted. A valid saved look never flashes Basic Dark; Basic Dark remains factory/pre-claim fallback. Hero moments and one reader remain. Earlier ruling text and quoted user words are retained as history.
 
 **Question:** How should the app look in its first moments, which look does setup start in, and should Basic, Friendly, Glass and Retro get their own versions of setup's big moments?
 
@@ -3548,6 +3570,8 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/Final
 
 ### DL-159: The chat opens in the look you chose, from its first frame
 
+> Superseded in part by DL-286 (2026-11-03). The one first-paint reader now consumes the exact Settings-resolved app/Project look, without an independent last-painted hint or second reader. Earlier ruling text and quoted user words are retained as history.
+
 **Question:** What should the assistant chat show in its first moments, before it has drawn itself?
 
 **Why it came up:** The 5.6 Pro chat concept opened on the browser's own dark grey and switched to the look a person had chosen only when the chat first drew itself, 1.3 to 1.7 seconds in. For a Light theme the whole window went from dark to light; for NieR Mode the dark grey came before the parchment or ink and the boot log. PMConcept7 had just fixed the same thing for its own page (its boot paint, F3-468, DL-153), and Jared approved doing the same for the chat on 2026-10-09.
@@ -3701,6 +3725,8 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DEC
 ContractRef: ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/DRY_Rules.md#DR-058, ContractName:Plans/usage-feature.md#UF-093, ContractName:Plans/usage-feature.md#UF-092, ContractName:Plans/Decision_Log.md#DL-139
 
 ### DL-174: The Accounts room acts in place through the real Settings, auto-switch is set per provider, and every account of a provider is shown
+
+> Superseded in part by DL-281 (2026-11-03). MA-073 gains Computer between Everywhere and Project, skipping Project in No project; provider/account owner rungs, exact identity and switch safeguards remain. Earlier ruling text and quoted user words are retained as history.
 
 **Question:** What can be done from the Usage page's Accounts room, is the automatic account switch one setting or one per provider, and how are several accounts of one provider shown?
 
@@ -3945,6 +3971,8 @@ ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015, Contract
 
 ### DL-180: Home becomes one universal panel system, and the chat stays fixed on the right
 
+> Superseded in part by DL-287, DL-292 (2026-11-03). A workspace tab may select real application No project scope; panel/tab kinds, one Assistant column and Project-native target checks remain. Earlier ruling text and quoted user words are retained as history.
+
 **Question:** How should the middle of the home page work: fixed editor panels, a separate dashboard and a terminal dock at the bottom, or one kind of panel that can hold anything?
 
 **Why it came up:** Home today has four fixed editor panels (two open at start), one dashboard, up to four terminal sections docked at the bottom and a chat that can be dragged into other docks. None of that came from a decision Jared made: it came from an audit packet of the concept as it stood in August. Jared asked on 2026-10-09 for a redesign of the whole home page: one universal panel that can hold dashboards, browsers, artifacts, plans, terminals, the code editor and everything the new chat needs, with a "+" button after the last tab, a way to reach tabs that do not fit, files from the left rail opening in the panels, and a chat that is not moved around any more. This is the first Decision Log entry about the home layout, and it replaces that packet's model.
@@ -4013,6 +4041,8 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/DRY_Rules.md#DR-065
 
 ### DL-181: The terminal is rebuilt as one session per tab, and it has no AI of its own
+
+> Superseded in part by DL-281, DL-287 (2026-11-03). Terminal future-session roots and appearance defaults gain explicit app/Computer context. Conversion does not migrate a live session, PTY or input authority. Earlier ruling text and quoted user words are retained as history.
 
 **Question:** What should the terminal look like and do now that it is an ordinary tab in any panel?
 
@@ -4084,6 +4114,8 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181, ContractName:Plans/FinalGUISpec.md#F3-645
 
 ### DL-183: The terminal gets real colour schemes, backgrounds, effects and fonts, all applying live
+
+> Superseded in part by DL-281, DL-283 (2026-11-03). The one appearance model consumes declared Everywhere/Computer/Project/tab values; All terminals now explicitly writes Everywhere, not a hidden Project default. Earlier ruling text and quoted user words are retained as history.
 
 **Question:** What appearance choices should the terminal have, how do they follow the app's look, and which fonts are built in?
 
@@ -4191,6 +4223,8 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-649, ContractName:Plans/DRY_R
 
 ### DL-186: Dashboards run on the Usage board engine, one board per tab, saved per project, with presets you can save
 
+> Superseded in part by DL-287, DL-292 (2026-11-03). Existing Project boards remain per Project; a separate tagged application board uses the same engine and limits, and conversion never overwrites destination boards. Earlier ruling text and quoted user words are retained as history.
+
 **Question:** Now that dashboard tabs run on the Usage page's widget board, what happens to the old Home widgets, where is each board kept, and what can a person do with a dashboard?
 
 **Why it came up:** DL-180 made the dashboard an ordinary tab that can show every Usage widget and said it would run on the Usage board engine once that engine could run several boards at once. The panels thread built that second step on 2026-10-10 and brought Jared thirteen questions (P1 to P13) about the old Home widgets, ranges, presets, storage and the tour. Jared also answered an earlier question from the Plans thread: may a person make, rename or delete a dashboard (PLN-4)?
@@ -4230,6 +4264,8 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261
 ContractRef: ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/FinalGUISpec.md#F3-638, ContractName:Plans/UI_Command_Catalog.md#UCC-200
 
 ### DL-187: Ten answers on the chat, the Debug Console, terminal tabs, saved scrollback, notifications and shells
+
+> Superseded in part by DL-281, DL-287 (2026-11-03). Shell and persisted default choices consume their actual declared levels/Computer. Live session, scrollback/secret limits and pop-out non-persistence remain unchanged. Earlier ruling text and quoted user words are retained as history.
 
 **Question:** The home redesign left ten questions for Jared, each with an interim rule in canon (PLN-1 to PLN-10). What are his answers?
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L3466-L3474
+Source lines: L3477-L3485
 
-Source SHA256: `f550e21e1654e8c2bbc5b73ed8947b5f71c8cfb3d5dc86fa40413db167463298`
+Source SHA256: `70539854a90f660a87becb50e6d5940880345e97cd12c4860fa3388c25e1ad23`
 
 ---
 
@@ -14,6 +14,6 @@ This addendum repairs non-runtime persona rows without creating WorkNodes, imple
 
 - Repairs `sfk-bb3280798bd1706bc464fd91`: persona GUI command IDs are `cmd.persona.create`, `cmd.persona.edit`, `cmd.persona.disable`, `cmd.persona.restore`, `cmd.persona.delete`, `cmd.persona.save_as_override`, and `cmd.persona.validate_schema`.
 - Repairs `sfk-5ebb077583e46703c74baa39`: `crew.roles` is a map from `role_id` to `{display_name, description, required_capabilities[], default_persona_id?, allowed_persona_ids[]}`. Role tag values are `planner`, `implementer`, `reviewer`, `tester`, `designer`, `security`, `release`, and `governance`.
-- Repairs `sfk-a0b10c29e5616a01ecab3d13`: persona selection fields are `requested_persona`, `effective_persona`, `persona_selection_source`, `persona_policy_snapshot_id`, `fallback_reason_code?`, and `created_at_utc`. `persona_selection_source` values are `user_selected`, `project_default`, `role_default`, `policy_override`, and `fallback`.
+- Current selection fields remain `requested_persona`, `effective_persona`, `persona_selection_source`, `persona_policy_snapshot_id`, `fallback_reason_code?`, and `created_at_utc`. The scope-aware successor adds `everywhere_default` and `computer_default` beside `user_selected`, `project_default`, `role_default`, `policy_override`, and `fallback`. Historical Project resolution bytes/enums stay readable under their original version; F binds the successor schema before app dispatch. P-056/P-060 preserve immutable frozen identity.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

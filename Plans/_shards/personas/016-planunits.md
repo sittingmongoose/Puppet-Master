@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L697-L3195
+Source lines: L697-L3206
 
-Source SHA256: `f550e21e1654e8c2bbc5b73ed8947b5f71c8cfb3d5dc86fa40413db167463298`
+Source SHA256: `70539854a90f660a87becb50e6d5940880345e97cd12c4860fa3388c25e1ad23`
 
 ---
 
@@ -296,7 +296,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Persona files use a deterministic two-tier layout where project-local Personas override global Personas by persona_id.
+  Persona files use the existing Project and library PERSONA.md roots. The library definition has an
+  Everywhere home on the settings home with read-only Computer mirrors; a Project version replaces the
+  entire same-id library definition by persona_id, never individual fields. P-060 owns home, reach,
+  declared switches, copy and save semantics; protected core built-ins cannot be shadowed.
 gui_related: true
 gui_classification_reason: This unit defines GUI-visible Persona management behavior or UI-facing metadata.
 split_recommended: false
@@ -318,7 +321,9 @@ node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0009
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0009
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "STORAGE-LAYOUT"
   - "persona_id"
@@ -533,16 +538,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Agent Config > Personas is the primary Persona management surface and provides library, create, prompt visibility, edit, disable/restore, delete, and schema-validation workflows.
+  Agent Config > Personas is the one primary Persona library, prompt browser and editor, realized
+  inside Settings as Settings › Personas & Crews by section 4. Other Settings pages route to that same
+  management surface. P-060 supplies its home, reach, whole-Project-version and Save feedback without
+  creating another editor.
 gui_related: true
 gui_classification_reason: This unit defines GUI-visible Persona management behavior or UI-facing metadata.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Settings remains a routing/help surface, not the main Persona prompt browser or editor.
-  - The library groups resolved Personas by source/status and shows required columns.
-  - Create/edit/delete/disable/restore flows preserve protected core built-in restrictions.
+- Settings › Personas & Crews realizes the existing Agent Config > Personas library and editor; other pages route
+  or help only.
+- The library groups resolved Personas by source/status and shows the required columns plus owner home/reach.
+- Create/edit/delete/disable/restore preserve protected core built-in restrictions.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -555,8 +564,10 @@ node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0020
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0021
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0020
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0021
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "Agent Config > Personas"
   - "Library view"
@@ -566,8 +577,8 @@ preserved_exact_tokens:
   - "Protected core built-ins"
   - "Schema validation on save"
 negative_constraints:
-  - "Settings is not the main Persona prompt browser or editor."
-  - "Protected core built-ins cannot be modified, disabled, deleted, or shadowed."
+- Do not add a second Persona editor or a per-field layered Persona definition.
+- Protected core built-ins cannot be modified, disabled, deleted, or shadowed.
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md"
   - "ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA, ContractName:Plans/Personas.md#PERSONA-VALIDATION"

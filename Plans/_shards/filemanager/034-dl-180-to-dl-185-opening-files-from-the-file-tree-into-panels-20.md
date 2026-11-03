@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L5315-L5420
+Source lines: L5370-L5490
 
-Source SHA256: `e2fcd22d76721dfd61754927b7b31cc183466c24050f47090f0cf7d7f10bedbf`
+Source SHA256: `3996097e3ab9dbc61c391860625de9f78f78f263621da0b912a2faa4930ed44f`
 
 ---
 
@@ -31,25 +31,33 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   The file tree opens files into the home panels through the one opening module (DL-180, D7;
-  Plans/FinalGUISpec.md#F3-634, Plans/DRY_Rules.md#DR-071) and keeps no placement or dedupe rule of its own. A single
-  click on a file row opens the file in the target panel's preview tab, with an italic label, which the next single
-  click replaces, and leaves keyboard focus in the tree so the arrow keys keep walking it; a double click opens the
-  file kept and moves focus to its tab; an edit in the tab, or dragging the tab, keeps a preview tab. With the Preview
-  Tabs setting off (`general.interaction.preview-tabs`, Plans/Settings_System.md#SSYS-050), a single click opens the
-  file kept. Enter on a focused file row opens it as a double click does. The tree dispatches the existing `cmd.file.open` with the placement
-  fields of Plans/Contracts_V0.md#CV-360 beside the file's identity: `mode: preview` for a single click, `mode: keep`
-  for a double click or Enter, `where: panel` for Alt+click, and `background: true` for Ctrl+click (Cmd+click on
-  macOS), which opens the file without taking focus. A file already open anywhere is revealed where it is, as F3-634
-  says. Alt+click opens the file in a new panel by the fit rule (Plans/FinalGUISpec.md#F3-630). The target of an ordinary
-  click is the last-focused panel that holds documents, as F3-634 says; this unit does not restate that rule. The
-  file row's context menu starts with Open (kept, in that target), Open in new panel (`where: panel`) and Open to the
-  side (`where: right`, a new panel to the right of the target panel), then a separator and the existing file-tree
-  actions of section 11. The Open in Panel submenu with Panel 1 to Panel 4 and its `target_editor_panel_id` routing
-  retire. Open in Terminal on a folder reveals the last-focused terminal tab whose folder is that folder, else opens a new terminal tab there; on a file it uses the file's folder in the same way; the terminal tab lands where F3-634 places a terminal. A folder row's single
-  click still expands or collapses it and opens nothing. Opening, revealing and keeping a file change only the Home
-  layout and the file's tab: the tree's selection, expansion, filter and multi-select state are its own (F-009,
-  F-011) and never written into the Home layout record. This supersedes F-080 and the editor-panel targets of F-017,
-  F-034 and F-036, and amends F-009, F-023, F-033, F-040 and F-067.
+  Plans/FinalGUISpec.md#F3-634, Plans/DRY_Rules.md#DR-071) and keeps no placement or dedupe rule of
+  its own. A single click on a file row opens the file in the target panel's preview tab, with an
+  italic label, which the next single click replaces, and leaves keyboard focus in the tree so the
+  arrow keys keep walking it; a double click opens the file kept and moves focus to its tab; an edit
+  in the tab, or dragging the tab, keeps a preview tab. With the Preview Tabs setting off
+  (`general.interaction.preview-tabs`, Plans/Settings_System.md#SSYS-050), a single click opens the
+  file kept. Enter on a focused file row opens it as a double click does. The tree dispatches the
+  existing `cmd.file.open` with the placement fields of Plans/Contracts_V0.md#CV-360 beside the file's
+  identity: `mode: preview` for a single click, `mode: keep` for a double click or Enter, `where:
+  panel` for Alt+click, and `background: true` for Ctrl+click (Cmd+click on macOS), which opens the
+  file without taking focus. A file already open anywhere is revealed where it is, as F3-634 says.
+  Alt+click opens the file in a new panel by the fit rule (Plans/FinalGUISpec.md#F3-630). The target
+  of an ordinary click is the last-focused panel that holds documents, as F3-634 says; this unit does
+  not restate that rule. The file row's context menu starts with Open (kept, in that target), Open in
+  new panel (`where: panel`) and Open to the side (`where: right`, a new panel to the right of the
+  target panel), then a separator and the existing file-tree actions of section 11. The Open in Panel
+  submenu with Panel 1 to Panel 4 and its `target_editor_panel_id` routing retire. Open in Terminal on
+  a folder reveals the last-focused terminal tab whose folder is that folder, else opens a new
+  terminal tab there; on a file it uses the file's folder in the same way; the terminal tab lands
+  where F3-634 places a terminal. A folder row's single click still expands or collapses it and opens
+  nothing. Opening, revealing and keeping a file change only the Home layout and the file's tab: the
+  tree's selection, expansion, filter and multi-select state are its own (F-009, F-011) and never
+  written into the Home layout record. This supersedes F-080 and the editor-panel targets of F-017,
+  F-034 and F-036, and amends F-009, F-023, F-033, F-040 and F-067. The same opening module and
+  preview/keep rules serve explicit app file identities; Open in Terminal uses that file's admitted
+  Computer/folder/profile. Conversion maps moved files and preserves outside-file/buffer identities
+  without opening a second Assistant or losing unsaved edits.
 gui_related: true
 gui_classification_reason: Defines what a person sees happen when they click, double-click, Alt+click or right-click a file or folder in the file tree.
 split_recommended: false
@@ -79,11 +87,18 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D7, D8)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 6 and 6.2; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (section 3.4 and gap C5; audit lineage only)"
-  - "Concepts/home-redesign/src/panels/js/48-shims.js on concept/home-panels-20261009 (the tree's clicks and its context-menu rows; concept lineage only)"
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D7, D8)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 6 and 6.2; concept lineage
+  only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8
+  (section 3.4 and gap C5; audit lineage only)
+- Concepts/home-redesign/src/panels/js/48-shims.js on concept/home-panels-20261009 (the tree's clicks and its context-menu
+  rows; concept lineage only)
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "cmd.file.open"
   - "mode: preview"

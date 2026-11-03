@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L27584-L28236
+Source lines: L27486-L27976
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -67,63 +67,8 @@ plan_unit_id: SP-330
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'The Home layout of a project and workspace tab is one record, pm.home_workspace_layout.v2 2.0.0 (Plans/home_workspace_layout_v2.schema.json),
-  under home_workspace_layout.v2:{project_id}:{workspace_tab_id} in family home_workspace_layout_v2 with RP-CONFIG-CURRENT;
-  it is the only Home layout authority (DL-180). It holds the panel split tree, the tab records, a view-state block,
-  the chat column, the user''s saved named layouts, a closed-tab stack of at most 20, revision, updated_at and a migration
-  stamp, and never buffers, sessions, scrollback, browser history, chat messages, credentials or a dashboard''s widget
-  layout, which each board keeps per project under widget_layout:v1:<project_id>:<board_id> (WS-030, SP-249). Narrow,
-  overlay, menu, hover and drag state is never written. Every committed structural change validates, writes, reads back,
-  then advances revision by one, publishes one result and receipt and appends one workspace.layout_changed (CV-361);
-  failure rolls back with rolled_back=true and no event; a reveal-only open is no_change, and a reveal into a collapsed
-  panel is one panel_expanded. View state, the chat column''s shown and history_pinned, and a terminal tab''s ref moving
-  to a new session are written with the record without a revision advance, receipt or event. The first read without a
-  v2 record converts the v1 record, else the Home part of layout:v1, through the StorageMigrationCoordinator by the conversion
-  table of this section: editor panels become panels holding their editor tabs, the dashboard a panel with dashboard:home,
-  each terminal section a bottom-row panel whose workgroup panes become terminal tabs bound to their existing sessions,
-  a docked or floating chat returns to the fixed column (a popped-out chat starts in its column after restart), floating
-  surfaces dock, an editor panel''s inactive browser session becomes a background browser tab there, and a hidden surface
-  that holds anything becomes a collapsed panel. The source stays read-only and is never reset; an unreadable source
-  yields the default Home layout, the old record kept and a notice. The concept''s pm.home.panels keys are lineage only.
-  The chat column''s popped_out is current-run state; after a restart the chat starts in its column (F3-504, F3-637).
-  Amended 2026-10-17 (DL-230, Jared): the user''s saved named layouts belong to the person across projects and live in
-  one per-person record, home_named_layouts:v1 in family home_named_layouts, not in this record; the dashboard boards
-  inside a layout stay per project: each saved layout records the project it was saved in, and outside that project its
-  boards, a null board included, are skipped. The first read copies every project''s v2 named_layouts in once, two layouts
-  with one name both kept and the later one numbered, and named_layouts becomes a read-only legacy field. cmd.workspace_layout.save_named
-  writes the layout to the per-person record and, as before, advances this record''s revision by one with its receipt
-  and its one workspace.layout_changed (named_layout_saved, CV-361); this record keeps no copy of the layout. Amended
-  2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width_px, history_pinned, shown and
-  keep_open (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id to the board''s
-  envelope or null), capped at 64 KB (65,536 bytes) of canonical JSON; a bigger save keeps the layout, writes boards_skipped_bytes
-  instead and says so; applying it writes each included board back to its key only when the saved envelope belongs to
-  the current project (null removes), skips another project''s envelope, and leaves a custom board not held by the applied
-  layout unchanged with no event of its own; a layout saved before applies as it did (D10 P6, lead ruling F3). The old
-  Dashboard layout widget_layout:v1:dashboard is converted into no board (P1). The Debug Console is one tab, debug-console,
-  whose chosen session sub-tab is view state in its state (D33, lead ruling F6), and a terminal tab''s notification mute
-  is that tab''s state (D38, lead ruling F5); both are written like view state. A named layout''s boards never name agents,
-  which stores nothing (lead ruling F7). The chat column also keeps keep_open, the narrow-window pin ui.chat_column.keep_open
-  sets (UCC-203), off while absent; it is the person''s choice, not a narrow-window state, and is written like view state.
-  The chat_column fields width_px, history_pinned and keep_open default to null, false and false; width_px is the message
-  area''s width, rounded to an integer of at least 400 px without a fixed upper cap (G3), an undersized finite value
-  stored at the minimum bound and null the window''s default. They are layout values, never Settings values. A changed
-  width is one cmd.workspace_layout.resize_surface { surface: ''chat'', width } structural commit, with one receipt,
-  one layout event and a new revision; a changed drag commits once on release, Escape or no movement commits nothing,
-  and double-click resets with width null. Both pins are view state with no receipt, event or revision; their typed actions
-  ui.chat_column.pin_history and ui.chat_column.keep_open accept the named boolean and toggle when it is absent. A named
-  layout and Restore home layout keep all three; a project switch loads that project''s own chat column, or the defaults.
-  Once at boot, the former chat.width (finite, rounded and clamped), chat.history value pinned and chat.pinOpen true
-  are carried into this project''s layout and every other project''s saved layout only where the corresponding field
-  is still at its default. Existing non-default values survive. The old keys are dropped only after this project''s layout
-  is written, never while an unreadable record waits to be set aside; old defaults null, flyout and false are just dropped.
-  Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer width ≥400
-  or null for default and dynamically clamp rendering to current centre/page floors. Keep History pin/user width and
-  narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the constrained fallback. G1 B,
-  Jared 2026-10-30: Activity Detail’s restored Pin/unpin is session-only view state. It survives thread switches while
-  the data follows the selected thread; unpinned detail closes on a switch. It adds no persisted field, Settings row,
-  receipt or event; history_pinned remains solely History’s saved pin. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18:
-  Amended 2026-10-31 (DL-270): a redb value is at most 16 KiB (SP-340), so a layout record larger than that is split
-  per key or stored by reference, as the storage registry records.'
+canonical_text: |-
+  The Home layout of a project and workspace tab is one record, pm.home_workspace_layout.v2 2.0.0 (Plans/home_workspace_layout_v2.schema.json), under home_workspace_layout.v2:{project_id}:{workspace_tab_id} in family home_workspace_layout_v2 with RP-CONFIG-CURRENT; it is the only Home layout authority (DL-180). It holds the panel split tree, the tab records, a view-state block, the chat column, the user's saved named layouts, a closed-tab stack of at most 20, revision, updated_at and a migration stamp, and never buffers, sessions, scrollback, browser history, chat messages, credentials or a dashboard's widget layout, which each board keeps per project under widget_layout:v1:<project_id>:<board_id> (WS-030, SP-249). Narrow, overlay, menu, hover and drag state is never written. Every committed structural change validates, writes, reads back, then advances revision by one, publishes one result and receipt and appends one workspace.layout_changed (CV-361); failure rolls back with rolled_back=true and no event; a reveal-only open is no_change, and a reveal into a collapsed panel is one panel_expanded. View state, the chat column's shown and history_pinned, and a terminal tab's ref moving to a new session are written with the record without a revision advance, receipt or event. The first read without a v2 record converts the v1 record, else the Home part of layout:v1, through the StorageMigrationCoordinator by the conversion table of this section: editor panels become panels holding their editor tabs, the dashboard a panel with dashboard:home, each terminal section a bottom-row panel whose workgroup panes become terminal tabs bound to their existing sessions, a docked or floating chat returns to the fixed column (a popped-out chat starts in its column after restart), floating surfaces dock, an editor panel's inactive browser session becomes a background browser tab there, and a hidden surface that holds anything becomes a collapsed panel. The source stays read-only and is never reset; an unreadable source yields the default Home layout, the old record kept and a notice. The concept's pm.home.panels keys are lineage only. The chat column's popped_out is current-run state; after a restart the chat starts in its column (F3-504, F3-637). Amended 2026-10-17 (DL-230, Jared): the user's saved named layouts belong to the person across projects and live in one per-person record, home_named_layouts:v1 in family home_named_layouts, not in this record; the dashboard boards inside a layout stay per project: each saved layout records the project it was saved in, and outside that project its boards, a null board included, are skipped. The first read copies every project's v2 named_layouts in once, two layouts with one name both kept and the later one numbered, and named_layouts becomes a read-only legacy field. cmd.workspace_layout.save_named writes the layout to the per-person record and, as before, advances this record's revision by one with its receipt and its one workspace.layout_changed (named_layout_saved, CV-361); this record keeps no copy of the layout. Amended 2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width_px, history_pinned, shown and keep_open (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id to the board's envelope or null), capped at 64 KB (65,536 bytes) of canonical JSON; a bigger save keeps the layout, writes boards_skipped_bytes instead and says so; applying it writes each included board back to its key only when the saved envelope belongs to the current project (null removes), skips another project's envelope, and leaves a custom board not held by the applied layout unchanged with no event of its own; a layout saved before applies as it did (D10 P6, lead ruling F3). The old Dashboard layout widget_layout:v1:dashboard is converted into no board (P1). The Debug Console is one tab, debug-console, whose chosen session sub-tab is view state in its state (D33, lead ruling F6), and a terminal tab's notification mute is that tab's state (D38, lead ruling F5); both are written like view state. A named layout's boards never name agents, which stores nothing (lead ruling F7). The chat column also keeps keep_open, the narrow-window pin ui.chat_column.keep_open sets (UCC-203), off while absent; it is the person's choice, not a narrow-window state, and is written like view state. The chat_column fields width_px, history_pinned and keep_open default to null, false and false; width_px is the message area's width, rounded to an integer of at least 400 px without a fixed upper cap (G3), an undersized finite value stored at the minimum bound and null the window's default. They are layout values, never Settings values. A changed width is one cmd.workspace_layout.resize_surface { surface: 'chat', width } structural commit, with one receipt, one layout event and a new revision; a changed drag commits once on release, Escape or no movement commits nothing, and double-click resets with width null. Both pins are view state with no receipt, event or revision; their typed actions ui.chat_column.pin_history and ui.chat_column.keep_open accept the named boolean and toggle when it is absent. A named layout and Restore home layout keep all three; a project switch loads that project's own chat column, or the defaults. Once at boot, the former chat.width (finite, rounded and clamped), chat.history value pinned and chat.pinOpen true are carried into this project's layout and every other project's saved layout only where the corresponding field is still at its default. Existing non-default values survive. The old keys are dropped only after this project's layout is written, never while an unreadable record waits to be set aside; old defaults null, flyout and false are just dropped. Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer width ≥400 or null for default and dynamically clamp rendering to current centre/page floors. Keep History pin/user width and narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the constrained fallback. G1 B, Jared 2026-10-30: Activity Detail’s restored Pin/unpin is session-only view state. It survives thread switches while the data follows the selected thread; unpinned detail closes on a switch. It adds no persisted field, Settings row, receipt or event; history_pinned remains solely History’s saved pin. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Amended 2026-10-31 (DL-270): a redb value is at most 16 KiB (SP-340), so a layout record larger than that is split per key or stored by reference, as the storage registry records. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App Home layout is a separate application sibling with the same invariants and 16 KiB/64 KB payload limits; original Project v2 records and migration ordering stay exact. App named-layout board snapshots apply only back into their exact saved app Server, never to every null context or any Project.
 gui_related: true
 gui_classification_reason: The persisted record decides the visible panels, tabs, chat column and what survives an upgrade.
 split_recommended: false
@@ -185,22 +130,39 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D2, D3, D10)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 2, 3 and 12; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (layout model, named layouts, the 16 KB cap; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7: the reopen stack holds 20)"
-  - "Plans/storage-plan.md#SP-245"
-  - "Plans/Decision_Log.md#DL-186"
-  - "Plans/Decision_Log.md#DL-187"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D38)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P6; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the Debug Console's one tab and its folded ids; concept lineage only)"
-  - "Concepts/home-redesign/src/panels/js/04-settings.js at c4e32ec0b7, SHA-256 07bdcadf218484acbd1be0c290911707fd21f06aa777e213d2f9f9e121ec5e8a (chat.pinOpen, kept beside the chat width and History choice; concept lineage only)"
-  - "Concepts/home-redesign/src/panels/js/14-layouts.js at c4e32ec0b7, SHA-256 50a4cd1600bcb921430b5f96c1719bdea60703b6815722fa699cbb8cfe2e061a (the 64 KB board snapshot of a named layout and the skipped size; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D1, D2, D3, D10)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 2, 3 and 12; concept lineage
+  only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
+  SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (layout model, named layouts, the 16
+  KB cap; concept lineage only)
+- '/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7: the reopen stack holds 20)'
+- Plans/storage-plan.md#SP-245
+- Plans/Decision_Log.md#DL-186
+- Plans/Decision_Log.md#DL-187
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D38)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md,
+  SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P6; Jared's answers relayed by the
+  planning thread, pm-mail 1010191613-9ce1)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md,
+  SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the Debug Console's one tab and its
+  folded ids; concept lineage only)
+- Concepts/home-redesign/src/panels/js/04-settings.js at c4e32ec0b7, SHA-256 07bdcadf218484acbd1be0c290911707fd21f06aa777e213d2f9f9e121ec5e8a
+  (chat.pinOpen, kept beside the chat width and History choice; concept lineage only)
+- Concepts/home-redesign/src/panels/js/14-layouts.js at c4e32ec0b7, SHA-256 50a4cd1600bcb921430b5f96c1719bdea60703b6815722fa699cbb8cfe2e061a
+  (the 64 KB board snapshot of a named layout and the skipped size; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
   - "pm.home_workspace_layout.v2"
   - "home_workspace_layout.v2:{project_id}:{workspace_tab_id}"
@@ -270,89 +232,20 @@ plan_unit_id: SP-331
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  The terminal's appearance resolves field by field from the look's defaults, which are never
-  stored, then the app default, the project default and the tab override (DL-183, F3-642, DR-068).
-  Until an app-wide Settings store is admitted (SSYS-028), the app default and the project default
-  share one stored value per field: the Settings rows of SSYS-051, held like every Settings value in
-  the open Project's settings snapshot (pm.project_settings_snapshot.v1, Settings custody
-  scd.settings.durable.v1) and written only through Settings transactions, so All terminals reaches
-  the open Project's terminals only and no project field falls through to a separate app value. The
-  per-tab override lives inside the terminal tab's serialized state in the v2 Home record (SP-330),
-  within its 16 KB. Each stored value holds only the fields set there; an unset field falls through
-  to the next value down. When an app-wide store is admitted the app default becomes its own stored
-  level beneath the project default. Every field applies live and nothing stored carries a restart
-  flag. An imported scheme is stored as its parsed colour table, never the file. A custom background
-  image is stored once in the SP-337 payload store (BLAKE3 id, reference count) and referenced by the
-  layer, SP-222's pattern supplying only the manifest and scope fields (Amended 2026-10-31, DL-270); dim and blur are fields applied when drawing; an asset with no layer or
-  retained preset reference is deleted. Images an app or project layer references are backed up with
-  Settings; an image only a tab override references follows the Home record, is not backed up, and
-  when missing the tab falls through to the next layer. This replaces SP-122's
-  terminal_font.v1:global and terminal_color.v1:global. The editor's scheme choice is stored as
-  SSYS-050's code.editing.color-scheme row beside the terminal's scheme row, in the same Project
-  settings snapshot through Settings transactions. The code colour-scheme catalog is built in and
-  never stored; each surface stores only its own choice. The Customize screen’s All terminals is
-  enabled and writes the project default row of SSYS-051 through the same Settings transaction
-  Settings uses, so it changes every terminal while this Project is open; its hover tag says in this
-  project; no surface writes an app-wide value until q-035 admits one. The two Customize screens
-  share F3-650's scope/preview rules. SP-333 adds the editor's per-tab appearance and wallpaper
-  binding without changing this terminal model or creating a fifth stored layer. The reusable
-  terminal preset library is computer-local per user, under terminal_appearance_presets:v1 (logical
-  family terminal_appearance_presets; Plans/terminal_appearance_presets.schema.json). It is beside
-  the imported-scheme library, not in a Project or an appearance inheritance layer. The versioned
-  envelope keeps at most 40 newest-first entries with stable id, normalized name, saved time and
-  sparse canonical appearance fields. Store asset references and parsed scheme references only,
-  never image bytes, terminal output or original import files. A preset reference keeps its custom
-  image alive under SP-222 even when no current terminal uses it; deletion releases only
-  unreferenced assets. ui.terminal.preset.save, rename, delete and undo are typed local library
-  mutations with atomic write/readback, no UICommand receipt or domain event; a failure leaves the
-  prior library and current appearance intact. Undo is available for the most recent deletion in the
-  open Customize session and restores the same entry/position. Apply reads a snapshot and uses the
-  existing This/All writers, with no ongoing link to the preset. Missing/corrupt library data is
-  disclosed and quarantined rather than being used as a Settings default. The logical contract does
-  not claim an installed physical family: storage_value_registry.json records its native custody as
-  deferred. The concept key pm.home.terminal:v1:presets is source lineage only, not a native
-  migration key. Backup/export follows the eventual admitted local-library custody, never implicit
-  Project backup or sync. The local preset library's ownership is this unit and its explicit
-  storage_value_registry family, not an inference from the imported-scheme sentence. Preset and
-  open-session Undo references participate in image reachability, so a deleted preset remains
-  recoverable while Undo is offered. The eventual coherent local-library backup includes the assets
-  it references; this remains distinct from Project Settings backup. A missing imported-scheme id or
-  image reference is retained and disclosed in the library, with Look's own used only for its
-  illustrative preview; Apply refuses that unresolved reference without replacing any current
-  fields. Storage-full or write/readback failure reports failure and preserves the prior library.
-  The 40-character base-name rule is deliberately terminal-specific; it does not change
-  widget-preset naming.
-  Amended 2026-10-17 (DL-228): a custom background picture is PNG, JPEG or WebP under 4 MB (F3-642), kept once
-  by its content hash; besides the pictures a layer or a retained preset references, the four most recently
-  chosen stay so they can be picked again, and an older picture with no reference is deleted.
+canonical_text: |-
+  The terminal's appearance resolves field by field from the look's defaults, which are never stored, then the app default, the project default and the tab override (DL-183, F3-642, DR-068). SSYS-002/059 now admits sparse Everywhere, Computer and Project own levels under SP-348. Each field falls through from the tab override to applicable Project, Computer, Everywhere and the look’s bundled defaults; No project omits Project. All terminals writes Everywhere through the same Settings transaction and names any narrower masking value. The previous shared app/Project-value workaround and q-035 hold are retired. The per-tab override lives inside the terminal tab's serialized state in the v2 Home record (SP-330), within its 16 KB. Each stored value holds only the fields set there; an unset field falls through to the next value down. The Everywhere record is a distinct stored level and Computer values are independent sparse overrides. Every field applies live and nothing stored carries a restart flag. An imported scheme is stored as its parsed colour table, never the file. A custom background image is stored once in the SP-337 payload store (BLAKE3 id, reference count) and referenced by the layer, SP-222's pattern supplying only the manifest and scope fields (Amended 2026-10-31, DL-270); dim and blur are fields applied when drawing; an asset with no layer or retained preset reference is deleted. Images an app or project layer references are backed up with Settings; an image only a tab override references follows the Home record, is not backed up, and when missing the tab falls through to the next layer. This replaces SP-122's terminal_font.v1:global and terminal_color.v1:global. The editor's scheme choice is stored as SSYS-050's code.editing.color-scheme row beside the terminal's scheme row, at its selected offered level through Settings transactions. The code colour-scheme catalog is built in and never stored; each surface stores only its own choice. The Customize screen’s All terminals targets Everywhere; a narrower target must be explicitly selected and its exact origin shown. The two Customize screens share F3-650's scope/preview rules. SP-333 adds the editor's per-tab appearance and wallpaper binding without changing this terminal model or creating a fifth stored layer. The reusable terminal preset library is computer-local per user, under terminal_appearance_presets:v1 (logical family terminal_appearance_presets; Plans/terminal_appearance_presets.schema.json). It is beside the imported-scheme library, not in a Project or an appearance inheritance layer. The versioned envelope keeps at most 40 newest-first entries with stable id, normalized name, saved time and sparse canonical appearance fields. Store asset references and parsed scheme references only, never image bytes, terminal output or original import files. A preset reference keeps its custom image alive under SP-222 even when no current terminal uses it; deletion releases only unreferenced assets. ui.terminal.preset.save, rename, delete and undo are typed local library mutations with atomic write/readback, no UICommand receipt or domain event; a failure leaves the prior library and current appearance intact. Undo is available for the most recent deletion in the open Customize session and restores the same entry/position. Apply reads a snapshot and uses the existing This/All writers, with no ongoing link to the preset. Missing/corrupt library data is disclosed and quarantined rather than being used as a Settings default. The logical contract does not claim an installed physical family: storage_value_registry.json records its native custody as deferred. The concept key pm.home.terminal:v1:presets is source lineage only, not a native migration key. Backup/export follows the eventual admitted local-library custody, never implicit Project backup or sync. The local preset library's ownership is this unit and its explicit storage_value_registry family, not an inference from the imported-scheme sentence. Preset and open-session Undo references participate in image reachability, so a deleted preset remains recoverable while Undo is offered. The eventual coherent local-library backup includes the assets it references; this remains distinct from Project Settings backup. A missing imported-scheme id or image reference is retained and disclosed in the library, with Look's own used only for its illustrative preview; Apply refuses that unresolved reference without replacing any current fields. Storage-full or write/readback failure reports failure and preserves the prior library. The 40-character base-name rule is deliberately terminal-specific; it does not change widget-preset naming. Amended 2026-10-17 (DL-228): a custom background picture is PNG, JPEG or WebP under 4 MB (F3-642), kept once by its content hash; besides the pictures a layer or a retained preset references, the four most recently chosen stay so they can be picked again, and an older picture with no reference is deleted. Full Server Backup includes Everywhere/Computer canonical level records and referenced assets; Project Backup includes Project own values/assets. Device preferences use their own Client writer. Computer-local terminal preset custody stays deferred and does not become a synchronized Settings default.
 gui_related: true
 gui_classification_reason: Decides where each terminal look choice is kept and what survives a move, a reopen and a restore.
 split_recommended: false
 depends_on: [DL-183, DR-068, SSYS-051, SSYS-028, SP-330, SP-222]
 unblocks: []
 acceptance_criteria:
-- The app and project defaults are stored only as SSYS-051's Settings rows in the Project's settings snapshot,
-  as one shared value per field until an app-wide store is admitted (SSYS-028); the tab override only
-  in the tab's state; the look's defaults are not stored.
-- A stored value holds only the fields set in it; clearing a tab override field shows the Settings value,
-  and clearing a Settings field shows the look's default.
-- Moving, collapsing or reopening a terminal tab keeps its override; Settings and the Customize screen’s
-  All terminals write the project layer through the same Settings transaction.
-- No appearance value is stored with a restart flag.
-- A background image is stored once by content hash and referenced, never inlined in a settings row or
-  tab state; an unreferenced image is deleted.
-- Backup includes images the app or project layer references and excludes images only a tab override references.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build
-  tasks are created by this unit.
-- The editor scheme choice is a Settings row stored beside the terminal scheme choice in the same way,
-  and the built-in catalog itself is never stored.
-- The same user sees one computer-local library across Projects; switching Project never relocates it
-  or applies it automatically.
-- Library mutations return truthful readback or failure; applying a preset reuses the appearance/Settings
-  writers and preserves their Project, revision, permission and 16 KB tab-state bounds.
-- The logical preset schema rejects unknown fields and inline/path image values; original native readback
-  must additionally resolve each opaque reference against the owned asset manifest.
+- Sparse appearance levels resolve once with app omitting Project and All terminals targeting Everywhere.
+- Existing per-tab state, imports, preset limits/trust, image reachability and deferred local-library admission
+  remain.
+- Current level/scope/write presentation follows SSYS-002/059, F3-670 and SP-348; old q-035 and universal inheritance/no-app-write
+  bans are superseded. Detached copies remain independent of their source Project. Exact owner/trust/permission/currentness
+  rules remain.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -376,22 +269,21 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
   (D15)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
-  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 6, the appearance
-  model; concept lineage only)
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 6, the appearance model; concept
+  lineage only)
 - Plans/storage-plan.md#SP-222
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
-  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
-  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md, SHA-256
+  4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--home-redesign--src--terminal--js--42-appearance.js,
-  SHA-256 60379cc762cb98e4fbc4d6fb0a44751cbc7447da3c1e9ff4a04589c8186fefc9 (source lineage; not native
-  certification)
+  SHA-256 60379cc762cb98e4fbc4d6fb0a44751cbc7447da3c1e9ff4a04589c8186fefc9 (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/COORDINATOR-PRESET-CUSTODY-1016001056-4c95.md,
-  SHA-256 ad3b14eebf173550efe88a594b4a869588e3175e7e1277120e86405753bc7f3f (source lineage; not native
-  certification)
+  SHA-256 ad3b14eebf173550efe88a594b4a869588e3175e7e1277120e86405753bc7f3f (source lineage; not native certification)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,A-F09,B-F03,C-F11
 preserved_exact_tokens:
   - "scd.settings.durable.v1"
   - "pm.project_settings_snapshot.v1"
@@ -462,47 +354,8 @@ plan_unit_id: SP-332
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Terminal storage follows one session per tab (DL-181, SMPFS-180). terminal_session_record moves to value
-  pm.storage_value.terminal_session_record.v2 at its unchanged key: the required terminal_leaf_pane_id becomes an
-  optional panel_tab_id, the id of the terminal tab that shows the session (or last showed it, once ended) or null, never
-  derived from the session's own id, so a session survives every view change and a tab keeps its id when Restart
-  or a restore gives it a new session, with a
-  coordinator-only conversion and the v1 value schema kept under $defs.legacy_v1. terminal_workspace_state,
-  terminal_section_record, terminal_workgroup_record and editor_terminal_panel_state, and with them
-  terminal_tab_record, terminal_pane_record and terminal_leaf_pane_record, are read-only migration inputs read once
-  by SP-330. SP-122's nine prose-only keys map to terminal_session_record, the v2 Home record, terminal_command_block,
-  Settings, the Project's Settings, cwd_ref, saved scrollback and SP-331. Saved scrollback is the terminal restore
-  record's transcript chunks (SP-125), not a new store: the main screen's retained lines (at most the 10,000-line
-  scrollback plus the screen), styles, links, command records with by and anchored image placements, never the
-  transient_only alternate screen, typed line, selections or find highlights; 64 MiB per terminal tab for text
-  and images, images as PNG with one record per frame written once; text never gives way to images, images drop oldest
-  first and leave a placeholder record naming them; written 1.5 s after output settles, at most every 5 s while
-  streaming and when the page hides; Clear scrollback empties it at the next save; kept for a closed tab while the
-  20-tab stack can reopen it and at most 7 days; a 5 s load budget; one copy per terminal tab, keyed by project
-  and tab id whichever session wrote it, each save replacing the tab's previous copy, so after Restart or a restore
-  the new session's first save takes the copy over and a restored or reopened tab loads the copy under its own tab
-  id. Saved images follow saved scrollback's storage, retention and exclusion rules. Saved scrollback is excluded
-  from backups, exports and sync and holds the output as shown apart from the secret replacements below, which command blocks reach only by
-  transcript_ref; its physical family registration is an open item. SP-047's no-transcript rule covers the privileged-session evidence store, not terminal
-  scrollback. No storage family holds an agent's terminal write grant (CV-362).
-  Amended 2026-10-10 (DL-187): before a copy is written, well-known secret formats are replaced in it (vendor API
-  keys sk-..., AKIA..., ghp_..., github_pat_..., glpat-..., xox?-..., AIza..., Stripe sk_live_...; bearer tokens and
-  JWTs; KEY=value assignments whose name says key, secret, token or password; a private-key block's body), cell for
-  cell in place with the label [API key · not saved] (or token, secret, private key) and blank cells, or • when the
-  secret is shorter; a private key keeps its BEGIN and END lines; command lines and link targets the same; the live
-  screen keeps the original, and a restored tab's notice ends "N secrets were left out of the saved copy." (D36).
-  Every terminal's saved copy together is capped at 512 MiB, fixed and not a setting, with 64 MiB per terminal tab
-  kept: past it the saved copies of terminals not running now (closed tabs, other projects), least recently saved
-  first, are deleted until a full per-terminal quota fits, and then the terminal being saved keeps fewer images,
-  with an index of bytes and save times keeping the total (D37, lead ruling F4); the total is reached by that order,
-  not held as a hard ceiling, and what a save does when running terminals' text alone passes it is open. The scrub
-  question is answered; the physical registration, now with the total's index, stays open. A terminal tab's notification mute is its
-  state in the v2 Home record (D38, SP-330).
-  Amended 2026-10-17 (DL-228): the scrub floor also covers AWS session keys (ASIA...), GitHub's gho_, ghu_,
-  ghs_ and ghr_ tokens, Anthropic and OpenAI project keys (sk-ant-..., sk-proj-...), Stripe test and
-  restricted keys (sk_test_..., rk_live_..., rk_test_...), "Token <value>" authorization headers and names
-  containing PASSWD; a secret split by a soft wrap is still found and replaced.
+canonical_text: |-
+  Terminal storage follows one session per tab (DL-181, SMPFS-180). terminal_session_record moves to value pm.storage_value.terminal_session_record.v2 at its unchanged key: the required terminal_leaf_pane_id becomes an optional panel_tab_id, the id of the terminal tab that shows the session (or last showed it, once ended) or null, never derived from the session's own id, so a session survives every view change and a tab keeps its id when Restart or a restore gives it a new session, with a coordinator-only conversion and the v1 value schema kept under $defs.legacy_v1. terminal_workspace_state, terminal_section_record, terminal_workgroup_record and editor_terminal_panel_state, and with them terminal_tab_record, terminal_pane_record and terminal_leaf_pane_record, are read-only migration inputs read once by SP-330. SP-122's nine prose-only keys map to terminal_session_record, the v2 Home record, terminal_command_block, Settings, the Project's Settings, cwd_ref, saved scrollback and SP-331. Saved scrollback is the terminal restore record's transcript chunks (SP-125), not a new store: the main screen's retained lines (at most the 10,000-line scrollback plus the screen), styles, links, command records with by and anchored image placements, never the transient_only alternate screen, typed line, selections or find highlights; 64 MiB per terminal tab for text and images, images as PNG with one record per frame written once; text never gives way to images, images drop oldest first and leave a placeholder record naming them; written 1.5 s after output settles, at most every 5 s while streaming and when the page hides; Clear scrollback empties it at the next save; kept for a closed tab while the 20-tab stack can reopen it and at most 7 days; a 5 s load budget; one copy per terminal tab, keyed by project and tab id whichever session wrote it, each save replacing the tab's previous copy, so after Restart or a restore the new session's first save takes the copy over and a restored or reopened tab loads the copy under its own tab id. Saved images follow saved scrollback's storage, retention and exclusion rules. Saved scrollback is excluded from backups, exports and sync and holds the output as shown apart from the secret replacements below, which command blocks reach only by transcript_ref; its physical family registration is an open item. SP-047's no-transcript rule covers the privileged-session evidence store, not terminal scrollback. No storage family holds an agent's terminal write grant (CV-362). Amended 2026-10-10 (DL-187): before a copy is written, well-known secret formats are replaced in it (vendor API keys sk-..., AKIA..., ghp_..., github_pat_..., glpat-..., xox?-..., AIza..., Stripe sk_live_...; bearer tokens and JWTs; KEY=value assignments whose name says key, secret, token or password; a private-key block's body), cell for cell in place with the label [API key · not saved] (or token, secret, private key) and blank cells, or • when the secret is shorter; a private key keeps its BEGIN and END lines; command lines and link targets the same; the live screen keeps the original, and a restored tab's notice ends "N secrets were left out of the saved copy." (D36). Every terminal's saved copy together is capped at 512 MiB, fixed and not a setting, with 64 MiB per terminal tab kept: past it the saved copies of terminals not running now (closed tabs, other projects), least recently saved first, are deleted until a full per-terminal quota fits, and then the terminal being saved keeps fewer images, with an index of bytes and save times keeping the total (D37, lead ruling F4); the total is reached by that order, not held as a hard ceiling, and what a save does when running terminals' text alone passes it is open. The scrub question is answered; the physical registration, now with the total's index, stays open. A terminal tab's notification mute is its state in the v2 Home record (D38, SP-330). Amended 2026-10-17 (DL-228): the scrub floor also covers AWS session keys (ASIA...), GitHub's gho_, ghu_, ghs_ and ghr_ tokens, Anthropic and OpenAI project keys (sk-ant-..., sk-proj-...), Stripe test and restricted keys (sk_test_..., rk_live_..., rk_test_...), "Token <value>" authorization headers and names containing PASSWD; a secret split by a soft wrap is still found and replaced. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: Decides what a terminal tab keeps across moves, restarts and reopen, and what its restored scrollback shows.
 split_recommended: false
@@ -537,15 +390,23 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-181"
-  - "Plans/Decision_Log.md#DL-182"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D11, D14)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7, saved scrollback; concept lineage only)"
-  - "Plans/storage-plan.md#SP-122"
-  - "Plans/storage-plan.md#SP-125"
-  - "Plans/Decision_Log.md#DL-187"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D36, D37, D38)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 7: the secret formats, labels and notice, and the total cap's trimming order; concept lineage only)"
+- Plans/Decision_Log.md#DL-181
+- Plans/Decision_Log.md#DL-182
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D11, D14)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7, saved scrollback; concept
+  lineage only)
+- Plans/storage-plan.md#SP-122
+- Plans/storage-plan.md#SP-125
+- Plans/Decision_Log.md#DL-187
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D36, D37, D38)
+- '/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md,
+  SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 7: the secret formats, labels
+  and notice, and the total cap''s trimming order; concept lineage only)'
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
   - "pm.storage_value.terminal_session_record.v2"
   - "512 MiB"
@@ -585,49 +446,24 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Decision_Log.md#DL-182, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181, ContractName:Plans/storage-plan.md#SP-125, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/Contracts_V0.md#CV-362, SchemaID:pm.storage_value.terminal_session_record.v2
 
-### SP-333 - Editor Appearance And Wallpaper Remain Project-Owned
+### SP-333 - Editor Appearance And Wallpaper Settings Levels
 
 ```yaml
 plan_unit_id: SP-333
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Editor appearance overrides are optional appearance fields inside the existing editor tab state of
-  SP-330, within its 16 KB serialized-state bound; no new physical family or buffer copy is created.
-  Absent fields fall through to the Project code.editing rows and then F3-651's defaults. The
-  token-colors map is keyed by scheme/kind and overlays the Project map per entry; null in a field
-  patch clears that override, never copies all effective defaults into the tab. A tab-scoped
-  appearance command returns a bounded receipt and saves/readbacks this nonstructural state without
-  a layout revision advance or workspace.layout_changed event. All editors and All terminals write
-  only the Project Settings snapshot through SSYS-009; no compatibility editor/terminal key
-  authorizes app-global or no-Project persistence. The customizer's remembered tab scope is view
-  state separate from the appearance fields; entering from Settings is temporary and does not
-  overwrite it. No preview, sample, dock position or hover color is stored. Wallpaper is the same
-  Project Settings snapshot's general.visual.wallpaper value; assets are immutable packaged catalog
-  assets, not copied into settings. For the migration admitted by the 2026-10-15 publication, an old
-  concept wallpaper preference may seed the current Project only when its canonical value is absent
-  and its id is valid; an explicit Project choice wins and no other Project is modified. Old
-  glass_background_mode:v1 and Mesh/Depth/Minimal do not map to images; they retire to look when no
-  new choice exists. Legacy keys are cleared only after successful owner write/readback, never
-  before, and no-Project rendering performs no migration write. Import remains SP-331's parsed
-  scheme/asset custody; this unit adds no secret, session, event family or governance authority.
-  SSYS-054’s most-recent-change rule uses the existing Project transaction revision as its order: a
-  NieR background edit commits its background value and wallpaper=look together; a later gallery
-  edit commits the chosen wallpaper id. The existing NieR background preference is retained beneath
-  an explicit gallery choice. No timestamp record, extra inheritance layer or second wallpaper store
-  is created.
+canonical_text: |-
+  Editor appearance overrides are optional appearance fields inside the existing editor tab state of SP-330, within its 16 KB serialized-state bound; no new physical family or buffer copy is created. Absent fields fall through to SSYS-059’s effective code.editing result for the actual Project/Computer/Everywhere context and then F3-651’s defaults. The token-colors map is keyed by scheme/kind and overlays the effective base map per entry; null in a field patch clears that override, never copies all effective defaults into the tab. A tab-scoped appearance command returns a bounded receipt and saves/readbacks this nonstructural state without a layout revision advance or workspace.layout_changed event. All editors and All terminals target Everywhere through the same Settings transactions; explicitly chosen narrower edits use their exact offered level. Compatibility editor/terminal keys authorize no independent writer. The customizer's remembered tab scope is view state separate from the appearance fields; entering from Settings is temporary and does not overwrite it. No preview, sample, dock position or hover color is stored. Wallpaper is the same resolver-owned general.visual.wallpaper value at its offered level; assets are immutable packaged catalog assets, not copied into settings. For the migration admitted by the 2026-10-15 publication, an old concept wallpaper preference may seed the current Project only when its canonical value is absent and its id is valid; an explicit Project choice wins and no other Project is modified. Old glass_background_mode:v1 and Mesh/Depth/Minimal do not map to images; they retire to look when no new choice exists. Legacy keys are cleared only after successful owner write/readback, never before, and no-Project rendering performs no migration write. Import remains SP-331's parsed scheme/asset custody; this unit adds no secret, session, event family or governance authority. SSYS-054’s most-recent-change rule uses the actual level/setting transaction revision as its order: a NieR background edit commits its background value and wallpaper=look together; a later gallery edit commits the chosen wallpaper id. The existing NieR background preference is retained beneath an explicit gallery choice. No timestamp record, extra inheritance layer or second wallpaper store is created. The older concept preference migration remains explicit and Project-targeted only; it never seeds Everywhere/Computer from discovered concept data. SP-348 owns current level custody. App tab appearance uses SP-349 without another buffer or wallpaper store.
 gui_related: true
-gui_classification_reason: Editor appearance and wallpaper remain Project-owned.
+gui_classification_reason: Storage binding across offered Settings levels; visible presentation remains FinalGUISpec-owned.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Tab override/reset and reload preserve sparse fields and token fallthrough inside 16 KB; an over-bound mutation
-  refuses without losing prior state.
-- An appearance update emits no structural layout event and never changes another Project.
-- Migration preserves an explicit Project choice, does not fan out an old key, and clears legacy data only after verified
-  write.
+- One resolver/transaction owns level values; tab map overlay and reset semantics remain.
+- No-Project app writes require the actual offered level/writer, not a Project.
+- Wallpaper/currentness and old explicitly admitted concept migration preserve source and readback.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -651,11 +487,13 @@ source_lineage:
 - Plans/Settings_System.md#SSYS-009
 - Plans/FinalGUISpec.md#F3-651
 - Plans/Settings_System.md#SSYS-054
-- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md, SHA-256
-  56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816 (decision/source lineage; not native implementation
-  evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md, SHA-256 56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816
+  (decision/source lineage; not native implementation evidence)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,A-F09,C-F11
 preserved_exact_tokens: []
-negative_constraints: []
+negative_constraints:
+- No theme/wallpaper shadow store, implicit concept migration, second writer or stale Project-only ban.
 owner_hints:
 - Plans/storage-plan.md
 ```

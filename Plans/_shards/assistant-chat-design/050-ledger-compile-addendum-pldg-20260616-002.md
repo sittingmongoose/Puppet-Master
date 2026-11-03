@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L23015-L23082
+Source lines: L23169-L23242
 
-Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6`
+Source SHA256: `f4e5a424ee6841b4988ce457166d26b762be0b3f0c4aa0c5d0d03132ef6be00f`
 
 ---
 
@@ -18,7 +18,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat owns visible Goal mode controls and completion presentation for user-directed goals, including pause, resume, stop, status, child-goal summaries, and completion reports. Chat may expose Orchestrator Goal handoff status, but PRD Builder conversational intake routes to Planning_Ledger_System, legacy invisible Requirements Doc Builder conversion remains a Goal Runtime compatibility flow only, and work-graph/compiler-boundary readiness routes to Plan_To_Node_Compilation/PNC-009 rather than ordinary chat-owned WorkNodes.
+  Assistant Chat projects user-requested Goals through the current text-only Goal/Activity contract,
+  including app Goals. Crew is an existing collaboration overlay, not child-goal orchestration. PRD
+  Builder, Planning Wizard and Orchestrator retain real Project admission and their own owner boundaries.
+  Conversion alone admits none of their compiler/WorkNode/certification engines.
 gui_related: true
 gui_classification_reason: Assistant Chat goal controls, status, and completion reports are user-visible chat UI.
 depends_on:
@@ -48,11 +51,14 @@ node_compile_hint:
   mode: assistant_chat_goal_boundary
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0003
-  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0005
-  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0008
-  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0079
-  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0103
+  - "pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0003"
+  - "pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0005"
+  - "pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0008"
+  - "pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0079"
+  - "pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0103"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Goal mode exposed to the user in chat assistant"
   - "pause"

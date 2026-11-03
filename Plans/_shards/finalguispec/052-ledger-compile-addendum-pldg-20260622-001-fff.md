@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28343-L28394
+Source lines: L28270-L28323
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -17,8 +17,8 @@ plan_unit_id: F3-399
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  GUI path/context discovery surfaces route through the shared DiscoveryService while preserving established user-facing names and shortcuts. Quick Open, command palette fuzzy search, Search path narrowing, Assistant Chat file mentions, File Manager type-ahead, Planning Wizard source picker, and PRD Builder source picker expose loading, indexing/warming, stale, fallback, denied, no-results, hidden-by-policy, disabled, unsupported, over-budget/backpressure, rank explanation, disclosed local sort/filter, settings, and reset states. GUI surfaces preserve DiscoveryService ranking order unless they disclose a local sort/filter, and coarse rank explanations may show path match, recent in this project, current context, stale cache, or fallback without exposing raw private frecency/query/open history or blocked path details.
+canonical_text: |-
+  GUI path/context discovery surfaces route through the shared DiscoveryService while preserving established user-facing names and shortcuts. Quick Open, command palette fuzzy search, Search path narrowing, Assistant Chat file mentions, File Manager type-ahead, Planning Wizard source picker, and PRD Builder source picker expose loading, indexing/warming, stale, fallback, denied, no-results, hidden-by-policy, disabled, unsupported, over-budget/backpressure, rank explanation, disclosed local sort/filter, settings, and reset states. GUI surfaces preserve DiscoveryService ranking order unless they disclose a local sort/filter, and coarse rank explanations may show path match, recent in this project, current context, stale cache, or fallback without exposing raw private frecency/query/open history or blocked path details. App local ranking says recent in this chat or current permitted root; cross-Project T-185 result cards carry explicit coverage and source, never a pooled ambient index. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This defines user-visible GUI states, controls, ranking presentation, and route migration.
 depends_on: [T-160, T-161, T-163, CV-291, F2-191, SP-217]
@@ -38,20 +38,22 @@ context_scope: gui_discovery_surfaces
 implementation_surfaces: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md, Plans/FileManager.md, Plans/assistant-chat-design.md, Plans/Planning_Wizard.md, Plans/PRD_Builder.md]
 node_compile_hint: {mode: gui_discovery_consumer_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - pldg-20260622-001-fff:atom-0013
-  - pldg-20260622-001-fff:atom-0021
-  - pldg-20260622-001-fff:atom-0044
-  - pldg-20260622-001-fff:atom-0056
-  - pldg-20260622-001-fff:atom-0059
-  - pldg-20260622-001-fff:atom-0063
-  - pldg-20260622-001-fff:atom-0078
-  - pldg-20260622-001-fff:atom-0081
-  - pldg-20260622-001-fff:atom-0084
-  - pldg-20260622-001-fff:atom-0087
-  - pldg-20260622-001-fff:atom-0089
-  - pldg-20260622-001-fff:atom-0090
-  - pldg-20260622-001-fff:atom-0093
-  - pldg-20260622-001-fff:state/doc_impact_matrix.json#DIM-008
+- pldg-20260622-001-fff:atom-0013
+- pldg-20260622-001-fff:atom-0021
+- pldg-20260622-001-fff:atom-0044
+- pldg-20260622-001-fff:atom-0056
+- pldg-20260622-001-fff:atom-0059
+- pldg-20260622-001-fff:atom-0063
+- pldg-20260622-001-fff:atom-0078
+- pldg-20260622-001-fff:atom-0081
+- pldg-20260622-001-fff:atom-0084
+- pldg-20260622-001-fff:atom-0087
+- pldg-20260622-001-fff:atom-0089
+- pldg-20260622-001-fff:atom-0090
+- pldg-20260622-001-fff:atom-0093
+- pldg-20260622-001-fff:state/doc_impact_matrix.json#DIM-008
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 source_atom_ids: [atom-0013, atom-0021, atom-0044, atom-0056, atom-0059, atom-0063, atom-0078, atom-0081, atom-0084, atom-0087, atom-0089, atom-0090, atom-0093]
 preserved_exact_tokens: ["Quick Open", "command palette fuzzy search", "Search path narrowing", "Assistant Chat file mentions", "File Manager type-ahead", "Planning Wizard source picker", "PRD Builder source picker", "hidden-by-policy", "over-budget/backpressure", "rank explanation", "local sort/filter disclosed"]
 negative_constraints:

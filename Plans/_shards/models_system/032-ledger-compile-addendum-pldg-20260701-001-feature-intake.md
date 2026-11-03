@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L8368-L8592
+Source lines: L8423-L8655
 
-Source SHA256: `fca9d7c6d996b9cf16f6e377b75d46f9a458aa94f866374e8eb7f5961846eace`
+Source SHA256: `98cedbe72059189d8dedef8480350441120a92631e6e4ef4f973487aefcf68c4`
 
 ---
 
@@ -19,24 +19,30 @@ plan_unit_id: MS-122
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: 'After an actual Project owner commit, first-run onboarding initializes provider/model setup with a paid-provider-first
-  posture. Detected usable accounts and copied routes are verified and become Ready automatically without a Connect or
-  Use This Provider gate. Authentication alone does not prove entitlement, billing, trust, capability, route, quota or
-  readiness. Free Models and the retained exact token Fee models appear after that paid-provider prompt, including after
-  explicit Skip, as an optional Set Up Free Models continuation inside Onboarding. MS-118..121 retain canonical provider/model/account
-  identity, exact underlying setup returns, paid-first default ordering, explicit user overrides, truthful eligibility
-  and no recommendation/quality-ranking scope.
+canonical_text: >-
+  After an actual Project owner commit, or after explicit Set up a project later commits an authorized application/Computer
+  setup under N15/MACS-006, first-run onboarding initializes provider/model setup with a paid-provider-first posture.
+  Detected usable accounts and copied routes are verified and become Ready automatically without a Connect or
+  Use This Provider gate. Authentication alone does not prove entitlement, billing, trust, capability, route,
+  quota or readiness. Free Models and the retained exact token Fee models appear after that paid-provider prompt,
+  including after explicit Skip, as an optional Set Up Free Models continuation inside Onboarding. MS-118..121
+  retain canonical provider/model/account identity, exact underlying setup returns, paid-first default ordering,
+  explicit user overrides, truthful eligibility and no recommendation/quality-ranking scope.
 
 
-  DL-272 READY-NO-AI, 2026-11-01: With neither a usable AI account nor a usable Free Models route, Ready is titled Almost
-  ready and offers the existing later setup path; it does not imply that planning is available. A usable free route counts
-  as AI.
+  DL-272 READY-NO-AI, 2026-11-01: With neither a usable AI account nor a usable Free Models route, Ready is titled
+  Almost ready and offers the existing later setup path; it does not imply that planning is available. A usable
+  free route counts as AI.
 
 
-  DL-272 FO-18, 2026-11-01: When neither an AI account nor a Free Models route is usable, the Almost ready
-  state has no celebration in any family or Light/Dark variant: no confetti, crew cheer, wink, bow or
-  celebratory sound. Apply this eligibility check before any family-specific Ready moment. Skipping both AI
-  routes is not success and does not make planning available; a usable free route still counts as AI.'
+  DL-272 FO-18, 2026-11-01: When neither an AI account nor a Free Models route is usable, the Almost ready state
+  has no celebration in any family or Light/Dark variant: no confetti, crew cheer, wink, bow or celebratory sound.
+  Apply this eligibility check before any family-specific Ready moment. Skipping both AI routes is not success
+  and does not make planning available; a usable free route still counts as AI. The Later path performs paid-first
+  AI setup then lands in a real No project chat on its named Computer; no fake Project, unbound Planning Wizard
+  landing or silent local claim. Protected sign-in stays human-only, installation explicit and every copied/detected
+  account is rechecked on the actual work Computer. Almost ready/no-celebration and Free Models ordering remain
+  unchanged.
 gui_related: true
 gui_classification_reason: Governs user-visible first-run provider/model sequencing, Free Models placement, top-10
   copy, and readiness labels.
@@ -102,6 +108,8 @@ source_lineage:
 - PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
   Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
   are source lineage only.
+- 'source_ref:projects-pass2-20261103:N5/N15/N17; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 source_atom_ids:
 - atom-0016
 - atom-0033
@@ -135,8 +143,8 @@ negative_constraints:
 - Do not include recommended models, `Recommended for this section`, recommendation sorting/highlighting, recommendation
   confidence labels, local recommendation learning, online review lookup, or benchmark/probe calibration.
 - Do not silently insert or reorder Free Models in the saved top-10 list.
-- Do not prompt broad AI-provider setup before the Project commit or undo the Project when provider setup closes
-  or fails.
+- Do not prompt broad AI-provider setup before its actual owner commit, except the approved explicit Later application
+  route; do not undo a committed Project when provider setup closes or fails.
 owner_hints:
 - Plans/Models_System.md
 - Plans/Multi-Account.md

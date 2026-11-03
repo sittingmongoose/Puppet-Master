@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4302-L14495
+Source lines: L4338-L14567
 
-Source SHA256: `871d8c14649e5f994a06f4b9b68b9e58144fe262d175e5251c8dcb653f0c50ac`
+Source SHA256: `0c481af2073b0da7e199828b487c63f6080d5da8e92ce42f76db375dee982cb4`
 
 ---
 
@@ -2726,6 +2726,8 @@ canonical_text: >-
   command-line and repository-format qualification with truthful unsupported states is an
   existing prerequisite, not part of this acceptance. The answer changes no default, authorizes
   no cross-format migration, and promises no universal SHA-256 support.
+
+  Superseded in part by DL-297 (2026-11-03). Only object-format picker placement changes: Settings owns it; permanent-format, capability evidence and no cross-format migration rules remain. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: The accepted capability is a visible setup-flow control, its disabled states, its discovered-format display and its permanence copy.
 split_recommended: false
@@ -5294,6 +5296,8 @@ canonical_text: >-
   the structured retention_policy_ref and reconciles chat deletion. This covers the
   recorded events only, not the run record, transcript messages, proposals or findings.
   Nothing is registered, admitted or removed and no registry row changes.
+
+  Superseded in part by DL-292 (2026-11-03). Collaboration history also belongs to admitted application chats; the chat-lifetime/deletion/hold policy is unchanged and conversion cannot erase independently retained custody. Earlier ruling text and quoted user words are retained as history.
 gui_related: false
 gui_classification_reason: Assigns event retention; collaborative cards and panels are unchanged.
 split_recommended: false
@@ -6436,6 +6440,8 @@ canonical_text: >-
   Auto is on and the evaluator (CWR-021) admits the request, so the evaluator remains the gate;
   "Build With Crew" on a Plan stays a user choice; and the separate per-chat
   "Allow Crews in this chat" switch is retired into the Crew Auto check.
+
+  Superseded in part by DL-281, DL-292 (2026-11-03). Crew Auto defaults use declared Settings levels and application chats are admitted; CWR-021 evaluator/parent ceilings and user-triggered Build With Crew remain. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records an owner decision about crew auto presentation or behaviour.
 split_recommended: false
@@ -6744,6 +6750,8 @@ canonical_text: >-
   inherit deleting the chat override) and cmd.chat.eli5.explain_reply. The project scope on the
   existing ELI5 default setting (general.interaction.eli5-default; per-chat override
   general.interaction.chat-eli5) is a Settings follow-up, out of scope for the wand-modules compile.
+
+  Superseded in part by DL-281, DL-292 (2026-11-03). The ELI5 default uses the declared ladder with no Project rung in app scope; a chat override and the prohibition on rewriting old replies remain. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records an owner decision about eli5 presentation or behaviour.
 split_recommended: false
@@ -7007,6 +7015,8 @@ canonical_text: >-
   that reaches its own limit ends as stopped with the reason "Stopped at your limit", a stop reason,
   not a new state: it settles in the existing terminal state cancelled, never failed, with
   stop_reason limit_time, limit_cost or limit_tokens (Collaborative_Workflows CWR-029).
+
+  Superseded in part by DL-281 (2026-11-03). A kind-specific run limit remains its requested value, bounded by declared Computer/hard/parent ceilings; this creates no new terminal state. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records an owner decision about run limits presentation or behaviour.
 split_recommended: false
@@ -7211,6 +7221,8 @@ canonical_text: >-
   turning Crew Auto on for the project, the setting the card asked about; a chat's own Crew Auto
   check (the per-chat override of DL-120) and saving rules while Crew Auto is already on for the
   project add no note (Collaborative_Workflows CWR-038).
+
+  Superseded in part by DL-292 (2026-11-03). Project notes stay Project-worded; saving app Crew Auto configuration uses the separate thread-bound note and retains override-only no-note behavior. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records an owner decision about crew auto presentation or behaviour.
 split_recommended: false
@@ -7266,6 +7278,8 @@ canonical_text: >-
   clears or bypasses it, and creating a new schedule while it is on does not clear it. The command is
   cmd.runtime.automation_pause.set, project-scoped, payload paused true or false. Cost: "A new command
   and a little runtime work."
+
+  Superseded in part by DL-292 (2026-11-03). The original Project pause/epoch is unchanged; an independent application/Server pause/epoch now covers app automations through the same operational owner. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records an owner decision about automation pause presentation or behaviour.
 split_recommended: false
@@ -7475,6 +7489,8 @@ canonical_text: >-
   outstanding as Scheduling ledger q-006: Event Authority owns the family-specific decision and admission,
   followed by the prescribed schema, registry, fixture, depth and checkpoint requirements before emission is enabled. Static schemas, fixtures and acceptance
   contracts do not prove implemented runtime behavior.
+
+  Superseded in part by DL-281, DL-292 (2026-11-03). Questions 13–15/25 gain the Settings ladder and app Crew configuration; questions 7–9 gain app scheduling/pause editions without waiving Event Authority or changing old bytes. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records owner decisions for collaboration, scheduling, advisor, chat, Settings, typography
   and visible command behavior.
@@ -7901,6 +7917,8 @@ canonical_text: >-
   those changes now too.", then "might as well add the nier mode to the whole concept as well.  it will need to be
   done eventually so might as well have you do it.  Make it a selectable theme in the demo studio.", and on the two
   scene ideas "Also the images you sent me looked good.  Do 2 but not 1."
+
+  Superseded in part by DL-286 (2026-11-03). Current five-family look selection uses the shared Settings resolver and accepted levels; the quoted scene/motion ruling and Q22 retirement of a separate NieR switch remain. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records an owner decision on the assistant chat's visual design.
 split_recommended: false
@@ -8368,6 +8386,8 @@ canonical_text: >-
   states it in plain words, without quoting him. Retained historical/source tokens (not active overrides):
   DL-152. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source
   confirmation 1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only.
+
+  Superseded in part by DL-281, DL-286 (2026-11-03). Look selection is no longer universally Project-only; the same non-persistent onboarding preview has an explicit accepted-level commit and saved resolution wins before first paint. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records an owner decision on NieR Mode's entry points and on onboarding and Guided Tour presentation and sound.
 split_recommended: false
@@ -8439,6 +8459,8 @@ canonical_text: >-
   in plain words, the rulings kept word for word in the cited source. Amended Q22, Jared 2026-10-30 (DL-257):
   the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust
   controls.
+
+  Superseded in part by DL-281, DL-286, DL-287 (2026-11-03). The ordinary Everywhere store and application first paint are admitted. A valid saved look never flashes Basic Dark; Basic Dark remains factory/pre-claim fallback. Hero moments and one reader remain. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records an owner decision on the first paint, onboarding's starting look, the families' hero moments and the tour's restore notices.
 split_recommended: false
@@ -8793,6 +8815,8 @@ canonical_text: >-
   look (F3-612). NieR Mode's boot log and reboot moment behave as before. One first-paint reader serves a page, and the
   chat's reader is dropped when the chat is ported into PMConcept7 (DR-054). No command, action id, setting or wiring
   entry changes.
+
+  Superseded in part by DL-286 (2026-11-03). The one first-paint reader now consumes the exact Settings-resolved app/Project look, without an independent last-painted hint or second reader. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records an owner decision on what the assistant chat shows in its first frame.
 split_recommended: false
@@ -9069,6 +9093,8 @@ canonical_text: >-
   showing the level the account resolves to and whether it is the account's own or follows its provider, offering
   following the provider again, committed through the Settings transaction at scope account and held below the
   warning level that applies to that account; its Open in Settings lands inside that account (SSYS-044).
+
+  Superseded in part by DL-281 (2026-11-03). MA-073 gains Computer between Everywhere and Project, skipping Project in No project; provider/account owner rungs, exact identity and switch safeguards remain. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records an owner decision on the Usage Accounts room's actions and the per-provider auto-switch settings.
 split_recommended: false
@@ -9581,6 +9607,8 @@ canonical_text: >-
   under the decisions: Output, Problems, Ports and Debug Console are dedicated tool kinds that land beside the
   terminals; activating a tab and maximizing are view state; every committed change emits the existing
   workspace.layout_changed.
+
+  Superseded in part by DL-287, DL-292 (2026-11-03). A workspace tab may select real application No project scope; panel/tab kinds, one Assistant column and Project-native target checks remain. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records the owner decision that replaces the home page's panel model, tabs, opening rules and chat position.
 split_recommended: false
@@ -9684,6 +9712,8 @@ canonical_text: >-
   folding, maximizing or hiding a terminal tab never touches its session; closing it ends the session after saying
   what is still running; reopening a closed terminal tab, or restoring one whose session did not survive, starts a new
   session in the same folder and profile and never pretends to be the old one.
+
+  Superseded in part by DL-281, DL-287 (2026-11-03). Terminal future-session roots and appearance defaults gain explicit app/Computer context. Conversion does not migrate a live session, PTY or input authority. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records the owner decision that rebuilds the terminal as a tab kind with new chrome, features and agent rules.
 split_recommended: false
@@ -9839,6 +9869,8 @@ canonical_text: >-
   the terminal concept's. Superseded in presentation on 2026-10-14 by DL-189/DL-190: F3-650’s full
   Customize screens replace the earlier Appearance popover, retaining this decision’s shared catalog and
   scope writers. DL-197 records the later program-output/interface contrast distinction.
+
+  Superseded in part by DL-281, DL-283 (2026-11-03). The one appearance model consumes declared Everywhere/Computer/Project/tab values; All terminals now explicitly writes Everywhere, not a hidden Project default. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records the owner decision on the terminal's schemes, backgrounds, effects and built-in code fonts.
 split_recommended: false
@@ -10035,6 +10067,8 @@ canonical_text: >-
   widget step teaches adding Upcoming resets. Widget command payloads stay as they are; boards, the catalogue and the
   layout record are designed for several sources. The storage key, set ids, preset record and rename and delete wiring
   are the panels thread's build; the 64 KB named-layout snapshot limit is a lead ruling.
+
+  Superseded in part by DL-287, DL-292 (2026-11-03). Existing Project boards remain per Project; a separate tagged application board uses the same engine and limits, and conversion never overwrites destination boards. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records the owner's answers on how dashboard tabs and their boards behave.
 split_recommended: false
@@ -10101,6 +10135,8 @@ canonical_text: >-
   and cleared on first read with no pop-out and no notice (the planning thread's ruling under D3 and D32). The scrub
   patterns, the 3-second limit and the fixed cap are the terminal thread's build; the cap's fixed value is a lead
   ruling.
+
+  Superseded in part by DL-281, DL-287 (2026-11-03). Shell and persisted default choices consume their actual declared levels/Computer. Live session, scrollback/secret limits and pop-out non-persistence remain unchanged. Earlier ruling text and quoted user words are retained as history.
 gui_related: true
 gui_classification_reason: Records the owner's answers on the chat, Debug Console, terminal tabs and terminal storage.
 split_recommended: false

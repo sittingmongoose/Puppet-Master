@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L19240-L19490
+Source lines: L19221-L19462
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -189,19 +189,8 @@ plan_unit_id: CV-300
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Inline visualizer host APIs use one typed PM bridge registry rather than a private per-visualizer command
-  language. Canonical method ids are `sendPrompt`, `openLink`, `copyToClipboard`, `requestResize`, `toast`,
-  `saveState`, and `loadState`; `copyText` is a compatibility alias for `copyToClipboard(text)`, and question-flow
-  embedded visual modules omit `sendPrompt`. Every bridge call uses an envelope with `bridge_call_id`,
-  `visualizer_artifact_id`, `project_id`, `thread_id`, `message_id`, `method`, `args`, `origin_nonce`, and
-  `created_at_utc`; the host returns `{ ok, value?, error_code?, message?, retryable? }` after validating artifact
-  identity, origin/nonce, schema, permission, sandbox state, and method availability. The Rust + Slint host uses a
-  PM-owned isolated webview adapter that maps iframe/postMessage semantics onto a native message bridge with equivalent
-  sandbox guarantees: no `allow-same-origin`, forms, popups, top navigation, parent DOM access, raw parent localStorage,
-  remote CDN loading, dynamic import, or unvetted network access. `saveState` and `loadState` use PM-managed visual
-  state under `visualizer_state.v1:{project_id}:{thread_id}:{message_id}:{visualizer_artifact_id}` with quota,
-  JSON-serializable values, reload replay, export, and purge boundaries.
+canonical_text: |-
+  Inline visualizer host APIs use one typed PM bridge registry rather than a private per-visualizer command language. Canonical method ids are `sendPrompt`, `openLink`, `copyToClipboard`, `requestResize`, `toast`, `saveState`, and `loadState`; `copyText` is a compatibility alias for `copyToClipboard(text)`, and question-flow embedded visual modules omit `sendPrompt`. Every bridge call uses an envelope with `bridge_call_id`, `visualizer_artifact_id`, `project_id`, `thread_id`, `message_id`, `method`, `args`, `origin_nonce`, and `created_at_utc`; the host returns `{ ok, value?, error_code?, message?, retryable? }` after validating artifact identity, origin/nonce, schema, permission, sandbox state, and method availability. The Rust + Slint host uses a PM-owned isolated webview adapter that maps iframe/postMessage semantics onto a native message bridge with equivalent sandbox guarantees: no `allow-same-origin`, forms, popups, top navigation, parent DOM access, raw parent localStorage, remote CDN loading, dynamic import, or unvetted network access. `saveState` and `loadState` use PM-managed visual state under `visualizer_state.v1:{project_id}:{thread_id}:{message_id}:{visualizer_artifact_id}` with quota, JSON-serializable values, reload replay, export, and purge boundaries. For an owner-admitted app feature, CV-365/366 selects explicit application scope and the exact application envelope/source/physical-key/append/read/retention graph; required-present project_id is null and actual thread/Server/Host/root identities remain. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge.
 gui_related: false
 gui_classification_reason: Defines shared bridge and native host adapter contracts; visible rendering is owned by GUI and Assistant Chat.
 depends_on: []
@@ -225,11 +214,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-bridge-alias-map
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-persistence-reload-security
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0057
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0060
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0088
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-bridge-alias-map
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-persistence-reload-security
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0057
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0060
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0088
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,B-F06,D-F06
 source_atom_ids: [atom-0057, atom-0060, atom-0088]
 preserved_exact_tokens:
   - "sendPrompt"

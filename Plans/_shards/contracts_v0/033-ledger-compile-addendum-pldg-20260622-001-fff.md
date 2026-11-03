@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L18569-L18720
+Source lines: L18549-L18702
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -17,8 +17,8 @@ plan_unit_id: CV-291
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Contracts_V0 owns the promoted shared discovery enum, event, and receipt envelope terms used by DiscoveryService and discover_paths. CV-291 is the canonical exact value registry for discovery-local enum fields; implementations must not depend on ledger source-lineage files to recover these values. Discovery-local surface_type values are assistant_chat_thread, assistant_chat_file_mention, quick_open, search_path_filter, file_manager, planning_wizard_source_picker, prd_builder_source_picker, orchestrator_agent, executor_agent, worknode_intake, runtime_artifacts, and agent_tool. Discovery-local intent values are context_acquisition, bug_fix, feature_work, refactor, test_repair, code_review, planning_context, source_selection, quick_open, file_navigation, mention_autocomplete, search_path_narrowing, audit_trace, implementation, and verification. Discovery-local target_kind values are file, directory, file_or_directory, module, test, doc, config, content_candidate, and mixed, and they must not alter the existing route_target.target_kind enum. Discovery-local path_kind values are file, directory, symlink, virtual_cache_entry, and remote_entry. Discovery-local match_type values are exact_path, prefix_path, fuzzy_path, basename, path_segment, extension, abbreviation, symbol_adjacent, frecency_boost, context_proximity, git_manifest, remote_manifest, and fallback_scan. Discovery-local freshness_state values are fresh, warming, stale, snapshot, and unknown. Discovery-local fallback_state values are none, index_cold, stale_index, fallback_scan, remote_cache, ssh_manifest, over_budget, disabled, unsupported, and backpressure. Discovery-local policy_decision values are allowed, redacted, hidden_by_policy, denied, and requires_approval. Discovery-local error_code values are no_results, invalid_query, unsupported_target_kind, project_identity_missing, index_unavailable, timeout, over_budget, permission_denied, policy_denied, remote_unavailable, ssh_auth_failed, stale_remote_cache, cancelled, backpressure, discovery_disabled, discovery_unsupported, ssh_unavailable, known_host_changed, remote_command_denied, manifest_missing, and receipt_missing. Receipt events are discovery.invoked, discovery.candidates_returned, discovery.selected, discovery.fallback, discovery.verified, discovery.disabled, discovery.unsupported, and discovery.backpressure. Receipt payloads preserve request_id, consumer_id, project/worktree or remote identity, query_digest, visible post-policy candidate_count, opaque/redaction-profiled selected_result_ids, freshness_state, fallback_state, policy_decision, source_index_generation, cache/ranking/policy/ignore/identity versions when cached, permission_snapshot_id, approval_scope_key, redaction_profile, SSH host trust fields when applicable, budget_ms, elapsed_ms, error_code, and verification_receipt_ref when available.
+canonical_text: |-
+  Contracts_V0 owns the promoted shared discovery enum, event, and receipt envelope terms used by DiscoveryService and discover_paths. CV-291 is the canonical exact value registry for discovery-local enum fields; implementations must not depend on ledger source-lineage files to recover these values. Discovery-local surface_type values are assistant_chat_thread, assistant_chat_file_mention, quick_open, search_path_filter, file_manager, planning_wizard_source_picker, prd_builder_source_picker, orchestrator_agent, executor_agent, worknode_intake, runtime_artifacts, and agent_tool. Discovery-local intent values are context_acquisition, bug_fix, feature_work, refactor, test_repair, code_review, planning_context, source_selection, quick_open, file_navigation, mention_autocomplete, search_path_narrowing, audit_trace, implementation, and verification. Discovery-local target_kind values are file, directory, file_or_directory, module, test, doc, config, content_candidate, and mixed, and they must not alter the existing route_target.target_kind enum. Discovery-local path_kind values are file, directory, symlink, virtual_cache_entry, and remote_entry. Discovery-local match_type values are exact_path, prefix_path, fuzzy_path, basename, path_segment, extension, abbreviation, symbol_adjacent, frecency_boost, context_proximity, git_manifest, remote_manifest, and fallback_scan. Discovery-local freshness_state values are fresh, warming, stale, snapshot, and unknown. Discovery-local fallback_state values are none, index_cold, stale_index, fallback_scan, remote_cache, ssh_manifest, over_budget, disabled, unsupported, and backpressure. Discovery-local policy_decision values are allowed, redacted, hidden_by_policy, denied, and requires_approval. Discovery-local error_code values are no_results, invalid_query, unsupported_target_kind, project_identity_missing, index_unavailable, timeout, over_budget, permission_denied, policy_denied, remote_unavailable, ssh_auth_failed, stale_remote_cache, cancelled, backpressure, discovery_disabled, discovery_unsupported, ssh_unavailable, known_host_changed, remote_command_denied, manifest_missing, and receipt_missing. Receipt events are discovery.invoked, discovery.candidates_returned, discovery.selected, discovery.fallback, discovery.verified, discovery.disabled, discovery.unsupported, and discovery.backpressure. Receipt payloads preserve request_id, consumer_id, project/worktree or remote identity, query_digest, visible post-policy candidate_count, opaque/redaction-profiled selected_result_ids, freshness_state, fallback_state, policy_decision, source_index_generation, cache/ranking/policy/ignore/identity versions when cached, permission_snapshot_id, approval_scope_key, redaction_profile, SSH host trust fields when applicable, budget_ms, elapsed_ms, error_code, and verification_receipt_ref when available. No project discovery carries actual Server/thread/Host/root identity; its local ranking corpus is app-thread/root bounded. Only explicit T-185 projects.* requests may merge bounded permitted results through one coverage object. Never merge physical indexes or infer Project authority from a path.
 gui_related: false
 gui_classification_reason: This is schema and event envelope ownership, not GUI presentation.
 depends_on: [CV-006, CV-038, CV-097, CV-101, CV-285]
@@ -38,17 +38,19 @@ context_scope: shared_discovery_contracts
 implementation_surfaces: [Plans/Contracts_V0.md, Plans/Tools.md, future discovery receipt schemas]
 node_compile_hint: {mode: shared_contract_envelope, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - pldg-20260622-001-fff:atom-0051
-  - pldg-20260622-001-fff:atom-0035
-  - pldg-20260622-001-fff:atom-0036
-  - pldg-20260622-001-fff:atom-0063
-  - pldg-20260622-001-fff:atom-0076
-  - pldg-20260622-001-fff:atom-0088
-  - pldg-20260622-001-fff:atom-0090
-  - pldg-20260622-001-fff:atom-0091
-  - pldg-20260622-001-fff:atom-0095
-  - pldg-20260622-001-fff:state/precision_contract.json#exact_value_registry
-  - pldg-20260622-001-fff:state/subagent_compile_proposals.json#Helmholtz
+- pldg-20260622-001-fff:atom-0051
+- pldg-20260622-001-fff:atom-0035
+- pldg-20260622-001-fff:atom-0036
+- pldg-20260622-001-fff:atom-0063
+- pldg-20260622-001-fff:atom-0076
+- pldg-20260622-001-fff:atom-0088
+- pldg-20260622-001-fff:atom-0090
+- pldg-20260622-001-fff:atom-0091
+- pldg-20260622-001-fff:atom-0095
+- pldg-20260622-001-fff:state/precision_contract.json#exact_value_registry
+- pldg-20260622-001-fff:state/subagent_compile_proposals.json#Helmholtz
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; B-F04,B-F06,C-F01
 source_atom_ids: [atom-0035, atom-0036, atom-0051, atom-0063, atom-0076, atom-0088, atom-0090, atom-0091, atom-0095]
 preserved_exact_tokens:
   - "surface_type"

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5361-L5397
+Source lines: L5785-L5886
 
-Source SHA256: `3f8150617657a7e9de14a5815e7cc3097714249b08ea146d6967ac8137771f7b`
+Source SHA256: `3899744314444527ed5abfa724f4abdb67822efa4d7b3852a2db461438fffebe`
 
 ---
 
@@ -21,27 +21,92 @@ plan_unit_id: WM-058
 unit_type: production_wiring
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: The seven UCC-165 primaries each have exactly one production-intent row with the exact owner request/result refs, one sole future handler, expected_event_types=[], central response separation, and complete reverse consumers with exact return; the pipeline open_in_browser row carries the exact automation-run versus hosted-settings destination kind with provider-profile origin resolution, and recovery open/delete reuse Forge owner routes.
+canonical_text: 'The seven UCC-165 primaries each have exactly one production-intent row with the exact owner
+  request/result refs, one sole future handler, expected_event_types=[], central response separation, and complete
+  reverse consumers with exact return; the pipeline open_in_browser row carries the exact automation-run versus
+  hosted-settings destination kind with provider-profile origin resolution, and recovery open/delete reuse
+  Forge owner routes.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Production rows bind recovery, delete, CI artifact, secret/variable, and official-service controls to availability, disabled reasons, dispatch targets, results, accessibility, and return routes.
-depends_on: [WM-051, UCC-165, UIW-023]
+gui_classification_reason: Production rows bind recovery, delete, CI artifact, secret/variable, and official-service
+  controls to availability, disabled reasons, dispatch targets, results, accessibility, and return routes.
+depends_on:
+- WM-051
+- UCC-165
+- UIW-023
 unblocks: []
 acceptance_criteria:
-  - Each of the seven commands has exactly one production entry keyed catalog.<suffix> with the same command and sole target as its catalog row.
-  - Every new row validates against Plans/Wiring_Matrix.schema.json with typed request/result refs, state/disabled-reason selectors, receipt-only effects, expected_event_types=[], accessibility, and the four required evidence kinds.
-  - The open_in_browser row requires exactly one official_destination_kind, never conflates run and settings identities, and resolves the allowed origin from the provider instance profile web_base_url.
-  - Recovery open/delete dispatch through Forge owner routes only; no Project-local mutation row exists for either.
-  - All rows remain handler_unavailable static intent; no EventRecord, native handler, or runtime is claimed, and no literal denominator is carried here.
-validation_surfaces: [Plans/Wiring_Matrix.production.json, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-touch-closure-verify.py --json]
+- Each of the seven commands has exactly one production entry keyed catalog.<suffix> with the same command
+  and sole target as its catalog row.
+- Every new row validates against Plans/Wiring_Matrix.schema.json with typed request/result refs, state/disabled-reason
+  selectors, receipt-only effects, expected_event_types=[], accessibility, and the four required evidence kinds.
+- The open_in_browser row requires exactly one official_destination_kind, never conflates run and settings
+  identities, and resolves the allowed origin from the provider instance profile web_base_url.
+- Recovery open/delete dispatch through Forge owner routes only; no Project-local mutation row exists for either.
+- All rows remain handler_unavailable static intent; no EventRecord, native handler, or runtime is claimed,
+  and no literal denominator is carried here.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
+validation_surfaces:
+- Plans/Wiring_Matrix.production.json
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-touch-closure-verify.py --json
 risk_class: production_intent_wiring_and_claim_boundary
 reasoning_tier: high
 context_scope: project_recovery_forge_delete_ci_production_intent
-implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json]
-node_compile_hint: {mode: production_intent_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/UI_Command_Catalog.md#UCC-165, Plans/Project_System.md#PJCT-007, Plans/Forge_Integrations.md#FGI-021]
-preserved_exact_tokens: [catalog.project_resume_creation, catalog.forge_repository_delete, catalog.forge_pipeline_artifact_download, catalog.forge_pipeline_secret_set, catalog.forge_pipeline_secret_remove, catalog.forge_pipeline_variable_set, catalog.forge_pipeline_variable_remove, official_destination_kind, automation_run_artifacts, hosted_service_settings, automation_service_overview, automation_run_id, hosted_setting_scope_ref, AutomationBinding, "Open in <provider>", handler_unavailable, "expected_event_types=[]"]
-negative_constraints: [Do not claim native runtime implementation from static wiring., Do not register an event without Event Authority., Do not restore a literal actionable-primary or production-entry count; those denominators belong to scripts/pm-touch-closure-verify.py., Do not admit Commands & Shortcuts local actions in this batch.]
+implementation_surfaces:
+- Plans/Wiring_Matrix.md
+- Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: production_intent_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/UI_Command_Catalog.md#UCC-165
+- Plans/Project_System.md#PJCT-007
+- Plans/Forge_Integrations.md#FGI-021
+- source_ref:chat:2026-11-03-projects-pass2-approved
+preserved_exact_tokens:
+- catalog.project_resume_creation
+- catalog.forge_repository_delete
+- catalog.forge_pipeline_artifact_download
+- catalog.forge_pipeline_secret_set
+- catalog.forge_pipeline_secret_remove
+- catalog.forge_pipeline_variable_set
+- catalog.forge_pipeline_variable_remove
+- official_destination_kind
+- automation_run_artifacts
+- hosted_service_settings
+- automation_service_overview
+- automation_run_id
+- hosted_setting_scope_ref
+- AutomationBinding
+- Open in <provider>
+- handler_unavailable
+- expected_event_types=[]
+negative_constraints:
+- Do not claim native runtime implementation from static wiring.
+- Do not register an event without Event Authority.
+- Do not restore a literal actionable-primary or production-entry count; those denominators belong to scripts/pm-touch-closure-verify.py.
+- Do not admit Commands & Shortcuts local actions in this batch.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 compile_disposition: extend_existing_owner
+owner_hints:
+- Plans/Wiring_Matrix.md
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-165, ContractName:Plans/Project_System.md#PJCT-007, ContractName:Plans/Forge_Integrations.md#FGI-021

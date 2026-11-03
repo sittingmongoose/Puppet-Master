@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11691-L11924
+Source lines: L11907-L12149
 
-Source SHA256: `0ae93e5637dcb0b333516aecf071c145ac679bc77caae51c7bade24ccf79f1dc`
+Source SHA256: `0398aca0a8d02e356ae284700fb6b1b57992a6eb3b3aa08ed90180c6a9cebda5`
 
 ---
 
@@ -208,16 +208,21 @@ unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  Newly define the browser.workspace.created-only producer commit and read-consumer
-  binding under DL-046. Only the authenticated ordinary BrowserRuntimeService.workspace
-  owner publishes the exact committed creation identity after the barrier AppendReceipt.
+  Newly define the browser.workspace.created-only producer commit and read-consumer binding under
+  DL-046. Only the authenticated ordinary BrowserRuntimeService.workspace owner publishes the exact
+  committed creation identity after the barrier AppendReceipt.
   browser.workspace_inventory.created.v1@1.0.0 reads the historical creation fact through
-  storage.browser_workspace_created_index.v1@1.0.0 and SP-266, with no independent durable
-  effect and no authority to recreate or act on a live workspace. Since 2026-09-25 the current
-  reader is browser.workspace_inventory.created.v2@2.0.0 over storage.browser_workspace_created_index.v2@2.0.0
-  and the v2 checkpoint of SP-266; the v1 reader and checkpoint are compatibility custody. Lost-acknowledgement and
-  uncertain-append recovery resolves an issued original creation append only through the explicitly
-  adopted SP-286/CV-339 storage.first_append_receipt.resolve.v2.
+  storage.browser_workspace_created_index.v1@1.0.0 and SP-266, with no independent durable effect and
+  no authority to recreate or act on a live workspace. Since 2026-09-25 the current reader is
+  browser.workspace_inventory.created.v2@2.0.0 over storage.browser_workspace_created_index.v2@2.0.0
+  and the v2 checkpoint of SP-266; the v1 reader and checkpoint are compatibility custody.
+  Lost-acknowledgement and uncertain-append recovery resolves an issued original creation append only
+  through the explicitly adopted SP-286/CV-339 storage.first_append_receipt.resolve.v2. The new
+  accepted app behavior requires a separately versioned application creation wrapper/payload and
+  complete producer/receipt/index/read/backup graph with actual Server/Host/Environment/thread/session
+  identity. Existing Project payload bytes, source digests, v1/v2 reader contracts and non-admission
+  boundaries stay exact; absent app adoption remains handler_unavailable, never fabricated native
+  proof.
 gui_related: false
 gui_classification_reason: This is event, scope, identity and replay authority, not presentation.
 depends_on: [DL-046, SMPFS-166, CV-332, SP-286, CV-339]
@@ -235,7 +240,11 @@ reasoning_tier: high
 context_scope: browser_workspace_created_single_family
 implementation_surfaces: [Plans/browser_event_admission.json, Plans/browser_event_payloads.schema.json, Plans/storage-plan.md]
 node_compile_hint: {mode: static_single_family_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Decision_Log.md#DL-046, Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution]
+source_lineage:
+- Plans/Decision_Log.md#DL-046
+- Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 negative_constraints:
   - No sibling-family admission, new feature, event alias, protected-auth access, Browser session/profile physical-family admission or native-proof claim.
   - No runtime availability, currentness clearance, WorkNodes, NodeSeeds, frozen-audit rewrite or governance seal follows from this contract.

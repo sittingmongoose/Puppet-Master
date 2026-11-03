@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L10036-L10963
+Source lines: L10380-L11331
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -693,64 +693,88 @@ plan_unit_id: UCC-135
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  cmd.file.open is the bare subject-open command over the canonical OpenFile route contract, distinct from
-  cmd.file.open_with and additive beside the intact ten-row CRUD closure. cmd.file.refresh rescans the file
-  tree projection; cmd.file.reveal is the /reveal navigation wrapper; cmd.file.expand_capped is the shell_view
-  row-cap expansion. cmd.editor.close_tab registers editor tab lifecycle under the reserved cmd.editor.*
+canonical_text: 'cmd.file.open is the bare subject-open command over the canonical OpenFile route contract,
+  distinct from cmd.file.open_with and additive beside the intact ten-row CRUD closure. cmd.file.refresh rescans
+  the file tree projection; cmd.file.reveal is the /reveal navigation wrapper; cmd.file.expand_capped is the
+  shell_view row-cap expansion. cmd.editor.close_tab registers editor tab lifecycle under the reserved cmd.editor.*
   prefix with a dirty-state confirm. cmd.chat.open_thread is the cross-surface chat thread entry wrapper that
   cmd.chat.open_at retires into; it opens the chat panel when closed and does not duplicate the panel-local
   cmd.chat.switch_thread row. cmd.chat.add_file_reference keeps its existing row and signature lock unchanged.
-  Amended 2026-10-09 (DL-180): cmd.file.open places its tab through CV-360's placement fields and the one opening module, not Panel 1 to 4, and cmd.editor.close_tab is an alias of cmd.panel_tab.close (UCC-200).
-  D7, PM7 final-review direct correction, 2026-10-30 (Astra r2 N2): Teacher/help target requirements and
-  Settings-manager return apply only to this Settings consumer of cmd.chat.open_thread. Work detail’s
-  separate producer opens its exact ordinary Assistant thread without a Teacher predicate and preserves its
-  invoking Work view/focus. Consumer-specific availability/return rules never create a second thread owner
-  or default an unrelated caller to Settings.
+  Amended 2026-10-09 (DL-180): cmd.file.open places its tab through CV-360''s placement fields and the one
+  opening module, not Panel 1 to 4, and cmd.editor.close_tab is an alias of cmd.panel_tab.close (UCC-200).
+  D7, PM7 final-review direct correction, 2026-10-30 (Astra r2 N2): Teacher/help target requirements and Settings-manager
+  return apply only to this Settings consumer of cmd.chat.open_thread. Work detail’s separate producer opens
+  its exact ordinary Assistant thread without a Teacher predicate and preserves its invoking Work view/focus.
+  Consumer-specific availability/return rules never create a second thread owner or default an unrelated caller
+  to Settings.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Registers user-visible file open, refresh, reveal, row-cap, editor tab, and chat thread controls.
-depends_on: [UCC-108, UCC-014, DL-180]
+gui_classification_reason: Registers user-visible file open, refresh, reveal, row-cap, editor tab, and chat
+  thread controls.
+depends_on:
+- UCC-108
+- UCC-014
+- DL-180
 unblocks: []
 acceptance_criteria:
-  - cmd.file.open resolves through the OpenFile route contract and does not duplicate any CRUD closure row.
-  - expand_capped mutates only view projection state.
-  - close_tab requires confirmation only for dirty tabs.
-  - cmd.chat.open_at appears nowhere in production markup.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+- cmd.file.open resolves through the OpenFile route contract and does not duplicate any CRUD closure row.
+- expand_capped mutates only view projection state.
+- close_tab requires confirmation only for dirty tabs.
+- cmd.chat.open_at appears nowhere in production markup.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by
+  this PlanUnit.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 risk_class: file_manager_command_catalog_gap
 reasoning_tier: standard
 context_scope: cozy_shelves_file_editor_chat_commands
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/FileManager.md
-  - Plans/assistant-chat-design.md
-  - Plans/Wiring_Matrix.md
+- Plans/UI_Command_Catalog.md
+- Plans/FileManager.md
+- Plans/assistant-chat-design.md
+- Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: cozy_shelves_file_editor_chat_command_catalog
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves concept; source-lineage-only)"
-  - "Plans/FileManager.md (/reveal, OpenFile route, CRUD closure)"
+- Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves concept; source-lineage-only)
+- Plans/FileManager.md (/reveal, OpenFile route, CRUD closure)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "cmd.file.open"
-  - "cmd.file.refresh"
-  - "cmd.file.reveal"
-  - "cmd.file.expand_capped"
-  - "cmd.editor.close_tab"
-  - "cmd.chat.open_thread"
+- cmd.file.open
+- cmd.file.refresh
+- cmd.file.reveal
+- cmd.file.expand_capped
+- cmd.editor.close_tab
+- cmd.chat.open_thread
 negative_constraints:
-  - Do not duplicate the ten CRUD closure rows or the cmd.file.open_with row.
-  - Do not collapse cmd.chat.open_thread and cmd.chat.switch_thread into one row.
+- Do not duplicate the ten CRUD closure rows or the cmd.file.open_with row.
+- Do not collapse cmd.chat.open_thread and cmd.chat.switch_thread into one row.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-180): file placement and tab close move to UCC-200."
+- 'Amended 2026-10-09 (DL-180): file placement and tab close move to UCC-200.'
 owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/FileManager.md
-  - Plans/assistant-chat-design.md
+- Plans/UI_Command_Catalog.md
+- Plans/FileManager.md
+- Plans/assistant-chat-design.md
 ```
 
 ### UCC-136 - Docker Container Lifecycle Adjudication Image And Cleanup Rows

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46026-L48361
+Source lines: L45249-L47317
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -63,148 +63,8 @@ plan_unit_id: F3-630
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The home centre, between the left rail and the chat column (F3-637), is one universal panel system
-  (DL-180). Its layout is an n-ary split tree: a split is a row or a column of two or more children, each
-  child a panel or another split, and every leaf is a panel. A panel is a tab group, one tab strip (F3-631)
-  over one body, and any panel can hold any tab kind (F3-635). Every split has its own sizes, stored as
-  proportions of that split, never as pixels, so panel widths and heights are independent. The tree always
-  keeps these invariants: every leaf is a panel; a split has two or more children and never runs in its
-  parent's direction; every size is above 0.02; a tab lives in exactly one panel; pinned tabs come first in
-  their strip; a panel has at most one preview tab. A panel's minimum is the largest content minimum of its
-  tabs (F3-635) and never less than 280 x 120 px. Inserting a panel starts from half the target's share,
-  redistributing available room from neighbours when necessary to preserve every resulting panel's own
-  minimum; a new panel along the centre's outer edge takes 0.34 of the root. Removing a panel gives its
-  share to its previous sibling, else to the next. Closing the last tab of a panel closes the panel and its
-  neighbour takes the space, unless it is the only panel in the centre or the user locked it: then it stays
-  and shows the empty-panel launcher (F3-632). Closing a panel closes its tabs, each kind asking first where
-  it asks (F3-635). Locking a panel keeps it in place when its last tab closes, and automatic placement
-  skips it (F3-634). Split fit rule: offer a split whenever the complete resulting layout can meet each
-  panel's own minimum, borrowing available room from neighbours; drag, the tab menu's splits, Move panel and
-  Alt+Shift+arrows use this room rule, and a panel the application places uses the automatic rule of the 2026-10-17
-  amendment below (it read: drag, split menus, Move panel and Alt+Shift+arrows use this one rule). For an unspecified side prefer right, then below, else refuse with a
-  reason. Panels are 6 px apart, the divider line in the middle of the gap, and the centre is inset 6 px
-  from the rail, the chat and the bars; a divider's hit target is 8 px. Dragging a divider moves only the
-  two neighbours it separates and commits once on release (cmd.workspace_layout.resize_surface); from the
-  keyboard, Tab reaches a divider, arrows move it 8 px, Shift+arrows 48 px, Home and End move it to a
-  neighbour's minimum, and Enter or a double click evens the two sides. A panel dragged below half its
-  minimum along the divider's axis collapses to its 35 px strip and keeps every tab and its state; dragging
-  it out again, or Expand in its panel menu, restores it (cmd.workspace_layout.set_collapsed). This replaces
-  Collapse Bottom Terminal for every panel. Maximize is a flag outside the tree: the maximized panel fills
-  the centre and the tree underneath does not change; Shift+Escape, the panel menu, or Escape while focus is
-  in its strip restores it (ui.workspace_layout.maximize, view state with no receipt and no event). Each
-  panel has a small corner grip and a panel menu (⋮) at the end of its strip: Split right, Split down,
-  Maximize or Restore panels, Collapse to tabs or Expand, a hairline, Move panel, Lock panel or Unlock panel, Show all
-  tabs in this panel, a hairline, Layouts, a hairline, Close other tabs and Close panel (amended 2026-10-17, DL-228:
-  this unit holds the rows and their order; UCC-200 maps their dispatch).
-  A whole panel moves by its grip, or by Move panel from the menu or Enter on the grip
-  (cmd.workspace_layout.move_surface): beside another panel on any edge, along the centre's outer edge, or
-  into another panel as its tabs. A tab dragged into the diagonal region nearest a panel side splits on that
-  side (cmd.panel_tab.move with a split target); dropped on a strip, it moves into that panel at the drop
-  position; pulled off its strip by 14 px vertically or 40 px horizontally beyond the strip band, it tears
-  off and follows the pointer until it lands on a strip, an edge band or the "+N" list (F3-633). The panel
-  body is divided along diagonals into four side regions. Only the central Join tile or a strip slot joins
-  as tabs; other body regions split. A whole panel carried onto another panel's strip shows the exact
-  caption Join as tabs and reuses the existing join command and caption placement rule. A central guide
-  shows the four sides around Join, and outer-side dock targets plus thin left/right/bottom edge bands
-  create a full-height or full-width panel; a drag starts after 4 px of travel, a zone is adopted after 100
-  ms of dwell, scaled by Animation speed (skipped on release and under Reduced Motion, where the result appears in
-  place, fading only, once the zone has held briefly; amended 2026-10-17, DL-228, it read: retained under Reduced
-  Motion, which removes travel), and an adopted zone holds by the three hold rules of the 2026-10-17 amendment below
-  (it read: while the pointer stays within 12 px of it). Every drag runs the gesture transaction Home already
-  uses and shares with the Usage board's gesture kit (F3-HOME-002, F3-503, DR-066): the preview is local,
-  nothing dispatches while dragging, a changed release commits one command, an unchanged release, Escape, a
-  pointer cancel, a lost pointer capture, a lost window or a drop past the workspace commits nothing and
-  restores the exact earlier picture, and a failed commit rolls back. Every drag outcome also has a menu
-  path and a keyboard path (Move panel, Move to panel, Alt+Shift+arrows; F3-635). Motion: a panel glides
-  into its new place in 180 ms by default, in Friendly 220 ms, Glass 260 ms, Basic 200 ms, Retro 140 ms in
-  steps and NieR Mode 200 ms; the landing preview glides in 160 ms and fades in 140 ms; neighbours slide
-  aside in 250 ms on cubic-bezier(.22,1,.36,1); a tab settles in 160 ms on cubic-bezier(.17,.84,.29,.99); a
-  drop settles on a critically damped spring of stiffness 520 and damping 45.6; a cancel returns in 300 ms;
-  under Reduced Motion every one of these is 0. The default layout, Home, keeps a full-width bottom row
-  where the terminal sat before, 0.4 of the centre's height: an ordinary panel row that holds any tab kind
-  and can be split side by side. Four named layouts ship. Home: a column of a row of 0.6 (a dashboard panel
-  0.5 holding the pinned Home dashboard, F3-638, and a documents panel 0.5) over a tools row of 0.4 holding
-  terminals and Output. Build: a column of a row of 0.62 (documents 0.66 and a side panel 0.34 for browsers
-  and dashboards) over a row of 0.38 (terminals 0.6 and tools 0.4 holding Output and Problems). Terminals
-  2x2: a column of two rows of two terminal panels, every size 0.5, one terminal in each, new ones started
-  where fewer than four are open, and every other tab joining the first panel in the background. Focus: one
-  panel holding every tab. Applying a named layout keeps every open tab: no terminal session ends, no
-  unsaved buffer is dropped, and each tab moves to the slot that holds its kind
-  (cmd.workspace_layout.apply_named). Restore home layout (cmd.workspace_layout.reset; the Settings row
-  general.startup.reset-home-layout) applies Home the same way, keeping every tab. A user can save the
-  current arrangement as a named layout (cmd.workspace_layout.save_named); a saved layout keeps its shape,
-  its sizes, the kinds each slot holds and the tabs each slot held, and never recreates a closed tab (amended
-  2026-10-17, DL-228; it read: never the tabs themselves). The named and saved layouts, Save this
-  layout... and Restore home layout sit in the panel menu's Layouts submenu and in the title bar's Home
-  options menu (F3-502). The layout persists in the v2 Home layout record
-  `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home layout authority
-  (Plans/storage-plan.md#SP-330, Plans/home_workspace_layout_v2.schema.json), through F3-HOME-004's
-  write-then-read-back transaction; this unit does not restate its fields. Narrow states (F3-636), menus,
-  overlays and drags are never saved. A layout from before this redesign is converted on first read and
-  never reset: an upgrade never loses a user's tabs or layout. Every committed change emits the one existing
-  event workspace.layout_changed (CV-361); a reveal of an open tab emits nothing. This unit supersedes
-  F3-501 and the composition of F3-HOME-001 (four fixed editor panels, the singleton dashboard, the chat as
-  a movable surface, terminal sections docked at the bottom), the fixed bottom runtime zone of sections 3.1,
-  3.2, 5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row,
-  the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home
-  panels, section 5.8's 240 px panel minimum. A saved named layout also keeps at most 64 KB (65,536 bytes)
-  of its dashboard boards' contents; a larger save keeps the layout without those contents, records
-  boards_skipped_bytes and says so (SP-330). Amended 2026-10-31 (DL-270): the 64 KB figure is a payload budget,
-  not a stored value size; board contents larger than the 16 KiB value cap are kept by payload reference (SP-337,
-  SP-340), and the boards_skipped_bytes rule is unchanged. The guide responds immediately while a stable-intent gate
-  prevents a passing pointer from repeatedly rearranging the live preview. A split ghost shows the resulting
-  panel/tab, joining opens the destination strip slot, a moving panel leaves an outline, and a source
-  emptied by the move fades back. Escape returns the exact earlier arrangement; release commits precisely
-  the shown result. Every target name remains outside the carried tab, pointer, other docks and preview
-  tab/mark, including a resting pointer at bottom and edge docks. Each zone has an ordered list of caption
-  positions: choose the first with 12 px clearance from the carried tab and pointer, retain it while at
-  least 4 px remains clear, and return to an earlier place only after 160 ms. Captions draw above the
-  carried tab. After ordinary clear positions fail, a position just past the carried tab is tried before
-  sacrificing the preview mark or tab. Bottom, left and right outer docks prefer above the carried tab; the
-  top dock uses below; the +N caption is below the strip. The existing clearance and hysteresis apply to
-  every candidate, so a resting pointer never hides a target name. While a carried tab rests over "+N", that
-  target stays under the pointer with no insertion gap pushing it away, shows "To the end", and release
-  appends the tab to that strip. Approaching through the end insertion slot or directly produces the same
-  settled target. The guide, captions and preview use each family's motion and material; Reduced Motion
-  keeps the legible end state without spatial travel. The screen reader announces the held destination once
-  its intent settles. F3-657 owns resize feedback. Jared’s 2026-10-14 grip correction puts the grip’s narrow
-  end in the panel’s top-right corner. Orientation changes no drag threshold, menu route or command. Move
-  panel and Layouts levels consume the shared F3-632 level/Back rule and F3-647 material; navigating them
-  dispatches nothing.
-  Amended 2026-10-17 (DL-228): applying a saved layout returns each tab still open to the slot it was saved
-  in, with that slot's active tab, and puts back each slot's lock and collapse (a locked slot survives empty);
-  tabs no longer open are not recreated, and the other open tabs go to a slot that accepts their kind
-  (Plans/home_workspace_layout_v2.schema.json $defs.slot). Amended 2026-10-17 (DL-230, Jared): a saved named
-  layout belongs to the person across projects, as the concept keeps it, in home_named_layouts:v1 (SP-330),
-  and the dashboard boards inside a layout stay per project, skipped when it is applied elsewhere. Two fit
-  rules: the room rule above serves every move whose side the person chooses, offered when the result leaves
-  every panel it changes at its minimum, neighbours along the split giving up room, and a panel already under
-  its minimum failing only if the move shrinks it further; the automatic split rule serves a new panel the
-  application places (an open by the fit rule, Alt+click, the "+" and panel menus' Split right and Split down
-  with a new tab, Ctrl+\ and Ctrl+Shift+\): right when both halves of the source panel stay at least the
-  larger minimum, else down, else none. A panel cannot collapse while every other child of its split is
-  collapsed (last_open_in_split), so a split never leaves its room to nobody; the menu row and the refusal say
-  so. Maximize is unavailable with one panel and in the one-column narrow centre, each with its reason;
-  maximizing a collapsed panel expands it first and announces "<panel> maximized. Press Escape to restore."
-  Moving focus to another panel (Alt+arrows, Alt+Shift+N, a reveal or open that activates a tab elsewhere, the
-  narrow switcher) restores the panels in the same view action and announces it, so the focused panel is never
-  hidden; an agent's background open never restores them. A panel collapsed in a row split, side by side, is a
-  35 px column: pinned tabs first, then a window of 32 px icon tabs around the active tab, "+N" for the rest,
-  and its Expand control, "+" and panel menu kept at its foot; the active tab never hides, and Expand points
-  the way the panel will open. Drop zones: a side whose result does not fit shows its guide tile dimmed and
-  empty and gives its region to the nearest side that fits; with no side left the whole body joins, or offers
-  nothing over the carried tab's own panel, which never joins itself; the top dock sits just below the strips
-  so a strip's first slots stay strip slots; outer docks are offered only with two panels or more; zones are
-  measured on the committed layout, never on the live preview, so the preview never moves a zone under the
-  pointer. The three hold rules: a side holds until another side is nearer by about 5 % of the body, Join
-  until the pointer is 12 px past its slack, and a dock until it is 12 px past its band. The stable-intent
-  gate settles a zone once the pointer has held it and slowed, or held it longer, and the guide shrinks its
-  tiles in small bodies and below that shows Join alone; those values are tuning, not acceptance numbers. Zone
-  captions: Split left, Split right, Split up, Split down, Join as a tab (a carried tab) or Join as tabs (a
-  carried panel), New panel along the left, New panel along the right, New row across the top, New row across
-  the bottom, and To the end. The Lock row's second line says what locking does: "Files open in other panels"
-  or "Files can open here again", and locking announces "Panel locked: files open elsewhere".
+canonical_text: |-
+  The home centre, between the left rail and the chat column (F3-637), is one universal panel system (DL-180). Its layout is an n-ary split tree: a split is a row or a column of two or more children, each child a panel or another split, and every leaf is a panel. A panel is a tab group, one tab strip (F3-631) over one body, and any panel can hold any tab kind (F3-635). Every split has its own sizes, stored as proportions of that split, never as pixels, so panel widths and heights are independent. The tree always keeps these invariants: every leaf is a panel; a split has two or more children and never runs in its parent's direction; every size is above 0.02; a tab lives in exactly one panel; pinned tabs come first in their strip; a panel has at most one preview tab. A panel's minimum is the largest content minimum of its tabs (F3-635) and never less than 280 x 120 px. Inserting a panel starts from half the target's share, redistributing available room from neighbours when necessary to preserve every resulting panel's own minimum; a new panel along the centre's outer edge takes 0.34 of the root. Removing a panel gives its share to its previous sibling, else to the next. Closing the last tab of a panel closes the panel and its neighbour takes the space, unless it is the only panel in the centre or the user locked it: then it stays and shows the empty-panel launcher (F3-632). Closing a panel closes its tabs, each kind asking first where it asks (F3-635). Locking a panel keeps it in place when its last tab closes, and automatic placement skips it (F3-634). Split fit rule: offer a split whenever the complete resulting layout can meet each panel's own minimum, borrowing available room from neighbours; drag, the tab menu's splits, Move panel and Alt+Shift+arrows use this room rule, and a panel the application places uses the automatic rule of the 2026-10-17 amendment below (it read: drag, split menus, Move panel and Alt+Shift+arrows use this one rule). For an unspecified side prefer right, then below, else refuse with a reason. Panels are 6 px apart, the divider line in the middle of the gap, and the centre is inset 6 px from the rail, the chat and the bars; a divider's hit target is 8 px. Dragging a divider moves only the two neighbours it separates and commits once on release (cmd.workspace_layout.resize_surface); from the keyboard, Tab reaches a divider, arrows move it 8 px, Shift+arrows 48 px, Home and End move it to a neighbour's minimum, and Enter or a double click evens the two sides. A panel dragged below half its minimum along the divider's axis collapses to its 35 px strip and keeps every tab and its state; dragging it out again, or Expand in its panel menu, restores it (cmd.workspace_layout.set_collapsed). This replaces Collapse Bottom Terminal for every panel. Maximize is a flag outside the tree: the maximized panel fills the centre and the tree underneath does not change; Shift+Escape, the panel menu, or Escape while focus is in its strip restores it (ui.workspace_layout.maximize, view state with no receipt and no event). Each panel has a small corner grip and a panel menu (⋮) at the end of its strip: Split right, Split down, Maximize or Restore panels, Collapse to tabs or Expand, a hairline, Move panel, Lock panel or Unlock panel, Show all tabs in this panel, a hairline, Layouts, a hairline, Close other tabs and Close panel (amended 2026-10-17, DL-228: this unit holds the rows and their order; UCC-200 maps their dispatch). A whole panel moves by its grip, or by Move panel from the menu or Enter on the grip (cmd.workspace_layout.move_surface): beside another panel on any edge, along the centre's outer edge, or into another panel as its tabs. A tab dragged into the diagonal region nearest a panel side splits on that side (cmd.panel_tab.move with a split target); dropped on a strip, it moves into that panel at the drop position; pulled off its strip by 14 px vertically or 40 px horizontally beyond the strip band, it tears off and follows the pointer until it lands on a strip, an edge band or the "+N" list (F3-633). The panel body is divided along diagonals into four side regions. Only the central Join tile or a strip slot joins as tabs; other body regions split. A whole panel carried onto another panel's strip shows the exact caption Join as tabs and reuses the existing join command and caption placement rule. A central guide shows the four sides around Join, and outer-side dock targets plus thin left/right/bottom edge bands create a full-height or full-width panel; a drag starts after 4 px of travel, a zone is adopted after 100 ms of dwell, scaled by Animation speed (skipped on release and under Reduced Motion, where the result appears in place, fading only, once the zone has held briefly; amended 2026-10-17, DL-228, it read: retained under Reduced Motion, which removes travel), and an adopted zone holds by the three hold rules of the 2026-10-17 amendment below (it read: while the pointer stays within 12 px of it). Every drag runs the gesture transaction Home already uses and shares with the Usage board's gesture kit (F3-HOME-002, F3-503, DR-066): the preview is local, nothing dispatches while dragging, a changed release commits one command, an unchanged release, Escape, a pointer cancel, a lost pointer capture, a lost window or a drop past the workspace commits nothing and restores the exact earlier picture, and a failed commit rolls back. Every drag outcome also has a menu path and a keyboard path (Move panel, Move to panel, Alt+Shift+arrows; F3-635). Motion: a panel glides into its new place in 180 ms by default, in Friendly 220 ms, Glass 260 ms, Basic 200 ms, Retro 140 ms in steps and NieR Mode 200 ms; the landing preview glides in 160 ms and fades in 140 ms; neighbours slide aside in 250 ms on cubic-bezier(.22,1,.36,1); a tab settles in 160 ms on cubic-bezier(.17,.84,.29,.99); a drop settles on a critically damped spring of stiffness 520 and damping 45.6; a cancel returns in 300 ms; under Reduced Motion every one of these is 0. The default layout, Home, keeps a full-width bottom row where the terminal sat before, 0.4 of the centre's height: an ordinary panel row that holds any tab kind and can be split side by side. Four named layouts ship. Home: a column of a row of 0.6 (a dashboard panel 0.5 holding the pinned Home dashboard, F3-638, and a documents panel 0.5) over a tools row of 0.4 holding terminals and Output. Build: a column of a row of 0.62 (documents 0.66 and a side panel 0.34 for browsers and dashboards) over a row of 0.38 (terminals 0.6 and tools 0.4 holding Output and Problems). Terminals 2x2: a column of two rows of two terminal panels, every size 0.5, one terminal in each, new ones started where fewer than four are open, and every other tab joining the first panel in the background. Focus: one panel holding every tab. Applying a named layout keeps every open tab: no terminal session ends, no unsaved buffer is dropped, and each tab moves to the slot that holds its kind (cmd.workspace_layout.apply_named). Restore home layout (cmd.workspace_layout.reset; the Settings row general.startup.reset-home-layout) applies Home the same way, keeping every tab. A user can save the current arrangement as a named layout (cmd.workspace_layout.save_named); a saved layout keeps its shape, its sizes, the kinds each slot holds and the tabs each slot held, and never recreates a closed tab (amended 2026-10-17, DL-228; it read: never the tabs themselves). The named and saved layouts, Save this layout... and Restore home layout sit in the panel menu's Layouts submenu and in the title bar's Home options menu (F3-502). The layout persists in the v2 Home layout record `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home layout authority (Plans/storage-plan.md#SP-330, Plans/home_workspace_layout_v2.schema.json), through F3-HOME-004's write-then-read-back transaction; this unit does not restate its fields. Narrow states (F3-636), menus, overlays and drags are never saved. A layout from before this redesign is converted on first read and never reset: an upgrade never loses a user's tabs or layout. Every committed change emits the one existing event workspace.layout_changed (CV-361); a reveal of an open tab emits nothing. This unit supersedes F3-501 and the composition of F3-HOME-001 (four fixed editor panels, the singleton dashboard, the chat as a movable surface, terminal sections docked at the bottom), the fixed bottom runtime zone of sections 3.1, 3.2, 5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row, the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home panels, section 5.8's 240 px panel minimum. A saved named layout also keeps at most 64 KB (65,536 bytes) of its dashboard boards' contents; a larger save keeps the layout without those contents, records boards_skipped_bytes and says so (SP-330). Amended 2026-10-31 (DL-270): the 64 KB figure is a payload budget, not a stored value size; board contents larger than the 16 KiB value cap are kept by payload reference (SP-337, SP-340), and the boards_skipped_bytes rule is unchanged. The guide responds immediately while a stable-intent gate prevents a passing pointer from repeatedly rearranging the live preview. A split ghost shows the resulting panel/tab, joining opens the destination strip slot, a moving panel leaves an outline, and a source emptied by the move fades back. Escape returns the exact earlier arrangement; release commits precisely the shown result. Every target name remains outside the carried tab, pointer, other docks and preview tab/mark, including a resting pointer at bottom and edge docks. Each zone has an ordered list of caption positions: choose the first with 12 px clearance from the carried tab and pointer, retain it while at least 4 px remains clear, and return to an earlier place only after 160 ms. Captions draw above the carried tab. After ordinary clear positions fail, a position just past the carried tab is tried before sacrificing the preview mark or tab. Bottom, left and right outer docks prefer above the carried tab; the top dock uses below; the +N caption is below the strip. The existing clearance and hysteresis apply to every candidate, so a resting pointer never hides a target name. While a carried tab rests over "+N", that target stays under the pointer with no insertion gap pushing it away, shows "To the end", and release appends the tab to that strip. Approaching through the end insertion slot or directly produces the same settled target. The guide, captions and preview use each family's motion and material; Reduced Motion keeps the legible end state without spatial travel. The screen reader announces the held destination once its intent settles. F3-657 owns resize feedback. Jared’s 2026-10-14 grip correction puts the grip’s narrow end in the panel’s top-right corner. Orientation changes no drag threshold, menu route or command. Move panel and Layouts levels consume the shared F3-632 level/Back rule and F3-647 material; navigating them dispatches nothing. Amended 2026-10-17 (DL-228): applying a saved layout returns each tab still open to the slot it was saved in, with that slot's active tab, and puts back each slot's lock and collapse (a locked slot survives empty); tabs no longer open are not recreated, and the other open tabs go to a slot that accepts their kind (Plans/home_workspace_layout_v2.schema.json $defs.slot). Amended 2026-10-17 (DL-230, Jared): a saved named layout belongs to the person across projects, as the concept keeps it, in home_named_layouts:v1 (SP-330), and the dashboard boards inside a layout stay per project, skipped when it is applied elsewhere. Two fit rules: the room rule above serves every move whose side the person chooses, offered when the result leaves every panel it changes at its minimum, neighbours along the split giving up room, and a panel already under its minimum failing only if the move shrinks it further; the automatic split rule serves a new panel the application places (an open by the fit rule, Alt+click, the "+" and panel menus' Split right and Split down with a new tab, Ctrl+\ and Ctrl+Shift+\): right when both halves of the source panel stay at least the larger minimum, else down, else none. A panel cannot collapse while every other child of its split is collapsed (last_open_in_split), so a split never leaves its room to nobody; the menu row and the refusal say so. Maximize is unavailable with one panel and in the one-column narrow centre, each with its reason; maximizing a collapsed panel expands it first and announces "<panel> maximized. Press Escape to restore." Moving focus to another panel (Alt+arrows, Alt+Shift+N, a reveal or open that activates a tab elsewhere, the narrow switcher) restores the panels in the same view action and announces it, so the focused panel is never hidden; an agent's background open never restores them. A panel collapsed in a row split, side by side, is a 35 px column: pinned tabs first, then a window of 32 px icon tabs around the active tab, "+N" for the rest, and its Expand control, "+" and panel menu kept at its foot; the active tab never hides, and Expand points the way the panel will open. Drop zones: a side whose result does not fit shows its guide tile dimmed and empty and gives its region to the nearest side that fits; with no side left the whole body joins, or offers nothing over the carried tab's own panel, which never joins itself; the top dock sits just below the strips so a strip's first slots stay strip slots; outer docks are offered only with two panels or more; zones are measured on the committed layout, never on the live preview, so the preview never moves a zone under the pointer. The three hold rules: a side holds until another side is nearer by about 5 % of the body, Join until the pointer is 12 px past its slack, and a dock until it is 12 px past its band. The stable-intent gate settles a zone once the pointer has held it and slowed, or held it longer, and the guide shrinks its tiles in small bodies and below that shows Join alone; those values are tuning, not acceptance numbers. Zone captions: Split left, Split right, Split up, Split down, Join as a tab (a carried tab) or Join as tabs (a carried panel), New panel along the left, New panel along the right, New row across the top, New row across the bottom, and To the end. The Lock row's second line says what locking does: "Files open in other panels" or "Files can open here again", and locking announces "Panel locked: files open elsewhere". No project has its own SP-349 Home layout and boards, shared across that Server’s app chats rather than one fresh bucket per thread. Selecting or converting into a Project loads that Project’s saved UI state or its fresh defaults; do not import app boards into it. Saved named layouts remain per person; saved board snapshots apply only to the exact saved scope/Server/Project identity and are skipped elsewhere, including null-board snapshots. Keep the 64 KB board-payload cap, 16 KiB redb cap, one Assistant node, existing geometry and view-state/event distinctions. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines the home centre's panel model, its layout tree, its named layouts and how panels move, split, collapse and persist.
 split_recommended: false
@@ -263,13 +123,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/DND-NOTES-20261014-COMBINED.md, SHA-256
-  6ffc7b0308acc0b371f997fd643f5711169f4d7d9f431ea090f3243668752734 (landing source recheck; approved direction,
-  not native implementation evidence)
-- Plans/FinalGUISpec.md F3-HOME-002, F3-HOME-004 and F3-HOME-005 (prose headings with no PlanUnit; cited,
-  not a dependency (lead ruling L22, 2026-10-10))
-- Plans/FinalGUISpec.md#F3-635 (the tab kinds consume this model; cited, not a dependency (lead ruling
-  L22, 2026-10-10))
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/DND-NOTES-20261014-COMBINED.md, SHA-256 6ffc7b0308acc0b371f997fd643f5711169f4d7d9f431ea090f3243668752734
+  (landing source recheck; approved direction, not native implementation evidence)
+- Plans/FinalGUISpec.md F3-HOME-002, F3-HOME-004 and F3-HOME-005 (prose headings with no PlanUnit; cited, not a
+  dependency (lead ruling L22, 2026-10-10))
+- Plans/FinalGUISpec.md#F3-635 (the tab kinds consume this model; cited, not a dependency (lead ruling L22, 2026-10-10))
 - Plans/Decision_Log.md#DL-180
 - Plans/Decision_Log.md#DL-181
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
@@ -278,31 +136,27 @@ source_lineage:
   SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
   SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)
-- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256
-  52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage
-  only)
-- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256
-  f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981
+  (the agreed anatomy; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8
+  (audit lineage only)
 - Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
-  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage
-  only)
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
-  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage
-  only)
-- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/DND-NOTES-20261014-FOLLOWUP.md, SHA-256
-  b5b883caeef6d774fbca250e5c7b6c82dd31eee05af8da207727179baa21b5c3 (approved campaign source lineage;
-  not native implementation evidence)
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/DND-NOTES-20261014-FOLLOWUP.md, SHA-256 b5b883caeef6d774fbca250e5c7b6c82dd31eee05af8da207727179baa21b5c3
+  (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
   (decision/source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-13-panel-dnd-resize--NOTES.md,
-  SHA-256 6ffc7b0308acc0b371f997fd643f5711169f4d7d9f431ea090f3243668752734 (source lineage; not native
-  certification)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
-  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
-  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-13-panel-dnd-resize--NOTES.md, SHA-256
+  6ffc7b0308acc0b371f997fd643f5711169f4d7d9f431ea090f3243668752734 (source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md, SHA-256
+  29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native certification)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - n-ary split tree
 - '0.34'
@@ -1611,143 +1465,8 @@ plan_unit_id: F3-638
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'A dashboard is a tab kind (F3-635), not a singleton surface (DL-180, D10). Every dashboard tab holds
-  its own board on the Usage board engine (DL-186): it shows the Usage page''s widget design and can show every Usage
-  widget, and Plans/usage-feature.md#UF-062''s rule that every Usage widget can be hosted on the dashboard now holds.
-  Boards are built for more than one widget source: Usage widgets now, Orchestrator widgets after the Orchestrator page''s
-  own redesign, and other sources later, each under its own label (Plans/Widget_System.md#WS-030); the widget commands''
-  payloads do not change. The built-in dashboards are Home (`dashboard:home`, pinned in the default layout, F3-630),
-  Metrics (`dashboard:metrics`), Monitoring (`dashboard:monitoring`) and Agents (`dashboard:agents`), and a person can
-  make custom dashboards with n from 1 to 9999 (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home, Metrics
-  and Monitoring start from their own sets of Usage widgets (WS-030); a new custom dashboard starts empty. The old Home
-  widgets (run progress, lanes and results) have left Home until Orchestrator widgets join the board engine after that
-  page''s redesign, and there is no Home (current) board (Jared, P1 B). Agents is drawn by the dashboard kind itself,
-  not by the board engine: one card per agent at work, each opening that agent''s transcript as a kept tab (Alt+click
-  in a new panel), with the filters All agents, Working, Needs you, Waiting and Finished in its Show menu; it has no
-  widgets and no board record, and resetting it means its filter (lead ruling F7). A dashboard tab sits in the same tab
-  strip as every other tab (F3-631): it has no strip of its own and no second tab model. Inside the tab the board is
-  the Usage widget board: its widget grid, its gestures, gravity and Tidy behave exactly as on the Usage page, each settled
-  change one transaction (Plans/Widget_System.md#WS-019), and they act inside the tab only, never laying out panels (DR-066).
-  The board lays out on the Usage board''s tracks and width classes (Plans/Widget_System.md#WS-017), measured on the
-  tab''s own width, never the window (F3-635), and it sits on Home''s tab surface, not the Usage page''s background,
-  in every look (P11). Each board''s contents are kept per project (`widget_layout:v1:<project_id>:<board_id>`; the keys,
-  the one-time adoption of an older key and the records are Plans/Widget_System.md#WS-030''s and Plans/storage-plan.md''s),
-  so a project switch shows each dashboard tab with that project''s board and a project lists only its own custom dashboards.
-  A dashboard''s widget layout is never stored inside the Home layout record, and Home''s panels are not widgets. The
-  header row is F3-635''s shared row. Its left side shows the dashboard''s name, the Live mark while Live readings are
-  on and the board holds a Usage widget, the widget count ("N widgets", "1 widget" or "No widgets") and the range, with
-  the scope when it is not all usage; its right side shows Add widget, Board and Maximize (Restore while maximized; Shift+Escape).
-  The Live mark is the Usage page''s own indicator in each look''s words (Live; Retro [LIVE]; NieR Mode LIVE) and pulses
-  once for each live change the board applies, never between them and never under Reduced Motion. On Agents the left
-  side counts the agents at work ("N agents · N working · N need you", and "Showing <filter>" under a filter) and Show
-  takes the place of Add widget and Board. Add widget opens a searchable list ("Find a widget") of every widget the board
-  can be given: a section for each Usage room in the Usage page''s room order (F3-514), then the Usage widgets that belong
-  to no room, then one section for each other widget source under its label. Each row''s second line names its room or
-  source and what kind of widget it is in plain words; a widget already on the board is checked and disabled with the
-  reason "Already on this dashboard". Choosing one adds it (cmd.widget.add), scrolls to it and moves focus onto it. The
-  Board menu holds, in order: Dashboards (Home, Metrics, Monitoring, Agents, this project''s custom dashboards by name
-  with their widget counts, and New dashboard; the current one checked); This dashboard (Range, Scope, Start from, Save
-  as preset..., Tidy, Reset widgets); Live (Live readings); and, on a custom dashboard only, after a hairline, Rename
-  dashboard... and Delete dashboard.... On Agents it holds Dashboards and Show. On an empty board Save as preset... and
-  Tidy are disabled with their reasons ("Add a widget first", "Nothing to tidy yet"). Range (Last 5 hours, Last 24 hours,
-  Last 7 days, Last 30 days) and Scope (All current usage, Work accounts, Personal accounts, or one provider) belong
-  to each dashboard and change only its board, independent of the Usage page''s (P2); choosing one is the typed local
-  action ui.widget_board.set_view, view state kept in the board''s record with no receipt and no event (lead ruling F1).
-  Live readings is the Usage page''s own Live / Paused choice, one switch shared with the Usage page (Plans/usage-feature.md#UF-107).
-  Tidy and Reset widgets are the board''s own (WS-019, WS-030): Reset widgets returns Home, Metrics and Monitoring to
-  their default sets and a custom dashboard to empty. Start from lists the sets a board can start from in four groups
-  (P4): This dashboard (the board''s own default), Dashboard starter, Usage rooms (the Usage page''s 13 room sets, in
-  its room order) and Your presets. Each row''s second line says what the set holds, a preset adding the day it was saved,
-  and the active set is checked; a filter field ("Find a room or a preset") appears once there are more than three presets.
-  Choosing a set replaces the board''s widgets with it through one cmd.widget.reset_layout naming the set (set_id; WS-030).
-  Because Start from replaces the widgets, an Undo notice then shows at the foot of the tab for 8 s, held while the pointer
-  or focus is on it and for 3 s after; it ends at the next change to the board''s widgets, on Escape (focus returns to
-  Board), on a project switch and when the tab closes, and Undo puts the board back as it was and says so. Amended 2026-10-10
-  (lead ruling): Undo dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision },
-  restore_revision being the board''s committed layout revision just before that Start from, with one receipt and only
-  while the notice is up; it never carries set_id, the owner puts back exactly that revision''s records, a restore is
-  refused without dispatch if any other change was committed on the board since, excluding the preset hold''s own settling
-  resizes, and Undo is disabled with its reason, and it emits no workspace.layout_changed (WS-030, UCC-200). The empty
-  board''s Start from... button opens the same list. Presets are the person''s own, kept across projects and offered
-  on every dashboard (WS-030). Save as preset... asks for a name, starting from the dashboard''s name made unique; a
-  name is trimmed, its spaces collapsed and kept to at most 80 characters, and a preset saved without one is called "Preset
-  <n>". With no presets, Your presets holds "Save this dashboard as a preset..."; with some, its last row, "Rename or
-  delete presets", lists them, each with Start from this preset, Rename preset... and Delete preset... behind a confirm
-  (Delete preset or Keep it). A dashboard that started from a deleted preset keeps its widgets. A preset keeps the widgets
-  shown at each board width class with their sizes and settings, never the board''s own range and scope. Saving, renaming
-  and deleting a preset are the typed local actions ui.widget_preset.save, ui.widget_preset.rename and ui.widget_preset.delete,
-  with no command; using one is cmd.widget.reset_layout with set_id user:<id> (lead ruling F2). New dashboard, in the
-  Board menu, the "+" menu''s Dashboard sub-row (F3-632) and the catalog, makes a custom dashboard (D35); so does a new
-  tab or a split in a panel whose usual kind is the dashboard (Ctrl+T, F3-632). It starts empty and is called "Dashboard
-  <n>". Rename dashboard... asks for a name and renames the tab with cmd.panel_tab.rename; renaming the tab renames the
-  dashboard too, and clearing the tab''s label gives back "Dashboard <n>". A name is trimmed and kept to at most 80 characters,
-  and is kept per project with the board (WS-030). The name shows on the tab, in the header row, in the Board menu, in
-  the "+" menu and in the catalog. Delete dashboard... asks first ("Delete <name>?": Delete dashboard, whose widgets
-  cannot be brought back, or Keep it), then closes the tab (cmd.panel_tab.close), drops it from the reopen list and forgets
-  its board and its name; it leaves the "+" menu and the catalog. Home, Metrics, Monitoring and Agents can be reset but
-  never deleted, and show neither Rename dashboard... nor Delete dashboard...; a label the person gives one of their
-  tabs names that tab only (F3-631). A closed custom dashboard keeps its board while it can be reopened from the reopen
-  list and is forgotten when it leaves the list, unless it is open as a tab; the built-in dashboards keep theirs (P6).
-  A saved named layout keeps the boards of the dashboards it holds, at most 64 KB of them per named layout; a larger
-  save keeps the layout without its boards and says so (lead ruling F3; Plans/storage-plan.md#SP-330); applying the layout
-  puts back the boards it kept, and a named layout saved before this applies as before. Amended 2026-10-31 (DL-270):
-  the 64 KB per named layout is a payload budget; board contents larger than the 16 KiB value cap are kept by payload
-  reference (SP-337, SP-340), and SP-330 owns the stored form. A board''s first show plays the Usage page''s calm reading-order
-  entrance, and none under Reduced Motion (P7). An empty board shows an invitation over the board, which stays laid out
-  beneath it: a small sketch of a board, "<Name> is empty", one line saying what to do, and Add widget and Start from...
-  buttons; a new, empty dashboard puts focus on its Add widget, and otherwise focus goes to the board''s first card in
-  reading order. Details on a widget opens the Usage page at that widget''s room with its inspector open (P8). Live readings
-  apply to dashboards too, each board separately, with the Usage page''s idle rule (F3-628, UF-107): nothing animates
-  at idle except one live change per applied batch while Live is on, and a board that is not on screen does no live work
-  (P12). This supersedes F3-279''s exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and
-  C.4.1, F3-517''s "distinct tab models" for Home and Dashboard and its Dashboard-frozen resize peers (with F3-515''s
-  and F3-518''s), section 7.2''s singleton dashboard, and the dashboard''s own Main, Metrics and Monitoring strip of
-  F3-505. Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of width;
-  Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below 520 px
-  and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The Live
-  mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly''s lavender
-  #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE
-  and a 6 px ink diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode and, in
-  the other looks, a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above the tab''s
-  foot (10 px below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent fill (outlined
-  in Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under Reduced Motion.
-  The empty board''s invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by 30 px rows hides
-  below 320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at most 360 px wide;
-  its buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and buttons follow from
-  160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while shown; a filter other
-  than All agents is that tab''s own state, saved about 250 ms after it changes. The Dashboard plus sub-row keeps the
-  four built-ins and New dashboard inline; Your dashboards opens this project''s custom dashboards by name with their
-  widget counts and search above 7 (F3-632). A custom board''s number is one more than the largest across open tabs,
-  the reopen list, this project''s stores, unadopted unscoped board stores, names and live boards; past 9999, opening
-  falls back to Home. An unknown board opens Home; dashboard:new creates one and dashboard:current resolves to dashboard:home.
-  Custom names collapse whitespace before trimming, at most 80 characters; a clash with a built-in or another of this
-  project''s dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name clears the stored name. Preset
-  names use the same uniqueness rule among presets. The current dashboard in Board and the active set in Start from are
-  checked and focused. Board shows Empty for a zero-widget custom board''s detail; Start from shows the active set''s
-  label, Save as preset... says Reuse these widgets anywhere, and Reset widgets says Back to its default widgets or Back
-  to an empty dashboard. Add widget labels the Usage widgets without a room More widgets. An Undo notice follows a Reset
-  widgets that changed anything as well as Start from; its restore_revision is the committed revision immediately before
-  that operation. The owner writes and reads that revision''s captured envelope in this project, with one receipt and
-  no workspace.layout_changed, and restore_revision never accompanies set_id. Undo''s availability is checked on a commit
-  that leaves the notice up, on pointer or focus entering it and on its click; if stale, the envelope is invalid or the
-  board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and the notice text and button''s hover detail
-  give the reason. Preset-hold resizes settle the set and never end the notice or make its revision stale. The notice
-  is at most the body width minus 24 px, with padding 5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes, Retro and
-  NieR''s Undo reverses on hover, and Glass uses a 30 px blur at saturation 1.5. NieR''s Live word is 11.5 px in the
-  code face with 0.08 em spacing. The empty board stays laid out but is visually hidden under its invitation; its three-track
-  sketch has 6 px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an API move or resize
-  returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or pointed on a board,
-  pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds every mounted board
-  whose tab the new layout keeps, hidden ones included, reloads custom names and refreshes the catalog; an unmounted
-  tab writes to its prior project. A named layout restores only envelopes saved for the current project, skipping another
-  project''s envelope; a custom board that the applied layout does not hold keeps its current contents. Amended 2026-10-16
-  (DL-214; Jared''s 2026-10-15 panel item 1): the Home board opens as the pinned 36 px Home tab from every path, the
-  "+" menu, the Board menu and a page''s subtab, never as a second, unpinned tab at natural width. D7, PM7 Step4 final-source
-  alignment, 2026-10-30 (integration e9b15abc64): dashboard:agents uses PM7_WORK_UI.list, agentGroup and agentSummary
-  over PM_WORK, the same rows/needs-you set as the platform panel and Agents rail. Its existing frame, All/Working/Needs
-  you/Waiting/Finished filter and short time form stay with this owner; no private AGENTS list or clock owns different
-  agents. DR-078 defines subscription teardown and show-time catch-up. Amended DL-260, Jared 2026-10-31: only real product
-  behavior remains an implementation requirement.'
+canonical_text: |-
+  A dashboard is a tab kind (F3-635), not a singleton surface (DL-180, D10). Every dashboard tab holds its own board on the Usage board engine (DL-186): it shows the Usage page's widget design and can show every Usage widget, and Plans/usage-feature.md#UF-062's rule that every Usage widget can be hosted on the dashboard now holds. Boards are built for more than one widget source: Usage widgets now, Orchestrator widgets after the Orchestrator page's own redesign, and other sources later, each under its own label (Plans/Widget_System.md#WS-030); the widget commands' payloads do not change. The built-in dashboards are Home (`dashboard:home`, pinned in the default layout, F3-630), Metrics (`dashboard:metrics`), Monitoring (`dashboard:monitoring`) and Agents (`dashboard:agents`), and a person can make custom dashboards with n from 1 to 9999 (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home, Metrics and Monitoring start from their own sets of Usage widgets (WS-030); a new custom dashboard starts empty. The old Home widgets (run progress, lanes and results) have left Home until Orchestrator widgets join the board engine after that page's redesign, and there is no Home (current) board (Jared, P1 B). Agents is drawn by the dashboard kind itself, not by the board engine: one card per agent at work, each opening that agent's transcript as a kept tab (Alt+click in a new panel), with the filters All agents, Working, Needs you, Waiting and Finished in its Show menu; it has no widgets and no board record, and resetting it means its filter (lead ruling F7). A dashboard tab sits in the same tab strip as every other tab (F3-631): it has no strip of its own and no second tab model. Inside the tab the board is the Usage widget board: its widget grid, its gestures, gravity and Tidy behave exactly as on the Usage page, each settled change one transaction (Plans/Widget_System.md#WS-019), and they act inside the tab only, never laying out panels (DR-066). The board lays out on the Usage board's tracks and width classes (Plans/Widget_System.md#WS-017), measured on the tab's own width, never the window (F3-635), and it sits on Home's tab surface, not the Usage page's background, in every look (P11). Each board's contents are kept per project (`widget_layout:v1:<project_id>:<board_id>`; the keys, the one-time adoption of an older key and the records are Plans/Widget_System.md#WS-030's and Plans/storage-plan.md's), so a project switch shows each dashboard tab with that project's board and a project lists only its own custom dashboards. A dashboard's widget layout is never stored inside the Home layout record, and Home's panels are not widgets. The header row is F3-635's shared row. Its left side shows the dashboard's name, the Live mark while Live readings are on and the board holds a Usage widget, the widget count ("N widgets", "1 widget" or "No widgets") and the range, with the scope when it is not all usage; its right side shows Add widget, Board and Maximize (Restore while maximized; Shift+Escape). The Live mark is the Usage page's own indicator in each look's words (Live; Retro [LIVE]; NieR Mode LIVE) and pulses once for each live change the board applies, never between them and never under Reduced Motion. On Agents the left side counts the agents at work ("N agents · N working · N need you", and "Showing <filter>" under a filter) and Show takes the place of Add widget and Board. Add widget opens a searchable list ("Find a widget") of every widget the board can be given: a section for each Usage room in the Usage page's room order (F3-514), then the Usage widgets that belong to no room, then one section for each other widget source under its label. Each row's second line names its room or source and what kind of widget it is in plain words; a widget already on the board is checked and disabled with the reason "Already on this dashboard". Choosing one adds it (cmd.widget.add), scrolls to it and moves focus onto it. The Board menu holds, in order: Dashboards (Home, Metrics, Monitoring, Agents, this project's custom dashboards by name with their widget counts, and New dashboard; the current one checked); This dashboard (Range, Scope, Start from, Save as preset..., Tidy, Reset widgets); Live (Live readings); and, on a custom dashboard only, after a hairline, Rename dashboard... and Delete dashboard.... On Agents it holds Dashboards and Show. On an empty board Save as preset... and Tidy are disabled with their reasons ("Add a widget first", "Nothing to tidy yet"). Range (Last 5 hours, Last 24 hours, Last 7 days, Last 30 days) and Scope (All current usage, Work accounts, Personal accounts, or one provider) belong to each dashboard and change only its board, independent of the Usage page's (P2); choosing one is the typed local action ui.widget_board.set_view, view state kept in the board's record with no receipt and no event (lead ruling F1). Live readings is the Usage page's own Live / Paused choice, one switch shared with the Usage page (Plans/usage-feature.md#UF-107). Tidy and Reset widgets are the board's own (WS-019, WS-030): Reset widgets returns Home, Metrics and Monitoring to their default sets and a custom dashboard to empty. Start from lists the sets a board can start from in four groups (P4): This dashboard (the board's own default), Dashboard starter, Usage rooms (the Usage page's 13 room sets, in its room order) and Your presets. Each row's second line says what the set holds, a preset adding the day it was saved, and the active set is checked; a filter field ("Find a room or a preset") appears once there are more than three presets. Choosing a set replaces the board's widgets with it through one cmd.widget.reset_layout naming the set (set_id; WS-030). Because Start from replaces the widgets, an Undo notice then shows at the foot of the tab for 8 s, held while the pointer or focus is on it and for 3 s after; it ends at the next change to the board's widgets, on Escape (focus returns to Board), on a project switch and when the tab closes, and Undo puts the board back as it was and says so. Amended 2026-10-10 (lead ruling): Undo dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision being the board's committed layout revision just before that Start from, with one receipt and only while the notice is up; it never carries set_id, the owner puts back exactly that revision's records, a restore is refused without dispatch if any other change was committed on the board since, excluding the preset hold's own settling resizes, and Undo is disabled with its reason, and it emits no workspace.layout_changed (WS-030, UCC-200). The empty board's Start from... button opens the same list. Presets are the person's own, kept across projects and offered on every dashboard (WS-030). Save as preset... asks for a name, starting from the dashboard's name made unique; a name is trimmed, its spaces collapsed and kept to at most 80 characters, and a preset saved without one is called "Preset <n>". With no presets, Your presets holds "Save this dashboard as a preset..."; with some, its last row, "Rename or delete presets", lists them, each with Start from this preset, Rename preset... and Delete preset... behind a confirm (Delete preset or Keep it). A dashboard that started from a deleted preset keeps its widgets. A preset keeps the widgets shown at each board width class with their sizes and settings, never the board's own range and scope. Saving, renaming and deleting a preset are the typed local actions ui.widget_preset.save, ui.widget_preset.rename and ui.widget_preset.delete, with no command; using one is cmd.widget.reset_layout with set_id user:<id> (lead ruling F2). New dashboard, in the Board menu, the "+" menu's Dashboard sub-row (F3-632) and the catalog, makes a custom dashboard (D35); so does a new tab or a split in a panel whose usual kind is the dashboard (Ctrl+T, F3-632). It starts empty and is called "Dashboard <n>". Rename dashboard... asks for a name and renames the tab with cmd.panel_tab.rename; renaming the tab renames the dashboard too, and clearing the tab's label gives back "Dashboard <n>". A name is trimmed and kept to at most 80 characters, and is kept per project with the board (WS-030). The name shows on the tab, in the header row, in the Board menu, in the "+" menu and in the catalog. Delete dashboard... asks first ("Delete <name>?": Delete dashboard, whose widgets cannot be brought back, or Keep it), then closes the tab (cmd.panel_tab.close), drops it from the reopen list and forgets its board and its name; it leaves the "+" menu and the catalog. Home, Metrics, Monitoring and Agents can be reset but never deleted, and show neither Rename dashboard... nor Delete dashboard...; a label the person gives one of their tabs names that tab only (F3-631). A closed custom dashboard keeps its board while it can be reopened from the reopen list and is forgotten when it leaves the list, unless it is open as a tab; the built-in dashboards keep theirs (P6). A saved named layout keeps the boards of the dashboards it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its boards and says so (lead ruling F3; Plans/storage-plan.md#SP-330); applying the layout puts back the boards it kept, and a named layout saved before this applies as before. Amended 2026-10-31 (DL-270): the 64 KB per named layout is a payload budget; board contents larger than the 16 KiB value cap are kept by payload reference (SP-337, SP-340), and SP-330 owns the stored form. A board's first show plays the Usage page's calm reading-order entrance, and none under Reduced Motion (P7). An empty board shows an invitation over the board, which stays laid out beneath it: a small sketch of a board, "<Name> is empty", one line saying what to do, and Add widget and Start from... buttons; a new, empty dashboard puts focus on its Add widget, and otherwise focus goes to the board's first card in reading order. Details on a widget opens the Usage page at that widget's room with its inspector open (P8). Live readings apply to dashboards too, each board separately, with the Usage page's idle rule (F3-628, UF-107): nothing animates at idle except one live change per applied batch while Live is on, and a board that is not on screen does no live work (P12). This supersedes F3-279's exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and C.4.1, F3-517's "distinct tab models" for Home and Dashboard and its Dashboard-frozen resize peers (with F3-515's and F3-518's), section 7.2's singleton dashboard, and the dashboard's own Main, Metrics and Monitoring strip of F3-505. Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below 520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly's lavender #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE and a 6 px ink diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode and, in the other looks, a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above the tab's foot (10 px below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent fill (outlined in Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under Reduced Motion. The empty board's invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by 30 px rows hides below 320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at most 360 px wide; its buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and buttons follow from 160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while shown; a filter other than All agents is that tab's own state, saved about 250 ms after it changes. The Dashboard plus sub-row keeps the four built-ins and New dashboard inline; Your dashboards opens this project's custom dashboards by name with their widget counts and search above 7 (F3-632). A custom board's number is one more than the largest across open tabs, the reopen list, this project's stores, unadopted unscoped board stores, names and live boards; past 9999, opening falls back to Home. An unknown board opens Home; dashboard:new creates one and dashboard:current resolves to dashboard:home. Custom names collapse whitespace before trimming, at most 80 characters; a clash with a built-in or another of this project's dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name clears the stored name. Preset names use the same uniqueness rule among presets. The current dashboard in Board and the active set in Start from are checked and focused. Board shows Empty for a zero-widget custom board's detail; Start from shows the active set's label, Save as preset... says Reuse these widgets anywhere, and Reset widgets says Back to its default widgets or Back to an empty dashboard. Add widget labels the Usage widgets without a room More widgets. An Undo notice follows a Reset widgets that changed anything as well as Start from; its restore_revision is the committed revision immediately before that operation. The owner writes and reads that revision's captured envelope in this project, with one receipt and no workspace.layout_changed, and restore_revision never accompanies set_id. Undo's availability is checked on a commit that leaves the notice up, on pointer or focus entering it and on its click; if stale, the envelope is invalid or the board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and the notice text and button's hover detail give the reason. Preset-hold resizes settle the set and never end the notice or make its revision stale. The notice is at most the body width minus 24 px, with padding 5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes, Retro and NieR's Undo reverses on hover, and Glass uses a 30 px blur at saturation 1.5. NieR's Live word is 11.5 px in the code face with 0.08 em spacing. The empty board stays laid out but is visually hidden under its invitation; its three-track sketch has 6 px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an API move or resize returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or pointed on a board, pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds every mounted board whose tab the new layout keeps, hidden ones included, reloads custom names and refreshes the catalog; an unmounted tab writes to its prior project. A named layout restores only envelopes saved for the current project, skipping another project's envelope; a custom board that the applied layout does not hold keeps its current contents. Amended 2026-10-16 (DL-214; Jared's 2026-10-15 panel item 1): the Home board opens as the pinned 36 px Home tab from every path, the "+" menu, the Board menu and a page's subtab, never as a second, unpinned tab at natural width. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): dashboard:agents uses PM7_WORK_UI.list, agentGroup and agentSummary over PM_WORK, the same rows/needs-you set as the platform panel and Agents rail. Its existing frame, All/Working/Needs you/Waiting/Finished filter and short time form stay with this owner; no private AGENTS list or clock owns different agents. DR-078 defines subscription teardown and show-time catch-up. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement. No project has its own SP-349 Home layout and boards, shared across that Server’s app chats rather than one fresh bucket per thread. Selecting or converting into a Project loads that Project’s saved UI state or its fresh defaults; do not import app boards into it. Saved named layouts remain per person; saved board snapshots apply only to the exact saved scope/Server/Project identity and are skipped elsewhere, including null-board snapshots. Keep the 64 KB board-payload cap, 16 KiB redb cap, one Assistant node, existing geometry and view-state/event distinctions. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
@@ -1784,26 +1503,40 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-186"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1-P13; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1; design lineage only)"
-  - "The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10)"
-  - "Concepts/home-redesign/NUMBERS.md (SHA-256 77e9c04c23959812da6799a54708c487fcb2f33f342219a1c79dae9c396614d7) and CONTRACT.md section 3.1 (SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9) at c4e32ec0b7 on branch concept/home-panels-20261009 (the dashboard kind as built; concept lineage only)"
-  - "Concepts/home-redesign/src/panels/kinds/30-dashboard.js at c4e32ec0b7 on branch concept/home-panels-20261009 (labels, prompts and confirms as built; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D10)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
-  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--home-redesign--src--panels--kinds--30-dashboard.js,
-    SHA-256 68f488e94f6ffb0927ea52c46a03771d93f9dde05a7852b2f19170fe0a9781e5 (Q16 landed on main as aec2916c94;
-    source lineage; not native certification)
-  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/c0305227f7-friendly-lavender.diff,
-    SHA-256 fb6f7127bfa67d809d9fdfef3b44da8603511e24c4782b1f24627376566a3b77 (landed main c0305227f7;
-    Jared approved lavender 2026-10-15; source lineage)
+- Plans/Decision_Log.md#DL-186
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md,
+  SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1-P13; Jared's answers relayed by the
+  planning thread, pm-mail 1010191613-9ce1; design lineage only)
+- The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10)
+- Concepts/home-redesign/NUMBERS.md (SHA-256 77e9c04c23959812da6799a54708c487fcb2f33f342219a1c79dae9c396614d7) and
+  CONTRACT.md section 3.1 (SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9) at c4e32ec0b7
+  on branch concept/home-panels-20261009 (the dashboard kind as built; concept lineage only)
+- Concepts/home-redesign/src/panels/kinds/30-dashboard.js at c4e32ec0b7 on branch concept/home-panels-20261009 (labels,
+  prompts and confirms as built; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D10)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
+  SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8
+  (audit lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--home-redesign--src--panels--kinds--30-dashboard.js,
+  SHA-256 68f488e94f6ffb0927ea52c46a03771d93f9dde05a7852b2f19170fe0a9781e5 (Q16 landed on main as aec2916c94; source
+  lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/c0305227f7-friendly-lavender.diff, SHA-256 fb6f7127bfa67d809d9fdfef3b44da8603511e24c4782b1f24627376566a3b77
+  (landed main c0305227f7; Jared approved lavender 2026-10-15; source lineage)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
   - "dashboard:home"
   - "dashboard:dash-<n>"

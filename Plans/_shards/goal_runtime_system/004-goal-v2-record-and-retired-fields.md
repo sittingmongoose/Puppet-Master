@@ -4,7 +4,7 @@ Source: `Plans/Goal_Runtime_System.md`
 
 Source lines: L58-L121
 
-Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f`
+Source SHA256: `e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f
 
 A Goal is one concise text objective plus a lifecycle. There is no title field, no separate summary, no structured decomposition, and no second text field of any kind. The objective prose itself carries the outcome, the finish condition, and the constraints, because a user who wants to change any of those edits one paragraph rather than reconciling five fields.
 
-`GoalRecordV2` is the only active writer schema:
+`GoalRecordV2` below is the exact original Project writer edition; GRS-086 admits a distinct application edition with the same eleven fields and `project_id=null` at birth. Scope/Computer metadata belongs to the wrapper/execution record. Neither edition permits ordinary binding mutation, and original Project bytes/hashes remain valid.
 
 ```yaml
 schema_id: pm.goal.record.v2

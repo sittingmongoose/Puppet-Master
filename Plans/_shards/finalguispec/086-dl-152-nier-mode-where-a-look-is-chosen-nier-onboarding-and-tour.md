@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43931-L44326
+Source lines: L43336-L43568
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -19,97 +19,10 @@ plan_unit_id: F3-598
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable theme family (nier), ordered after Basic,
-  Friendly, Glass and Retro. NieR Light (nier-light) and NieR Dark (nier-dark) complete ten built-in variants. A NieR
-  family pick uses general.visual.theme and the existing mode through cmd.settings.transaction.preview then cmd.settings.transaction.apply;
-  no independent NieR switch or command remains. Adjust NieR opens the one existing editor. general.visual.nier-parts
-  (29 parts) and general.visual.nier-background remain its Adjust rows, shown when general.visual.theme is NieR Light
-  or NieR Dark, with hidden values retained. Basic High contrast and Basic color scheme remain Basic-only; Glass and
-  Retro controls remain confined to their own families. The title-bar selector, Guided Tour Look menu, onboarding welcome
-  and its Look menu all offer the same five families in order basic, friendly, glass, retro, nier. Live family picks
-  use the Settings transaction pair; inside onboarding, choose_look on ui.onboarding.choose_look previews family/mode
-  or retained NieR Adjust values in the closed look_choice and persists only at the existing exact Project commit/finish
-  boundary. preview_nier and the independent nier_mode field are retired. Hover is silent and changes no theme; click
-  or keyboard activation selects (O6). ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay
-  remain presentation-only; nier.editor.open is the Adjust binding. No manager_id, route, detail id, command, new part
-  or event is added. shell.nier.mode, tour.nier.mode and onboarding.nier.mode are retired non_dispatch census tombstones
-  with no action, setting or production writer. The editor retains a focus-contained popup over the application and an
-  in-window panel during onboarding, with Escape and exact return. While NieR Mode is painted, its preview included,
-  onboarding and the Tour take a NieR direction in place of Basic''s. Superseded 2026-10-29 for onboarding by O8/X3/F3-663,
-  retained as Tour/source lineage only: the earlier illustration system used the NieR unit marionettes, original line
-  art drawn for Puppet Master with no game asset and no character likeness: small android units whose shield-shaped head
-  is crossed by a rigid ink visor band that overhangs it on both sides and is the unit''s only face (a scan notch at
-  rest, two chevrons for joy, two dashes in a bow), with a high collar, one coat silhouette per variant (long coat, short
-  cape, hood, pauldron), square pins at shoulders, elbows and knees, square hands, and hairline strings tied to an ink
-  diamond knot on the head; head to torso is 1.21 to 1 at scene and icon scale. A solid-ink figure with a paper visor
-  slit, the only unstrung one, steers the floating control unit from a broken column, a small machine lifeform watches
-  from the snapped corner of a ruined stage, and the icon form keeps the same unit on the 28-unit marionette grid, dropping
-  detail as it shrinks (pins below 36 px, hands below 28 px, one string below 22 px, a pixel map at 14 to 16 px). The
-  art paints only NieR''s ink, paper and raised-surface roles, strings in ink at about half strength, the accent ochre
-  on one item per scene and rust only in a fifth of the confetti; no NieR part gates the units or their visor, which
-  follow NieR Mode being painted, while the parts gate the scene''s decoration and motion (YoRHa headers the kicker,
-  Machine glyphs the glyph strip, Parchment ground the dot grid, Map ticks the map label and ruler ticks, Scan sweep
-  the visor scan, Menu cursor the blinks, Target brackets the lock-on corners of a cheer, Slice open and Text decode
-  the scene changes). The window and the Tour callout gain, each under its own part: the YoRHa header band, kicker and
-  ink rail (YoRHa headers); square fields and switches (Square hairlines); the menu cursor on cards, tiles, switches
-  and choice rows (Menu cursor); ink target brackets on the chosen card or tile and around the Tour''s target (Target
-  brackets); labels of 8 characters or fewer decode, and longer words type on (Text decode); slice-opening panels and
-  callouts (Slice open); a page wipe on a back move (Page wipe); a block progress meter (Block progress); and, under
-  Quest banners, the cards named below rather than a chapter banner. A torn alert marks an error or a missing Tour target
-  (Alert glitch). Pod 042 docks in the Tour callout, flies Show Me''s pointer and reports each screen once, led by `Report:`,
-  `Proposal:`, `Alert:` or `Query:` (Pod companion for the unit, Pod voice for the words), and never covers an actor,
-  a hung card or the stage kicker. No part is added. In the concept the moments, as built, are these. Entering NieR uses
-  its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving
-  NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant
-  settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting. The cold open: the window
-  opens empty and a boot log types in the pane, and each of its stamps wakes the puppets. At a chapter''s end in onboarding
-  an ink act card is lowered on two strings, and on landing the ink block walks the rail to the next chapter, instead
-  of a chapter banner. The Project''s name is stamped Created, and at Ready a two-panel curtain closes over the last
-  scene and opens on the troupe standing in a line, for a curtain call that re-stamps the rail. Ready hands the window
-  over as one ink line into the tour''s first callout, and the same Pod flies into that callout. In the tour, Show Me
-  is Pod 042 taking the strings inside a frame that reads In control and Press any key to stop. Each new tour chapter
-  hangs a chapter card while the bar''s ink block walks from the old chapter''s name to the new one. At the finish the
-  callout folds, a results card opens, and then Pod flies home. Entering NieR with Reboot installed uses the shared slat
-  plate with the existing wake cue; all other family/scheme transitions use the standard look cover. The NieR boot log
-  on the Settings page paints in the stored Light, Dark or Auto mode from its first frame. NieR motion is stepped, with
-  no glow, filter or blur, loops only by transform or opacity, and scales with Animation speed. Words longer than 8 characters
-  type on, with their final layout reserved from the first frame. No surface larger than 340x256 px reverses its opacity
-  more than once a second: a large area leaves one way, by a fold, a wipe or slats, and only a small element such as
-  a caret, a stamp or a tick may flicker. Input never waits: a key or a press snaps a running performance to its end
-  state. Every beat is gated by an existing part. Reduced Motion, the Still and Colors only presets and low resource
-  show each moment''s end state, and Quiet drops the Pod beats. A background change made from the editor cross-fades
-  as F3-589 sets out. The application beneath the onboarding window stays still while the window is open (F3-520 owns
-  this in every look). The five theme families have hero moments of their own (F3-600); NieR''s play whenever the NieR
-  family is selected, only while the NieR family is selected (Q22) (DL-153). Q22 adds the NieR family and its two variants
-  without a new settings key, part, command, route or tour action: inside the onboarding window the five-family look
-  choice and its Adjust editor panel use the one typed local action `ui.onboarding.choose_look`, the editor''s open,
-  close and Play reboot moment are `ui.settings.nier_editor.open`, `ui.settings.nier_editor.close` and `ui.settings.nier_editor.replay`,
-  and every live control composes the Settings transaction pair (SSYS-043, DL-153). Amended 2026-10-16 (DL-215): the
-  reboot cover''s exit is smooth: its slats tear the cover away in place, with no sideways jumps of the cover over the
-  page beneath (Jared, 2026-10-16). Amended 2026-10-16 (DL-216, Jared): while the reboot cover waits for the look to
-  finish applying, it keeps moving in NieR''s language, a scanline sweep or a progress glyph within NieR''s stepped motion
-  rule, so a long wait never reads as frozen. Amended 2026-10-16 (DL-217, the Settings lane): under Reduced Motion the
-  NieR switch shows a calm cover in the outgoing look''s colours, with no slats or travel, that names what is being applied,
-  is announced politely, and lifts once the new look is drawn; the waiting reboot cover''s movement is a compositor ink
-  sweep across its segmented meter. Current PM7 replacement: Amended 2026-10-29 (O8/O11, X3; PM7): F3-663’s NieR Pip
-  replaces the unit marionette for onboarding and chat agents. NieR Pip shows eyes through the band on live and static
-  marks, including title bar, app icon and tray, at every size (X3 B, Jared 2026-10-30). Retain NieR material/HUD/reboot
-  and Pod 042 as Tour/Chat narrator; no Tour redesign now. Retained historical/source tokens (not active overrides):
-  menuitemcheckbox. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation
-  1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only. DL-259 QA2 Q5/Q21,
-  Jared 2026-10-31: look menus fit the available window/viewport with bounded scrolling where needed. Highlight plates
-  fit their family/scheme rows; Customize Pip has its own clearly grouped entry through the existing editor action. The
-  five-family order and ten variants stay DL-257’s. DL-257/Q22 and DL-259 QA2 M4, 2026-10-31: the welcome look chooser
-  gives Basic, Friendly, Glass, Retro and NieR equal choice prominence. Each tile has an accessible family label and
-  reachable question/Adjust controls where applicable. At narrow and short supported sizes the title, all five choices
-  and footer remain readable and reachable without clipping or a hidden extra-family strip; the chooser fits above the
-  footer or scrolls within its bounded content area. Click or keyboard activation selects; silent hover does not select.
+canonical_text: |-
+  Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable theme family (nier), ordered after Basic, Friendly, Glass and Retro. NieR Light (nier-light) and NieR Dark (nier-dark) complete ten built-in variants. A NieR family pick uses general.visual.theme and the existing mode through cmd.settings.transaction.preview then cmd.settings.transaction.apply; no independent NieR switch or command remains. Adjust NieR opens the one existing editor. general.visual.nier-parts (29 parts) and general.visual.nier-background remain its Adjust rows, shown when general.visual.theme is NieR Light or NieR Dark, with hidden values retained. Basic High contrast and Basic color scheme remain Basic-only; Glass and Retro controls remain confined to their own families. The title-bar selector, Guided Tour Look menu, onboarding welcome and its Look menu all offer the same five families in order basic, friendly, glass, retro, nier. Live family picks use the Settings transaction pair; inside onboarding, choose_look on ui.onboarding.choose_look previews family/mode or retained NieR Adjust values in the closed look_choice and persists only at the existing exact Project commit/finish boundary. preview_nier and the independent nier_mode field are retired. Hover is silent and changes no theme; click or keyboard activation selects (O6). ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay remain presentation-only; nier.editor.open is the Adjust binding. No manager_id, route, detail id, command, new part or event is added. shell.nier.mode, tour.nier.mode and onboarding.nier.mode are retired non_dispatch census tombstones with no action, setting or production writer. The editor retains a focus-contained popup over the application and an in-window panel during onboarding, with Escape and exact return. While NieR Mode is painted, its preview included, onboarding and the Tour take a NieR direction in place of Basic's. Superseded 2026-10-29 for onboarding by O8/X3/F3-663, retained as Tour/source lineage only: the earlier illustration system used the NieR unit marionettes, original line art drawn for Puppet Master with no game asset and no character likeness: small android units whose shield-shaped head is crossed by a rigid ink visor band that overhangs it on both sides and is the unit's only face (a scan notch at rest, two chevrons for joy, two dashes in a bow), with a high collar, one coat silhouette per variant (long coat, short cape, hood, pauldron), square pins at shoulders, elbows and knees, square hands, and hairline strings tied to an ink diamond knot on the head; head to torso is 1.21 to 1 at scene and icon scale. A solid-ink figure with a paper visor slit, the only unstrung one, steers the floating control unit from a broken column, a small machine lifeform watches from the snapped corner of a ruined stage, and the icon form keeps the same unit on the 28-unit marionette grid, dropping detail as it shrinks (pins below 36 px, hands below 28 px, one string below 22 px, a pixel map at 14 to 16 px). The art paints only NieR's ink, paper and raised-surface roles, strings in ink at about half strength, the accent ochre on one item per scene and rust only in a fifth of the confetti; no NieR part gates the units or their visor, which follow NieR Mode being painted, while the parts gate the scene's decoration and motion (YoRHa headers the kicker, Machine glyphs the glyph strip, Parchment ground the dot grid, Map ticks the map label and ruler ticks, Scan sweep the visor scan, Menu cursor the blinks, Target brackets the lock-on corners of a cheer, Slice open and Text decode the scene changes). The window and the Tour callout gain, each under its own part: the YoRHa header band, kicker and ink rail (YoRHa headers); square fields and switches (Square hairlines); the menu cursor on cards, tiles, switches and choice rows (Menu cursor); ink target brackets on the chosen card or tile and around the Tour's target (Target brackets); labels of 8 characters or fewer decode, and longer words type on (Text decode); slice-opening panels and callouts (Slice open); a page wipe on a back move (Page wipe); a block progress meter (Block progress); and, under Quest banners, the cards named below rather than a chapter banner. A torn alert marks an error or a missing Tour target (Alert glitch). Pod 042 docks in the Tour callout, flies Show Me's pointer and reports each screen once, led by `Report:`, `Proposal:`, `Alert:` or `Query:` (Pod companion for the unit, Pod voice for the words), and never covers an actor, a hung card or the stage kicker. No part is added. In the concept the moments, as built, are these. Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting. The cold open: the window opens empty and a boot log types in the pane, and each of its stamps wakes the puppets. At a chapter's end in onboarding an ink act card is lowered on two strings, and on landing the ink block walks the rail to the next chapter, instead of a chapter banner. The Project's name is stamped Created, and at Ready a two-panel curtain closes over the last scene and opens on the troupe standing in a line, for a curtain call that re-stamps the rail. Ready hands the window over as one ink line into the tour's first callout, and the same Pod flies into that callout. In the tour, Show Me is Pod 042 taking the strings inside a frame that reads In control and Press any key to stop. Each new tour chapter hangs a chapter card while the bar's ink block walks from the old chapter's name to the new one. At the finish the callout folds, a results card opens, and then Pod flies home. Entering NieR with Reboot installed uses the shared slat plate with the existing wake cue; all other family/scheme transitions use the standard look cover. The NieR boot log on the Settings page paints in the stored Light, Dark or Auto mode from its first frame. NieR motion is stepped, with no glow, filter or blur, loops only by transform or opacity, and scales with Animation speed. Words longer than 8 characters type on, with their final layout reserved from the first frame. No surface larger than 340x256 px reverses its opacity more than once a second: a large area leaves one way, by a fold, a wipe or slats, and only a small element such as a caret, a stamp or a tick may flicker. Input never waits: a key or a press snaps a running performance to its end state. Every beat is gated by an existing part. Reduced Motion, the Still and Colors only presets and low resource show each moment's end state, and Quiet drops the Pod beats. A background change made from the editor cross-fades as F3-589 sets out. The application beneath the onboarding window stays still while the window is open (F3-520 owns this in every look). The five theme families have hero moments of their own (F3-600); NieR's play whenever the NieR family is selected, only while the NieR family is selected (Q22) (DL-153). Q22 adds the NieR family and its two variants without a new settings key, part, command, route or tour action: inside the onboarding window the five-family look choice and its Adjust editor panel use the one typed local action `ui.onboarding.choose_look`, the editor's open, close and Play reboot moment are `ui.settings.nier_editor.open`, `ui.settings.nier_editor.close` and `ui.settings.nier_editor.replay`, and every live control composes the Settings transaction pair (SSYS-043, DL-153). Amended 2026-10-16 (DL-215): the reboot cover's exit is smooth: its slats tear the cover away in place, with no sideways jumps of the cover over the page beneath (Jared, 2026-10-16). Amended 2026-10-16 (DL-216, Jared): while the reboot cover waits for the look to finish applying, it keeps moving in NieR's language, a scanline sweep or a progress glyph within NieR's stepped motion rule, so a long wait never reads as frozen. Amended 2026-10-16 (DL-217, the Settings lane): under Reduced Motion the NieR switch shows a calm cover in the outgoing look's colours, with no slats or travel, that names what is being applied, is announced politely, and lifts once the new look is drawn; the waiting reboot cover's movement is a compositor ink sweep across its segmented meter. Current PM7 replacement: Amended 2026-10-29 (O8/O11, X3; PM7): F3-663’s NieR Pip replaces the unit marionette for onboarding and chat agents. NieR Pip shows eyes through the band on live and static marks, including title bar, app icon and tray, at every size (X3 B, Jared 2026-10-30). Retain NieR material/HUD/reboot and Pod 042 as Tour/Chat narrator; no Tour redesign now. Retained historical/source tokens (not active overrides): menuitemcheckbox. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation 1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only. DL-259 QA2 Q5/Q21, Jared 2026-10-31: look menus fit the available window/viewport with bounded scrolling where needed. Highlight plates fit their family/scheme rows; Customize Pip has its own clearly grouped entry through the existing editor action. The five-family order and ten variants stay DL-257’s. DL-257/Q22 and DL-259 QA2 M4, 2026-10-31: the welcome look chooser gives Basic, Friendly, Glass, Retro and NieR equal choice prominence. Each tile has an accessible family label and reachable question/Adjust controls where applicable. At narrow and short supported sizes the title, all five choices and footer remain readable and reachable without clipping or a hidden extra-family strip; the chooser fits above the footer or scrolls within its bounded content area. Click or keyboard activation selects; silent hover does not select.
 
-
-  DL-272 FO-18, 2026-11-01: The Ready curtain call is eligible only when MS-122 reports usable AI, including a
-  usable free route. Otherwise show the calm Almost ready state without a celebration or celebratory sound.
-  This eligibility check precedes NieR’s and every other family’s Ready moment; it does not change O12’s
-  Creating owner-completion and last-block gates.'
+  DL-272 FO-18, 2026-11-01: The Ready curtain call is eligible only when MS-122 reports usable AI, including a usable free route. Otherwise show the calm Almost ready state without a celebration or celebratory sound. This eligibility check precedes NieR’s and every other family’s Ready moment; it does not change O12’s Creating owner-completion and last-block gates. Current SSYS-059/065 scope classification supersedes universal no-Project look/sound write wording: claimed app levels can persist, only pre-claim preview remains ephemeral. Project Later still sets up AI on the named Computer and lands in No project; explicit Skip AI remains valid. Re-entry reads the exact resolved app/Project look, without a private reader/store. Preserve PM7’s current service admission, FO-22 valid-answer Back/Review, all art/solver/Pip/Glass/motion/audio and calm Almost ready rules; new native availability is not inferred.
 gui_related: true
 gui_classification_reason: Defines fifth-family NieR selection and how onboarding and the Guided Tour look (Q22)
   under it.
@@ -191,17 +104,19 @@ source_lineage:
   lineage only)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md, SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9
   (the global acceptance bar and the A4, A11, A13 and B9 findings; source lineage)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md, SHA-256
-  a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of 2026-10-16 ~12:10Z; decision
-  lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
+  SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of 2026-10-16 ~12:10Z;
+  decision lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--pm7-motion-settings--NOTES.md,
-  SHA-256 969a47e289d72c048f7f44b94488b1953a2edeba0fa28c41b72bdc5d4ca5e094 (Settings lane notes, B1, B3 and B5; source
-  lineage)
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md — QA2 review M2/m4 five equal look choices;
-  grid geometry is source evidence only.
+  SHA-256 969a47e289d72c048f7f44b94488b1953a2edeba0fa28c41b72bdc5d4ca5e094 (Settings lane notes, B1, B3 and B5;
+  source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md — QA2 review M2/m4 five equal look
+  choices; grid geometry is source evidence only.
 - PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
   Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
   are source lineage only.
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F09,C-F02,C-F11,E-F07,E-F08
 preserved_exact_tokens:
 - NieR Mode
 - Adjust NieR look
@@ -236,88 +151,8 @@ plan_unit_id: F3-599
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Product Onboarding and the Guided Tour play sound cues for their own moments, and those cues form one
-  onboarding and Guided Tour cue category in the Notifications & Sounds routing matrix (F3-405), beside the chat cue
-  category (F3-564): mapped through general.interaction.sound-mapping, switched by general.interaction.sound-effects
-  (on by default, DL-107) and silenced by the onboarding and Tour sound controls, which toggle that same key (F3-520,
-  F3-521). Its moments, as the concept plays them, are: in setup, the window opening, moving forward or back, entering
-  a new chapter, choosing a card or tile, a tap, a switch turned on or off, a sheet or panel opening or closing, a reveal,
-  typing, a phase of owner work, something found, a warning, a failure, a copy, moving through folders, the Project made,
-  a helper''s cheer, the celebration, and the finish or a close; in the Tour, its opening, a callout arriving, next,
-  back and skip, a step done, Show Me''s pointer setting off, picking up, dropping, pressing and arriving, typing, moving
-  through parts, a phase, a missing target, an interruption, pause and resume, a choice, and the finish or a close; NieR
-  Mode turned on or off; and, while NieR Mode is painted, the reboot cover, a title decode, the act card or hung chapter
-  card, Pod''s chirp and the menu cursor''s tick. The cues added for these moments are wake, which falls back to a reveal,
-  string to a tap, land to a drop, bow to back, save to a success, showPointer to the pointer and showInterrupt to an
-  interruption. wake plays when the cover reveals, string when strings go taut or the name sign or Show Me''s string
-  sounds, land when a unit or prop is set down, bow when a unit bows, save when the Project is stamped made, showPointer
-  while Pod demonstrates and showInterrupt when that demonstration hands control back. A moment without a sound of its
-  own in a kit plays the sound of a fixed related moment, never silence by accident and never an unrelated sound; pointer
-  hover alone is silent outside NieR Mode. Each of the five families has a cue kit shared by its Light/Dark variants
-  (Q22). The NieR kit uses original Puppet Master sounds in the spirit of the game’s menus while family nier is selected/previewed
-  and its Menu sounds part is installed; otherwise the existing cue fallback remains, without changing family; turning
-  NieR Mode on or off and the reboot cover use the NieR kit whenever Menu sounds is installed, even mid-change. Pod''s
-  chirp plays only while Pod companion or Pod voice is installed and a Pod is on screen to turn toward what it reports;
-  it is the NieR kit''s chirp with Menu sounds installed and the painted kit''s tap otherwise. Frequent cues (a tap,
-  a choice, next, back, the switches, a step, typing, moves, callouts, steps done, and in the NieR kit Pod, decode, quest
-  and the cursor tick) draw from pools of three to five takes in a shuffle that never repeats the last take; every cue
-  follows the journey''s pitch (a chord per chapter, forward steps climbing with progress, back descending). The legacy
-  Guided Tour cue motifs remain scoped to the unchanged Tour (O11). Pip onboarding instead uses the six approved recipe
-  roots/offsets below (O3/O4); the former Friendly G A B D and Glass C G D A table is retired for onboarding, never a
-  re-key target. A chapter already stung in the current run does not sting again, so moving Back and then forward plays
-  the plain forward cue. A take never changes a cue''s meaning, loudness tier or timing. Cues requested in one task or
-  within 70 ms merge by importance: only the most important plays (a commit, then a celebration, then the finish, then
-  NieR Mode turning on or off and wake, then the reboot, then an outcome such as a success and then save, then a chapter
-  sting, then screen changes, moves and choices, then taps, with title decode, typing and hover last), and a lesser cue
-  already sounding gives way to a more important one arriving inside the window. Each moment has one signature cue: no
-  two cues of priority 75 or higher play within 1000 ms, except the designed layers. Those layers are the texture ticks
-  (a title decode''s chatter, typing, moves and the cursor''s hover) and the stage''s foley (a string, a landing and
-  a bow) under anything, the celebration''s sparkles over a commit or the finish, and Pod''s chirp just after a callout,
-  a quest card, a chapter or a step. Before a resolution, Ready''s chord and the tour''s finish, the other cues rest
-  for 150 ms. Very frequent cues keep a minimum gap between two of the same, and a burst of six sounds within half a
-  second keeps only the important ones. These limits are the onboarding and Guided Tour category''s; the chat''s cues
-  keep ACD-475''s. Every onboarding, Tour and NieR sound, the NieR parts'' menu sounds included, plays through the Notifications
-  & Sounds owner''s one player with its one switch, volume and gesture gate: audio starts only after a user gesture,
-  each cue accompanies a visible change and never carries information alone, and Reduced Motion does not mute. With no
-  Project the onboarding sound control starts on, as general.interaction.sound-effects''s factory default (DL-107), as
-  a session-only preview that writes nothing. The Settings sound library lists every take of every onboarding and Tour
-  cue of every kit, the NieR kit included, as its own built-in entry in styles of their own beside the notification sounds
-  (Setup & tour, one per look, and NieR), the main take of each moment first and the other takes behind a Show N more
-  takes control; each is previewed after an explicit gesture under F3-405''s preview rules. Setup & tour shows one look''s
-  takes at a time, chosen by a Which look switch; that switch (ui.settings.sound_library.look.select) and Show N more
-  takes (ui.settings.sound_library.takes.toggle) are typed local presentation actions that write nothing, and previewing
-  an entry dispatches the existing cmd.sound.preview (DL-153). In the concept that library holds 354 entries (Basic 69
-  takes, Friendly, Glass and Retro 66 each, and the NieR kit 87), generated demonstration tones labelled as such and
-  previewed through the onboarding''s own player. This pass changes the four family kits'' sounds; the five families''
-  pictures change only at their own hero moments (F3-600, DL-153), which play those kits'' existing cues and add no take.
-  Production built-in cues carry source, licence, version, duration and hash metadata, and no game audio is used. Amended
-  2026-10-29 (O3–O6, S3/S4; PM7): Onboarding now has six live-synthesized kits with distinct Retro Dark/Light, voice
-  and eight-bar music as Pip parts through the existing player/master sound, with recipe metadata in the existing library/tools.
-  The earlier 354 cue count is a historical cue-only snapshot, not a total that excludes new recipes. Approved tunes
-  are not re-keyed. Reduced Motion never mutes; look-tile hover is silent. No hums/drones/beating/gated buzz/moan/deep
-  thump. Master sound defaults on; first input gates audio. Preserve library preview and licence/source/hash rules for
-  shipped assets. O3/O4 normative Pip setup recipes (2026-10-29), from Concepts/onboarding/opus-5.5-pip/sound.js: Friendly
-  MIDI root 72 with offsets [12,14,16,19] (C D E G); Glass root 74, [0,7,14,21] (D A E B); Basic root 72, [4,7,11,14]
-  (E G B D); Retro Dark root 72, [0,4,7,12] (C E G C); Retro Light root 79, [0,2,4,7] (G A B D); NieR root 69 minor,
-  [12,15,19,22] (A C E G). Preserve approved pitch/chapter transposition and synthesis recipes with source/licence/version
-  metadata through the one player; no re-key to the old canon. Six setup kits coexist with the unchanged Tour’s existing
-  cue mappings, not another player, switch or local registry. O6, Jared 2026-10-30: look-tile hover has no sound or theme
-  change in any look, NieR included. Only click/keyboard activation selects the look; this does not silence deliberate
-  Ask Pip or other owner-routed cues. O3/O4/O5/O8/O9/SND1 B, PM7 Step4 final-source alignment, 2026-10-30 (integration
-  e9b15abc64): the existing sound_render.mjs renders Pip’s six kits with --pip-only into sound.json pip records and pip/<kit>/<key>.wav;
-  sound_catalog.py --pip measures/levels them and --write updates the shared TRIM/MAKEUP. sound_board.py --pip builds
-  the boards/spectrograms; --pip-page builds the listening page. The separate pip_sound_board.py, pip_sound_levels.mjs
-  and pip_sound_texture.mjs tools are retired in favor of these shared tools. This is one recipe/catalog/player path,
-  not a second sound registry. Land on the tools’ measured numbers as Jared decided SND1 B; product listening remains
-  his later check. Block cues occur once per touchdown, rise with stack position and flourish on the last, through the
-  same sound/mute/gesture gates; hover over a look tile is silent in every look, including NieR. Amended Q22, Jared 2026-10-30
-  (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust
-  controls. Q22, Jared 2026-10-30 (DL-257): family nier replaces the independent overlay model; retained sound parts
-  and the shared player remain. DL-259, Jared 2026-10-31: Q1 B, Jared 2026-10-31: the shared Pip voice, say and vocals
-  everywhere Pip speaks, sends 0.35 after trim and pan into its look’s room; Glass uses 0.30 and NieR 0.16. Each look
-  uses its one per-look kit room, registered before the first shared voice in every host, with no stacked rooms. These
-  restore the old voice’s own sends. Loudness remains within approximately 0.4 dB. The existing preference, gesture and
-  sound owner still gates playback.'
+canonical_text: |-
+  Product Onboarding and the Guided Tour play sound cues for their own moments, and those cues form one onboarding and Guided Tour cue category in the Notifications & Sounds routing matrix (F3-405), beside the chat cue category (F3-564): mapped through general.interaction.sound-mapping, switched by general.interaction.sound-effects (on by default, DL-107) and silenced by the onboarding and Tour sound controls, which toggle that same key (F3-520, F3-521). Its moments, as the concept plays them, are: in setup, the window opening, moving forward or back, entering a new chapter, choosing a card or tile, a tap, a switch turned on or off, a sheet or panel opening or closing, a reveal, typing, a phase of owner work, something found, a warning, a failure, a copy, moving through folders, the Project made, a helper's cheer, the celebration, and the finish or a close; in the Tour, its opening, a callout arriving, next, back and skip, a step done, Show Me's pointer setting off, picking up, dropping, pressing and arriving, typing, moving through parts, a phase, a missing target, an interruption, pause and resume, a choice, and the finish or a close; NieR Mode turned on or off; and, while NieR Mode is painted, the reboot cover, a title decode, the act card or hung chapter card, Pod's chirp and the menu cursor's tick. The cues added for these moments are wake, which falls back to a reveal, string to a tap, land to a drop, bow to back, save to a success, showPointer to the pointer and showInterrupt to an interruption. wake plays when the cover reveals, string when strings go taut or the name sign or Show Me's string sounds, land when a unit or prop is set down, bow when a unit bows, save when the Project is stamped made, showPointer while Pod demonstrates and showInterrupt when that demonstration hands control back. A moment without a sound of its own in a kit plays the sound of a fixed related moment, never silence by accident and never an unrelated sound; pointer hover alone is silent outside NieR Mode. Each of the five families has a cue kit shared by its Light/Dark variants (Q22). The NieR kit uses original Puppet Master sounds in the spirit of the game’s menus while family nier is selected/previewed and its Menu sounds part is installed; otherwise the existing cue fallback remains, without changing family; turning NieR Mode on or off and the reboot cover use the NieR kit whenever Menu sounds is installed, even mid-change. Pod's chirp plays only while Pod companion or Pod voice is installed and a Pod is on screen to turn toward what it reports; it is the NieR kit's chirp with Menu sounds installed and the painted kit's tap otherwise. Frequent cues (a tap, a choice, next, back, the switches, a step, typing, moves, callouts, steps done, and in the NieR kit Pod, decode, quest and the cursor tick) draw from pools of three to five takes in a shuffle that never repeats the last take; every cue follows the journey's pitch (a chord per chapter, forward steps climbing with progress, back descending). The legacy Guided Tour cue motifs remain scoped to the unchanged Tour (O11). Pip onboarding instead uses the six approved recipe roots/offsets below (O3/O4); the former Friendly G A B D and Glass C G D A table is retired for onboarding, never a re-key target. A chapter already stung in the current run does not sting again, so moving Back and then forward plays the plain forward cue. A take never changes a cue's meaning, loudness tier or timing. Cues requested in one task or within 70 ms merge by importance: only the most important plays (a commit, then a celebration, then the finish, then NieR Mode turning on or off and wake, then the reboot, then an outcome such as a success and then save, then a chapter sting, then screen changes, moves and choices, then taps, with title decode, typing and hover last), and a lesser cue already sounding gives way to a more important one arriving inside the window. Each moment has one signature cue: no two cues of priority 75 or higher play within 1000 ms, except the designed layers. Those layers are the texture ticks (a title decode's chatter, typing, moves and the cursor's hover) and the stage's foley (a string, a landing and a bow) under anything, the celebration's sparkles over a commit or the finish, and Pod's chirp just after a callout, a quest card, a chapter or a step. Before a resolution, Ready's chord and the tour's finish, the other cues rest for 150 ms. Very frequent cues keep a minimum gap between two of the same, and a burst of six sounds within half a second keeps only the important ones. These limits are the onboarding and Guided Tour category's; the chat's cues keep ACD-475's. Every onboarding, Tour and NieR sound, the NieR parts' menu sounds included, plays through the Notifications & Sounds owner's one player with its one switch, volume and gesture gate: audio starts only after a user gesture, each cue accompanies a visible change and never carries information alone, and Reduced Motion does not mute. Without a Project the onboarding sound control resolves general.interaction.sound-effects from admitted app levels; On remains the bundled default. Only pre-claim/unavailable-writer preview writes nothing. The Settings sound library lists every take of every onboarding and Tour cue of every kit, the NieR kit included, as its own built-in entry in styles of their own beside the notification sounds (Setup & tour, one per look, and NieR), the main take of each moment first and the other takes behind a Show N more takes control; each is previewed after an explicit gesture under F3-405's preview rules. Setup & tour shows one look's takes at a time, chosen by a Which look switch; that switch (ui.settings.sound_library.look.select) and Show N more takes (ui.settings.sound_library.takes.toggle) are typed local presentation actions that write nothing, and previewing an entry dispatches the existing cmd.sound.preview (DL-153). In the concept that library holds 354 entries (Basic 69 takes, Friendly, Glass and Retro 66 each, and the NieR kit 87), generated demonstration tones labelled as such and previewed through the onboarding's own player. This pass changes the four family kits' sounds; the five families' pictures change only at their own hero moments (F3-600, DL-153), which play those kits' existing cues and add no take. Production built-in cues carry source, licence, version, duration and hash metadata, and no game audio is used. Amended 2026-10-29 (O3–O6, S3/S4; PM7): Onboarding now has six live-synthesized kits with distinct Retro Dark/Light, voice and eight-bar music as Pip parts through the existing player/master sound, with recipe metadata in the existing library/tools. The earlier 354 cue count is a historical cue-only snapshot, not a total that excludes new recipes. Approved tunes are not re-keyed. Reduced Motion never mutes; look-tile hover is silent. No hums/drones/beating/gated buzz/moan/deep thump. Master sound defaults on; first input gates audio. Preserve library preview and licence/source/hash rules for shipped assets. O3/O4 normative Pip setup recipes (2026-10-29), from Concepts/onboarding/opus-5.5-pip/sound.js: Friendly MIDI root 72 with offsets [12,14,16,19] (C D E G); Glass root 74, [0,7,14,21] (D A E B); Basic root 72, [4,7,11,14] (E G B D); Retro Dark root 72, [0,4,7,12] (C E G C); Retro Light root 79, [0,2,4,7] (G A B D); NieR root 69 minor, [12,15,19,22] (A C E G). Preserve approved pitch/chapter transposition and synthesis recipes with source/licence/version metadata through the one player; no re-key to the old canon. Six setup kits coexist with the unchanged Tour’s existing cue mappings, not another player, switch or local registry. O6, Jared 2026-10-30: look-tile hover has no sound or theme change in any look, NieR included. Only click/keyboard activation selects the look; this does not silence deliberate Ask Pip or other owner-routed cues. O3/O4/O5/O8/O9/SND1 B, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): the existing sound_render.mjs renders Pip’s six kits with --pip-only into sound.json pip records and pip/<kit>/<key>.wav; sound_catalog.py --pip measures/levels them and --write updates the shared TRIM/MAKEUP. sound_board.py --pip builds the boards/spectrograms; --pip-page builds the listening page. The separate pip_sound_board.py, pip_sound_levels.mjs and pip_sound_texture.mjs tools are retired in favor of these shared tools. This is one recipe/catalog/player path, not a second sound registry. Land on the tools’ measured numbers as Jared decided SND1 B; product listening remains his later check. Block cues occur once per touchdown, rise with stack position and flourish on the last, through the same sound/mute/gesture gates; hover over a look tile is silent in every look, including NieR. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. Q22, Jared 2026-10-30 (DL-257): family nier replaces the independent overlay model; retained sound parts and the shared player remain. DL-259, Jared 2026-10-31: Q1 B, Jared 2026-10-31: the shared Pip voice, say and vocals everywhere Pip speaks, sends 0.35 after trim and pan into its look’s room; Glass uses 0.30 and NieR 0.16. Each look uses its one per-look kit room, registered before the first shared voice in every host, with no stacked rooms. These restore the old voice’s own sends. Loudness remains within approximately 0.4 dB. The existing preference, gesture and sound owner still gates playback.
 gui_related: true
 gui_classification_reason: Places onboarding and Guided Tour sound cues, their kits and the NieR kit in the
   sound settings model.
@@ -382,7 +217,9 @@ source_lineage:
 - Plans/Decision_Log.md#DL-152
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-REQUEST-20261007.md, SHA-256 416638453431ef6bac2b4a8066560214c4fa3bcd8e0663cf778fba89bc63e652
 - Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/polish-nier-onboarding-sounds)
-- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F09,C-F11,E-F07
 preserved_exact_tokens:
 - general.interaction.sound-effects
 - general.interaction.sound-mapping

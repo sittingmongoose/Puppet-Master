@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6117-L6194
+Source lines: L6247-L6331
 
-Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f`
+Source SHA256: `e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a`
 
 ---
 
@@ -44,12 +44,16 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Original Standard certification comes from the actual owning Workflow controller or assigned
-  canonical artifact owner and complete independently resolved source, target authority, workgraph,
-  validator, WorkNode and acceptance evidence, with authentically empty current child-Goal
-  requirements under GRS-052/GRS-075 and unchanged historical receipt grammar. The Original Standard certification receipt
-  contract preserves its immutable decision and truthful labels through SP-289 custody, keeps
-  existing generic receipts and exception semantics separate, and grants no Goal/body/event action.
+  Original Standard certification comes from the actual owning Workflow controller or assigned canonical
+  artifact owner and complete independently resolved source, target authority, workgraph, validator,
+  WorkNode and acceptance evidence, with authentically empty current child-Goal requirements under
+  GRS-052/GRS-075 and unchanged historical receipt grammar. The Original Standard certification receipt
+  contract preserves its immutable decision and truthful labels through SP-289 custody, keeps existing
+  generic receipts and exception semantics separate, and grants no Goal/body/event action. This exact
+  historical/Project Workflow source edition remains Project-bound and unchanged in its schema, hashes and
+  original predicates. Ordinary application Goal continuation is GRS-086 and cannot synthesize this
+  Workflow/WorkGraph/WorkNode/certification evidence. An app-needed source/event requires its own complete
+  admitted sibling rather than casting a null Project into this contract; native proof remains separate.
 gui_related: false
 gui_classification_reason: Defines internal original certification metadata, custody and owner interfaces; no GUI presentation is specified.
 depends_on: [GRS-042, GRS-064, CV-288, CV-340, DL-045]
@@ -77,7 +81,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - reports/event-authority-20260911/step-08-certified-custody-checks.json
+  - "reports/event-authority-20260911/step-08-certified-custody-checks.json"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
   - Do not infer certification from an accepted marker, worker success, body receipt, event or projection.
   - Do not claim native installation, event/body publication, exception authority or complete event depth from this prerequisite.

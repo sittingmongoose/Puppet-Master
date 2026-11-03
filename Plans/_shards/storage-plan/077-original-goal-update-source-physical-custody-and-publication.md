@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24574-L26663
+Source lines: L24502-L26594
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -145,12 +145,8 @@ plan_unit_id: SP-299
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: The existing Goal objective update joins independently accepted original source, original
-  shared body reservation/commit, immutable update progress, genuine shared event/first-receipt custody
-  and original SIR terminal members through their exact participating owners; four physical families preserve
-  distinct content and audit lifetimes. Named current Activity/body/history, selected-event observation,
-  audit/input and immutable replay consumers use their own complete original sources and final disclosure
-  boundaries without a new event-derived Goal projector or checkpoint.
+canonical_text: |-
+  The existing Goal objective update joins independently accepted original source, original shared body reservation/commit, immutable update progress, genuine shared event/first-receipt custody and original SIR terminal members through their exact participating owners; four physical families preserve distinct content and audit lifetimes. Named current Activity/body/history, selected-event observation, audit/input and immutable replay consumers use their own complete original sources and final disclosure boundaries without a new event-derived Goal projector or checkpoint. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app Goal body/start/update/cancel/association operations require genuine original app source and retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation identity; N25 uses linked new birth.
 gui_related: false
 gui_classification_reason: Defines existing-command source, event, storage and result publication without
   a new visual surface.
@@ -201,6 +197,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
 - Plans/Goal_Runtime_System.md#GRS-064
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
 - Do not infer accepted source or native atomicity from a schema, copied owner map, result-shaped value
   or fixture.
@@ -630,11 +628,8 @@ plan_unit_id: SP-304
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Own the seven new canonical cancellation/Stop/audit families and the current version of the
-  existing Goal body control. Original source, Stop, receipt, independently owned disposition, append, control
-  and SIR terminal stages preserve exact original identities, immutable progress and whole preimages. Current
-  passive event inspection has no durable effect or checkpoint; current body/Activity is read from canonical
-  control.
+canonical_text: |-
+  Own the seven new canonical cancellation/Stop/audit families and the current version of the existing Goal body control. Original source, Stop, receipt, independently owned disposition, append, control and SIR terminal stages preserve exact original identities, immutable progress and whole preimages. Current passive event inspection has no durable effect or checkpoint; current body/Activity is read from canonical control. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app Goal body/start/update/cancel/association operations require genuine original app source and retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation identity; N25 uses linked new birth.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -676,6 +671,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-039
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
 - No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
 - No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
@@ -808,11 +805,8 @@ plan_unit_id: SP-305
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Own nine exact execution writer-domain/binding/origin/selection/assignment families, complete
-  arbitrary-precision local bytes and current versus retained source reads. Genuine acknowledged original SIR
-  source precedes the original append owner's exclusive assignment reservation. Full original finite EventRecord/SIR/MessagePack
-  domain proof precedes Stop, while consumed reservations yield to actual original append evidence for later
-  control and terminal publication.
+canonical_text: |-
+  Own nine exact execution writer-domain/binding/origin/selection/assignment families, complete arbitrary-precision local bytes and current versus retained source reads. Genuine acknowledged original SIR source precedes the original append owner's exclusive assignment reservation. Full original finite EventRecord/SIR/MessagePack domain proof precedes Stop, while consumed reservations yield to actual original append evidence for later control and terminal publication. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app Goal body/start/update/cancel/association operations require genuine original app source and retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation identity; N25 uses linked new birth.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -853,6 +847,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-039
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
 - No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
 - No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
@@ -1031,11 +1027,8 @@ plan_unit_id: SP-306
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Original Plan cancellation physical custody and existing class assignments. Exactly ten
-  canonical non-rebuildable original families use complete source/wrapper schemas, exact keys, whole-value
-  hashes and mandatory coherent backup. DL-138 gives the existing execution_schedule family a versioned
-  pm.execution.schedule.v2 logical value with persisted grace_seconds under its unchanged physical key; v1
-  reads use an explicit migration and preserve original audit lineage.
+canonical_text: |-
+  Original Plan cancellation physical custody and existing class assignments. Exactly ten canonical non-rebuildable original families use complete source/wrapper schemas, exact keys, whole-value hashes and mandatory coherent backup. DL-138 gives the existing execution_schedule family a versioned pm.execution.schedule.v2 logical value with persisted grace_seconds under its unchanged physical key; v1 reads use an explicit migration and preserve original audit lineage. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-352 adopts app Assistant Plan/run/cancel/schedule/consent/occurrence wrappers as a coherent independent source graph; original PlanRun’s logical field count and run_completion_anchor semantics remain. A moved transcript is not a new approval, accepted source or completion.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -1072,7 +1065,10 @@ source_lineage:
 - Plans/Decision_Log.md#DL-039
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
-- "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 7"
+- Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md
+  sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 7
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens: [pm.execution.schedule.v2, grace_seconds, execution_schedule.v1]
 negative_constraints:
 - No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
@@ -1144,9 +1140,8 @@ plan_unit_id: SP-307
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Original run completion anchor and runtime-only retirement. run_completion_anchor is immutable
-  physical-wrapper metadata created only by actual first completed/cancelled native Run settlement; the
-  15 logical PlanRun fields remain unchanged.
+canonical_text: |-
+  Original run completion anchor and runtime-only retirement. run_completion_anchor is immutable physical-wrapper metadata created only by actual first completed/cancelled native Run settlement; the 15 logical PlanRun fields remain unchanged. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-352 adopts app Assistant Plan/run/cancel/schedule/consent/occurrence wrappers as a coherent independent source graph; original PlanRun’s logical field count and run_completion_anchor semantics remain. A moved transcript is not a new approval, accepted source or completion.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -1184,6 +1179,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-039
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
 - No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
 - No native field redaction, numeric coercion, new retention policy, full runtime archive or automatic
@@ -1743,7 +1740,8 @@ plan_unit_id: SP-311
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Complete original started-v3 source and bounded consumer ownership; native execution remains unproved.
+canonical_text: |-
+  Complete original started-v3 source and bounded consumer ownership; native execution remains unproved. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. The Project started/cancelled-v3 source resources remain strict. Ordinary app GoalRun start/cancel uses the separately frozen application sources and reader/checkpoint graph; no Project Workflow/native-v7/certified source enrollment or fabricated certification follows.
 gui_related: false
 gui_classification_reason: Defines original runtime source, custody, replay and retention contracts without a visual surface.
 split_recommended: false
@@ -1780,6 +1778,8 @@ source_lineage:
 - Plans/Executor_Protocol.md#EP-118
 - Plans/storage-plan.md#SP-309
 - Plans/Backup_Restore_System.md#BRS-025
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids: []
 ```
 
@@ -1905,7 +1905,8 @@ plan_unit_id: SP-312
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Complete positive original cancelled-v3 source consumer and bounded versioned projector ownership; native execution remains unproved.
+canonical_text: |-
+  Complete positive original cancelled-v3 source consumer and bounded versioned projector ownership; native execution remains unproved. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. The Project started/cancelled-v3 source resources remain strict. Ordinary app GoalRun start/cancel uses the separately frozen application sources and reader/checkpoint graph; no Project Workflow/native-v7/certified source enrollment or fabricated certification follows.
 gui_related: false
 gui_classification_reason: Original runtime custody and derived source currentness contract without visual presentation.
 split_recommended: false
@@ -1946,6 +1947,8 @@ source_lineage:
 - Plans/Executor_Protocol.md#EP-118
 - Plans/storage-plan.md#SP-309
 - Plans/Backup_Restore_System.md#BRS-025
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids: []
 ```
 

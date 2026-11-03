@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23591-L23956
+Source lines: L23540-L23873
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -165,46 +165,8 @@ plan_unit_id: CV-361
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  workspace.layout_changed keeps its event type and family and moves to payload 2.0.0
-  (Plans/event_payloads/workspace_layout_changed_v2.schema.json), which Event Authority admitted on 2026-10-10 (DL-188, Jared's D42):
-  Plans/event_family_registry.json registers the family at revision 2.0.0, registry revision 2026-10-09.1, 43 families.
-  Every committed structural change of the v2 Home
-  layout appends exactly one after the record is written and read back (SP-330), with a change discriminator
-  (tab_opened, tab_closed, tab_moved, tab_kept, tab_pinned, tab_unpinned, tab_renamed, panel_split, panel_moved,
-  panel_resized, panel_collapsed, panel_expanded, panel_closed, panel_locked, panel_unlocked, named_layout_applied,
-  named_layout_saved, layout_reset, chat_column_changed, migrated_from_v1) bound to the commands that may produce
-  it, the tab, panel and split ids it touched, prior_layout_revision and new_layout_revision, the actor (user,
-  agent:<name> or system), the command id as its caller named it (null only for the conversion), commit_origin,
-  result and receipt references and persisted=true. chat_column_changed is bound only to a chat width drag
-  (cmd.workspace_layout.resize_surface with the chat); the chat's show and hide (cmd.panel.switch, the column's
-  shown) are view state. A reveal that expands its tab's collapsed panel is one panel_expanded, and an open with
-  mode keep of a preview tab one tab_kept, each under the open's command id; a preview open that replaces a
-  panel's preview tab is one tab_opened naming both tabs, the replaced preview not stacked. A reveal-only open, view state, menus, hover, drags, an unchanged release and a failed write append
-  nothing. 1.1.0 events stay readable through the payload's v1
-  compatibility reader; a stored event's own payload_schema_id dispatches its validation, so a 1.1.0 event is read
-  by the 1.1.0 schema and every new append carries 2.0.0. terminal.workgroup_moved is withdrawn under SMPFS-170's
-  rule: no producer, recorded events readable at 1.0.0, a terminal tab's move is a tab_moved that keeps its
-  session, and a move unresolved at upgrade is settled under SMPFS-170 and SP-319 before SP-330's conversion reads
-  the v1 terminal records, never reminted. panel.undocked and panel.redocked
-  stay for the chat's pop-out only (UCC-203) and are its only events; the pop-out is never saved, so the record has
-  no popped_out (DL-187, D32). No new event family.
-  Amended 2026-10-10 (DL-186, DL-188): command_id names every admitted route of UCC-200's table of routes that
-  open or reveal a tab (cmd.chat.plan.open_version and cmd.chat.plan.open_details included), cmd.chat.attachment.open
-  and the alias cmd.editor.close_tab, and less that alias equals the production wiring rows that declare this event.
-  The five reveal-only routes (cmd.terminal.show, cmd.terminal.focus, cmd.terminal.reveal,
-  cmd.chat.focus_thread_context_details, cmd.run_debug.terminal.reveal) are accepted for tab_kept and panel_expanded,
-  never tab_opened; cmd.browser.focus_browser_tab stays layout-only, and a collapsed host panel expands through
-  cmd.workspace_layout.set_collapsed. Renaming a dashboard is one tab_renamed and deleting one a tab_closed; widget commands, Start from and
-  Reset, a board's view, presets, a board's stored contents and the Debug Console's session sub-tab append nothing.
-  Amended 2026-10-17 (DL-228): the change discriminator gains layout_restored, bound only to
-  cmd.workspace_layout.restore (UCC-200): the Guided Tour's Back, Skip or Finish putting a captured layout
-  back in one command, its dashboard boards included; the command_id list gains that command, and its
-  production entry tour.layout_restore declares this event. A project switch loads that project's own record
-  and appends nothing.
-  Amended 2026-10-17 (DL-230, Jared): saved named layouts belong to the person in home_named_layouts:v1
-  (SP-330); cmd.workspace_layout.save_named writes the layout there and, as before, advances the v2 record's
-  revision by one with its receipt and its one named_layout_saved, appended after both records are read back.
+canonical_text: |-
+  workspace.layout_changed keeps its event type and family and moves to payload 2.0.0 (Plans/event_payloads/workspace_layout_changed_v2.schema.json), which Event Authority admitted on 2026-10-10 (DL-188, Jared's D42): Plans/event_family_registry.json registers the family at revision 2.0.0, registry revision 2026-10-09.1, 43 families. Every committed structural change of the v2 Home layout appends exactly one after the record is written and read back (SP-330), with a change discriminator (tab_opened, tab_closed, tab_moved, tab_kept, tab_pinned, tab_unpinned, tab_renamed, panel_split, panel_moved, panel_resized, panel_collapsed, panel_expanded, panel_closed, panel_locked, panel_unlocked, named_layout_applied, named_layout_saved, layout_reset, chat_column_changed, migrated_from_v1) bound to the commands that may produce it, the tab, panel and split ids it touched, prior_layout_revision and new_layout_revision, the actor (user, agent:<name> or system), the command id as its caller named it (null only for the conversion), commit_origin, result and receipt references and persisted=true. chat_column_changed is bound only to a chat width drag (cmd.workspace_layout.resize_surface with the chat); the chat's show and hide (cmd.panel.switch, the column's shown) are view state. A reveal that expands its tab's collapsed panel is one panel_expanded, and an open with mode keep of a preview tab one tab_kept, each under the open's command id; a preview open that replaces a panel's preview tab is one tab_opened naming both tabs, the replaced preview not stacked. A reveal-only open, view state, menus, hover, drags, an unchanged release and a failed write append nothing. 1.1.0 events stay readable through the payload's v1 compatibility reader; a stored event's own payload_schema_id dispatches its validation, so a 1.1.0 event is read by the 1.1.0 schema and every new append carries 2.0.0. terminal.workgroup_moved is withdrawn under SMPFS-170's rule: no producer, recorded events readable at 1.0.0, a terminal tab's move is a tab_moved that keeps its session, and a move unresolved at upgrade is settled under SMPFS-170 and SP-319 before SP-330's conversion reads the v1 terminal records, never reminted. panel.undocked and panel.redocked stay for the chat's pop-out only (UCC-203) and are its only events; the pop-out is never saved, so the record has no popped_out (DL-187, D32). No new event family. Amended 2026-10-10 (DL-186, DL-188): command_id names every admitted route of UCC-200's table of routes that open or reveal a tab (cmd.chat.plan.open_version and cmd.chat.plan.open_details included), cmd.chat.attachment.open and the alias cmd.editor.close_tab, and less that alias equals the production wiring rows that declare this event. The five reveal-only routes (cmd.terminal.show, cmd.terminal.focus, cmd.terminal.reveal, cmd.chat.focus_thread_context_details, cmd.run_debug.terminal.reveal) are accepted for tab_kept and panel_expanded, never tab_opened; cmd.browser.focus_browser_tab stays layout-only, and a collapsed host panel expands through cmd.workspace_layout.set_collapsed. Renaming a dashboard is one tab_renamed and deleting one a tab_closed; widget commands, Start from and Reset, a board's view, presets, a board's stored contents and the Debug Console's session sub-tab append nothing. Amended 2026-10-17 (DL-228): the change discriminator gains layout_restored, bound only to cmd.workspace_layout.restore (UCC-200): the Guided Tour's Back, Skip or Finish putting a captured layout back in one command, its dashboard boards included; the command_id list gains that command, and its production entry tour.layout_restore declares this event. A project switch loads that project's own record and appends nothing. Amended 2026-10-17 (DL-230, Jared): saved named layouts belong to the person in home_named_layouts:v1 (SP-330); cmd.workspace_layout.save_named writes the layout there and, as before, advances the v2 record's revision by one with its receipt and its one named_layout_saved, appended after both records are read back. The original Project 2.0.0 payload/record/transaction selectors remain exact. App Home layout uses CV-366/SP-349’s separate application edition with identical structural invariants and event-versus-view-state rules. Person-level saved layouts preserve exact saved scope for board application; app null never matches every Project.
 gui_related: true
 gui_classification_reason: The event is how every visible layout change is recorded, replayed and audited.
 split_recommended: false
@@ -242,15 +204,21 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-180"
-  - "Plans/Decision_Log.md#DL-181"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D2, D3, D11)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (section 8, one event per committed change; concept lineage only)"
-  - "Plans/Contracts_V0.md#CV-323"
-  - "Plans/Decision_Log.md#DL-186"
-  - "Plans/Decision_Log.md#DL-187"
-  - "Plans/Decision_Log.md#DL-188"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D35, D42)"
+- Plans/Decision_Log.md#DL-180
+- Plans/Decision_Log.md#DL-181
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D1, D2, D3, D11)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (section 8, one event per committed change;
+  concept lineage only)
+- Plans/Contracts_V0.md#CV-323
+- Plans/Decision_Log.md#DL-186
+- Plans/Decision_Log.md#DL-187
+- Plans/Decision_Log.md#DL-188
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D35, D42)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F11
 preserved_exact_tokens:
   - "workspace.layout_changed"
   - "2026-10-09.1"

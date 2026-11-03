@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3642-L4925
+Source lines: L3584-L4742
 
-Source SHA256: `2ee9163141078a9ed56d59700128756b51cb1c18109a0f7fe60e02b9748b8245`
+Source SHA256: `f483b45c08ded2f8811a35ed53cd4b052d3b603b856084efdaba166705d30608`
 
 ---
 
@@ -278,47 +278,8 @@ plan_unit_id: DR-068
 unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  The terminal has one appearance model (DL-183, D15). Four layers resolve field by field, an unset
-  field falling through: the look's defaults ("Follow look": the current look's scheme, face and
-  effects), then the app default (Settings > Terminal), then the project default, then the per-tab
-  override, each later layer winning (F3-642). The Customize screen (F3-650) in the terminal's More
-  menu, Settings > Terminal and the per-look defaults read and write this one model: the Customize
-  screen writes This terminal (the tab's override) or All terminals (the project default, written
-  through the same Settings transaction Settings uses over SSYS-051's rows, F3-642), no surface
-  writes an app-wide value until q-035 admits an app-wide store (SSYS-002), and the look layer reads
-  the current look from its one store (SSYS-010, DR-056) and keeps no copy. The fields are F3-642's,
-  the storage SP-331's (the app default in Settings rows, the project default in the Project's
-  Settings, the override inside the terminal tab's saved state) and the Settings rows SSYS-051's;
-  the existing terminal appearance rows, code.terminal.theme and code.terminal.font-family among
-  them, bind the Project layer under SSYS-002. The app-default layer is reserved
-  compatibility/default lineage, not an admitted writable app store. There is no fifth layer (a
-  shell profile carries no appearance of its own), and no second terminal theme, scheme, font,
-  background or effects store or terminal-local settings key outside the model. Every field applies
-  live, and no terminal appearance setting carries a restart badge. The faces are F3-644's and their
-  files DR-050's one set. The effects (F3-643) are paint on the terminal's own screen inside this
-  model, not motion voices: DR-043's per-family motion voices and its accent rule stand, so the
-  scheme colours the screen and the terminal's chrome takes the theme's token roles. One code
-  colour-scheme catalog and the shared Customize presentation serve the editor and terminal (F3-642,
-  F3-650, F3-651). Each curated scheme carries the terminal palette and editor syntax colours. Each
-  surface has its own scheme choice, defaulting to "Follow look"; neither surface keeps its own
-  scheme list or duplicate Customize implementation. F3-650 alone owns scope entry and preview
-  docking for both screens; F3-438 owns the shared selector layout. F3-651 owns editor field
-  behavior; SSYS-052 and SSYS-051 own their Project rows. Compatibility concept keys never authorize
-  a no-Project write. Each kind’s quick sets resolve from Plans/appearance_quick_sets.json; This and
-  All adapt the same exact patch to their existing writers, never maintain their own patch copies.
-  Separate editor/terminal field identities remain intact. Plans/terminal_background_catalog.json
-  owns design ids/categories/names and compatibility mapping; Customize, Settings and the renderer
-  consume it. F3-650's saved preset library is a reusable set of sparse field values, never a fifth
-  appearance layer; SP-331 owns its computer-local custody and the existing scope writers alone
-  apply it. The extended bezel/background fields use the existing one model and shared
-  reset/quick-set registry.
-  Amended 2026-10-17 (DL-228): each field's choice words and help text have one owner, its inventory row
-  (F3-441), which Settings and the Customize screens both read. The concept's Customize words that differ
-  (Fill, Fit, Tile, Centre for Picture Fit; Still for Off in Background Motion; the materials' "plastic";
-  "Less colour"; "Grain"; "Text drawing") were adopted in F3-441's wording pass (2026-10-17, DL-230, Jared) as
-  those rows' labels and option_labels, and its Bell help's "flash" is stale: Bell is Follow look or Off
-  (DL-213, DL-216).
+canonical_text: |-
+  The terminal has one appearance model (DL-183, D15). The look's defaults (Follow look) feed the one SSYS-059 resolver. Declared terminal/editor fields resolve through Everywhere, Computer where offered, Project when present, then the existing per-tab override; unset values fall through and owner identity remains exact. The Customize screen (F3-650) in the terminal's More menu, Settings > Terminal and the per-look defaults read and write this one model: the Customize screen writes This terminal (the tab's override) or All terminals (an explicit Everywhere write through the same Settings transaction over SSYS-051's rows, F3-642), with offered Computer/Project own values edited through their named target/origin, and the look layer reads the current look from its one store (SSYS-010, DR-056) and keeps no copy. The fields are F3-642's, the storage SP-331's (Everywhere/Computer records under their actual writer, Project own values in its Vault, and the override inside the terminal tab's saved state) and the Settings rows SSYS-051's; the existing terminal appearance rows, code.terminal.theme and code.terminal.font-family among them, declare their levels under SSYS-059. q-035 is resolved by DL-281; the app-default level is real Everywhere Settings. A shell profile carries no appearance layer of its own, and no second terminal theme, scheme, font, background or effects store or terminal-local settings key outside the model. Every field applies live, and no terminal appearance setting carries a restart badge. The faces are F3-644's and their files DR-050's one set. The effects (F3-643) are paint on the terminal's own screen inside this model, not motion voices: DR-043's per-family motion voices and its accent rule stand, so the scheme colours the screen and the terminal's chrome takes the theme's token roles. One code colour-scheme catalog and the shared Customize presentation serve the editor and terminal (F3-642, F3-650, F3-651). Each curated scheme carries the terminal palette and editor syntax colours. Each surface has its own scheme choice, defaulting to "Follow look"; neither surface keeps its own scheme list or duplicate Customize implementation. F3-650 alone owns scope entry and preview docking for both screens; F3-438 owns the shared selector layout. F3-651 owns editor field behavior; SSYS-052 and SSYS-051 own their declared-level rows. A No project context omits Project and keeps the actual Computer/tab; concept keys never authorize a write. Each kind’s quick sets resolve from Plans/appearance_quick_sets.json; This and All adapt the same exact patch to their existing writers, never maintain their own patch copies. Separate editor/terminal field identities remain intact. Plans/terminal_background_catalog.json owns design ids/categories/names and compatibility mapping; Customize, Settings and the renderer consume it. F3-650's saved preset library is a reusable set of sparse field values, never another appearance layer; SP-331 owns its computer-local custody and the existing scope writers alone apply it. The extended bezel/background fields use the existing one model and shared reset/quick-set registry. Amended 2026-10-17 (DL-228): each field's choice words and help text have one owner, its inventory row (F3-441), which Settings and the Customize screens both read. The concept's Customize words that differ (Fill, Fit, Tile, Centre for Picture Fit; Still for Off in Background Motion; the materials' "plastic"; "Less colour"; "Grain"; "Text drawing") were adopted in F3-441's wording pass (2026-10-17, DL-230, Jared) as those rows' labels and option_labels, and its Bell help's "flash" is stale: Bell is Follow look or Off (DL-213, DL-216).
 gui_related: true
 gui_classification_reason: "Fixes one layered appearance model for every terminal."
 split_recommended: false
@@ -377,12 +338,17 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not keep a second terminal theme, scheme, font, background or effects store.
 - Do not mark a terminal appearance setting as needing a restart.
-- Do not let the Customize screen or any other surface write an app-wide terminal appearance value until q-035
-  admits an app-wide store.
+- All terminals explicitly targets Everywhere; reject any write without the exact offered level/key, current preview,
+  writer, permission and owner result.
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
-  - "Amended 2026-10-10 (lead ruling L16): The popover's All terminals writes the project default through the Settings transaction (F3-642, SSYS-051), replacing the app default and the rule that only Settings writes the project default; no surface writes an app-wide value until q-035."
-  - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults.'
+- 'Amended 2026-10-10 (lead ruling L16): The popover''s All terminals writes the project default through the Settings
+  transaction (F3-642, SSYS-051), replacing the app default and the rule that only Settings writes the project default;
+  no surface writes an app-wide value until q-035.'
+- 'Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor
+  and terminal.'
+- 'Superseded in part by DL-281/283 (2026-11-03): the earlier L16 Project-only All terminals/no-app-write wording
+  above is historical lineage; All terminals now explicitly writes Everywhere.'
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
@@ -600,55 +566,21 @@ plan_unit_id: DR-073
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  One wallpaper registry supplies stable ids, family/order, names, dark/light assets, thumbnails and
-  defaults to every wallpaper consumer. Plans/wallpaper_catalog.json is that registry; F3-653 owns
-  presentation, SSYS-054 owns the single Project choice and SP-333 owns storage. No theme, Settings
-  gallery, onboarding or native renderer keeps a competing list or default. Picking through any
-  surface uses the Settings transaction, never a wallpaper-specific settings store or duplicate
-  command. The terminal Lens consumes the same selected print and catalog as Glass; it never derives
-  another wallpaper from computed page styling or stores a second choice. The six NieR prints derive
-  from the original scene drawings, while their native packaged assets are registered here.
-  Amended 2026-10-16 (DL-217, the motion lanes): every consumer of the selected print, the terminal Lens
-  and Glass's optics included, asks the one wallpaper owner for it through a synchronous, cache-only query
-  by print id and mode. The query answers the print's prepared source, not cached yet, or no image, and it
-  reads no page style. A consumer told not cached yet keeps its fallback until the owner announces the
-  print, and a watch on the selected print never forces a style recalculation. In the concept this is
-  PM_WALLPAPERS.sourceUrl(id, mode), returning a URL, undefined or null.
-  Amended 2026-10-16 (DL-217, the Settings and Glass lanes): the owner prepares a print and its frost
-  before the choice is published, and fills the source query's cache first. Preparing nearby and visible choices ahead of a pick runs at idle, one job at a time, pauses for input,
-  Settings navigation and the shared busy signal, and never delays a pick; hover or keyboard focus
-  prepares the intended tile after a short quiet pause, and a press requests it at once, still behind
-  those guards. A cancelled or stale preparation changes nothing on screen and only the newest pick
-  commits; a pick whose preparation fails still commits through the ordinary print and frost fallback, so
-  no pick is lost. Glass alone keeps the decoded prints, the visible gallery choices among them within a
-  bounded budget, and a byte-bounded frost cache; the gallery keeps no image cache of its own.
-  Amended 2026-10-17 (DL-222, DL-223): preparing prints at idle follows ACD-475 and does not restate
-  that rule. The owner prepares a print and its frost before the choice commits. The print may start
-  fading before the frost is ready (F3-653); the setting still writes at the pick. An intent, hover or
-  keyboard focus after a short quiet pause, or a press, never waits behind background preparation of
-  another print. A pick or intent for a print runs whatever preparation is left at once (review r1).
-  This unit still owns the cache-only query and the rule
-  that a failed preparation still commits.
-  Amended 2026-10-17 (DL-228): the requirement is one synchronous, cache-only print query; the concept's
-  page API for it is lineage, not an interface the rebuild keeps. A wallpaper joins the
-  catalog only with a Dark and a Light print, each composed with a quiet middle and its detail toward the
-  edges (opaque looks cover the middle with panels and Glass frosts what sits behind a sheet) and drawn at the
-  contrast its mode's text needs; its thumbnails are made from the same print, and the gallery never decodes a
-  full print. Byte and pixel budgets are the packager's.
+canonical_text: |-
+  One wallpaper registry supplies stable ids, family/order, names, dark/light assets, thumbnails and defaults to every wallpaper consumer. Plans/wallpaper_catalog.json is that registry; F3-653 owns presentation, SSYS-054 owns the single Settings-resolved choice at its declared levels and SP-333 owns storage. No theme, Settings gallery, onboarding or native renderer keeps a competing list or default. Picking through any surface uses the Settings transaction, never a wallpaper-specific settings store or duplicate command. The terminal Lens consumes the same selected print and catalog as Glass; it never derives another wallpaper from computed page styling or stores a second choice. The six NieR prints derive from the original scene drawings, while their native packaged assets are registered here. Amended 2026-10-16 (DL-217, the motion lanes): every consumer of the selected print, the terminal Lens and Glass's optics included, asks the one wallpaper owner for it through a synchronous, cache-only query by print id and mode. The query answers the print's prepared source, not cached yet, or no image, and it reads no page style. A consumer told not cached yet keeps its fallback until the owner announces the print, and a watch on the selected print never forces a style recalculation. In the concept this is PM_WALLPAPERS.sourceUrl(id, mode), returning a URL, undefined or null. Amended 2026-10-16 (DL-217, the Settings and Glass lanes): the owner prepares a print and its frost before the choice is published, and fills the source query's cache first. Preparing nearby and visible choices ahead of a pick runs at idle, one job at a time, pauses for input, Settings navigation and the shared busy signal, and never delays a pick; hover or keyboard focus prepares the intended tile after a short quiet pause, and a press requests it at once, still behind those guards. A cancelled or stale preparation changes nothing on screen and only the newest pick commits; a pick whose preparation fails still commits through the ordinary print and frost fallback, so no pick is lost. Glass alone keeps the decoded prints, the visible gallery choices among them within a bounded budget, and a byte-bounded frost cache; the gallery keeps no image cache of its own. Amended 2026-10-17 (DL-222, DL-223): preparing prints at idle follows ACD-475 and does not restate that rule. The owner prepares a print and its frost before the choice commits. The print may start fading before the frost is ready (F3-653); the setting still writes at the pick. An intent, hover or keyboard focus after a short quiet pause, or a press, never waits behind background preparation of another print. A pick or intent for a print runs whatever preparation is left at once (review r1). This unit still owns the cache-only query and the rule that a failed preparation still commits. Amended 2026-10-17 (DL-228): the requirement is one synchronous, cache-only print query; the concept's page API for it is lineage, not an interface the rebuild keeps. A wallpaper joins the catalog only with a Dark and a Light print, each composed with a quiet middle and its detail toward the edges (opaque looks cover the middle with panels and Glass frosts what sits behind a sheet) and drawn at the contrast its mode's text needs; its thumbnails are made from the same print, and the gallery never decodes a full print. Byte and pixel budgets are the packager's.
 gui_related: true
 gui_classification_reason: One wallpaper catalog and one writer.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Every wallpaper id/default/asset resolves from the registry and every committed choice uses the same Project transaction.
+- Every wallpaper id/default/asset resolves from the registry and every committed choice uses the same exact-level
+  Settings transaction.
 - A consumer references the owner and cannot silently add a private wallpaper or background mode.
-- The selected print reaches every consumer through the owner's one synchronous, cache-only query (its
-  source, not cached yet, or no image); no consumer or wallpaper watch reads page styles to find it.
-- Preparing a print at idle follows ACD-475. An intent never waits behind another print's background
-  preparation, a pick runs the remaining bake at once, and the print may fade before its frost commits
-  (F3-653).
+- The selected print reaches every consumer through the owner's one synchronous, cache-only query (its source, not
+  cached yet, or no image); no consumer or wallpaper watch reads page styles to find it.
+- Preparing a print at idle follows ACD-475. An intent never waits behind another print's background preparation,
+  a pick runs the remaining bake at once, and the print may fade before its frost commits (F3-653).
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -967,38 +899,10 @@ plan_unit_id: DR-078
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: 'D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project
-  badge and composer attention are filtered OperationalAwareness over ObservableWork and registry lineage. No consumer
-  owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate ProcessFacts; host monitor owns
-  server/environment resource samples while Resources is open only. Actions route to one owner command/handler; services
-  are read-only and stop lists are generation-bound. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64):
-  PM7_WORK_UI.list(host, options), agentGroup and agentSummary in src/js/48-work.js are the shared row/filter/summary
-  adapters. The rail #panel-agents [data-work-rail] keeps its four shelves (Needs you, Active with lineage, Queued, Recently
-  completed); Home dashboard:agents in 30-dashboard.js keeps its frame/filter. Both read PM_WORK and the same needs-you
-  set; the live owner projection and shared clock remain the sole inputs. list refreshes on change, patchTicks updates
-  times/progress/output, hidden lists catch up on show, and destroy removes subscriptions/observers. Rail uses spelled-out
-  ages; Home keeps its short time form. These source adapters demonstrate the projection boundary without certifying
-  native runtime. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and
-  retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting, waiting-dep,
-  blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced
-  Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility
-  policy. Lead clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond
-  loader owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing material
-  language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command,
-  event, setting, state or extra loader owner is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends
-  G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong
-  to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project
-  is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines
-  show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2
-  s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared
-  read scope creates no Stop/Restart/Stop all or service-control authority. Q13/CC5: the PM_WORK dock provider gives
-  a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s
-  dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the
-  same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs
-  line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry
-  timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work.
-  Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through
-  Activity and the panel.'
+canonical_text: |-
+  D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project badge and composer attention are filtered OperationalAwareness over ObservableWork and registry lineage. No consumer owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate ProcessFacts; host monitor owns server/environment resource samples while Resources is open only. Actions route to one owner command/handler; services are read-only and stop lists are generation-bound. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): PM7_WORK_UI.list(host, options), agentGroup and agentSummary in src/js/48-work.js are the shared row/filter/summary adapters. The rail #panel-agents [data-work-rail] keeps its four shelves (Needs you, Active with lineage, Queued, Recently completed); Home dashboard:agents in 30-dashboard.js keeps its frame/filter. Both read PM_WORK and the same needs-you set; the live owner projection and shared clock remain the sole inputs. list refreshes on change, patchTicks updates times/progress/output, hidden lists catch up on show, and destroy removes subscriptions/observers. Rail uses spelled-out ages; Home keeps its short time form. These source adapters demonstrate the projection boundary without certifying native runtime. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel.
+
+  The shared work/History projection also includes application ordinary chat, request-started turns, Goals, Crew, Assistant Plan/Deep Plan and scheduled messages/tasks under their actual Server/thread/Computer and parent lineage. App and Project Pause/Stop epochs remain operational owner state. Scope filters cannot relabel another scope's work or create a second action list. Only Planning Wizard/PRD Builder/Orchestrator retain no-project workflow gates; their existing Project run requirements remain.
 gui_related: false
 gui_classification_reason: Defines owner authority, record semantics or lifecycle.
 split_recommended: false
@@ -1129,43 +1033,14 @@ plan_unit_id: DR-080
 unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q7/H2/H8: a selected choice’s follow-up belongs
-  immediately in a tray joined to that card, before sibling alternatives. One shared joined-choice component owns the
-  join, indentation and line from the parent mark across all twelve affected screens (DL-258; source mechanics stay lineage
-  under DL-260). The parent opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring;
-  narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the
-  option, its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer
-  checks, sign-up links, Settings copy, remote route and proxy-configuration choices (certificate choices removed by
-  CERT-1 / srv C1), online service kind/address, device notes and connection routes. Naming and Review display the same
-  selected mounted/network source, rather than an empty local-location field. Q3/Q8/Q9: question controls answer pointer
-  hover and keyboard focus in the current look. Remove duplicate explanation-only disclosures (What is a Server?, the
-  Connect proxy explanation, and What does Puppet Master read? on Choose a key); put their information in the shared
-  option tips. Keep functional sections: More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik
-  selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating
-  system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use
-  protected flow; never reuse its never-saved hint for SMB. DL-260: one shared component renders the option question
-  affordance, expanded note and joined tray in every family; no screen appends a second tray, disclosure grammar, pointer
-  engine or sibling-level follow-up. Source API/class names remain lineage only. DL-259 FO-5/FO-6/FO-8/FO-9, 2026-10-31:
-  the shared choice/help owner preserves question visibility through selected/hover/focus states, NieR included. One
-  protected-field reconciliation owner preserves same-field live input through redraw and performs explicit consumption/reset
-  clearing (PWIZ-022); a screen never copies the secret into its draft to survive redraw. Copy feedback uses one per-control
-  acknowledgment deadline (F3-182), and Creating checks/blocks read one verified phase/effect projection (PWIZ-021),
-  rather than separate timer-driven completion state. DL-259 FO-9 final, 2026-10-31: one verified settled-effect projection
-  feeds Creating’s checklist, block set, block count and stage progress. Incomplete/unclear results retain pending phases
-  until a later accepted owner result settles them; no timer, refresh or separate scene counter promotes them. Project
-  recovery remains PJCT-007’s existing owner route, with no second resume command or duplicate remote create.
+canonical_text: |-
+  QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q7/H2/H8: a selected choice’s follow-up belongs immediately in a tray joined to that card, before sibling alternatives. One shared joined-choice component owns the join, indentation and line from the parent mark across all twelve affected screens (DL-258; source mechanics stay lineage under DL-260). The parent opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links, Settings copy, remote route and proxy-configuration choices (certificate choices removed by CERT-1 / srv C1), online service kind/address, device notes and connection routes. Naming and Review display the same selected mounted/network source, rather than an empty local-location field. Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in the current look. Remove duplicate explanation-only disclosures (What is a Server?, the Connect proxy explanation, and What does Puppet Master read? on Choose a key); put their information in the shared option tips. Keep functional sections: More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use protected flow; never reuse its never-saved hint for SMB. DL-260: one shared component renders the option question affordance, expanded note and joined tray in every family; no screen appends a second tray, disclosure grammar, pointer engine or sibling-level follow-up. Source API/class names remain lineage only. DL-259 FO-5/FO-6/FO-8/FO-9, 2026-10-31: the shared choice/help owner preserves question visibility through selected/hover/focus states, NieR included. One protected-field reconciliation owner preserves same-field live input through redraw and performs explicit consumption/reset clearing (PWIZ-022); a screen never copies the secret into its draft to survive redraw. Copy feedback uses one per-control acknowledgment deadline (F3-182), and Creating checks/blocks read one verified phase/effect projection (PWIZ-021), rather than separate timer-driven completion state. DL-259 FO-9 final, 2026-10-31: one verified settled-effect projection feeds Creating’s checklist, block set, block count and stage progress. Incomplete/unclear results retain pending phases until a later accepted owner result settles them; no timer, refresh or separate scene counter promotes them. Project recovery remains PJCT-007’s existing owner route, with no second resume command or duplicate remote create.
 
+  DL-272: the shared wizard renderer keeps the stage fixed, invalid edges/rings/warnings readable and refused-action reasons in view. Its selected indicator follows the strip’s actual layout, including mode/content changes. One fault/success projection serves every screen and suppresses a cheer while any fault remains; no per-family validation, success timer or indicator engine.
 
-  DL-272: the shared wizard renderer keeps the stage fixed, invalid edges/rings/warnings readable and refused-action
-  reasons in view. Its selected indicator follows the strip’s actual layout, including mode/content changes. One fault/success
-  projection serves every screen and suppresses a cheer while any fault remains; no per-family validation, success timer
-  or indicator engine.
+  DL-272 FO-18/FO-19, 2026-11-01: One MS-122 Ready-eligibility result gates every family’s celebration before its moment starts. The shared details renderer keeps long values within the pane, placing a long fingerprint’s hash whole on its own line after the algorithm label when wrapping is needed. Display wrapping preserves the compared/copied value; no per-look readiness, trust or value-format authority is added.
 
-
-  DL-272 FO-18/FO-19, 2026-11-01: One MS-122 Ready-eligibility result gates every family’s celebration before
-  its moment starts. The shared details renderer keeps long values within the pane, placing a long
-  fingerprint’s hash whole on its own line after the algorithm label when wrapping is needed. Display wrapping
-  preserves the compared/copied value; no per-look readiness, trust or value-format authority is added.'
+  New Project and conversion-to-new reuse this shared joined-choice/help/phase projection over PJCT-009/PWIZ-037. Current answers determine applicability and valid return history; abandoned branch input, validation, auth and Review cannot revive. N15 Later still runs the named Computer's protected AI setup and finishes in No project. Existing phase receipts and MS-122 readiness remain the only success basis.
 gui_related: true
 gui_classification_reason: Fixes shared joined-choice tray and option hint grammar across onboarding screens.
 split_recommended: false

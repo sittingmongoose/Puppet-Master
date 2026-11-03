@@ -2,25 +2,22 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L9163-L9349
+Source lines: L9551-L9757
 
-Source SHA256: `a2f40fb89918b299f4b90af9d0d7d7c85b75ad57f8312f598490040ea1d74bca`
+Source SHA256: `30d3beb8e135f0dd30e7757570a3b6b7e2830c5655547b4ebb81b675b748cbed`
 
 ---
 
 ## Shared runtime dispatch-admission boundary (2026-08-13)
 
-Provider dispatch admission consumes one immutable
-`permission_snapshot_record.v1:{project_id}:{snapshot_id}` by reference. It does
-not reinterpret, refresh, or replace permission authority. The snapshot must be
+Provider dispatch admission consumes one immutable materialized scope/version-matched permission snapshot by reference: the original Project family or PS-145 application evidence. It never fabricates Project/node fields or reinterprets, refreshes or replaces permission authority. The snapshot must be
 materialized, identity-matched to the current operation/attempt, non-corrupt, and
 current for the exact route, effective account, topology generation, and mutation
 intent before `ProviderDispatchAdmissionService` may issue its ephemeral
 `ProviderRequestPermit` / durable `ProviderDispatchAdmissionReceipt` evidence.
 The receipt also binds the existing Packet Admission decision, structured
 attachment-manifest hash/ref, host-local RuntimeResourceGovernor admission, and
-required-present project/thread/Goal/run/node/agent lineage; these refs do not
-replace permission authority.
+actual required lineage for its admitted workflow: thread/run/Computer and present Goal/Crew/Plan/agent identities; Project/node fields are required only for the real Project/Orchestrator variant. These refs do not replace permission authority.
 
 Permission `allow` is necessary but never sufficient. Mutation-capable work must
 also supply the independent FileSafe receipt refs for the exact finalized mutation
@@ -38,36 +35,59 @@ plan_unit_id: PS-134
 unit_type: security_contract
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: >-
-  Provider dispatch admission consumes the immutable materialized permission
-  snapshot by exact attempt identity and cannot issue or consume a permit when the
-  snapshot is missing, corrupt, stale, mismatched, or superseded; permission allow
-  remains independently co-bound with FileSafe for mutation-capable work.
+canonical_text: 'Provider dispatch consumes one immutable materialized permission snapshot of the admitted
+  Project or application version, exact-matched to operation/attempt, thread/run/Computer/roots, route/account/topology,
+  request and authority revision. Required lineage is discriminated by actual workflow: app chat/Goal/Crew/Assistant
+  Plan/scheduled tasks do not invent nodes or a Project. A permit/receipt cannot refresh or replace authority;
+  missing/corrupt/stale/superseded evidence rejects dispatch before transmission. FileSafe finalized evidence
+  and runtime/resource admission remain independent requirements.'
 gui_related: false
-depends_on: [PS-132, PS-133, CV-325, SIR-009]
+depends_on:
+- PS-132
+- PS-133
+- CV-325
+- SIR-009
+- PS-145
+- PS-148
 unblocks: []
 acceptance_criteria:
-  - Dispatch admission references one exact permission_snapshot_record and never reconstructs it from current Settings or UI state.
-  - Every bound policy, account, route, target, topology, or request-byte change invalidates prior admission and triggers fresh evidence as applicable.
-  - Permission allow cannot bypass FileSafe, auth, provider readiness, budget, storage mode, or host-local resource admission.
-  - Permission and dispatch records contain refs, decisions, and hashes only and reject raw credentials, tokens, auth values, request bytes, and credential paths.
-  - Attachment-manifest, Packet Admission, host-local resource admission, and run/node lineage refs are identity-matched before dispatch and cannot authorize permission reuse.
+- Dispatch admission references one exact permission_snapshot_record and never reconstructs it from current
+  Settings or UI state.
+- Every bound policy, account, route, target, topology, or request-byte change invalidates prior admission
+  and triggers fresh evidence as applicable.
+- Permission allow cannot bypass FileSafe, auth, provider readiness, budget, storage mode, or host-local resource
+  admission.
+- Permission and dispatch records contain refs, decisions, and hashes only and reject raw credentials, tokens,
+  auth values, request bytes, and credential paths.
+- Attachment-manifest, Packet Admission, host-local resource admission, and run/node lineage refs are identity-matched
+  before dispatch and cannot authorize permission reuse.
 validation_surfaces:
-  - future permission-snapshot and provider-dispatch join fixtures
-  - future stale/missing/corrupt snapshot negative fixtures
+- future permission-snapshot and provider-dispatch join fixtures
+- future stale/missing/corrupt snapshot negative fixtures
 risk_class: stale_permission_dispatch_bypass
 reasoning_tier: high
 context_scope: shared_runtime_permission_admission
-implementation_surfaces: [Plans/Permissions_System.md, Plans/storage_value_registry.json, Plans/shared_runtime_contracts.schema.json]
-node_compile_hint: {mode: shared_runtime_permission_join, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Permissions_System.md
+- Plans/storage_value_registry.json
+- Plans/shared_runtime_contracts.schema.json
+node_compile_hint:
+  mode: shared_runtime_permission_join
+  create_worknodes: false
+  create_nodeseeds: false
 negative_constraints:
-  - Do not treat a provider permit as permission authority.
-  - Do not reuse a permission snapshot after its bound authority changes.
-owner_hints: [Plans/Permissions_System.md]
+- Do not treat a provider permit as permission authority.
+- Do not reuse a permission snapshot after its bound authority changes.
+owner_hints:
+- Plans/Permissions_System.md
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md
-  - 'Plans/runtime_integration_disposition.json#items[PRM-012]'
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md
+- Plans/runtime_integration_disposition.json#items[PRM-012]
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N1/N6/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
+preserved_exact_tokens: []
 ```
 
 ### PS-135 - Browser State Minimum Export Boundary

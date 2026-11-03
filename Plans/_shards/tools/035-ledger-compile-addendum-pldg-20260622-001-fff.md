@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L11296-L11474
+Source lines: L11353-L11546
 
-Source SHA256: `9f8f951e268b5a9642675d8bc16560174ee3265592aa1c7c4d77e345c3e8f504`
+Source SHA256: `ede2a7942ae8c531e17d141bb5f9b2c6f0a9e43c259bfe1fa9f102f70e9d0a67`
 
 ---
 
@@ -67,7 +67,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  The agent-facing discovery operation is discover_paths, delegating to DiscoveryService. DiscoveryRequest carries request_id, consumer_id, surface_type, project/worktree or remote identity, query_text, intent, target_kind, limit, budget_ms, current_context, policy_context, redaction_profile, and permission/approval/SSH trust fields where applicable. DiscoveryResult returns ranked candidates with result_id, rank, canonical_path_identity, display_path, path_kind, target_kind, score_total, score_breakdown, match_type, policy-filtered matched_ranges when available, provenance, freshness_state, fallback_state, policy_decision, source_index_generation, requires_exact_verification, and verification_handoff. Discovery receipts use discovery.invoked, discovery.candidates_returned, discovery.selected, discovery.fallback, discovery.verified, discovery.disabled, discovery.unsupported, and discovery.backpressure. The allowed values for discover_paths request, result, receipt_event, and error_code fields come from the CV-291 canonical exact value registry.
+  The agent-facing discovery operation is discover_paths, delegating to DiscoveryService.
+  DiscoveryRequest carries request_id, consumer_id, surface_type, project/worktree or remote identity,
+  query_text, intent, target_kind, limit, budget_ms, current_context, policy_context,
+  redaction_profile, and permission/approval/SSH trust fields where applicable. DiscoveryResult
+  returns ranked candidates with result_id, rank, canonical_path_identity, display_path, path_kind,
+  target_kind, score_total, score_breakdown, match_type, policy-filtered matched_ranges when
+  available, provenance, freshness_state, fallback_state, policy_decision, source_index_generation,
+  requires_exact_verification, and verification_handoff. Discovery receipts use discovery.invoked,
+  discovery.candidates_returned, discovery.selected, discovery.fallback, discovery.verified,
+  discovery.disabled, discovery.unsupported, and discovery.backpressure. The allowed values for
+  discover_paths request, result, receipt_event, and error_code fields come from the CV-291 canonical
+  exact value registry. App discovery carries application scope, null project_id, real thread/Computer
+  and explicitly admitted working roots. It never substitutes a focused Project or treats a discovered
+  path as a grant; CV-291 owns the versioned request/result identity.
 gui_related: false
 gui_classification_reason: This is the tool/API behavior contract; GUI presentation is owned by GUI docs.
 depends_on: [T-160, CV-291, T-072]
@@ -85,16 +98,18 @@ context_scope: discovery_tool_contract
 implementation_surfaces: [Plans/Tools.md, Plans/Contracts_V0.md, future discover_paths tool route]
 node_compile_hint: {mode: discover_paths_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - pldg-20260622-001-fff:atom-0023
-  - pldg-20260622-001-fff:atom-0035
-  - pldg-20260622-001-fff:atom-0036
-  - pldg-20260622-001-fff:atom-0063
-  - pldg-20260622-001-fff:atom-0076
-  - pldg-20260622-001-fff:atom-0051
-  - pldg-20260622-001-fff:atom-0088
-  - pldg-20260622-001-fff:atom-0092
-  - pldg-20260622-001-fff:state/precision_contract.json
-  - pldg-20260622-001-fff:state/consumer_conformance_matrix.json#shared_agent_tool_discover_paths
+- pldg-20260622-001-fff:atom-0023
+- pldg-20260622-001-fff:atom-0035
+- pldg-20260622-001-fff:atom-0036
+- pldg-20260622-001-fff:atom-0063
+- pldg-20260622-001-fff:atom-0076
+- pldg-20260622-001-fff:atom-0051
+- pldg-20260622-001-fff:atom-0088
+- pldg-20260622-001-fff:atom-0092
+- pldg-20260622-001-fff:state/precision_contract.json
+- pldg-20260622-001-fff:state/consumer_conformance_matrix.json#shared_agent_tool_discover_paths
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: [atom-0023, atom-0035, atom-0036, atom-0051, atom-0063, atom-0076, atom-0088, atom-0092]
 preserved_exact_tokens: ["discover_paths", "DiscoveryRequest", "DiscoveryResult", "request_id", "consumer_id", "surface_type", "intent", "target_kind", "path_kind", "match_type", "score_breakdown", "freshness_state", "fallback_state", "policy_decision", "error_code", "receipt_event", "requires_exact_verification", "verification_handoff", "discovery.invoked", "discovery.candidates_returned", "discovery.selected", "discovery.fallback", "discovery.verified", "discovery.disabled", "discovery.unsupported", "discovery.backpressure"]
 negative_constraints:

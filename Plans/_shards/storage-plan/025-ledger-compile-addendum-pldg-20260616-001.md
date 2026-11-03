@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L15185-L15349
+Source lines: L15299-L15410
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -17,82 +17,27 @@ plan_unit_id: SP-214
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'storage-plan owns persistence, replay, and projection boundaries for Goal Runtime durable state,
-  append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence
-  refs, goal_revision/expected_goal_revision, and retention anchors. Canonical persisted goal events registered
-  by Contracts_V0 are goal.created, goal.scheduled, goal.progressed, goal.tool_check_recorded, goal.updated, goal.replanned,
-  goal.child_status_changed, goal.evidence_captured, goal.verification_decided, goal.receipt_recorded, goal.completed,
-  goal.degraded, goal.stopped, goal.blocked, goal.cancelled, plus Orchestrator GoalRun events goal_run.started,
-  goal_run.replanned, goal_run.blocked, goal_run.certified, goal_run.cancelled, and goal_run.stopped. Storage persists
-  them in an append-only goal_event_log and rebuilds disposable projections goal_state.v1:{project_id}:{goal_id},
-  goal_receipt.v1:{project_id}:{receipt_id}, goal_blocked_projection.v1:{project_id}:{goal_id}, goal_child_index.v1:{project_id}:{parent_goal_id},
-  goal_evidence_index.v1:{project_id}:{goal_id}, and goal_run_projection.v1:{project_id}:{goal_run_id}. Goal_Runtime_System
-  owns behavior semantics; Contracts_V0 owns event-name and payload-minimum registration.
+canonical_text: |-
+  storage-plan owns persistence, replay, and projection boundaries for Goal Runtime durable state, append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence refs, goal_revision/expected_goal_revision, and retention anchors. Canonical persisted goal events registered by Contracts_V0 are goal.created, goal.scheduled, goal.progressed, goal.tool_check_recorded, goal.updated, goal.replanned, goal.child_status_changed, goal.evidence_captured, goal.verification_decided, goal.receipt_recorded, goal.completed, goal.degraded, goal.stopped, goal.blocked, goal.cancelled, plus Orchestrator GoalRun events goal_run.started, goal_run.replanned, goal_run.blocked, goal_run.certified, goal_run.cancelled, and goal_run.stopped. Storage persists them in an append-only goal_event_log and rebuilds disposable projections goal_state.v1:{project_id}:{goal_id}, goal_receipt.v1:{project_id}:{receipt_id}, goal_blocked_projection.v1:{project_id}:{goal_id}, goal_child_index.v1:{project_id}:{parent_goal_id}, goal_evidence_index.v1:{project_id}:{goal_id}, and goal_run_projection.v1:{project_id}:{goal_run_id}. Goal_Runtime_System owns behavior semantics; Contracts_V0 owns event-name and payload-minimum registration.
 
+  For exactly goal.degraded, GRS-061/CV-335 override current-write or Goal-state reconstruction implications: its schema/event custody remains historical, and SP-277 owns bounded read-only inspection with no family projection or checkpoint write. Existing other-row qualifications remain unchanged.
 
-  For exactly goal.degraded, GRS-061/CV-335 override current-write or Goal-state reconstruction implications: its
-  schema/event custody remains historical, and SP-277 owns bounded read-only inspection with no family projection
-  or checkpoint write. Existing other-row qualifications remain unchanged.
+  For exactly goal.scheduled, GRS-062/CV-336 override current-writer and Goal-state reconstruction implications: SP-280 interprets retained historical source with no family projection or scheduling effect. Existing child-status, degraded and other-row qualifications and canonical receipt/recovery fences remain unchanged.
 
+  For exactly goal.child_status_changed, GRS-060/CV-334 forbid current writes and child-state reconstruction. SP-271 defines only bounded historical inspection without a family projection or checkpoint write; schema registration does not restore retired child topology.
 
-  For exactly goal.scheduled, GRS-062/CV-336 override current-writer and Goal-state reconstruction implications:
-  SP-280 interprets retained historical source with no family projection or scheduling effect. Existing child-status,
-  degraded and other-row qualifications and canonical receipt/recovery fences remain unchanged.
+  For the exact goal_receipt physical family, GRS-042 and SP-235 supersede the older disposable-receipt wording above: generic v1 and SP-289 Standard v2 are canonical non-rebuildable receipt authority. SP-289 adds only explicit same-family original certification custody; event and Goal-body producer integration remain separate.
 
+  For exactly goal.created, CV-341/GRS-066 and SP-294 select active content-free v3 original creation integration while retaining the whole v2 resource as historical decoding. The new command family is canonical non-rebuildable original authority; this prerequisite neither materializes an event projector/checkpoint nor permits body reconstruction from the event. The current creation consumer mapping in GRS-064 supplies Activity/body/history from its existing canonical readers; the original SP-287/SP-294 transaction already owns their durable state. The older deferred goal_state/child/evidence/GoalRun projector inventory is not an active-v3 creation reducer or checkpoint assignment. This exact current-route mapping does not settle other Goal/GoalRun families or authorize historical reconstruction.
+  For exactly goal.progressed, GRS-069/CV-343 independently supersede current-write and Goal-state/progress/child/evidence projection implications above. SP-300 assigns this exact family only storage.goal_progressed_history_read.v1@1.0.0 ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
 
-  For exactly goal.child_status_changed, GRS-060/CV-334 forbid current writes and child-state reconstruction. SP-271
-  defines only bounded historical inspection without a family projection or checkpoint write; schema registration
-  does not restore retired child topology.
+  For exactly goal.replanned, GRS-070/CV-344 independently supersede current-write and Goal-state/progress/child/evidence projection implications above. SP-301 assigns this exact family only storage.goal_replanned_history_read.v1@1.0.0 ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
 
+  For exactly goal.stopped, GRS-071/CV-345 independently supersede current-write and Goal-state/progress/child/evidence projection implications above. SP-302 assigns this exact family only storage.goal_stopped_history_read.v1@1.0.0 ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
 
-  For the exact goal_receipt physical family, GRS-042 and SP-235 supersede the older disposable-receipt wording
-  above: generic v1 and SP-289 Standard v2 are canonical non-rebuildable receipt authority. SP-289 adds only explicit
-  same-family original certification custody; event and Goal-body producer integration remain separate.
+  For exactly goal.verification_decided, GRS-072/CV-346 independently supersede current-write and Goal-state/progress/child/evidence projection implications above. SP-303 assigns this exact family only storage.goal_verification_decided_history_read.v1@1.0.0 ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
 
-
-  For exactly goal.created, CV-341/GRS-066 and SP-294 select active content-free v3 original creation integration
-  while retaining the whole v2 resource as historical decoding. The new command family is canonical non-rebuildable
-  original authority; this prerequisite neither materializes an event projector/checkpoint nor permits body reconstruction
-  from the event. The current creation consumer mapping in GRS-064 supplies Activity/body/history from its existing
-  canonical readers; the original SP-287/SP-294 transaction already owns their durable state. The older deferred
-  goal_state/child/evidence/GoalRun projector inventory is not an active-v3 creation reducer or checkpoint assignment.
-  This exact current-route mapping does not settle other Goal/GoalRun families or authorize historical reconstruction.
-
-  For exactly goal.progressed, GRS-069/CV-343 independently supersede current-write and Goal-state/progress/child/evidence
-  projection implications above. SP-300 assigns this exact family only storage.goal_progressed_history_read.v1@1.0.0
-  ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source
-  proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
-
-
-  For exactly goal.replanned, GRS-070/CV-344 independently supersede current-write and Goal-state/progress/child/evidence
-  projection implications above. SP-301 assigns this exact family only storage.goal_replanned_history_read.v1@1.0.0
-  ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source
-  proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
-
-
-  For exactly goal.stopped, GRS-071/CV-345 independently supersede current-write and Goal-state/progress/child/evidence
-  projection implications above. SP-302 assigns this exact family only storage.goal_stopped_history_read.v1@1.0.0
-  ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source
-  proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
-
-
-  For exactly goal.verification_decided, GRS-072/CV-346 independently supersede current-write and Goal-state/progress/child/evidence
-  projection implications above. SP-303 assigns this exact family only storage.goal_verification_decided_history_read.v1@1.0.0
-  ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source
-  proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
-
-
-  For exactly goal_run.certified, GRS-084 selects the active v3 payload and coordinator identity EventRecord root,
-  and GRS-085 governs the mandatory started/cancelled/certified per-Workflow-run prefix projection that carries
-  the durable GoalRun projection role of this unit (with D-R20) for that family. SP-316 owns its compact original
-  authority families and v7 wrapper routes, and SP-317 owns its projection and checkpoint families. The goal_run_projection.v1
-  inventory above is not its reducer or checkpoint. That family applies only to a genuine fresh pm.executor.workflow_source.all_writers.v7
-  birth and pm.goal_run_certified.producer_source.v2 prepare.v2 binding; earlier native-v6 and producer-v1 source
-  editions keep their original closed scope, no existing birth is enrolled or cast, and whole-v2 certified rows
-  keep their historical interpretation. The event family registry keeps this unit as the payload_owner_doc route
-  for that family; this paragraph, added 2026-09-24, points the route at those owners and changes no payload, schema,
-  registry row, admission or behavior. goal_run.started and goal_run.cancelled v3 keep their registry owners GRS-079
-  with SP-311 and GRS-080 with SP-312.'
+  For exactly goal_run.certified, GRS-084 selects the active v3 payload and coordinator identity EventRecord root, and GRS-085 governs the mandatory started/cancelled/certified per-Workflow-run prefix projection that carries the durable GoalRun projection role of this unit (with D-R20) for that family. SP-316 owns its compact original authority families and v7 wrapper routes, and SP-317 owns its projection and checkpoint families. The goal_run_projection.v1 inventory above is not its reducer or checkpoint. That family applies only to a genuine fresh pm.executor.workflow_source.all_writers.v7 birth and pm.goal_run_certified.producer_source.v2 prepare.v2 binding; earlier native-v6 and producer-v1 source editions keep their original closed scope, no existing birth is enrolled or cast, and whole-v2 certified rows keep their historical interpretation. The event family registry keeps this unit as the payload_owner_doc route for that family; this paragraph, added 2026-09-24, points the route at those owners and changes no payload, schema, registry row, admission or behavior. goal_run.started and goal_run.cancelled v3 keep their registry owners GRS-079 with SP-311 and GRS-080 with SP-312. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound. Unqualified legacy Goal family lists are constrained by CV-366’s per-family active/historical/Project-only disposition and canonical non-rebuildable body/receipt custody.
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual
   presentation.
@@ -149,6 +94,8 @@ source_lineage:
 - pldg-20260616-001-goal-runtime-system:atom-0107
 - pldg-20260616-001-goal-runtime-system:atom-0109
 - pldg-20260616-001-goal-runtime-system:atom-0110
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 preserved_exact_tokens:
 - durable state
 - append-only goal event log

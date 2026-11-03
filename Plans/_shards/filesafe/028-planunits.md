@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L2946-L13311
+Source lines: L2951-L13452
 
-Source SHA256: `e3dd00aefe77af402142dc62c8838be67674b3d6204abfdd4b1caa9f78ae6c67`
+Source SHA256: `2d6da9a9eae44820501a3ab3b65d326476249c557a85e7d584e03761f54f7ce2`
 
 ---
 
@@ -3567,49 +3567,52 @@ plan_unit_id: F2-065
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  FileSafe settings checklist coverage includes filesafe.enabled,
-  filesafe.verification_gate_exemptions for readonly verification tools, optional
-  filesafe.project_scope_overrides, and remote-mode aware scope roots derived from mounted
-  project identity.
+canonical_text: FileSafe configuration uses the Settings ladder once, with the one filesafe.enabled/Protect
+  files and commands switch and owner policy subsettings. Existing filesafe.project_scope_overrides is a compatibility
+  input to declared Project own values, not a second precedence engine. Remote Project roots and application
+  chat/granted working roots carry actual Host/Environment and scope identity under F2-213.
 gui_related: true
-gui_classification_reason: >-
-  This unit covers user-configurable settings that surface in application settings.
+gui_classification_reason: This unit covers user-configurable settings that surface in application settings.
 split_recommended: false
-depends_on: []
+depends_on:
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: filesafe_settings_configuration_checklist
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0033"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0033
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S3/N6
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "Add configuration"
-- "filesafe.enabled"
-- "filesafe.verification_gate_exemptions"
-- "readonly verification tools"
-- "filesafe.project_scope_overrides"
-- "remote-mode aware scope roots"
-- "mounted project identity"
+- Add configuration
+- filesafe.enabled
+- filesafe.verification_gate_exemptions
+- readonly verification tools
+- filesafe.project_scope_overrides
+- remote-mode aware scope roots
+- mounted project identity
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-066 - FileSafe Event Logging Checklist And Safe Point Compatibility
@@ -3909,54 +3912,68 @@ plan_unit_id: F2-071
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  Assistant YOLO mode removes permission prompts and the human approval step, so Assistant chat
-  and YOLO runs must use the same FileSafe settings as the rest of the app and FileSafe remains
-  the primary protection layer for destructive commands, write scope, and sensitive files.
+canonical_text: YOLO skips ordinary tool prompts under Permissions PS-146/148 and allows ordinary push/publication,
+  but uses the same single resolved FileSafe policy as every other run. Root, secret, destructive-command,
+  pre-write safe-point, DAE and protected-human checks remain. A build grant never disables FileSafe; exact
+  Y1/grant evidence is evaluated by its structured admission path. No Assistant-only bypass or agent-authored
+  relaxation is created.
 gui_related: false
-gui_classification_reason: >-
-  This unit defines backend guard primacy and shared config behavior for Assistant YOLO mode.
+gui_classification_reason: This unit defines backend guard primacy and shared config behavior for Assistant
+  YOLO mode.
 split_recommended: false
-depends_on: []
+depends_on:
+- PS-146
+- PS-147
+- PS-148
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: assistant_yolo_shared_filesafe_config_and_guard_primacy
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0041"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0041
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "YOLO mode"
-- "maximum permissions"
-- "no permission prompts"
-- "no human approval step"
-- "primary protection layer"
-- "Same FileSafe config for Assistant"
-- "Command blocklist"
-- "Write scope"
-- "Security filter"
-- "No separate \"Assistant-only\" bypass unless explicitly configured"
-- "10a. FileSafe and Assistant YOLO mode"
+- YOLO mode
+- maximum permissions
+- no permission prompts
+- no human approval step
+- primary protection layer
+- Same FileSafe config for Assistant
+- Command blocklist
+- Write scope
+- Security filter
+- No separate "Assistant-only" bypass unless explicitly configured
+- 10a. FileSafe and Assistant YOLO mode
 negative_constraints:
-- "Assistant chat must not have a separate Assistant-only FileSafe bypass unless explicitly configured."
+- No separate Assistant-only FileSafe bypass or implicit relaxation follows from YOLO.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Assistant YOLO mode removes permission prompts and the human approval step, so Assistant
+  chat and YOLO runs must use the same FileSafe settings as the rest of the app and FileSafe remains the primary
+  protection layer for destructive commands, write scope, and sensitive files.'
 owner_boundary_notes:
-- "Assistant chat owns chat mode semantics; FileSafe owns guard enforcement and safety state consumed by Assistant YOLO runs."
+- Assistant chat owns chat mode semantics; FileSafe owns guard enforcement and safety state consumed by Assistant
+  YOLO runs.
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-072 - YOLO FileSafe Visible State And Explicit Override Surface
@@ -3966,53 +3983,63 @@ plan_unit_id: F2-072
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  When YOLO is enabled, the GUI should recommend or warn that FileSafe remain enabled, expose
-  active FileSafe state without deep navigation, keep FileSafe toggles easy to find, and allow
-  any per-chat FileSafe relaxation only through an explicit clearly labeled non-default setting.
+canonical_text: YOLO shows active resolved FileSafe state and keeps its owner Settings route easy to reach.
+  The existing one switch and individual Advanced guard settings use SSYS-059 safety combination; Computer
+  On defeats Project Off. Any authenticated human relaxation is explicit, labelled, scoped and audited under
+  the current owner policy, never an automatic per-chat switch or a way for an agent to clear its own block.
 gui_related: true
-gui_classification_reason: >-
-  This unit defines GUI-visible FileSafe state, warning, and per-context override presentation
-  for YOLO mode.
+gui_classification_reason: This unit defines GUI-visible FileSafe state, warning, and per-context override
+  presentation for YOLO mode.
 split_recommended: false
-depends_on: []
+depends_on:
+- PS-144
+- PS-148
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: yolo_filesafe_visible_state_and_explicit_override_surface
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0041"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0041
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S3/Y1
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "Recommend FileSafe on when YOLO is on"
-- "FileSafe protects you when YOLO is on"
-- "small indicator"
-- "Configurable and visible"
-- "§13.4"
-- "§15.5"
-- "relax FileSafe for this chat only"
-- "explicit, clearly labeled setting--not the default"
-- "FileSafe should be the main line of defense"
+- Recommend FileSafe on when YOLO is on
+- FileSafe protects you when YOLO is on
+- small indicator
+- Configurable and visible
+- §13.4
+- §15.5
+- relax FileSafe for this chat only
+- explicit, clearly labeled setting--not the default
+- FileSafe should be the main line of defense
 negative_constraints:
-- "Per-context FileSafe relaxation is not the default when YOLO is on."
+- Per-context FileSafe relaxation is not the default when YOLO is on.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 S3/Y1: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: When YOLO is enabled, the GUI should recommend or warn that FileSafe remain enabled,
+  expose active FileSafe state without deep navigation, keep FileSafe toggles easy to find, and allow any per-chat
+  FileSafe relaxation only through an explicit clearly labeled non-default setting.'
 owner_boundary_notes:
-- "Final GUI and Assistant UI consume FileSafe state visibility requirements; FileSafe owns safety state."
+- Final GUI and Assistant UI consume FileSafe state visibility requirements; FileSafe owns safety state.
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-073 - Dirty Layer Search Results Do Not Weaken Mutation Guards
@@ -4591,54 +4618,63 @@ plan_unit_id: F2-083
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  At project or worktree root initialization, PM probes filesystem case sensitivity with a
-  temporary .pm_case_probe file, checks whether .PM_CASE_PROBE resolves to the same inode,
-  defaults to case-sensitive mode if the probe cannot be created, and caches the detected flag
-  per project root for FileSafe and permission comparisons within the session.
+canonical_text: At each actual working-root initialization, including a chat folder or granted application
+  root, PM probes case sensitivity with .pm_case_probe versus .PM_CASE_PROBE, uses the existing stricter case-sensitive
+  fallback if probe creation fails, and caches the result by normalized root plus Host/Environment/filesystem
+  identity for the session. FileSafe and Permissions share that result. A read-only home-read grant does not
+  authorize creating a probe file there.
 gui_related: false
-gui_classification_reason: >-
-  This unit defines backend filesystem case-sensitivity detection.
+gui_classification_reason: This unit defines backend filesystem case-sensitivity detection.
 split_recommended: false
-depends_on: []
+depends_on:
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: filesystem_case_sensitivity_probe_and_session_cache
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0047"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0047
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "Case-sensitivity detection contract"
-- ".pm_case_probe"
-- ".PM_CASE_PROBE"
-- "same inode"
-- "case-insensitive"
-- "read-only filesystem"
-- "permission error"
-- "defaults to case-sensitive mode"
-- "cached per project root"
-- "project session"
+- Case-sensitivity detection contract
+- .pm_case_probe
+- .PM_CASE_PROBE
+- same inode
+- case-insensitive
+- read-only filesystem
+- permission error
+- defaults to case-sensitive mode
+- cached per project root
+- project session
 negative_constraints:
-- "If the case-sensitivity probe cannot be created, PM defaults to case-sensitive mode."
+- If the case-sensitivity probe cannot be created, PM defaults to case-sensitive mode.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 N6: current behavior is the replacement canonical_text; superseded source remains lineage only.
+  Superseded clause: At project or worktree root initialization, PM probes filesystem case sensitivity with
+  a temporary .pm_case_probe file, checks whether .PM_CASE_PROBE resolves to the same inode, defaults to case-sensitive
+  mode if the probe cannot be created, and caches the detected flag per project root for FileSafe and permission
+  comparisons within the session.'
 owner_boundary_notes:
-- "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md"
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md'
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-084 - Shared NFC Case Fold Path Comparison Contract
@@ -5408,47 +5444,51 @@ plan_unit_id: F2-097
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  The FileSafe validation layer exposes default_sensitive_patterns() -> Vec<Regex> and supports
-  an optional additive-only project override file at .puppet-master/security-filter.local.txt,
-  with the behavior documented in AGENTS.md.
+canonical_text: default_sensitive_patterns() -> Vec<Regex> remains the mandatory sensitive baseline. Additive
+  Computer-owned patterns cover cloud/service/AI sign-in directories, browser profiles, password managers,
+  keychains and mail; optional .puppet-master/security-filter.local.txt remains additive Project-owned input.
+  None may remove baseline secret exclusions; global home-read permission never reaches protected data.
 gui_related: false
-gui_classification_reason: >-
-  This unit defines backend security-filter override and documentation behavior.
+gui_classification_reason: This unit defines backend security-filter override and documentation behavior.
 split_recommended: false
-depends_on: []
+depends_on:
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: additive_security_filter_overrides_and_agents_documentation_hook
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0049"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0049
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S3/N6
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "FileSafe validation layer"
-- "default_sensitive_patterns() -> Vec<Regex>"
-- ".puppet-master/security-filter.local.txt"
-- "additive patterns only"
-- "Document in AGENTS.md"
+- FileSafe validation layer
+- default_sensitive_patterns() -> Vec<Regex>
+- .puppet-master/security-filter.local.txt
+- additive patterns only
+- Document in AGENTS.md
 negative_constraints:
-- "Project security-filter overrides are additive-only."
+- Project security-filter overrides are additive-only.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-098 - Prompt And Context Compilation Safety Threat Model
@@ -6085,49 +6125,58 @@ plan_unit_id: F2-109
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  False-positive risk covers legitimate commands or documentation examples such as migrate:fresh
-  matching destructive patterns, mitigated through prompt context checks, environment override,
-  block logging, and clear override instructions.
+canonical_text: 'False-positive handling for migrate:fresh and documentation examples uses prompt-context checks,
+  block logging and clear authenticated override instructions. The former environment override wording is retired:
+  PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is request-only, and F2-207/F2-213 require exact operator/scope/expiry/security
+  receipt evidence. An environment variable alone never admits execution.'
 gui_related: false
-gui_classification_reason: >-
-  This unit captures backend false-positive risk and user-facing error mitigation.
+gui_classification_reason: This unit captures backend false-positive risk and user-facing error mitigation.
 split_recommended: false
-depends_on: []
+depends_on:
+- F2-207
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: false_positive_review
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0056"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0056
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/Y1
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "False Positives"
-- "migrate:fresh"
-- "documentation"
-- "Check prompt context"
-- "environment variable"
-- "Log all blocks for review"
-- "clear error messages"
-- "override instructions"
+- False Positives
+- migrate:fresh
+- documentation
+- Check prompt context
+- environment variable
+- Log all blocks for review
+- clear error messages
+- override instructions
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 N6/Y1: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: False-positive risk covers legitimate commands or documentation examples such as
+  migrate:fresh matching destructive patterns, mitigated through prompt context checks, environment override,
+  block logging, and clear override instructions.'
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-110 - Pattern Performance Mitigation
@@ -6344,61 +6393,66 @@ plan_unit_id: F2-114
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  Allowed write scope is supplied via PUPPET_MASTER_ALLOWED_FILES as a JSON array of repo-
-  relative paths and explicit directories; if missing or empty while file_guard.enabled is true,
-  FileSafe treats it as an empty allowlist and blocks fail-closed regardless of strict_mode, while
-  orchestrator derives the env value from current subtask declared files and implicit context_files.
-  strict_mode=false may soften advisory reporting only after authoritative enforcement input exists.
+canonical_text: 'PUPPET_MASTER_ALLOWED_FILES carries authoritative scope declarations derived by the owning
+  request producer: current subtask files/context for Project work, or finalized task file/directory metadata
+  within admitted application working roots for planless chat/Goal/Crew/Assistant Plan tasks. Relative paths
+  resolve against explicit working_directory plus Host/Environment; absolute declared directories remain bound
+  to their recorded root identity. Missing/empty authoritative input while file_guard.enabled is true stays
+  empty and fail-closed, regardless of strict_mode.'
 gui_related: false
-gui_classification_reason: >-
-  This unit defines backend allowed-file scope derivation and fail-closed behavior.
+gui_classification_reason: This unit defines backend allowed-file scope derivation and fail-closed behavior.
 split_recommended: false
-depends_on: []
+depends_on:
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "Missing or empty PUPPET_MASTER_ALLOWED_FILES blocks writes regardless of strict_mode."
-- "strict_mode=false cannot permit writes when the allowlist, baseline, root, or guard input is absent."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- Missing or empty PUPPET_MASTER_ALLOWED_FILES blocks writes regardless of strict_mode.
+- strict_mode=false cannot permit writes when the allowlist, baseline, root, or guard input is absent.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: allowed_files_env_scope_derivation_and_fail_closed_strictness
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0060"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0060
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/Q11/N21 reversal
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
 preserved_exact_tokens:
-- "PUPPET_MASTER_ALLOWED_FILES"
-- "JSON array"
-- "repo-relative paths"
-- "explicit directories"
-- "missing or empty"
-- "empty allowlist"
-- "file_guard.enabled == true"
-- "strict_mode"
-- "puppet-master-rs/src/core/orchestrator.rs"
-- "request.context_files"
-- "context files are implicitly allowed"
+- PUPPET_MASTER_ALLOWED_FILES
+- JSON array
+- repo-relative paths
+- explicit directories
+- missing or empty
+- empty allowlist
+- file_guard.enabled == true
+- strict_mode
+- puppet-master-rs/src/core/orchestrator.rs
+- request.context_files
+- context files are implicitly allowed
 negative_constraints:
-- "Missing or empty PUPPET_MASTER_ALLOWED_FILES must be treated as an empty allowlist when file_guard.enabled is true."
-- "strict_mode=false must not turn an empty authoritative allowlist into warn-only execution."
+- Missing or empty PUPPET_MASTER_ALLOWED_FILES must be treated as an empty allowlist when file_guard.enabled
+  is true.
+- strict_mode=false must not turn an empty authoritative allowlist into warn-only execution.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- "Orchestrator owns allowed-files derivation; FileSafe enforces the effective allowlist."
-- "ContractRef: EnvVar:PUPPET_MASTER_ALLOWED_FILES, ConfigKey:filesafe.fileGuard.strictMode"
-- "ContractRef: CodePath:puppet-master-rs/src/core/orchestrator.rs, CodePath:puppet-master-rs/src/platforms/context_files.rs"
+- Orchestrator owns allowed-files derivation; FileSafe enforces the effective allowlist.
+- 'ContractRef: EnvVar:PUPPET_MASTER_ALLOWED_FILES, ConfigKey:filesafe.fileGuard.strictMode'
+- 'ContractRef: CodePath:puppet-master-rs/src/core/orchestrator.rs, CodePath:puppet-master-rs/src/platforms/context_files.rs'
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-115 - Pattern Source Fallback Does Not Disable FileSafe
@@ -6408,57 +6462,65 @@ plan_unit_id: F2-115
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  A missing or unreadable custom pattern file is ignored while bundled patterns still apply; if
-  bundled patterns are unavailable at runtime, FileSafe falls back to an embedded minimal
-  default list covering root deletion, git hard reset/clean/force-push, database drop/flush, and
-  Docker volume/system prune families, logs filesafe.policy_degraded, and does not disable FileSafe.
+canonical_text: Custom-pattern absence does not disable bundled/embedded fallback protection. The emergency
+  embedded baseline still detects root deletion, hard reset/clean/force-push, database drop/flush and Docker
+  prune families and emits filesafe.policy_degraded. A matching force-push or build cleanup is admitted only
+  by the exact structured PS-146 Y1 or PS-147 grant-created-resource exception after all other guards; no regex
+  deletion or blanket command allow implements the exception.
 gui_related: false
-gui_classification_reason: >-
-  This unit defines backend pattern-source fallback behavior.
+gui_classification_reason: This unit defines backend pattern-source fallback behavior.
 split_recommended: false
-depends_on: []
+depends_on:
+- PS-146
+- PS-147
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "Embedded fallback baseline includes the minimum pattern list in Section 4.1."
-- "If bundled and embedded fallback baselines are unavailable, BashGuard emits filesafe.guard_init_failed and blocks."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- Embedded fallback baseline includes the minimum pattern list in Section 4.1.
+- If bundled and embedded fallback baselines are unavailable, BashGuard emits filesafe.guard_init_failed and
+  blocks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: pattern_source_fallback_does_not_disable_filesafe
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0060"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0060
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "filesafe.bashGuard.customPatternsPath"
-- "missing/unreadable custom pattern file"
-- "bundled patterns still apply"
-- "embedded minimal default list"
-- "filesafe.policy_degraded"
-- "rm\\s+-r?f\\s+/"
-- "git\\s+reset\\s+--hard"
-- "git\\s+push\\s+.*--force"
-- "redis-cli\\s+FLUSH(ALL|DB)"
-- "do not disable FileSafe"
+- filesafe.bashGuard.customPatternsPath
+- missing/unreadable custom pattern file
+- bundled patterns still apply
+- embedded minimal default list
+- filesafe.policy_degraded
+- rm\s+-r?f\s+/
+- git\s+reset\s+--hard
+- git\s+push\s+.*--force
+- redis-cli\s+FLUSH(ALL|DB)
+- do not disable FileSafe
 negative_constraints:
-- "Missing custom patterns or unavailable bundled patterns must not disable FileSafe."
+- Missing custom patterns or unavailable bundled patterns must not disable FileSafe.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- "Reconciles with fail-closed FileSafe canon by treating embedded minimal defaults as fallback baseline, not a disabled guard state."
-- "ContractRef: ConfigKey:filesafe.bashGuard.customPatternsPath"
+- Reconciles with fail-closed FileSafe canon by treating embedded minimal defaults as fallback baseline, not
+  a disabled guard state.
+- 'ContractRef: ConfigKey:filesafe.bashGuard.customPatternsPath'
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-116 - Approved Commands Exact Normalized Match Boundary
@@ -6580,48 +6642,56 @@ plan_unit_id: F2-118
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  The Git destructive-command guard enhancement extends the bash guard blocklist with
-  destructive git patterns for reset hard, force push, branch deletion, and clean -fd.
+canonical_text: Destructive Git patterns still detect hard reset, force push, branch deletion and clean -fd.
+  Y1 permits only force-with-lease on a current branch PM created for this work, never main/default/protected,
+  with exact repo/remote/branch/provenance/expected-head checks at dispatch. Retained destructive actions still
+  ask; a PS-147 build exception is restricted to listed operations on verified grant-created resources, never
+  an unowned target or broad prune.
 gui_related: false
-gui_classification_reason: >-
-  This unit captures backend git destructive-command enhancement.
+gui_classification_reason: This unit captures backend git destructive-command enhancement.
 split_recommended: false
-depends_on: []
+depends_on:
+- PS-146
+- PS-147
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: git_destructive_command_pattern_enhancement
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0062"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0062
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "Git Destructive Commands Guard"
-- "destructive-commands.txt"
-- "git\\s+reset\\s+--hard"
-- "git\\s+push\\s+.*--force"
-- "git\\s+push\\s+.*-f"
-- "git\\s+branch\\s+-D"
-- "git\\s+clean\\s+-fd"
+- Git Destructive Commands Guard
+- destructive-commands.txt
+- git\s+reset\s+--hard
+- git\s+push\s+.*--force
+- git\s+push\s+.*-f
+- git\s+branch\s+-D
+- git\s+clean\s+-fd
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- "Extends F2-050 and F2-051 blocklist coverage."
+- Extends F2-050 and F2-051 blocklist coverage.
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-119 - SQL Injection Prompt Pattern Enhancement
@@ -6795,59 +6865,66 @@ plan_unit_id: F2-122
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  When Assistant chat blocks a command, the user can approve this run and optionally add the
-  command to the approved list; Config exposes viewing, removing, and optionally manually adding
-  approved commands, and approved commands are persisted in settings while exact normalized
-  matching remains the runtime approval boundary.
+canonical_text: Assistant blocked-command approval offers run-scoped Approve once and explicit Add to approved
+  list at an admissible owner home. Approved commands use the existing safety.protection.approved-commands
+  owner setting, Everywhere for path-independent normalized identities with declared Project additions; path-,
+  executable-location- or Computer-dependent entries target This computer or the exact Project, never Everywhere.
+  No YOLO skip creates a list entry. Exact normalized whole-command matching, Settings revocation and permission/guard
+  intersection remain mandatory.
 gui_related: true
-gui_classification_reason: >-
-  This unit defines GUI and chat UX for approved commands and settings list management.
+gui_classification_reason: Approval, scope, provenance or action feedback is visible on the owning GUI surface.
 split_recommended: false
-depends_on: []
+depends_on:
+- PS-144
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: assistant_approved_commands_ux_and_settings_list
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0065"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0065
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S3/S16
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "Approved-commands list (Assistant chat)"
-- "approve this run"
-- "add to approved list"
-- "approvedCommands"
-- "whitelist overrides blocklist"
-- "exact match or normalized match"
-- "strip extra whitespace"
-- "\"Blocked: <command>\""
-- "\"Approve once\""
-- "\"Approve and add to list\""
-- "scrollable list"
-- "remove button per row"
-- "filesafe.approvedCommands"
-- "puppet-master.yaml"
+- Approved-commands list (Assistant chat)
+- approve this run
+- add to approved list
+- approvedCommands
+- whitelist overrides blocklist
+- exact match or normalized match
+- strip extra whitespace
+- '"Blocked: <command>"'
+- '"Approve once"'
+- '"Approve and add to list"'
+- scrollable list
+- remove button per row
+- filesafe.approvedCommands
+- puppet-master.yaml
 negative_constraints:
-- "Do not weaken F2-116 exact normalized approved-command matching into prefix or substring matching."
+- Do not weaken F2-116 exact normalized approved-command matching into prefix or substring matching.
 compatibility_only_notes:
-- "Any dedicated approved-command file is a projection or implementation detail, not a competing settings authority."
-- "The phrase whitelist overrides blocklist is source-lineage shorthand only; active canon allows only exact normalized approved command identities."
+- Any dedicated approved-command file is a projection or implementation detail, not a competing settings authority.
+- The phrase whitelist overrides blocklist is source-lineage shorthand only; active canon allows only exact
+  normalized approved command identities.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-123 - Prompt Pipeline Owns Moved Context Compilation Canon
@@ -7256,51 +7333,61 @@ plan_unit_id: F2-130
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  Worktree-aware write scope resolves plan paths relative to working_directory, canonicalizes
-  fail-closed with GuardError::SymlinkResolution, compares against normalized allowed_files from
-  request metadata, and does not store request-scoped allowlists inside FileGuard.
+canonical_text: Allowed-file declarations come from finalized canonical request context, resolve relative to
+  explicit working_directory on the actual Host/Environment, and compare canonical paths within the admitted
+  worktree/Project or application chat/granted roots. Planless app work derives declarations from its task
+  and roots; it does not fabricate current-plan metadata or reuse a Project root. Realpath/nearest-parent create
+  handling, fail-closed empty input, TOCTOU recheck and request-local allowlists remain. No mutable allowed_files
+  state is stored in FileGuard.
 gui_related: false
-gui_classification_reason: >-
-  This unit defines backend worktree path canonicalization behavior.
+gui_classification_reason: This unit defines backend worktree path canonicalization behavior.
 split_recommended: false
-depends_on: []
+depends_on:
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: worktree_aware_write_scope_canonicalization
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0071"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0071
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/Q11/N21 reversal
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
 preserved_exact_tokens:
-- "Worktree-aware write scope"
-- "working_directory"
-- "worktree path"
-- "project root"
-- "canonicalize()"
-- "GuardError::SymlinkResolution"
-- "allowed_files"
-- "FileGuard does not store request-scoped allowlists"
-- "request metadata"
+- Worktree-aware write scope
+- working_directory
+- worktree path
+- project root
+- canonicalize()
+- GuardError::SymlinkResolution
+- allowed_files
+- FileGuard does not store request-scoped allowlists
+- request metadata
 negative_constraints:
-- "Worktree write-scope checks must not fall back to unresolved aliases."
+- Worktree write-scope checks must not fall back to unresolved aliases.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 N6/Q11/N21 reversal: current behavior is the replacement canonical_text; superseded source remains
+  lineage only. Superseded clause: Worktree-aware write scope resolves plan paths relative to working_directory,
+  canonicalizes fail-closed with GuardError::SymlinkResolution, compares against normalized allowed_files from
+  request metadata, and does not store request-scoped allowlists inside FileGuard.'
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-131 - Worktree Cleanup And Evidence Schema Coordination
@@ -7489,50 +7576,57 @@ plan_unit_id: F2-134
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  The FileSafe GUI config struct remains GuiConfig.filesafe: FileSafeConfig with
-  BashGuardConfig, FileGuardConfig, SecurityFilterConfig, and approved_commands: Vec<String> as
-  defined in earlier config sections.
+canonical_text: 'GuiConfig.filesafe: FileSafeConfig with BashGuardConfig, FileGuardConfig, SecurityFilterConfig
+  and approved_commands: Vec<String> remains the effective run-config view. Its values come from the single
+  Settings resolver for exact Computer/Project/chat/run context, with declared more_careful safety ordering
+  and separately owned additive patterns; it is not a single-file authority or independent writer.'
 gui_related: false
-gui_classification_reason: >-
-  This unit defines config schema preservation rather than GUI layout.
+gui_classification_reason: This unit defines config schema preservation rather than GUI layout.
 split_recommended: false
-depends_on: []
+depends_on:
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: filesafe_config_struct_preservation
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0072"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0072
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S3/S7
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "GuiConfig.filesafe: FileSafeConfig"
-- "BashGuardConfig"
-- "FileGuardConfig"
-- "SecurityFilterConfig"
-- "approved_commands: Vec<String>"
-- "Config struct (unchanged)"
-- "§2.4"
-- "§5.2"
+- 'GuiConfig.filesafe: FileSafeConfig'
+- BashGuardConfig
+- FileGuardConfig
+- SecurityFilterConfig
+- 'approved_commands: Vec<String>'
+- Config struct (unchanged)
+- §2.4
+- §5.2
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 S3/S7: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: The FileSafe GUI config struct remains GuiConfig.filesafe: FileSafeConfig with BashGuardConfig,
+  FileGuardConfig, SecurityFilterConfig, and approved_commands: Vec<String> as defined in earlier config sections.'
 owner_boundary_notes:
-- "Config schema/runtime bridge boundary; not visual layout."
+- Config schema/runtime bridge boundary; not visual layout.
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-135 - Assistant Chat YOLO Approval And Terminal Block Output
@@ -7607,56 +7701,68 @@ plan_unit_id: F2-136
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  The dashboard may show compact FileSafe status linked to Settings > Advanced > FileSafe, and
-  FileSafe-related UI messages update guard toggles, destructive override, strict mode,
-  interview allowance, approved command removal/addition, event-log viewing, and config
-  persistence with other Advanced tab changes.
+canonical_text: Dashboard/chat show resolved FileSafe status with the existing Settings > Advanced > FileSafe
+  route. Guard edits, strict mode, interview policy and approved-list changes use the Settings owner transaction
+  at an explicit admitted level, with current revisions, origin feedback and Undo. Destructive overrides remain
+  Permissions-authenticated operator grants. Event-log viewing consumes the existing inspector; no per-tab/global
+  save path creates a second writer.
 gui_related: true
-gui_classification_reason: >-
-  This unit defines GUI status and message/update flow.
+gui_classification_reason: Approval, scope, provenance or action feedback is visible on the owning GUI surface.
 split_recommended: false
-depends_on: []
+depends_on:
+- PS-144
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: dashboard_status_and_filesafe_message_flow
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0072"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0072
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S3/S4/S7/S16
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "\"FileSafe: 3/3 guards active\""
-- "Settings > Advanced > FileSafe"
-- "FileSafeBashGuardToggled(bool)"
-- "FileSafeAllowDestructiveToggled(bool)"
-- "FileSafeFileGuardToggled(bool)"
-- "FileSafeFileGuardStrictToggled(bool)"
-- "FileSafeSecurityFilterToggled(bool)"
-- "FileSafeAllowSensitiveDuringInterviewToggled(bool)"
-- "FileSafeRemoveApprovedCommand(usize)"
-- "FileSafeAddApprovedCommandClicked"
-- "FileSafeAddApprovedCommand(String)"
-- "FileSafeViewEventLog"
-- "Save Changes per tab or global"
+- '"FileSafe: 3/3 guards active"'
+- Settings > Advanced > FileSafe
+- FileSafeBashGuardToggled(bool)
+- FileSafeAllowDestructiveToggled(bool)
+- FileSafeFileGuardToggled(bool)
+- FileSafeFileGuardStrictToggled(bool)
+- FileSafeSecurityFilterToggled(bool)
+- FileSafeAllowSensitiveDuringInterviewToggled(bool)
+- FileSafeRemoveApprovedCommand(usize)
+- FileSafeAddApprovedCommandClicked
+- FileSafeAddApprovedCommand(String)
+- FileSafeViewEventLog
+- Save Changes per tab or global
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
-- "Amended 2026-10-31 (DL-270): event-log viewing, including the FileSafeViewEventLog message in this unit's tokens, opens the log and audit inspector (F3-148) filtered to FileSafe events, backed by seglog; a row will open the record inspector (F3-666) once its own production wiring row lands (SP-339). No JSONL file is its source."
+- 'Amended 2026-10-31 (DL-270): event-log viewing, including the FileSafeViewEventLog message in this unit''s
+  tokens, opens the log and audit inspector (F3-148) filtered to FileSafe events, backed by seglog; a row will
+  open the record inspector (F3-666) once its own production wiring row lands (SP-339). No JSONL file is its
+  source.'
+- '2026-11-03 S3/S4/S7/S16: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: The dashboard may show compact FileSafe status linked to Settings > Advanced > FileSafe,
+  and FileSafe-related UI messages update guard toggles, destructive override, strict mode, interview allowance,
+  approved command removal/addition, event-log viewing, and config persistence with other Advanced tab changes.'
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-137 - GUI Config To PuppetMasterConfig Runtime Wiring
@@ -7893,47 +7999,56 @@ plan_unit_id: F2-141
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  Guard configuration persists as part of GuiConfig serialized through puppet-master.yaml, with
-  safe defaults that keep guards enabled across sessions.
+canonical_text: Guard own values persist at the declared Everywhere/Computer/Project Settings writer and are
+  resolved once for the immutable run snapshot. GuiConfig and puppet-master.yaml survive only as an effective
+  in-memory/compatibility import-export view, never a second live store. Absent own values fall through; safe
+  defaults keep guards enabled. Computer-owned additive patterns and host paths do not travel as portable Everywhere
+  values.
 gui_related: false
-gui_classification_reason: >-
-  This unit defines runtime, policy, integration, or governance behavior rather than visual
-  presentation.
+gui_classification_reason: This unit defines runtime, policy, integration, or governance behavior rather than
+  visual presentation.
 split_recommended: false
-depends_on: []
+depends_on:
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: persistent_guard_config_state_and_safe_defaults
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0074"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0074
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S3/S7
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "GuiConfig"
-- "puppet-master.yaml"
-- "persist across sessions"
-- "guards enabled by default"
-- "Default values remain safe"
+- GuiConfig
+- puppet-master.yaml
+- persist across sessions
+- guards enabled by default
+- Default values remain safe
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 S3/S7: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Guard configuration persists as part of GuiConfig serialized through puppet-master.yaml,
+  with safe defaults that keep guards enabled across sessions.'
 owner_boundary_notes:
-- "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md"
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-142 - Write Scope Plan Metadata Request Context
@@ -7943,48 +8058,58 @@ plan_unit_id: F2-142
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  Write-scope checks get the current plan allowed-files metadata through canonical request context
-  and compare only canonical real paths rooted in the active worktree or project root.
+canonical_text: Allowed-file declarations come from finalized canonical request context, resolve relative to
+  explicit working_directory on the actual Host/Environment, and compare canonical paths within the admitted
+  worktree/Project or application chat/granted roots. Planless app work derives declarations from its task
+  and roots; it does not fabricate current-plan metadata or reuse a Project root. Realpath/nearest-parent create
+  handling, fail-closed empty input, TOCTOU recheck and request-local allowlists remain. No mutable allowed_files
+  state is stored in FileGuard.
 gui_related: false
-gui_classification_reason: >-
-  This unit defines runtime, policy, integration, or governance behavior rather than visual
-  presentation.
+gui_classification_reason: This unit defines runtime, policy, integration, or governance behavior rather than
+  visual presentation.
 split_recommended: false
-depends_on: []
+depends_on:
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: write_scope_plan_metadata_request_context
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0074"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0074
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/Q11/N21 reversal
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
 preserved_exact_tokens:
-- "allowed-files list"
-- "BaseRunner"
-- "canonical request context"
-- "canonical real paths"
-- "active worktree"
-- "project root"
+- allowed-files list
+- BaseRunner
+- canonical request context
+- canonical real paths
+- active worktree
+- project root
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 N6/Q11/N21 reversal: current behavior is the replacement canonical_text; superseded source remains
+  lineage only. Superseded clause: Write-scope checks get the current plan allowed-files metadata through canonical
+  request context and compare only canonical real paths rooted in the active worktree or project root.'
 owner_boundary_notes:
-- "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md"
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md'
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-143 - Cleanup And Write Scope Allowlist Coordination
@@ -8148,47 +8273,58 @@ plan_unit_id: F2-146
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  BaseRunner must receive current-plan allowed-file metadata for write-scope enforcement,
-  preserving the legacy source wording that metadata may travel via ExecutionRequest or context
-  files while standardizing on canonical request context and env/request wiring.
+canonical_text: Allowed-file declarations come from finalized canonical request context, resolve relative to
+  explicit working_directory on the actual Host/Environment, and compare canonical paths within the admitted
+  worktree/Project or application chat/granted roots. Planless app work derives declarations from its task
+  and roots; it does not fabricate current-plan metadata or reuse a Project root. Realpath/nearest-parent create
+  handling, fail-closed empty input, TOCTOU recheck and request-local allowlists remain. No mutable allowed_files
+  state is stored in FileGuard.
 gui_related: false
-gui_classification_reason: >-
-  This unit defines runtime, policy, integration, or governance behavior rather than visual
-  presentation.
+gui_classification_reason: This unit defines runtime, policy, integration, or governance behavior rather than
+  visual presentation.
 split_recommended: false
-depends_on: []
+depends_on:
+- F2-213
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: filesafe_drift
 reasoning_tier: standard
 context_scope: filesafe_standardization
 implementation_surfaces:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 node_compile_hint:
   mode: plan_metadata_access_gap_closure
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0078"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0078
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/Q11/N21 reversal
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
 preserved_exact_tokens:
-- "Write scope needs current plan's allowed files list"
-- "BaseRunner"
-- "ExecutionRequest"
-- "context files"
+- Write scope needs current plan's allowed files list
+- BaseRunner
+- ExecutionRequest
+- context files
 negative_constraints: []
 compatibility_only_notes:
-- "The source phrase “via ExecutionRequest or context files” is preserved as lineage and reconciled with the canonical request-context/env-var model."
-stale_retired_dispositions: []
+- The source phrase “via ExecutionRequest or context files” is preserved as lineage and reconciled with the
+  canonical request-context/env-var model.
+stale_retired_dispositions:
+- '2026-11-03 N6/Q11/N21 reversal: current behavior is the replacement canonical_text; superseded source remains
+  lineage only. Superseded clause: BaseRunner must receive current-plan allowed-file metadata for write-scope
+  enforcement, preserving the legacy source wording that metadata may travel via ExecutionRequest or context
+  files while standardizing on canonical request context and env/request wiring.'
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FileSafe.md"
+- Plans/FileSafe.md
 ```
 
 ### F2-147 - Config Wiring Gap Closure

@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_API_Auth_and_Flows.md`
 
-Source lines: L162-L806
+Source lines: L162-L821
 
-Source SHA256: `3109298d54ea966d7161ce851efa826bbb71ce09feba86cc2cc2b79fdaa307a2`
+Source SHA256: `d67b62830013f496d67e925f36cb00eea849875c94a5921af311ae8f29bd5271`
 
 ---
 
@@ -17,7 +17,9 @@ plan_unit_id: GAAAF-002
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_API_Auth_and_Flows.md
-canonical_text: GitHub platform operations use the github_api realm with the GitHub API provider, OAuth device-code default auth flow, no external auth-shell dependency, and secrets stored only in the OS credential store rather than seglog, redb, Tantivy, or logs.
+canonical_text: >-
+  GitHub platform operations use the github_api realm with the GitHub API provider, OAuth device-code default auth flow, no external auth-shell dependency, and secrets stored only in the OS credential store rather than seglog, redb, Tantivy, or logs.
+  New Project uses FGI-023/024 per-service fields, PJCT-010 receipt joins and the existing github_api owner; P1 does not change GHES github_host_policy or certification. A copied chosen account ID is re-resolved on the destination Computer through MA-074/MACS-006 and never transports credential bytes, CLI roots or a Git transport credential as API authority.
 gui_related: false
 gui_classification_reason: This unit defines provider/auth and credential-storage rules, not GUI presentation.
 split_recommended: true
@@ -42,6 +44,9 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0001
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0003
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - Puppet Master -- GitHub API Auth and Flows
 - github_api
@@ -71,7 +76,9 @@ plan_unit_id: GAAAF-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_API_Auth_and_Flows.md
-canonical_text: Local Git operations remain performed by the local git binary while GitHub hosting operations use the GitHub HTTPS API; GitHub Copilot auth does not authorize repository/platform mutations, github_api tokens never transfer to SSH remotes or local Git credential helpers, and GitHub_Integration remote surfaces consume FileSafe mutation-safety, write-scope, and durability contracts.
+canonical_text: >-
+  Local Git operations remain performed by the local git binary while GitHub hosting operations use the GitHub HTTPS API; GitHub Copilot auth does not authorize repository/platform mutations, github_api tokens never transfer to SSH remotes or local Git credential helpers, and GitHub_Integration remote surfaces consume FileSafe mutation-safety, write-scope, and durability contracts.
+  New Project uses FGI-023/024 per-service fields, PJCT-010 receipt joins and the existing github_api owner; P1 does not change GHES github_host_policy or certification. A copied chosen account ID is re-resolved on the destination Computer through MA-074/MACS-006 and never transports credential bytes, CLI roots or a Git transport credential as API authority.
 gui_related: true
 gui_classification_reason: This unit includes user-visible blocked/runtime and disabled-state behavior for GitHub surfaces as well as remote-surface consumer routing.
 split_recommended: true
@@ -95,6 +102,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0003
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - Local Git operations
 - GitHub HTTPS API
@@ -126,7 +136,9 @@ plan_unit_id: GAAAF-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_API_Auth_and_Flows.md
-canonical_text: GitHub command and routing dependencies stay owned by Permissions_System, UI_Command_Catalog, WorktreeGitImprovement, and Progression_Gates; wizard/thread resume URLs normalize through object and scope identity, and OAuth callback listeners are loopback-only for the active local, WSL, container, or remote-dev context.
+canonical_text: >-
+  GitHub command and routing dependencies stay owned by Permissions_System, UI_Command_Catalog, WorktreeGitImprovement, and Progression_Gates; wizard/thread resume URLs normalize through object and scope identity, and OAuth callback listeners are loopback-only for the active local, WSL, container, or remote-dev context.
+  New Project uses FGI-023/024 per-service fields, PJCT-010 receipt joins and the existing github_api owner; P1 does not change GHES github_host_policy or certification. A copied chosen account ID is re-resolved on the destination Computer through MA-074/MACS-006 and never transports credential bytes, CLI roots or a Git transport credential as API authority.
 gui_related: false
 gui_classification_reason: This unit defines command routing, owner-doc dependencies, and auth callback binding constraints, not GUI presentation.
 split_recommended: false
@@ -150,6 +162,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0004
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - Permissions_System.md
 - UI_Command_Catalog.md

@@ -1,13 +1,14 @@
 # Shard Index: Plans/settings_inventory.schema.json
 
-Generated: 2026-10-30T23:33:26Z
+Generated: 2026-11-03T22:13:31Z
 
-Source SHA256: `ab42664ca6e15f866e4e574c7d9cc1c4562e32ad263d3881b5dfeef6485de89f`
+Source SHA256: `fb670b6e1df3f7565532dabaa45e2d83a7f92e34b4b4215d1458be4a5224d240`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Lines 1-200](001-lines-1-200.md) L1-L200 `7b6bc6dc7249af1eef820242a01e08aa407f01e0c0befa7ce85e8ef9cf16c886`
-- [002 - Lines 201-221](002-lines-201-221.md) L201-L221 `e0b62e42f0eb200a1bdb6fef7733d99f38f19f0c782d04eaded9d025c08042b8`
-- [003 - Lines 222-237](003-lines-222-237.md) L222-L237 `8efb48a1721024fc6d1daa4c9bce2cb55d55f518fc94a219d96aab5db57bc147`
+- [001 - Lines 1-200](001-lines-1-200.md) L1-L200 `8b097d6cfcc91dec93ad7443ef4497e5fab4d08b6d8feece731d7d8a6b33f400`
+- [002 - Lines 201-221](002-lines-201-221.md) L201-L221 `ee281c2d1ba2b0987f4ee14acc17d23de3c14b5a80b7414d442422cc664549ad`
+- [003 - Lines 222-421](003-lines-222-421.md) L222-L421 `06f8f6116bbd35ae8de146a524ce825d4f7d8e42a6445d4ec2722ea38ac43b46`
+- [004 - Lines 422-569](004-lines-422-569.md) L422-L569 `48ec1ba5d6c2927c6b46863782057957c5a159eb941ebda69f4db3bf201fe469`

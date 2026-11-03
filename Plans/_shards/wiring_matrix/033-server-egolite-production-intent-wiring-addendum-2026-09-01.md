@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L4788-L4826
+Source lines: L5094-L5185
 
-Source SHA256: `3f8150617657a7e9de14a5815e7cc3097714249b08ea146d6967ac8137771f7b`
+Source SHA256: `3899744314444527ed5abfa724f4abdb67822efa4d7b3852a2db461438fffebe`
 
 ---
 
@@ -29,21 +29,74 @@ plan_unit_id: WM-050
 unit_type: wiring_contract
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: Production intent binds 103 unique server/Egolite primary commands to exact owner contracts, one sole planned target, complete GUI consumers, truthful handler-unavailable state, receipt/projection-only effects, and future evidence requirements while aliases, local predecessors, and rejections receive no peer production rows; the September 11 unarchive correction consumes Project-owned registry persistence rather than a local-only action.
+canonical_text: 'Production intent binds 103 unique server/Egolite primary commands to exact owner contracts,
+  one sole planned target, complete GUI consumers, truthful handler-unavailable state, receipt/projection-only
+  effects, and future evidence requirements while aliases, local predecessors, and rejections receive no peer
+  production rows; the September 11 unarchive correction consumes Project-owned registry persistence rather
+  than a local-only action.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-depends_on: [CS-073, UCC-151]
-unblocks: [UIW-016]
+depends_on:
+- CS-073
+- UCC-151
+unblocks:
+- UIW-016
 acceptance_criteria:
-  - The production matrix validates and contains all 103 unique rows with exact command, handler, schema, state, disabled-reason, effect, accessibility, and evidence fields.
-  - The exclusion list contains the complete 84 source-token partition and excludes none of the 103 primaries; cmd.project.unarchive is admitted atomically with its one production-intent row under USER-PROJECT-UNARCHIVE-REGISTRY-20260911.
-  - Touch alias bindings have exact targets with no independent handler/wiring and every intended GUI consumer appears in reverse coverage.
-  - All rows remain static production intent and handler_unavailable until native dispatcher and runtime evidence exists.
-validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.schema.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, scripts/pm-plans-verify.py, scripts/pm-touch-closure-verify.py]
+- The production matrix validates and contains all 103 unique rows with exact command, handler, schema, state,
+  disabled-reason, effect, accessibility, and evidence fields.
+- The exclusion list contains the complete 84 source-token partition and excludes none of the 103 primaries;
+  cmd.project.unarchive is admitted atomically with its one production-intent row under USER-PROJECT-UNARCHIVE-REGISTRY-20260911.
+- Touch alias bindings have exact targets with no independent handler/wiring and every intended GUI consumer
+  appears in reverse coverage.
+- All rows remain static production intent and handler_unavailable until native dispatcher and runtime evidence
+  exists.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
+validation_surfaces:
+- Plans/Wiring_Matrix.production.json
+- Plans/Wiring_Matrix.schema.json
+- Plans/Wiring_Matrix.production.exclusions.json
+- Plans/touch_closure.json
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: wiring_or_reverse_coverage_false_completion
 reasoning_tier: high
 context_scope: server_egolite_production_intent
-implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json]
-node_compile_hint: {mode: production_intent_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:server-command-gap-adjudication:rows-1-171, source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator]
-negative_constraints: [No peer alias handler., No domain handler for local presentation., No unadmitted event., No native proof from static wiring.]
+implementation_surfaces:
+- Plans/Wiring_Matrix.md
+- Plans/Wiring_Matrix.production.json
+- Plans/Wiring_Matrix.production.exclusions.json
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: production_intent_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:server-command-gap-adjudication:rows-1-171
+- source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator
+- source_ref:chat:2026-11-03-projects-pass2-approved
+negative_constraints:
+- No peer alias handler.
+- No domain handler for local presentation.
+- No unadmitted event.
+- No native proof from static wiring.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- handler_unavailable
 ```

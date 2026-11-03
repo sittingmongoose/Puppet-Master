@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L14546-L14709
+Source lines: L14737-L14919
 
-Source SHA256: `e3dd00aefe77af402142dc62c8838be67674b3d6204abfdd4b1caa9f78ae6c67`
+Source SHA256: `2d6da9a9eae44820501a3ab3b65d326476249c557a85e7d584e03761f54f7ce2`
 
 ---
 
@@ -133,42 +133,61 @@ plan_unit_id: F2-207
 unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  The mitigation bullets reading "Allow override via environment variable" in section 12.2 False
-  Positives (Plans/FileSafe.md:1995) and section 15.10 Potential Issues, Issue 1
-  (Plans/FileSafe.md:2610) are stale source-lineage superseded by the P0 fail-closed security
-  resolution (2026-07-07): PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is a request signal only and is
-  never sufficient authority by itself; a destructive override requires an authenticated operator
-  grant with auth realm, operator identity, reason, scope, duration/expiry, project/run/worktree
-  binding, and an emitted security event and receipt. Per the P0 section's fencing requirement,
-  those two bullets must be read as retired/noncanonical and are not implementation guidance.
-  This successor unit records the disposition without editing preserved prose.
+canonical_text: The two preserved mitigation bullets reading Allow override via environment variable remain
+  retired source-lineage under the P0 resolution. PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is only a request signal.
+  Operator overrides require auth realm/operator/reason/scope/expiry plus exact Project/run/worktree binding
+  or the explicit application thread/run/Computer/recorded-root union in F2-213, with a security event and
+  receipt. A verified PS-147 build-grant action uses its separate exact grant/ownership evidence, never an
+  environment-variable override. Historical override payloads remain immutable.
 gui_related: false
 gui_classification_reason: This unit dispositions stale mitigation prose; it defines no visible behavior.
-depends_on: []
+depends_on:
+- F2-213
+- PS-147
 unblocks: []
 acceptance_criteria:
-  - The two env-var override bullets are read as retired/noncanonical lineage; the P0 fail-closed resolution remains the live canon.
-  - No implementation treats an environment variable as sufficient override authority.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+- The two env-var override bullets are read as retired/noncanonical lineage; the P0 fail-closed resolution
+  remains the live canon.
+- No implementation treats an environment variable as sufficient override authority.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by
+  this PlanUnit.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
 risk_class: filesafe_fail_open_regression
 reasoning_tier: standard
 context_scope: filesafe_stale_override_disposition
-implementation_surfaces: [Plans/FileSafe.md]
-node_compile_hint: {mode: filesafe_stale_override_disposition, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/FileSafe.md
+node_compile_hint:
+  mode: filesafe_stale_override_disposition
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - Plans/FileSafe.md:1995
-  - Plans/FileSafe.md:2610
-  - Plans/FileSafe.md P0 fail-closed security resolution (2026-07-07), lines 102-116
+- Plans/FileSafe.md:1995
+- Plans/FileSafe.md:2610
+- Plans/FileSafe.md P0 fail-closed security resolution (2026-07-07), lines 102-116
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
 preserved_exact_tokens:
-  - "PUPPET_MASTER_ALLOW_DESTRUCTIVE"
+- PUPPET_MASTER_ALLOW_DESTRUCTIVE
 negative_constraints:
-  - Do not edit the preserved section 12.2 or 15.10 prose; supersession lives in this unit.
-  - Do not cite the retired bullets as behavior authority in new spec or implementation text.
+- Do not edit the preserved section 12.2 or 15.10 prose; supersession lives in this unit.
+- Do not cite the retired bullets as behavior authority in new spec or implementation text.
 compatibility_only_notes: []
 owner_boundary_notes: []
-owner_hints: [Plans/FileSafe.md]
+owner_hints:
+- Plans/FileSafe.md
+stale_retired_dispositions:
+- '2026-11-03 N6/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: The mitigation bullets reading "Allow override via environment variable" in section
+  12.2 False Positives (Plans/FileSafe.md:1995) and section 15.10 Potential Issues, Issue 1 (Plans/FileSafe.md:2610)
+  are stale source-lineage superseded by the P0 fail-closed security resolution (2026-07-07): PUPPET_MASTER_ALLOW_DESTRUCTIVE=1
+  is a request signal only and is never sufficient authority by itself; a destructive override requires an
+  authenticated operator grant with auth realm, operator identity, reason, scope, duration/expiry, project/run/worktree
+  binding, and an emitted security event and receipt. Per the P0 section''s fencing requirement, those two
+  bullets must be read as retired/noncanonical and are not implementation guidance. This successor unit records
+  the disposition without editing preserved prose.'
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2292-L2323
+Source lines: L2294-L2326
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -36,6 +36,7 @@ Safe points and restore points use distinct storage key prefixes:
 |------|-----------|-------|
 | Safe point | `sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}` | Runtime-internal, scoped to run/node/attempt |
 | Restore point | `rp:{project_id}:{restore_point_id}` | User-facing, scoped to project |
+| App restore point | `restore_point_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}` | User-facing application sibling under SP-349; no overlap with rp: or sp: |
 
 These namespaces MUST NOT overlap. Queries for safe points MUST use the `sp:` prefix; queries for restore points MUST use the `rp:` prefix.
 

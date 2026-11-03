@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L15668-L15987
+Source lines: L15733-L16050
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -19,12 +19,8 @@ plan_unit_id: SP-219
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: History uses a project-scoped unified read projection for wizard documents, Orchestrator runs, artifacts,
-  evidence, source lineage, package manifests, retention/archive state, and currentness/action availability. The
-  projection is not the mutable authority; it preserves stable refs to immutable source records and is rebuildable
-  from wizard save/approval, run lifecycle, artifact/evidence write, archive/unarchive, lineage, and manifest events.
-  Stale, corrupt, incomplete, or out-of-sync projection state is detected and surfaced; rebuild never rewrites immutable
-  source history or approved/final outputs.
+canonical_text: |-
+  History uses a project-scoped unified read projection for wizard documents, Orchestrator runs, artifacts, evidence, source lineage, package manifests, retention/archive state, and currentness/action availability. The projection is not the mutable authority; it preserves stable refs to immutable source records and is rebuildable from wizard save/approval, run lifecycle, artifact/evidence write, archive/unarchive, lineage, and manifest events. Stale, corrupt, incomplete, or out-of-sync projection state is detected and surfaced; rebuild never rewrites immutable source history or approved/final outputs. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App History reads actual app sources, while explicit cross-Project results use T-185 coverage. Neither result projection grants remote action authority or recategorizes old Usage.
 gui_related: false
 gui_classification_reason: Projection storage, rebuild, and identity rules are storage/read-model behavior; GUI
   consumers are separate.
@@ -80,6 +76,8 @@ source_lineage:
 - chat:history-source-index-answer
 - chat:history-projection-lifecycle-answer
 - chat:history-degraded-mode-answer
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids:
 - atom-0008
 - atom-0009

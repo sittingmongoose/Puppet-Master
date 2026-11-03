@@ -2,9 +2,9 @@
 
 Source: `Plans/Skills_System.md`
 
-Source lines: L2500-L2510
+Source lines: L2521-L2531
 
-Source SHA256: `8beb0fcd8afb1cc6ddfcf7bc20710d2e41f07bb4059c08d5007d508804b3d0e6`
+Source SHA256: `3991b8ab1648e297aa22614fd680256e74b0f67915ae13cde762545eb44e50d8`
 
 ---
 

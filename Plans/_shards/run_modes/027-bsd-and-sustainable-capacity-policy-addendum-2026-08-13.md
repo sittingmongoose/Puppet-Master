@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Modes.md`
 
-Source lines: L1184-L1263
+Source lines: L1720-L1830
 
-Source SHA256: `10748eec1ef7dd884950815c40a6feab7cc682868ab976a9482d71a17902f144`
+Source SHA256: `b075a6bdaa47c419844faffa96ddcd921297c0cbdeb48300758aa14fb43d2948`
 
 ---
 
@@ -62,29 +62,60 @@ plan_unit_id: RM-051
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Run_Modes.md
-canonical_text: >-
-  Configured concurrency values are hard ceilings; effective sustainable concurrency remains capacity-, permit-, pressure-, lease-, dependency-, cost-, and topology-aware. Admission reserves interactive control and parent synthesis/testing/verification/repair, holds provider permits only around requests, and runs required specialists in bounded waves instead of dropping them.
+canonical_text: Configured concurrency remains a hard ceiling, with capacity/permit/pressure/lease/dependency/cost/topology
+  admission and reserved interactive/synthesis/testing/verification/repair capacity. App Goal/Crew/Plan/scheduled
+  tasks and Project grant-covered builds share the existing governor and ObservableWork projection; neither
+  grants nor no-project threads mint extra capacity or unlimited buckets.
 gui_related: true
-gui_classification_reason: Effective limits, queues, waves, waits, reductions, and reserve-pressure reasons are user-visible work state.
-depends_on: [RM-012, RM-013, SIR-006, SIR-007]
-unblocks: [OSI-434]
+gui_classification_reason: Effective limits, queues, waves, waits, reductions, and reserve-pressure reasons
+  are user-visible work state.
+depends_on:
+- RM-012
+- RM-013
+- SIR-006
+- SIR-007
+- RM-053
+unblocks:
+- OSI-434
 acceptance_criteria:
-  - Effective concurrency never exceeds hard ceilings and can reduce under host/provider/memory/process pressure.
-  - Parent/child provider-permit deadlock is impossible because permits wrap requests rather than agent lifetime.
-  - Saturation preserves interactive pause/stop/approval and parent synthesis/testing/repair reserve.
-  - Required specialists execute in visible bounded waves and physical child environments share parent budgets.
-validation_surfaces: [python3 scripts/pm-plan-index.py validate, future sustainable-concurrency and reserve-pressure fixtures]
+- Effective concurrency never exceeds hard ceilings and can reduce under host/provider/memory/process pressure.
+- Parent/child provider-permit deadlock is impossible because permits wrap requests rather than agent lifetime.
+- Saturation preserves interactive pause/stop/approval and parent synthesis/testing/repair reserve.
+- Required specialists execute in visible bounded waves and physical child environments share parent budgets.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- future sustainable-concurrency and reserve-pressure fixtures
 risk_class: unsustainable_concurrency_or_reserve_starvation
 reasoning_tier: high
 context_scope: sustainable_run_capacity
-implementation_surfaces: [Plans/Run_Modes.md, Plans/Shared_Integration_Runtime.md, Plans/orchestrator-subagent-integration.md]
-node_compile_hint: {mode: sustainable_run_capacity_policy, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Run_Modes.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: sustainable_run_capacity_policy
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/09_TEST_MIGRATION_AND_ACCEPTANCE_MATRIX.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
-preserved_exact_tokens: [sustainable concurrency, reserve, required specialists run in waves, provider request permits]
-negative_constraints: [Do not treat caps as guaranteed capacity., Do not drop required specialists., Do not create a second governor or ObservableWork owner.]
-owner_hints: [Plans/Run_Modes.md, Plans/Shared_Integration_Runtime.md, Plans/orchestrator-subagent-integration.md]
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/09_TEST_MIGRATION_AND_ACCEPTANCE_MATRIX.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N24/O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
+preserved_exact_tokens:
+- sustainable concurrency
+- reserve
+- required specialists run in waves
+- provider request permits
+negative_constraints:
+- Do not treat caps as guaranteed capacity.
+- Do not drop required specialists.
+- Do not create a second governor or ObservableWork owner.
+owner_hints:
+- Plans/Run_Modes.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/orchestrator-subagent-integration.md
 ```

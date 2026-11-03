@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L22959-L23140
+Source lines: L22892-L23068
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -100,15 +100,8 @@ plan_unit_id: SP-285
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage defines two separately installed transient retained-custody readers for already-admitted
-  native restore creation and expired/deleted custody. Complete original creation and fresh lifecycle controls
-  apply at their respective original boundaries; ordinary later reads authenticate exact immutable retained canonical
-  rows and full current source without disposed original controls. All current callers adopt the exact
-  passive types explicitly. Current registration/install/migration/backup/origin/access/quarantine/row/source
-  facts remain bound through final disclosure. Physical retirement additionally rechecks fresh complete
-  release/selection/all protecting refs in the same lease, followed by Storage revalidation and the unchanged
-  atomic summary gate. Pending recovery explicitly installs the SP-286 original full-value resolver at terminal staging and final publication, using the same actual v2 receipt owner.
-  New lifecycle B1/E1 consumes admitted retained creation under its exact purpose and fresh gates; installed pending recovery authenticates direct actual rows/source/token and derives complete terminal afterimages before dependent helpers, preserving original receipt custody without disposed original controls.
+canonical_text: |-
+  Storage defines two separately installed transient retained-custody readers for already-admitted native restore creation and expired/deleted custody. Complete original creation and fresh lifecycle controls apply at their respective original boundaries; ordinary later reads authenticate exact immutable retained canonical rows and full current source without disposed original controls. All current callers adopt the exact passive types explicitly. Current registration/install/migration/backup/origin/access/quarantine/row/source facts remain bound through final disclosure. Physical retirement additionally rechecks fresh complete release/selection/all protecting refs in the same lease, followed by Storage revalidation and the unchanged atomic summary gate. Pending recovery explicitly installs the SP-286 original full-value resolver at terminal staging and final publication, using the same actual v2 receipt owner. New lifecycle B1/E1 consumes admitted retained creation under its exact purpose and fresh gates; installed pending recovery authenticates direct actual rows/source/token and derives complete terminal afterimages before dependent helpers, preserving original receipt custody without disposed original controls. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App restore lifecycle has its own complete original create/expiry/delete/source/checkpoint/result wrappers under CV-366, the same shared 2,048 app bucket, 7,776,000-second reference-release threshold and every current hold; immutable historical Project source predicates stay exact.
 gui_related: false
 gui_classification_reason: Defines Storage custody/read phase and owner verification contracts; existing
   Chat and Runtime Artifacts units own presentation.
@@ -169,6 +162,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - storage.first_append_receipt.resolve_full_value.v1
 - owner.storage.restore_point_lifecycle_from_retained_creation@1.0.0

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5969-L6747
+Source lines: L6555-L7422
 
-Source SHA256: `3f8150617657a7e9de14a5815e7cc3097714249b08ea146d6967ac8137771f7b`
+Source SHA256: `3899744314444527ed5abfa724f4abdb67822efa4d7b3852a2db461438fffebe`
 
 ---
 
@@ -248,159 +248,234 @@ plan_unit_id: WM-090
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: >-
-  Every Home control of the universal panel system (DL-180) has exactly one wiring row: a production
-  entry in Plans/Wiring_Matrix.production.json when it dispatches a command, otherwise a typed local
-  action or a view-local disposition with no entry, as this addendum's tables list them. The tab
-  strip, the tab menu, the "+" menu with each row's body (where tab) and its trailing cell,
-  Alt+click or Alt+Enter (where panel), Quick Open, the empty-panel launcher, the "+N" list and the
-  every-tab list, the panel grip and Move panel, dividers with their keys, the panel menu, the named
-  layouts and Restore home layout, the title bar's Home options menu, the chat column (show and
-  hide, width, Pop out, Dock back, keep open in narrow windows), the narrow switcher and the
-  keyboard map with its web-client mapping are covered. Tabs commit through cmd.panel_tab.open,
-  cmd.panel_tab.close, cmd.panel_tab.move and the rest of the cmd.panel_tab.* family, and panels
-  through cmd.workspace_layout.split, cmd.workspace_layout.move_surface,
-  cmd.workspace_layout.resize_surface, cmd.workspace_layout.set_collapsed,
-  cmd.workspace_layout.reset and the rest of the cmd.workspace_layout.* family (UCC-200). Commits
-  run the gesture transaction of UIW-012: previews, menus, lists and hovering dispatch nothing, a
-  changed release dispatches one command, a cancelled or unchanged gesture restores the earlier
-  picture with no dispatch, and a failed commit rolls back. Every committed structural change emits
-  the one existing event workspace.layout_changed with its v2 payload (CV-361) and writes
-  pm.home_workspace_layout.v2 once (SP-330); an open that only reveals a tab emits nothing;
-  cmd.panel.switch is receipt only; cmd.panel.undock and cmd.panel.redock emit panel.undocked and
-  panel.redocked for the chat only. ui.panel_tab.activate, ui.workspace_layout.maximize and
-  ui.workspace_layout.focus_panel are typed local actions with no entry. Fifty-one home.* entries of
-  the fixed-zone model retire and are recorded in the reconciliation file; five are rebuilt on the
-  v2 model. ui.chat_column.pin_history is a typed local action (view state); its value is the v2
-  record's chat column history_pinned, saved as view state in the v2 record's chat column, with no
-  workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize. It
-  has no production entry, like the other typed local actions. Output opens or reveals `output`. The
-  channel picker switches its channel with `ui.output.select_channel`, a typed local action with no
-  production entry, receipt or event. "Open in new tab" uses `cmd.panel_tab.open` with
-  `output:<channel>`; it emits workspace.layout_changed only when it adds a tab (UCC-200, F3-635).
-  Amended 2026-10-10 (DL-186, DL-187; lead rulings F1, F2, F6 and F7): the census grows by the
-  answers of 2026-10-10, with 21 new home.* entries (129 in all; amended 2026-10-10, lead ruling,
-  for the Undo after Start from; it read: with 20 new home.* entries (128 in all)). The "+" menu's
-  SSH hosts row and New dashboard, and the empty-panel launcher's sub-row links, each have an entry;
-  the "+" menu's and the launcher's Dashboard row bodies open or reveal dashboard:home; the Terminal
-  rows list installed shells; the Debug Console rows open or reveal the one debug-console tab, whose
-  session sub-tab dispatches nothing. A dashboard tab's command-bearing controls have
-  home.dashboard_tab.* entries: Add widget (cmd.widget.add), a dashboard and New dashboard in its
-  Board menu (cmd.panel_tab.open), Start from and Start from this preset (cmd.widget.reset_layout
-  with set_id), Tidy (cmd.widget.move with arrange), Reset widgets (cmd.widget.reset_layout), Rename
-  dashboard... (cmd.panel_tab.rename), Delete dashboard... (cmd.panel_tab.close, after its confirm),
-  the Undo after Start from (cmd.widget.reset_layout with restore_revision; added 2026-10-10, lead
-  ruling) and an Agents card (cmd.agents.open_thread); the widget commands name the board in their
-  existing room field and emit no workspace.layout_changed. Range and Scope
-  (ui.widget_board.set_view) and the preset save, rename and delete (ui.widget_preset.*) are typed
-  local actions with no entry; Live readings is the Usage page's view_only Live / Paused; the Undo
-  in the notice that follows Start from is home.dashboard_tab.undo_start_from, one
-  cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision } while the notice
-  is up, never with set_id, refused without dispatch and disabled with a reason when any other board
-  change was committed since, excluding the preset hold's settling resizes, with a receipt and no
-  event (amended 2026-10-10, lead ruling; it read: the Undo after Start from has no entry until the
-  lead rules). The rail's Chat entry dispatches cmd.panel.switch on every page; Keep the chat open
-  in narrow windows, in the Home options menu and the chat header's menu, is the typed local action
-  ui.chat_column.keep_open with no entry; the chat's pop-out is never saved. The same dashboard Undo
-  notice and existing Undo route serve Start from and a Reset widgets that changed anything: one
-  cmd.widget.reset_layout { scope: 'room', room: <board_id>, restore_revision }, one receipt and no
-  workspace.layout_changed, never set_id with restore_revision. The revision and its envelope are
-  captured before that operation and written back and read by the board owner after acceptance. Any
-  other committed board change disables Undo without dispatch, except the preset hold's settling
-  resizes; eligibility is rechecked while the notice is up on commit, pointer or focus entering and
-  click (WS-030, F3-638). The census includes F3-632's Back and equivalent level-navigation keys in
-  + pickers, launcher pickers, Move panel, Layouts, Move to panel, Show all tabs and kind submenus.
-  They resolve to ui.panel_tab.picker_back, a typed local navigation action with no production
-  entry, Settings write, receipt or event; final row selection alone uses its existing command.
-  F3-647 owns drawing, F3-635 keys, and the exact controls are listed in pm7_control_bindings.json.
+canonical_text: 'Every Home control of the universal panel system (DL-180) has exactly one wiring row: a production
+  entry in Plans/Wiring_Matrix.production.json when it dispatches a command, otherwise a typed local action
+  or a view-local disposition with no entry, as this addendum''s tables list them. The tab strip, the tab menu,
+  the "+" menu with each row''s body (where tab) and its trailing cell, Alt+click or Alt+Enter (where panel),
+  Quick Open, the empty-panel launcher, the "+N" list and the every-tab list, the panel grip and Move panel,
+  dividers with their keys, the panel menu, the named layouts and Restore home layout, the title bar''s Home
+  options menu, the chat column (show and hide, width, Pop out, Dock back, keep open in narrow windows), the
+  narrow switcher and the keyboard map with its web-client mapping are covered. Tabs commit through cmd.panel_tab.open,
+  cmd.panel_tab.close, cmd.panel_tab.move and the rest of the cmd.panel_tab.* family, and panels through cmd.workspace_layout.split,
+  cmd.workspace_layout.move_surface, cmd.workspace_layout.resize_surface, cmd.workspace_layout.set_collapsed,
+  cmd.workspace_layout.reset and the rest of the cmd.workspace_layout.* family (UCC-200). Commits run the gesture
+  transaction of UIW-012: previews, menus, lists and hovering dispatch nothing, a changed release dispatches
+  one command, a cancelled or unchanged gesture restores the earlier picture with no dispatch, and a failed
+  commit rolls back. Every committed structural change emits the one existing event workspace.layout_changed
+  with its v2 payload (CV-361) and writes pm.home_workspace_layout.v2 once (SP-330); an open that only reveals
+  a tab emits nothing; cmd.panel.switch is receipt only; cmd.panel.undock and cmd.panel.redock emit panel.undocked
+  and panel.redocked for the chat only. ui.panel_tab.activate, ui.workspace_layout.maximize and ui.workspace_layout.focus_panel
+  are typed local actions with no entry. Fifty-one home.* entries of the fixed-zone model retire and are recorded
+  in the reconciliation file; five are rebuilt on the v2 model. ui.chat_column.pin_history is a typed local
+  action (view state); its value is the v2 record''s chat column history_pinned, saved as view state in the
+  v2 record''s chat column, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize.
+  It has no production entry, like the other typed local actions. Output opens or reveals `output`. The channel
+  picker switches its channel with `ui.output.select_channel`, a typed local action with no production entry,
+  receipt or event. "Open in new tab" uses `cmd.panel_tab.open` with `output:<channel>`; it emits workspace.layout_changed
+  only when it adds a tab (UCC-200, F3-635). Amended 2026-10-10 (DL-186, DL-187; lead rulings F1, F2, F6 and
+  F7): the census grows by the answers of 2026-10-10, with 21 new home.* entries (129 in all; amended 2026-10-10,
+  lead ruling, for the Undo after Start from; it read: with 20 new home.* entries (128 in all)). The "+" menu''s
+  SSH hosts row and New dashboard, and the empty-panel launcher''s sub-row links, each have an entry; the "+"
+  menu''s and the launcher''s Dashboard row bodies open or reveal dashboard:home; the Terminal rows list installed
+  shells; the Debug Console rows open or reveal the one debug-console tab, whose session sub-tab dispatches
+  nothing. A dashboard tab''s command-bearing controls have home.dashboard_tab.* entries: Add widget (cmd.widget.add),
+  a dashboard and New dashboard in its Board menu (cmd.panel_tab.open), Start from and Start from this preset
+  (cmd.widget.reset_layout with set_id), Tidy (cmd.widget.move with arrange), Reset widgets (cmd.widget.reset_layout),
+  Rename dashboard... (cmd.panel_tab.rename), Delete dashboard... (cmd.panel_tab.close, after its confirm),
+  the Undo after Start from (cmd.widget.reset_layout with restore_revision; added 2026-10-10, lead ruling)
+  and an Agents card (cmd.agents.open_thread); the widget commands name the board in their existing room field
+  and emit no workspace.layout_changed. Range and Scope (ui.widget_board.set_view) and the preset save, rename
+  and delete (ui.widget_preset.*) are typed local actions with no entry; Live readings is the Usage page''s
+  view_only Live / Paused; the Undo in the notice that follows Start from is home.dashboard_tab.undo_start_from,
+  one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision } while the notice is
+  up, never with set_id, refused without dispatch and disabled with a reason when any other board change was
+  committed since, excluding the preset hold''s settling resizes, with a receipt and no event (amended 2026-10-10,
+  lead ruling; it read: the Undo after Start from has no entry until the lead rules). The rail''s Chat entry
+  dispatches cmd.panel.switch on every page; Keep the chat open in narrow windows, in the Home options menu
+  and the chat header''s menu, is the typed local action ui.chat_column.keep_open with no entry; the chat''s
+  pop-out is never saved. The same dashboard Undo notice and existing Undo route serve Start from and a Reset
+  widgets that changed anything: one cmd.widget.reset_layout { scope: ''room'', room: <board_id>, restore_revision
+  }, one receipt and no workspace.layout_changed, never set_id with restore_revision. The revision and its
+  envelope are captured before that operation and written back and read by the board owner after acceptance.
+  Any other committed board change disables Undo without dispatch, except the preset hold''s settling resizes;
+  eligibility is rechecked while the notice is up on commit, pointer or focus entering and click (WS-030, F3-638).
+  The census includes F3-632''s Back and equivalent level-navigation keys in + pickers, launcher pickers, Move
+  panel, Layouts, Move to panel, Show all tabs and kind submenus. They resolve to ui.panel_tab.picker_back,
+  a typed local navigation action with no production entry, Settings write, receipt or event; final row selection
+  alone uses its existing command. F3-647 owns drawing, F3-635 keys, and the exact controls are listed in pm7_control_bindings.json.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: "Binds every visible control of the universal panels, the chat column and the Home keys to exactly one command or typed local action."
+gui_classification_reason: Binds every visible control of the universal panels, the chat column and the Home
+  keys to exactly one command or typed local action.
 split_recommended: false
-depends_on: [DL-180, DL-186, DL-187, UCC-200, UCC-202, UCC-203, CS-100, CS-101, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-638, F3-502, CV-360, CV-361, SP-330, UIW-012, UIW-040, UIW-041, WM-045]
-unblocks: [ATS-075]
+depends_on:
+- DL-180
+- DL-186
+- DL-187
+- UCC-200
+- UCC-202
+- UCC-203
+- CS-100
+- CS-101
+- F3-630
+- F3-631
+- F3-632
+- F3-633
+- F3-634
+- F3-635
+- F3-636
+- F3-637
+- F3-638
+- F3-502
+- CV-360
+- CV-361
+- SP-330
+- UIW-012
+- UIW-040
+- UIW-041
+- WM-045
+unblocks:
+- ATS-075
 acceptance_criteria:
-  - "Every control in the Home tables maps to exactly one production entry, typed local action or view-local disposition, and every home.* production entry appears in the tables."
-  - "No production entry exists for ui.panel_tab.activate, ui.workspace_layout.maximize, ui.workspace_layout.focus_panel, a menu or list opening, a hover or a drag preview."
-  - "Every entry of a cmd.panel_tab.* or cmd.workspace_layout.* command declares exactly workspace.layout_changed; every cmd.panel_tab.open and open-route entry declares workspace.layout_changed for an added tab and nothing for a reveal."
-  - "No production entry names editor_panel_1 to editor_panel_4, a dock host, the floating host, a terminal section, a workgroup, Collapse Bottom Terminal or a chat grab."
-  - "In the web client the four browser-owned chords are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`, and the key entries say so."
-  - "All rows sharing a command name one handler."
-  - "Output opens or reveals output; its picker switch is ui.output.select_channel without a production entry, and Open in new tab dispatches cmd.panel_tab.open with output:<channel>."
-  - "Every dashboard tab control in the dashboard tab table maps to its one entry, typed local action or view-local disposition, the Undo after Start from to home.dashboard_tab.undo_start_from (cmd.widget.reset_layout with restore_revision and no set_id; amended 2026-10-10, lead ruling; it read: except the Undo after Start from, which waits for the lead's ruling); the home.dashboard_tab.* entries of a cmd.widget.* command declare no event and those of a cmd.panel_tab.* or cmd.agents.open_thread command declare workspace.layout_changed."
-  - "The \"+\" menu's and the launcher's Dashboard row bodies open or reveal dashboard:home, New dashboard makes a custom dashboard, and every launcher sub-row link dispatches what its menu sub-row dispatches, as a new tab in this panel."
-  - "The rail's Chat entry dispatches cmd.panel.switch on every page; Keep the chat open in narrow windows and the Debug Console's session sub-tab have no production entry and no Settings transaction."
+- Every control in the Home tables maps to exactly one production entry, typed local action or view-local disposition,
+  and every home.* production entry appears in the tables.
+- No production entry exists for ui.panel_tab.activate, ui.workspace_layout.maximize, ui.workspace_layout.focus_panel,
+  a menu or list opening, a hover or a drag preview.
+- Every entry of a cmd.panel_tab.* or cmd.workspace_layout.* command declares exactly workspace.layout_changed;
+  every cmd.panel_tab.open and open-route entry declares workspace.layout_changed for an added tab and nothing
+  for a reveal.
+- No production entry names editor_panel_1 to editor_panel_4, a dock host, the floating host, a terminal section,
+  a workgroup, Collapse Bottom Terminal or a chat grab.
+- In the web client the four browser-owned chords are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`, and
+  the key entries say so.
+- All rows sharing a command name one handler.
+- Output opens or reveals output; its picker switch is ui.output.select_channel without a production entry,
+  and Open in new tab dispatches cmd.panel_tab.open with output:<channel>.
+- 'Every dashboard tab control in the dashboard tab table maps to its one entry, typed local action or view-local
+  disposition, the Undo after Start from to home.dashboard_tab.undo_start_from (cmd.widget.reset_layout with
+  restore_revision and no set_id; amended 2026-10-10, lead ruling; it read: except the Undo after Start from,
+  which waits for the lead''s ruling); the home.dashboard_tab.* entries of a cmd.widget.* command declare no
+  event and those of a cmd.panel_tab.* or cmd.agents.open_thread command declare workspace.layout_changed.'
+- The "+" menu's and the launcher's Dashboard row bodies open or reveal dashboard:home, New dashboard makes
+  a custom dashboard, and every launcher sub-row link dispatches what its menu sub-row dispatches, as a new
+  tab in this panel.
+- The rail's Chat entry dispatches cmd.panel.switch on every page; Keep the chat open in narrow windows and
+  the Debug Console's session sub-tab have no production entry and no Settings transaction.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: home_panels_terminal_redesign_drift
 reasoning_tier: high
 context_scope: home_panels_terminal
 implementation_surfaces:
-  - Plans/Wiring_Matrix.md
-  - Plans/Wiring_Matrix.production.json
+- Plans/Wiring_Matrix.md
+- Plans/Wiring_Matrix.production.json
 node_compile_hint:
   mode: static_wiring_intent_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json (superseded fixed-model Home reconciliation; control_census.retired_rows_2026_10_09 retains the retired rows)
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9 and 13; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; the \"+\" menu, Commands and keys; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md (SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8; section 6.2 items 2, 7 and 10)"
-  - "Plans/Decision_Log.md#DL-186"
-  - "Plans/Decision_Log.md#DL-187"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D39, D40)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the \"+\" menu's shells and SSH hosts, the launcher links, the Debug Console sub-tabs, the rail's Chat entry; concept lineage only)"
-  - "The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10): set_id, presets, rename and delete through the tab commands"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+- Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json (superseded fixed-model Home reconciliation;
+  control_census.retired_rows_2026_10_09 retains the retired rows)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md,
+  SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md
+  (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9 and 13; concept
+  lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md
+  (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; the "+" menu, Commands and keys;
+  concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md (SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8;
+  section 6.2 items 2, 7 and 10)
+- Plans/Decision_Log.md#DL-186
+- Plans/Decision_Log.md#DL-187
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D39, D40)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md,
+  SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the "+" menu's shells and SSH hosts,
+  the launcher links, the Debug Console sub-tabs, the rail's Chat entry; concept lineage only)
+- 'The panels thread''s build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10): set_id, presets,
+  rename and delete through the tab commands'
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "home.dashboard_tab.start_from"
-  - "home.dashboard_tab.undo_start_from"
-  - "restore_revision"
-  - "home.plus_menu.new_dashboard"
-  - "home.plus_menu.ssh_host"
-  - "ui.chat_column.keep_open"
-  - "Open in new tab"
-  - "output:<channel>"
-  - "output"
-  - "ui.output.select_channel"
-  - "cmd.panel_tab.open"
-  - "cmd.panel_tab.close"
-  - "cmd.panel_tab.move"
-  - "cmd.workspace_layout.split"
-  - "cmd.workspace_layout.move_surface"
-  - "cmd.workspace_layout.resize_surface"
-  - "cmd.workspace_layout.set_collapsed"
-  - "cmd.workspace_layout.reset"
-  - "ui.panel_tab.activate"
-  - "ui.workspace_layout.maximize"
-  - "ui.workspace_layout.focus_panel"
-  - "workspace.layout_changed"
-  - "pm.home_workspace_layout.v2"
+- home.dashboard_tab.start_from
+- home.dashboard_tab.undo_start_from
+- restore_revision
+- home.plus_menu.new_dashboard
+- home.plus_menu.ssh_host
+- ui.chat_column.keep_open
+- Open in new tab
+- output:<channel>
+- output
+- ui.output.select_channel
+- cmd.panel_tab.open
+- cmd.panel_tab.close
+- cmd.panel_tab.move
+- cmd.workspace_layout.split
+- cmd.workspace_layout.move_surface
+- cmd.workspace_layout.resize_surface
+- cmd.workspace_layout.set_collapsed
+- cmd.workspace_layout.reset
+- ui.panel_tab.activate
+- ui.workspace_layout.maximize
+- ui.workspace_layout.focus_panel
+- workspace.layout_changed
+- pm.home_workspace_layout.v2
 negative_constraints:
-  - "Do not add a production entry for a typed local action, a menu or list opening, a hover or a drag preview."
-  - "Do not wire a chat move, dock or in-window float, or a pop-out of any panel, tab or dashboard."
-  - "Do not emit workspace.layout_changed for a reveal, a cancelled or unchanged gesture, or a failed commit."
-  - "Do not use Ctrl+1..9, a Ctrl+K chord, or a bare letter or digit as a panel key."
+- Do not add a production entry for a typed local action, a menu or list opening, a hover or a drag preview.
+- Do not wire a chat move, dock or in-window float, or a pop-out of any panel, tab or dashboard.
+- Do not emit workspace.layout_changed for a reveal, a cancelled or unchanged gesture, or a failed commit.
+- Do not use Ctrl+1..9, a Ctrl+K chord, or a bare letter or digit as a panel key.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 compatibility_only_notes:
-  - "cmd.workspace_layout.size_surface still normalizes to cmd.workspace_layout.resize_surface and has no entry."
+- cmd.workspace_layout.size_surface still normalizes to cmd.workspace_layout.resize_surface and has no entry.
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
-  - "Amended 2026-10-10 (lead ruling L9): The History pin is wired as ui.chat_column.pin_history with no production entry."
-  - "Amended 2026-10-10 (lead ruling L9, corrected to view state with no event): The History pin is saved as view state with no workspace.layout_changed event; it is no longer committed with chat_column_changed (CV-361 binds chat_column_changed to a width drag only)."
-  - "Retired 2026-10-09 (DL-180): 51 home.* entries of the fixed-zone model; the list is control_census.retired_rows_2026_10_09 in Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json."
-  - "Amended 2026-10-10 (DL-186; D35; lead rulings F1, F2 and F7): 14 home.* entries added for the dashboard tab's controls, New dashboard and the launcher's dashboard links; the Dashboard row bodies open or reveal dashboard:home; range, scope and presets are typed local actions without entries."
-  - "Amended 2026-10-10 (DL-187; D32, D33, D39, D40): 6 home.* entries added for SSH hosts and the launcher's sub-row links (shells, a host, a recent address, a recent file); installed shells in the Terminal rows; one debug-console tab whose sub-tab dispatches nothing; the rail's Chat entry on every page; Keep the chat open in narrow windows is ui.chat_column.keep_open, no longer a Settings transaction; the pop-out is never saved."
-  - "Amended 2026-10-10 (lead ruling on the Undo after Start from): 1 home.* entry added, home.dashboard_tab.undo_start_from for cmd.widget.reset_layout with restore_revision (129 home.* entries); the Undo is no longer an open item."
-  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The existing dashboard Undo restores the captured revision after Start from or a changed Reset with the same command and guard."
+- 'Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel
+  split-off uses output:<channel>.'
+- 'Amended 2026-10-10 (lead ruling L9): The History pin is wired as ui.chat_column.pin_history with no production
+  entry.'
+- 'Amended 2026-10-10 (lead ruling L9, corrected to view state with no event): The History pin is saved as
+  view state with no workspace.layout_changed event; it is no longer committed with chat_column_changed (CV-361
+  binds chat_column_changed to a width drag only).'
+- 'Retired 2026-10-09 (DL-180): 51 home.* entries of the fixed-zone model; the list is control_census.retired_rows_2026_10_09
+  in Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json.'
+- 'Amended 2026-10-10 (DL-186; D35; lead rulings F1, F2 and F7): 14 home.* entries added for the dashboard
+  tab''s controls, New dashboard and the launcher''s dashboard links; the Dashboard row bodies open or reveal
+  dashboard:home; range, scope and presets are typed local actions without entries.'
+- 'Amended 2026-10-10 (DL-187; D32, D33, D39, D40): 6 home.* entries added for SSH hosts and the launcher''s
+  sub-row links (shells, a host, a recent address, a recent file); installed shells in the Terminal rows; one
+  debug-console tab whose sub-tab dispatches nothing; the rail''s Chat entry on every page; Keep the chat open
+  in narrow windows is ui.chat_column.keep_open, no longer a Settings transaction; the pop-out is never saved.'
+- 'Amended 2026-10-10 (lead ruling on the Undo after Start from): 1 home.* entry added, home.dashboard_tab.undo_start_from
+  for cmd.widget.reset_layout with restore_revision (129 home.* entries); the Undo is no longer an open item.'
+- 'Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The existing dashboard Undo restores the captured
+  revision after Start from or a changed Reset with the same command and guard.'
 owner_hints:
-  - Plans/Wiring_Matrix.md
-  - Plans/Wiring_Matrix.production.json
+- Plans/Wiring_Matrix.md
+- Plans/Wiring_Matrix.production.json
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-186, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/UI_Command_Catalog.md#UCC-203, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-638, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/UI_Wiring_Rules.md#UIW-040
@@ -712,36 +787,44 @@ plan_unit_id: WM-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: >-
-  Plans/pm7_control_bindings.json is this unit's enumerated companion table; UIW-043 owns its completeness
-  rule. This editor fields/reset/quick sets bind to production editor.appearance.field and
-  cmd.editor.appearance.set. This terminal binds to terminal.appearance.field; import to
-  terminal.appearance.import_scheme. All scopes, every corresponding Settings row and
-  general.visual.wallpaper bind to catalog.settings_transaction_preview then
-  catalog.settings_transaction_apply, over the exact ids named in each census row. Menu/Settings entry,
+canonical_text: 'Plans/pm7_control_bindings.json is this unit''s enumerated companion table; UIW-043 owns its
+  completeness rule. This editor fields/reset/quick sets bind to production editor.appearance.field and cmd.editor.appearance.set.
+  This terminal binds to terminal.appearance.field; import to terminal.appearance.import_scheme. All scopes,
+  every corresponding Settings row and general.visual.wallpaper bind to catalog.settings_transaction_preview
+  then catalog.settings_transaction_apply, over the exact ids named in each census row. Menu/Settings entry,
   scope, search, sample trial, token-kind selection and noncommitted previews are CS-102 local actions with
-  no production dispatch row. The notification inbox's dismiss/Delete binds catalog.alert_dismiss; Clear
-  all composes it per captured eligible item, while toast close/swipe remains local and domain actions
-  reuse catalog.alert_acknowledge, catalog.alert_snooze and their existing owner commands. DnD commits
-  reuse UCC-200's panel_tab.move/workspace_layout split or move_surface according to target; cancel/hover
-  commit nothing. Divider/chat/rail/history resize controls keep their existing layout command/view-state
-  ownership, with keyboard alternatives; F3-657 adds presentation only. A rendered control disabled for no
-  Project, stale state, locked target or owner permission dispatches nothing and announces the projected
-  reason. All new evidence is planned production evidence, never inferred from a concept callback or
-  screenshot. Plans/appearance_quick_sets.json supplies the exact composite payloads consumed by the
-  binding rows; each scope names precisely those affected ids. The extended background/bezel/mask controls
-  have exact per-field bindings to those same writers. Saved-preset Apply uses their exact whole-scope
-  replacement adapter; Save/Rename/Delete/Undo are CS-102 local library actions, excluded from production
-  command rows but enumerated in the census. F3-632 picker Back is also enumerated as local navigation,
-  with its keyboard equivalents and no layout mutation. The NieR background control consumes SSYS-054’s
-  admitted two-setting patch through the existing Settings preview/apply pair, not a second wallpaper
-  command. The existing rail Chat producer remains home.chat.activity_toggle; its selected state reflects
-  visibility and the removed Dashboard button has no replacement producer. The retired cmd.theme.preview
-  producer is removed from production wiring and its sole obsolete Touch Closure obligation/profile; its
-  rejected packet token is retained and explicitly excluded as lineage under UCC-204; this does not exclude
-  either Settings transaction command. PM7 B1/B2/B6, S5, D5/G4: extend the shell control census with the
-  project box/row-key paths, Settings/wand/titlebar Pip editor and two status work items; decorative
-  Pip/loader draw no controls. WM-097 lists the exact new bindings and owner routes.
+  no production dispatch row. The notification inbox''s dismiss/Delete binds catalog.alert_dismiss; Clear all
+  composes it per captured eligible item, while toast close/swipe remains local and domain actions reuse catalog.alert_acknowledge,
+  catalog.alert_snooze and their existing owner commands. DnD commits reuse UCC-200''s panel_tab.move/workspace_layout
+  split or move_surface according to target; cancel/hover commit nothing. Divider/chat/rail/history resize
+  controls keep their existing layout command/view-state ownership, with keyboard alternatives; F3-657 adds
+  presentation only. A rendered control disabled for an intrinsically required missing Project target, stale
+  state, locked target or owner permission dispatches nothing and announces the projected reason. All new evidence
+  is planned production evidence, never inferred from a concept callback or screenshot. Plans/appearance_quick_sets.json
+  supplies the exact composite payloads consumed by the binding rows; each scope names precisely those affected
+  ids. The extended background/bezel/mask controls have exact per-field bindings to those same writers. Saved-preset
+  Apply uses their exact whole-scope replacement adapter; Save/Rename/Delete/Undo are CS-102 local library
+  actions, excluded from production command rows but enumerated in the census. F3-632 picker Back is also enumerated
+  as local navigation, with its keyboard equivalents and no layout mutation. The NieR background control consumes
+  SSYS-054’s admitted two-setting patch through the existing Settings preview/apply pair, not a second wallpaper
+  command. The existing rail Chat producer remains home.chat.activity_toggle; its selected state reflects visibility
+  and the removed Dashboard button has no replacement producer. The retired cmd.theme.preview producer is removed
+  from production wiring and its sole obsolete Touch Closure obligation/profile; its rejected packet token
+  is retained and explicitly excluded as lineage under UCC-204; this does not exclude either Settings transaction
+  command. PM7 B1/B2/B6, S5, D5/G4: extend the shell control census with the project box/row-key paths, Settings/wand/titlebar
+  Pip editor and two status work items; decorative Pip/loader draw no controls. WM-097 lists the exact new
+  bindings and owner routes.
+
+
+  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single
+  resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere.
+  Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project
+  versions and sole owner. Computer installations, credentials and protected source trust never travel in copy.
+  Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.*
+  local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact
+  consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay
+  resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable
+  handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Appearance controls and Settings bindings.
 split_recommended: false
@@ -751,6 +834,9 @@ acceptance_criteria:
 - Each census command route resolves a production entry with typed payload, owner state, accessibility and
   effect assertions.
 - This/All, Clear all races, drop/cancel and no-Project paths have explicit planned fixtures.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -780,8 +866,11 @@ source_lineage:
   4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md, SHA-256
   29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native certification)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens: []
-negative_constraints: []
+negative_constraints:
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
 - Plans/Wiring_Matrix.md
 ```

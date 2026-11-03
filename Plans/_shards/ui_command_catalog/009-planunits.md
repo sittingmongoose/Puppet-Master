@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1269-L6959
+Source lines: L1269-L7084
 
-Source SHA256: `e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84`
+Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
 
 ---
 
@@ -474,9 +474,25 @@ plan_unit_id: UCC-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Mutating domain_action commands must apply catalog-wide projection-freshness gating before dispatch, and catalog verification must cover UX flow, storage/audit, tools/permissions/provider/identity, and cross-doc routing semantics.
+canonical_text: 'Mutating domain_action commands must apply catalog-wide projection-freshness gating before
+  dispatch, and catalog verification must cover UX flow, storage/audit, tools/permissions/provider/identity,
+  and cross-doc routing semantics.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring,
+  or surface behavior.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -486,8 +502,13 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UCC-011 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -501,6 +522,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0010
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - domain_action
 - projection-freshness
@@ -509,7 +531,9 @@ preserved_exact_tokens:
 - refresh/revalidation
 - UX / flow / action-surface behavior
 - state / storage / command / audit-trail behavior
-negative_constraints: []
+negative_constraints:
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions:
@@ -577,11 +601,26 @@ plan_unit_id: UCC-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  Wrapper commands may carry shared panel-context vocabulary for deep-link and cross-surface focus; tab_id is stable page-tab focus, and route-shaped payloads keep route_target, OpenSubject, and panel-context identity distinct from shell/view-state hints.
-  Amended 2026-10-09 (DL-180): a home panel tab is named panel_tab_id and a home panel panel_id; neither is route tab_id, panel-context vocabulary or the rail's cmd.panel.switch panel_id (UCC-200).
+canonical_text: 'Wrapper commands may carry shared panel-context vocabulary for deep-link and cross-surface
+  focus; tab_id is stable page-tab focus, and route-shaped payloads keep route_target, OpenSubject, and panel-context
+  identity distinct from shell/view-state hints. Amended 2026-10-09 (DL-180): a home panel tab is named panel_tab_id
+  and a home panel panel_id; neither is route tab_id, panel-context vocabulary or the rail''s cmd.panel.switch
+  panel_id (UCC-200).
+
+
+  Current projects-refresh contract: One Permissions admission distinguishes actual human, task mode and human-approved
+  build_grant. YOLO permits ordinary push/publish and needed create without another ordinary yes; force-with-lease
+  only on a PM-created-for-this-work branch, never main/default/protected. Retain risky asks outside an exact
+  grant-created-resource exception and retain FileSafe/trust/secrets/DAE/capabilities/explicit Always. Approve/expand/renew
+  a Project build grant remains human-only and binds exact Plan/hash/build/resources/permission/Stop; cleanup
+  requires verified created UID/generation. What the build did is the existing ObservableWork/History projection;
+  Start/Stop stay with the run owner, no new build event/log engine. Preview, target/receipt links and truthful
+  Undo/No safe Undo remain visible. The exact consumer contract is UCC-217/WM-103 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring,
+  or surface behavior.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -592,8 +631,13 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UCC-013 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-217; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -607,6 +651,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0011
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - panel-context
 - project_id
@@ -620,12 +665,16 @@ preserved_exact_tokens:
 - /view-state
 - /switch_subview
 negative_constraints:
-- Panel-context is shared wrapper vocabulary only and is not a new cmd.nav family or replacement for route_target or OpenSubject.
+- Panel-context is shared wrapper vocabulary only and is not a new cmd.nav family or replacement for route_target
+  or OpenSubject.
 - View-state and selected-subview hints must not be used as runtime-local mutation payloads.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-180): panel_tab_id and panel_id name home panel tabs and panels, kept apart from route tab_id and panel-context."
+- 'Amended 2026-10-09 (DL-180): panel_tab_id and panel_id name home panel tabs and panels, kept apart from
+  route tab_id and panel-context.'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -1042,9 +1091,25 @@ plan_unit_id: UCC-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Uncataloged owner signals and extraction hazards remain registration or retirement obligations; prose, filenames, examples, indexes, deprecated-ID markers, and cmd.*.json/schema.json names do not become command IDs merely by appearing in source text.
+canonical_text: 'Uncataloged owner signals and extraction hazards remain registration or retirement obligations;
+  prose, filenames, examples, indexes, deprecated-ID markers, and cmd.*.json/schema.json names do not become
+  command IDs merely by appearing in source text.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring,
+  or surface behavior.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -1054,8 +1119,13 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UCC-021 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1069,6 +1139,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0015
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - cmd.orchestrator.preview_open
 - cmd.orchestrator.preview_stop
@@ -1090,7 +1161,10 @@ preserved_exact_tokens:
 - schema.json
 - workspace-tab
 negative_constraints:
-- Extraction hazards are not valid command IDs merely because they appear in prose, filenames, examples, or index summaries.
+- Extraction hazards are not valid command IDs merely because they appear in prose, filenames, examples, or
+  index summaries.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -1405,9 +1479,25 @@ plan_unit_id: UCC-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Orchestrator shell-view commands bind to upstream data-source owners, source-lineage packet names stay noncanonical, Run Graph and page conflicts resolve toward runtime and route primitives, command-system ghost IDs resolve through catalog aliases/retirements, and widget shell navigation stays route-aware.
+canonical_text: 'Orchestrator shell-view commands bind to upstream data-source owners, source-lineage packet
+  names stay noncanonical, Run Graph and page conflicts resolve toward runtime and route primitives, command-system
+  ghost IDs resolve through catalog aliases/retirements, and widget shell navigation stays route-aware.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring,
+  or surface behavior.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -1417,8 +1507,13 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UCC-027 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1432,6 +1527,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0015
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - /history/evidence
 - Ledger
@@ -1455,6 +1551,8 @@ negative_constraints:
 - Source-lineage packet names and process inventory files remain noncanonical.
 - Command-system backfill must not create a second command system.
 - cmd.panel.switch must not become a hidden object-targeting command when a stable route command exists.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -3094,9 +3192,26 @@ plan_unit_id: UCC-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Chat thread lifecycle and discovery commands create, archive, delete, rename, pin, export, and search threads while preserving lineage and stable identity; cmd.chat.delete is a separately confirmed whole-thread action that immediately removes ordinary projections, requests physical content purge within 24 hours unless held, and preserves a content-free tombstone plus non-content authority receipts.
+canonical_text: 'Chat thread lifecycle and discovery commands create, archive, delete, rename, pin, export,
+  and search threads while preserving lineage and stable identity; cmd.chat.delete is a separately confirmed
+  whole-thread action that immediately removes ordinary projections, requests physical content purge within
+  24 hours unless held, and preserves a content-free tombstone plus non-content authority receipts.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: false
-gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility,
+  or owner-boundary rules without primary visual presentation.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -3106,9 +3221,15 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UCC-056 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
-- cmd.chat.delete remains distinct from unsupported message-level delete and discloses legal-hold-delayed physical purge without promising ordinary unarchive.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- cmd.chat.delete remains distinct from unsupported message-level delete and discloses legal-hold-delayed physical
+  purge without promising ordinary unarchive.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3122,6 +3243,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0034
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - cmd.chat.{new,archive,delete,rename,pin,export,search}
 - cmd.chat.new
@@ -3141,7 +3263,10 @@ preserved_exact_tokens:
 - storage.deletion_lifecycle_changed
 negative_constraints:
 - Grouped chat lifecycle token does not denote message-level delete or file-restore behavior.
-- Thread deletion must not clear legal, recovery, worktree, backup, or audit authority merely to satisfy the purge target.
+- Thread deletion must not clear legal, recovery, worktree, backup, or audit authority merely to satisfy the
+  purge target.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []

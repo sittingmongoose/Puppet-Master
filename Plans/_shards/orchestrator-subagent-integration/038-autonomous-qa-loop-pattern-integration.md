@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L5817-L6206
+Source lines: L5824-L6215
 
-Source SHA256: `f932a74573f86d7dc4a4bfa3088531138d1c22add1185e7613ed76ae56a3abe9`
+Source SHA256: `d07e09bc0879a8662e29cc47c8fd3ef1b8d0520f0501c34823aa00caedf610b1`
 
 ---
 
@@ -372,7 +372,9 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 4. **Commit Amending**: Track which commits are reworks vs new work
 5. **Inspector Subagents**: Could use specialized subagents for inspection (code-reviewer, qa-expert)
 
-### Updated Configuration
+### Project-era configuration example (compatibility/source lineage only)
+
+The following .puppet-master/config.yaml additions preserve the earlier Project representation, not a current universal settings home or direct writer. QA/progress/commit preferences now consume the Settings-owned exact admitted levels and frozen run context; app work skips Project. Actual QA/run state and current Stop/pause remain their owners' operational records.
 
 ```yaml
 # .puppet-master/config.yaml (additions)

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34815-L35954
+Source lines: L34638-L35762
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -450,25 +450,8 @@ plan_unit_id: F3-488
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Breakpoint types are line, conditional (expression and/or hit-count), logpoint (a
-  log message with {} interpolation that does not pause), function breakpoint, and
-  exception breakpoints (adapter-provided filters rendered as checkbox rows). The
-  breakpoints shelf lists all breakpoints with an activation toggle per row, a type
-  glyph (logpoint diamond, conditional badge showing the condition), a file:line
-  label that opens the source in the editor on click, and an inline edit strip
-  (mode selector: Expression / Hit Count / Log Message, plus a single-line input;
-  Enter commits, Esc cancels) reachable from a per-row edit action. Header actions:
-  Add Function Breakpoint, Toggle All Activations, Remove All. Breakpoint states
-  are enabled, disabled (dimmed), and unverified (hollow, adapter-rejected at
-  session time, with the reason on hover). Breakpoints are project state that
-  persists across sessions and app restarts; storage keys are referenced from
-  Plans/storage-plan.md, not restated. Editor-gutter sync: the gutter marker and
-  the shelf row are two renderers of the same breakpoint record; the record is the
-  truth with a single owner, and toggling either renderer updates both.
-  Amended 2026-10-09 (DL-162): in the rail the conditional badge is the condition written out after the location and
-  function as when followed by the expression, with no capsule (F3-619); the logpoint diamond and the hollow
-  unverified mark stay.
+canonical_text: |-
+  Breakpoint types are line, conditional (expression and/or hit-count), logpoint (a log message with {} interpolation that does not pause), function breakpoint, and exception breakpoints (adapter-provided filters rendered as checkbox rows). The breakpoints shelf lists all breakpoints with an activation toggle per row, a type glyph (logpoint diamond, conditional badge showing the condition), a file:line label that opens the source in the editor on click, and an inline edit strip (mode selector: Expression / Hit Count / Log Message, plus a single-line input; Enter commits, Esc cancels) reachable from a per-row edit action. Header actions: Add Function Breakpoint, Toggle All Activations, Remove All. Breakpoint states are enabled, disabled (dimmed), and unverified (hollow, adapter-rejected at session time, with the reason on hover). Breakpoints are project state that persists across sessions and app restarts; storage keys are referenced from Plans/storage-plan.md, not restated. Editor-gutter sync: the gutter marker and the shelf row are two renderers of the same breakpoint record; the record is the truth with a single owner, and toggling either renderer updates both. Amended 2026-10-09 (DL-162): in the rail the conditional badge is the condition written out after the location and function as when followed by the expression, with no capsule (F3-619); the logpoint diamond and the hollow unverified mark stay. App debugging binds an explicitly supported absolute file/root and real adapter session. Project-owned launch presets still require their real Project target. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This unit defines the visible breakpoint shelf rows, glyphs, edit strip, and gutter-sync rendering contract.
 split_recommended: false
@@ -493,10 +476,12 @@ node_compile_hint:
   mode: breakpoint_canon
   create_worknodes: false
 source_lineage:
-- "user-decision:2026-07-27-run-debug-revival"
-- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
-- "nvim-dap-ui (research lineage)"
-- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
+- user-decision:2026-07-27-run-debug-revival
+- microsoft/vscode src/vs/workbench/contrib/debug (research lineage)
+- nvim-dap-ui (research lineage)
+- Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Expression"
 - "Hit Count"

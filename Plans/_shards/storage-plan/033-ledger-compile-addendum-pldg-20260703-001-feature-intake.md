@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16410-L16892
+Source lines: L16458-L16935
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -432,15 +432,8 @@ plan_unit_id: SP-232
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  storage-plan owns the storage boundary for active-agent coordination canon: coordination EventRecords in seglog,
-  authoritative redb projections for agent/file/operation/snapshot read models, a coordination projector checkpoint, and
-  optional debug/export mirror metadata. `project_state`, `active-agents.json`, `agent-messages.json`, and
-  `.puppet-master/state/*.json` paths are compatibility/debug/export surfaces only and must not own runtime coordination
-  truth. Amended 2026-10-31 (DL-270, SP-339): `active-agents.json`, `agent-messages.json` and the
-  `.puppet-master/state/*.json` files are retired as live files. Coordination state is read through `pm db dump`,
-  `pm inspect`, `pm tail` and `pm export`; only `pm export` writes JSON, on request, and it emits no event, so
-  `coordination.debug_mirror_exported` is retired (SP-339).
+canonical_text: |-
+  storage-plan owns the storage boundary for active-agent coordination canon: coordination EventRecords in seglog, authoritative redb projections for agent/file/operation/snapshot read models, a coordination projector checkpoint, and optional debug/export mirror metadata. `project_state`, `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` paths are compatibility/debug/export surfaces only and must not own runtime coordination truth. Amended 2026-10-31 (DL-270, SP-339): `active-agents.json`, `agent-messages.json` and the `.puppet-master/state/*.json` files are retired as live files. Coordination state is read through `pm db dump`, `pm inspect`, `pm tail` and `pm export`; only `pm export` writes JSON, on request, and it emits no event, so `coordination.debug_mirror_exported` is retired (SP-339). The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app agent/file/operation/snapshot/board/checkpoint keys include Server/crew/run/root identity. The same coordinator is the sole appender; read tokens/checkpoint coverage and 16 KiB/BLAKE3 bounds apply. No second crew database or live active-agents.json.
 gui_related: false
 gui_classification_reason: This unit defines backend storage records and mirror/export boundaries, not GUI presentation.
 depends_on: [SP-230, SP-231, CV-309, OSI-432]
@@ -470,8 +463,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - fablereport.md
-  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6
+- fablereport.md
+- Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids: []
 preserved_exact_tokens:
   - "active-agents.json"

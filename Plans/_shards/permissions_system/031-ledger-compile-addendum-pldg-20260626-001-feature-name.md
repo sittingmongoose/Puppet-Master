@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L7930-L8307
+Source lines: L8283-L8676
 
-Source SHA256: `a2f40fb89918b299f4b90af9d0d7d7c85b75ad57f8312f598490040ea1d74bca`
+Source SHA256: `30d3beb8e135f0dd30e7757570a3b6b7e2830c5655547b4ebb81b675b748cbed`
 
 ---
 
@@ -128,24 +128,26 @@ plan_unit_id: PS-121
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: Before PM sends a local image or screenshot to a separate vision provider, it evaluates project
-  policy, sensitivity/redaction state, source class, destination provider/account, and user disclosure permission.
-  The popup offers choices like reject, accept, and always accept; exact wording may differ. Always accept is explicit,
-  scoped by project_id, user/account identity, source class, destination provider/account or provider-family policy,
-  tool id, and sensitivity/redaction class, then remains visible, auditable, and revocable/resettable. PM must not
-  silently reroute images to a destination outside the accepted permission scope.
+canonical_text: Before a local image/screenshot reaches a separate vision provider, evaluate the actual application/Project
+  policy, source sensitivity/redaction, source class, provider/account and scoped human disclosure. Always
+  accept is explicit, visible and revocable, with no preselected This project/This computer/Everywhere choice;
+  paths never offer Everywhere. Its key retains user/account/source class/destination/tool/redaction class
+  and the selected scope; no-project binds thread/Computer, never a made-up Project. Task YOLO may skip an
+  ordinary computer_use ask but never creates, broadens or substitutes the provider/screen disclosure grant.
+  Changed provider/account/source sensitivity invalidates reuse.
 gui_related: true
-gui_classification_reason: Defines the user-visible disclosure popup, reject/accept/always-accept choices, settings
-  visibility, and revocation UI.
-depends_on: []
+gui_classification_reason: Approval, scope, provenance or action feedback is visible on the owning GUI surface.
+depends_on:
+- PS-144
+- PS-145
 unblocks:
 - RAP-035
 - ACD-425
 acceptance_criteria:
 - Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
 - Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build
+  tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -177,6 +179,9 @@ source_lineage:
 - Plans/FileSafe.md
 - Plans/Models_System.md
 - Plans/Media_Generation_and_Capabilities.md
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S16/N10
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 source_atom_ids:
 - atom-0077
 - atom-0079
@@ -226,15 +231,15 @@ preserved_exact_tokens:
 - policy permits
 - disclosure permission covers the destination
 negative_constraints:
-- Do not silently send screenshots containing secrets or sensitive local/project context to another provider route.
+- Do not silently send screenshots containing secrets or sensitive local/project context to another provider
+  route.
 - Do not bypass the existing tool permission model just because the bridge is model-assistive.
 - Do not serialize revoked, blocked, expired, or omitted image artifacts as successful prompt content.
-- Do not make always-accept global, irreversible, hidden, or impossible to revoke.
 - Do not create an implicit always-accept rule without an explicit user choice.
 - Do not make always-accept hidden, global by accident, irreversible, or impossible to audit.
 - Do not keep prompting after an applicable always-accept rule exists.
-- Do not make always-accept global across all projects, providers, users, source types, or sensitivity classes by
-  accident.
+- Do not make always-accept global across all projects, providers, users, source types, or sensitivity classes
+  by accident.
 - Do not create a hidden permission rule that cannot be inspected or revoked.
 - Do not keep prompting after an applicable remembered permission exists.
 - Do not silently send sensitive screenshots or images to another provider without policy evaluation.
@@ -243,6 +248,8 @@ negative_constraints:
 - Do not silently reroute an image to a different provider/account than the user allowed.
 - Do not treat provider catalog visibility as proof that a route can currently process image input.
 - Do not hide usage/cost attribution when the bridge uses a separate model route.
+- An explicitly chosen Everywhere rule is bounded by all non-path source/provider/user/sensitivity dimensions;
+  no accidental broadening.
 owner_hints:
 - Plans/Permissions_System.md
 - Plans/FileSafe.md
@@ -256,6 +263,15 @@ owner_hints:
 - Plans/Models_System.md
 - Plans/Media_Generation_and_Capabilities.md
 - Plans/usage-feature.md
+stale_retired_dispositions:
+- '2026-11-03 S16/N10: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Before PM sends a local image or screenshot to a separate vision provider, it evaluates
+  project policy, sensitivity/redaction state, source class, destination provider/account, and user disclosure
+  permission. The popup offers choices like reject, accept, and always accept; exact wording may differ. Always
+  accept is explicit, scoped by project_id, user/account identity, source class, destination provider/account
+  or provider-family policy, tool id, and sensitivity/redaction class, then remains visible, auditable, and
+  revocable/resettable. PM must not silently reroute images to a destination outside the accepted permission
+  scope.'
 ```
 
 ### PS-122 - Teach Guided Mutation Confirmation Gates

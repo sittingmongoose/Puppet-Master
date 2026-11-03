@@ -4,17 +4,17 @@ Source: `Plans/agent-rules-context.md`
 
 Source lines: L28-L37
 
-Source SHA256: `af088bfdefbd05fb66d86da2f524238b1f51e9006f900ca84a88fc982b910b97`
+Source SHA256: `4678a9510ad12ec8ecb86b8035f2180b66caf762f79ad23e77d2f24722ff87a0`
 
 ---
 
 ## Executive Summary
 
-Rule: Agents invoked by Puppet Master (orchestrator iterations, interview, Assistant) MUST receive **two durable rule scopes** so that global and project-specific policies are always applied.
+Rule: Every invocation uses the single rules pipeline with Everywhere and actual Computer application context, and real Project rules only when bound. In No project, `project_path=None` is normal and no application, thread or Computer identity is guessed.
 ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§4
 
 1. **Application-level rules (Puppet Master)** -- e.g. "Always use Context7 MCP." Apply to **every agent, everywhere**. Stored and configured at the **application** (Puppet Master) level and injected into every agent invocation regardless of project.
 2. **Project-level rules** -- e.g. "Always use DRY Method." Apply to **every agent that works on that project**. Stored at the **project** (target workspace) level and injected whenever the agent is operating in the context of that project.
 
-Rule: Both layers MUST be fed into every agent on every invocation (orchestrator iteration, interview turn, Assistant chat when attached to a project) via a **single rules pipeline** (DRY).
+Rule: Every applicable instruction source is fed through the single rules pipeline for Orchestrator, Interview and Assistant, including an app Assistant invocation. App rules win on conflict as ARC-008 states; ordinary Settings narrower-level selection does not reverse instruction precedence.
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7

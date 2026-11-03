@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L3217-L3598
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -235,10 +235,8 @@ plan_unit_id: CV-006
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  Shared governance/runtime records carry the required record envelope and actor
-  envelope fields, including identity, project scope, lineage refs, status
-  timestamps, and attributable actor/runtime role fields.
+canonical_text: |-
+  Shared governance/runtime records carry the required record envelope and actor envelope fields, including identity, project scope, lineage refs, status timestamps, and attributable actor/runtime role fields. For an owner-admitted app feature, CV-365/366 selects explicit application scope and the exact application envelope/source/physical-key/append/read/retention graph; required-present project_id is null and actual thread/Server/Host/root identities remain. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge.
 gui_related: false
 gui_classification_reason: This unit defines persisted record envelope fields rather than UI presentation.
 split_recommended: true
@@ -261,7 +259,9 @@ node_compile_hint:
   mode: shared_record_envelope
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0024
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0024
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,B-F06,D-F06
 preserved_exact_tokens:
   - "`record_id`"
   - "`record_kind`"

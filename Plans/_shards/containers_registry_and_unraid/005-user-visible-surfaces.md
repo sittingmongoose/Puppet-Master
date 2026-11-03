@@ -4,7 +4,7 @@ Source: `Plans/Containers_Registry_and_Unraid.md`
 
 Source lines: L36-L244
 
-Source SHA256: `9aa7d954d0264e081d8647735683a7d0b9422b13891ceaae17bef41f4cc8bc4e`
+Source SHA256: `64b5a9a3310152bf3b30d972a4dd22c9db59ca42a1c6b53db7e851bc75fe306e`
 
 ---
 
@@ -43,7 +43,7 @@ The existing `Containers & Registry` settings area remains the primary configura
   - repository selector/discovery
   - refresh repositories action
   - create repository action
-  - create-repository toggle in settings-level configuration, kept distinct from the mandatory confirmation used when creation becomes a remote side effect
+  - create-repository setting is a default only; actual effect uses Regular protected confirmation or PS-146/147 mode/build authority at the same writer
   - repository privacy control for creation flow
   - tag template defaults (`{commit}`, `{version}`, `{timestamp}` plus any future canonical tag variables)
   - push policy (`manual` default; optional `after_build`)
@@ -97,7 +97,7 @@ Surface rules:
 - Kubernetes is a Docker Manager subview when manifests, Helm artifacts, kube-linked state, or explicit enablement are present.
 - Unraid is integrated under `Publish / Unraid`; it does not require a separate top-level panel.
 - Docker Hub is one registry/provider capability inside Docker Manager, and Docker Manager must not split build, bake, compose, run, inspect, logs, publish, pull, `Registries / Docker Hub`, or `Publishing / Unraid` into unrelated mini-surfaces.
-- Docker Manager is a first-class side-panel surface, not only Settings > Advanced. Its canonical surface includes settings-level DockerHub actions such as the create-repository toggle and `/clear` auth recovery, while remote repository creation still requires the separate protected confirmation flow.
+- Docker Manager retains its first-class panel and Settings routes, create-repository default and /clear auth recovery. Remote creation uses the same owner effect with Regular confirmation or typed PS-146 YOLO/PS-147 grant authority, never duplicate publication prompts.
 
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Permissions_System.md
 

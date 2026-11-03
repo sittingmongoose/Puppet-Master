@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25756-L25803
+Source lines: L25931-L25986
 
-Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6`
+Source SHA256: `f4e5a424ee6841b4988ce457166d26b762be0b3f0c4aa0c5d0d03132ef6be00f`
 
 ---
 
@@ -22,15 +22,17 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The existing cmd.chat.composer.destination.set and cmd.chat.thread.regenerate_title declarations
-  in UCC-156 are Assistant Chat-owned. Destination selection binds the exact thread and existing
-  workflow/participant/Plan-revision target (the destination kinds Collaborative_Workflows §4.5
-  closes) and names it visibly in composer chrome; it does not create or start that workflow or send
-  unrelated unsent input. The numbered component list that cmd.browser.component.add_to_composer
-  builds is message content attached to the composer, never a destination. Explicit title regeneration
-  consumes the existing title policy and title-model availability and clears the manual-rename lock
-  only through its owner operation. Neither command owns a second ComposerBuffer, collaborative
-  runtime, model service or artifact store.
+  The existing cmd.chat.composer.destination.set and cmd.chat.thread.regenerate_title declarations in
+  UCC-156 are Assistant Chat-owned. Destination selection binds the exact thread and existing
+  workflow/participant/Plan-revision target (the destination kinds Collaborative_Workflows §4.5 closes)
+  and names it visibly in composer chrome; it does not create or start that workflow or send unrelated
+  unsent input. The numbered component list that cmd.browser.component.add_to_composer builds is message
+  content attached to the composer, never a destination. Explicit title regeneration consumes the existing
+  title policy and title-model availability and clears the manual-rename lock only through its owner
+  operation. Neither command owns a second ComposerBuffer, collaborative runtime, model service or
+  artifact store. ACD-508 Where selects the draft's work place/Computer, not a message recipient. After
+  first message it offers conversion/continuation and cannot rewrite thread/workflow/participant/Plan
+  identity. Both controls bind real app or Project source context independently.
 gui_related: true
 gui_classification_reason: Composer destination chrome, title actions, disabled state and return focus are visible Chat behavior.
 depends_on: [UCC-156, UCC-158, DR-040, DR-041]
@@ -48,7 +50,13 @@ reasoning_tier: high
 context_scope: composer_and_title_owner_reference_repair
 implementation_surfaces: [Plans/assistant-chat-design.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
 node_compile_hint: {mode: owner_and_touch_accounting_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/UI_Command_Catalog.md#UCC-158, "Lead ruling 2026-09-27 (ledger pldg-20260927-005 q-019): the component list is message content, not a destination kind"]
+source_lineage:
+  - "USER-PACKET-GAP-CLOSURE-20260910"
+  - "Plans/UI_Command_Catalog.md#UCC-158"
+  - "Lead ruling 2026-09-27 (ledger pldg-20260927-005 q-019): the component list is message content, not a destination kind"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens: [cmd.browser.component.add_to_composer, destination_kind]
 negative_constraints: [No new command or handler., No second buffer or collaboration owner., No fabricated schema or native proof., No event or readiness admission.]
 ```

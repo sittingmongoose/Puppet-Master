@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L140-L1036
+Source lines: L142-L1045
 
-Source SHA256: `43a07fb905a5098940dacc4b2c05a638530069963510181b5e38b1a24f630bb1`
+Source SHA256: `c22fa261c6871094e282b9e6be4a42d4419bcdf31c95ac1b6a6aad89e3971c3c`
 
 ---
 
@@ -135,7 +135,10 @@ plan_unit_id: WS-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Widget_System.md
-canonical_text: 'Widget config changes presentation, local filtering, and layout only. Widget-level filters inherit page, project, and focused-run context; `/tab` filters, page/tab filters, and widget presentation config remain separate.'
+canonical_text: |-
+  Widget config changes presentation, local filtering, and layout only. Widget-level filters inherit page, project, and focused-run context; `/tab` filters, page/tab filters, and widget presentation config remain separate.
+
+  An admitted application page carries explicit scope_kind=application, project_id=null and actual Computer/thread/source refs. Page/tab/widget filters remain the same three layers, with no implicit Project or independent work scope. A Project-required source shows its actual unavailable reason instead of empty or unrelated data.
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible widget configuration and filter behavior.'
 split_recommended: false
@@ -436,7 +439,10 @@ plan_unit_id: WS-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Widget_System.md
-canonical_text: 'Layout persistence uses app-default with project override. `dashboard_layout:v1` is import or rollback only; Dashboard writes use `widget_layout:v1:dashboard`; retired Orchestrator layout namespaces remain compatibility-only; `orchestrator:progress` has its own namespace. Amended 2026-10-09 (DL-180): each dashboard board writes its own namespace `widget_layout:v1:dashboard:<board_id>`, with the app default and project override applied per board; `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home` on first read, is never reset, and stays only as a read-only migration input and rollback backup, like `dashboard_layout:v1` (WS-030). Amended 2026-10-10 (DL-186): board contents are kept per project, so each dashboard board writes `widget_layout:v1:<project_id>:<board_id>`, and a project with no saved copy of a board starts from that board''s own default set; `widget_layout:v1:dashboard` holds the old Home widgets, which leave Home, so it is converted into no board and stays only a read-only record and rollback backup; the 2026-10-09 `widget_layout:v1:dashboard:<board_id>` was never written (WS-030).'
+canonical_text: |-
+  Layout persistence uses app-default with project override. `dashboard_layout:v1` is import or rollback only; Dashboard writes use `widget_layout:v1:dashboard`; retired Orchestrator layout namespaces remain compatibility-only; `orchestrator:progress` has its own namespace. Amended 2026-10-09 (DL-180): each dashboard board writes its own namespace `widget_layout:v1:dashboard:<board_id>`, with the app default and project override applied per board; `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home` on first read, is never reset, and stays only as a read-only migration input and rollback backup, like `dashboard_layout:v1` (WS-030). Amended 2026-10-10 (DL-186): board contents are kept per project, so each dashboard board writes `widget_layout:v1:<project_id>:<board_id>`, and a project with no saved copy of a board starts from that board's own default set; `widget_layout:v1:dashboard` holds the old Home widgets, which leave Home, so it is converted into no board and stays only a read-only record and rollback backup; the 2026-10-09 `widget_layout:v1:dashboard:<board_id>` was never written (WS-030).
+
+  The exact Project board keys remain unchanged. WS-031 adds a tagged, versioned app/Server board namespace owned by storage; an app board starts from the same board default and retains its own contents. App and Project records never share a null/empty Project interpolation, and conversion never copies a source board over the destination.
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible layout persistence and migration behavior.'
 split_recommended: false
@@ -786,7 +792,8 @@ plan_unit_id: WS-014
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Widget_System.md
-canonical_text: 'Settings scope follows App / Global, Project, Seam, Package, rare targeted Node, Actor / Role, and Runtime only; Runtime only is computed truth, not user configuration.'
+canonical_text: |-
+  Ordinary preferences consume the single SSYS-059/DR-084 resolver and its declared Everywhere, Computer or Device, Project and existing owner levels. App / Global is normalized compatibility wording, not an alternative hierarchy. Seam, Package, Node and Actor / Role remain only their declared execution-owner inputs. Board layout/view/filter state belongs to its existing owners; Runtime only remains computed truth, not user configuration.
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible settings scope and runtime-only configuration boundaries.'
 split_recommended: false

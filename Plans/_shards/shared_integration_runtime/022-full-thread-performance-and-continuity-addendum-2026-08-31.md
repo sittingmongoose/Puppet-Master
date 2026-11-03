@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L817-L1091
+Source lines: L827-L1101
 
-Source SHA256: `ae043ff101e9961383abd53c59f9f78f01314f3061ce0ea7039bbb1386ea9d35`
+Source SHA256: `0eb674f95b083572d08fa10b6506de4fb7e33e53dd80f2683155ea8f8e451cd1`
 
 ---
 
@@ -36,7 +36,7 @@ Runtime identity scope is explicit. Every full-thread identity envelope carries 
 
 Chats, threads, named Plans, Goals, WorkNodes, Browser tasks, provider attempts, and agents are durable logical state machines rather than dedicated operating-system threads or processes. The canonical execution lanes are the Slint UI thread, a protected interactive control/projection reserve, the async I/O runtime, a bounded CPU work-stealing pool, a bounded blocking/platform/install pool, ordered storage append/projector/index lanes, and governed external-process pools. Consumers may request a domain ceiling, but they may not instantiate a peer pool governor or multiply independent Tokio, Rayon, Tantivy, renderer, CEF, compiler, test, LSP, provider-helper, compression, or image-library budgets without a governor mapping.
 
-The shared physical-parent budget tree prevents native hosts, WSL environments, containers, and Kubernetes workloads from each claiming the full parent CPU, memory, process, network, GPU/media, or storage budget. Admission applies Project-first then named-Plan fairness, weighted aging, temporary interaction boost, anti-starvation, completion-aware capacity, and provider/account/model/reset/cost limits. Required specialists and tests run in admitted waves; resource pressure may queue a wave but never silently remove it.
+The shared physical-parent budget tree prevents native hosts, WSL environments, containers, and Kubernetes workloads from each claiming the full parent CPU, memory, process, network, GPU/media, or storage budget. Admission applies app-or-Project peer fairness then the actual named Plan or thread/workflow child fairness, weighted aging, temporary interaction boost, anti-starvation, completion-aware capacity, and provider/account/model/reset/cost limits. Required specialists and tests run in admitted waves; resource pressure may queue a wave but never silently remove it. App work retains the same weights, aging and limits; opening new no-project chats cannot bypass a shared Computer ceiling.
 
 Resource families include CPU, memory, GPU, media, process, watcher, descriptor, queue, log, artifact, network, port, storage, index, browser, capture, provider, LSP, DAP, Eval, MCP, test host, device, container, worktree, and package-manager-root pressure. These are mapping keys into the one governor, not new resource owners. One seglog writer, one worktree writer per fenced scope, one Browser page mutation controller per page generation, one package-manager-root mutator, one Goal owner epoch, and one activation switch are serialized even while independent owners proceed concurrently.
 

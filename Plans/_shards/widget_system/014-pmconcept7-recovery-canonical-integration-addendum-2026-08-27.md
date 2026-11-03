@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1251-L1757
+Source lines: L1260-L1729
 
-Source SHA256: `43a07fb905a5098940dacc4b2c05a638530069963510181b5e38b1a24f630bb1`
+Source SHA256: `c22fa261c6871094e282b9e6be4a42d4419bcdf31c95ac1b6a6aad89e3971c3c`
 
 ---
 
@@ -416,47 +416,10 @@ plan_unit_id: WS-020
 unit_type: data_contract
 status: accepted
 owner_doc: Plans/Widget_System.md
-canonical_text: >-
-  Widget layout has one schema family with separate canonical namespaces per host. Usage writes
-  `widget_layout:v1:usage`; Dashboard writes `widget_layout:v1:dashboard`; Home shell surfaces remain under
-  `home_workspace_layout.v1`. The named public Usage contract is `UsageWidgetLayoutRecord`. Its required closed
-  fields are `layout_schema_version`, `default_set_version`, `host_id`, `room_id`, `widget_id`, `visible`,
-  `order_index`, `slot_id`, `geometry_id`, `semantic_tier_id`, `preset_id`, `configuration_refs`, and
-  `committed_revision`, with the exact types and nullability defined immediately above this unit. Each
-  `configuration_ref` resolves to an existing stable, non-secret widget-configuration identity governed by WS-004
-  and UF-060; filter payloads remain in that configuration record and are not copied into the layout record. Preview
-  rectangles, pointers or pointer coordinates, ghosts,
-  placeholders, animation state, and drafts or per-frame drafts are forbidden. A widget operation cannot write
-  the Home surface record, and a Home surface operation cannot write a widget-layout record.
-  `preset_id` names the widget kind's size preset (WS-017) whenever the settled geometry equals one of that kind's
-  presets, whether the size came from the size picker or from a pointer or keyboard resize, and is null for any size
-  in between; a "custom size" label is presentation only and is never stored as a `preset_id`. A `preset_id` is the
-  preset's stable id in the kind's preset table (`compact`, `standard`, `expanded`, `wide`, `full`, `strip`,
-  `panel`, `ladder`, or `band`), never its display name. Choosing a preset in
-  the size picker dispatches one `cmd.widget.resize` carrying that preset's geometry and `preset_id`, and the settled
-  record stores the `preset_id` together with the `semantic_tier_id` of the content tier the size shows. A chosen
-  preset survives reload and look change: the card restores with its stored `preset_id`, and when a look change moves
-  the board's pitch or a fit preset's measured height, the card keeps that `preset_id` and takes the preset's newly
-  resolved geometry instead of becoming a custom size; a keyboard resize that lands on a preset stores it the same
-  way. On restore, a saved
-  `preset_id` that the kind's current preset table no longer lists maps to the current preset with the same geometry,
-  or else to null with the geometry snapped by WS-018; a stored `preset_id` never brings back a retired preset. When
-  the default boards or a kind's preset table change, `default_set_version` changes, and a saved Usage layout from an
-  older set keeps its visibility and configuration and takes the new default geometry once.
-  Amended 2026-10-09 (DL-180): Dashboard writes one namespace per board, `widget_layout:v1:dashboard:<board_id>`
-  with `host_id` `dashboard:<board_id>`, Home shell surfaces live in `home_workspace_layout.v2`
-  (Plans/storage-plan.md#SP-330), and `widget_layout:v1:dashboard` and `home_workspace_layout.v1` are read only as
-  migration inputs (WS-030).
-  Amended 2026-10-10 (DL-186): a dashboard board is a board of the Usage board engine and writes this record family
-  per project under `widget_layout:v1:<project_id>:<board_id>`; its envelope's `host_id` is `home.dashboard`, its
-  `project_id` is the board's real project, and each record's `room_id` is the board id. The 2026-10-09
-  `widget_layout:v1:dashboard:<board_id>` with `host_id` `dashboard:<board_id>` was never written, and
-  `widget_layout:v1:dashboard` is converted into no board (WS-030).
-  Amended 2026-10-17 (DL-228): Reset this room and Reset every room, from the head's Cards menu (DL-230), put back the
-  curated default set of that room or of every room: its positions, sizes and which cards show; a card's
-  configuration stays as WS-004 keeps it. Each is one cmd.widget.reset_layout with scope room or all
-  (UI_Command_Catalog section 2.3), writing every affected record of that board once under one receipt; on a
-  dashboard the board is its one room.
+canonical_text: |-
+  Widget layout has one schema family with separate canonical namespaces per host. Usage writes `widget_layout:v1:usage`; Dashboard writes `widget_layout:v1:dashboard`; Home shell surfaces remain under `home_workspace_layout.v1`. The named public Usage contract is `UsageWidgetLayoutRecord`. Its required closed fields are `layout_schema_version`, `default_set_version`, `host_id`, `room_id`, `widget_id`, `visible`, `order_index`, `slot_id`, `geometry_id`, `semantic_tier_id`, `preset_id`, `configuration_refs`, and `committed_revision`, with the exact types and nullability defined immediately above this unit. Each `configuration_ref` resolves to an existing stable, non-secret widget-configuration identity governed by WS-004 and UF-060; filter payloads remain in that configuration record and are not copied into the layout record. Preview rectangles, pointers or pointer coordinates, ghosts, placeholders, animation state, and drafts or per-frame drafts are forbidden. A widget operation cannot write the Home surface record, and a Home surface operation cannot write a widget-layout record. `preset_id` names the widget kind's size preset (WS-017) whenever the settled geometry equals one of that kind's presets, whether the size came from the size picker or from a pointer or keyboard resize, and is null for any size in between; a "custom size" label is presentation only and is never stored as a `preset_id`. A `preset_id` is the preset's stable id in the kind's preset table (`compact`, `standard`, `expanded`, `wide`, `full`, `strip`, `panel`, `ladder`, or `band`), never its display name. Choosing a preset in the size picker dispatches one `cmd.widget.resize` carrying that preset's geometry and `preset_id`, and the settled record stores the `preset_id` together with the `semantic_tier_id` of the content tier the size shows. A chosen preset survives reload and look change: the card restores with its stored `preset_id`, and when a look change moves the board's pitch or a fit preset's measured height, the card keeps that `preset_id` and takes the preset's newly resolved geometry instead of becoming a custom size; a keyboard resize that lands on a preset stores it the same way. On restore, a saved `preset_id` that the kind's current preset table no longer lists maps to the current preset with the same geometry, or else to null with the geometry snapped by WS-018; a stored `preset_id` never brings back a retired preset. When the default boards or a kind's preset table change, `default_set_version` changes, and a saved Usage layout from an older set keeps its visibility and configuration and takes the new default geometry once. Amended 2026-10-09 (DL-180): Dashboard writes one namespace per board, `widget_layout:v1:dashboard:<board_id>` with `host_id` `dashboard:<board_id>`, Home shell surfaces live in `home_workspace_layout.v2` (Plans/storage-plan.md#SP-330), and `widget_layout:v1:dashboard` and `home_workspace_layout.v1` are read only as migration inputs (WS-030). Amended 2026-10-10 (DL-186): a dashboard board is a board of the Usage board engine and writes this record family per project under `widget_layout:v1:<project_id>:<board_id>`; its envelope's `host_id` is `home.dashboard`, its `project_id` is the board's real project, and each record's `room_id` is the board id. The 2026-10-09 `widget_layout:v1:dashboard:<board_id>` with `host_id` `dashboard:<board_id>` was never written, and `widget_layout:v1:dashboard` is converted into no board (WS-030). Amended 2026-10-17 (DL-228): Reset this room and Reset every room, from the head's Cards menu (DL-230), put back the curated default set of that room or of every room: its positions, sizes and which cards show; a card's configuration stays as WS-004 keeps it. Each is one cmd.widget.reset_layout with scope room or all (UI_Command_Catalog section 2.3), writing every affected record of that board once under one receipt; on a dashboard the board is its one room.
+
+  Application envelopes and their physical keys use the explicit scope-aware edition selected by storage and WS-031. Existing exact Project envelope fields and semantic size IDs remain unchanged. App layout writes, view state, Reset, Start from, presets and Undo use the same owners, CAS and size/capacity rules; no new widget command or runtime event follows.
 gui_related: true
 gui_classification_reason: The record determines restored widget placement, semantic size, and cross-surface ownership.
 depends_on: [UF-060, WS-004, WS-009, WS-018, WS-019, DL-186]

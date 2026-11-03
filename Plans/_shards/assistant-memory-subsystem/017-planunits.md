@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L574-L2359
+Source lines: L574-L2376
 
-Source SHA256: `6cbf9b3a7ad87b100a7c3bc1c712e41c9e29fd4df68636b207e934cabddf3ebd`
+Source SHA256: `f0493b3f44b352436041e7d206c70d7638402625d9ebba5acf3993556991abd2`
 
 ---
 
@@ -115,7 +115,11 @@ plan_unit_id: AMS-003
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Assistant memory is Assistant-only continuity and project state, separate from rules assembly, non-Assistant execution paths, seglog storage, system redb/Tantivy projections, and the shared rules pipeline.
+canonical_text: >-
+  Assistant memory is Assistant-only continuity and project state, separate from rules assembly,
+  non-Assistant execution paths, seglog storage, system redb/Tantivy projections, and the shared rules
+  pipeline. AMS-054 adds only a thread-private app working set/capsule; taught public_safe Everywhere
+  rules remain part of the rules pipeline, not shared personal memory.
 gui_related: false
 gui_classification_reason: Scope separation is backend architecture and owner-boundary behavior.
 depends_on: [AMS-002]
@@ -138,7 +142,9 @@ node_compile_hint:
   mode: assistant_memory_scope_separation
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0003
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0003
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N16
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "Assistant-only"
   - "continuity/project-state subsystem"
@@ -306,10 +312,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: >-
-  Assistant memory uses separate per-project physical stores for
-  assistant_memory.redb, assistant_memory_index, and
-  assistant_memory_vectors.usearch, preserving the system.redb project-state
-  note, file-level separation, and atomic project switching.
+  Project memory retains its separate physical stores assistant_memory.redb, assistant_memory_index
+  and assistant_memory_vectors.usearch, with written Project paths resolved through DL-270/SP-015 and
+  atomic Project-switch behavior. AMS-054 adds explicit app custody and thread-keyed access on the
+  work Computer, with separate scope-aware physical keys supplied by storage-plan. Nullable Project
+  never selects another thread or a Project store and creates no JSON/SQLite mirror. system.redb
+  remains the separate Project-state reference, and project switching selects the correct isolated
+  memory view.
 gui_related: false
 gui_classification_reason: Physical storage paths and project switching are backend storage behavior.
 depends_on: [AMS-004]
@@ -331,7 +340,9 @@ node_compile_hint:
   mode: assistant_memory_physical_stores
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0007
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0007
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N16/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - ".puppet-master/project/state/assistant_memory.redb"
   - ".puppet-master/project/state/assistant_memory_index/"
@@ -1426,15 +1437,19 @@ plan_unit_id: AMS-033
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Assistant memory configuration preserves all assistant.memory keys and deterministic project-scoped resolution for memory behavior.
+canonical_text: >-
+  Assistant memory preserves all assistant.memory.* behavior keys and resolves them deterministically
+  through the single Settings resolver at admitted Everywhere, Computer, optional Project and existing
+  narrower scopes. Resolving preferences does not merge memory tiers, stores, capsules or private
+  content across threads/Projects.
 gui_related: false
 gui_classification_reason: Memory config keys and project-scoped resolution are backend configuration behavior.
 depends_on: [AMS-029, AMS-030]
 unblocks: [AMS-034]
 acceptance_criteria:
-  - All assistant.memory config keys in the source span remain preserved.
-  - Config resolution is deterministic.
-  - Config resolution is project-scoped for memory behavior.
+- All existing assistant.memory config keys and defaults remain.
+- No-project behavior resolves without a Project step; Computer ceilings and narrower-context policy stay explicit.
+- Shared preferences cannot make another chat's gists or a Project ledger available.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1448,7 +1463,9 @@ node_compile_hint:
   mode: project_scoped_memory_config_keys
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0037
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0037
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N16
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "assistant.memory.enabled"
   - "assistant.memory.capsule_budget_tokens"

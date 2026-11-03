@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L1052-L8804
+Source lines: L1056-L8894
 
-Source SHA256: `0ae93e5637dcb0b333516aecf071c145ac679bc77caae51c7bade24ccf79f1dc`
+Source SHA256: `0398aca0a8d02e356ae284700fb6b1b57992a6eb3b3aa08ed90180c6a9cebda5`
 
 ---
 
@@ -80,11 +80,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  The app shell is workspace-tab based: each workspace tab owns one active project, project switching is a
-  workspace-tab concern rather than a title-bar project bar, and background, blocked, or failed activity
-  remains visible through persistent shell regions. Amended 2026-10-29 (B1–B6; PM7): Project box A is an
-  admitted secondary project switch entry; Projects view remains primary. Ctrl+Shift+P opens the box menu
-  without dispatch; ordinary pick switches active workspace, Ctrl/Cmd+Enter opens new workspace tab.
+  The app shell is workspace-tab based: each workspace tab owns zero or one active project, with the
+  zero case explicitly labelled No project, project switching is a workspace-tab concern rather than a
+  title-bar project bar, and background, blocked, or failed activity remains visible through
+  persistent shell regions. Amended 2026-10-29 (B1–B6; PM7): Project box A is an admitted secondary
+  project switch entry; Projects view remains primary. Ctrl+Shift+P opens the box menu without
+  dispatch; ordinary pick switches active workspace, Ctrl/Cmd+Enter opens new workspace tab. The two
+  existing switch/open-new commands accept a discriminated Project or No project target and keep the
+  same source workspace identity; a null Project is never a fake registry Project.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation
   requirements.
@@ -121,6 +124,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0003
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0004
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N1/N8/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - 1. Canonical shell and surface model
 - 1.1 Shell ownership
@@ -554,7 +559,13 @@ plan_unit_id: SMPFS-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Assistant worktrees are an MVP per-project setting surfaced through chat header, thread selector icon, Source Control accordion, breadcrumb toggle, settings, and merge/test affordances without hiding project/worktree state.
+canonical_text: >-
+  Assistant worktrees are an MVP feature whose behavior defaults consume Everywhere/Computer/Project
+  Settings surfaced through chat header, thread selector icon, Source Control accordion, breadcrumb
+  toggle, settings, and merge/test affordances without hiding project/worktree state. A PM worktree
+  mutation still requires its real Project/repository/backend binding; its absence never gates app
+  Goal, Crew, Plan/Deep Plan or scheduling. The prior per-project setting is its own Project override,
+  not a universal app-workflow gate.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -584,6 +595,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0011
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Assistant worktree integration
 - per-project setting
@@ -1894,7 +1907,13 @@ plan_unit_id: SMPFS-032
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Background activity, blocked episodes, action-needed states, attention-center rows, project-card badges, title-bar attention badges, command-palette resume/fix entries, and /fix routes normalize into visible canonical attention surfaces instead of unrelated UI hints.
+canonical_text: >-
+  Background activity, blocked episodes, action-needed states, attention-center rows, project-card
+  badges, title-bar attention badges, command-palette resume/fix entries, and /fix routes normalize
+  into visible canonical attention surfaces instead of unrelated UI hints. App
+  chat/Goal/Crew/Plan/schedule activity uses those same owner projections with explicit No
+  project/Computer identity; project_state remains Project-only and no placeholder Project is
+  synthesized.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -1924,6 +1943,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0022
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N1/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - project-attention
 - attention center
@@ -2128,14 +2149,22 @@ plan_unit_id: SMPFS-035
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: >-
-  Conversation branching starts only from an immutable Assistant Chat restore_point_record at the
-  canonical rp project key. Applying an available expected-hash boundary creates a new thread_id and
-  conversation branch_id, leaves the source thread and source worktree unchanged, restores no files,
-  treats an optional safe_point_id as lineage only, does not consume the record, and never substitutes
-  a runtime safe point, FileSafe snapshot, artifact projection, or generic preserved boundary.
+canonical_text: Conversation branching starts only from an immutable Assistant Chat restore_point_record
+  in the explicitly Project or app scope namespace. Applying an available expected-hash boundary creates
+  a new thread_id and conversation branch_id, leaves the source thread and source worktree unchanged,
+  restores no files, treats an optional safe_point_id as lineage only, does not consume the record, and
+  never substitutes a runtime safe point, FileSafe snapshot, artifact projection, or generic preserved
+  boundary. Original Project keys/codecs stay exact; the app variant uses scope_partition=app with owning
+  Server and source thread, and shares one 2,048 bucket across that Computer's app chats. Current retention,
+  reference_release + 7,776,000 seconds, holds and typed results remain identical. The selected app record
+  is Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1, logical pm.restore_point.record.application.v1
+  version 1.0.0, with OriginalRestoreLifecycleSource in Plans/application_workflow_sources.schema.json.
+  CV-366 and SP-349 select only restore_point_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}
+  for app storage; rp:app and restore_point_record.v2:app are not aliases. Complete original-source/currentness/create/branch/delete/expiry/read/checkpoint/backup
+  adoption is required before dispatch; absent joins remain unavailable.
 gui_related: false
-gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership
+  requirements rather than visual presentation.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -2150,18 +2179,32 @@ depends_on:
 - UCC-001
 - UCC-126
 - ACD-086
+- CV-366
+- SP-349
 unblocks: []
 acceptance_criteria:
 - SMPFS-035 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
-- The materialized family is restore_point_record at rp:{project_id}:{restore_point_id} with schema pm.storage_value.restore_point_record.v1 and closed status available, expired, deleted, or corrupt.
-- Only branched creates a new thread_id, conversation branch_id, and restore_point.applied record; refused and failed create none.
-- Successful application does not consume the record, change the source conversation, change SCM/worktree state, or invoke FileSafe restore.
-- Descendant branch, in-flight application, preserve, legal-hold, and source-lineage refs retain the record; Section 15 does not invent an expiry window beyond the current registry policy.
-- Source-thread deletion is provenance, not permission to resurrect or mutate it; branching may proceed only from an available record whose required frozen refs remain retained.
-- Purged required source content returns refused with source_deleted_content_unavailable, reconstructs nothing from tombstone or backup projection, and leaves the record/status unchanged.
-- unavailable and deleted-source state remain derived availability/provenance facts and do not expand the closed status or application-result enums.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+- Project restore_point_record keeps rp:{project_id}:{restore_point_id}/pm.storage_value.restore_point_record.v1
+  unchanged; F admits a distinct scope-aware app key/schema variant with the same closed status available,
+  expired, deleted, corrupt.
+- Only branched creates a new thread_id, conversation branch_id, and restore_point.applied record; refused
+  and failed create none.
+- Successful application does not consume the record, change the source conversation, change SCM/worktree
+  state, or invoke FileSafe restore.
+- Descendant branch, in-flight application, preserve, legal-hold, and source-lineage refs retain the record;
+  Section 15 does not invent an expiry window beyond the current registry policy.
+- Source-thread deletion is provenance, not permission to resurrect or mutate it; branching may proceed
+  only from an available record whose required frozen refs remain retained.
+- Purged required source content returns refused with source_deleted_content_unavailable, reconstructs
+  nothing from tombstone or backup projection, and leaves the record/status unchanged.
+- unavailable and deleted-source state remain derived availability/provenance facts and do not expand
+  the closed status or application-result enums.
+- App create/branch/delete and their idempotency identities bind actual Server/thread/partition with the
+  same cap/retention/holds; no sentinel Project or per-chat cap reset.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2181,6 +2224,9 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0025
 - Case-L:L-022
 - Case-L:PD-RSP-08
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N1/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
 preserved_exact_tokens:
 - Branching Conversations (Restore Then Fork)
 - restore point
@@ -2189,7 +2235,7 @@ preserved_exact_tokens:
 - source branch
 - source thread remains intact
 - restore_point_record
-- "rp:{project_id}:{restore_point_id}"
+- rp:{project_id}:{restore_point_id}
 - pm.storage_value.restore_point_record.v1
 - available
 - expired
@@ -2200,11 +2246,17 @@ preserved_exact_tokens:
 - failed
 - source_deleted_content_unavailable
 negative_constraints:
-- Do not use safe_point_id as restore-point identity or silently restore files, repositories, branches, indexes, or worktrees.
-- Do not treat a runtime safe point, FileSafe snapshot, runtime artifact projection, or generic preserved state as a conversation restore point.
-- Do not infer `reference_release`, expire before inclusive `reference_release + 7,776,000 seconds`, evict any record other than the oldest eligible record above `2,048` per project, or bypass descendant-branch, application, preserve, legal-hold, in-flight-application, source-lineage, live, recovery, backup, rollback, or maintenance refs.
+- Do not use safe_point_id as restore-point identity or silently restore files, repositories, branches,
+  indexes, or worktrees.
+- Do not treat a runtime safe point, FileSafe snapshot, runtime artifact projection, or generic preserved
+  state as a conversation restore point.
+- Do not infer `reference_release`, expire before inclusive `reference_release + 7,776,000 seconds`, evict
+  any record other than the oldest eligible record above `2,048` in its Project or owning-Computer app
+  bucket, or bypass descendant-branch, application, preserve, legal-hold, in-flight-application, source-lineage,
+  live, recovery, backup, rollback, or maintenance refs.
 preserved_contractrefs:
-- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md'
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json,
+  ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
@@ -5009,10 +5061,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  Instant project switch defaults to switching the active workspace tab, while an alternate command opens
-  the target project in a new workspace tab. Amended 2026-10-29 (B1/B6; PM7): Promote
+  Instant project switch defaults to switching the active workspace tab, while an alternate command
+  opens the target project in a new workspace tab. Amended 2026-10-29 (B1/B6; PM7): Promote
   cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab into UCC-209/CS-105; the
-  title-bar menu is an additional producer using stable project_id and the same workspace owner.
+  title-bar menu is an additional producer using stable project_id and the same workspace owner. Both
+  existing commands gain an explicit No project target discriminant and real app workspace/Computer
+  context; they are amended, never registered a second time.
 gui_related: true
 gui_classification_reason: Defines visible Project box entry and keyboard command selection.
 split_recommended: false
@@ -5047,6 +5101,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0046
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N8/N12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Instant Project Switch
 - default switch target
@@ -5070,7 +5126,14 @@ plan_unit_id: SMPFS-084
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Project switching recalculates project-scoped config, sessions, terminal cwd, browser preview state, effective tool/MCP/Persona state, preserves old project background activity through attention surfaces, and exposes deterministic missing-path, duplicate-path, and in-flight-run states.
+canonical_text: >-
+  Project switching, entering/leaving No project, changing the work Computer for a draft or completing
+  conversion recalculates project-scoped config only when bound and otherwise the app defaults, future
+  terminal cwd/profile, browser preview state and effective tool/MCP/Skill/Plugin/Persona/provider
+  state through the single resolver. Existing sessions and frozen snapshots remain bound to their
+  original Computer/roots. Old background activity stays visible through canonical attention. App
+  workspace state is separate from project_state; missing-path, duplicate-path and in-flight-run
+  states remain explicit, never a main-Project fallback.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -5100,6 +5163,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0046
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N5/N8/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - project-scoped config
 - sessions
@@ -5737,12 +5802,15 @@ plan_unit_id: SMPFS-094
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: |-
+canonical_text: >-
   Browser persistence covers history, cookies, storage, profile { name, saveChanges }, project-scoped
   ordinary BrowserSessions, workspace_preview/detached_preview sharing, isolated automation_session
   profiles, restore eligibility, and crash recovery. Protected AuthBrowserSession is the explicit
-  exception: it is human-only and ephemeral, uses a domain-restricted transient store, and cannot persist,
-  restore, copy, promote, capture, or export profile/content state.
+  exception: it is human-only and ephemeral, uses a domain-restricted transient store, and cannot
+  persist, restore, copy, promote, capture, or export profile/content state. Ordinary app browsing
+  uses an explicit application profile namespace with real
+  user/Server/Host/Environment/profile/session identity; null Project cannot collide with a Project or
+  another isolation scope. App scope does not admit protected auth persistence.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
   rather than visual presentation.
@@ -5774,6 +5842,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - 'profile: { name: string, saveChanges: boolean }'
 - cookies
@@ -6506,7 +6576,11 @@ plan_unit_id: SMPFS-105
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Normal browser tabs restore by project and workspace tab while preserving profile scope; detached normal browsing restores with the originating normal browsing session when supported.
+canonical_text: >-
+  Normal browser tabs restore by project and workspace tab while preserving profile scope; detached
+  normal browsing restores with the originating normal browsing session when supported. App browser
+  tabs restore by explicit app workspace/tab/profile/Computer identity; conversion opens future
+  destination sessions and never silently retargets a live browser or copies auth state.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -6535,6 +6609,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - normal browser tabs
 - project
@@ -6991,11 +7067,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  Ordinary BrowserSession or terminal session classes must not silently bleed storage into another profile
-  scope, and profile { name, saveChanges } scopes cookies and localStorage by profile name and project while
-  disabled saveChanges keeps the ordinary session isolated. Protected AuthBrowserSession is outside this
-  persistence facility: its domain-restricted transient store is never written back, copied, promoted,
-  captured, exported, or restored.
+  Ordinary BrowserSession or terminal session classes must not silently bleed storage into another
+  profile scope, and profile { name, saveChanges } scopes cookies and localStorage by profile name and
+  project while disabled saveChanges keeps the ordinary session isolated. Protected AuthBrowserSession
+  is outside this persistence facility: its domain-restricted transient store is never written back,
+  copied, promoted, captured, exported, or restored. In app scope the profile namespace is explicitly
+  application plus real user/Computer/profile/session ownership, rather than an empty Project
+  component. No Project cookie/localStorage state is inherited by a null key.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -7024,6 +7102,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - 'profile: { name: string, saveChanges: boolean }'
 - cookies
@@ -7480,7 +7560,11 @@ plan_unit_id: SMPFS-122
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: App-level-only tool permission scope is insufficient for the promoted project-switch, MCP, and browser model.
+canonical_text: >-
+  App-level-only tool permission scope is insufficient for the promoted project-switch, MCP, and
+  browser model. This is an execution permission-scope floor, not a prohibition on Everywhere Settings
+  defaults or real app-scoped chat/Goal/Crew/Plan/scheduled work. Each actual dispatch still binds its
+  exact place/Computer/thread/target and current authority.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -7509,6 +7593,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - app-level-only tool permission scope
 - project-switch

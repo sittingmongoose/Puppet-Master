@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L27392-L27466
+Source lines: L27315-L27375
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -31,27 +31,8 @@ plan_unit_id: SP-321
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  The `Plans/storage_value_registry.json#/contract_family_dispositions` row
-  `scd.project.recovery_context.v1` classifies `pm.project.creation_recovery_context.v1`,
-  machine-bound by `Plans/project_system_contracts.schema.json#/$defs/project_creation_recovery_context`,
-  as `durable` with `physical_family_status` = `physical_family_registration_pending`.
-  The declared key shape is `project_creation_recovery_context.v1:{recovery_id}`, looked up by
-  recovery identity and by the original command instance and idempotency key; the value retains the
-  immutable original terminal result ref and digest, the Forge create result and receipt refs with the
-  verified repository binding, the reviewed draft binding, the settled effects with their result/receipt
-  refs, the remaining effects, the composition revision and hash, and the one-active-resume claim. One
-  atomic compare-and-swap claim admits a single active resume with a fresh claim generation bound to the
-  winning attempt identity; a second Client presenting a new attempt for the same recovery is rejected or
-  coalesced, never admitted alongside; child-effect execution and result adoption are fenced by claim
-  generation and attempt identity; and a crash restarts into the retained recovery and reconciles any
-  in-flight child effect through its owner before retrying it. Retention holds the context until the
-  creation reaches a terminal Project outcome — listed registration or owner-confirmed abandonment after
-  Forge-side reconciliation — and only then, with all references released, is the row eligible for cleanup;
-  restart lookup always returns the retained recovery and never fabricates a new one. A durable-pending row
-  cannot be written, restored, advertised as materialized, or used to enable a dependent command. No
-  storage writer, adapter, EventRecord family, or receipt family is admitted, and the
-  `cmd.project.resume_creation` and `cmd.forge.repository.delete` rows keep `handler_unavailable`.
+canonical_text: |-
+  The `Plans/storage_value_registry.json#/contract_family_dispositions` row `scd.project.recovery_context.v1` classifies `pm.project.creation_recovery_context.v1`, machine-bound by `Plans/project_system_contracts.schema.json#/$defs/project_creation_recovery_context`, as `durable` with `physical_family_status` = `physical_family_registration_pending`. The declared key shape is `project_creation_recovery_context.v1:{recovery_id}`, looked up by recovery identity and by the original command instance and idempotency key; the value retains the immutable original terminal result ref and digest, the tagged remote_effect_origin=create|fork and exact nested Forge result/receipt refs with the verified repository binding, the reviewed draft binding, the settled effects with their result/receipt refs, the remaining effects, the composition revision and hash, and the one-active-resume claim. One atomic compare-and-swap claim admits a single active resume with a fresh claim generation bound to the winning attempt identity; a second Client presenting a new attempt for the same recovery is rejected or coalesced, never admitted alongside; child-effect execution and result adoption are fenced by claim generation and attempt identity; and a crash restarts into the retained recovery and reconciles any in-flight child effect through its owner before retrying it. Retention holds the context until the creation reaches a terminal Project outcome — listed registration or owner-confirmed abandonment after Forge-side reconciliation — and only then, with all references released, is the row eligible for cleanup; restart lookup always returns the retained recovery and never fabricates a new one. A durable-pending row cannot be written, restored, advertised as materialized, or used to enable a dependent command. No storage writer, adapter, EventRecord family, or receipt family is admitted, and the `cmd.project.resume_creation` and `cmd.forge.repository.delete` rows keep `handler_unavailable`. The versioned PJCT-010 recovery composition covers each admitted non-GitHub create chain and GitHub/GHES contribution fork chain. It retains application intake, original request/result digest, reviewed draft, source preparation/native clone-or-bind, any explicitly selected publication, Settings, reserved real Project identity, settled/remaining effect sets and registry readback. Fork results are never create results; failed_before_effect carries no remote identity, unknown permits reconcile only and verified_created gates retained recovery actions. Original-key replay is read-only; a fresh fenced resume does no settled effect twice. No new physical receipt family, half-listed Project or speculative remote cleanup is introduced.
 gui_related: false
 gui_classification_reason: This PlanUnit governs storage and contract custody rather than presentation.
 depends_on: [SP-251]
@@ -74,7 +55,12 @@ reasoning_tier: high
 context_scope: project_creation_recovery_durable_custody
 implementation_surfaces: [Plans/storage-plan.md, Plans/storage_value_registry.json, Plans/Project_System.md]
 node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Project_System.md#PJCT-007, Plans/Project_System.md#3.1.1-generic-remote-create-local-failure-recovery-composition, source_report:reports/packet-integration-completion-20260926/project-recovery.md]
+source_lineage:
+- Plans/Project_System.md#PJCT-007
+- Plans/Project_System.md#3.1.1-generic-remote-create-local-failure-recovery-composition
+- source_report:reports/packet-integration-completion-20260926/project-recovery.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; E-F01,E-F11,C-F04
 preserved_exact_tokens: [scd.project.recovery_context.v1, pm.project.creation_recovery_context.v1, "project_creation_recovery_context.v1:{recovery_id}", physical_family_registration_pending]
 negative_constraints:
   - No families-row registration, storage writer, adapter, restore path, EventRecord family, receipt family, runtime capability, or native proof.

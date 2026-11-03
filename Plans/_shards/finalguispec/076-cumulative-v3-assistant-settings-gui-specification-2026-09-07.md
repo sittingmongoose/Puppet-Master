@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L39212-L39932
+Source lines: L38676-L39388
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -673,18 +673,8 @@ plan_unit_id: F3-543
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Under USER-SETTINGS-MANAGER-REFRESH-20260908 the Settings manager presentation grammar gains four principles
-  beyond the six restored native ones: no header-level action strip, at most six tabs, exactly one labeled
-  Advanced disclosure per manager view, and one side-panel anatomy shared by manager drawers and the setting
-  Details inspector (identity header, sectioned body, quiet footer, spring open and material close, no
-  decorative accent bars, inspector width tokens unchanged). Manager workspaces of the published concept are
-  presentation groupings over the unchanged 38-key registry: separate Code & Tools workspaces for Skills,
-  Plugins, MCP Servers, and Commands & Shortcuts; one System workspace Server & Project Location; Single Owners
-  and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain switches
-  obey F3-513, built-in sounds are labelled demonstration tones per F3-405, and All Settings scrolls with the
-  page while remaining virtualized per SSYS-005. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family
-  supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+canonical_text: |-
+  Under USER-SETTINGS-MANAGER-REFRESH-20260908 the Settings manager presentation grammar gains four principles beyond the six restored native ones: no header-level action strip, at most six tabs, exactly one labeled Advanced disclosure per manager view, and one side-panel anatomy shared by manager drawers and the setting Details inspector (identity header, sectioned body, quiet footer, spring open and material close, no decorative accent bars, inspector width tokens unchanged). Manager workspaces of the published concept are presentation groupings over the unchanged 38-key registry: separate Code & Tools workspaces for Skills, Plugins, MCP Servers, and Commands & Shortcuts; one System workspace Server & Project Location; Single Owners and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain switches obey F3-513, built-in sounds are labelled demonstration tones per F3-405, and All Settings scrolls with the page while remaining virtualized per SSYS-005. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. The unchanged project-defaults-templates manager route shows separate Saved setups and Starters / My starters children. Saved setups are detached configuration, Starters are Project-owned file sets (PJCT-011); no 39th manager. Home/reach/project switches/whole Project versions use SSYS-061 and domain owners; library reach Every project includes No project, Project-owned things do not. Persona management remains the existing Settings Agent Config realization, with no second editor.
 gui_related: true
 gui_classification_reason: Owns the visible manager presentation grammar, workspace grouping, and side-panel anatomy of every Settings manager in the published concept.
 split_recommended: false
@@ -709,11 +699,13 @@ node_compile_hint:
   mode: gui_presentation_specification
   create_worknodes: false
 source_lineage:
-  - USER-SETTINGS-MANAGER-REFRESH-20260908
-  - USER-REFERENCE-LAYOUT-ROLLBACK-20260908
-  - F3-542
-  - SSYS-033
-  - USER-SETTINGS-MANAGER-REFRESH-20260909
+- USER-SETTINGS-MANAGER-REFRESH-20260908
+- USER-REFERENCE-LAYOUT-ROLLBACK-20260908
+- F3-542
+- SSYS-033
+- USER-SETTINGS-MANAGER-REFRESH-20260909
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F03,B-F01,B-F13,E-F05
 preserved_exact_tokens:
   - "No Top Action Bar"
   - "Bounded Tabs"

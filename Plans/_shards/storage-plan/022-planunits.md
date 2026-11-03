@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2393-L15129
+Source lines: L2396-L15243
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -869,20 +869,8 @@ plan_unit_id: SP-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Storage uses one app data root for core stores and for project-scoped runtime state, which plan text writes as
-  managed .puppet-master paths when inherently project-local and which resolves under the data root as below.
-  Amended 2026-10-31 (DL-270): the root and every store directory follow SP-345: inside a directory ending
-  .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux. Project-local stores, including
-  regex_index, are not exempt: they sit under that app data root keyed by project_id, and PM never writes a
-  .noindex directory or any other marker into a user's project folder. The data root is ~/Library/Application
-  Support/puppet-master.noindex/ on macOS, %LOCALAPPDATA%/puppet-master/ (Local AppData, which does not roam) on
-  Windows and $XDG_DATA_HOME/puppet-master/ (default ~/.local/share/puppet-master/) on Linux. Project-scoped
-  stores live under <data root>/projects/<project_id>/: a plan path written .puppet-master/project/state/<x>
-  resolves to <data root>/projects/<project_id>/state/<x>, and .puppet-master/cache/<x> to <data
-  root>/projects/<project_id>/cache/<x>. .puppet-master/state/ in a project holds no store, mirror or backup and
-  stays reserved (SP-339, SP-345). Every other .puppet-master/ path names a project file that people or Git use
-  and stays in the project folder.
+canonical_text: |-
+  Storage uses one app data root for core stores and for project-scoped runtime state, which plan text writes as managed .puppet-master paths when inherently project-local and which resolves under the data root as below. Amended 2026-10-31 (DL-270): the root and every store directory follow SP-345: inside a directory ending .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux. Project-local stores, including regex_index, are not exempt: they sit under that app data root keyed by project_id, and PM never writes a .noindex directory or any other marker into a user's project folder. The data root is ~/Library/Application Support/puppet-master.noindex/ on macOS, %LOCALAPPDATA%/puppet-master/ (Local AppData, which does not roam) on Windows and $XDG_DATA_HOME/puppet-master/ (default ~/.local/share/puppet-master/) on Linux. Project-scoped stores live under <data root>/projects/<project_id>/: a plan path written .puppet-master/project/state/<x> resolves to <data root>/projects/<project_id>/state/<x>, and .puppet-master/cache/<x> to <data root>/projects/<project_id>/cache/<x>. .puppet-master/state/ in a project holds no store, mirror or backup and stays reserved (SP-339, SP-345). Every other .puppet-master/ path names a project file that people or Git use and stays in the project folder. Application records live beneath the same SP-345 app-data-root and canonical/derived store engines, partitioned by the actual owning Server. The visible chat folder is user content outside PM data and is created lazily on that work Host. SP-349 freezes app keys; no scratch Project, new storage engine or JSON mirror.
 gui_related: false
 gui_classification_reason: "This unit preserves backend file layout and storage root requirements."
 split_recommended: false
@@ -908,8 +896,10 @@ node_compile_hint:
   mode: app_data_root_core_store_layout
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0032"
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0033"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0032
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0033
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - "~/.puppet-master/"
 - "$XDG_DATA_HOME/puppet-master/"
@@ -1143,7 +1133,8 @@ plan_unit_id: SP-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Local, remote Git, and remote non-Git regex-index layouts preserve generation snapshot paths, remote cache roots, manifest mappings, hash8 short paths, and Windows longPathAware mitigation."
+canonical_text: |-
+  Local, remote Git, and remote non-Git regex-index layouts preserve generation snapshot paths, remote cache roots, manifest mappings, hash8 short paths, and Windows longPathAware mitigation. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: "This unit preserves backend cache layout and platform compatibility requirements."
 split_recommended: false
@@ -1172,10 +1163,12 @@ node_compile_hint:
   mode: local_remote_regex_layout_windows_path_compatibility
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0034"
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0035"
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0036"
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0037"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0034
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0035
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0036
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0037
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - ".puppet-master/project/state/regex_index/"
 - "frequency_table.bin"
@@ -1857,7 +1850,8 @@ plan_unit_id: SP-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Concern is a first-class durable record distinct from findings, annotations, blocked episodes, and graph patch requests, with lifecycle, lineage, severity/category/status, governance metadata, resolution_kind, and separate projection/linkage layers."
+canonical_text: |-
+  Concern is a first-class durable record distinct from findings, annotations, blocked episodes, and graph patch requests, with lifecycle, lineage, severity/category/status, governance metadata, resolution_kind, and separate projection/linkage layers. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: "This unit preserves backend concern record lifecycle and storage separation requirements."
 split_recommended: false
@@ -1883,7 +1877,9 @@ node_compile_hint:
   mode: concern_record_lifecycle_canon
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0049"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0049
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - "Concern"
 - "first-class durable record"
@@ -2181,7 +2177,8 @@ plan_unit_id: SP-037
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Artifacts are indexed by artifact ID, export manifests bind artifact collections to deliverables, and route/open linkage records active route args and open contracts during execution."
+canonical_text: |-
+  Artifacts are indexed by artifact ID, export manifests bind artifact collections to deliverables, and route/open linkage records active route args and open contracts during execution. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound.
 gui_related: false
 gui_classification_reason: "This unit preserves backend artifact index, export manifest, and route/open linkage requirements."
 split_recommended: false
@@ -2207,7 +2204,9 @@ node_compile_hint:
   mode: artifact_index_route_linkage_baseline
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0055"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0055
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 preserved_exact_tokens:
 - "artifact ID"
 - "run"
@@ -2388,7 +2387,8 @@ plan_unit_id: SP-041
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Storage owns one shared record envelope and required runtime/storage families for attempts, blocked projections, concerns, worktrees, lanes, project summaries, attention items, account pressure, and account switch events."
+canonical_text: |-
+  Storage owns one shared record envelope and required runtime/storage families for attempts, blocked projections, concerns, worktrees, lanes, project summaries, attention items, account pressure, and account switch events. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. Runtime-linked app records use real thread/run/attempt/root identity; optional node/worktree fields never manufacture a WorkNode.
 gui_related: false
 gui_classification_reason: "This unit preserves backend runtime/storage record family requirements."
 split_recommended: false
@@ -2415,7 +2415,9 @@ node_compile_hint:
   mode: runtime_storage_record_families
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0059"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0059
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - "shared record envelope"
 - "attempt_record.v1:{project_id}:{node_id}:{attempt_number}"
@@ -2453,7 +2455,8 @@ plan_unit_id: SP-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Project/runtime redb keys include artifact indices, projector checkpoints, attempt and blocked records, concern records, project summary/attention items, worktree/lane records and projections, thread state bindings, and account pressure/switch events."
+canonical_text: |-
+  Project/runtime redb keys include artifact indices, projector checkpoints, attempt and blocked records, concern records, project summary/attention items, worktree/lane records and projections, thread state bindings, and account pressure/switch events. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: "This unit preserves backend project/runtime redb key requirements."
 split_recommended: false
@@ -2479,7 +2482,9 @@ node_compile_hint:
   mode: project_runtime_redb_keys
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0060"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0060
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - "artifacts_index.v1:{project_id}:{artifact_id}"
 - "artifacts_project_state.v1:{project_id}"
@@ -2635,7 +2640,8 @@ plan_unit_id: SP-045
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Project attention records do not collapse attention into orchestrator status; storage preserves severity meanings, family-local lifecycle states, projection freshness/health lineage, execution ownership migration, and worktree durable-key boundaries."
+canonical_text: |-
+  Project attention records do not collapse attention into orchestrator status; storage preserves severity meanings, family-local lifecycle states, projection freshness/health lineage, execution ownership migration, and worktree durable-key boundaries. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: "This unit preserves user-visible project attention and execution ownership state."
 split_recommended: true
@@ -2662,7 +2668,9 @@ node_compile_hint:
   mode: project_attention_execution_reconciliation
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0063"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0063
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - "orchestrator status"
 - "idle/running/paused"
@@ -3244,7 +3252,8 @@ plan_unit_id: SP-055
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Owner-reconciled redb keys include artifact/projector checkpoint, worktree, lane, thread binding, reverse binding, and orchestrator project state families."
+canonical_text: |-
+  Owner-reconciled redb keys include artifact/projector checkpoint, worktree, lane, thread binding, reverse binding, and orchestrator project state families. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound.
 gui_related: false
 gui_classification_reason: "This unit preserves backend owner-reconciled redb key requirements."
 split_recommended: false
@@ -3270,7 +3279,9 @@ node_compile_hint:
   mode: required_redb_keys_owner_reconciliation
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0073"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0073
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 preserved_exact_tokens:
 - "artifacts_index.v1:{project_id}:{artifact_id}"
 - "artifacts_project_state.v1:{project_id}"
@@ -3901,7 +3912,8 @@ plan_unit_id: SP-067
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Cross-surface panel state is per-project and panel-specific across Source Control, GitHub Actions, Docker Manager, Kubernetes, hidden-subview policy, and Unraid navigation while canonical cmd.docker.* command aliases win when legacy and new keys coexist.
+canonical_text: |-
+  Cross-surface panel state is per-project and panel-specific across Source Control, GitHub Actions, Docker Manager, Kubernetes, hidden-subview policy, and Unraid navigation while canonical cmd.docker.* command aliases win when legacy and new keys coexist. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible panel state, subviews, filters, focus, and navigation.
 split_recommended: false
@@ -3928,6 +3940,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - source_control.project_state.{project_id}
 - github_actions.project_state.{project_id}
@@ -4168,7 +4182,8 @@ plan_unit_id: SP-072
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Assistant worktree settings are additive project-level redb config keys and do not replace Branching, File Manager, or Source Control panel-state keys.
+canonical_text: |-
+  Assistant worktree preference rows use SSYS-059’s offered levels and SP-348’s sparse Settings storage. A shared default is a value, not PM Project worktree execution authority: cmd.chat.worktree.* and cmd.git.worktree.* still require their real bound Project/backend/root/lease. Branching, File Manager and Source Control panel/runtime records keep their distinct owners and keys.
 gui_related: false
 gui_classification_reason: This unit preserves backend project-level configuration keys.
 split_recommended: false
@@ -4195,6 +4210,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F12
 preserved_exact_tokens:
 - config:project:{pid}:branching.assistant_auto_worktree
 - config:project:{pid}:branching.assistant_worktree_cleanup_default
@@ -4449,7 +4466,8 @@ plan_unit_id: SP-077
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Per-surface search, filter, and focus inheritance is storage-backed per project; deep links record visible context filter chips or isolated focus markers so inherited context can be cleared without erasing saved project filters.
+canonical_text: |-
+  Per-surface search, filter, and focus inheritance is storage-backed per project; deep links record visible context filter chips or isolated focus markers so inherited context can be cleared without erasing saved project filters. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible context filter chips, focus mode, and per-surface filter state.
 split_recommended: false
@@ -4476,6 +4494,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - /search
 - filter
@@ -4499,7 +4519,8 @@ plan_unit_id: SP-078
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'File/editor search write-state is host-aware: persisted search state may reopen visible local, remote, diff, or editor-buffer queries, but write-capable actions bind to the owning project, host, repo/worktree, and recover-unsaved buffer context.'
+canonical_text: |-
+  File/editor search write-state is host-aware: persisted search state may reopen visible local, remote, diff, or editor-buffer queries, but write-capable actions bind to the owning project, host, repo/worktree, and recover-unsaved buffer context. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. An app write binds its actual Host/absolute root/file and independent permission, never a read grant into another Project.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible search state and write-authority recovery behavior.
 split_recommended: false
@@ -4526,6 +4547,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - /search/write-state
 - Local tree search
@@ -4940,7 +4963,8 @@ plan_unit_id: SP-086
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: File command receipt payloads store exact workspace-node intent and typed payload vocabulary before UI localization for cmd.file.* operations, root_kind, target_dir, image_viewer, diff_review, workspace_preview, and detached_preview.
+canonical_text: |-
+  File command receipt payloads store exact workspace-node intent and typed payload vocabulary before UI localization for cmd.file.* operations, root_kind, target_dir, image_viewer, diff_review, workspace_preview, and detached_preview. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend command-ref and receipt payload vocabulary.
 split_recommended: false
@@ -4967,6 +4991,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - cmd.file.*
 - cmd.file.new_file { project_id, parent_path }
@@ -5273,7 +5299,8 @@ plan_unit_id: SP-092
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Core runtime storage includes attempt, blocked, artifact, lane, worktree, concern, project, attention, provider account, entitlement, server profile, pressure, and account-switch record families with their exact v1 key templates. Amended 2026-10-31 (DL-270): each family listed here, and in SP-042, also declares in the storage registry (SP-340) a maximum value size of at most 16 KiB, whether it lives in the canonical or the derived redb file, and a disk budget. Values are MessagePack or typed fields, never JSON text (SP-339); larger values go to the payload store (SP-337). Changing a shipped family's encoding follows the SP-099 versioning rule."
+canonical_text: |-
+  Core runtime storage includes attempt, blocked, artifact, lane, worktree, concern, project, attention, provider account, entitlement, server profile, pressure, and account-switch record families with their exact v1 key templates. Amended 2026-10-31 (DL-270): each family listed here, and in SP-042, also declares in the storage registry (SP-340) a maximum value size of at most 16 KiB, whether it lives in the canonical or the derived redb file, and a disk budget. Values are MessagePack or typed fields, never JSON text (SP-339); larger values go to the payload store (SP-337). Changing a shipped family's encoding follows the SP-099 versioning rule. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend runtime/project/provider key families.
 split_recommended: false
@@ -5300,6 +5327,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - attempt_record.v1:{project_id}:{node_id}:{attempt_number}
 - blocked_projection.v1:{project_id}:{node_id}
@@ -5331,8 +5360,8 @@ plan_unit_id: SP-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Terminal and dev-session record families preserve workspace tab, section, tab, pane, leaf-pane, workgroup, panel, session, command-block, and dev-session identity without collapsing terminal restore into one bottom-panel blob. Amended 2026-10-09 (DL-181): the workspace, section, tab, pane, leaf-pane, workgroup and editor-terminal-panel families are read-only migration inputs; terminal placement lives in the v2 Home record (SP-330) and session, command-block and dev-session records stay current (SP-332). The no-single-blob rule stands.
+canonical_text: |-
+  Terminal and dev-session record families preserve workspace tab, section, tab, pane, leaf-pane, workgroup, panel, session, command-block, and dev-session identity without collapsing terminal restore into one bottom-panel blob. Amended 2026-10-09 (DL-181): the workspace, section, tab, pane, leaf-pane, workgroup and editor-terminal-panel families are read-only migration inputs; terminal placement lives in the v2 Home record (SP-330) and session, command-block and dev-session records stay current (SP-332). The no-single-blob rule stands. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible terminal layout continuity plus dev-session restoration identities.
 split_recommended: true
@@ -5361,6 +5390,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - terminal_workspace_state.v1:{project_id}:{workspace_tab_id}
 - terminal_section_record.v1:{project_id}:{terminal_section_id}
@@ -5438,7 +5469,8 @@ plan_unit_id: SP-095
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Debug, GitHub Actions, bundle/note/revision/composer, preview, browser session, and browser profile state families remain durable storage families with exact v1 key templates.
+canonical_text: |-
+  Debug, GitHub Actions, bundle/note/revision/composer, preview, browser session, and browser profile state families remain durable storage families with exact v1 key templates. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. Ordinary app browser/debug/document artifacts require supported actual targets; GHA and Project bundle/approval engines remain Project-only.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible debug, GHA panel, bundle review, preview, and browser state families.
 split_recommended: true
@@ -5465,6 +5497,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - debug_investigation_record.v1:{project_id}:{investigation_id}
 - gha_panel_state.v1:{project_id}
@@ -5541,7 +5575,8 @@ plan_unit_id: SP-097
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Debug investigation records persist target binding and instrumentation_manifest lineage, but arbitrary external targets may store evidence and suggestions only and must not become durable workspace mutation authority without workspace binding.
+canonical_text: |-
+  Debug investigation records persist target binding and instrumentation_manifest lineage, but arbitrary external targets may store evidence and suggestions only and must not become durable workspace mutation authority without workspace binding. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend debug instrumentation lineage and authority boundaries.
 split_recommended: false
@@ -5568,6 +5603,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - debug_investigation_record.v1:{project_id}:{investigation_id}
 - instrumentation_manifest[]
@@ -6244,7 +6281,8 @@ plan_unit_id: SP-109
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Legacy browser_state single-blob shapes are retired; preview, browser session, and browser profile persistence split runtime capability, permission tier, profile scope, restore policy, visible session class, viewport, scroll, zoom, dev tools, cookies, localStorage, and saveChanges writeback state.
+canonical_text: |-
+  Legacy browser_state single-blob shapes are retired; preview, browser session, and browser profile persistence split runtime capability, permission tier, profile scope, restore policy, visible session class, viewport, scroll, zoom, dev tools, cookies, localStorage, and saveChanges writeback state. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible preview/browser session state and profile persistence.
 split_recommended: false
@@ -6271,6 +6309,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - browser_state.v1
 - browser_state:v1
@@ -6315,7 +6355,8 @@ plan_unit_id: SP-110
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Runtime artifact index storage defines artifacts_project_state.v1 and projector.checkpoint.runtime_artifacts with artifact identity refs, projection_freshness, and projection_health for runtime artifact projection authority.
+canonical_text: |-
+  Runtime artifact index storage defines artifacts_project_state.v1 and projector.checkpoint.runtime_artifacts with artifact identity refs, projection_freshness, and projection_health for runtime artifact projection authority. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend runtime artifact index and projector checkpoint records.
 split_recommended: false
@@ -6342,6 +6383,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - runtime artifact index
 - artifacts_project_state.v1:{project_id}
@@ -6489,7 +6532,8 @@ plan_unit_id: SP-113
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Runtime-linked record families carry required identity and attribution fields from project/run/node/attempt through provider/model/account/runtime health, pressure, instruction, skill, reason, transport, account-switch, provider-attempt, and usage references.
+canonical_text: |-
+  Runtime-linked record families carry required identity and attribution fields from project/run/node/attempt through provider/model/account/runtime health, pressure, instruction, skill, reason, transport, account-switch, provider-attempt, and usage references. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend runtime-linked identity and attribution fields.
 split_recommended: true
@@ -6516,6 +6560,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - project_id
 - run_id
@@ -7001,7 +7047,8 @@ plan_unit_id: SP-121
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Runtime-artifact indexing, durable worktree/lane identity, projection state, and projector checkpoints are storage-owned families with required artifact, repo, path, branch, and baseline fields rather than panel-owned leftovers.
+canonical_text: |-
+  Runtime-artifact indexing, durable worktree/lane identity, projection state, and projector checkpoints are storage-owned families with required artifact, repo, path, branch, and baseline fields rather than panel-owned leftovers. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend storage ownership for runtime artifact, worktree, lane, and projector checkpoint families.
 split_recommended: false
@@ -7028,6 +7075,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0078
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - artifact_type
 - repo_id
@@ -7121,8 +7170,8 @@ plan_unit_id: SP-123
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Terminal project, section, and tab records preserve project settings, restore flags, dock state/zone, detached bounds, tab order, labels, active state, layout_style, and review_only state. Amended 2026-10-09 (DL-181): the terminal_sections and terminal_tabs records, with dock_state, dock_zone, detached_window_bounds and layout_style, are read-only migration inputs (SP-332); a terminal tab's place, order, label and active state live in the v2 Home record (SP-330); the project restore flag and settings reference remain, and review_only becomes part of the terminal tab's serialized state.
+canonical_text: |-
+  Terminal project, section, and tab records preserve project settings, restore flags, dock state/zone, detached bounds, tab order, labels, active state, layout_style, and review_only state. Amended 2026-10-09 (DL-181): the terminal_sections and terminal_tabs records, with dock_state, dock_zone, detached_window_bounds and layout_style, are read-only migration inputs (SP-332); a terminal tab's place, order, label and active state live in the v2 Home record (SP-330); the project restore flag and settings reference remain, and review_only becomes part of the terminal tab's serialized state. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible terminal project, section, tab, layout, and detached-window state.
 split_recommended: false
@@ -7152,6 +7201,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - terminal_project_state
 - project_id
@@ -7374,7 +7425,8 @@ plan_unit_id: SP-127
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'Terminal GUI persistence settings are separate from live PTY state: storage owns durable keys and migration behavior, FinalGUISpec owns Settings > Terminal GUI grouping, theming discoverability, shortcuts, and labels, and terminal terminology cross-refs stay explicit. Amended 2026-10-09 (DL-183): terminal appearance is stored as SP-331 says (the app and project defaults as SSYS-051''s Settings rows, one shared value per field until an app-wide store is admitted, and the per-tab override inside the terminal tab''s state); terminal layout and restore placement belong to the panel system (SP-330), not the Terminal settings; a terminal tab is a panel tab of kind terminal.'
+canonical_text: |-
+  Terminal GUI persistence settings are separate from live PTY state: storage owns durable keys and migration behavior, FinalGUISpec owns Settings > Terminal GUI grouping, theming discoverability, shortcuts, and labels, and terminal terminology cross-refs stay explicit. Amended 2026-10-09 (DL-183): terminal appearance is stored as SP-331 says (the app and project defaults as SSYS-051's Settings rows, one shared value per field until an app-wide store is admitted, and the per-tab override inside the terminal tab's state); terminal layout and restore placement belong to the panel system (SP-330), not the Terminal settings; a terminal tab is a panel tab of kind terminal. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible Terminal GUI settings grouping, theming discoverability, shortcuts, labels, and storage-backed settings.
 split_recommended: false
@@ -7403,6 +7455,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Terminal GUI
 - /persistence/settings
@@ -7866,7 +7920,8 @@ plan_unit_id: SP-135
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Live storage-managed collections must declare TTL, max-cardinality, or both; bounded-collections canon is satisfied when owner sections name family, bound type/source, and retention/eviction notes for active maps, auth caches, LSP maps, queues, event records, safe points, temp artifacts, and stale rewrite remnants. Amended 2026-10-31 (DL-270): detailed usage.event records carry the ai.usage.usage-retention window (90 days by default) and no count cap, and the daily usage totals per account, provider and model are exempt from TTL and cardinality bounds because they are kept whatever that setting says (SP-341, UF-108). Their size is controlled by the cold tier and per-group disk budgets, not by count eviction."
+canonical_text: |-
+  Live storage-managed collections must declare TTL, max-cardinality, or both; bounded-collections canon is satisfied when owner sections name family, bound type/source, and retention/eviction notes for active maps, auth caches, LSP maps, queues, event records, safe points, temp artifacts, and stale rewrite remnants. Amended 2026-10-31 (DL-270): detailed usage.event records carry the ai.usage.usage-retention window (90 days by default) and no count cap, and the daily usage totals per account, provider and model are exempt from TTL and cardinality bounds because they are kept whatever that setting says (SP-341, UF-108). Their size is controlled by the cold tier and per-group disk budgets, not by count eviction. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend bounded collection retention contracts.
 split_recommended: false
@@ -7893,6 +7948,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0085
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - TTL
 - /max-cardinality
@@ -7931,7 +7988,8 @@ plan_unit_id: SP-136
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Regex-index projector rules require byte-level u8 extraction without Unicode decoding, shared build-thread-pool concurrency with one project build slot and FIFO queueing, and platform mmap deletion/open semantics using memmap2 share_mode(0x7) on Windows and inode-by-fd safety on Linux/macOS.
+canonical_text: |-
+  Regex-index projector rules require byte-level u8 extraction without Unicode decoding, shared build-thread-pool concurrency with one project build slot and FIFO queueing, and platform mmap deletion/open semantics using memmap2 share_mode(0x7) on Windows and inode-by-fd safety on Linux/macOS. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend regex-index byte, concurrency, and mmap file-handle contracts.
 split_recommended: false
@@ -7958,6 +8016,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0086
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Regex-index indexing model byte contract
 - MUST NOT decode content to Unicode
@@ -8298,7 +8358,8 @@ plan_unit_id: SP-142
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Assistant worktree events use underscore canonical names, normalize dot-form aliases before projection, bind to thread/worktree redb projection keys and worktree records, and keep background enqueue fields optional without inventing worktree context.
+canonical_text: |-
+  Assistant worktree events use underscore canonical names, normalize dot-form aliases before projection, bind to thread/worktree redb projection keys and worktree records, and keep background enqueue fields optional without inventing worktree context. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend assistant worktree event naming and projection key ownership.
 split_recommended: false
@@ -8325,6 +8386,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0088
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - chat.thread_created
 - chat.thread_archived
@@ -8342,7 +8405,7 @@ preserved_exact_tokens:
 - worktree_path
 - branch_name
 negative_constraints:
-- Absent worktree fields on run.background_enqueued are treated as main-project context rather than inventing worktree context.
+- Absent worktree fields never infer main-Project or app scope; dispatch requires captured explicit scope and actual root/Host. Only an authenticated Project-bound context may use its actual main root.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -8797,7 +8860,8 @@ plan_unit_id: SP-150
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Shared runtime identity storage preserves requested/effective persona, account binding, operational identity, effective account/provider/project fields, and required account/auth vocabulary for requested account, execution role, credential, login, and auth realm.
+canonical_text: |-
+  Shared runtime identity storage preserves requested/effective persona, account binding, operational identity, effective account/provider/project fields, and required account/auth vocabulary for requested account, execution role, credential, login, and auth realm. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend shared runtime identity field vocabulary.
 split_recommended: false
@@ -8824,6 +8888,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0091
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - requested_persona
 - effective_persona
@@ -9995,7 +10061,8 @@ plan_unit_id: SP-169
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'Unsaved editor recovery is required MVP live shared-buffer storage: checklist delivery cannot downgrade it to later, recovery starts on first dirty buffer capture, ends only on save/discard/resolution, and multi-view editor surfaces share recovery, restore, and redo lineage.'
+canonical_text: |-
+  Unsaved editor recovery is required MVP live shared-buffer storage: checklist delivery cannot downgrade it to later, recovery starts on first dirty buffer capture, ends only on save/discard/resolution, and multi-view editor surfaces share recovery, restore, and redo lineage. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible unsaved editor recovery, banner, restore, and conflict lifecycle.
 split_recommended: false
@@ -10022,6 +10089,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0097
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Unsaved editor recovery
 - live shared-buffer storage contract
@@ -10059,7 +10128,8 @@ plan_unit_id: SP-170
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Editor recovery stores editor_state.v1:{project_id}:{file_path_hash}, cursor, scroll, selection ranges, undo stack reference, unsaved changes flag, and session-restore/conflict-handling behavior that reloads state before focus and shows diffs on disk changes.
+canonical_text: |-
+  Editor recovery stores editor_state.v1:{project_id}:{file_path_hash}, cursor, scroll, selection ranges, undo stack reference, unsaved changes flag, and session-restore/conflict-handling behavior that reloads state before focus and shows diffs on disk changes. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible editor state restoration and conflict resolution behavior.
 split_recommended: false
@@ -10086,6 +10156,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0097
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - editor_state.v1:{project_id}:{file_path_hash}
 - cursor position
@@ -10222,7 +10294,8 @@ plan_unit_id: SP-173
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'Search state and Source Control state keep separate projection families: search_projection stores query intent/results/filter/scope, sc_projection stores repo projections, compare origins, review context, branch/diff/staging/commit draft, and editor markers consume rather than own those projections.'
+canonical_text: |-
+  Search state and Source Control state keep separate projection families: search_projection stores query intent/results/filter/scope, sc_projection stores repo projections, compare origins, review context, branch/diff/staging/commit draft, and editor markers consume rather than own those projections. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible Search and Source Control projection separation and editor marker consumption.
 split_recommended: false
@@ -10249,6 +10322,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0099
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Search state
 - text query intent
@@ -10289,7 +10364,8 @@ plan_unit_id: SP-174
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Source Control review and conflict persistence stores compare targets, review filters, generated-file visibility, review comments/notes, stale target downgrade refs, conflict presentation settings, and command resolution events without persisting conflict content.
+canonical_text: |-
+  Source Control review and conflict persistence stores compare targets, review filters, generated-file visibility, review comments/notes, stale target downgrade refs, conflict presentation settings, and command resolution events without persisting conflict content. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible Source Control review/conflict filters, compare state, and command outcomes.
 split_recommended: false
@@ -10316,6 +10392,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0099
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - sc_projection.v1:{project_id}
 - last compare target
@@ -10360,7 +10438,8 @@ plan_unit_id: SP-175
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: GitHub Actions to-code correlation persistence stores project state and receipt projections for run/job/step focus, log focus, diff targets, failing-file hints, heuristic toggles, confidence thresholds, related diffs/worktrees, and evidence-labeled log-to-file candidates.
+canonical_text: |-
+  GitHub Actions to-code correlation persistence stores project state and receipt projections for run/job/step focus, log focus, diff targets, failing-file hints, heuristic toggles, confidence thresholds, related diffs/worktrees, and evidence-labeled log-to-file candidates. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible GitHub Actions to-code focus, related-diff/worktree pivots, and uncertainty labels.
 split_recommended: false
@@ -10387,6 +10466,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0099
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - github_actions.project_state.{project_id}
 - receipt projections
@@ -10547,7 +10628,8 @@ plan_unit_id: SP-178
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: LSP server state persists under lsp_server_state.v1:{host_id}:{server_id}:{root_hash} with server config, capabilities snapshot, last known status, restart count, recovery path, and persisted restart counts for stable budget enforcement and degraded-state disclosure.
+canonical_text: |-
+  LSP server state persists under lsp_server_state.v1:{host_id}:{server_id}:{root_hash} with server config, capabilities snapshot, last known status, restart count, recovery path, and persisted restart counts for stable budget enforcement and degraded-state disclosure. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. Existing Host/server/root-hash LSP keys already separate actual roots; app readers must preserve those domains rather than filling a missing Project.
 gui_related: false
 gui_classification_reason: This unit preserves backend LSP server state keys, recovery, and restart count persistence.
 split_recommended: false
@@ -10574,6 +10656,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0100
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - lsp_server_state.v1:{host_id}:{server_id}:{root_hash}
 - server config
@@ -10791,7 +10875,8 @@ plan_unit_id: SP-182
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Compaction and backup/restore enhancements preserve sequence order, exclude the active segment from frozen removal and policy inputs while carrying its authenticated bytes unchanged under SP-295, keep replay/projector correctness intact, snapshot canonical stores at one shared boundary, validate checksums before restore, and rebuild Tantivy and other disposable projections instead of treating them as authoritative. Amended 2026-10-31 (DL-270): backup follows BRS-031: a brief capture barrier (at most 250 ms at p99) records one consistent point; sealed segments and payload packs copy in the background; redb copies from a read snapshot; derived families are not backed up; no writer lock is held while copying; one backup-status record shows the newest backup at Structure verified or higher and what a restore from it would lose. There is no JSONL projection to rebuild (SP-339). SP-335's segment repack is the only rewrite of sealed bytes."
+canonical_text: |-
+  Compaction and backup/restore enhancements preserve sequence order, exclude the active segment from frozen removal and policy inputs while carrying its authenticated bytes unchanged under SP-295, keep replay/projector correctness intact, snapshot canonical stores at one shared boundary, validate checksums before restore, and rebuild Tantivy and other disposable projections instead of treating them as authoritative. Amended 2026-10-31 (DL-270): backup follows BRS-031: a brief capture barrier (at most 250 ms at p99) records one consistent point; sealed segments and payload packs copy in the background; redb copies from a read snapshot; derived families are not backed up; no writer lock is held while copying; one backup-status record shows the newest backup at Structure verified or higher and what a restore from it would lose. There is no JSONL projection to rebuild (SP-339). SP-335's segment repack is the only rewrite of sealed bytes. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend compaction and backup/restore authority rules.
 split_recommended: false
@@ -10818,6 +10903,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0102
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Compaction
 - '## 7. Backup, restore, compaction, and optional storage enhancements'
@@ -10851,7 +10938,8 @@ plan_unit_id: SP-183
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Enhancement coverage preserves export from seglog and redb through pm export (JSONL or JSON on request, plus optional pm export --sqlite) and pm db dump (SP-339, SP-342), embedded redb read-replica non-applicability, per-project seglog default behavior, event schema registry ownership, and optional streaming projector correctness boundaries."
+canonical_text: |-
+  Enhancement coverage preserves export from seglog and redb through pm export (JSONL or JSON on request, plus optional pm export --sqlite) and pm db dump (SP-339, SP-342), embedded redb read-replica non-applicability, per-project seglog default behavior, event schema registry ownership, and optional streaming projector correctness boundaries. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend enhancement routing and owner boundaries.
 split_recommended: false
@@ -10878,6 +10966,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0102
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Export
 - thread or run history
@@ -11122,7 +11212,8 @@ plan_unit_id: SP-187
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Startup order resolves app data root, probes durable-store safety including unsafe-filesystem/NFS posture, derives lock-path, acquires pm.lock before writers, enters read-only mode if held, opens stores and projectors in order, and routes fallback metadata to safe local storage while preserving logical-root lineage and diagnostics.
+canonical_text: |-
+  Startup order resolves app data root, probes durable-store safety including unsafe-filesystem/NFS posture, derives lock-path, acquires pm.lock before writers, enters read-only mode if held, opens stores and projectors in order, and routes fallback metadata to safe local storage while preserving logical-root lineage and diagnostics. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible startup diagnostics/read-only posture and backend lock/fallback order.
 split_recommended: true
@@ -11149,6 +11240,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0106
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Startup order
 - app data root
@@ -11308,7 +11401,8 @@ plan_unit_id: SP-190
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Concurrency rules keep seglog a single-writer stream, regex-index publication single-writer per project with ArcSwap reader snapshots, and compatibility prompt/session files such as kv.json or prompt-history.jsonl protected against last-write-wins overwrite unless migrated or locked with lineage and conflict evidence.
+canonical_text: |-
+  Concurrency rules keep seglog a single-writer stream, regex-index publication single-writer per project with ArcSwap reader snapshots, and compatibility prompt/session files such as kv.json or prompt-history.jsonl protected against last-write-wins overwrite unless migrated or locked with lineage and conflict evidence. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. The app index has one Server-wide builder/publication slot; source thread/roots/current generation remain explicit, and conversion stops its old live publication.
 gui_related: false
 gui_classification_reason: This unit preserves backend single-writer and compatibility prompt/session state protection.
 split_recommended: false
@@ -11335,6 +11429,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0106
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Concurrency and single-writer rules
 - Seglog remains a single-writer stream
@@ -11801,7 +11897,8 @@ plan_unit_id: SP-198
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Scheduler runtime redb projections preserve scheduler_pass, blocked_projection, remediation, and safe_point key patterns, while blocked_projection run-scoped keys are superseded by canonical blocked_projection.v1:{project_id}:{node_id} values with blocked reason, family, approval scope, and allowed actions.
+canonical_text: |-
+  Scheduler runtime redb projections preserve scheduler_pass, blocked_projection, remediation, and safe_point key patterns, while blocked_projection run-scoped keys are superseded by canonical blocked_projection.v1:{project_id}:{node_id} values with blocked reason, family, approval scope, and allowed actions. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. Node-based scheduler/blocked keys remain Project-only; app task/approval/Stop records use their actual app counterparts without fictitious node IDs.
 gui_related: false
 gui_classification_reason: This unit preserves backend scheduler runtime redb projection keys and supersession notes.
 split_recommended: true
@@ -11828,6 +11925,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0113
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - scheduler_pass.{run_id}.{scheduler_pass_id}
 - blocked_projection.{run_id}.{node_id}.{blocked_sequence}
@@ -12273,7 +12372,8 @@ plan_unit_id: SP-206
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Permission snapshot storage binds durable permission_snapshot_record keys to immutable attempt_record.permission_snapshot_id references while Permissions_System owns schema/enums/surfaces; storage may cache query fields but must not redefine nested snapshot schema locally.
+canonical_text: |-
+  Permission snapshot storage binds durable permission_snapshot_record keys to immutable attempt_record.permission_snapshot_id references while Permissions_System owns schema/enums/surfaces; storage may cache query fields but must not redefine nested snapshot schema locally. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound. App permission snapshot/grant physical bindings are SP-353; nested permission schema remains Permissions-owned.
 gui_related: false
 gui_classification_reason: This unit preserves backend permission snapshot storage binding and owner boundary.
 split_recommended: true
@@ -12301,6 +12401,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0122
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0123
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 preserved_exact_tokens:
 - Permission Snapshot Storage and Safe-Point Namespace Addendum
 - Permission snapshot storage
@@ -12339,7 +12441,8 @@ plan_unit_id: SP-207
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Safe points and restore points use distinct prefixes, with sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id} for runtime-internal run/node/attempt scope and rp:{project_id}:{restore_point_id} for user-facing project scope; namespaces and queries must not overlap.
+canonical_text: |-
+  Safe points and restore points use distinct prefixes, with sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id} for runtime-internal run/node/attempt scope and rp:{project_id}:{restore_point_id} for user-facing project scope; namespaces and queries must not overlap. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. The sole app restore key is restore_point_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}; it is distinct from the unchanged rp:{project_id}:{restore_point_id} and every sp: runtime key. Proposed rp:app and restore_point_record.v2:app spellings are not aliases.
 gui_related: false
 gui_classification_reason: This unit preserves backend safe-point versus restore-point namespace separation.
 split_recommended: false
@@ -12366,6 +12469,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0124
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Safe-point vs restore-point namespace separation
 - Safe point
@@ -12448,7 +12553,8 @@ plan_unit_id: SP-209
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Web content cache persistence consumes the linked owner contract, preserving two-phase lookup, state vocabulary, per-project 500 MB cache sizing, action skip/read-time behavior, PM-cache precedence, Firecrawl latency-only role, and diff-reuse audit states.
+canonical_text: |-
+  Web content cache persistence consumes the linked owner contract, preserving two-phase lookup, state vocabulary, per-project 500 MB cache sizing, action skip/read-time behavior, PM-cache precedence, Firecrawl latency-only role, and diff-reuse audit states. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App web cache is one bucket per owning Server shared by all its no-project chats, using the same 500 MB default, TTL/LRU and web.fetch.cache-size resolver, never 500 MB per chat.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible web cache routing/cache-state behavior.
 split_recommended: true
@@ -12475,6 +12581,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0126
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Web content caching persistence
 - linked owner contract
@@ -12510,7 +12618,8 @@ plan_unit_id: SP-210
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Web cache entries store cache_key, normalized URL, formats, adapter_id, content hash/ref pointer, metadata, fetched/expires/access fields, 500 MB budget, TTL, LRU, per-project/per-operation scope, cache key ordering, and change detection persistence without inlining cached content.
+canonical_text: |-
+  Web cache entries store cache_key, normalized URL, formats, adapter_id, content hash/ref pointer, metadata, fetched/expires/access fields, 500 MB budget, TTL, LRU, per-project/per-operation scope, cache key ordering, and change detection persistence without inlining cached content. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App web cache is one bucket per owning Server shared by all its no-project chats, using the same 500 MB default, TTL/LRU and web.fetch.cache-size resolver, never 500 MB per chat.
 gui_related: false
 gui_classification_reason: This unit preserves backend web cache entry schema, budget, and eviction fields.
 split_recommended: true
@@ -12537,6 +12646,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0126
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - 'cache_key: string'
 - hash of (url, formats, adapter_id)

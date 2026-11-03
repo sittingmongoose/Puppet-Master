@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L22396-L22513
+Source lines: L22340-L22449
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -73,18 +73,8 @@ plan_unit_id: SP-287
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Store exactly five canonical Goal body/history/origin/control/receipt families as closed
-  schema_id/schema_version/record wrappers with independent physical and semantic byte domains.
-  GRS-064 owns exact inner meaning and shared owner.goal.body.mutation@1.0.0 acceptance;
-  Storage authenticates physical origin and supplies atomic whole-preimage custody, exact
-  reader admission, coherent mandatory backup and explicit schema/codec migration.
-  Four content families follow DL-047's bound-thread lifetime, immediate deletion hide and
-  24-hour/30-day purge limits under valid holds. Original content-free receipts remain independently
-  auditable without retaining or rebuilding purged text. Detailed Goal body storage custody
-  governs terminal fences, restore/tombstone replay and activation; sibling events remain separate.
-  SP-304/GRS-073 select current control v2 in the same physical family/key, with independent
-  cancellation_pending and complete retained v1 decoding; the other four wrappers remain exact.
+canonical_text: |-
+  Store exactly five canonical Goal body/history/origin/control/receipt families as closed schema_id/schema_version/record wrappers with independent physical and semantic byte domains. GRS-064 owns exact inner meaning and shared owner.goal.body.mutation@1.0.0 acceptance; Storage authenticates physical origin and supplies atomic whole-preimage custody, exact reader admission, coherent mandatory backup and explicit schema/codec migration. Four content families follow DL-047's bound-thread lifetime, immediate deletion hide and 24-hour/30-day purge limits under valid holds. Original content-free receipts remain independently auditable without retaining or rebuilding purged text. Detailed Goal body storage custody governs terminal fences, restore/tombstone replay and activation; sibling events remain separate. SP-304/GRS-073 select current control v2 in the same physical family/key, with independent cancellation_pending and complete retained v1 decoding; the other four wrappers remain exact. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app Goal body/start/update/cancel/association operations require genuine original app source and retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation identity; N25 uses linked new birth.
 gui_related: false
 gui_classification_reason: Defines physical storage, transaction, retention and recovery contracts; Goal presentation is owned by GRS-064.
 depends_on: [SP-231, SP-235, SP-237, SP-239, GRS-064, DL-045, DL-047]
@@ -114,10 +104,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/storage-plan.md#SP-231
-  - Plans/Goal_Runtime_System.md#GRS-064
-  - Plans/Decision_Log.md#DL-045
-  - Plans/Decision_Log.md#DL-047
+- Plans/storage-plan.md#SP-231
+- Plans/Goal_Runtime_System.md#GRS-064
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
   - No sixth family, semantic field/version exception, new lifecycle, generic authority service or receipt-based content reconstruction.
   - No automatic Goal event adoption/depth, certification exception, native proof, WorkNode, NodeSeed, readiness or governance seal.

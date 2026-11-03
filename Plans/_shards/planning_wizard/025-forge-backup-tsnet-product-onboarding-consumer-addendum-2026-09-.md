@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2886-L3300
+Source lines: L2894-L3313
 
-Source SHA256: `b73c7dd92c540a1fc7c7a978302bb3bd760b6d277c4f5b7a36e637a448122d77`
+Source SHA256: `7578becdd2f6be0c7aca52532f04b6d53d6e1bdfceadd11461d48312638d4439`
 
 ---
 
@@ -164,7 +164,8 @@ canonical_text: 'After safe local Server claim, Bootstrap may offer one `restore
 
 
   DL-272 RV-3: the native Client’s explicit protected Sign in precedes its chosen network’s Server list under RAS-014/015;
-  all other mutation/approval/commit fences remain. Source-control token permissions and runtime access remain distinct.'
+  all other mutation/approval/commit fences remain. Source-control token permissions and runtime access remain distinct.
+  BRS-032 owns backup destination family/locator and policy preview before sign-in, safe test, Use existing, daily Standard seed and Advanced choices; backup/Kit setup may be left for later without reversing committed Project work. The destination check identifies a NAS regardless of SSH, paired PM, SMB, NFS, mount or same-device Server route. Restore from a cloud destination carries its actual cloud transport/family rather than mounted. PJCT-010 recovery includes admitted create/fork chains; it never substitutes delete or repeat-create for reconciliation.'
 gui_related: true
 gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
   choices, protected handoffs, progress, exact return, and disabled/error states.
@@ -376,18 +377,22 @@ source_lineage:
 - packet:10_RESTORE_BROWSE_RETRIEVE_GUI_AND_SAFETY.md
 - packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md#BGUI-004
 - packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
-- PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
-  FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
-  API/error-grammar admission.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31;
+  DL-259)
+- PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee
+  and srv/final-onb FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source
+  lineage, not native API/error-grammar admission.
 - 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
-  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
-  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
-  refusal.'
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host,
+  seeded situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional
+  weak-key refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - restore_existing_pm_data
 - Restore a backup

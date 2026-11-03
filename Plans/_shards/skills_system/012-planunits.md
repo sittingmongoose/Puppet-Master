@@ -2,9 +2,9 @@
 
 Source: `Plans/Skills_System.md`
 
-Source lines: L443-L2498
+Source lines: L443-L2519
 
-Source SHA256: `8beb0fcd8afb1cc6ddfcf7bc20710d2e41f07bb4059c08d5007d508804b3d0e6`
+Source SHA256: `3991b8ab1648e297aa22614fd680256e74b0f67915ae13cde762545eb44e50d8`
 
 ---
 
@@ -252,7 +252,12 @@ plan_unit_id: SS-006
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Skills_System.md
-canonical_text: Skill discovery uses deterministic project-local and global roots and resolves project-local roots relative to the active project root or git worktree root.
+canonical_text: >-
+  Skill discovery keeps the canonical Project-local and user/global root order. Library content is
+  mirrored from its owner home and each Computer records installation/readiness separately. With
+  project_root=null the Project roots are absent and discovery uses only allowed user/global roots; it
+  never walks up from a chat folder to claim a repository or invents a per-Computer source-root tier.
+  A real bound active project root retains its existing root meaning.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -281,6 +286,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0011
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0012
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - .puppet-master/skills/**/SKILL.md
 - .claude/skills/**/SKILL.md
@@ -307,7 +314,10 @@ plan_unit_id: SS-007
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Skills_System.md
-canonical_text: Discovery walks roots in canonical order and resolves duplicate Skill IDs by first match wins, treating later duplicates as shadowed.
+canonical_text: >-
+  Discovery walks roots in canonical order and resolves duplicate Skill IDs by first match wins,
+  treating later duplicates as shadowed. No-project discovery skips only the inapplicable Project
+  roots and retains the same first-match order, hash/provenance and shadowed-entry disclosure.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -335,6 +345,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0013
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - SEARCH-ORDER
 - first match wins
@@ -525,7 +537,12 @@ plan_unit_id: SS-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Skills_System.md
-canonical_text: The canonical skill invocation payload uses skill_id with input, optional context, optional timeout, active project/thread context, and manifest-defined input schema validation.
+canonical_text: >-
+  The canonical invoke_skill payload keeps skill_id, input, optional context and timeout plus
+  manifest-defined input schema validation. Its scope-aware context carries the real thread/Computer
+  and project_root=null in No project; a Project/worktree root is present only for a real admitted
+  binding. SS-039 governs app discovery/readiness, and exact-root/capability/permission checks still
+  apply.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -554,6 +571,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0018
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - skill_id
 - invoke_skill
@@ -566,7 +585,9 @@ preserved_exact_tokens:
 - conversation_id
 - input schema
 negative_constraints:
-- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.
+- Do not assume a single active-worktree or synthesize a Project for an app invocation.
+- Skill-driven tree, evidence, restore and /revert routes preserve exact place/root identity and refuse absent,
+  archived or stale actual targets.
 preserved_contractrefs: []
 compatibility_only_notes:
 - The canonical invocation key is `skill_id`. Legacy or provider-style inputs such as `path_or_name` and `path_or_name -> content, name` MAY be normalized only as compatibility aliases; they do not bypass Skill ID validation, permission checks by exact skill name, registry lookup, or readiness gating.

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L27511-L27582
+Source lines: L27420-L27484
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -42,18 +42,8 @@ plan_unit_id: SP-323
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Storage binds SQR-018's pm.runtime.project_automation_pause.v1 to the project_automation_pause family,
-  exact key project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)}, and closed
-  pm.storage_value.project_automation_pause.v1 wrapper (DL-138). It is original project manual-stop
-  authority under existing RP-AUTHORITY-INDEFINITE@1.0.0, not Settings. Genuine project birth creates
-  the off record under proven never-born custody; missing later custody is unavailable. Only an authorized
-  user change uses whole-value compare-and-swap; setting paused true advances user_stop_epoch exactly once,
-  an idempotent reset does not advance it, and setting false never clears per-run stops. The scheduler checks
-  current project state and epoch before automatic dispatch; missing state blocks dispatch. Backup and restore
-  preserve the newer latch and epoch. The static schema/registry row proves no native writer. The candidate
-  runtime.automation_pause_changed emits no EventRecord and reports missing_event_registration until its own
-  Event Authority admission under DL-093.
+canonical_text: |-
+  Storage binds SQR-018's pm.runtime.project_automation_pause.v1 to the project_automation_pause family, exact key project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)}, and closed pm.storage_value.project_automation_pause.v1 wrapper (DL-138). It is original project manual-stop authority under existing RP-AUTHORITY-INDEFINITE@1.0.0, not Settings. Genuine project birth creates the off record under proven never-born custody; missing later custody is unavailable. Only an authorized user change uses whole-value compare-and-swap; setting paused true advances user_stop_epoch exactly once, an idempotent reset does not advance it, and setting false never clears per-run stops. The scheduler checks current project state and epoch before automatic dispatch; missing state blocks dispatch. Backup and restore preserve the newer latch and epoch. The static schema/registry row proves no native writer. The candidate runtime.automation_pause_changed emits no EventRecord and reports missing_event_registration until its own Event Authority admission under DL-093. This exact Project record, key, schema, birth evidence, no-op behavior and epoch remain unchanged. SQR-020/CV-368/SP-352 add the independent Server-owned application pause, never a Settings value. Both latches/epochs participate in conversion and later dispatch; source or target missing custody refuses, and no conversion/automatic task clears either.
 gui_related: false
 gui_classification_reason: Defines original project stop storage and admission authority, not presentation.
 depends_on: [SQR-018]
@@ -72,9 +62,12 @@ context_scope: project_automation_pause_original_custody
 implementation_surfaces: [Plans/storage-plan.md, Plans/storage_value_registry.json, Plans/Scheduling_and_Quota_Resume.md]
 node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false, runtime_enabled: false}
 source_lineage:
-  - Plans/Scheduling_and_Quota_Resume.md#SQR-018
-  - "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 9"
-  - Plans/storage-plan.md#SP-306
+- Plans/Scheduling_and_Quota_Resume.md#SQR-018
+- Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md
+  sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 9
+- Plans/storage-plan.md#SP-306
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens: [pm.runtime.project_automation_pause.v1, "project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)}", pm.storage_value.project_automation_pause.v1, RP-AUTHORITY-INDEFINITE, user_stop_epoch, runtime.automation_pause_changed, missing_event_registration]
 negative_constraints:
   - No Settings value, invented automatic clear, missing-as-off default, alternate physical key, or new retention policy.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L942-L2623
+Source lines: L1032-L2732
 
-Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f`
+Source SHA256: `e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a`
 
 ---
 
@@ -396,18 +396,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime, not the worker model alone, drives runtime-driven idle continuation until completion, blocked, stopped, failed, cancelled, or budget-limited. When the thread is idle and eligible, `try_start_turn_if_idle` reloads canonical goal state, checks currentness, budgets, and user preemption, and starts the next bounded turn; this is not model self-recursion. User preemption, constraints, scope changes, and goal updates are revisioned with goal_revision, previous_revision, objective_update, constraint_added, active_subgoals_notified, and stale child goals so the scheduler can pause, re-evaluate impact, cancel or re-scope child goals, and resume from a coherent state.
+  Host-owned try_start_turn_if_idle reloads canonical concise Goal/body/control and exact thread scope,
+  verifies currentness, owner permission/root/storage/recovery and Stop epochs, and admits one bounded
+  ordinary turn under the existing run limits. App continuation uses GRS-086; scope conversion uses
+  GRS-087. Objective updates retain the exact two accepted sources and revision chain. Legacy
+  previous_revision/objective_update/constraint_added/active_subgoals_notified fields, child Goal
+  re-scoping and Goal budgets are compatibility/source-lineage only under GRS-048/051; they are not active
+  Goal fields or a second scheduler.
 gui_related: false
 gui_classification_reason: Scheduler continuation and revisioning are runtime behavior; visible controls are Assistant Chat consumer behavior.
 depends_on:
   - GRS-005
 unblocks: []
 acceptance_criteria:
-  - A running goal can be paused by user instruction before new scheduling work begins.
-  - Runtime state records revisions for material goal updates.
-  - Scheduler continuation stops only at explicit lifecycle/budget/authority states.
-  - "`try_start_turn_if_idle` starts continuation only after canonical-state reload, currentness checks, budget checks, and user preemption checks."
-  - Material goal updates preserve goal_revision, previous_revision, objective_update, constraint_added, active_subgoals_notified, and stale child goals.
+  - "The host reloads canonical state and Stop/currentness/root/permission/writer evidence before every bounded turn."
+  - "Goal revision writes use the current two-source text contract; retired child/role/budget fields stay lineage-only."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future scheduler state-machine tests
@@ -421,9 +424,12 @@ node_compile_hint:
   mode: scheduler_revision_contract
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0035
-  - pldg-20260616-001-goal-runtime-system:atom-0036
-  - pldg-20260616-001-goal-runtime-system:atom-0037
+  - "pldg-20260616-001-goal-runtime-system:atom-0035"
+  - "pldg-20260616-001-goal-runtime-system:atom-0036"
+  - "pldg-20260616-001-goal-runtime-system:atom-0037"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Runtime-driven continuation"
   - "runtime-driven idle continuation"
@@ -1284,7 +1290,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime handles ordinary ambiguity and large-work recovery autonomously by preserving open questions, conflicts, or unplaced requirements in appropriate docs/artifacts, selecting a safe canonical destination when policy is clear, retrying, inspecting, replanning, spawning verifier/subagents, escalating model tier, narrowing scope, running repair gates, rolling back isolated changes when appropriate, and recording precise blockers when it cannot proceed. Large, cross-referential, ambiguous-in-ordinary-ways, or many-shard tasks do not route to manual decision merely because they are large. Blocked status must store and display blocker_class, cause, affected scope, last attempted recovery, why autonomous recovery cannot continue safely, and next safe action rather than a generic failure label.
+  Goal Runtime handles ordinary ambiguity and large-work recovery autonomously by preserving open
+  questions, conflicts, or unplaced requirements in appropriate docs/artifacts, selecting a safe canonical
+  destination when policy is clear, retrying, inspecting, replanning, spawning verifier/subagents,
+  escalating model tier, narrowing scope, running repair gates, rolling back isolated changes when
+  appropriate, and recording precise blockers when it cannot proceed. Large, cross-referential,
+  ambiguous-in-ordinary-ways, or many-shard tasks do not route to manual decision merely because they are
+  large. Blocked status must store and display blocker_class, cause, affected scope, last attempted
+  recovery, why autonomous recovery cannot continue safely, and next safe action rather than a generic
+  failure label. For app Goals autonomous recovery stays inside real task roots and authority; missing
+  permission/capability/Computer remains a recorded blocker. Large work does not justify inventing a
+  Project, borrowing a grant or issuing a protected approval.
 gui_related: true
 gui_classification_reason: Exact blocker status is a user-visible goal status surface as well as runtime state.
 depends_on:
@@ -1311,10 +1327,13 @@ node_compile_hint:
   mode: autonomous_recovery_and_blockers
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0069
-  - pldg-20260616-001-goal-runtime-system:atom-0070
-  - pldg-20260616-001-goal-runtime-system:atom-0071
-  - pldg-20260616-001-goal-runtime-system:atom-0072
+  - "pldg-20260616-001-goal-runtime-system:atom-0069"
+  - "pldg-20260616-001-goal-runtime-system:atom-0070"
+  - "pldg-20260616-001-goal-runtime-system:atom-0071"
+  - "pldg-20260616-001-goal-runtime-system:atom-0072"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Autonomous ambiguity handling"
   - "ordinary ambiguity"

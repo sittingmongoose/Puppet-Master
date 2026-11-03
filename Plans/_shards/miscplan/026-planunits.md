@@ -2,9 +2,9 @@
 
 Source: `Plans/MiscPlan.md`
 
-Source lines: L1353-L6286
+Source lines: L1353-L6320
 
-Source SHA256: `08dc9e9319f62047e1d3e6b602b0fd6701de2d56c9af0c73007465e7e3b03a98`
+Source SHA256: `9fe00e10eab87efa104b8d9deeac8ba2ce657ee0776a20f86f99a6053793f37e`
 
 ---
 
@@ -387,7 +387,12 @@ plan_unit_id: M-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Cleanup runs only in the actual selected main repo, worktree, lane, attempt workspace, or worktree path used by the agent, and must not clean the main working tree for artifacts owned by another lane, attempt, or worktree.
+canonical_text: >-
+  Cleanup runs only in the actual selected main repo, worktree, lane, attempt workspace, or worktree
+  path used by the agent, and must not clean the main working tree for artifacts owned by another
+  lane, attempt, or worktree. An app conversation may clean only its one explicitly admitted
+  Computer/chat or granted directory through M-084; home, broad mounts, escapes and other owners'
+  artifacts remain refused.
 gui_related: false
 gui_classification_reason: The unit covers backend cleanup, retention, security, storage, or execution-contract behavior rather than direct GUI presentation.
 split_recommended: true
@@ -412,6 +417,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0014
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - paths.workspace
 - configured project root
@@ -1069,7 +1076,12 @@ plan_unit_id: M-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Cleanup and evidence settings must be modeled in one run/config schema with deterministic defaults and must be projected from the same GuiConfig/config path used by the rest of the app.
+canonical_text: >-
+  Cleanup and evidence settings must be modeled in one run/config schema with deterministic defaults
+  and must be projected from the same GuiConfig/config path used by the rest of the app. These are
+  Settings-owned behavior rows resolved through the single admitted Everywhere/Computer/Project ladder
+  into an immutable run snapshot; the cleanup inventory and receipts remain MiscPlan-owned operational
+  records.
 gui_related: false
 gui_classification_reason: The unit covers backend config schema and run-config projection rather than direct GUI presentation.
 split_recommended: true
@@ -1098,6 +1110,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0038
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0041
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - cleanup.untracked
 - cleanup.ignored
@@ -1204,7 +1218,12 @@ plan_unit_id: M-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Clean workspace now must run prepare-style workspace cleanup for the intended project path, with confirmations, optional dry-run/evidence pruning, clear feedback, and disabled-state safety when no project context exists.
+canonical_text: >-
+  Clean workspace now must run prepare-style workspace cleanup for the intended project path, with
+  confirmations, optional dry-run/evidence pruning, clear feedback, and disabled-state safety when no
+  exact admitted workspace directory exists. With no Project, it is available only for an explicitly
+  selected admitted chat/granted directory; missing exact scope is the disabled reason. No Project,
+  home, CWD or broad mount is guessed.
 gui_related: true
 gui_classification_reason: The unit defines user-visible manual cleanup actions, confirmation modals, previews, tooltips, toasts, and disabled states.
 split_recommended: true
@@ -1237,6 +1256,8 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0039
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0040
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0042
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Clean workspace now
 - run_git_clean_with_excludes
@@ -1778,7 +1799,12 @@ plan_unit_id: M-030
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Skill discovery and validation must follow the one-folder-per-skill SKILL.md package model, ordered project/global discovery roots, strict OpenCode-aligned name validation, frontmatter requirements, and required_tool_refs/optional_tool_refs readiness semantics.
+canonical_text: >-
+  Skill discovery and validation must follow the one-folder-per-skill SKILL.md package model, ordered
+  project/global discovery roots, strict OpenCode-aligned name validation, frontmatter requirements,
+  and required_tool_refs/optional_tool_refs readiness semantics. App discovery passes
+  project_root=None, skips Project-local roots and uses the same allowed user/global first-wins roots
+  and Computer readiness checks.
 gui_related: false
 gui_classification_reason: The unit covers backend discovery, package validation, and readiness metadata rather than direct GUI presentation.
 split_recommended: true
@@ -1806,6 +1832,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0045
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0047
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - SKILL.md
 - name
@@ -2644,7 +2672,11 @@ plan_unit_id: M-044
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Cleanup wrapper and config wiring must place cleanup settings in the run config snapshot, pass CleanupConfig explicitly through execution context, wrap CLI execution paths, and skip cleanup only when no intended project workspace exists.
+canonical_text: >-
+  Cleanup wrapper and config wiring must place cleanup settings in the run config snapshot, pass
+  CleanupConfig explicitly through execution context, wrap CLI execution paths, and skip cleanup when
+  no exact admitted intended workspace directory exists. For app work, no intended admitted Computer
+  directory means cleanup is skipped; a valid app directory does not require a synthetic Project.
 gui_related: false
 gui_classification_reason: The unit covers backend execution wiring and run-config propagation rather than direct GUI presentation.
 split_recommended: true
@@ -2674,6 +2706,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0053
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - run_with_cleanup(runner, request, config)
 - IterationContext

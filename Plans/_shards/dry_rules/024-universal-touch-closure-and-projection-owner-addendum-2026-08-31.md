@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2581-L2640
+Source lines: L2574-L2636
 
-Source SHA256: `2ee9163141078a9ed56d59700128756b51cb1c18109a0f7fe60e02b9748b8245`
+Source SHA256: `f483b45c08ded2f8811a35ed53cd4b052d3b603b856084efdaba166705d30608`
 
 ---
 
@@ -35,7 +35,10 @@ plan_unit_id: DR-040
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: Every touched system, command, typed local UI action, route, control, setting, and migration has exactly one Touch Closure row connecting requirement evidence, canonical owner and PlanUnit, one DRY contract, one sole handler route, GUI and reverse coverage, availability and disabled reason, events or receipts, ObservableWork, persistence or migration, tests, evidence class, disposition, and residual risk. Consumer GUIs render or route owner state and never create parallel runtimes. Presentation-only behavior remains a typed local UI action or theme/motion token rather than a false domain command, and concept/browser/static evidence never becomes native runtime or Slint certification.
+canonical_text: |-
+  Every touched system, command, typed local UI action, route, control, setting, and migration has exactly one Touch Closure row connecting requirement evidence, canonical owner and PlanUnit, one DRY contract, one sole handler route, GUI and reverse coverage, availability and disabled reason, events or receipts, ObservableWork, persistence or migration, tests, evidence class, disposition, and residual risk. Consumer GUIs render or route owner state and never create parallel runtimes. Presentation-only behavior remains a typed local UI action or theme/motion token rather than a false domain command, and concept/browser/static evidence never becomes native runtime or Slint certification.
+
+  The same closure obligation covers admitted application variants, every direct agent route, all 38 manager descriptors, the two conversion routes and every settings-level origin/Details/Undo control. A row joins the exact selected request/result/schema edition, scope, state selector, disabled reason, permission/currentness, actor, effect or no-persist disposition and return. Extend the stable action-source extraction together with closure; nullability and all-true client booleans are never owner-join evidence.
 gui_related: true
 gui_classification_reason: Governs every visible control's owner route, action type, disabled state, and evidence boundary.
 split_recommended: false

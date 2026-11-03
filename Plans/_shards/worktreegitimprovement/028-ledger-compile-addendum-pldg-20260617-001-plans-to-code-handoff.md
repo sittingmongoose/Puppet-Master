@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L5032-L5087
+Source lines: L5034-L5101
 
-Source SHA256: `d88bd32eee2d947b3b4f63806d74c34f24399e24967033c200d31e08c9da97b9`
+Source SHA256: `a3c7716ed889591e15bb6bcf68dd481d1a49e1ff1e0d23594603c70960db6c11`
 
 ---
 
@@ -18,8 +18,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
-  Mutation-capable WorkNode attempts must run in a known repo/worktree context. Parallel WorkNodes require isolated worktrees or explicit clean allocation, and dirty, conflicted, contaminated, blocked-preserved, or lineage-mismatched worktrees cannot be reused silently. Worktree allocation records preserve repo_id, worktree_id, worktree_path, baseline_commit_oid, branch/head state, head_commit_oid, changed_files, conflict_refs, owner lane, lease state, dirty_state_policy, conflict_policy, merge_policy, github_policy, rollback_available, rollback_ref, and restore_command_or_action. Local source-control/worktree state remains execution truth; GitHub is an optional promotion/output layer when configured.
-  This is the source-control execution contract for worktree allocation; a dirty worktree or merge conflict blocks silent reuse, and GitHub optional promotion cannot replace local source-control truth.
+  Mutation-capable WorkNode attempts must run in a known repo/worktree context. Parallel WorkNodes
+  require isolated worktrees or explicit clean allocation, and dirty, conflicted, contaminated,
+  blocked-preserved, or lineage-mismatched worktrees cannot be reused silently. Worktree allocation
+  records preserve repo_id, worktree_id, worktree_path, baseline_commit_oid, branch/head state,
+  head_commit_oid, changed_files, conflict_refs, owner lane, lease state, dirty_state_policy,
+  conflict_policy, merge_policy, github_policy, rollback_available, rollback_ref, and
+  restore_command_or_action. Local source-control/worktree state remains execution truth; GitHub is an
+  optional promotion/output layer when configured. This is the source-control execution contract for
+  worktree allocation; a dirty worktree or merge conflict blocks silent reuse, and GitHub optional
+  promotion cannot replace local source-control truth. This WorkNode requirement remains
+  Project-bound. Ordinary app chat/Goal/Crew/Assistant Plan/task attempts instead use T-187/SIR app
+  execution identity and admitted directories; no Project or WorkNode is fabricated for their cwd.
 gui_related: true
 gui_classification_reason: Worktree allocation, Source Control status, lease state, conflicts, and blocked-preserved states are user-visible source-control UI surfaces.
 depends_on: [W-071]
@@ -40,10 +50,12 @@ context_scope: plans_to_code_worktrees
 implementation_surfaces: [Plans/WorktreeGitImprovement.md, Plans/Executor_Protocol.md, Plans/FileSafe.md, Plans/GitHub_Integration.md]
 node_compile_hint: {mode: worktree_allocation_source_control_truth, create_worknodes: false}
 source_lineage:
-  - pldg-20260617-001-plans-to-code-handoff:atom-0035
-  - pldg-20260617-001-plans-to-code-handoff:atom-0036
-  - pldg-20260617-001-plans-to-code-handoff:atom-0038
-  - pldg-20260617-001-plans-to-code-handoff:dec-0015
+- pldg-20260617-001-plans-to-code-handoff:atom-0035
+- pldg-20260617-001-plans-to-code-handoff:atom-0036
+- pldg-20260617-001-plans-to-code-handoff:atom-0038
+- pldg-20260617-001-plans-to-code-handoff:dec-0015
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "worktree_id"
   - "isolated worktree"

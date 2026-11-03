@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L312-L451
+Source lines: L313-L452
 
-Source SHA256: `a2f40fb89918b299f4b90af9d0d7d7c85b75ad57f8312f598490040ea1d74bca`
+Source SHA256: `30d3beb8e135f0dd30e7757570a3b6b7e2830c5655547b4ebb81b675b748cbed`
 
 ---
 
@@ -74,7 +74,7 @@ The characters `~` and `$HOME` are expanded to the user's home directory **only 
 
 <a id="EXTERNAL-DIR-GUARD"></a>
 
-Any tool invocation that references a path outside the active project's working roots (as defined by the project configuration and workspace) triggers the `external_directory` permission key. Default: `ask` (see §7).
+`external_directory` applies outside the actual admitted working roots: Project/worktree roots or the app chat folder plus Read and change grants. Default remains `ask`, including YOLO. PS-145 permits only FileSafe-on task-needed listed home-folder reads through its explicit exclusions; that exception grants no write root or Project mutation. Turning FileSafe off removes it.
 
 An **external directory allowlist** defines paths that are pre-approved for external access. The allowlist is stored in the permissions config (§9). Paths on the allowlist bypass the `external_directory` guard.
 
@@ -100,7 +100,7 @@ When a user responds `always` to an `ask` prompt (§6.2), the system derives a s
 - **webfetch/webextract/webcrawl/webmap:** The normalized target origin and scope. Single-target reads and extraction use the concrete URL origin (`https://<domain>/*`); bounded crawl/map rules use the approved root origin plus an explicit crawl-scope discriminator, never a naked wildcard.
 - Web approval pre-population is deterministic: `websearch` and `webresearch` pre-populate `*`; `webfetch` and `webextract` pre-populate `https://<actual-host>/*` derived from the URL; `webcrawl` and `webmap` pre-populate `https://<actual-root-host>/*` derived from `root_url`. The `/suggest` value is a user-editable pre-population convenience, not a lock.
 
-The suggested pattern is displayed to the user during approval confirmation. The user MAY edit the pattern before a durable project/global rule is created, but the canonical approval anchor remains `approval_scope_key` plus blocked-episode identity rather than a UI session id.
+The suggested pattern is displayed and editable before the person explicitly chooses This project, This computer or Everywhere; no scope is preselected and paths never offer Everywhere. Approval binds approval_scope_key plus its real owner identity: the existing Orchestrator blocked episode, or PS-145 app thread/tool/request/target. A suggested pattern is not a FileSafe approved-command entry and never grants a whole command prefix outside that guard.
 
 ### 3.4A Web-operation permission-key derivation
 For canonical permission-key derivation, web operations use normalized suffixes rather than raw user-entered URLs:
@@ -141,7 +141,7 @@ Session-approval rules:
 - `For Session` for `websearch` and `webresearch` shows "Approve this tool for the rest of the current session" with suggested pattern `*`; this wildcard-only, tool-wide session behavior is tool-scoped and does not permit unrelated file/shell/network mutation tools.
 - `For Session` for `webfetch` and `webextract` shows "Approve this host/site for the rest of the current session" and approves the normalized host/domain, while `webcrawl` and `webmap` approve the normalized root host/domain; the user-facing pattern suggestion uses host-scoped forms such as `https://host.example/*` or `https://docs.example.com/*`. For example, approving `webcrawl` For Session on `https://docs.example.com/start` approves later crawl/map/extract/fetch calls only when they match the same allowed host pattern and same tool-key semantics.
 - The `/crawl/map/fetch` follow-on family shares the same normalized host/site matching rule when a `webcrawl` session approval grants follow-on read operations.
-- `Always` shows "Create durable permission rule", surfaces Project/Global scope selection when both scopes are valid, and creates the durable project/global permission rule through canonical permissions storage.
+- Always shows Create durable permission rule, lets the person explicitly choose This project/This computer/Everywhere without preselection and uses the selected canonical owner. No-project hides Project; paths never offer Everywhere; YOLO never creates Always.
 - `Deny` shows "Reject this invocation" and invokes the `reject-all-pending` cascade: reject this invocation and reject any other pending asks in the same approval batch/session that share the same approval ask.
 
 The approval summaries are rendered by `Plans/FinalGUISpec.md#15.7 Permission approval card widget` and the actual consumer sections that display the summaries.

@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L5053-L5097
+Source lines: L5095-L5143
 
-Source SHA256: `e2fcd22d76721dfd61754927b7b31cc183466c24050f47090f0cf7d7f10bedbf`
+Source SHA256: `3996097e3ab9dbc61c391860625de9f78f78f263621da0b912a2faa4930ed44f`
 
 ---
 
@@ -18,12 +18,14 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
-  File Manager consumes Backup-owned immutable snapshot browse, initiating-Client download,
-  explicitly authorized Host extraction, snapshot-to-current-file compare, disclosed portable
-  export, and consented archive retrieval. Every route preserves repository, snapshot, capture
-  set, Project/path/current-file, Client/Host, currentness, return, and focus identity; no Files
-  handler, latest-by-implication, RestoreRun mode, Project activation, or content execution is
-  created.
+  File Manager consumes Backup-owned immutable snapshot browse, initiating-Client download, explicitly
+  authorized Host extraction, snapshot-to-current-file compare, disclosed portable export, and
+  consented archive retrieval. Every route preserves repository, snapshot, capture set,
+  Project/path/current-file, Client/Host, currentness, return, and focus identity; no Files handler,
+  latest-by-implication, RestoreRun mode, Project activation, or content execution is created. With no
+  active Project, Compare with current names an explicitly selected authorized
+  Computer/root/file/source version; the snapshot and current side are independently pinned and a
+  Project is never inferred.
 gui_related: true
 gui_classification_reason: Snapshot tree, download/extract/compare/export/retrieve choices, FileSafe decisions, progress, disabled reasons, and exact reverse focus are visible Files surfaces.
 depends_on: [F-055, F-058, F-059, BRS-014, BRS-016]
@@ -43,9 +45,11 @@ context_scope: file_manager_backup_snapshot_consumer
 implementation_surfaces: [Plans/FileManager.md, future File Manager snapshot browser and compare surfaces, future Backup Restore native owner]
 node_compile_hint: {mode: filemanager_backup_consumer_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:REST-002-REST-005
-  - source_ref:packet:2026-09-01:REST-009
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
+- source_ref:packet:2026-09-01:REST-002-REST-005
+- source_ref:packet:2026-09-01:REST-009
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 negative_constraints:
   - Do not create FileManager-owned snapshot, fetch, download, extract, compare, export, archive, or restore handlers.
   - Do not infer latest snapshot, current file, Host, Project, path, or successful delivery.

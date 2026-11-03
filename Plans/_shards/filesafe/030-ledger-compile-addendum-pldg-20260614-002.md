@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L13325-L13367
+Source lines: L13466-L13540
 
-Source SHA256: `e3dd00aefe77af402142dc62c8838be67674b3d6204abfdd4b1caa9f78ae6c67`
+Source SHA256: `2d6da9a9eae44820501a3ab3b65d326476249c557a85e7d584e03761f54f7ce2`
 
 ---
 
@@ -17,37 +17,69 @@ plan_unit_id: F2-188
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  FileSafe owns the guard inputs for shared mutation sessions spanning user edits, agent edits,
-  preview edits, and FileManager operations. A mutation session must carry mutation_id, session_id,
-  actor/runtime_identity, source_surface, project/package/seam/lane/worktree scope, file identity/path,
-  target refs, base version/digest, baseline hash or version, operation type, dirty-state snapshot,
-  watcher snapshot, trust/degraded state, preview/trust mode, preview trust state, LSP/index availability,
-  remote/offline/cache/LSP/watch state, permission result, conflict policy, resulting version/digest,
-  artifact/evidence refs, and rollback/recovery or safe-point refs before mutation actions proceed.
+canonical_text: Shared mutation sessions retain every existing actor/source/file/target/version/dirty/watch/trust/conflict/result/rollback
+  field and add a discriminated application-or-Project scope. App mutation binds null project_id, actual thread/run/Computer/Host/Environment,
+  working root and recorded absolute file identity; Project work retains exact Project/package/seam/lane/worktree
+  when present. Admission snapshots and pre-write safe points are required before mutation; conversion never
+  relabels an old session or override as destination authority.
 gui_related: false
-gui_classification_reason: FileSafe mutation guard inputs are filesystem/runtime safety contracts, not visual presentation.
-depends_on: [CV-281]
+gui_classification_reason: FileSafe mutation guard inputs are filesystem/runtime safety contracts, not visual
+  presentation.
+depends_on:
+- CV-281
+- F2-213
 unblocks: []
 acceptance_criteria:
-  - User, agent, preview, and FileManager edits share one mutation-session guard model.
-  - Mutation sessions capture mutation_id, operation type, base and resulting version/digest, trust, degraded, offline/cache, watcher, LSP/index, permission, conflict, artifact/evidence, and rollback inputs.
-  - FileManager actions cannot bypass FileSafe guard inputs.
+- User, agent, preview, and FileManager edits share one mutation-session guard model.
+- Mutation sessions capture mutation_id, operation type, base and resulting version/digest, trust, degraded,
+  offline/cache, watcher, LSP/index, permission, conflict, artifact/evidence, and rollback inputs.
+- FileManager actions cannot bypass FileSafe guard inputs.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
 risk_class: mutation_safety_boundary_drift
 reasoning_tier: high
 context_scope: filesafe_shared_mutation_session
-implementation_surfaces: [Plans/FileSafe.md, Plans/FileManager.md, Plans/GitHub_Integration.md, Plans/FinalGUISpec.md]
-node_compile_hint: {mode: filesafe_mutation_session_guard, create_worknodes: false}
+implementation_surfaces:
+- Plans/FileSafe.md
+- Plans/FileManager.md
+- Plans/GitHub_Integration.md
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: filesafe_mutation_session_guard
+  create_worknodes: false
 source_lineage:
-  - pldg-20260614-002-part-3-fable-cleanup:atom-0082
-  - pldg-20260614-002-part-3-fable-cleanup:atom-0083
-preserved_exact_tokens: ["FileSafe-adjacent mutation seams", "versioned mutation session contract", "user/agent/preview edits", "mutation_id", "actor/runtime_identity", "source_surface", "file identity/path", "base version/digest", "operation type", "preview/trust mode", "remote/offline/cache/LSP/watch state", "conflict policy", "resulting version/digest", "artifact/evidence refs", "rollback/recovery path", "remote cache/offline/LSP degraded states", "watcher behavior", "preview trust/fallback"]
+- pldg-20260614-002-part-3-fable-cleanup:atom-0082
+- pldg-20260614-002-part-3-fable-cleanup:atom-0083
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/N25
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
+preserved_exact_tokens:
+- FileSafe-adjacent mutation seams
+- versioned mutation session contract
+- user/agent/preview edits
+- mutation_id
+- actor/runtime_identity
+- source_surface
+- file identity/path
+- base version/digest
+- operation type
+- preview/trust mode
+- remote/offline/cache/LSP/watch state
+- conflict policy
+- resulting version/digest
+- artifact/evidence refs
+- rollback/recovery path
+- remote cache/offline/LSP degraded states
+- watcher behavior
+- preview trust/fallback
 negative_constraints:
-  - Do not let FileManager mutation actions bypass FileSafe mutation-session guard inputs.
-  - Do not treat preview edits or agent edits as separate safety models.
-  - Do not omit artifact/evidence refs or resulting version/digest from mutation-session guard outcomes.
-owner_hints: [Plans/FileSafe.md, Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/GitHub_Integration.md]
+- Do not let FileManager mutation actions bypass FileSafe mutation-session guard inputs.
+- Do not treat preview edits or agent edits as separate safety models.
+- Do not omit artifact/evidence refs or resulting version/digest from mutation-session guard outcomes.
+owner_hints:
+- Plans/FileSafe.md
+- Plans/FileManager.md
+- Plans/FinalGUISpec.md
+- Plans/GitHub_Integration.md
 ```

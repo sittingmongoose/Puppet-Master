@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6023-L6115
+Source lines: L6147-L6245
 
-Source SHA256: `d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f`
+Source SHA256: `e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a`
 
 ---
 
@@ -43,20 +43,23 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Preserve the exact eleven-field GoalRecordV2, nine-field objective revision and seven-field
-  accepted origin. The Goal body currentness and history contract defines the exact local
-  canonical JSON semantic hashes, concrete scalar limit, single ordinary revision/history
-  chain and owner.goal.body.mutation@1.0.0 shared body/control transaction. Original accepted
-  source authority, current approval/owner/stop/access facts and whole reserved control gate
-  terminal writes. Independent current body/history and content-free receipt readers use
-  actual canonical origin; original receipt audit survives lawful body purge without
-  recreating text. SP-287 supplies separate physical wrappers/custody and DL-047 lifetime.
-  The explicitly adopted active updated-v3 Activity/body/control/history views use those current
-  canonical readers; separate SP-299 event/audit/input and original SIR replay boundaries preserve
-  accepted effects and original terminal meaning without event-built Goal state.
-  GRS-073/SP-304 select the shared current BodyControlV2 with independent cancellation_pending;
-  every current mutation/read/backup route preserves genuine Stop and cancellation effects.
-  No sibling Goal event or Workflow certification closure follows from this prerequisite.
+  Preserve the exact eleven-field GoalRecordV2, nine-field objective revision and seven-field accepted
+  origin. The Goal body currentness and history contract defines the exact local canonical JSON semantic
+  hashes, concrete scalar limit, single ordinary revision/history chain and owner.goal.body.mutation@1.0.0
+  shared body/control transaction. Original accepted source authority, current approval/owner/stop/access
+  facts and whole reserved control gate terminal writes. Independent current body/history and content-free
+  receipt readers use actual canonical origin; original receipt audit survives lawful body purge without
+  recreating text. SP-287 supplies separate physical wrappers/custody and DL-047 lifetime. The explicitly
+  adopted active updated-v3 Activity/body/control/history views use those current canonical readers;
+  separate SP-299 event/audit/input and original SIR replay boundaries preserve accepted effects and
+  original terminal meaning without event-built Goal state. GRS-073/SP-304 select the shared current
+  BodyControlV2 with independent cancellation_pending; every current mutation/read/backup route preserves
+  genuine Stop and cancellation effects. No sibling Goal event or Workflow certification closure follows
+  from this prerequisite. These exact Project semantic/physical editions remain immutable. GRS-086
+  requires separately versioned app body/origin/control/history/currentness and backup/source siblings as
+  one adopted graph, using real thread/Computer authority. Ordinary updates still cannot change
+  goal_id/project_id/thread_id/created_at, including a null binding; GRS-087 supplies conversion by linked
+  birth or separate association-owner transaction.
 gui_related: true
 gui_classification_reason: Preserves exact accepted Goal text, direct Save/approval behavior and authorized history visibility through deletion and recovery.
 depends_on: [GRS-048, GRS-050, GRS-051, GRS-054, GRS-056, DL-045, DL-047]
@@ -88,11 +91,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Goal_Runtime_System.md#GRS-048
-  - Plans/Goal_Runtime_System.md#GRS-054
-  - Plans/Goal_Runtime_System.md#GRS-056
-  - Plans/Decision_Log.md#DL-045
-  - Plans/Decision_Log.md#DL-047
+  - "Plans/Goal_Runtime_System.md#GRS-048"
+  - "Plans/Goal_Runtime_System.md#GRS-054"
+  - "Plans/Goal_Runtime_System.md#GRS-056"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
   - No Goal title/phase/child/budget/role fields, fifth state, inferred Goal, fabricated accepted lineage or certification exception.
   - No automatic Goal event adoption/depth, native proof, WorkNode, NodeSeed, readiness or governance seal.

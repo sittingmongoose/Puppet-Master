@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L20496-L21358
+Source lines: L20445-L21302
 
-Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
+Source SHA256: `5a777fb26616dd0bf554388fba855db82656e73b7f34c27d60924b3bda0b0f6a`
 
 ---
 
@@ -181,15 +181,8 @@ plan_unit_id: SP-274
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage supplies canonical content-free custody of the original create-restore-point command
-  identity, typed owner result, authenticated shared-runtime outcome, original UI response and synced
-  append receipt. Pending custody commits atomically with the point and creation intent; terminal custody
-  commits atomically with the committed creation marker. Original command replay survives lawful point
-  retirement without creating current point availability or accessing retired content. SP-285 separates
-  initial genuine source capture from later authenticated immutable retained-row resolution; disposed
-  raw SIR/transaction inputs are not reacquired. Combined available-created result inspection requires
-  original_create_result_custody, never passive_creation.
-  SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication, authenticating the original complete event and actual v2 receipt custody before the complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+canonical_text: |-
+  Storage supplies canonical content-free custody of the original create-restore-point command identity, typed owner result, authenticated shared-runtime outcome, original UI response and synced append receipt. Pending custody commits atomically with the point and creation intent; terminal custody commits atomically with the committed creation marker. Original command replay survives lawful point retirement without creating current point availability or accessing retired content. SP-285 separates initial genuine source capture from later authenticated immutable retained-row resolution; disposed raw SIR/transaction inputs are not reacquired. Combined available-created result inspection requires original_create_result_custody, never passive_creation. SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication, authenticating the original complete event and actual v2 receipt custody before the complete owner-local guard; no dependent resolver intervenes before atomic terminal publication. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App restore lifecycle has its own complete original create/expiry/delete/source/checkpoint/result wrappers under CV-366, the same shared 2,048 app bucket, 7,776,000-second reference-release threshold and every current hold; immutable historical Project source predicates stay exact.
 gui_related: false
 gui_classification_reason: This unit defines durable authority, authenticated custody and replay, with
   no visual presentation contract.
@@ -245,6 +238,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-045
 - Plans/UI_Command_Catalog.md#UCC-164
 - Plans/Contracts_V0.md#CV-333
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - cmd.chat.create_restore_point
 - RP-AUTHORITY-INDEFINITE

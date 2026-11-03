@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29267-L29422
+Source lines: L29196-L29337
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -19,24 +19,8 @@ plan_unit_id: F3-411
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  First-run onboarding for newbie vibecoders appears as a separate modal/wizard before the user enters the full shell,
-  remains skippable guided setup, and keeps the normal path focused on provider setup rather than a full Settings tour,
-  dense Home shell, or product training sequence. The accepted four-screen order is `Connect Puppet Master to an AI
-  provider`, `Set up a paid provider`, `Optional: Free Models`, and `You are ready to plan`. The first screen uses the
-  body copy `Puppet Master needs an AI provider account before it can plan or code with you. Start with a paid provider
-  for the most reliable setup. You can skip this and come back later.` with actions `Set up a paid provider` and `Skip
-  for now`. The paid-provider screen presents compact rows with one primary action and friendly row labels such as
-  `Use this provider`, `Sign in`, `Set up provider`, `Reconnect`, `Connected`, `Needs sign-in`, and `Could not connect`.
-  `Optional: Free Models` appears only after the paid-provider prompt and offers `Review Free Models`, `Maybe later`, and
-  `Continue to Planning Wizard` without recommendation, quality-rank, coding-strength, online-review, local-learning, or
-  benchmark/probe-calibration language. The final setup screen says `Need help later? Ask Assistant Chat for Teacher.
-  Try: 'What does this mean?' or 'Show me how to use this page.' Teacher explains the current screen from chat.` and
-  routes `Open Planning Wizard` as the first full app page. `Skip for now` routes directly to Planning Wizard in limited
-  setup state with the copy `Provider setup is not finished. You can still open Planning Wizard, but assistant features
-  may need a provider before they can run.` Doctor remains a compact Health summary after onboarding with labels `Ready`,
-  `Needs setup`, `Needs attention`, and `Could not connect`; it shows the simplest next action first, keeps critical
-  blockers visible, and puts advanced diagnostics behind details/support.
+canonical_text: |-
+  The earlier four-screen onboarding below is compatibility/source lineage; current full onboarding presentation/stages are F3-520/663 and PWIZ-037. First-run onboarding for newbie vibecoders appears as a separate modal/wizard before the user enters the full shell, remains skippable guided setup, and keeps the normal path focused on provider setup rather than a full Settings tour, dense Home shell, or product training sequence. The accepted four-screen order is `Connect Puppet Master to an AI provider`, `Set up a paid provider`, `Optional: Free Models`, and `You are ready to plan`. The first screen uses the body copy `Puppet Master needs an AI provider account before it can plan or code with you. Start with a paid provider for the most reliable setup. You can skip this and come back later.` with actions `Set up a paid provider` and `Skip for now`. The paid-provider screen presents compact rows with one primary action and friendly row labels such as `Use this provider`, `Sign in`, `Set up provider`, `Reconnect`, `Connected`, `Needs sign-in`, and `Could not connect`. `Optional: Free Models` appears only after the paid-provider prompt and offers `Review Free Models`, `Maybe later`, and `Continue to Planning Wizard` without recommendation, quality-rank, coding-strength, online-review, local-learning, or benchmark/probe-calibration language. The final setup screen says `Need help later? Ask Assistant Chat for Teacher. Try: 'What does this mean?' or 'Show me how to use this page.' Teacher explains the current screen from chat.` and routes `Open Planning Wizard` as the first full app page. `Skip for now` routes directly to Planning Wizard in limited setup state with the copy `Provider setup is not finished. You can still open Planning Wizard, but assistant features may need a provider before they can run.` Doctor remains a compact Health summary after onboarding with labels `Ready`, `Needs setup`, `Needs attention`, and `Could not connect`; it shows the simplest next action first, keeps critical blockers visible, and puts advanced diagnostics behind details/support. Current SSYS-059/065 scope classification supersedes universal no-Project look/sound write wording: claimed app levels can persist, only pre-claim preview remains ephemeral. Project Later still sets up AI on the named Computer and lands in No project; explicit Skip AI remains valid. Re-entry reads the exact resolved app/Project look, without a private reader/store. Preserve PM7’s current service admission, FO-22 valid-answer Back/Review, all art/solver/Pip/Glass/motion/audio and calm Almost ready rules; new native availability is not inferred.
 gui_related: true
 gui_classification_reason: This PlanUnit defines first-run wizard screens, copy, actions, visible provider rows, Doctor/Health labels, and GUI presentation rules.
 depends_on: [F3-409, MA-040, MA-064, MS-120, MS-121, ACD-426, UCC-102, CS-053, T-088, MI-028, F2-155]
@@ -67,44 +51,46 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0006
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0007
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0008
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0010
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0015
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0024
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0025
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0027
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0029
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0031
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0032
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0034
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0035
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0039
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0043
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0044
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0003
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0004
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0005
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0006
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0007
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0008
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/pmconcept_gui_reference_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0006
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0007
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0008
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0010
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0015
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0024
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0025
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0027
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0029
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0031
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0032
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0034
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0035
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0039
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0043
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0044
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0003
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0004
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0005
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0006
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0007
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0008
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/pmconcept_gui_reference_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F09,C-F02,C-F11,E-F07,E-F08
 source_atom_ids: [atom-0006, atom-0007, atom-0008, atom-0010, atom-0015, atom-0016, atom-0024, atom-0025, atom-0027, atom-0029, atom-0031, atom-0032, atom-0033, atom-0034, atom-0035, atom-0036, atom-0037, atom-0038, atom-0039, atom-0040, atom-0041, atom-0042, atom-0043, atom-0044, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0001, dec-0002, dec-0003, dec-0004, dec-0005, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:

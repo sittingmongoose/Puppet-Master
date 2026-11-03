@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L22598-L23303
+Source lines: L22548-L23252
 
-Source SHA256: `4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae`
+Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
 
 ---
 
@@ -31,11 +31,8 @@ plan_unit_id: CV-342
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: The existing Goal update command uses exact central request/result definitions and original
-  update custody; only its existing event family selects active-v3 content-free accepted-change facts
-  while preserving the entire historical-v2 resource and exact original CV-333 result/effect meaning.
-  Exact transient updated-consumer shapes import original source/receipt/epoch contracts and the complete
-  shared source token without widening writer schemas or adding an event-derived Goal projector.
+canonical_text: |-
+  The existing Goal update command uses exact central request/result definitions and original update custody; only its existing event family selects active-v3 content-free accepted-change facts while preserving the entire historical-v2 resource and exact original CV-333 result/effect meaning. Exact transient updated-consumer shapes import original source/receipt/epoch contracts and the complete shared source token without widening writer schemas or adding an event-derived Goal projector. The unchanged update resource graph is Project-only. CV-366’s app sibling requires genuine original application source and preserves every accepted operation/result/custody boundary; ordinary update still rejects goal/project/thread/creation binding changes.
 gui_related: false
 gui_classification_reason: Defines existing-command source, event, storage and result publication without
   a new visual surface.
@@ -82,6 +79,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
 - Plans/Goal_Runtime_System.md#GRS-064
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F06
 negative_constraints:
 - Do not infer accepted source or native atomicity from a schema, copied owner map, result-shaped value
   or fixture.
@@ -403,11 +402,8 @@ plan_unit_id: CV-347
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: Register current goal.cancelled family revision 3.0.0 with complete content-free v3 payload
-  and preserve the entire original v2 schema under legacy_v2_reader. The single existing Cancel handler gains
-  closed GoalCancelRequestV2/GoalCancelResultV2 references. All 107 cancellation and execution-source definitions
-  and the 19-document plus three embedded-resource graph are required alongside complete relational source/owner/codec
-  predicates.
+canonical_text: |-
+  Register current goal.cancelled family revision 3.0.0 with complete content-free v3 payload and preserve the entire original v2 schema under legacy_v2_reader. The single existing Cancel handler gains closed GoalCancelRequestV2/GoalCancelResultV2 references. All 107 cancellation and execution-source definitions and the 19-document plus three embedded-resource graph are required alongside complete relational source/owner/codec predicates. These exact original cancellation resources and their historical readers remain Project-bound. CV-366/SP-351 separately select complete application Stop/control/association/source/append/result custody. No original source is recaptured and no app record is admitted by nulling Project in these resources.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -446,6 +442,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-039
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F06
 negative_constraints:
 - No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
 - No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
@@ -534,9 +532,8 @@ plan_unit_id: CV-348
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: Complete bound Plan cancellation source and preparation contracts. Complete original schemas,
-  method graph, recursive target templates and numeric domains resolve through the declared canonical
-  resource graph.
+canonical_text: |-
+  Complete bound Plan cancellation source and preparation contracts. Complete original schemas, method graph, recursive target templates and numeric domains resolve through the declared canonical resource graph. This exact Project graph stays intact. CV-368’s app Plan cancellation sibling independently binds the entire approved Plan/run/Goal/schedule/consent/occurrence source, source-selection and owner-method graph; all participating app writers/readers adopt together or report unavailable.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -574,6 +571,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-039
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F08,C-F09
 negative_constraints:
 - No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
 - No native field redaction, numeric coercion, new retention policy, full runtime archive or automatic

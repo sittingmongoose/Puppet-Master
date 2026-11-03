@@ -2,9 +2,9 @@
 
 Source: `Plans/Plugins_System.md`
 
-Source lines: L648-L4055
+Source lines: L650-L4087
 
-Source SHA256: `0b754bd9e29239becb917810f8b63479913ea56b425d53e00386acc65174f6da`
+Source SHA256: `d9a210e3a709ee17b5fd624480bcbe73969fee68d37c1c90113b20217cf23809`
 
 ---
 
@@ -352,7 +352,11 @@ plan_unit_id: PLUG-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Plugin discovery walks internal plugins, project-local plugins, global plugins, and config package list entries in strict priority order."
+canonical_text: >-
+  Plugin discovery walks internal plugins, project-local plugins, global plugins, and config package
+  list entries in strict priority order. App discovery skips Project-local plugins and uses the same
+  remaining order on the exact Computer; library reach and installation readiness remain distinct
+  under PLUG-071.
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -377,6 +381,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0008
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0009
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "DISCOVERY"
 - "Discovery paths"
@@ -515,7 +521,10 @@ plan_unit_id: PLUG-011
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Puppet Master must not auto-load executable plugin code from config without explicit user approval; config-only discovery does not imply execution approval."
+canonical_text: >-
+  Puppet Master must not auto-load executable plugin code from config without explicit user approval;
+  config-only discovery does not imply execution approval. A copied definition, enablement switch,
+  mirrored package or YOLO mode is not that executable-source approval.
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -540,6 +549,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0012
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0013
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "Load order and execution model"
 - "Auto-load prohibition"
@@ -566,7 +577,11 @@ plan_unit_id: PLUG-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "First-time plugin load shows source, declared hooks, requested capabilities, and trust implications, and approval is version/hash-sensitive so source change requires new approval."
+canonical_text: >-
+  First-time plugin load shows source, declared hooks, requested capabilities, and trust implications,
+  and approval is version/hash-sensitive so source change requires new approval. Approval is bound to
+  the destination Computer and admitted package/capability identity; copies and whole Project versions
+  do not inherit it.
 gui_related: true
 gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
 split_recommended: false
@@ -590,6 +605,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0013
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "first-time plugin load"
 - "source"
@@ -770,7 +787,12 @@ plan_unit_id: PLUG-016
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Plugins initialize with PluginContext as the sole API surface for project root, global config, plugin data directory, hook registration, tool registration, and structured logging, and must not access Puppet Master internals outside it."
+canonical_text: >-
+  Plugins initialize with PluginContext as the sole API surface for project root, global config,
+  plugin data directory, hook registration, tool registration, and structured logging, and must not
+  access Puppet Master internals outside it. In app scope its versioned context additionally binds
+  user, Computer, thread and session with project_root=None; PLUGIN_DATA isolation never uses a shared
+  null-Project directory.
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -794,6 +816,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0017
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "PLUGIN-CONTEXT"
 - "PluginContext"
@@ -973,7 +997,11 @@ plan_unit_id: PLUG-020
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Plugins that declare arg-touching hooks require signed verification or explicitly /approved elevated approval at a higher trust posture than read-only hooks because they can inject malicious arguments after permission checks."
+canonical_text: >-
+  Plugins that declare arg-touching hooks require signed verification or explicitly /approved elevated
+  approval at a higher trust posture than read-only hooks because they can inject malicious arguments
+  after permission checks. Layering, app scope and owner copies cannot widen the admitted capability
+  ceiling or bypass final post-transform permission validation.
 gui_related: true
 gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
 split_recommended: false
@@ -998,6 +1026,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0020
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0021
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "arg-touching hooks"
 - "higher-trust approval posture"

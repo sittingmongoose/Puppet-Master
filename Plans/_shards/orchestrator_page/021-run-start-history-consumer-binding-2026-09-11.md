@@ -2,9 +2,9 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L2733-L2794
+Source lines: L2747-L2815
 
-Source SHA256: `99709bfde0f92665acf3f3d28fd9e2691d5fad3749f3ec48a3afd1d6e9e8f723`
+Source SHA256: `3f0bd0e3fa8398a8ea4ed1b9d08656f9a51c268a9326c2bf4cf027986172829e`
 
 ---
 
@@ -25,14 +25,18 @@ plan_unit_id: OP-036
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Orchestrator_Page.md
-canonical_text: Orchestrator newly defines orchestrator.history_run_start.v2@2.0.0 as its existing focused-run
+canonical_text: >-
+  Orchestrator newly defines orchestrator.history_run_start.v2@2.0.0 as its existing focused-run
   History/Ledger reader of SP-265. A verified source event and semantic digest produce one historical
   start fact after exact payload.run_id, snapshot, project, access, deletion and currentness checks. The
   reader shares the filtered checkpoint and preserves live/historical routing; it owns no separate writer
   or cursor and cannot activate a terminal run, imply completion, enable resume, add actions or recreate
   deleted thread content. The v1 reader is compatibility-only for this family; current v2 publication
   requires the explicitly admitted SP-265/SP-278 successor and complete current source/index token, with
-  unchanged owner behavior.
+  unchanged owner behavior. This exact Project reader/codec stays unchanged; an app thread run-start
+  reader must select its explicitly versioned app source/index through SIR-055/EP-132 and preserve passive
+  historical-only evidence. No null injection into the original Project source, current activation or
+  completion inference is authorized.
 gui_related: true
 gui_classification_reason: Defines existing user-visible consumer presentation and source trust.
 depends_on:
@@ -59,9 +63,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-045
-- reports/event-authority-20260911/step-08-run-started-depth.json
-- Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption
+  - "Plans/Decision_Log.md#DL-045"
+  - "reports/event-authority-20260911/step-08-run-started-depth.json"
+  - "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids: []
 negative_constraints:
 - No event membership, retention-policy definition, frozen accounting, runtime-proof or governance change.

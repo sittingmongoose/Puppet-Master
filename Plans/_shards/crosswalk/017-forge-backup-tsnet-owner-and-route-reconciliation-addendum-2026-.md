@@ -2,9 +2,9 @@
 
 Source: `Plans/Crosswalk.md`
 
-Source lines: L3439-L3522
+Source lines: L3436-L3510
 
-Source SHA256: `3fe991513bf85ef266c534b717fe05a3dec1ee220a3c3df294533445dcde0504`
+Source SHA256: `7f2dcd997fe0ad80b8427a6579596bd9120ccdf7088f07c9c3d66bb30a468824`
 
 ---
 
@@ -30,19 +30,10 @@ plan_unit_id: C-052
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Crosswalk.md
-canonical_text: >-
-  The post-integration Forge, Backup, and PM-managed connector transaction routes
-  every semantic field to its existing domain owner and every cross-surface open,
-  continuation, and reverse-navigation flow through CV-327. Forge Integrations
-  owns distinct Forgejo/Gitea profiles, RepositoryForgeBinding, independent
-  AutomationBinding, and the sole repository_automation / Actions & Pipelines
-  occupant. Backup Restore owns destinations, repositories, RecoverySet/Kit,
-  immutable snapshots/capture sets, retention, browse/retrieve, and RestoreRun.
-  Source Control/JJ supply native closure and reconciliation only. Server owns
-  server_id/trust/pairing; Remote Access owns the PM connector and route provenance;
-  shared auth/runtime/storage owners retain their existing primitives and custody.
-  Crosswalk selects and orders these owners without copying their schemas, commands,
-  handlers, state machines, events, or runtime claims.
+canonical_text: |-
+  The post-integration Forge, Backup, and PM-managed connector transaction routes every semantic field to its existing domain owner and every cross-surface open, continuation, and reverse-navigation flow through CV-327. Forge Integrations owns distinct Forgejo/Gitea profiles, RepositoryForgeBinding, independent AutomationBinding, and the sole repository_automation / Actions & Pipelines occupant. Backup Restore owns destinations, repositories, RecoverySet/Kit, immutable snapshots/capture sets, retention, browse/retrieve, and RestoreRun. Source Control/JJ supply native closure and reconciliation only. Server owns server_id/trust/pairing; Remote Access owns the PM connector and route provenance; shared auth/runtime/storage owners retain their existing primitives and custody. Crosswalk selects and orders these owners without copying their schemas, commands, handlers, state machines, events, or runtime claims.
+
+  PJCT-009/PWIZ-037 owns shared reviewed setup; PJCT-010/FGI-023/024 owns each admitted create/fork handoff and recovery; SCS-025 owns read-only source inspection and local remote.add; PJCT-011 owns Starters separately from detached Saved setups. BRS-032/033 owns first-policy absent-key CAS, Standard retention, archive pause and Full Server app custody/restore lineage. PS-146/147/148 alone determines human/mode/build-grant authority. This expansion preserves DL-273 service retirement/token deferral and all exact existing receipt routes.
 gui_related: true
 gui_classification_reason: This boundary controls the visible Actions & Pipelines migration, exact snapshot/filter/focus return, Bootstrap recovery scope, endpoint provenance, and all consumer handoffs.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L9015-L9161
+Source lines: L9384-L9549
 
-Source SHA256: `a2f40fb89918b299f4b90af9d0d7d7c85b75ad57f8312f598490040ea1d74bca`
+Source SHA256: `30d3beb8e135f0dd30e7757570a3b6b7e2830c5655547b4ebb81b675b748cbed`
 
 ---
 
@@ -34,7 +34,7 @@ The storage registry must materialize this row separately and bind it to the str
 
 ### Application versus project identity and denial replay
 
-All new permission audit and `tool.denied` writes use EventRecord `2.0.0`. A project-bound invocation uses `scope_kind = project` and its non-empty `project_id`. An application-level invocation before project selection uses `scope_kind = application` and `project_id = null`; it emits the denial/audit EventRecord without fabricating a project-scoped permission-snapshot row. If a mutation-capable attempt requires durable permission evidence, it must already be bound to one project and one materialized permission snapshot.
+Permission audit/tool.denied uses EventRecord 2.0.0: actual Project identity or scope_kind=application with project_id=null and real thread/run/Computer. PS-145 supplies app durable mutation evidence without a synthetic Project/node or empty Project v1 key. The original Project payload/key remains exact. Every mutation-capable dependency needs its admitted materialized scope-matched snapshot; missing evidence or audit admission fails closed.
 
 Permission audit inspection of an EventRecord `2.0.0` root requires a reader that validates `2.0.0`; an unsupported reader refuses the view with `unsupported_schema_version` instead of presenting partial permission history. Event routing consumes the storage-owned key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` with application `app` or the registered reversible project partition. Permissions does not derive a lookup key from current UI project/account state, omit `event_id`, or treat the index as permission authority.
 
@@ -59,47 +59,66 @@ plan_unit_id: PS-132
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: >-
-  Permission snapshots use the separate project-scoped durable family
-  permission_snapshot_record.v1:{project_id}:{snapshot_id}; Permissions owns its
-  closed immutable payload, while storage owns row registration, retention, and
-  recovery. Safe points use canonical sp: identity and restore points use rp:
-  identity. Neither can reconstruct or authorize reuse of a permission snapshot,
-  and missing or corrupt snapshot evidence requires fresh admission authority.
+canonical_text: 'The existing permission_snapshot_record.v1:{project_id}:{snapshot_id} and its closed Project
+  payload remain exact and immutable. PS-145 adds a separately versioned application evidence contract with
+  scope_kind=application, project_id=null, real thread/run/Computer/roots and owner-matched storage custody.
+  Application tool decisions do not fabricate attempt/node/Project fields. Safe-point sp: and restore-point
+  rp: identities remain their owners'' contracts and can never reconstruct or authorize snapshot reuse. Missing/corrupt
+  evidence requires fresh admission; historical Settings and replay projections are not authority.'
 gui_related: false
-gui_classification_reason: The unit defines backend permission evidence identity, schema ownership, retention linkage, and recovery admission.
-depends_on: [PS-097, PS-098, SP-242]
+gui_classification_reason: The unit defines backend permission evidence identity, schema ownership, retention
+  linkage, and recovery admission.
+depends_on:
+- PS-097
+- PS-098
+- SP-242
+- PS-145
 unblocks: []
 acceptance_criteria:
-  - The permission snapshot payload carries schema, project/snapshot/attempt/node identity, immutable permission contexts, event ref, redaction, and integrity evidence.
-  - Registry and cross-reference checks find one permission snapshot family distinct from safe-point and restore-point rows.
-  - New safe-point writes use only the canonical sp key and may reference but never embed or reconstruct permission snapshot authority.
-  - Missing or corrupt permission snapshot evidence cannot authorize restore/retry reuse and creates a fresh-snapshot admission requirement.
-  - Blocked, recovery, preserved-run, audit, and legal holds outlive ordinary snapshot age or current Settings changes.
+- The permission snapshot payload carries schema, project/snapshot/attempt/node identity, immutable permission
+  contexts, event ref, redaction, and integrity evidence.
+- Registry and cross-reference checks find one permission snapshot family distinct from safe-point and restore-point
+  rows.
+- New safe-point writes use only the canonical sp key and may reference but never embed or reconstruct permission
+  snapshot authority.
+- Missing or corrupt permission snapshot evidence cannot authorize restore/retry reuse and creates a fresh-snapshot
+  admission requirement.
+- Blocked, recovery, preserved-run, audit, and legal holds outlive ordinary snapshot age or current Settings
+  changes.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - future RSP-REGISTRY-001 and permission-snapshot custody fixtures
+- python3 scripts/pm-plan-index.py validate
+- future RSP-REGISTRY-001 and permission-snapshot custody fixtures
 risk_class: permission_snapshot_identity_recovery_drift
 reasoning_tier: high
 context_scope: case_l_permission_snapshot_custody
 implementation_surfaces:
-  - Plans/Permissions_System.md
-  - Plans/storage_value_registry.json
+- Plans/Permissions_System.md
+- Plans/storage_value_registry.json
 node_compile_hint:
   mode: case_l_permission_snapshot_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Case-L:L-021
-  - Case-L:PD-RSP-05
-  - Case-L:PD-RSP-06
-  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/REGISTRY_PROPOSED_ROWS.json
-  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/RESTORE_SAFEPOINT_REPAIR_PLAN.md
+- Case-L:L-021
+- Case-L:PD-RSP-05
+- Case-L:PD-RSP-06
+- PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/REGISTRY_PROPOSED_ROWS.json
+- PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/RESTORE_SAFEPOINT_REPAIR_PLAN.md
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N1/N6/N24/N25
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
 negative_constraints:
-  - Do not make Permissions the safe-point or restore-point lifecycle owner.
-  - Do not reconstruct historical permission authority from current Settings or replay-only projection state.
+- Do not make Permissions the safe-point or restore-point lifecycle owner.
+- Do not reconstruct historical permission authority from current Settings or replay-only projection state.
 owner_hints:
-  - Plans/Permissions_System.md
+- Plans/Permissions_System.md
+preserved_exact_tokens: []
+stale_retired_dispositions:
+- '2026-11-03 N1/N6/N24/N25: current behavior is the replacement canonical_text; superseded source remains
+  lineage only. Superseded clause: Permission snapshots use the separate project-scoped durable family permission_snapshot_record.v1:{project_id}:{snapshot_id};
+  Permissions owns its closed immutable payload, while storage owns row registration, retention, and recovery.
+  Safe points use canonical sp: identity and restore points use rp: identity. Neither can reconstruct or authorize
+  reuse of a permission snapshot, and missing or corrupt snapshot evidence requires fresh admission authority.'
 ```
 
 ### PS-133 - Case L Denial Scope And Recovery Gate Composition

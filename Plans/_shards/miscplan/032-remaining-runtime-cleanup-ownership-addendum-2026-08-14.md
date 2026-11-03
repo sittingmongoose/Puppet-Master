@@ -2,9 +2,9 @@
 
 Source: `Plans/MiscPlan.md`
 
-Source lines: L6406-L6440
+Source lines: L6440-L6477
 
-Source SHA256: `08dc9e9319f62047e1d3e6b602b0fd6701de2d56c9af0c73007465e7e3b03a98`
+Source SHA256: `9fe00e10eab87efa104b8d9deeac8ba2ce657ee0776a20f86f99a6053793f37e`
 
 ---
 
@@ -18,12 +18,13 @@ unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/MiscPlan.md
 canonical_text: >-
-  MiscPlan owns the sole Workspace Cleanup Manager policy and operation: exact
-  workspace/worktree target, inventory, allowlist, retention and sensitivity
-  classification, preview, Permissions and FileSafe decisions, resource
-  admission, deletion receipt, post-delete verification, restart reconciliation,
-  and recovery disclosure. Storage persists policy/receipts and Worktree owns
-  worktree lifecycle; neither is a peer cleanup manager.
+  MiscPlan owns the sole Workspace Cleanup Manager policy and operation: exact workspace/worktree
+  target, inventory, allowlist, retention and sensitivity classification, preview, Permissions and
+  FileSafe decisions, resource admission, deletion receipt, post-delete verification, restart
+  reconciliation, and recovery disclosure. Storage persists policy/receipts and Worktree owns worktree
+  lifecycle; neither is a peer cleanup manager. No-project Clean workspace uses the same
+  preview/inventory/retention/verification engine for one admitted directory and cannot turn home-read
+  authority or a cross-Project read grant into cleanup authority.
 gui_related: true
 gui_classification_reason: Cleanup preview, exclusions, retained evidence, blocked reasons, verification, and recovery are user-visible.
 depends_on: [M-020, M-021, M-061, SIR-006, W-084]
@@ -40,6 +41,8 @@ context_scope: workspace_cleanup_manager
 implementation_surfaces: [Plans/MiscPlan.md, Plans/FileSafe.md, Plans/Permissions_System.md, Plans/storage-plan.md, Plans/WorktreeGitImprovement.md]
 node_compile_hint: {mode: workspace_cleanup_manager_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#MGR-020
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#MGR-020
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 negative_constraints: [Do not use Storage or Worktree as a peer cleanup manager., Do not run broad recursive cleanup from an unresolved path., Do not claim deletion without verification.]
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45016-L45500
+Source lines: L44248-L44723
 
-Source SHA256: `24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac`
+Source SHA256: `04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a`
 
 ---
 
@@ -374,20 +374,8 @@ plan_unit_id: F3-622
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The Polish design adds two Source Control behaviours (DL-162). First, the Worktrees owner filter is one dropdown
-  labelled Owner, in the chat picker style of F3-621, that lists All and the owner classes (Threads, Orchestrator,
-  Agents, Manual) with each chosen class checked, in place of a row of filter chips; picking applies the same
-  owner-class filter with W-075's selection rules and persistence, and any other W-075 filter dimension the panel
-  shows uses the same dropdown; the Jujutsu Workspaces view uses the same Owner dropdown (F3-624).
-  Second, the publish and review card stays at the foot of the Git view and of the Jujutsu view (F3-623) and its
-  facts (destinations, expected head, review state) fold away and back from a fold button or from the card's head,
-  the height moving in the family's voice; a button inside the card never folds it, and folded or open is one
-  state for both engines, kept with the Source Control panel state (source_control_panel_state.v1, F3-475). Neither adds a command or an action: the filter is W-075's filter state
-  and the fold is panel state.
-  Amended 2026-10-17 (DL-228): the Owner dropdown uses F3-621's pick-several mode. The Jujutsu Workspaces
-  view's Owner filter is the same filter state as the Worktrees view's, kept with W-075's persistence, not a
-  separate view-local filter; this is a deliberate change from the concept, which keeps it view-local (amended 2026-10-17, review r1).
+canonical_text: |-
+  The Polish design adds two Source Control behaviours (DL-162). First, the Worktrees owner filter is one dropdown labelled Owner, in the chat picker style of F3-621, that lists All and the owner classes (Threads, Orchestrator, Agents, Manual) with each chosen class checked, in place of a row of filter chips; picking applies the same owner-class filter with W-075's selection rules and persistence, and any other W-075 filter dimension the panel shows uses the same dropdown; the Jujutsu Workspaces view uses the same Owner dropdown (F3-624). Second, the publish and review card stays at the foot of the Git view and of the Jujutsu view (F3-623) and its facts (destinations, expected head, review state) fold away and back from a fold button or from the card's head, the height moving in the family's voice; a button inside the card never folds it, and folded or open is one state for both engines, kept with the Source Control panel state (source_control_panel_state.v1, F3-475). Neither adds a command or an action: the filter is W-075's filter state and the fold is panel state. Amended 2026-10-17 (DL-228): the Owner dropdown uses F3-621's pick-several mode. The Jujutsu Workspaces view's Owner filter is the same filter state as the Worktrees view's, kept with W-075's persistence, not a separate view-local filter; this is a deliberate change from the concept, which keeps it view-local (amended 2026-10-17, review r1). For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines two visible Source Control behaviours the Polish design adds.
 split_recommended: false
@@ -412,8 +400,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-162"
-  - "Concepts/leftrail-redesign/src/concepts/d/10-skin.js applyWorktreeFilter and 20-fit.js wirePublish (concept lineage only, commit c93e341606)"
+- Plans/Decision_Log.md#DL-162
+- Concepts/leftrail-redesign/src/concepts/d/10-skin.js applyWorktreeFilter and 20-fit.js wirePublish (concept lineage
+  only, commit c93e341606)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
   - "Owner"
   - "source_control_panel_state.v1"
