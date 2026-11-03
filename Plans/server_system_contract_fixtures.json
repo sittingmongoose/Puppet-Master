@@ -2805,14 +2805,58 @@
         "schema_id": "pm.server_cross_owner_continuity_projection.v1",
         "plan_unit_ref": "Plans/Server_System.md#SRV-013",
         "server_id": "server:home",
-        "backup_owner_refs": ["Plans/Backup_Restore_System.md#BRS-012", "Plans/Backup_Restore_System.md#BRS-015", "Plans/Backup_Restore_System.md#BRS-016"],
+        "backup_owner_refs": [
+          "Plans/Backup_Restore_System.md#BRS-012",
+          "Plans/Backup_Restore_System.md#BRS-015",
+          "Plans/Backup_Restore_System.md#BRS-016"
+        ],
         "remote_access_owner_ref": "Plans/Remote_Access_System.md#RAS-015",
-        "schedule_occurrence": {"occurrence_id": "backup-occurrence:server-home:1", "durable_outbox_ref": "outbox:backup-occurrence:server-home:1", "writer_authority": "one_server_owned_writer", "survives_client_exit": true, "restart_safe": true, "project_move_policy": "owner_preflight_rebind_then_one_writer_transfer"},
-        "bootstrap_recovery": {"safe_local_claim_first": true, "recovery_safe": false, "schedules_paused": true, "execution_paused": true, "remote_exposure_paused": true, "machine_relationship": "foreign_machine", "identity_policy": "new_server_and_connector_identity_repair_clients", "collision_fence": "new_identity_no_takeover"},
+        "schedule_occurrence": {
+          "occurrence_id": "backup-occurrence:server-home:1",
+          "durable_outbox_ref": "outbox:backup-occurrence:server-home:1",
+          "writer_authority": "one_server_owned_writer",
+          "survives_client_exit": true,
+          "restart_safe": true,
+          "project_move_policy": "owner_preflight_rebind_then_one_writer_transfer"
+        },
+        "bootstrap_recovery": {
+          "safe_local_claim_first": true,
+          "recovery_safe": false,
+          "schedules_paused": true,
+          "execution_paused": true,
+          "remote_exposure_paused": true,
+          "machine_relationship": "foreign_machine",
+          "identity_policy": "new_server_and_connector_identity_repair_clients",
+          "collision_fence": "new_identity_no_takeover"
+        },
         "endpoint_provenance": [
-          {"endpoint_id": "server-endpoint:private", "route_kind": "connector_private", "observed_server_id": "server:home", "identity_verified": true, "pairing_verified": true, "dedupe_basis": "cryptographically_verified_server_id_only", "connector_is_server_identity": false},
-          {"endpoint_id": "server-endpoint:funnel", "route_kind": "hosted_funnel", "observed_server_id": "server:home", "identity_verified": false, "pairing_verified": false, "dedupe_basis": "cryptographically_verified_server_id_only", "connector_is_server_identity": false},
-          {"endpoint_id": "server-endpoint:external-tailnet", "route_kind": "external_host_tailscale", "observed_server_id": "server:home", "identity_verified": true, "pairing_verified": true, "dedupe_basis": "cryptographically_verified_server_id_only", "connector_is_server_identity": false}
+          {
+            "endpoint_id": "server-endpoint:private",
+            "route_kind": "connector_private",
+            "observed_server_id": "server:home",
+            "identity_verified": true,
+            "pairing_verified": true,
+            "dedupe_basis": "cryptographically_verified_server_id_only",
+            "connector_is_server_identity": false
+          },
+          {
+            "endpoint_id": "server-endpoint:funnel",
+            "route_kind": "hosted_funnel",
+            "observed_server_id": "server:home",
+            "identity_verified": false,
+            "pairing_verified": false,
+            "dedupe_basis": "cryptographically_verified_server_id_only",
+            "connector_is_server_identity": false
+          },
+          {
+            "endpoint_id": "server-endpoint:external-tailnet",
+            "route_kind": "external_host_tailscale",
+            "observed_server_id": "server:home",
+            "identity_verified": true,
+            "pairing_verified": true,
+            "dedupe_basis": "cryptographically_verified_server_id_only",
+            "connector_is_server_identity": false
+          }
         ],
         "command_availability": "handler_unavailable",
         "expected_event_types": [],
@@ -2829,11 +2873,41 @@
         "schema_id": "pm.server_cross_owner_continuity_projection.v1",
         "plan_unit_ref": "Plans/Server_System.md#SRV-013",
         "server_id": "server:home",
-        "backup_owner_refs": ["Plans/Backup_Restore_System.md#BRS-012", "Plans/Backup_Restore_System.md#BRS-015", "Plans/Backup_Restore_System.md#BRS-016"],
+        "backup_owner_refs": [
+          "Plans/Backup_Restore_System.md#BRS-012",
+          "Plans/Backup_Restore_System.md#BRS-015",
+          "Plans/Backup_Restore_System.md#BRS-016"
+        ],
         "remote_access_owner_ref": "Plans/Remote_Access_System.md#RAS-015",
-        "schedule_occurrence": {"occurrence_id": "occurrence:1", "durable_outbox_ref": "outbox:1", "writer_authority": "one_server_owned_writer", "survives_client_exit": true, "restart_safe": true, "project_move_policy": "owner_preflight_rebind_then_one_writer_transfer"},
-        "bootstrap_recovery": {"safe_local_claim_first": true, "recovery_safe": false, "schedules_paused": true, "execution_paused": true, "remote_exposure_paused": true, "machine_relationship": "verified_same_host", "identity_policy": "recover_existing_identity", "collision_fence": "new_identity_no_takeover"},
-        "endpoint_provenance": [{"endpoint_id": "server-endpoint:private", "route_kind": "connector_private", "observed_server_id": "server:home", "identity_verified": true, "pairing_verified": true, "dedupe_basis": "cryptographically_verified_server_id_only", "connector_is_server_identity": false}],
+        "schedule_occurrence": {
+          "occurrence_id": "occurrence:1",
+          "durable_outbox_ref": "outbox:1",
+          "writer_authority": "one_server_owned_writer",
+          "survives_client_exit": true,
+          "restart_safe": true,
+          "project_move_policy": "owner_preflight_rebind_then_one_writer_transfer"
+        },
+        "bootstrap_recovery": {
+          "safe_local_claim_first": true,
+          "recovery_safe": false,
+          "schedules_paused": true,
+          "execution_paused": true,
+          "remote_exposure_paused": true,
+          "machine_relationship": "verified_same_host",
+          "identity_policy": "recover_existing_identity",
+          "collision_fence": "new_identity_no_takeover"
+        },
+        "endpoint_provenance": [
+          {
+            "endpoint_id": "server-endpoint:private",
+            "route_kind": "connector_private",
+            "observed_server_id": "server:home",
+            "identity_verified": true,
+            "pairing_verified": true,
+            "dedupe_basis": "cryptographically_verified_server_id_only",
+            "connector_is_server_identity": false
+          }
+        ],
         "command_availability": "handler_unavailable",
         "expected_event_types": [],
         "runtime_claim": false
@@ -3827,5 +3901,2533 @@
       },
       "expected_error": "Initial owner-claim authority is an owner-verified tuple, not raw code or a caller flag"
     }
-  ]
+  ],
+  "projects_refresh_cases": [
+    {
+      "case_id": "fd-ssh_host_trust-apply",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "replace",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": 1,
+        "trust_absence_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_host_trust-source"
+    },
+    {
+      "case_id": "fd-ssh_host_trust-reject-target_ref",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "wrong-target",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "replace",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": 1,
+        "trust_absence_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_host_trust-source"
+    },
+    {
+      "case_id": "fd-ssh_host_trust-reject-human_decision_ref",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "wrong-decision",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "replace",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": 1,
+        "trust_absence_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_host_trust-source"
+    },
+    {
+      "case_id": "fd-ssh_host_trust-no-agent",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "agent",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "replace",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": 1,
+        "trust_absence_ref": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-ssh_host_trust-no-password",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "replace",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": 1,
+        "trust_absence_ref": null,
+        "password": "never-store"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-ssh_host_trust-wrong-client",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-b",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "replace",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": 1,
+        "trust_absence_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_host_trust-source"
+    },
+    {
+      "case_id": "fd-ssh_host_trust-stale-generation",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 2,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "replace",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": 1,
+        "trust_absence_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_host_trust-source"
+    },
+    {
+      "case_id": "fd-ssh_host_trust-unknown-effect",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandResultV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "status": "effect_unknown",
+        "target_ref": "target-a",
+        "preview": null,
+        "receipt": null,
+        "error": {
+          "code": "remote_effect_unknown",
+          "reason": "Read the same trusted target before retry.",
+          "settled_fact_refs": []
+        },
+        "work_ref": "work-a",
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "expected_event_types": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-ssh_host_trust-unknown-not-success",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandResultV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "status": "applied",
+        "target_ref": "target-a",
+        "preview": null,
+        "receipt": null,
+        "error": {
+          "code": "remote_effect_unknown",
+          "reason": "Read the same trusted target before retry.",
+          "settled_fact_refs": []
+        },
+        "work_ref": "work-a",
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "expected_event_types": []
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-ssh_public_key_install-apply",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_public_key_install-source"
+    },
+    {
+      "case_id": "fd-ssh_public_key_install-reject-target_ref",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "wrong-target",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_public_key_install-source"
+    },
+    {
+      "case_id": "fd-ssh_public_key_install-reject-human_decision_ref",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "wrong-decision",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_public_key_install-source"
+    },
+    {
+      "case_id": "fd-ssh_public_key_install-no-agent",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "agent",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-ssh_public_key_install-no-password",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a",
+        "password": "never-store"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-ssh_public_key_install-wrong-client",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-b",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_public_key_install-source"
+    },
+    {
+      "case_id": "fd-ssh_public_key_install-stale-generation",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 2,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_public_key_install-source"
+    },
+    {
+      "case_id": "fd-ssh-install-refuse-weak",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_public_key_install-source-weak"
+    },
+    {
+      "case_id": "fd-ssh-install-refuse-symlink",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_public_key_install-source-symlink"
+    },
+    {
+      "case_id": "fd-ssh-install-refuse-atomicity",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_public_key_install-source-atomicity"
+    },
+    {
+      "case_id": "fd-ssh-install-refuse-account",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_public_key_install-source-account"
+    },
+    {
+      "case_id": "fd-ssh-install-refuse-concurrent",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-ssh_public_key_install-source-concurrent"
+    },
+    {
+      "case_id": "fd-ssh_public_key_install-unknown-effect",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandResultV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "status": "effect_unknown",
+        "target_ref": "target-a",
+        "preview": null,
+        "receipt": null,
+        "error": {
+          "code": "remote_effect_unknown",
+          "reason": "Read the same trusted target before retry.",
+          "settled_fact_refs": []
+        },
+        "work_ref": "work-a",
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "expected_event_types": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-ssh_public_key_install-unknown-not-success",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandResultV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "status": "applied",
+        "target_ref": "target-a",
+        "preview": null,
+        "receipt": null,
+        "error": {
+          "code": "remote_effect_unknown",
+          "reason": "Read the same trusted target before retry.",
+          "settled_fact_refs": []
+        },
+        "work_ref": "work-a",
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "expected_event_types": []
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-ssh-install-existing-strong",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_public_key_install.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "ssh.protected_original_source_join",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-ssh-install-existing-strong-source"
+    }
+  ],
+  "ssh_owner_sources": {
+    "fd-ssh-ssh_host_trust-source": {
+      "target": {
+        "target_ref": "target-a",
+        "source_kind": "connection_draft",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "remote_account_ref": "remote-account-a",
+        "transport": "ssh",
+        "target_generation": 1,
+        "topology_generation": 1,
+        "auth_session_generation": 1,
+        "permission_generation": 1,
+        "stop_epoch": 1
+      },
+      "host_key": {
+        "observation_ref": "observation-a",
+        "target_ref": "target-a",
+        "target_generation": 1,
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "public_host_key_ref": "host-public-key-a",
+        "fingerprint": "fingerprint-a",
+        "algorithm": "ed25519",
+        "observed_at_utc": "2026-11-03T00:00:00Z",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "trust_revision": 1,
+        "prior_trust_ref": "trust-a",
+        "prior_fingerprint": "fingerprint-a",
+        "absence_proof_ref": null
+      },
+      "preview": {
+        "preview_ref": "preview-a",
+        "operation_id": "operation-a",
+        "command_id": "cmd.server.ssh.trust",
+        "target_ref": "target-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "host_key_observation_ref": "observation-a",
+        "public_key_ref": null,
+        "authorized_keys_observation_ref": null,
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        }
+      },
+      "decision": {
+        "human_decision_ref": "decision-a",
+        "person_id": "person-a",
+        "client_id": "client-a",
+        "actor": "human_gui",
+        "operation_id": "operation-a",
+        "preview_ref": "preview-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "decision": "approve",
+        "session_ref": "session-a",
+        "session_generation": 1,
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      },
+      "now_utc": "2026-11-03T01:00:00Z",
+      "permission_snapshot_ref": "permission-a",
+      "current_session_generation": 1,
+      "key_policy": {
+        "policy_ref": "policy-a",
+        "allowed_algorithms": [
+          "ed25519"
+        ],
+        "minimum_bits": {
+          "ed25519": 256
+        }
+      }
+    },
+    "fd-ssh-ssh_public_key_install-source": {
+      "target": {
+        "target_ref": "target-a",
+        "source_kind": "connection_draft",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "remote_account_ref": "remote-account-a",
+        "transport": "ssh",
+        "target_generation": 1,
+        "topology_generation": 1,
+        "auth_session_generation": 1,
+        "permission_generation": 1,
+        "stop_epoch": 1
+      },
+      "host_key": {
+        "observation_ref": "observation-a",
+        "target_ref": "target-a",
+        "target_generation": 1,
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "public_host_key_ref": "host-public-key-a",
+        "fingerprint": "fingerprint-a",
+        "algorithm": "ed25519",
+        "observed_at_utc": "2026-11-03T00:00:00Z",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "trust_revision": 1,
+        "prior_trust_ref": "trust-a",
+        "prior_fingerprint": "fingerprint-a",
+        "absence_proof_ref": null
+      },
+      "preview": {
+        "preview_ref": "preview-a",
+        "operation_id": "operation-a",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "target_ref": "target-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "host_key_observation_ref": "observation-a",
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        }
+      },
+      "decision": {
+        "human_decision_ref": "decision-a",
+        "person_id": "person-a",
+        "client_id": "client-a",
+        "actor": "human_gui",
+        "operation_id": "operation-a",
+        "preview_ref": "preview-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "decision": "approve",
+        "session_ref": "session-a",
+        "session_generation": 1,
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      },
+      "now_utc": "2026-11-03T01:00:00Z",
+      "permission_snapshot_ref": "permission-a",
+      "current_session_generation": 1,
+      "key_policy": {
+        "policy_ref": "policy-a",
+        "allowed_algorithms": [
+          "ed25519"
+        ],
+        "minimum_bits": {
+          "ed25519": 256
+        }
+      },
+      "public_key": {
+        "public_key_ref": "public-key-a",
+        "public_key_id": "key-a",
+        "revision": 1,
+        "fingerprint": "entry-fingerprint-a",
+        "public_entry_ref": "entry-a",
+        "algorithm": "ed25519",
+        "strength_bits": 256,
+        "key_policy_ref": "policy-a",
+        "private_key_owner_ref": "secure-owner-a"
+      },
+      "authorized_keys": {
+        "observation_ref": "authorized-file-a",
+        "target_ref": "target-a",
+        "remote_account_ref": "remote-account-a",
+        "remote_home_ref": "remote-home-a",
+        "file_identity_ref": "file-a",
+        "file_revision": 1,
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "absence_proof_ref": null,
+        "host_trust_ref": "trust-a",
+        "auth_session_ref": "session-a",
+        "permissions_mode": 384,
+        "file_kind": "regular",
+        "atomic_compare_write_capability_ref": "atomic-a",
+        "existing_entry_fingerprints": [],
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      }
+    },
+    "fd-ssh-ssh_public_key_install-source-weak": {
+      "target": {
+        "target_ref": "target-a",
+        "source_kind": "connection_draft",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "remote_account_ref": "remote-account-a",
+        "transport": "ssh",
+        "target_generation": 1,
+        "topology_generation": 1,
+        "auth_session_generation": 1,
+        "permission_generation": 1,
+        "stop_epoch": 1
+      },
+      "host_key": {
+        "observation_ref": "observation-a",
+        "target_ref": "target-a",
+        "target_generation": 1,
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "public_host_key_ref": "host-public-key-a",
+        "fingerprint": "fingerprint-a",
+        "algorithm": "ed25519",
+        "observed_at_utc": "2026-11-03T00:00:00Z",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "trust_revision": 1,
+        "prior_trust_ref": "trust-a",
+        "prior_fingerprint": "fingerprint-a",
+        "absence_proof_ref": null
+      },
+      "preview": {
+        "preview_ref": "preview-a",
+        "operation_id": "operation-a",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "target_ref": "target-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "host_key_observation_ref": "observation-a",
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        }
+      },
+      "decision": {
+        "human_decision_ref": "decision-a",
+        "person_id": "person-a",
+        "client_id": "client-a",
+        "actor": "human_gui",
+        "operation_id": "operation-a",
+        "preview_ref": "preview-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "decision": "approve",
+        "session_ref": "session-a",
+        "session_generation": 1,
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      },
+      "now_utc": "2026-11-03T01:00:00Z",
+      "permission_snapshot_ref": "permission-a",
+      "current_session_generation": 1,
+      "key_policy": {
+        "policy_ref": "policy-a",
+        "allowed_algorithms": [
+          "ed25519"
+        ],
+        "minimum_bits": {
+          "ed25519": 256
+        }
+      },
+      "public_key": {
+        "public_key_ref": "public-key-a",
+        "public_key_id": "key-a",
+        "revision": 1,
+        "fingerprint": "entry-fingerprint-a",
+        "public_entry_ref": "entry-a",
+        "algorithm": "ed25519",
+        "strength_bits": 128,
+        "key_policy_ref": "policy-a",
+        "private_key_owner_ref": "secure-owner-a"
+      },
+      "authorized_keys": {
+        "observation_ref": "authorized-file-a",
+        "target_ref": "target-a",
+        "remote_account_ref": "remote-account-a",
+        "remote_home_ref": "remote-home-a",
+        "file_identity_ref": "file-a",
+        "file_revision": 1,
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "absence_proof_ref": null,
+        "host_trust_ref": "trust-a",
+        "auth_session_ref": "session-a",
+        "permissions_mode": 384,
+        "file_kind": "regular",
+        "atomic_compare_write_capability_ref": "atomic-a",
+        "existing_entry_fingerprints": [
+          "entry-fingerprint-a"
+        ],
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      }
+    },
+    "fd-ssh-ssh_public_key_install-source-symlink": {
+      "target": {
+        "target_ref": "target-a",
+        "source_kind": "connection_draft",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "remote_account_ref": "remote-account-a",
+        "transport": "ssh",
+        "target_generation": 1,
+        "topology_generation": 1,
+        "auth_session_generation": 1,
+        "permission_generation": 1,
+        "stop_epoch": 1
+      },
+      "host_key": {
+        "observation_ref": "observation-a",
+        "target_ref": "target-a",
+        "target_generation": 1,
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "public_host_key_ref": "host-public-key-a",
+        "fingerprint": "fingerprint-a",
+        "algorithm": "ed25519",
+        "observed_at_utc": "2026-11-03T00:00:00Z",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "trust_revision": 1,
+        "prior_trust_ref": "trust-a",
+        "prior_fingerprint": "fingerprint-a",
+        "absence_proof_ref": null
+      },
+      "preview": {
+        "preview_ref": "preview-a",
+        "operation_id": "operation-a",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "target_ref": "target-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "host_key_observation_ref": "observation-a",
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        }
+      },
+      "decision": {
+        "human_decision_ref": "decision-a",
+        "person_id": "person-a",
+        "client_id": "client-a",
+        "actor": "human_gui",
+        "operation_id": "operation-a",
+        "preview_ref": "preview-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "decision": "approve",
+        "session_ref": "session-a",
+        "session_generation": 1,
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      },
+      "now_utc": "2026-11-03T01:00:00Z",
+      "permission_snapshot_ref": "permission-a",
+      "current_session_generation": 1,
+      "key_policy": {
+        "policy_ref": "policy-a",
+        "allowed_algorithms": [
+          "ed25519"
+        ],
+        "minimum_bits": {
+          "ed25519": 256
+        }
+      },
+      "public_key": {
+        "public_key_ref": "public-key-a",
+        "public_key_id": "key-a",
+        "revision": 1,
+        "fingerprint": "entry-fingerprint-a",
+        "public_entry_ref": "entry-a",
+        "algorithm": "ed25519",
+        "strength_bits": 256,
+        "key_policy_ref": "policy-a",
+        "private_key_owner_ref": "secure-owner-a"
+      },
+      "authorized_keys": {
+        "observation_ref": "authorized-file-a",
+        "target_ref": "target-a",
+        "remote_account_ref": "remote-account-a",
+        "remote_home_ref": "remote-home-a",
+        "file_identity_ref": "file-a",
+        "file_revision": 1,
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "absence_proof_ref": null,
+        "host_trust_ref": "trust-a",
+        "auth_session_ref": "session-a",
+        "permissions_mode": 384,
+        "file_kind": "symlink",
+        "atomic_compare_write_capability_ref": "atomic-a",
+        "existing_entry_fingerprints": [],
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      }
+    },
+    "fd-ssh-ssh_public_key_install-source-atomicity": {
+      "target": {
+        "target_ref": "target-a",
+        "source_kind": "connection_draft",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "remote_account_ref": "remote-account-a",
+        "transport": "ssh",
+        "target_generation": 1,
+        "topology_generation": 1,
+        "auth_session_generation": 1,
+        "permission_generation": 1,
+        "stop_epoch": 1
+      },
+      "host_key": {
+        "observation_ref": "observation-a",
+        "target_ref": "target-a",
+        "target_generation": 1,
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "public_host_key_ref": "host-public-key-a",
+        "fingerprint": "fingerprint-a",
+        "algorithm": "ed25519",
+        "observed_at_utc": "2026-11-03T00:00:00Z",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "trust_revision": 1,
+        "prior_trust_ref": "trust-a",
+        "prior_fingerprint": "fingerprint-a",
+        "absence_proof_ref": null
+      },
+      "preview": {
+        "preview_ref": "preview-a",
+        "operation_id": "operation-a",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "target_ref": "target-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "host_key_observation_ref": "observation-a",
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        }
+      },
+      "decision": {
+        "human_decision_ref": "decision-a",
+        "person_id": "person-a",
+        "client_id": "client-a",
+        "actor": "human_gui",
+        "operation_id": "operation-a",
+        "preview_ref": "preview-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "decision": "approve",
+        "session_ref": "session-a",
+        "session_generation": 1,
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      },
+      "now_utc": "2026-11-03T01:00:00Z",
+      "permission_snapshot_ref": "permission-a",
+      "current_session_generation": 1,
+      "key_policy": {
+        "policy_ref": "policy-a",
+        "allowed_algorithms": [
+          "ed25519"
+        ],
+        "minimum_bits": {
+          "ed25519": 256
+        }
+      },
+      "public_key": {
+        "public_key_ref": "public-key-a",
+        "public_key_id": "key-a",
+        "revision": 1,
+        "fingerprint": "entry-fingerprint-a",
+        "public_entry_ref": "entry-a",
+        "algorithm": "ed25519",
+        "strength_bits": 256,
+        "key_policy_ref": "policy-a",
+        "private_key_owner_ref": "secure-owner-a"
+      },
+      "authorized_keys": {
+        "observation_ref": "authorized-file-a",
+        "target_ref": "target-a",
+        "remote_account_ref": "remote-account-a",
+        "remote_home_ref": "remote-home-a",
+        "file_identity_ref": "file-a",
+        "file_revision": 1,
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "absence_proof_ref": null,
+        "host_trust_ref": "trust-a",
+        "auth_session_ref": "session-a",
+        "permissions_mode": 384,
+        "file_kind": "regular",
+        "atomic_compare_write_capability_ref": null,
+        "existing_entry_fingerprints": [],
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      }
+    },
+    "fd-ssh-ssh_public_key_install-source-account": {
+      "target": {
+        "target_ref": "target-a",
+        "source_kind": "connection_draft",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "remote_account_ref": "remote-account-a",
+        "transport": "ssh",
+        "target_generation": 1,
+        "topology_generation": 1,
+        "auth_session_generation": 1,
+        "permission_generation": 1,
+        "stop_epoch": 1
+      },
+      "host_key": {
+        "observation_ref": "observation-a",
+        "target_ref": "target-a",
+        "target_generation": 1,
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "public_host_key_ref": "host-public-key-a",
+        "fingerprint": "fingerprint-a",
+        "algorithm": "ed25519",
+        "observed_at_utc": "2026-11-03T00:00:00Z",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "trust_revision": 1,
+        "prior_trust_ref": "trust-a",
+        "prior_fingerprint": "fingerprint-a",
+        "absence_proof_ref": null
+      },
+      "preview": {
+        "preview_ref": "preview-a",
+        "operation_id": "operation-a",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "target_ref": "target-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "host_key_observation_ref": "observation-a",
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        }
+      },
+      "decision": {
+        "human_decision_ref": "decision-a",
+        "person_id": "person-a",
+        "client_id": "client-a",
+        "actor": "human_gui",
+        "operation_id": "operation-a",
+        "preview_ref": "preview-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "decision": "approve",
+        "session_ref": "session-a",
+        "session_generation": 1,
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      },
+      "now_utc": "2026-11-03T01:00:00Z",
+      "permission_snapshot_ref": "permission-a",
+      "current_session_generation": 1,
+      "key_policy": {
+        "policy_ref": "policy-a",
+        "allowed_algorithms": [
+          "ed25519"
+        ],
+        "minimum_bits": {
+          "ed25519": 256
+        }
+      },
+      "public_key": {
+        "public_key_ref": "public-key-a",
+        "public_key_id": "key-a",
+        "revision": 1,
+        "fingerprint": "entry-fingerprint-a",
+        "public_entry_ref": "entry-a",
+        "algorithm": "ed25519",
+        "strength_bits": 256,
+        "key_policy_ref": "policy-a",
+        "private_key_owner_ref": "secure-owner-a"
+      },
+      "authorized_keys": {
+        "observation_ref": "authorized-file-a",
+        "target_ref": "target-a",
+        "remote_account_ref": "other-account",
+        "remote_home_ref": "remote-home-a",
+        "file_identity_ref": "file-a",
+        "file_revision": 1,
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "absence_proof_ref": null,
+        "host_trust_ref": "trust-a",
+        "auth_session_ref": "session-a",
+        "permissions_mode": 384,
+        "file_kind": "regular",
+        "atomic_compare_write_capability_ref": "atomic-a",
+        "existing_entry_fingerprints": [],
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      }
+    },
+    "fd-ssh-ssh_public_key_install-source-concurrent": {
+      "target": {
+        "target_ref": "target-a",
+        "source_kind": "connection_draft",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "remote_account_ref": "remote-account-a",
+        "transport": "ssh",
+        "target_generation": 1,
+        "topology_generation": 1,
+        "auth_session_generation": 1,
+        "permission_generation": 1,
+        "stop_epoch": 1
+      },
+      "host_key": {
+        "observation_ref": "observation-a",
+        "target_ref": "target-a",
+        "target_generation": 1,
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "public_host_key_ref": "host-public-key-a",
+        "fingerprint": "fingerprint-a",
+        "algorithm": "ed25519",
+        "observed_at_utc": "2026-11-03T00:00:00Z",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "trust_revision": 1,
+        "prior_trust_ref": "trust-a",
+        "prior_fingerprint": "fingerprint-a",
+        "absence_proof_ref": null
+      },
+      "preview": {
+        "preview_ref": "preview-a",
+        "operation_id": "operation-a",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "target_ref": "target-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "host_key_observation_ref": "observation-a",
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        }
+      },
+      "decision": {
+        "human_decision_ref": "decision-a",
+        "person_id": "person-a",
+        "client_id": "client-a",
+        "actor": "human_gui",
+        "operation_id": "operation-a",
+        "preview_ref": "preview-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "decision": "approve",
+        "session_ref": "session-a",
+        "session_generation": 1,
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      },
+      "now_utc": "2026-11-03T01:00:00Z",
+      "permission_snapshot_ref": "permission-a",
+      "current_session_generation": 1,
+      "key_policy": {
+        "policy_ref": "policy-a",
+        "allowed_algorithms": [
+          "ed25519"
+        ],
+        "minimum_bits": {
+          "ed25519": 256
+        }
+      },
+      "public_key": {
+        "public_key_ref": "public-key-a",
+        "public_key_id": "key-a",
+        "revision": 1,
+        "fingerprint": "entry-fingerprint-a",
+        "public_entry_ref": "entry-a",
+        "algorithm": "ed25519",
+        "strength_bits": 256,
+        "key_policy_ref": "policy-a",
+        "private_key_owner_ref": "secure-owner-a"
+      },
+      "authorized_keys": {
+        "observation_ref": "authorized-file-a",
+        "target_ref": "target-a",
+        "remote_account_ref": "remote-account-a",
+        "remote_home_ref": "remote-home-a",
+        "file_identity_ref": "file-a",
+        "file_revision": 2,
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "absence_proof_ref": null,
+        "host_trust_ref": "trust-a",
+        "auth_session_ref": "session-a",
+        "permissions_mode": 384,
+        "file_kind": "regular",
+        "atomic_compare_write_capability_ref": "atomic-a",
+        "existing_entry_fingerprints": [],
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      }
+    },
+    "fd-ssh-install-existing-strong-source": {
+      "target": {
+        "target_ref": "target-a",
+        "source_kind": "connection_draft",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "remote_account_ref": "remote-account-a",
+        "transport": "ssh",
+        "target_generation": 1,
+        "topology_generation": 1,
+        "auth_session_generation": 1,
+        "permission_generation": 1,
+        "stop_epoch": 1
+      },
+      "host_key": {
+        "observation_ref": "observation-a",
+        "target_ref": "target-a",
+        "target_generation": 1,
+        "remote_host": "ssh-target.invalid",
+        "remote_port": 22,
+        "public_host_key_ref": "host-public-key-a",
+        "fingerprint": "fingerprint-a",
+        "algorithm": "ed25519",
+        "observed_at_utc": "2026-11-03T00:00:00Z",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "trust_revision": 1,
+        "prior_trust_ref": "trust-a",
+        "prior_fingerprint": "fingerprint-a",
+        "absence_proof_ref": null
+      },
+      "preview": {
+        "preview_ref": "preview-a",
+        "operation_id": "operation-a",
+        "command_id": "cmd.server.ssh.public_key.install",
+        "target_ref": "target-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": 1,
+          "authorized_keys_revision": 1
+        },
+        "host_key_observation_ref": "observation-a",
+        "public_key_ref": "public-key-a",
+        "authorized_keys_observation_ref": "authorized-file-a",
+        "expires_at_utc": "2026-11-03T02:00:00Z",
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        }
+      },
+      "decision": {
+        "human_decision_ref": "decision-a",
+        "person_id": "person-a",
+        "client_id": "client-a",
+        "actor": "human_gui",
+        "operation_id": "operation-a",
+        "preview_ref": "preview-a",
+        "intent_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "decision": "approve",
+        "session_ref": "session-a",
+        "session_generation": 1,
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      },
+      "now_utc": "2026-11-03T01:00:00Z",
+      "permission_snapshot_ref": "permission-a",
+      "current_session_generation": 1,
+      "key_policy": {
+        "policy_ref": "policy-a",
+        "allowed_algorithms": [
+          "ed25519"
+        ],
+        "minimum_bits": {
+          "ed25519": 256
+        }
+      },
+      "public_key": {
+        "public_key_ref": "public-key-a",
+        "public_key_id": "key-a",
+        "revision": 1,
+        "fingerprint": "entry-fingerprint-a",
+        "public_entry_ref": "entry-a",
+        "algorithm": "ed25519",
+        "strength_bits": 256,
+        "key_policy_ref": "policy-a",
+        "private_key_owner_ref": "secure-owner-a"
+      },
+      "authorized_keys": {
+        "observation_ref": "authorized-file-a",
+        "target_ref": "target-a",
+        "remote_account_ref": "remote-account-a",
+        "remote_home_ref": "remote-home-a",
+        "file_identity_ref": "file-a",
+        "file_revision": 1,
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "absence_proof_ref": null,
+        "host_trust_ref": "trust-a",
+        "auth_session_ref": "session-a",
+        "permissions_mode": 384,
+        "file_kind": "regular",
+        "atomic_compare_write_capability_ref": "atomic-a",
+        "existing_entry_fingerprints": [
+          "entry-fingerprint-a"
+        ],
+        "expires_at_utc": "2026-11-03T02:00:00Z"
+      }
+    }
+  }
 }

@@ -1217,6 +1217,9 @@
           }
         }
       ]
+    },
+    "HomeWorkspaceLayoutApplicationV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/HomeLayoutApplicationV1"
     }
   }
 }

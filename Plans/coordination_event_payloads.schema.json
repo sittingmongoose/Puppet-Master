@@ -773,6 +773,734 @@
           "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/non_secret_ref"
         }
       }
+    },
+    "agent_abortedApplicationV1": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.coordination_event.agent_aborted.schema.v1",
+      "title": "coordination.agent_aborted payload",
+      "description": "Abort resolution by the component that resolves the abort (OSI-438). One of the three terminal families. aborted_by_ref names that authority, and its kind follows abort_reason (CV-353 rule 6): run and the parent run ID for parent, with parent_run_id present and equal; actor for user; component for runtime.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/lineage_envelope"
+        },
+        {
+          "if": {
+            "properties": {
+              "abort_reason": {
+                "const": "parent"
+              }
+            },
+            "required": [
+              "abort_reason"
+            ]
+          },
+          "then": {
+            "required": [
+              "parent_run_id"
+            ],
+            "properties": {
+              "aborted_by_ref": {
+                "pattern": "^run:"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "abort_reason": {
+                "const": "user"
+              }
+            },
+            "required": [
+              "abort_reason"
+            ]
+          },
+          "then": {
+            "properties": {
+              "aborted_by_ref": {
+                "pattern": "^actor:"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "abort_reason": {
+                "const": "runtime"
+              }
+            },
+            "required": [
+              "abort_reason"
+            ]
+          },
+          "then": {
+            "properties": {
+              "aborted_by_ref": {
+                "pattern": "^component:"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "run_id",
+        "agent_id",
+        "abort_reason",
+        "aborted_by_ref",
+        "aborted_at_utc",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "application_context"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "const": null
+        },
+        "run_id": true,
+        "thread_id": true,
+        "agent_id": true,
+        "agent_type": true,
+        "parent_run_id": true,
+        "child_run_id": true,
+        "node_id": true,
+        "lane_id": true,
+        "worktree_id": true,
+        "platform": true,
+        "agent_revision": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "expected_previous_revision": true,
+        "last_applied_event_id": true,
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^coordination:coordination\\.agent_aborted:[\\s\\S]+:(?:[2-9]|[1-9][0-9]+)$"
+        },
+        "abort_reason": {
+          "enum": [
+            "parent",
+            "user",
+            "runtime"
+          ]
+        },
+        "aborted_by_ref": {
+          "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/non_secret_ref"
+        },
+        "aborted_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      }
+    },
+    "agent_crashedApplicationV1": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.coordination_event.agent_crashed.schema.v1",
+      "title": "coordination.agent_crashed payload",
+      "description": "Crash resolution by the scheduler or the crash detector, never by the agent (OSI-438). One of the three terminal families. crash_reason records the direct evidence. A heartbeat_expired crash records the observed heartbeat_age_ms, never the runtime policy threshold coordination_heartbeat_expiry_ms.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/lineage_envelope"
+        },
+        {
+          "if": {
+            "properties": {
+              "crash_reason": {
+                "const": "heartbeat_expired"
+              }
+            },
+            "required": [
+              "crash_reason"
+            ]
+          },
+          "then": {
+            "required": [
+              "heartbeat_age_ms"
+            ]
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "run_id",
+        "agent_id",
+        "crash_reason",
+        "detected_at_utc",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "application_context"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "const": null
+        },
+        "run_id": true,
+        "thread_id": true,
+        "agent_id": true,
+        "agent_type": true,
+        "parent_run_id": true,
+        "child_run_id": true,
+        "node_id": true,
+        "lane_id": true,
+        "worktree_id": true,
+        "platform": true,
+        "agent_revision": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "expected_previous_revision": true,
+        "last_applied_event_id": true,
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^coordination:coordination\\.agent_crashed:[\\s\\S]+:(?:[2-9]|[1-9][0-9]+)$"
+        },
+        "crash_reason": {
+          "enum": [
+            "process_exit",
+            "heartbeat_expired",
+            "process_lost",
+            "worktree_lost"
+          ]
+        },
+        "detected_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+        },
+        "heartbeat_age_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "process_ref": {
+          "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/non_secret_ref"
+        },
+        "worktree_ref": {
+          "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/non_secret_ref"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      }
+    },
+    "agent_file_ownership_updatedApplicationV1": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.coordination_event.agent_file_ownership_updated.schema.v1",
+      "title": "coordination.agent_file_ownership_updated payload",
+      "description": "A new file-activity claim, or a changed claim_kind, claim_confidence or operation_id for the same path (OSI-438). A claim warns and sequences agents; it is not a FileSafe lock or lease. path_ref is the normalized worktree-relative path of SP-320's recipe and path_hash the lowercase hex SHA-256 of its UTF-8 bytes. Only high and medium confidence claims are appended; there is no release value.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/lineage_envelope"
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "run_id",
+        "agent_id",
+        "path_ref",
+        "path_hash",
+        "claim_kind",
+        "claim_confidence",
+        "observed_at_utc",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "application_context"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "const": null
+        },
+        "run_id": true,
+        "thread_id": true,
+        "agent_id": true,
+        "agent_type": true,
+        "parent_run_id": true,
+        "child_run_id": true,
+        "node_id": true,
+        "lane_id": true,
+        "worktree_id": true,
+        "platform": true,
+        "agent_revision": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "expected_previous_revision": true,
+        "last_applied_event_id": true,
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^coordination:coordination\\.agent_file_ownership_updated:[\\s\\S]+:(?:[2-9]|[1-9][0-9]+)$"
+        },
+        "path_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^(?![A-Za-z]:[\\\\/])(?![~\\\\])(?!\\.{1,2}(?:/|$))(?![\\s\\S]*/\\.{1,2}(?:/|$))[^/]+(?:/[^/]+)*$"
+        },
+        "path_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "claim_kind": {
+          "enum": [
+            "editing",
+            "reviewing",
+            "generated_output",
+            "read_dependency"
+          ]
+        },
+        "claim_confidence": {
+          "enum": [
+            "high",
+            "medium"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "observed_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      }
+    },
+    "agent_operation_updatedApplicationV1": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.coordination_event.agent_operation_updated.schema.v1",
+      "title": "coordination.agent_operation_updated payload",
+      "description": "A new operation, or an actual change of its summary, progress or refs (OSI-438). The latest event for an operation_id wins in the operation projection (SP-320). operation_summary is bounded plain text with no prompt, model output, file content, diff, tool argument or secret. operation_refs, when present, holds 1 to 16 distinct typed non-secret references.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/lineage_envelope"
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "run_id",
+        "agent_id",
+        "operation_id",
+        "operation_summary",
+        "observed_at_utc",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "application_context"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "const": null
+        },
+        "run_id": true,
+        "thread_id": true,
+        "agent_id": true,
+        "agent_type": true,
+        "parent_run_id": true,
+        "child_run_id": true,
+        "node_id": true,
+        "lane_id": true,
+        "worktree_id": true,
+        "platform": true,
+        "agent_revision": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "expected_previous_revision": true,
+        "last_applied_event_id": true,
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^coordination:coordination\\.agent_operation_updated:[\\s\\S]+:(?:[2-9]|[1-9][0-9]+)$"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^[^\\u0000-\\u001F\\u007F]+$",
+          "not": {
+            "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+          }
+        },
+        "progress_pct": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "operation_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/non_secret_ref"
+          }
+        },
+        "observed_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      }
+    },
+    "agent_registeredApplicationV1": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.coordination_event.agent_registered.schema.v1",
+      "title": "coordination.agent_registered payload",
+      "description": "Agent registration before execution (OSI-438). The first event of an agent: agent_revision is 1 and neither expected_previous_revision nor last_applied_event_id is present (CV-353 rule 4). It carries no operation; the initial operation is its own coordination.agent_operation_updated event at agent_revision 2.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/lineage_envelope"
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "run_id",
+        "agent_id",
+        "agent_type",
+        "started_at_utc",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "application_context"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "const": null
+        },
+        "run_id": true,
+        "thread_id": true,
+        "agent_id": true,
+        "agent_type": true,
+        "parent_run_id": true,
+        "child_run_id": true,
+        "node_id": true,
+        "lane_id": true,
+        "worktree_id": true,
+        "platform": true,
+        "agent_revision": {
+          "const": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^coordination:coordination\\.agent_registered:[\\s\\S]+:1$"
+        },
+        "model_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "started_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      }
+    },
+    "agent_status_updatedApplicationV1": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.coordination_event.agent_status_updated.schema.v1",
+      "title": "coordination.agent_status_updated payload",
+      "description": "An actual change of status or status_reason (OSI-438). status takes only the four non-terminal members of the canonical child lifecycle enum; complete, failed and cancelled arise only from the three terminal families. status_reason is bounded plain text with no prompt, model output, file content, diff, tool argument or secret.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/lineage_envelope"
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "run_id",
+        "agent_id",
+        "status",
+        "observed_at_utc",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "application_context"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "const": null
+        },
+        "run_id": true,
+        "thread_id": true,
+        "agent_id": true,
+        "agent_type": true,
+        "parent_run_id": true,
+        "child_run_id": true,
+        "node_id": true,
+        "lane_id": true,
+        "worktree_id": true,
+        "platform": true,
+        "agent_revision": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "expected_previous_revision": true,
+        "last_applied_event_id": true,
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^coordination:coordination\\.agent_status_updated:[\\s\\S]+:(?:[2-9]|[1-9][0-9]+)$"
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "running",
+            "awaiting_parent",
+            "blocked"
+          ]
+        },
+        "status_reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000-\\u001F\\u007F]+$",
+          "not": {
+            "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+          }
+        },
+        "observed_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      }
+    },
+    "agent_unregisteredApplicationV1": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.coordination_event.agent_unregistered.schema.v1",
+      "title": "coordination.agent_unregistered payload",
+      "description": "Normal terminal unregister with a known outcome (OSI-438). One of the three terminal families: each agent has exactly one terminal event, and it releases every claim of the agent (SP-320). terminal_status takes the terminal members of the canonical child lifecycle enum.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/lineage_envelope"
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "run_id",
+        "agent_id",
+        "terminal_status",
+        "finished_at_utc",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "application_context"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "const": null
+        },
+        "run_id": true,
+        "thread_id": true,
+        "agent_id": true,
+        "agent_type": true,
+        "parent_run_id": true,
+        "child_run_id": true,
+        "node_id": true,
+        "lane_id": true,
+        "worktree_id": true,
+        "platform": true,
+        "agent_revision": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "expected_previous_revision": true,
+        "last_applied_event_id": true,
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^coordination:coordination\\.agent_unregistered:[\\s\\S]+:(?:[2-9]|[1-9][0-9]+)$"
+        },
+        "terminal_status": {
+          "enum": [
+            "complete",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "finished_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+        },
+        "result_ref": {
+          "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/non_secret_ref"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      }
     }
   }
 }

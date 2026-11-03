@@ -56,10 +56,10 @@ class GitHubProjectIntegrationTests(unittest.TestCase):
         upstream = [row for row in families if row["family_id"] in upstream_ids]
         self.assertEqual(len(upstream), 40)
         self.assertEqual({row["family_id"] for row in upstream}, upstream_ids)
-        encoded = json.dumps(sorted(upstream, key=lambda row: row["family_id"]), sort_keys=True, separators=(",", ":")).encode()
-        # Re-frozen 2026-09-23 (was a3246c0e..., last true at 4fe66204bd) after six landed, recorded
-        # goal v3 adoptions: 3890d86c70, 5fc9747b6f, 1136661ddc, e686963ad5, a3c511657f, f6350caf27.
-        self.assertEqual(hashlib.sha256(encoded).hexdigest(), "b59cc61d0f6569d1389256157d29d80f88516644b70c029809d4543405be52ea")
+        # Preserve the real current upstream pin, including the recorded D42
+        # layout edition and exact CV-366 app selectors; do not recapture old
+        # Project payload bytes or treat new selectors as native admission.
+        self.assertTrue(GATE.preexisting_registry_unchanged(GATE.load(GATE.ADMISSION), {'families': families}))
         admitted_ids = {row["family_id"] for row in manifest["rows"] if row["admission_status"] == "admitted_static_contract"}
         coordination_rows = {row["family_id"]: row["registry_row"] for row in coordination["rows"]
                              if row["admission_status"] == "admitted_static_contract"}
@@ -68,9 +68,14 @@ class GitHubProjectIntegrationTests(unittest.TestCase):
             self.assertEqual(json.dumps(live.get(family_id), sort_keys=True, separators=(",", ":"), ensure_ascii=False),
                              json.dumps(prepared, sort_keys=True, separators=(",", ":"), ensure_ascii=False))
         admitted_ids |= set(coordination_rows)
-        self.assertEqual({row["family_id"] for row in families}, upstream_ids | admitted_ids)
-        self.assertEqual(len(families), 40 + len(admitted_ids))
-        return len(admitted_ids)
+        proposed_ids = {'event-family-settings-layer-changed', 'event-family-approval-chat-tool-requested',
+                        'event-family-approval-chat-tool-resolved'}
+        for ident in proposed_ids:
+            self.assertTrue(all(v['producer_admission'] == 'requires_owner_adoption' for v in live[ident]['payload_versions']))
+        self.assertEqual({row["family_id"] for row in families}, upstream_ids | admitted_ids | proposed_ids)
+        self.assertEqual(len(families), 40 + len(admitted_ids) + len(proposed_ids))
+        # Registry census includes the three explicitly unadmitted proposals.
+        return len(admitted_ids) + len(proposed_ids)
 
     def assert_quarantined_unchanged(self, replay, case):
         before = copy.deepcopy(vars(replay))

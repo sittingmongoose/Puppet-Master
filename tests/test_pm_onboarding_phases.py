@@ -312,8 +312,10 @@ class OnboardingStorageTests(unittest.TestCase):
         #   plans/ea-s09-coord-registered-20260925.
         families = self.registry["families"]
         # SP-322 adds the Release-owned application_update_check_schedule family.
-        self.assertEqual(len(families), 295)
-        self.assertEqual(len({row["family_id"] for row in families}), 295)
+        # The refresh preserves the 301-row integration pin and appends 41
+        # explicitly selected app/Settings/permission physical counterparts.
+        self.assertEqual(len(families), 342)
+        self.assertEqual(len({row["family_id"] for row in families}), 342)
         added = [row for row in families if row["family_id"] == "run_started_index_checkpoint"]
         browser_checkpoint = [row for row in families if row["family_id"] == "browser_workspace_created_index_checkpoint"]
         self.assertEqual(len(browser_checkpoint), 1)
@@ -439,6 +441,63 @@ class OnboardingStorageTests(unittest.TestCase):
         session["project_commit_binding"]["command_id"] = "cmd.project.open"
         self.assertIn("onboarding_settings_copy_cannot_mutate_opened_existing_project",
                       onboarding_semantic_failures("onboarding_session", session))
+
+
+class ProjectsRefreshSourceJoinTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import pm_projects_refresh_contracts as refresh
+        cls.refresh = refresh
+        cls.corpus = refresh.Corpus()
+
+    def test_ssh_closed_cases_and_original_source_joins(self):
+        pack = self.corpus.document('Plans/server_system_contract_fixtures.json')
+        for case in pack['projects_refresh_cases']:
+            with self.subTest(case=case['case_id']):
+                self.assertEqual(self.corpus.validator(case['schema_ref']).is_valid(case['record']), case['expected_schema_valid'])
+                for rule in case['semantic_checks']:
+                    self.assertEqual(self.refresh.semantic_outcome(rule['predicate_id'], case['record'], self.corpus, pack, case), rule['expected'])
+
+    def test_ephemeral_broker_reference_never_enters_durable_intent(self):
+        pack = self.corpus.document('Plans/server_system_contract_fixtures.json')
+        request = copy.deepcopy(pack['projects_refresh_cases'][0]['record'])
+        request['protected_input_ref'] = 'ephemeral-broker-a'
+        self.assertNotIn('protected_input_ref', self.refresh.redacted_ssh_intent(request))
+        self.assertEqual(request['protected_input_ref'], 'ephemeral-broker-a')
+
+    def test_screen_source_checks_controller_geometry_and_protected_surface(self):
+        pack = self.corpus.document('Plans/computer_use_contract_fixtures.json')
+        case = next(c for c in pack['projects_refresh_cases'] if c['case_id'] == 'fd-computer-pointer-request')
+        source = copy.deepcopy(pack['owner_session_sources'][case['owner_source_id']])
+        request = case['record']
+        self.assertEqual(self.refresh.computer_failures(request, source), [])
+        for key, value in [('controller_generation', 2), ('geometry_generation', 2), ('protected_surface', True), ('stopped', True)]:
+            changed = copy.deepcopy(source)
+            changed[key] = value
+            self.assertTrue(self.refresh.computer_failures(request, changed), key)
+        self.assertTrue(self.refresh.computer_failures(request, None))
+
+    def test_local_reconcile_requires_independent_exact_owner_input(self):
+        pack = self.corpus.document('Plans/projects_refresh_command_bindings.fixtures.json')
+        case = next(c for c in pack['projects_refresh_cases'] if c['case_id'] == 'fd-sync-local-complete')
+        source = pack['remote_sync_owner_sources'][case['owner_source_id']]
+        self.assertEqual(self.refresh.remote_sync_failures(case['record'], source), [])
+        for field in ('original_repository_ref', 'fork_repository_ref', 'return_context_ref', 'writer_lease_generation'):
+            changed = copy.deepcopy(source)
+            changed[field] = 99 if field.endswith('generation') else 'different-owner-value'
+            self.assertIn(field, self.refresh.remote_sync_failures(case['record'], changed))
+        self.assertTrue(self.refresh.remote_sync_failures(case['record'], None))
+
+    def test_binding_detects_replaced_actual_production_handler(self):
+        pack = self.corpus.document('Plans/projects_refresh_command_bindings.json')
+        request = copy.deepcopy(pack['commands'][0])
+        corpus = self.refresh.Corpus()
+        production = copy.deepcopy(corpus.document('Plans/Wiring_Matrix.production.json'))
+        row = next(r for r in production['entries'].values() if r['ui_command_id'] == request['command_id'])
+        row['handler_location'] = pack['commands'][1]['handler']
+        corpus.documents['Plans/Wiring_Matrix.production.json'] = production
+        self.assertTrue(self.corpus.validator('Plans/projects_refresh_command_bindings.schema.json#/$defs/CommandBinding').is_valid(request))
+        self.assertTrue(self.refresh.binding_row_failures(request, corpus))
 
 
 if __name__ == "__main__":

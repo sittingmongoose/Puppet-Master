@@ -4284,6 +4284,1970 @@
           }
         }
       ]
+    },
+    "registration_kind_v2": {
+      "enum": [
+        "new_local",
+        "existing_local",
+        "git_clone",
+        "jujutsu_clone",
+        "forge_created",
+        "ssh_remote",
+        "restore_same_project",
+        "restore_as_new",
+        "migration",
+        "mounted_existing"
+      ]
+    },
+    "project_setup_binding_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "setup_consumer",
+        "session_id",
+        "draft_id",
+        "draft_revision",
+        "draft_sha256",
+        "review_revision",
+        "review_sha256",
+        "preflight_evidence",
+        "project_id",
+        "settings_preview_ref",
+        "settings_preview_sha256",
+        "settings_rebind_ref",
+        "permission_authority",
+        "source_inspection_ref",
+        "starter_version_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_setup_binding.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "setup_consumer": {
+          "enum": [
+            "onboarding",
+            "new_project",
+            "chat_conversion"
+          ]
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "draft_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "draft_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "draft_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "review_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "review_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "preflight_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settings_preview_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settings_preview_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settings_rebind_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "permission_authority": {
+          "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "source_inspection_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "starter_version_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "acquisition_provenance_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "native_registration_kind",
+        "source_transport_ref",
+        "inspection_evidence",
+        "original_repository_ref",
+        "fork_repository_ref",
+        "head_repository_ref",
+        "base_repository_ref",
+        "fork_owner_result_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "online_import",
+            "fork_contribute"
+          ]
+        },
+        "native_registration_kind": {
+          "enum": [
+            "git_clone",
+            "jujutsu_clone"
+          ]
+        },
+        "source_transport_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "inspection_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "original_repository_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "fork_repository_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "head_repository_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "base_repository_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "fork_owner_result_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "project_rename_request_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "project_id",
+        "display_name",
+        "expected_project_revision",
+        "expected_registry_revision",
+        "expected_project_sha256",
+        "expected_registry_sha256",
+        "permission_evidence",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.project.rename"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": ".*\\S.*"
+        },
+        "expected_project_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_registry_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_project_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_registry_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "permission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "project_rename_result_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "project_id",
+        "status",
+        "display_name",
+        "project_revision",
+        "registry_revision",
+        "unchanged_identity_evidence",
+        "physical_path_changed",
+        "repository_changed",
+        "vault_changed",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.project.rename"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "renamed",
+            "replayed",
+            "refused",
+            "conflict"
+          ]
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "registry_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "unchanged_identity_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "physical_path_changed": {
+          "const": false
+        },
+        "repository_changed": {
+          "const": false
+        },
+        "vault_changed": {
+          "const": false
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "project_creation_recovery_context_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "recovery_id",
+        "revision",
+        "chain_kind",
+        "remote_effect_origin",
+        "remote_effect_status",
+        "original_project_request_ref",
+        "original_project_request_sha256",
+        "original_project_result_ref",
+        "original_project_result_sha256",
+        "remote_owner_result_ref",
+        "remote_owner_receipt_ref",
+        "verified_repository_ref",
+        "reserved_project_id",
+        "reviewed_setup_binding",
+        "settled_effect_refs",
+        "remaining_effect_ids",
+        "source_preparation_refs",
+        "active_resume_claim_ref",
+        "composition_revision",
+        "composition_sha256",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_creation_recovery_context.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "recovery_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "chain_kind": {
+          "enum": [
+            "github_compatibility",
+            "forge_create_then_register",
+            "fork_then_clone_register"
+          ]
+        },
+        "remote_effect_origin": {
+          "enum": [
+            "create",
+            "fork"
+          ]
+        },
+        "remote_effect_status": {
+          "enum": [
+            "verified_created",
+            "failed_before_effect",
+            "unknown"
+          ]
+        },
+        "original_project_request_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "original_project_request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_project_result_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "original_project_result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "remote_owner_result_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remote_owner_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verified_repository_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reserved_project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reviewed_setup_binding": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/project_setup_binding_v2"
+        },
+        "settled_effect_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "remaining_effect_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "source_preparation_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "active_resume_claim_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "composition_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "composition_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expires_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "starter_file_set_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "template_kind",
+        "item_id",
+        "version",
+        "content_sha256",
+        "source_kind",
+        "source_ref",
+        "source_manifest_ref",
+        "resolved_manifest_ref",
+        "secret_scan_evidence",
+        "source_trust_evidence",
+        "destination_collision_plan_ref",
+        "excluded_content_refs"
+      ],
+      "properties": {
+        "template_kind": {
+          "const": "starter_file_set"
+        },
+        "item_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_kind": {
+          "enum": [
+            "local_folder",
+            "template_repository"
+          ]
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_manifest_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "resolved_manifest_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "secret_scan_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "source_trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "destination_collision_plan_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "excluded_content_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "project_composition_payload_v2": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "template_kind",
+            "exact_payload"
+          ],
+          "properties": {
+            "template_kind": {
+              "const": "configuration"
+            },
+            "exact_payload": {
+              "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandPayload"
+            }
+          }
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/starter_file_set_v1"
+        }
+      ]
+    },
+    "project_archive_backup_child_result_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "project_transition_operation_id",
+        "backup_policy_id",
+        "policy_revision",
+        "backup_pause_evidence",
+        "status",
+        "last_good_backup_ref",
+        "pruned",
+        "run_started"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_transition_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "backup_policy_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "policy_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "backup_pause_evidence": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "paused",
+            "no_policy",
+            "not_reached",
+            "refused"
+          ]
+        },
+        "last_good_backup_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pruned": {
+          "const": false
+        },
+        "run_started": {
+          "const": false
+        }
+      }
+    },
+    "SetupRecoveryScenarioV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "setup_consumer",
+        "way",
+        "backend",
+        "registration_kind",
+        "remote_effect_origin",
+        "remote_status",
+        "verified_repository_id",
+        "original_result_sha256",
+        "captured_result_sha256",
+        "original_idempotency_replay",
+        "source_fresh",
+        "review_fresh",
+        "fork_provider",
+        "remote_name_taken",
+        "network_effect_requested",
+        "hook_execution_requested",
+        "jj_snapshot_requested",
+        "source_backing_device_ref",
+        "backup_backing_device_ref",
+        "backup_key_present",
+        "expected_policy_revision",
+        "archive",
+        "last_good_backup_ref",
+        "prune_requested",
+        "new_project_listed"
+      ],
+      "properties": {
+        "setup_consumer": {
+          "enum": [
+            "onboarding",
+            "new_project",
+            "chat_conversion"
+          ]
+        },
+        "way": {
+          "enum": [
+            "new",
+            "folder",
+            "online",
+            "device",
+            "restore",
+            "from_chat",
+            "later_no_project"
+          ]
+        },
+        "backend": {
+          "enum": [
+            "git",
+            "jujutsu"
+          ]
+        },
+        "registration_kind": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/registration_kind_v2"
+        },
+        "remote_effect_origin": {
+          "enum": [
+            null,
+            "create",
+            "fork"
+          ]
+        },
+        "remote_status": {
+          "enum": [
+            "none",
+            "verified_created",
+            "failed_before_effect",
+            "unknown"
+          ]
+        },
+        "verified_repository_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "captured_result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_idempotency_replay": {
+          "type": "boolean"
+        },
+        "source_fresh": {
+          "type": "boolean"
+        },
+        "review_fresh": {
+          "type": "boolean"
+        },
+        "fork_provider": {
+          "enum": [
+            null,
+            "github",
+            "github_enterprise",
+            "gitlab"
+          ]
+        },
+        "remote_name_taken": {
+          "type": "boolean"
+        },
+        "network_effect_requested": {
+          "type": "boolean"
+        },
+        "hook_execution_requested": {
+          "type": "boolean"
+        },
+        "jj_snapshot_requested": {
+          "type": "boolean"
+        },
+        "source_backing_device_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "backup_backing_device_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "backup_key_present": {
+          "type": "boolean"
+        },
+        "expected_policy_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "archive": {
+          "type": "boolean"
+        },
+        "last_good_backup_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prune_requested": {
+          "type": "boolean"
+        },
+        "new_project_listed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ProjectCompositionCommandIdApplicationV1": {
+      "type": "string",
+      "enum": [
+        "cmd.project.duplicate_configuration",
+        "cmd.project.duplicate_with_history",
+        "cmd.project_template.create_project",
+        "cmd.project_template.delete",
+        "cmd.project_template.rename",
+        "cmd.project_template.save"
+      ]
+    },
+    "ProjectCompositionCommandPayloadApplicationV1": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "portable_settings_ref",
+            "portable_bindings_ref",
+            "excluded_history",
+            "excluded_live_work",
+            "excluded_host_paths",
+            "excluded_raw_secrets"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project.duplicate_configuration"
+            },
+            "portable_settings_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "portable_bindings_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "excluded_history": {
+              "const": true
+            },
+            "excluded_live_work": {
+              "const": true
+            },
+            "excluded_host_paths": {
+              "const": true
+            },
+            "excluded_raw_secrets": {
+              "const": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "verified_backup_ref",
+            "identity_rewrite_plan_ref",
+            "inclusion_manifest_ref",
+            "duplicate_execution_lease"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project.duplicate_with_history"
+            },
+            "verified_backup_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "identity_rewrite_plan_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "inclusion_manifest_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "duplicate_execution_lease": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "template_version_ref",
+            "placeholder_resolution_ref",
+            "template_secret_free"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project_template.create_project"
+            },
+            "template_version_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "placeholder_resolution_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "template_secret_free": {
+              "const": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "destructive_confirmation_ref",
+            "dependency_check_ref",
+            "hold_check_ref",
+            "data_disposition_ref"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project_template.delete"
+            },
+            "destructive_confirmation_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "dependency_check_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "hold_check_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "data_disposition_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "new_display_name",
+            "stable_identity_preserved"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project_template.rename"
+            },
+            "new_display_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "stable_identity_preserved": {
+              "const": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "portable_configuration_ref",
+            "template_version_ref",
+            "secret_scan_ref",
+            "template_secret_free"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project_template.save"
+            },
+            "portable_configuration_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "template_version_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "secret_scan_ref": {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            "template_secret_free": {
+              "const": true
+            }
+          }
+        }
+      ]
+    },
+    "ProjectCompositionCommandRequestApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "idempotency_key",
+        "project_id",
+        "template_id",
+        "expected_registry_generation",
+        "expected_project_generation",
+        "expected_template_generation",
+        "permission_snapshot_ref",
+        "return_context",
+        "payload",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_composition.command_request.application.v1"
+        },
+        "record_kind": {
+          "const": "ProjectCompositionCommandRequest"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ProjectCompositionCommandIdApplicationV1"
+        },
+        "operation": {
+          "$ref": "#/$defs/ProjectCompositionOperationApplicationV1"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+        },
+        "project_id": {
+          "const": null
+        },
+        "template_id": {
+          "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+        },
+        "expected_registry_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_project_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_template_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+        },
+        "return_context": {
+          "$ref": "#/$defs/ProjectCompositionReturnContextApplicationV1"
+        },
+        "payload": {
+          "$ref": "#/$defs/ProjectCompositionCommandPayloadApplicationV1"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.duplicate_configuration"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "duplicate_configuration"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.duplicate_configuration"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.duplicate_with_history"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "duplicate_with_history"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.duplicate_with_history"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.create_project"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "template_create_project"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project_template.create_project"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.delete"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "template_delete"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project_template.delete"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.rename"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "template_rename"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project_template.rename"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.save"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "template_save"
+              },
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project_template.save"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ProjectCompositionNonSecretRefApplicationV1": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "not": {
+        "pattern": "(^|[._:/-])(raw|password|secret|access_token|refresh_token|api_key|cookie|authorization)([._:/-]|$)"
+      }
+    },
+    "ProjectCompositionOperationApplicationV1": {
+      "type": "string",
+      "enum": [
+        "duplicate_configuration",
+        "duplicate_with_history",
+        "template_create_project",
+        "template_delete",
+        "template_rename",
+        "template_save"
+      ]
+    },
+    "ProjectCompositionReturnContextApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface_id",
+        "route_id",
+        "focus_target",
+        "invocation_token",
+        "return_generation"
+      ],
+      "properties": {
+        "surface_id": {
+          "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+        },
+        "route_id": {
+          "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+        },
+        "focus_target": {
+          "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+        },
+        "invocation_token": {
+          "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+        },
+        "return_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "ProjectCompositionCommandRequestV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequest"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestApplicationV1"
+        }
+      ]
+    },
+    "ProjectCompositionCommandOutputApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "changed",
+        "state",
+        "currentness",
+        "operation_receipt_ref",
+        "resulting_generation",
+        "restart_disposition",
+        "secret_material_exposed",
+        "protected_auth_content_exposed"
+      ],
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/ProjectCompositionCommandIdApplicationV1"
+        },
+        "changed": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "running",
+            "paused",
+            "completed",
+            "cancelled",
+            "rolled_back",
+            "blocked",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "currentness": {
+          "enum": [
+            "current",
+            "stale",
+            "conflicted",
+            "unknown"
+          ]
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+        },
+        "resulting_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "restart_disposition": {
+          "enum": [
+            "not_applicable",
+            "resume",
+            "rollback",
+            "recovery_required"
+          ]
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        }
+      }
+    },
+    "ProjectCompositionCommandResultApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "operation",
+        "command_instance_id",
+        "status",
+        "project_id",
+        "template_id",
+        "expected_registry_generation",
+        "expected_project_generation",
+        "expected_template_generation",
+        "receipt_ref",
+        "observable_work_ref",
+        "return_context",
+        "event_effect_policy",
+        "output",
+        "completed_at_utc",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_composition.command_result.application.v1"
+        },
+        "record_kind": {
+          "const": "ProjectCompositionCommandResult"
+        },
+        "command_id": {
+          "$ref": "#/$defs/ProjectCompositionCommandIdApplicationV1"
+        },
+        "operation": {
+          "$ref": "#/$defs/ProjectCompositionOperationApplicationV1"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "succeeded",
+            "no_change",
+            "blocked",
+            "cancelled",
+            "failed",
+            "recovery_required"
+          ]
+        },
+        "project_id": {
+          "const": null
+        },
+        "template_id": {
+          "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+        },
+        "expected_registry_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_project_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_template_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "receipt_ref": {
+          "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+        },
+        "observable_work_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ProjectCompositionNonSecretRefApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "$ref": "#/$defs/ProjectCompositionReturnContextApplicationV1"
+        },
+        "event_effect_policy": {
+          "const": "receipt_only_no_eventrecord_pending_event_authority"
+        },
+        "output": {
+          "$ref": "#/$defs/ProjectCompositionCommandOutputApplicationV1"
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/ProjectCompositionTimestampApplicationV1"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.duplicate_configuration"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "duplicate_configuration"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.duplicate_configuration"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.duplicate_with_history"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "duplicate_with_history"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project.duplicate_with_history"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.create_project"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "template_create_project"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project_template.create_project"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.delete"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "template_delete"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project_template.delete"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.rename"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "template_rename"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project_template.rename"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.save"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "operation": {
+                "const": "template_save"
+              },
+              "output": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project_template.save"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ProjectCompositionTimestampApplicationV1": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ProjectCompositionCommandResultV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultApplicationV1"
+        }
+      ]
+    },
+    "project_action_request_v2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/project_action_request"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/project_rename_request_v1"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "command_id",
+            "project_id",
+            "setup_binding",
+            "registration_kind",
+            "acquisition_provenance",
+            "original_owner_request_ref",
+            "original_owner_request_sha256",
+            "recovery_context_ref",
+            "idempotency_key",
+            "return_context_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.project_action_request.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "command_id": {
+              "enum": [
+                "cmd.project.new_local",
+                "cmd.project.add_existing",
+                "cmd.project.new_github_repo",
+                "cmd.project.resume_creation"
+              ]
+            },
+            "project_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "setup_binding": {
+              "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/project_setup_binding_v2"
+            },
+            "registration_kind": {
+              "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/registration_kind_v2"
+            },
+            "acquisition_provenance": {
+              "anyOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/acquisition_provenance_v1"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "original_owner_request_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "original_owner_request_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "recovery_context_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "idempotency_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "return_context_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        }
+      ]
+    },
+    "project_action_result_v2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/project_action_result"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/project_rename_result_v1"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "operation_id",
+            "project_id",
+            "status",
+            "project_record_ref",
+            "registry_readback_ref",
+            "setup_receipt_refs",
+            "archive_backup_child_result",
+            "retained_result_evidence",
+            "return_context_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.project_action_result.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "project_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "status": {
+              "enum": [
+                "committed",
+                "failed_before_effect",
+                "unknown",
+                "recovery_required",
+                "refused"
+              ]
+            },
+            "project_record_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "registry_readback_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "setup_receipt_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "archive_backup_child_result": {
+              "anyOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/project_archive_backup_child_result_v1"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "retained_result_evidence": {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            "return_context_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        }
+      ]
     }
   },
   "x-server-gap-command-contracts": {

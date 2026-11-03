@@ -192,7 +192,7 @@ def validate():
         failures.append("wiring_census")
     else:
         row = rows[0]
-        if row.get("request_schema_ref") != forge.SCHEMA + "#/$defs/project_action_request" or row.get("result_schema_ref") != forge.SCHEMA + "#/$defs/project_action_result" or set(row["expected_event_types"]) != set(EVENTS):
+        if row.get("request_schema_ref") != forge.SCHEMA + "#/$defs/project_action_request_v2" or row.get("result_schema_ref") != forge.SCHEMA + "#/$defs/project_action_result_v2" or set(row["expected_event_types"]) != set(EVENTS):
             failures.append("wiring_owner_contract")
         if any(ADMISSION + "#/rows/" + str(index) not in row["effect_contract"]["receipt_or_event_refs"] for index in range(2)):
             failures.append("wiring_disposition")

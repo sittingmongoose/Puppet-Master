@@ -362,7 +362,11 @@ def validator_for(
 def offline_schema_registry() -> Registry:
     """Register every closed-manifest schema by $id; never retrieve remotely."""
 
-    registry = Registry(retrieve=lambda uri: (_ for _ in ()).throw(ValueError(f"unregistered schema URI: {uri}")))
+    # The refresh adds exact app sibling/source and path-URI references. The
+    # shared corpus resolves those resources offline without promoting nested
+    # historical banks or widening this gate's authored fixture denominator.
+    from pm_projects_refresh_contracts import Corpus
+    registry = Corpus(ROOT).registry
     for schema_rel, _ in CONTRACT_PAIRS:
         schema = load_json(ROOT / schema_rel)
         schema_uri = schema.get("$id")

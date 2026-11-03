@@ -1,6 +1,8 @@
 """Shared read-only command inventory checks; never dispatcher admission."""
 
 import fnmatch
+import json
+import re
 
 
 def wiring_command_excluded(command_id, excluded_tokens):
@@ -24,3 +26,50 @@ def command_handler_bindings(entries):
         if isinstance(handler, str):
             targets.add(handler)
     return {command: sorted(targets) for command, targets in sorted(bindings.items())}
+
+
+def projects_refresh_action_inventory(root, sources):
+    """Extract reviewed bindings independently of Touch rows and profiles.
+
+    Source deletion/unknown actions fail against the bounded companion and
+    typed schemas. Tool IDs additionally come from their actual Tools units.
+    """
+    from pm_projects_refresh_contracts import COMPUTER_TOOLS, PROJECT_TOOLS
+    manifest = json.loads((root / 'Plans/projects_refresh_command_bindings.json').read_text())
+    expected = {}
+    groups = (
+        ('commands', 'command_id', 'projects_refresh_commands', 'command', 1),
+        ('local_actions', 'action_id', 'projects_refresh_local', 'ui_action', 493),
+        ('tools', 'tool_id', 'projects_refresh_tools', 'tool', 555),
+    )
+    for group, key, source, kind, offset in groups:
+        rows = manifest[group]
+        ids = [r[key] for r in rows]
+        if len(ids) != len(set(ids)) or set(ids) != sources[source]:
+            raise ValueError('Projects refresh independent source inventory drift: ' + source)
+        for index, row in enumerate(rows):
+            action = row[key]
+            number = offset + index
+            if group == 'commands' and action.startswith('cmd.server.ssh.'):
+                number = 561 if action == 'cmd.server.ssh.trust' else 562
+            if group == 'tools' and action in COMPUTER_TOOLS:
+                number = 563 + list(COMPUTER_TOOLS).index(action)
+            expected[action] = (f'TCP-FB-{number:03d}', kind, 'partial')
+    local_schema = json.loads((root / 'Plans/final_gui_interaction_contracts.schema.json').read_text())
+    local_ids = set(local_schema['$defs']['ProjectsRefreshLocalActionRequest']['properties']['action_id']['enum'])
+    local_ids |= {'ui.thread.request.preview', 'ui.thread.spawn.preview'}
+    if sources['projects_refresh_local'] != local_ids:
+        raise ValueError('Projects refresh typed local schema inventory drift')
+    text = (root / 'Plans/Tools.md').read_text()
+    declared = set()
+    for unit, family in (('T-185', 'projects'), ('T-186', 'computer')):
+        match = re.search(r'^### ' + unit + r'\b.*?(?=^### |\Z)', text, re.M | re.S)
+        if match:
+            # Only quoted/table command declarations, excluding explicit
+            # rejected names such as computer.stop in the negative constraints.
+            declared |= set(re.findall(r'`(' + family + r'\.[a-z_]+)`\s*\|', match.group()))
+            if family == 'projects':
+                declared |= set(re.findall(r'\bprojects\.(?:list|status|search|read_file|read_chat|read_plans)\b', match.group()))
+    if declared != PROJECT_TOOLS | COMPUTER_TOOLS.keys() or sources['projects_refresh_tools'] != declared:
+        raise ValueError('Projects refresh Tools owner/schema inventory drift')
+    return expected

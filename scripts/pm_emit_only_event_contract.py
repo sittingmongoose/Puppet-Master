@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import copy
 
 AUTHORITY_REF = "Plans/Decision_Log.md#DL-039"
 DECISION_ID = "EMIT-PERSIST-026"
@@ -17,6 +18,42 @@ PREEXISTING_REGISTRY_COUNT = 40
 # 2.0.0 (CV-361), approved by Jared; row order and membership are unchanged.
 PREEXISTING_REGISTRY_ROWS_SHA256 = "237b757a8f78e70fc77d3332f27eb51f0c4f80f2f5fbc16d5ff6792a344c49f8"
 
+# CV-366/GRS-086 add an exact scope-selector edition, with app producers still
+# requiring owner adoption. Project payloads and the upstream preservation hash
+# remain unchanged. These digests cover only the three new edition fields.
+EVENT_EDITION_DELTAS = {
+    'event-family-goal-run-blocked': '8a370d4117f280a6ee75e42130ad628cf093b93abb42d9d21410ac2342c51c99',
+    'event-family-goal-run-cancelled': '16df42254cacfc5dd7a406cc2287d2a3c137ad7173c768cf4c15776759f7e683',
+    'event-family-goal-run-started': '5b35d7eed54e1f923920cba20e890eeef18a75ed3ab466b86a84b9d0fe5c2a18',
+    'event-family-goal-blocked': '910a22878a8043d786f4071be7c0d01fc90b9dec18e0bdec476810e30a3908df',
+    'event-family-goal-cancelled': '4afe090c7f14a6ef738d9873718a0e1cd66d18f4548df0311f9e540f0065ab4c',
+    'event-family-goal-completed': 'bb88a07045a6e16cae0ae7a09aee2f9088045932099f9252f05553244f425b7a',
+    'event-family-goal-created': '65fdc17ff924c6fd9b6f3615445591286193fb97b8302f9800f48185a778a646',
+    'event-family-goal-evidence-captured': '3c0826be830f7e2c4bd043701578ab67fbf61663346fb70a5139e1b21440c469',
+    'event-family-goal-receipt-recorded': '8874870fd7a1cb671b9f2ddce07217efa0dcb478057ab3ab4823c6c756ab84f9',
+    'event-family-goal-tool-check-recorded': 'c14269072e6758d9a5a13738ac855cf3a481b48a7333570e703fe5f6c3268d5a',
+    'event-family-goal-updated': '8ffaabea855bacf8c95d39dc75323c59671a382433433e3e446d66083872d787',
+}
+
+
+def legacy_registry_rows(rows):
+    """Project exact approved selector additions out of the historical pin.
+
+    Unknown edits, changed app admission, or changed Project payload bytes fail;
+    this is not a governance rebaseline or a general metadata exemption.
+    """
+    result = copy.deepcopy(rows)
+    for row in result:
+        ident = row.get('family_id')
+        if ident in EVENT_EDITION_DELTAS and 'payload_versions' in row:
+            edition = {k: row[k] for k in ('scope_policy', 'payload_versions', 'payload_selection_policy')}
+            digest = hashlib.sha256(json.dumps(edition, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+            if digest != EVENT_EDITION_DELTAS[ident]:
+                raise ValueError('unknown Goal scope-selector edition: ' + ident)
+            row['scope_policy'] = 'project_only'
+            del row['payload_versions'], row['payload_selection_policy']
+    return result
+
 
 def preexisting_registry_unchanged(manifest, registry):
     """Protect actual upstream membership, not the unlanded Browser proposal.
@@ -30,7 +67,11 @@ def preexisting_registry_unchanged(manifest, registry):
             or manifest["preexisting_family_prefix_sha256"] != PREEXISTING_REGISTRY_ROWS_SHA256
             or len(registry["families"]) < PREEXISTING_REGISTRY_COUNT):
         return False
-    encoded = json.dumps(registry["families"][:PREEXISTING_REGISTRY_COUNT], sort_keys=True, separators=(",", ":")).encode()
+    try:
+        preserved = legacy_registry_rows(registry["families"][:PREEXISTING_REGISTRY_COUNT])
+    except (KeyError, ValueError):
+        return False
+    encoded = json.dumps(preserved, sort_keys=True, separators=(",", ":")).encode()
     return hashlib.sha256(encoded).hexdigest() == PREEXISTING_REGISTRY_ROWS_SHA256
 
 

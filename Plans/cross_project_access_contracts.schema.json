@@ -1,0 +1,436 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/cross_project_access_contracts/1.0.0/cross_project_access_contracts.schema.json",
+  "x-schema-id": "pm.cross_project_access_contracts.v1",
+  "title": "pm.cross_project_access_contracts.v1",
+  "$defs": {
+    "SourceReadProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_scope",
+        "source_object_ref",
+        "source_revision",
+        "source_sha256",
+        "range_ref",
+        "grant_evidence",
+        "provider_exposure_ref",
+        "read_at_utc"
+      ],
+      "properties": {
+        "source_scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "source_object_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "range_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "grant_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "provider_exposure_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "read_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CrossProjectCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requested",
+        "looked_in",
+        "not_looked_in",
+        "partial"
+      ],
+      "properties": {
+        "requested": {
+          "oneOf": [
+            {
+              "const": "all"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            }
+          ]
+        },
+        "looked_in": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_ref",
+              "range_ref",
+              "index_generation"
+            ],
+            "properties": {
+              "source_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "range_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "index_generation": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "not_looked_in": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_ref",
+              "reason"
+            ],
+            "properties": {
+              "source_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reason": {
+                "enum": [
+                  "not_answering",
+                  "denied",
+                  "reading_off",
+                  "archived_not_named",
+                  "index_missing",
+                  "index_rebuilding",
+                  "inaccessible",
+                  "hidden_source"
+                ]
+              }
+            }
+          }
+        },
+        "partial": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_ref",
+              "missing_range_ref",
+              "cursor_ref"
+            ],
+            "properties": {
+              "source_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "missing_range_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "cursor_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "CrossProjectAccessRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool_id",
+        "context",
+        "requested",
+        "query",
+        "object_ref",
+        "range_ref",
+        "grant_refs",
+        "include_archived_named_only"
+      ],
+      "properties": {
+        "tool_id": {
+          "enum": [
+            "projects.list",
+            "projects.status",
+            "projects.search",
+            "projects.read_file",
+            "projects.read_chat",
+            "projects.read_plans"
+          ]
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "requested": {
+          "oneOf": [
+            {
+              "const": "all"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            }
+          ]
+        },
+        "query": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 16384
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "object_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "range_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "grant_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "include_archived_named_only": {
+          "const": true
+        }
+      }
+    },
+    "CrossProjectAccessResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool_id",
+        "operation_id",
+        "coverage",
+        "items",
+        "coverage_sentence",
+        "outward_disclosure_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "tool_id": {
+          "enum": [
+            "projects.list",
+            "projects.status",
+            "projects.search",
+            "projects.read_file",
+            "projects.read_chat",
+            "projects.read_plans"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "coverage": {
+          "$ref": "https://puppetmaster.local/schemas/cross_project_access_contracts/1.0.0/cross_project_access_contracts.schema.json#/$defs/CrossProjectCoverage"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "content_ref",
+              "provenance"
+            ],
+            "properties": {
+              "content_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "provenance": {
+                "$ref": "https://puppetmaster.local/schemas/cross_project_access_contracts/1.0.0/cross_project_access_contracts.schema.json#/$defs/SourceReadProvenance"
+              }
+            }
+          }
+        },
+        "coverage_sentence": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "outward_disclosure_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "ThreadTaskAuthorityV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sender_scope",
+        "receiver_scope",
+        "sender_thread_id",
+        "receiver_thread_id",
+        "sender_authority",
+        "receiver_policy",
+        "receiver_ceiling_ref",
+        "human_reviewed_message_evidence",
+        "automatic_round_trips",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "sender_scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "receiver_scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "sender_thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "receiver_thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "sender_authority": {
+          "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "receiver_policy": {
+          "enum": [
+            "off",
+            "ask_me",
+            "allowed",
+            "yolo"
+          ]
+        },
+        "receiver_ceiling_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "human_reviewed_message_evidence": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "automatic_round_trips": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

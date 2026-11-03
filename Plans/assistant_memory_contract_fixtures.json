@@ -724,5 +724,1586 @@
         ]
       }
     }
+  ],
+  "projects_refresh_cases": [
+    {
+      "case_id": "fd-app-shape-MemoryExportRequest",
+      "schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryExportRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.assistant_memory.memory_export_request.application.v1",
+        "request_id": "mexr-0001",
+        "command_id": "cmd.chat.memory.export",
+        "project_id": null,
+        "scope": "all",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-MemoryExportRequest",
+      "schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryExportRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.assistant_memory.memory_export_request.application.v1",
+        "request_id": "mexr-0001",
+        "command_id": "cmd.chat.memory.export",
+        "project_id": null,
+        "scope": "all",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-MemoryExportPayload",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+      "record": {
+        "schema_id": "pm.assistant_memory.view.application.v1",
+        "export_id": "mexp-0001",
+        "request_id": "mexr-0001",
+        "project_id": null,
+        "scope": "all",
+        "exported_at_utc": "2026-09-27T20:00:00Z",
+        "gists": [
+          {
+            "gist_id": "gist-0101",
+            "kind": "Constraint",
+            "status": "Active",
+            "pinned": true,
+            "verification_state": "Verified",
+            "half_life_days": null,
+            "tags": [
+              "storage"
+            ],
+            "claims": [
+              {
+                "claim_id": "c1",
+                "text": "Derived shard files are regenerated, never hand-edited.",
+                "created_at": "2026-09-20T10:00:00Z",
+                "application_context": {
+                  "scope": {
+                    "schema_id": "pm.workflow_scope.v2",
+                    "schema_version": "2.0.0",
+                    "scope_kind": "application",
+                    "scope_partition": "app",
+                    "project_id": null,
+                    "project_home_server_id": null,
+                    "named_plan_id": null,
+                    "server_id": "server-a"
+                  },
+                  "storage_instance_id": "storage-a",
+                  "thread_id": "thread-a",
+                  "execution_host_id": "host-a",
+                  "execution_environment_id": "environment-a",
+                  "roots": [],
+                  "command_instance_id": "command-a",
+                  "idempotency_key": "idempotency-a",
+                  "actor_ref": "actor-a",
+                  "permission_evidence": {
+                    "schema_id": "pm.owner.evidence.v1",
+                    "schema_version": "1.0.0",
+                    "owner_ref": "owner-a",
+                    "source_ref": "ref:source-a",
+                    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "revision": 1,
+                    "generation": 1
+                  },
+                  "writer_evidence": {
+                    "schema_id": "pm.owner.evidence.v1",
+                    "schema_version": "1.0.0",
+                    "owner_ref": "owner-a",
+                    "source_ref": "ref:source-a",
+                    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "revision": 1,
+                    "generation": 1
+                  },
+                  "scope_stop_epoch": 1,
+                  "task_stop_epoch": 1,
+                  "expected_generation": 1,
+                  "return_context_ref": "ref:return-a"
+                }
+              }
+            ],
+            "evidence_refs": [
+              {
+                "variant": "Commit",
+                "hash": "a878759b36",
+                "repo_id": "repo-pm"
+              },
+              {
+                "variant": "TestRun",
+                "run_id": "run-77",
+                "command": "python3 scripts/pm-shard-plans.py --check",
+                "exit_code": 0,
+                "summary_hash": "3b7d0c9f1e2a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d"
+              },
+              {
+                "variant": "PlanRef",
+                "file_path": "Plans/sharding_config.json"
+              }
+            ],
+            "created_at": "2026-09-20T10:00:00Z",
+            "updated_at": "2026-09-21T08:30:00Z",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "gist_id": "gist-0102",
+            "kind": "Note",
+            "status": "Active",
+            "pinned": false,
+            "verification_state": "Unverified",
+            "claims": [
+              {
+                "claim_id": "c1",
+                "text": "The nightly snapshot runs in its own worktree.",
+                "created_at": "2026-09-22T09:00:00Z",
+                "application_context": {
+                  "scope": {
+                    "schema_id": "pm.workflow_scope.v2",
+                    "schema_version": "2.0.0",
+                    "scope_kind": "application",
+                    "scope_partition": "app",
+                    "project_id": null,
+                    "project_home_server_id": null,
+                    "named_plan_id": null,
+                    "server_id": "server-a"
+                  },
+                  "storage_instance_id": "storage-a",
+                  "thread_id": "thread-a",
+                  "execution_host_id": "host-a",
+                  "execution_environment_id": "environment-a",
+                  "roots": [],
+                  "command_instance_id": "command-a",
+                  "idempotency_key": "idempotency-a",
+                  "actor_ref": "actor-a",
+                  "permission_evidence": {
+                    "schema_id": "pm.owner.evidence.v1",
+                    "schema_version": "1.0.0",
+                    "owner_ref": "owner-a",
+                    "source_ref": "ref:source-a",
+                    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "revision": 1,
+                    "generation": 1
+                  },
+                  "writer_evidence": {
+                    "schema_id": "pm.owner.evidence.v1",
+                    "schema_version": "1.0.0",
+                    "owner_ref": "owner-a",
+                    "source_ref": "ref:source-a",
+                    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "revision": 1,
+                    "generation": 1
+                  },
+                  "scope_stop_epoch": 1,
+                  "task_stop_epoch": 1,
+                  "expected_generation": 1,
+                  "return_context_ref": "ref:return-a"
+                }
+              }
+            ],
+            "evidence_refs": [],
+            "created_at": "2026-09-22T09:00:00Z",
+            "updated_at": "2026-09-22T09:00:00Z",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "gist_id": "gist-0103",
+            "kind": "Decision",
+            "status": "Done",
+            "pinned": false,
+            "verification_state": "Verified",
+            "half_life_days": 90,
+            "claims": [
+              {
+                "claim_id": "c1",
+                "text": "Busy sends queue by default.",
+                "created_at": "2026-09-23T12:00:00Z",
+                "application_context": {
+                  "scope": {
+                    "schema_id": "pm.workflow_scope.v2",
+                    "schema_version": "2.0.0",
+                    "scope_kind": "application",
+                    "scope_partition": "app",
+                    "project_id": null,
+                    "project_home_server_id": null,
+                    "named_plan_id": null,
+                    "server_id": "server-a"
+                  },
+                  "storage_instance_id": "storage-a",
+                  "thread_id": "thread-a",
+                  "execution_host_id": "host-a",
+                  "execution_environment_id": "environment-a",
+                  "roots": [],
+                  "command_instance_id": "command-a",
+                  "idempotency_key": "idempotency-a",
+                  "actor_ref": "actor-a",
+                  "permission_evidence": {
+                    "schema_id": "pm.owner.evidence.v1",
+                    "schema_version": "1.0.0",
+                    "owner_ref": "owner-a",
+                    "source_ref": "ref:source-a",
+                    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "revision": 1,
+                    "generation": 1
+                  },
+                  "writer_evidence": {
+                    "schema_id": "pm.owner.evidence.v1",
+                    "schema_version": "1.0.0",
+                    "owner_ref": "owner-a",
+                    "source_ref": "ref:source-a",
+                    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "revision": 1,
+                    "generation": 1
+                  },
+                  "scope_stop_epoch": 1,
+                  "task_stop_epoch": 1,
+                  "expected_generation": 1,
+                  "return_context_ref": "ref:return-a"
+                }
+              }
+            ],
+            "evidence_refs": [
+              {
+                "variant": "Diff",
+                "run_id": "run-81",
+                "repo_id": "repo-pm",
+                "paths": [
+                  "Plans/Settings_System.md"
+                ],
+                "stats": {
+                  "files_changed": 1,
+                  "insertions": 12,
+                  "deletions": 3
+                }
+              },
+              {
+                "variant": "Artifact",
+                "path": "runs/run-81/bundle.json",
+                "change_type": "created",
+                "content_hash": "9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1a0f9e8d"
+              },
+              {
+                "variant": "PR",
+                "provider": "github",
+                "id": "412"
+              }
+            ],
+            "created_at": "2026-09-23T12:00:00Z",
+            "updated_at": "2026-09-23T12:05:00Z",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          }
+        ],
+        "teachings": [
+          {
+            "memory_id": "teach-0007",
+            "scope": "project",
+            "source_thread_id": "thread-12",
+            "author_message_id": "msg-340",
+            "captured_at": "2026-09-19T15:00:00Z",
+            "normalized_fact": "Never edit files under Plans/_shards by hand.",
+            "locked": true,
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "memory_id": "teach-0009",
+            "scope": "thread",
+            "source_thread_id": "thread-15",
+            "author_message_id": "msg-512",
+            "captured_at": "2026-09-24T11:00:00Z",
+            "normalized_fact": "Answer in short paragraphs in this thread.",
+            "locked": false,
+            "supersedes_memory_id": "teach-0008",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "memory_id": "teach-0004",
+            "scope": "user",
+            "source_thread_id": "thread-03",
+            "author_message_id": "msg-044",
+            "captured_at": "2026-09-01T07:00:00Z",
+            "normalized_fact": "Prefer British spelling.",
+            "locked": false,
+            "revoked_at": "2026-09-10T07:00:00Z",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          }
+        ],
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-MemoryExportPayload",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+      "record": {
+        "schema_id": "pm.assistant_memory.view.application.v1",
+        "export_id": "mexp-0001",
+        "request_id": "mexr-0001",
+        "project_id": null,
+        "scope": "all",
+        "exported_at_utc": "2026-09-27T20:00:00Z",
+        "gists": [
+          {
+            "gist_id": "gist-0101",
+            "kind": "Constraint",
+            "status": "Active",
+            "pinned": true,
+            "verification_state": "Verified",
+            "half_life_days": null,
+            "tags": [
+              "storage"
+            ],
+            "claims": [
+              {
+                "claim_id": "c1",
+                "text": "Derived shard files are regenerated, never hand-edited.",
+                "created_at": "2026-09-20T10:00:00Z",
+                "application_context": {
+                  "scope": {
+                    "schema_id": "pm.workflow_scope.v2",
+                    "schema_version": "2.0.0",
+                    "scope_kind": "application",
+                    "scope_partition": "app",
+                    "project_id": null,
+                    "project_home_server_id": null,
+                    "named_plan_id": null,
+                    "server_id": "server-a"
+                  },
+                  "storage_instance_id": "storage-a",
+                  "thread_id": "thread-a",
+                  "execution_host_id": "host-a",
+                  "execution_environment_id": "environment-a",
+                  "roots": [],
+                  "command_instance_id": "command-a",
+                  "idempotency_key": "idempotency-a",
+                  "actor_ref": "actor-a",
+                  "permission_evidence": {
+                    "schema_id": "pm.owner.evidence.v1",
+                    "schema_version": "1.0.0",
+                    "owner_ref": "owner-a",
+                    "source_ref": "ref:source-a",
+                    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "revision": 1,
+                    "generation": 1
+                  },
+                  "writer_evidence": {
+                    "schema_id": "pm.owner.evidence.v1",
+                    "schema_version": "1.0.0",
+                    "owner_ref": "owner-a",
+                    "source_ref": "ref:source-a",
+                    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "revision": 1,
+                    "generation": 1
+                  },
+                  "scope_stop_epoch": 1,
+                  "task_stop_epoch": 1,
+                  "expected_generation": 1,
+                  "return_context_ref": "ref:return-a"
+                }
+              }
+            ],
+            "evidence_refs": [
+              {
+                "variant": "Commit",
+                "hash": "a878759b36",
+                "repo_id": "repo-pm"
+              },
+              {
+                "variant": "TestRun",
+                "run_id": "run-77",
+                "command": "python3 scripts/pm-shard-plans.py --check",
+                "exit_code": 0,
+                "summary_hash": "3b7d0c9f1e2a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d"
+              },
+              {
+                "variant": "PlanRef",
+                "file_path": "Plans/sharding_config.json"
+              }
+            ],
+            "created_at": "2026-09-20T10:00:00Z",
+            "updated_at": "2026-09-21T08:30:00Z",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "gist_id": "gist-0102",
+            "kind": "Note",
+            "status": "Active",
+            "pinned": false,
+            "verification_state": "Unverified",
+            "claims": [
+              {
+                "claim_id": "c1",
+                "text": "The nightly snapshot runs in its own worktree.",
+                "created_at": "2026-09-22T09:00:00Z",
+                "application_context": {
+                  "scope": {
+                    "schema_id": "pm.workflow_scope.v2",
+                    "schema_version": "2.0.0",
+                    "scope_kind": "application",
+                    "scope_partition": "app",
+                    "project_id": null,
+                    "project_home_server_id": null,
+                    "named_plan_id": null,
+                    "server_id": "server-a"
+                  },
+                  "storage_instance_id": "storage-a",
+                  "thread_id": "thread-a",
+                  "execution_host_id": "host-a",
+                  "execution_environment_id": "environment-a",
+                  "roots": [],
+                  "command_instance_id": "command-a",
+                  "idempotency_key": "idempotency-a",
+                  "actor_ref": "actor-a",
+                  "permission_evidence": {
+                    "schema_id": "pm.owner.evidence.v1",
+                    "schema_version": "1.0.0",
+                    "owner_ref": "owner-a",
+                    "source_ref": "ref:source-a",
+                    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "revision": 1,
+                    "generation": 1
+                  },
+                  "writer_evidence": {
+                    "schema_id": "pm.owner.evidence.v1",
+                    "schema_version": "1.0.0",
+                    "owner_ref": "owner-a",
+                    "source_ref": "ref:source-a",
+                    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "revision": 1,
+                    "generation": 1
+                  },
+                  "scope_stop_epoch": 1,
+                  "task_stop_epoch": 1,
+                  "expected_generation": 1,
+                  "return_context_ref": "ref:return-a"
+                }
+              }
+            ],
+            "evidence_refs": [],
+            "created_at": "2026-09-22T09:00:00Z",
+            "updated_at": "2026-09-22T09:00:00Z",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "gist_id": "gist-0103",
+            "kind": "Decision",
+            "status": "Done",
+            "pinned": false,
+            "verification_state": "Verified",
+            "half_life_days": 90,
+            "claims": [
+              {
+                "claim_id": "c1",
+                "text": "Busy sends queue by default.",
+                "created_at": "2026-09-23T12:00:00Z",
+                "application_context": {
+                  "scope": {
+                    "schema_id": "pm.workflow_scope.v2",
+                    "schema_version": "2.0.0",
+                    "scope_kind": "application",
+                    "scope_partition": "app",
+                    "project_id": null,
+                    "project_home_server_id": null,
+                    "named_plan_id": null,
+                    "server_id": "server-a"
+                  },
+                  "storage_instance_id": "storage-a",
+                  "thread_id": "thread-a",
+                  "execution_host_id": "host-a",
+                  "execution_environment_id": "environment-a",
+                  "roots": [],
+                  "command_instance_id": "command-a",
+                  "idempotency_key": "idempotency-a",
+                  "actor_ref": "actor-a",
+                  "permission_evidence": {
+                    "schema_id": "pm.owner.evidence.v1",
+                    "schema_version": "1.0.0",
+                    "owner_ref": "owner-a",
+                    "source_ref": "ref:source-a",
+                    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "revision": 1,
+                    "generation": 1
+                  },
+                  "writer_evidence": {
+                    "schema_id": "pm.owner.evidence.v1",
+                    "schema_version": "1.0.0",
+                    "owner_ref": "owner-a",
+                    "source_ref": "ref:source-a",
+                    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "revision": 1,
+                    "generation": 1
+                  },
+                  "scope_stop_epoch": 1,
+                  "task_stop_epoch": 1,
+                  "expected_generation": 1,
+                  "return_context_ref": "ref:return-a"
+                }
+              }
+            ],
+            "evidence_refs": [
+              {
+                "variant": "Diff",
+                "run_id": "run-81",
+                "repo_id": "repo-pm",
+                "paths": [
+                  "Plans/Settings_System.md"
+                ],
+                "stats": {
+                  "files_changed": 1,
+                  "insertions": 12,
+                  "deletions": 3
+                }
+              },
+              {
+                "variant": "Artifact",
+                "path": "runs/run-81/bundle.json",
+                "change_type": "created",
+                "content_hash": "9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1a0f9e8d"
+              },
+              {
+                "variant": "PR",
+                "provider": "github",
+                "id": "412"
+              }
+            ],
+            "created_at": "2026-09-23T12:00:00Z",
+            "updated_at": "2026-09-23T12:05:00Z",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          }
+        ],
+        "teachings": [
+          {
+            "memory_id": "teach-0007",
+            "scope": "project",
+            "source_thread_id": "thread-12",
+            "author_message_id": "msg-340",
+            "captured_at": "2026-09-19T15:00:00Z",
+            "normalized_fact": "Never edit files under Plans/_shards by hand.",
+            "locked": true,
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "memory_id": "teach-0009",
+            "scope": "thread",
+            "source_thread_id": "thread-15",
+            "author_message_id": "msg-512",
+            "captured_at": "2026-09-24T11:00:00Z",
+            "normalized_fact": "Answer in short paragraphs in this thread.",
+            "locked": false,
+            "supersedes_memory_id": "teach-0008",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "memory_id": "teach-0004",
+            "scope": "user",
+            "source_thread_id": "thread-03",
+            "author_message_id": "msg-044",
+            "captured_at": "2026-09-01T07:00:00Z",
+            "normalized_fact": "Prefer British spelling.",
+            "locked": false,
+            "revoked_at": "2026-09-10T07:00:00Z",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          }
+        ],
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ReplyIncludedTeachings",
+      "schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/ReplyIncludedTeachingsApplicationV1",
+      "record": {
+        "schema_id": "pm.assistant_memory.reply_included_teachings.application.v1",
+        "message_id": "msg-600",
+        "thread_id": "thread-a",
+        "included_teaching_ids": [
+          {
+            "memory_id": "teach-0007",
+            "normalized_fact_sha256": "3b7d0c9f1e2a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "memory_id": "teach-0009",
+            "normalized_fact_sha256": "0a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f9",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          }
+        ],
+        "rule_check_outcomes": [
+          {
+            "memory_id": "teach-0007",
+            "normalized_fact_sha256": "3b7d0c9f1e2a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d",
+            "outcome": "passed"
+          },
+          {
+            "memory_id": "teach-0009",
+            "normalized_fact_sha256": "0a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f9",
+            "outcome": "failed"
+          }
+        ],
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ReplyIncludedTeachings",
+      "schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/ReplyIncludedTeachingsApplicationV1",
+      "record": {
+        "schema_id": "pm.assistant_memory.reply_included_teachings.application.v1",
+        "message_id": "msg-600",
+        "thread_id": "thread-a",
+        "included_teaching_ids": [
+          {
+            "memory_id": "teach-0007",
+            "normalized_fact_sha256": "3b7d0c9f1e2a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "memory_id": "teach-0009",
+            "normalized_fact_sha256": "0a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f9",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          }
+        ],
+        "rule_check_outcomes": [
+          {
+            "memory_id": "teach-0007",
+            "normalized_fact_sha256": "3b7d0c9f1e2a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d",
+            "outcome": "passed"
+          },
+          {
+            "memory_id": "teach-0009",
+            "normalized_fact_sha256": "0a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f9",
+            "outcome": "failed"
+          }
+        ],
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    }
   ]
 }

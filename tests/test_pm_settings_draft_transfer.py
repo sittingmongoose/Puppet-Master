@@ -99,5 +99,45 @@ class SettingsDraftTransferTests(unittest.TestCase):
         self.assertIn("settings_transfer_draft_rebound_to_source_project", settings_draft_semantic_failures("settings_transfer_draft_rebind", rebind))
 
 
+class SettingsLayeringRefreshTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from pm_settings_layering import check, resolve_setting, snapshot_failures
+        cls.resolve = staticmethod(resolve_setting)
+        cls.snapshot_failures = staticmethod(snapshot_failures)
+        cls.check = staticmethod(check)
+        cls.rows = {r['id']: r for r in json.loads((ROOT / 'Plans/settings_inventory.json').read_text())['settings']}
+
+    def test_complete_reviewed_corpus_and_semantic_expectations(self):
+        errors, counts = self.check()
+        self.assertEqual(errors, [])
+        self.assertEqual(counts['rows'], 1017)
+        self.assertGreater(counts['semantic_cases'], 30)
+
+    def test_device_cannot_set_work_computer_behavior(self):
+        case = copy.deepcopy(next(c['record'] for c in PACK['projects_refresh_cases'] if c['case_id'] == 'fd-settings-device'))
+        self.assertIn('unoffered_level', self.snapshot_failures(case, self.rows))
+
+    def test_sparse_revision_omission_cannot_pass_shape_only(self):
+        case = copy.deepcopy(next(c['record'] for c in PACK['projects_refresh_cases'] if c['case_id'] == 'fd-settings-everywhere'))
+        case['setting_revisions'].clear()
+        self.assertIn('sparse_key_sets', self.snapshot_failures(case, self.rows))
+
+    def test_protective_order_and_custom_computer_fallback(self):
+        row = self.rows['safety.rules.permission-preset']
+        self.assertEqual(self.resolve(row, {'computer': 'custom', 'project': 'read_only'}), 'custom')
+        self.assertEqual(self.resolve(row, {'computer': 'plan', 'project': 'full'}), 'plan')
+        with self.assertRaises(ValueError):
+            self.resolve(row, {'computer': 'unvalidated-profile'})
+
+    def test_motion_os_and_capacity_are_independent_operators(self):
+        self.assertIs(self.resolve(self.rows['general.visual.reduce-animations'], {'device': False}, os_reduce_motion=True), True)
+        self.assertEqual(self.resolve(self.rows['ai.usage.max-tool-rounds'], {'computer': 3, 'project': 8}), 3)
+
+    def test_map_rows_cannot_use_a_scalar_merge(self):
+        with self.assertRaises(ValueError):
+            self.resolve(self.rows['safety.rules.per-tool-permissions'], {'computer': {'shell': 'ask'}})
+
+
 if __name__ == "__main__":
     unittest.main()

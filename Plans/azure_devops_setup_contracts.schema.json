@@ -750,6 +750,9 @@
           "$ref": "#/$defs/timestamp"
         }
       }
+    },
+    "ProjectSetupConsumerV2": {
+      "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/project_setup_binding_v2"
     }
   }
 }

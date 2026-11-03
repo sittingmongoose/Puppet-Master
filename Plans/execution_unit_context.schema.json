@@ -233,6 +233,9 @@
           "$ref": "#/$defs/nullable_non_empty_string"
         }
       }
+    },
+    "ExecutionUnitContextApplicationV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1"
     }
   }
 }

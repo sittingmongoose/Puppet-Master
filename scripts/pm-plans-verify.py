@@ -581,6 +581,8 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "validate_gui_asset_policy": "validate-gui-asset-policy",
     "validate_web_capability_contracts": "validate-web-capability-contracts",
     "validate_new_contracts": "validate-new-contracts",
+    "validate_settings_layering": "validate-settings-layering",
+    "validate_projects_refresh_contracts": "validate-projects-refresh-contracts",
     "validate_forge_backup_acceptance": "validate-forge-backup-acceptance",
     "validate_browser_event_admission": "validate-browser-event-admission",
     "validate_testing_session_event_admission": "validate-testing-session-event-admission",
@@ -622,6 +624,8 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "github_project_integration": "validate-github-project-integration",
     "ui_command_response": "validate-ui-command-response",
     "working_notebook_contracts": "validate-working-notebook-contracts",
+    "settings_layering": "validate-settings-layering",
+    "projects_refresh_contracts": "validate-projects-refresh-contracts",
     "touch_closure": "validate-touch-closure",
     "filesafe_security_policy": "validate-filesafe-security-policy",
     "wiring_matrix": "validate-wiring-matrix",
@@ -6592,6 +6596,25 @@ def cmd_validate_prd_planning_runtime_contracts(args: argparse.Namespace) -> dic
     )
 
 
+def _projects_refresh_subcheck(args: argparse.Namespace, command: str, script: str) -> dict[str, Any]:
+    validator = ROOT / 'scripts' / script
+    timeout = int(getattr(args, 'subcheck_timeout_seconds', 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        command, [sys.executable, str(validator)], timeout_seconds=timeout,
+        extra_failure_fields={'path': rel(validator)})
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(command, proc, extra_failure_fields={'path': rel(validator)})
+
+
+def cmd_validate_settings_layering(args: argparse.Namespace) -> dict[str, Any]:
+    return _projects_refresh_subcheck(args, 'validate-settings-layering', 'pm-settings-layering-check.py')
+
+
+def cmd_validate_projects_refresh_contracts(args: argparse.Namespace) -> dict[str, Any]:
+    return _projects_refresh_subcheck(args, 'validate-projects-refresh-contracts', 'pm-projects-refresh-contracts.py')
+
+
 def cmd_validate_new_contracts(args: argparse.Namespace) -> dict[str, Any]:
     validator = ROOT / "scripts" / "pm-new-contracts-verify.py"
     timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
@@ -7042,6 +7065,8 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("validate_prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
         ("validate_new_contracts", cmd_validate_new_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_settings_layering", cmd_validate_settings_layering, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_projects_refresh_contracts", cmd_validate_projects_refresh_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_forge_backup_acceptance", cmd_validate_forge_backup_acceptance, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_browser_event_admission", cmd_validate_browser_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_testing_session_event_admission", cmd_validate_testing_session_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
@@ -7098,6 +7123,8 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("project_artifacts", cmd_check_project_artifact_requirements, argparse.Namespace()),
         ("plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
+        ("settings_layering", cmd_validate_settings_layering, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("projects_refresh_contracts", cmd_validate_projects_refresh_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("server_command_gap", cmd_validate_server_command_gap, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("forge_backup_acceptance", cmd_validate_forge_backup_acceptance, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("browser_event_admission", cmd_validate_browser_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
@@ -7144,6 +7171,8 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         project_artifacts=compact_gate_report(check_map["project_artifacts"]),
         plans_to_code_handoff_schema=compact_gate_report(check_map["plans_to_code_handoff_schema"]),
         prd_planning_runtime_contracts=compact_gate_report(check_map["prd_planning_runtime_contracts"]),
+        settings_layering=compact_gate_report(check_map["settings_layering"]),
+        projects_refresh_contracts=compact_gate_report(check_map["projects_refresh_contracts"]),
         case_l_non_event_materialization=compact_gate_report(check_map["case_l_non_event_materialization"]),
         implementation_readiness=compact_gate_report(check_map["implementation_readiness"]),
         plan_migration=compact_gate_report(check_map["plan_migration"]),
@@ -7185,6 +7214,8 @@ COMMANDS = {
     "validate-plans-to-code-handoff-schema": cmd_validate_plans_to_code_handoff_schema,
     "validate-prd-planning-runtime-contracts": cmd_validate_prd_planning_runtime_contracts,
     "validate-new-contracts": cmd_validate_new_contracts,
+    "validate-settings-layering": cmd_validate_settings_layering,
+    "validate-projects-refresh-contracts": cmd_validate_projects_refresh_contracts,
     "validate-forge-backup-acceptance": cmd_validate_forge_backup_acceptance,
     "validate-browser-event-admission": cmd_validate_browser_event_admission,
     "validate-testing-session-event-admission": cmd_validate_testing_session_event_admission,
@@ -7225,6 +7256,8 @@ def main() -> int:
         "check-shards",
         "validate-prd-planning-runtime-contracts",
         "validate-new-contracts",
+        "validate-settings-layering",
+        "validate-projects-refresh-contracts",
         "validate-forge-backup-acceptance",
         "validate-browser-event-admission",
         "validate-testing-session-event-admission",

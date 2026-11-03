@@ -9,27 +9,69 @@
     "migration_rule": "An explicit pre-validation migrator must first validate an exact known record_kind and then replace the legacy aggregate payload ID with that record kind's unique schema_id. Unknown or missing record_kind fails closed. The aggregate ID is never stored as a record schema identity."
   },
   "oneOf": [
-    {"$ref": "#/$defs/browser_program_compile_request"},
-    {"$ref": "#/$defs/browser_program_compile_result"},
-    {"$ref": "#/$defs/browser_program_compile_error"},
-    {"$ref": "#/$defs/browser_program"},
-    {"$ref": "#/$defs/program_workspace_revision"},
-    {"$ref": "#/$defs/representation_query"},
-    {"$ref": "#/$defs/representation_query_result"},
-    {"$ref": "#/$defs/browser_controller_lease_receipt"},
-    {"$ref": "#/$defs/browser_program_segment_receipt"},
-    {"$ref": "#/$defs/browser_handoff_receipt"},
-    {"$ref": "#/$defs/browser_transfer_receipt"},
-    {"$ref": "#/$defs/browser_routing_decision"},
-    {"$ref": "#/$defs/browser_routine_record"},
-    {"$ref": "#/$defs/external_browser_adapter_receipt"},
-    {"$ref": "#/$defs/browser_program_result"},
-    {"$ref": "#/$defs/browser_command_request"},
-    {"$ref": "#/$defs/browser_command_result"},
-    {"$ref": "#/$defs/browser_command_error"},
-    {"$ref": "#/$defs/browser_command_availability"},
-    {"$ref": "#/$defs/browser_command_disabled_reason"},
-    {"$ref": "#/$defs/browser_observable_work_projection"}
+    {
+      "$ref": "#/$defs/browser_program_compile_request"
+    },
+    {
+      "$ref": "#/$defs/browser_program_compile_result"
+    },
+    {
+      "$ref": "#/$defs/browser_program_compile_error"
+    },
+    {
+      "$ref": "#/$defs/browser_program"
+    },
+    {
+      "$ref": "#/$defs/program_workspace_revision"
+    },
+    {
+      "$ref": "#/$defs/representation_query"
+    },
+    {
+      "$ref": "#/$defs/representation_query_result"
+    },
+    {
+      "$ref": "#/$defs/browser_controller_lease_receipt"
+    },
+    {
+      "$ref": "#/$defs/browser_program_segment_receipt"
+    },
+    {
+      "$ref": "#/$defs/browser_handoff_receipt"
+    },
+    {
+      "$ref": "#/$defs/browser_transfer_receipt"
+    },
+    {
+      "$ref": "#/$defs/browser_routing_decision"
+    },
+    {
+      "$ref": "#/$defs/browser_routine_record"
+    },
+    {
+      "$ref": "#/$defs/external_browser_adapter_receipt"
+    },
+    {
+      "$ref": "#/$defs/browser_program_result"
+    },
+    {
+      "$ref": "#/$defs/browser_command_request"
+    },
+    {
+      "$ref": "#/$defs/browser_command_result"
+    },
+    {
+      "$ref": "#/$defs/browser_command_error"
+    },
+    {
+      "$ref": "#/$defs/browser_command_availability"
+    },
+    {
+      "$ref": "#/$defs/browser_command_disabled_reason"
+    },
+    {
+      "$ref": "#/$defs/browser_observable_work_projection"
+    }
   ],
   "$defs": {
     "id": {
@@ -37,20 +79,27 @@
       "minLength": 1,
       "maxLength": 192,
       "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
-      "not": {"pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"}
+      "not": {
+        "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
+      }
     },
     "non_secret_ref": {
       "type": "string",
       "minLength": 1,
       "maxLength": 512,
       "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
-      "not": {"pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"}
+      "not": {
+        "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
+      }
     },
     "sha256": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
     },
-    "timestamp": {"type": "string", "format": "date-time"},
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
     "lineage": {
       "type": "object",
       "additionalProperties": false,
@@ -169,69 +218,202 @@
         "session_security_class"
       ],
       "properties": {
-        "browser_session_id": {"$ref": "#/$defs/id"},
-        "browser_workspace_id": {"$ref": "#/$defs/id"},
-        "browser_page_id": {"$ref": "#/$defs/id"},
-        "page_generation": {"type": "integer", "minimum": 0},
-        "session_security_class": {"const": "ordinary"}
+        "browser_session_id": {
+          "$ref": "#/$defs/id"
+        },
+        "browser_workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "browser_page_id": {
+          "$ref": "#/$defs/id"
+        },
+        "page_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "session_security_class": {
+          "const": "ordinary"
+        }
       }
     },
     "source_span": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["start_byte", "end_byte", "start_line", "start_column", "end_line", "end_column"],
+      "required": [
+        "start_byte",
+        "end_byte",
+        "start_line",
+        "start_column",
+        "end_line",
+        "end_column"
+      ],
       "properties": {
-        "start_byte": {"type": "integer", "minimum": 0},
-        "end_byte": {"type": "integer", "minimum": 0},
-        "start_line": {"type": "integer", "minimum": 1},
-        "start_column": {"type": "integer", "minimum": 1},
-        "end_line": {"type": "integer", "minimum": 1},
-        "end_column": {"type": "integer", "minimum": 1}
+        "start_byte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_byte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "start_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start_column": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_column": {
+          "type": "integer",
+          "minimum": 1
+        }
       }
     },
     "budgets": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["max_actions", "max_segments", "max_wall_ms", "max_local_compute_ms", "max_output_bytes", "max_artifact_bytes", "max_memory_bytes"],
+      "required": [
+        "max_actions",
+        "max_segments",
+        "max_wall_ms",
+        "max_local_compute_ms",
+        "max_output_bytes",
+        "max_artifact_bytes",
+        "max_memory_bytes"
+      ],
       "properties": {
-        "max_actions": {"type": "integer", "minimum": 1, "maximum": 10000},
-        "max_segments": {"type": "integer", "minimum": 1, "maximum": 1000},
-        "max_wall_ms": {"type": "integer", "minimum": 1, "maximum": 86400000},
-        "max_local_compute_ms": {"type": "integer", "minimum": 1, "maximum": 3600000},
-        "max_output_bytes": {"type": "integer", "minimum": 1, "maximum": 1073741824},
-        "max_artifact_bytes": {"type": "integer", "minimum": 1, "maximum": 1099511627776},
-        "max_memory_bytes": {"type": "integer", "minimum": 1048576, "maximum": 68719476736},
-        "max_representation_nodes": {"type": "integer", "minimum": 1, "maximum": 1000000},
-        "max_representation_bytes": {"type": "integer", "minimum": 1, "maximum": 1073741824}
+        "max_actions": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "max_segments": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "max_wall_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400000
+        },
+        "max_local_compute_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600000
+        },
+        "max_output_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741824
+        },
+        "max_artifact_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1099511627776
+        },
+        "max_memory_bytes": {
+          "type": "integer",
+          "minimum": 1048576,
+          "maximum": 68719476736
+        },
+        "max_representation_nodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "max_representation_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741824
+        }
       }
     },
     "pm_browser_script_source": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["source_language", "grammar_version", "source_text", "source_hash"],
+      "required": [
+        "source_language",
+        "grammar_version",
+        "source_text",
+        "source_hash"
+      ],
       "properties": {
-        "source_language": {"const": "pm_browser_script"},
-        "grammar_version": {"const": "1.0.0"},
-        "source_text": {"type": "string", "minLength": 1, "maxLength": 262144},
-        "source_hash": {"$ref": "#/$defs/sha256"}
+        "source_language": {
+          "const": "pm_browser_script"
+        },
+        "grammar_version": {
+          "const": "1.0.0"
+        },
+        "source_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 262144
+        },
+        "source_hash": {
+          "$ref": "#/$defs/sha256"
+        }
       }
     },
     "browser_action": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["action_id", "action_type", "source_span", "effect_class", "user_step_label"],
+      "required": [
+        "action_id",
+        "action_type",
+        "source_span",
+        "effect_class",
+        "user_step_label"
+      ],
       "properties": {
-        "action_id": {"$ref": "#/$defs/id"},
+        "action_id": {
+          "$ref": "#/$defs/id"
+        },
         "action_type": {
           "type": "string",
           "enum": [
-            "navigate", "back", "reload", "click", "scroll", "type", "press_key", "wait_for",
-            "set_viewport", "fill_form", "select_option", "snapshot", "screenshot", "console", "network",
-            "list_tabs", "create_tab", "select_tab", "close_tab", "upload_file", "download", "bookmark_capture"
+            "navigate",
+            "back",
+            "reload",
+            "click",
+            "scroll",
+            "type",
+            "press_key",
+            "wait_for",
+            "set_viewport",
+            "fill_form",
+            "select_option",
+            "snapshot",
+            "screenshot",
+            "console",
+            "network",
+            "list_tabs",
+            "create_tab",
+            "select_tab",
+            "close_tab",
+            "upload_file",
+            "download",
+            "bookmark_capture"
           ]
         },
-        "source_span": {"$ref": "#/$defs/source_span"},
-        "effect_class": {"type": "string", "enum": ["read_only", "page_mutation", "navigation", "transfer", "capture"]},
+        "source_span": {
+          "$ref": "#/$defs/source_span"
+        },
+        "effect_class": {
+          "type": "string",
+          "enum": [
+            "read_only",
+            "page_mutation",
+            "navigation",
+            "transfer",
+            "capture"
+          ]
+        },
         "user_step_label": {
           "type": "string",
           "minLength": 1,
@@ -243,67 +425,212 @@
           "additionalProperties": false,
           "maxProperties": 16,
           "properties": {
-            "target_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "url_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "text_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "key": {"type": "string", "enum": ["Enter", "Escape", "Tab", "Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Home", "End", "PageUp", "PageDown", "Backspace", "Delete"]},
-            "direction": {"type": "string", "enum": ["up", "down", "left", "right"]},
-            "amount": {"type": "integer", "minimum": 1, "maximum": 100000},
-            "timeout_ms": {"type": "integer", "minimum": 1, "maximum": 300000},
-            "viewport_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "form_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "option_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "snapshot_policy_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "capture_policy_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "console_query_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "network_query_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "tab_id": {"$ref": "#/$defs/id"},
-            "file_artifact_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "transfer_policy_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "bookmark_ref": {"$ref": "#/$defs/non_secret_ref"}
+            "target_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "url_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "text_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "key": {
+              "type": "string",
+              "enum": [
+                "Enter",
+                "Escape",
+                "Tab",
+                "Space",
+                "ArrowUp",
+                "ArrowDown",
+                "ArrowLeft",
+                "ArrowRight",
+                "Home",
+                "End",
+                "PageUp",
+                "PageDown",
+                "Backspace",
+                "Delete"
+              ]
+            },
+            "direction": {
+              "type": "string",
+              "enum": [
+                "up",
+                "down",
+                "left",
+                "right"
+              ]
+            },
+            "amount": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            },
+            "timeout_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 300000
+            },
+            "viewport_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "form_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "option_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "snapshot_policy_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "capture_policy_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "console_query_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "network_query_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "tab_id": {
+              "$ref": "#/$defs/id"
+            },
+            "file_artifact_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "transfer_policy_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "bookmark_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            }
           }
         },
-        "filesafe_preflight_ref": {"$ref": "#/$defs/non_secret_ref"}
+        "filesafe_preflight_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        }
       }
     },
     "local_operator": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["operator_id", "operator", "input_refs", "output_name", "source_span"],
+      "required": [
+        "operator_id",
+        "operator",
+        "input_refs",
+        "output_name",
+        "source_span"
+      ],
       "properties": {
-        "operator_id": {"$ref": "#/$defs/id"},
+        "operator_id": {
+          "$ref": "#/$defs/id"
+        },
         "operator": {
           "type": "string",
-          "enum": ["append", "select", "filter", "map", "reduce", "group", "sort", "dedupe", "count", "join", "schema", "preview", "spill"]
+          "enum": [
+            "append",
+            "select",
+            "filter",
+            "map",
+            "reduce",
+            "group",
+            "sort",
+            "dedupe",
+            "count",
+            "join",
+            "schema",
+            "preview",
+            "spill"
+          ]
         },
-        "input_refs": {"type": "array", "maxItems": 32, "items": {"$ref": "#/$defs/id"}},
-        "output_name": {"$ref": "#/$defs/id"},
-        "source_span": {"$ref": "#/$defs/source_span"},
-        "limit": {"type": "integer", "minimum": 1, "maximum": 1000000}
+        "input_refs": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "output_name": {
+          "$ref": "#/$defs/id"
+        },
+        "source_span": {
+          "$ref": "#/$defs/source_span"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        }
       }
     },
     "browser_program_ast": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["ast_version", "actions", "local_operators", "checkpoints", "ast_hash"],
+      "required": [
+        "ast_version",
+        "actions",
+        "local_operators",
+        "checkpoints",
+        "ast_hash"
+      ],
       "properties": {
-        "ast_version": {"const": "1.0.0"},
-        "actions": {"type": "array", "maxItems": 10000, "items": {"$ref": "#/$defs/browser_action"}},
-        "local_operators": {"type": "array", "maxItems": 10000, "items": {"$ref": "#/$defs/local_operator"}},
-        "checkpoints": {"type": "array", "maxItems": 1000, "items": {"$ref": "#/$defs/id"}},
-        "ast_hash": {"$ref": "#/$defs/sha256"}
+        "ast_version": {
+          "const": "1.0.0"
+        },
+        "actions": {
+          "type": "array",
+          "maxItems": 10000,
+          "items": {
+            "$ref": "#/$defs/browser_action"
+          }
+        },
+        "local_operators": {
+          "type": "array",
+          "maxItems": 10000,
+          "items": {
+            "$ref": "#/$defs/local_operator"
+          }
+        },
+        "checkpoints": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "ast_hash": {
+          "$ref": "#/$defs/sha256"
+        }
       }
     },
     "compiler_identity": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["compiler_id", "compiler_version", "compiler_hash", "browser_program_api_digest", "capability_profile_hash"],
+      "required": [
+        "compiler_id",
+        "compiler_version",
+        "compiler_hash",
+        "browser_program_api_digest",
+        "capability_profile_hash"
+      ],
       "properties": {
-        "compiler_id": {"const": "pm_browser_program_compiler"},
-        "compiler_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
-        "compiler_hash": {"$ref": "#/$defs/sha256"},
-        "browser_program_api_digest": {"$ref": "#/$defs/sha256"},
-        "capability_profile_hash": {"$ref": "#/$defs/sha256"}
+        "compiler_id": {
+          "const": "pm_browser_program_compiler"
+        },
+        "compiler_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "compiler_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "browser_program_api_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "capability_profile_hash": {
+          "$ref": "#/$defs/sha256"
+        }
       }
     },
     "browser_program_compile_request": {
@@ -360,48 +687,147 @@
     "browser_program_compile_result": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "compile_request_id", "compile_status", "no_effect_before_execution", "program_id", "source_hash", "compiler_hash", "browser_program_api_digest", "capability_profile_hash", "ast_hash", "ast"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "compile_request_id",
+        "compile_status",
+        "no_effect_before_execution",
+        "program_id",
+        "source_hash",
+        "compiler_hash",
+        "browser_program_api_digest",
+        "capability_profile_hash",
+        "ast_hash",
+        "ast"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.compile_result.v1"},
-        "record_kind": {"const": "browser_program_compile_result"},
-        "compile_request_id": {"$ref": "#/$defs/id"},
-        "compile_status": {"const": "compiled"},
-        "no_effect_before_execution": {"const": true},
-        "program_id": {"$ref": "#/$defs/id"},
-        "source_hash": {"$ref": "#/$defs/sha256"},
-        "compiler_hash": {"$ref": "#/$defs/sha256"},
-        "browser_program_api_digest": {"$ref": "#/$defs/sha256"},
-        "capability_profile_hash": {"$ref": "#/$defs/sha256"},
-        "ast_hash": {"$ref": "#/$defs/sha256"},
-        "ast": {"$ref": "#/$defs/browser_program_ast"}
+        "schema_id": {
+          "const": "pm.browser_program.compile_result.v1"
+        },
+        "record_kind": {
+          "const": "browser_program_compile_result"
+        },
+        "compile_request_id": {
+          "$ref": "#/$defs/id"
+        },
+        "compile_status": {
+          "const": "compiled"
+        },
+        "no_effect_before_execution": {
+          "const": true
+        },
+        "program_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "compiler_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "browser_program_api_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "capability_profile_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "ast_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "ast": {
+          "$ref": "#/$defs/browser_program_ast"
+        }
       }
     },
     "compile_diagnostic": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["code", "stage", "message", "source_span"],
+      "required": [
+        "code",
+        "stage",
+        "message",
+        "source_span"
+      ],
       "properties": {
-        "code": {"$ref": "#/$defs/id"},
-        "stage": {"type": "string", "enum": ["parse", "type", "name", "effect", "limit", "capability", "permission", "filesafe", "target"]},
-        "message": {"type": "string", "minLength": 1, "maxLength": 1024},
-        "source_span": {"$ref": "#/$defs/source_span"}
+        "code": {
+          "$ref": "#/$defs/id"
+        },
+        "stage": {
+          "type": "string",
+          "enum": [
+            "parse",
+            "type",
+            "name",
+            "effect",
+            "limit",
+            "capability",
+            "permission",
+            "filesafe",
+            "target"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "source_span": {
+          "$ref": "#/$defs/source_span"
+        }
       }
     },
     "browser_program_compile_error": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "compile_request_id", "compile_status", "no_effect", "diagnostics", "source_hash", "compiler_hash", "browser_program_api_digest", "capability_profile_hash"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "compile_request_id",
+        "compile_status",
+        "no_effect",
+        "diagnostics",
+        "source_hash",
+        "compiler_hash",
+        "browser_program_api_digest",
+        "capability_profile_hash"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.compile_error.v1"},
-        "record_kind": {"const": "browser_program_compile_error"},
-        "compile_request_id": {"$ref": "#/$defs/id"},
-        "compile_status": {"const": "failed"},
-        "no_effect": {"const": true},
-        "diagnostics": {"type": "array", "minItems": 1, "maxItems": 256, "items": {"$ref": "#/$defs/compile_diagnostic"}},
-        "source_hash": {"$ref": "#/$defs/sha256"},
-        "compiler_hash": {"$ref": "#/$defs/sha256"},
-        "browser_program_api_digest": {"$ref": "#/$defs/sha256"},
-        "capability_profile_hash": {"$ref": "#/$defs/sha256"}
+        "schema_id": {
+          "const": "pm.browser_program.compile_error.v1"
+        },
+        "record_kind": {
+          "const": "browser_program_compile_error"
+        },
+        "compile_request_id": {
+          "$ref": "#/$defs/id"
+        },
+        "compile_status": {
+          "const": "failed"
+        },
+        "no_effect": {
+          "const": true
+        },
+        "diagnostics": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "#/$defs/compile_diagnostic"
+          }
+        },
+        "source_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "compiler_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "browser_program_api_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "capability_profile_hash": {
+          "$ref": "#/$defs/sha256"
+        }
       }
     },
     "browser_program": {
@@ -515,8 +941,12 @@
         },
         "result_schema_dependencies": {
           "type": "object",
-          "propertyNames": {"$ref": "#/$defs/non_secret_ref"},
-          "additionalProperties": {"$ref": "#/$defs/sha256"},
+          "propertyNames": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/sha256"
+          },
           "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources."
         },
         "idempotency_key": {
@@ -527,175 +957,724 @@
     "typed_workspace_value": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name", "value_kind", "schema_ref", "byte_size"],
+      "required": [
+        "name",
+        "value_kind",
+        "schema_ref",
+        "byte_size"
+      ],
       "properties": {
-        "name": {"$ref": "#/$defs/id"},
-        "value_kind": {"type": "string", "enum": ["variable", "table", "dataset", "artifact_ref", "routine_ref", "checkpoint_ref", "schema_ref", "spill_ref"]},
-        "schema_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "byte_size": {"type": "integer", "minimum": 0, "maximum": 1073741824},
-        "value_ref": {"$ref": "#/$defs/non_secret_ref"}
+        "name": {
+          "$ref": "#/$defs/id"
+        },
+        "value_kind": {
+          "type": "string",
+          "enum": [
+            "variable",
+            "table",
+            "dataset",
+            "artifact_ref",
+            "routine_ref",
+            "checkpoint_ref",
+            "schema_ref",
+            "spill_ref"
+          ]
+        },
+        "schema_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1073741824
+        },
+        "value_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        }
       }
     },
     "program_workspace_revision": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "program_workspace_id", "expected_revision", "result_revision", "operation", "values", "durable", "host_directory_materialized", "created_at_utc"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "program_workspace_id",
+        "expected_revision",
+        "result_revision",
+        "operation",
+        "values",
+        "durable",
+        "host_directory_materialized",
+        "created_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.workspace_revision.v1"},
-        "record_kind": {"const": "program_workspace_revision"},
-        "program_workspace_id": {"$ref": "#/$defs/id"},
-        "expected_revision": {"type": "integer", "minimum": 0},
-        "result_revision": {"type": "integer", "minimum": 1},
-        "operation": {"type": "string", "enum": ["create", "append", "select", "filter", "map", "reduce", "group", "sort", "dedupe", "count", "join", "schema", "preview", "spill", "checkpoint", "close"]},
-        "values": {"type": "array", "maxItems": 10000, "items": {"$ref": "#/$defs/typed_workspace_value"}},
-        "artifact_refs": {"type": "array", "maxItems": 10000, "items": {"$ref": "#/$defs/non_secret_ref"}},
-        "checkpoint_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "durable": {"const": true},
-        "host_directory_materialized": {"const": false},
-        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+        "schema_id": {
+          "const": "pm.browser_program.workspace_revision.v1"
+        },
+        "record_kind": {
+          "const": "program_workspace_revision"
+        },
+        "program_workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "result_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "operation": {
+          "type": "string",
+          "enum": [
+            "create",
+            "append",
+            "select",
+            "filter",
+            "map",
+            "reduce",
+            "group",
+            "sort",
+            "dedupe",
+            "count",
+            "join",
+            "schema",
+            "preview",
+            "spill",
+            "checkpoint",
+            "close"
+          ]
+        },
+        "values": {
+          "type": "array",
+          "maxItems": 10000,
+          "items": {
+            "$ref": "#/$defs/typed_workspace_value"
+          }
+        },
+        "artifact_refs": {
+          "type": "array",
+          "maxItems": 10000,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "checkpoint_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "durable": {
+          "const": true
+        },
+        "host_directory_materialized": {
+          "const": false
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
       }
     },
     "representation_budget": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["max_nodes", "max_bytes", "max_time_ms", "max_frames", "max_shadow_roots", "max_listener_records", "max_style_records", "max_layout_records"],
+      "required": [
+        "max_nodes",
+        "max_bytes",
+        "max_time_ms",
+        "max_frames",
+        "max_shadow_roots",
+        "max_listener_records",
+        "max_style_records",
+        "max_layout_records"
+      ],
       "properties": {
-        "max_nodes": {"type": "integer", "minimum": 1, "maximum": 1000000},
-        "max_bytes": {"type": "integer", "minimum": 1, "maximum": 1073741824},
-        "max_time_ms": {"type": "integer", "minimum": 1, "maximum": 300000},
-        "max_frames": {"type": "integer", "minimum": 1, "maximum": 10000},
-        "max_shadow_roots": {"type": "integer", "minimum": 0, "maximum": 100000},
-        "max_listener_records": {"type": "integer", "minimum": 0, "maximum": 1000000},
-        "max_style_records": {"type": "integer", "minimum": 0, "maximum": 1000000},
-        "max_layout_records": {"type": "integer", "minimum": 0, "maximum": 1000000}
+        "max_nodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "max_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741824
+        },
+        "max_time_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300000
+        },
+        "max_frames": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "max_shadow_roots": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "max_listener_records": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "max_style_records": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "max_layout_records": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        }
       }
     },
     "representation_query": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "query_id", "subject", "representation_mode", "scope_roots", "detail_classes", "operators", "budget"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "query_id",
+        "subject",
+        "representation_mode",
+        "scope_roots",
+        "detail_classes",
+        "operators",
+        "budget"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.representation_query.v1"},
-        "record_kind": {"const": "representation_query"},
-        "query_id": {"$ref": "#/$defs/id"},
-        "subject": {"$ref": "#/$defs/ordinary_browser_subject"},
-        "representation_mode": {"type": "string", "enum": ["minimal", "standard", "full", "scoped", "delta"]},
-        "base_representation_id": {"$ref": "#/$defs/id"},
-        "scope_roots": {"type": "array", "maxItems": 256, "items": {"$ref": "#/$defs/id"}},
-        "detail_classes": {"type": "array", "uniqueItems": true, "maxItems": 32, "items": {"type": "string", "enum": ["accessibility", "landmarks", "headings", "interactive", "forms", "frames", "shadow", "listeners", "styles", "layout", "virtualization", "action_refs"]}},
-        "operators": {"type": "array", "maxItems": 128, "items": {"type": "string", "enum": ["filter", "project", "group", "sort", "dedupe", "limit", "count", "preview"]}},
-        "continuation": {"$ref": "#/$defs/non_secret_ref"},
-        "budget": {"$ref": "#/$defs/representation_budget"}
+        "schema_id": {
+          "const": "pm.browser_program.representation_query.v1"
+        },
+        "record_kind": {
+          "const": "representation_query"
+        },
+        "query_id": {
+          "$ref": "#/$defs/id"
+        },
+        "subject": {
+          "$ref": "#/$defs/ordinary_browser_subject"
+        },
+        "representation_mode": {
+          "type": "string",
+          "enum": [
+            "minimal",
+            "standard",
+            "full",
+            "scoped",
+            "delta"
+          ]
+        },
+        "base_representation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scope_roots": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "detail_classes": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 32,
+          "items": {
+            "type": "string",
+            "enum": [
+              "accessibility",
+              "landmarks",
+              "headings",
+              "interactive",
+              "forms",
+              "frames",
+              "shadow",
+              "listeners",
+              "styles",
+              "layout",
+              "virtualization",
+              "action_refs"
+            ]
+          }
+        },
+        "operators": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "type": "string",
+            "enum": [
+              "filter",
+              "project",
+              "group",
+              "sort",
+              "dedupe",
+              "limit",
+              "count",
+              "preview"
+            ]
+          }
+        },
+        "continuation": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "budget": {
+          "$ref": "#/$defs/representation_budget"
+        }
       },
       "allOf": [
         {
-          "if": {"properties": {"representation_mode": {"const": "delta"}}, "required": ["representation_mode"]},
-          "then": {"required": ["base_representation_id"]}
+          "if": {
+            "properties": {
+              "representation_mode": {
+                "const": "delta"
+              }
+            },
+            "required": [
+              "representation_mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "base_representation_id"
+            ]
+          }
         }
       ]
     },
     "coverage": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["status", "nodes_indexed", "frames_total", "frames_covered", "omission_codes", "budget_exhausted", "synthetic_id_collisions"],
+      "required": [
+        "status",
+        "nodes_indexed",
+        "frames_total",
+        "frames_covered",
+        "omission_codes",
+        "budget_exhausted",
+        "synthetic_id_collisions"
+      ],
       "properties": {
-        "status": {"type": "string", "enum": ["complete", "partial", "root_only", "stale_rejected"]},
-        "nodes_indexed": {"type": "integer", "minimum": 0},
-        "frames_total": {"type": "integer", "minimum": 0},
-        "frames_covered": {"type": "integer", "minimum": 0},
-        "omission_codes": {"type": "array", "uniqueItems": true, "items": {"type": "string", "enum": ["cross_origin_frame", "frame_timeout", "shadow_closed", "virtualized_unmaterialized", "listener_budget", "style_budget", "layout_budget", "node_budget", "byte_budget", "time_budget"]}},
-        "budget_exhausted": {"type": "boolean"},
-        "synthetic_id_collisions": {"type": "integer", "minimum": 0}
+        "status": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "partial",
+            "root_only",
+            "stale_rejected"
+          ]
+        },
+        "nodes_indexed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "frames_total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "frames_covered": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "omission_codes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "cross_origin_frame",
+              "frame_timeout",
+              "shadow_closed",
+              "virtualized_unmaterialized",
+              "listener_budget",
+              "style_budget",
+              "layout_budget",
+              "node_budget",
+              "byte_budget",
+              "time_budget"
+            ]
+          }
+        },
+        "budget_exhausted": {
+          "type": "boolean"
+        },
+        "synthetic_id_collisions": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     },
     "representation_query_result": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "query_id", "representation_id", "subject", "base_index_generation", "coverage", "result_count", "omitted_count", "byte_estimate", "token_estimate", "result_schema_ref", "result_ref", "invalidated"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "query_id",
+        "representation_id",
+        "subject",
+        "base_index_generation",
+        "coverage",
+        "result_count",
+        "omitted_count",
+        "byte_estimate",
+        "token_estimate",
+        "result_schema_ref",
+        "result_ref",
+        "invalidated"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.representation_query_result.v1"},
-        "record_kind": {"const": "representation_query_result"},
-        "query_id": {"$ref": "#/$defs/id"},
-        "representation_id": {"$ref": "#/$defs/id"},
-        "subject": {"$ref": "#/$defs/ordinary_browser_subject"},
-        "base_index_generation": {"type": "integer", "minimum": 0},
-        "coverage": {"$ref": "#/$defs/coverage"},
-        "result_count": {"type": "integer", "minimum": 0},
-        "omitted_count": {"type": "integer", "minimum": 0},
-        "byte_estimate": {"type": "integer", "minimum": 0},
-        "token_estimate": {"type": "integer", "minimum": 0},
-        "result_schema_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "result_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "continuation": {"$ref": "#/$defs/non_secret_ref"},
-        "invalidated": {"type": "boolean"},
-        "invalidation_reason": {"type": "string", "enum": ["navigation", "redirect", "reload", "document_replaced", "crash_restore", "controller_handoff", "generation_advanced"]}
+        "schema_id": {
+          "const": "pm.browser_program.representation_query_result.v1"
+        },
+        "record_kind": {
+          "const": "representation_query_result"
+        },
+        "query_id": {
+          "$ref": "#/$defs/id"
+        },
+        "representation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "subject": {
+          "$ref": "#/$defs/ordinary_browser_subject"
+        },
+        "base_index_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "coverage": {
+          "$ref": "#/$defs/coverage"
+        },
+        "result_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "omitted_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "byte_estimate": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "token_estimate": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "result_schema_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "result_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "continuation": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "invalidated": {
+          "type": "boolean"
+        },
+        "invalidation_reason": {
+          "type": "string",
+          "enum": [
+            "navigation",
+            "redirect",
+            "reload",
+            "document_replaced",
+            "crash_restore",
+            "controller_handoff",
+            "generation_advanced"
+          ]
+        }
       },
       "allOf": [
-        {"if": {"properties": {"invalidated": {"const": true}}, "required": ["invalidated"]}, "then": {"required": ["invalidation_reason"], "not": {"required": ["continuation"]}}, "else": {"not": {"required": ["invalidation_reason"]}}}
+        {
+          "if": {
+            "properties": {
+              "invalidated": {
+                "const": true
+              }
+            },
+            "required": [
+              "invalidated"
+            ]
+          },
+          "then": {
+            "required": [
+              "invalidation_reason"
+            ],
+            "not": {
+              "required": [
+                "continuation"
+              ]
+            }
+          },
+          "else": {
+            "not": {
+              "required": [
+                "invalidation_reason"
+              ]
+            }
+          }
+        }
       ]
     },
     "controller_fence": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["lease_id", "lease_generation", "lease_epoch", "holder_id", "page_generation", "last_sequence"],
+      "required": [
+        "lease_id",
+        "lease_generation",
+        "lease_epoch",
+        "holder_id",
+        "page_generation",
+        "last_sequence"
+      ],
       "properties": {
-        "lease_id": {"$ref": "#/$defs/id"},
-        "lease_generation": {"type": "integer", "minimum": 0},
-        "lease_epoch": {"type": "integer", "minimum": 0},
-        "holder_id": {"$ref": "#/$defs/id"},
-        "page_generation": {"type": "integer", "minimum": 0},
-        "last_sequence": {"type": "integer", "minimum": 0}
+        "lease_id": {
+          "$ref": "#/$defs/id"
+        },
+        "lease_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lease_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "holder_id": {
+          "$ref": "#/$defs/id"
+        },
+        "page_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "last_sequence": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     },
     "browser_controller_lease_receipt": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "receipt_id", "subject", "operation", "old_fence", "new_fence", "mutation_authority_changed", "created_at_utc"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "receipt_id",
+        "subject",
+        "operation",
+        "old_fence",
+        "new_fence",
+        "mutation_authority_changed",
+        "created_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.controller_lease_receipt.v1"},
-        "record_kind": {"const": "browser_controller_lease_receipt"},
-        "receipt_id": {"$ref": "#/$defs/id"},
-        "subject": {"$ref": "#/$defs/ordinary_browser_subject"},
-        "operation": {"type": "string", "enum": ["grant", "renew", "expire", "lose", "takeover_requested", "takeover_completed", "delegated", "handoff_fenced", "stale_rejected"]},
-        "old_fence": {"$ref": "#/$defs/controller_fence"},
-        "new_fence": {"$ref": "#/$defs/controller_fence"},
-        "mutation_authority_changed": {"type": "boolean"},
-        "read_only_viewers": {"type": "integer", "minimum": 0},
-        "blocked_reason_code": {"$ref": "#/$defs/id"},
-        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+        "schema_id": {
+          "const": "pm.browser_program.controller_lease_receipt.v1"
+        },
+        "record_kind": {
+          "const": "browser_controller_lease_receipt"
+        },
+        "receipt_id": {
+          "$ref": "#/$defs/id"
+        },
+        "subject": {
+          "$ref": "#/$defs/ordinary_browser_subject"
+        },
+        "operation": {
+          "type": "string",
+          "enum": [
+            "grant",
+            "renew",
+            "expire",
+            "lose",
+            "takeover_requested",
+            "takeover_completed",
+            "delegated",
+            "handoff_fenced",
+            "stale_rejected"
+          ]
+        },
+        "old_fence": {
+          "$ref": "#/$defs/controller_fence"
+        },
+        "new_fence": {
+          "$ref": "#/$defs/controller_fence"
+        },
+        "mutation_authority_changed": {
+          "type": "boolean"
+        },
+        "read_only_viewers": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blocked_reason_code": {
+          "$ref": "#/$defs/id"
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
       }
     },
     "browser_program_segment_receipt": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "segment_id", "program_id", "program_workspace_id", "expected_workspace_revision", "result_workspace_revision", "dependency_segment_ids", "effect_range", "user_step_label", "idempotency_key", "terminal_state", "retry_allowed", "completed_action_ids", "unknown_effect_action_ids", "created_at_utc"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "segment_id",
+        "program_id",
+        "program_workspace_id",
+        "expected_workspace_revision",
+        "result_workspace_revision",
+        "dependency_segment_ids",
+        "effect_range",
+        "user_step_label",
+        "idempotency_key",
+        "terminal_state",
+        "retry_allowed",
+        "completed_action_ids",
+        "unknown_effect_action_ids",
+        "created_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.segment_receipt.v1"},
-        "record_kind": {"const": "browser_program_segment_receipt"},
-        "segment_id": {"$ref": "#/$defs/id"},
-        "program_id": {"$ref": "#/$defs/id"},
-        "program_workspace_id": {"$ref": "#/$defs/id"},
-        "expected_workspace_revision": {"type": "integer", "minimum": 0},
-        "result_workspace_revision": {"type": "integer", "minimum": 0},
-        "dependency_segment_ids": {"type": "array", "uniqueItems": true, "maxItems": 1000, "items": {"$ref": "#/$defs/id"}},
-        "effect_range": {"type": "string", "enum": ["none", "read_only", "page_local", "navigation", "transfer", "capture"]},
-        "user_step_label": {"type": "string", "minLength": 1, "maxLength": 160, "pattern": "^[^\\n\\r\\t`$<>\\\\]{1,160}$"},
-        "idempotency_key": {"$ref": "#/$defs/id"},
-        "terminal_state": {"type": "string", "enum": ["completed", "failed_no_effect", "failed_effects_reconciled", "cancelled_confirmed", "timed_out_stopped", "timed_out_effects_reconciled", "timed_out_effect_state_unknown"]},
-        "retry_allowed": {"type": "boolean"},
-        "completed_action_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
-        "unknown_effect_action_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
-        "artifact_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
-        "capture_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
-        "safe_next_action": {"type": "string", "enum": ["continue", "retry", "reconcile_effects", "inspect", "cancel", "handoff", "none"]},
-        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+        "schema_id": {
+          "const": "pm.browser_program.segment_receipt.v1"
+        },
+        "record_kind": {
+          "const": "browser_program_segment_receipt"
+        },
+        "segment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "program_id": {
+          "$ref": "#/$defs/id"
+        },
+        "program_workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "expected_workspace_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "result_workspace_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dependency_segment_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "effect_range": {
+          "type": "string",
+          "enum": [
+            "none",
+            "read_only",
+            "page_local",
+            "navigation",
+            "transfer",
+            "capture"
+          ]
+        },
+        "user_step_label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160,
+          "pattern": "^[^\\n\\r\\t`$<>\\\\]{1,160}$"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "terminal_state": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "failed_no_effect",
+            "failed_effects_reconciled",
+            "cancelled_confirmed",
+            "timed_out_stopped",
+            "timed_out_effects_reconciled",
+            "timed_out_effect_state_unknown"
+          ]
+        },
+        "retry_allowed": {
+          "type": "boolean"
+        },
+        "completed_action_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "unknown_effect_action_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "artifact_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "capture_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "safe_next_action": {
+          "type": "string",
+          "enum": [
+            "continue",
+            "retry",
+            "reconcile_effects",
+            "inspect",
+            "cancel",
+            "handoff",
+            "none"
+          ]
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
       },
       "allOf": [
         {
-          "if": {"properties": {"terminal_state": {"const": "timed_out_effect_state_unknown"}}, "required": ["terminal_state"]},
+          "if": {
+            "properties": {
+              "terminal_state": {
+                "const": "timed_out_effect_state_unknown"
+              }
+            },
+            "required": [
+              "terminal_state"
+            ]
+          },
           "then": {
-            "properties": {"retry_allowed": {"const": false}, "safe_next_action": {"const": "reconcile_effects"}},
-            "required": ["safe_next_action"]
+            "properties": {
+              "retry_allowed": {
+                "const": false
+              },
+              "safe_next_action": {
+                "const": "reconcile_effects"
+              }
+            },
+            "required": [
+              "safe_next_action"
+            ]
           }
         }
       ]
@@ -1012,69 +1991,219 @@
     "browser_transfer_receipt": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "transfer_id", "subject", "direction", "artifact_ref", "filesafe_preflight_ref", "permission_snapshot_ref", "disposition", "created_at_utc"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "transfer_id",
+        "subject",
+        "direction",
+        "artifact_ref",
+        "filesafe_preflight_ref",
+        "permission_snapshot_ref",
+        "disposition",
+        "created_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.transfer_receipt.v1"},
-        "record_kind": {"const": "browser_transfer_receipt"},
-        "transfer_id": {"$ref": "#/$defs/id"},
-        "subject": {"$ref": "#/$defs/ordinary_browser_subject"},
-        "direction": {"type": "string", "enum": ["upload", "download"]},
-        "artifact_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "filesafe_preflight_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "disposition": {"type": "string", "enum": ["completed", "blocked", "cancelled", "quarantined"]},
-        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+        "schema_id": {
+          "const": "pm.browser_program.transfer_receipt.v1"
+        },
+        "record_kind": {
+          "const": "browser_transfer_receipt"
+        },
+        "transfer_id": {
+          "$ref": "#/$defs/id"
+        },
+        "subject": {
+          "$ref": "#/$defs/ordinary_browser_subject"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "upload",
+            "download"
+          ]
+        },
+        "artifact_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "filesafe_preflight_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "disposition": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "blocked",
+            "cancelled",
+            "quarantined"
+          ]
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
       }
     },
     "requested_effective_dimension": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["requested", "effective", "reason_code"],
+      "required": [
+        "requested",
+        "effective",
+        "reason_code"
+      ],
       "properties": {
-        "requested": {"$ref": "#/$defs/id"},
-        "effective": {"$ref": "#/$defs/id"},
-        "reason_code": {"$ref": "#/$defs/id"}
+        "requested": {
+          "$ref": "#/$defs/id"
+        },
+        "effective": {
+          "$ref": "#/$defs/id"
+        },
+        "reason_code": {
+          "$ref": "#/$defs/id"
+        }
       }
     },
     "browser_routing_decision": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "routing_decision_id", "lineage", "strategy", "runtime", "source", "visibility", "capture", "screenshot_model_attachment", "permission_snapshot_ref", "created_at_utc"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "routing_decision_id",
+        "lineage",
+        "strategy",
+        "runtime",
+        "source",
+        "visibility",
+        "capture",
+        "screenshot_model_attachment",
+        "permission_snapshot_ref",
+        "created_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.routing_decision.v1"},
-        "record_kind": {"const": "browser_routing_decision"},
-        "routing_decision_id": {"$ref": "#/$defs/id"},
-        "lineage": {"$ref": "#/$defs/lineage"},
-        "strategy": {"$ref": "#/$defs/requested_effective_dimension"},
-        "runtime": {"$ref": "#/$defs/requested_effective_dimension"},
-        "source": {"$ref": "#/$defs/requested_effective_dimension"},
-        "visibility": {"$ref": "#/$defs/requested_effective_dimension"},
-        "capture": {"$ref": "#/$defs/requested_effective_dimension"},
-        "screenshot_model_attachment": {"type": "string", "enum": ["auto", "always", "never"]},
-        "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "capture_policy_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+        "schema_id": {
+          "const": "pm.browser_program.routing_decision.v1"
+        },
+        "record_kind": {
+          "const": "browser_routing_decision"
+        },
+        "routing_decision_id": {
+          "$ref": "#/$defs/id"
+        },
+        "lineage": {
+          "$ref": "#/$defs/lineage"
+        },
+        "strategy": {
+          "$ref": "#/$defs/requested_effective_dimension"
+        },
+        "runtime": {
+          "$ref": "#/$defs/requested_effective_dimension"
+        },
+        "source": {
+          "$ref": "#/$defs/requested_effective_dimension"
+        },
+        "visibility": {
+          "$ref": "#/$defs/requested_effective_dimension"
+        },
+        "capture": {
+          "$ref": "#/$defs/requested_effective_dimension"
+        },
+        "screenshot_model_attachment": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "always",
+            "never"
+          ]
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "capture_policy_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
       }
     },
     "browser_routine_record": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "routine_id", "routine_version", "routine_hash", "scope_ref", "provenance_ref", "fixture_refs", "browser_program_api_digest", "capability_profile_hash", "state", "reversible", "created_at_utc"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "routine_id",
+        "routine_version",
+        "routine_hash",
+        "scope_ref",
+        "provenance_ref",
+        "fixture_refs",
+        "browser_program_api_digest",
+        "capability_profile_hash",
+        "state",
+        "reversible",
+        "created_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.routine_record.v1"},
-        "record_kind": {"const": "browser_routine_record"},
-        "routine_id": {"$ref": "#/$defs/id"},
-        "routine_version": {"type": "integer", "minimum": 1},
-        "routine_hash": {"$ref": "#/$defs/sha256"},
-        "scope_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "provenance_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "fixture_refs": {"type": "array", "minItems": 1, "maxItems": 1000, "items": {"$ref": "#/$defs/non_secret_ref"}},
-        "browser_program_api_digest": {"$ref": "#/$defs/sha256"},
-        "capability_profile_hash": {"$ref": "#/$defs/sha256"},
-        "state": {"type": "string", "enum": ["generated", "validated", "promoted", "invalidated", "disabled"]},
-        "reversible": {"const": true},
-        "invalidation_reason_code": {"$ref": "#/$defs/id"},
-        "created_at_utc": {"$ref": "#/$defs/timestamp"}
+        "schema_id": {
+          "const": "pm.browser_program.routine_record.v1"
+        },
+        "record_kind": {
+          "const": "browser_routine_record"
+        },
+        "routine_id": {
+          "$ref": "#/$defs/id"
+        },
+        "routine_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "routine_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scope_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "provenance_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "fixture_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "browser_program_api_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "capability_profile_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "generated",
+            "validated",
+            "promoted",
+            "invalidated",
+            "disabled"
+          ]
+        },
+        "reversible": {
+          "const": true
+        },
+        "invalidation_reason_code": {
+          "$ref": "#/$defs/id"
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
       }
     },
     "external_browser_adapter_receipt": {
@@ -1318,20 +2447,51 @@
       "description": "Static validation input only, deliberately excluded from the runtime record union. Context is supplied by the caller, never extracted as authority from result_utf8. Fixtures do not prove native owner custody or currentness resolution.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["record_kind", "program", "resolved_schema_ref", "result_schema_utf8", "result_schema_resources", "terminal_subject", "terminal_workspace_revision", "result_utf8"],
+      "required": [
+        "record_kind",
+        "program",
+        "resolved_schema_ref",
+        "result_schema_utf8",
+        "result_schema_resources",
+        "terminal_subject",
+        "terminal_workspace_revision",
+        "result_utf8"
+      ],
       "properties": {
-        "record_kind": {"const": "browser_program_result_validation"},
-        "program": {"$ref": "#/$defs/browser_program"},
-        "resolved_schema_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "result_schema_utf8": {"type": "string", "minLength": 1},
+        "record_kind": {
+          "const": "browser_program_result_validation"
+        },
+        "program": {
+          "$ref": "#/$defs/browser_program"
+        },
+        "resolved_schema_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "result_schema_utf8": {
+          "type": "string",
+          "minLength": 1
+        },
         "result_schema_resources": {
           "type": "object",
-          "propertyNames": {"$ref": "#/$defs/non_secret_ref"},
-          "additionalProperties": {"type": "string", "minLength": 1}
+          "propertyNames": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
         },
-        "terminal_subject": {"$ref": "#/$defs/ordinary_browser_subject"},
-        "terminal_workspace_revision": {"type": "integer", "minimum": 0},
-        "result_utf8": {"type": "string", "minLength": 1}
+        "terminal_subject": {
+          "$ref": "#/$defs/ordinary_browser_subject"
+        },
+        "terminal_workspace_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "result_utf8": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "browser_command_id": {
@@ -1357,12 +2517,27 @@
     "browser_controller_authority": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["lease_id", "lease_generation", "lease_epoch", "holder_id"],
+      "required": [
+        "lease_id",
+        "lease_generation",
+        "lease_epoch",
+        "holder_id"
+      ],
       "properties": {
-        "lease_id": {"$ref": "#/$defs/id"},
-        "lease_generation": {"type": "integer", "minimum": 0},
-        "lease_epoch": {"type": "integer", "minimum": 0},
-        "holder_id": {"$ref": "#/$defs/id"}
+        "lease_id": {
+          "$ref": "#/$defs/id"
+        },
+        "lease_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lease_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "holder_id": {
+          "$ref": "#/$defs/id"
+        }
       }
     },
     "browser_command_scope": {
@@ -1815,111 +2990,2327 @@
     "browser_command_request": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "command_instance_id", "idempotency_key", "scope", "permission_snapshot_ref", "filesafe_decision_ref", "requested_at_utc"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_instance_id",
+        "idempotency_key",
+        "scope",
+        "permission_snapshot_ref",
+        "filesafe_decision_ref",
+        "requested_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.command_request.v1"},
-        "record_kind": {"const": "browser_command_request"},
-        "command_instance_id": {"$ref": "#/$defs/id"},
-        "idempotency_key": {"$ref": "#/$defs/id"},
-        "scope": {"$ref": "#/$defs/browser_command_scope"},
-        "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "filesafe_decision_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "requested_at_utc": {"$ref": "#/$defs/timestamp"}
+        "schema_id": {
+          "const": "pm.browser_program.command_request.v1"
+        },
+        "record_kind": {
+          "const": "browser_command_request"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "scope": {
+          "$ref": "#/$defs/browser_command_scope"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "filesafe_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
       }
     },
     "browser_command_result": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "command_instance_id", "scope", "outcome", "effect_state", "result_refs", "completed_at_utc"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_instance_id",
+        "scope",
+        "outcome",
+        "effect_state",
+        "result_refs",
+        "completed_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.command_result.v1"},
-        "record_kind": {"const": "browser_command_result"},
-        "command_instance_id": {"$ref": "#/$defs/id"},
-        "scope": {"$ref": "#/$defs/browser_command_scope"},
-        "outcome": {"type": "string", "enum": ["succeeded", "blocked", "failed", "cancelled", "effect_unknown"]},
-        "effect_state": {"type": "string", "enum": ["no_effect", "effects_reconciled", "effect_unknown"]},
-        "result_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
-        "dispatch_receipt_ref": {"type": ["string", "null"], "minLength": 1},
-        "completed_at_utc": {"$ref": "#/$defs/timestamp"}
+        "schema_id": {
+          "const": "pm.browser_program.command_result.v1"
+        },
+        "record_kind": {
+          "const": "browser_command_result"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scope": {
+          "$ref": "#/$defs/browser_command_scope"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "succeeded",
+            "blocked",
+            "failed",
+            "cancelled",
+            "effect_unknown"
+          ]
+        },
+        "effect_state": {
+          "type": "string",
+          "enum": [
+            "no_effect",
+            "effects_reconciled",
+            "effect_unknown"
+          ]
+        },
+        "result_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "dispatch_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
       },
       "allOf": [
-        {"if": {"properties": {"outcome": {"const": "effect_unknown"}}, "required": ["outcome"]}, "then": {"properties": {"effect_state": {"const": "effect_unknown"}}}}
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "effect_unknown"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "effect_unknown"
+              }
+            }
+          }
+        }
       ]
     },
     "browser_command_error": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "command_instance_id", "scope", "error_code", "effect_state", "retry_allowed", "safe_next_actions", "occurred_at_utc"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_instance_id",
+        "scope",
+        "error_code",
+        "effect_state",
+        "retry_allowed",
+        "safe_next_actions",
+        "occurred_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.command_error.v1"},
-        "record_kind": {"const": "browser_command_error"},
-        "command_instance_id": {"$ref": "#/$defs/id"},
-        "scope": {"$ref": "#/$defs/browser_command_scope"},
-        "error_code": {"type": "string", "enum": ["handler_unavailable", "event_authority_unavailable", "runtime_unavailable", "protected_auth_rejected", "stale_generation", "controller_lease_lost", "permission_denied", "filesafe_denied", "capability_unavailable", "effect_unknown", "no_lossless_legacy_normalization", "invalid_named_action", "invalid_representation_base"]},
-        "effect_state": {"type": "string", "enum": ["no_effect", "effects_reconciled", "effect_unknown"]},
-        "retry_allowed": {"type": "boolean"},
-        "safe_next_actions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["inspect", "retry", "reconcile_effects", "request_permission", "select_capability", "close", "none"]}},
-        "detail_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "occurred_at_utc": {"$ref": "#/$defs/timestamp"}
+        "schema_id": {
+          "const": "pm.browser_program.command_error.v1"
+        },
+        "record_kind": {
+          "const": "browser_command_error"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scope": {
+          "$ref": "#/$defs/browser_command_scope"
+        },
+        "error_code": {
+          "type": "string",
+          "enum": [
+            "handler_unavailable",
+            "event_authority_unavailable",
+            "runtime_unavailable",
+            "protected_auth_rejected",
+            "stale_generation",
+            "controller_lease_lost",
+            "permission_denied",
+            "filesafe_denied",
+            "capability_unavailable",
+            "effect_unknown",
+            "no_lossless_legacy_normalization",
+            "invalid_named_action",
+            "invalid_representation_base"
+          ]
+        },
+        "effect_state": {
+          "type": "string",
+          "enum": [
+            "no_effect",
+            "effects_reconciled",
+            "effect_unknown"
+          ]
+        },
+        "retry_allowed": {
+          "type": "boolean"
+        },
+        "safe_next_actions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "inspect",
+              "retry",
+              "reconcile_effects",
+              "request_permission",
+              "select_capability",
+              "close",
+              "none"
+            ]
+          }
+        },
+        "detail_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "occurred_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
       },
       "allOf": [
-        {"if": {"properties": {"effect_state": {"const": "effect_unknown"}}, "required": ["effect_state"]}, "then": {"properties": {"retry_allowed": {"const": false}, "safe_next_actions": {"contains": {"const": "reconcile_effects"}}}}}
+        {
+          "if": {
+            "properties": {
+              "effect_state": {
+                "const": "effect_unknown"
+              }
+            },
+            "required": [
+              "effect_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "retry_allowed": {
+                "const": false
+              },
+              "safe_next_actions": {
+                "contains": {
+                  "const": "reconcile_effects"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "browser_command_disabled_reason": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "scope", "reason_code", "safe_next_actions", "observed_at_utc"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "scope",
+        "reason_code",
+        "safe_next_actions",
+        "observed_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.command_disabled_reason.v1"},
-        "record_kind": {"const": "browser_command_disabled_reason"},
-        "scope": {"$ref": "#/$defs/browser_command_scope"},
-        "reason_code": {"type": "string", "enum": ["handler_unavailable", "event_authority_unavailable", "runtime_unavailable", "protected_auth_rejected", "stale_generation", "controller_lease_lost", "permission_denied", "filesafe_denied", "capability_unavailable", "effect_unknown", "no_lossless_legacy_normalization"]},
-        "blocking_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "safe_next_actions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["inspect", "retry", "reconcile_effects", "request_permission", "select_capability", "close", "none"]}},
-        "observed_at_utc": {"$ref": "#/$defs/timestamp"}
+        "schema_id": {
+          "const": "pm.browser_program.command_disabled_reason.v1"
+        },
+        "record_kind": {
+          "const": "browser_command_disabled_reason"
+        },
+        "scope": {
+          "$ref": "#/$defs/browser_command_scope"
+        },
+        "reason_code": {
+          "type": "string",
+          "enum": [
+            "handler_unavailable",
+            "event_authority_unavailable",
+            "runtime_unavailable",
+            "protected_auth_rejected",
+            "stale_generation",
+            "controller_lease_lost",
+            "permission_denied",
+            "filesafe_denied",
+            "capability_unavailable",
+            "effect_unknown",
+            "no_lossless_legacy_normalization"
+          ]
+        },
+        "blocking_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "safe_next_actions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "inspect",
+              "retry",
+              "reconcile_effects",
+              "request_permission",
+              "select_capability",
+              "close",
+              "none"
+            ]
+          }
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
       }
     },
     "browser_command_availability": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "scope", "available", "effective_capability_profile_id", "disabled_reason", "checked_at_utc"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "scope",
+        "available",
+        "effective_capability_profile_id",
+        "disabled_reason",
+        "checked_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.command_availability.v1"},
-        "record_kind": {"const": "browser_command_availability"},
-        "scope": {"$ref": "#/$defs/browser_command_scope"},
-        "available": {"type": "boolean"},
-        "effective_capability_profile_id": {"$ref": "#/$defs/id"},
-        "disabled_reason": {"oneOf": [{"$ref": "#/$defs/browser_command_disabled_reason"}, {"type": "null"}]},
-        "checked_at_utc": {"$ref": "#/$defs/timestamp"}
+        "schema_id": {
+          "const": "pm.browser_program.command_availability.v1"
+        },
+        "record_kind": {
+          "const": "browser_command_availability"
+        },
+        "scope": {
+          "$ref": "#/$defs/browser_command_scope"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "effective_capability_profile_id": {
+          "$ref": "#/$defs/id"
+        },
+        "disabled_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/browser_command_disabled_reason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checked_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
       },
       "allOf": [
-        {"if": {"properties": {"available": {"const": true}}, "required": ["available"]}, "then": {"properties": {"disabled_reason": {"type": "null"}}}},
-        {"if": {"properties": {"available": {"const": false}}, "required": ["available"]}, "then": {"properties": {"disabled_reason": {"$ref": "#/$defs/browser_command_disabled_reason"}}}}
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "then": {
+            "properties": {
+              "disabled_reason": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": false
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "then": {
+            "properties": {
+              "disabled_reason": {
+                "$ref": "#/$defs/browser_command_disabled_reason"
+              }
+            }
+          }
+        }
       ]
     },
     "browser_observable_work_projection": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "observable_work_id", "program_id", "phase", "state", "progress_numerator", "progress_denominator", "progress_is_verdict", "requested_strategy", "effective_strategy", "blocked_reason_code", "safe_next_actions", "updated_at_utc"],
+      "required": [
+        "schema_id",
+        "record_kind",
+        "observable_work_id",
+        "program_id",
+        "phase",
+        "state",
+        "progress_numerator",
+        "progress_denominator",
+        "progress_is_verdict",
+        "requested_strategy",
+        "effective_strategy",
+        "blocked_reason_code",
+        "safe_next_actions",
+        "updated_at_utc"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.browser_program.observable_work_projection.v1"},
-        "record_kind": {"const": "browser_observable_work_projection"},
-        "observable_work_id": {"$ref": "#/$defs/id"},
-        "program_id": {"$ref": "#/$defs/id"},
-        "phase": {"type": "string", "enum": ["queued", "admission", "compile", "preflight", "lease_wait", "representation", "segment", "checkpoint", "handoff", "finalization", "terminal"]},
-        "state": {"type": "string", "enum": ["queued", "running", "paused", "blocked", "degraded", "cancelling", "completed", "failed", "cancelled", "timed_out"]},
-        "progress_numerator": {"type": "integer", "minimum": 0},
-        "progress_denominator": {"type": "integer", "minimum": 0},
-        "progress_is_verdict": {"const": false},
-        "requested_strategy": {"$ref": "#/$defs/id"},
-        "effective_strategy": {"$ref": "#/$defs/id"},
-        "current_user_step_label": {"type": "string", "minLength": 1, "maxLength": 160},
-        "blocked_reason_code": {"type": ["string", "null"], "maxLength": 192},
-        "artifact_refs": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}},
-        "capture_refs": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}},
-        "safe_next_actions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "enum": ["inspect", "pause", "resume", "cancel", "takeover", "reconcile_effects", "handoff", "none"]}},
-        "updated_at_utc": {"$ref": "#/$defs/timestamp"}
+        "schema_id": {
+          "const": "pm.browser_program.observable_work_projection.v1"
+        },
+        "record_kind": {
+          "const": "browser_observable_work_projection"
+        },
+        "observable_work_id": {
+          "$ref": "#/$defs/id"
+        },
+        "program_id": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "type": "string",
+          "enum": [
+            "queued",
+            "admission",
+            "compile",
+            "preflight",
+            "lease_wait",
+            "representation",
+            "segment",
+            "checkpoint",
+            "handoff",
+            "finalization",
+            "terminal"
+          ]
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "queued",
+            "running",
+            "paused",
+            "blocked",
+            "degraded",
+            "cancelling",
+            "completed",
+            "failed",
+            "cancelled",
+            "timed_out"
+          ]
+        },
+        "progress_numerator": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "progress_denominator": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "progress_is_verdict": {
+          "const": false
+        },
+        "requested_strategy": {
+          "$ref": "#/$defs/id"
+        },
+        "effective_strategy": {
+          "$ref": "#/$defs/id"
+        },
+        "current_user_step_label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "blocked_reason_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 192
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "capture_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "safe_next_actions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "inspect",
+              "pause",
+              "resume",
+              "cancel",
+              "takeover",
+              "reconcile_effects",
+              "handoff",
+              "none"
+            ]
+          }
+        },
+        "updated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "browser_actionApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "action_type",
+        "source_span",
+        "effect_class",
+        "user_step_label"
+      ],
+      "properties": {
+        "action_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "action_type": {
+          "type": "string",
+          "enum": [
+            "navigate",
+            "back",
+            "reload",
+            "click",
+            "scroll",
+            "type",
+            "press_key",
+            "wait_for",
+            "set_viewport",
+            "fill_form",
+            "select_option",
+            "snapshot",
+            "screenshot",
+            "console",
+            "network",
+            "list_tabs",
+            "create_tab",
+            "select_tab",
+            "close_tab",
+            "upload_file",
+            "download",
+            "bookmark_capture"
+          ]
+        },
+        "source_span": {
+          "$ref": "#/$defs/source_spanApplicationV1"
+        },
+        "effect_class": {
+          "type": "string",
+          "enum": [
+            "read_only",
+            "page_mutation",
+            "navigation",
+            "transfer",
+            "capture"
+          ]
+        },
+        "user_step_label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160,
+          "pattern": "^[^\\n\\r\\t`$<>\\\\]{1,160}$"
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": false,
+          "maxProperties": 16,
+          "properties": {
+            "target_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            },
+            "url_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            },
+            "text_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            },
+            "key": {
+              "type": "string",
+              "enum": [
+                "Enter",
+                "Escape",
+                "Tab",
+                "Space",
+                "ArrowUp",
+                "ArrowDown",
+                "ArrowLeft",
+                "ArrowRight",
+                "Home",
+                "End",
+                "PageUp",
+                "PageDown",
+                "Backspace",
+                "Delete"
+              ]
+            },
+            "direction": {
+              "type": "string",
+              "enum": [
+                "up",
+                "down",
+                "left",
+                "right"
+              ]
+            },
+            "amount": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            },
+            "timeout_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 300000
+            },
+            "viewport_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            },
+            "form_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            },
+            "option_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            },
+            "snapshot_policy_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            },
+            "capture_policy_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            },
+            "console_query_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            },
+            "network_query_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            },
+            "tab_id": {
+              "$ref": "#/$defs/idApplicationV1"
+            },
+            "file_artifact_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            },
+            "transfer_policy_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            },
+            "bookmark_ref": {
+              "$ref": "#/$defs/non_secret_refApplicationV1"
+            }
+          }
+        },
+        "filesafe_preflight_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        }
+      }
+    },
+    "browser_command_idApplicationV1": {
+      "type": "string",
+      "enum": [
+        "cmd.browser.workspace.create",
+        "cmd.browser.workspace.close",
+        "cmd.browser.workspace.reset",
+        "cmd.browser.page.create",
+        "cmd.browser.page.close",
+        "cmd.browser.page.activate",
+        "cmd.browser.page.evaluate",
+        "cmd.browser.page.representation.capture",
+        "cmd.browser.page.representation.delta",
+        "cmd.browser.page.representation.query",
+        "cmd.browser.program.run",
+        "cmd.browser.program.pause",
+        "cmd.browser.program.resume",
+        "cmd.browser.program.cancel",
+        "cmd.browser.program.inspect"
+      ]
+    },
+    "browser_command_requestApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_instance_id",
+        "idempotency_key",
+        "scope",
+        "permission_snapshot_ref",
+        "filesafe_decision_ref",
+        "requested_at_utc",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_program.command_request.application.v1"
+        },
+        "record_kind": {
+          "const": "browser_command_request"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "scope": {
+          "$ref": "#/$defs/browser_command_scopeApplicationV1"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "filesafe_decision_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestampApplicationV1"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "browser_command_resultApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_instance_id",
+        "scope",
+        "outcome",
+        "effect_state",
+        "result_refs",
+        "completed_at_utc",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_program.command_result.application.v1"
+        },
+        "record_kind": {
+          "const": "browser_command_result"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "scope": {
+          "$ref": "#/$defs/browser_command_scopeApplicationV1"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "succeeded",
+            "blocked",
+            "failed",
+            "cancelled",
+            "effect_unknown"
+          ]
+        },
+        "effect_state": {
+          "type": "string",
+          "enum": [
+            "no_effect",
+            "effects_reconciled",
+            "effect_unknown"
+          ]
+        },
+        "result_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_refApplicationV1"
+          }
+        },
+        "dispatch_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "completed_at_utc": {
+          "$ref": "#/$defs/timestampApplicationV1"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "effect_unknown"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "effect_unknown"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "browser_command_scopeApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "lineage",
+        "browser_session_id",
+        "session_security_class",
+        "application_context"
+      ],
+      "properties": {
+        "command_id": {
+          "$ref": "#/$defs/browser_command_idApplicationV1"
+        },
+        "lineage": {
+          "$ref": "#/$defs/lineageApplicationV1"
+        },
+        "browser_session_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "session_security_class": {
+          "const": "ordinary"
+        },
+        "browser_workspace_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "expected_workspace_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "browser_page_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "page_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "controller_authority": {
+          "$ref": "#/$defs/browser_controller_authorityApplicationV1"
+        },
+        "workspace_policy_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "capability_profile_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "named_action": {
+          "$ref": "#/$defs/browser_actionApplicationV1"
+        },
+        "named_action_arguments_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "representation_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "base_representation_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "representation_mode": {
+          "type": "string",
+          "enum": [
+            "minimal",
+            "standard",
+            "full",
+            "scoped",
+            "delta"
+          ]
+        },
+        "detail_classes": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 32,
+          "items": {
+            "type": "string",
+            "enum": [
+              "accessibility",
+              "landmarks",
+              "headings",
+              "interactive",
+              "forms",
+              "frames",
+              "shadow",
+              "listeners",
+              "styles",
+              "layout",
+              "virtualization",
+              "action_refs"
+            ]
+          }
+        },
+        "query_operators": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "type": "string",
+            "enum": [
+              "filter",
+              "project",
+              "group",
+              "sort",
+              "dedupe",
+              "limit",
+              "count",
+              "preview"
+            ]
+          }
+        },
+        "representation_budget": {
+          "$ref": "#/$defs/representation_budgetApplicationV1"
+        },
+        "browser_program_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "browser_program_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "program_workspace_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "expected_program_workspace_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reconciled_checkpoint_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "effect_state": {
+          "type": "string",
+          "enum": [
+            "no_effect",
+            "effects_reconciled"
+          ]
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.browser.workspace.create"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "workspace_policy_ref",
+              "capability_profile_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.browser.workspace.close",
+                  "cmd.browser.workspace.reset"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "browser_workspace_id",
+              "expected_workspace_revision",
+              "controller_authority"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.browser.page.create"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "browser_workspace_id",
+              "expected_workspace_revision",
+              "controller_authority"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.browser.page.close"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "browser_workspace_id",
+              "browser_page_id",
+              "page_generation",
+              "controller_authority"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.browser.page.activate"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "browser_workspace_id",
+              "browser_page_id",
+              "page_generation"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.browser.page.evaluate"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "browser_workspace_id",
+              "browser_page_id",
+              "page_generation",
+              "controller_authority",
+              "named_action",
+              "named_action_arguments_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.browser.page.representation.capture"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "browser_workspace_id",
+              "browser_page_id",
+              "page_generation",
+              "representation_mode",
+              "detail_classes",
+              "representation_budget"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.browser.page.representation.delta"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "browser_workspace_id",
+              "browser_page_id",
+              "page_generation",
+              "base_representation_id",
+              "representation_mode",
+              "representation_budget"
+            ],
+            "properties": {
+              "representation_mode": {
+                "const": "delta"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.browser.page.representation.query"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "browser_workspace_id",
+              "browser_page_id",
+              "page_generation",
+              "representation_id",
+              "query_operators",
+              "representation_budget"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.browser.program.run"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "browser_workspace_id",
+              "browser_page_id",
+              "page_generation",
+              "controller_authority",
+              "browser_program_id",
+              "browser_program_ref",
+              "program_workspace_id",
+              "expected_program_workspace_revision",
+              "capability_profile_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.browser.program.pause",
+                  "cmd.browser.program.cancel"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "browser_workspace_id",
+              "browser_page_id",
+              "page_generation",
+              "controller_authority",
+              "browser_program_id",
+              "program_workspace_id",
+              "expected_program_workspace_revision"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.browser.program.resume"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "browser_workspace_id",
+              "browser_page_id",
+              "page_generation",
+              "controller_authority",
+              "browser_program_id",
+              "program_workspace_id",
+              "expected_program_workspace_revision",
+              "reconciled_checkpoint_ref",
+              "effect_state"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.browser.program.inspect"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "browser_program_id",
+              "program_workspace_id",
+              "expected_program_workspace_revision"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.browser.program.run",
+                  "cmd.browser.program.pause",
+                  "cmd.browser.program.resume",
+                  "cmd.browser.program.cancel",
+                  "cmd.browser.program.inspect"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "lineage": {
+                "$ref": "#/$defs/run_bound_lineageApplicationV1"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "browser_controller_authorityApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lease_id",
+        "lease_generation",
+        "lease_epoch",
+        "holder_id"
+      ],
+      "properties": {
+        "lease_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "lease_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lease_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "holder_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        }
+      }
+    },
+    "browser_controller_lease_receiptApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "receipt_id",
+        "subject",
+        "operation",
+        "old_fence",
+        "new_fence",
+        "mutation_authority_changed",
+        "created_at_utc",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_program.controller_lease_receipt.application.v1"
+        },
+        "record_kind": {
+          "const": "browser_controller_lease_receipt"
+        },
+        "receipt_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "subject": {
+          "$ref": "#/$defs/ordinary_browser_subjectApplicationV1"
+        },
+        "operation": {
+          "type": "string",
+          "enum": [
+            "grant",
+            "renew",
+            "expire",
+            "lose",
+            "takeover_requested",
+            "takeover_completed",
+            "delegated",
+            "handoff_fenced",
+            "stale_rejected"
+          ]
+        },
+        "old_fence": {
+          "$ref": "#/$defs/controller_fenceApplicationV1"
+        },
+        "new_fence": {
+          "$ref": "#/$defs/controller_fenceApplicationV1"
+        },
+        "mutation_authority_changed": {
+          "type": "boolean"
+        },
+        "read_only_viewers": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blocked_reason_code": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestampApplicationV1"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "browser_programApplicationV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/BrowserProgramApplicationV1"
+    },
+    "browser_program_astApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ast_version",
+        "actions",
+        "local_operators",
+        "checkpoints",
+        "ast_hash"
+      ],
+      "properties": {
+        "ast_version": {
+          "const": "1.0.0"
+        },
+        "actions": {
+          "type": "array",
+          "maxItems": 10000,
+          "items": {
+            "$ref": "#/$defs/browser_actionApplicationV1"
+          }
+        },
+        "local_operators": {
+          "type": "array",
+          "maxItems": 10000,
+          "items": {
+            "$ref": "#/$defs/local_operatorApplicationV1"
+          }
+        },
+        "checkpoints": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/idApplicationV1"
+          }
+        },
+        "ast_hash": {
+          "$ref": "#/$defs/sha256ApplicationV1"
+        }
+      }
+    },
+    "browser_program_segment_receiptApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "segment_id",
+        "program_id",
+        "program_workspace_id",
+        "expected_workspace_revision",
+        "result_workspace_revision",
+        "dependency_segment_ids",
+        "effect_range",
+        "user_step_label",
+        "idempotency_key",
+        "terminal_state",
+        "retry_allowed",
+        "completed_action_ids",
+        "unknown_effect_action_ids",
+        "created_at_utc",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_program.segment_receipt.application.v1"
+        },
+        "record_kind": {
+          "const": "browser_program_segment_receipt"
+        },
+        "segment_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "program_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "program_workspace_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "expected_workspace_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "result_workspace_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dependency_segment_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/idApplicationV1"
+          }
+        },
+        "effect_range": {
+          "type": "string",
+          "enum": [
+            "none",
+            "read_only",
+            "page_local",
+            "navigation",
+            "transfer",
+            "capture"
+          ]
+        },
+        "user_step_label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160,
+          "pattern": "^[^\\n\\r\\t`$<>\\\\]{1,160}$"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "terminal_state": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "failed_no_effect",
+            "failed_effects_reconciled",
+            "cancelled_confirmed",
+            "timed_out_stopped",
+            "timed_out_effects_reconciled",
+            "timed_out_effect_state_unknown"
+          ]
+        },
+        "retry_allowed": {
+          "type": "boolean"
+        },
+        "completed_action_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/idApplicationV1"
+          }
+        },
+        "unknown_effect_action_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/idApplicationV1"
+          }
+        },
+        "artifact_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_refApplicationV1"
+          }
+        },
+        "capture_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_refApplicationV1"
+          }
+        },
+        "safe_next_action": {
+          "type": "string",
+          "enum": [
+            "continue",
+            "retry",
+            "reconcile_effects",
+            "inspect",
+            "cancel",
+            "handoff",
+            "none"
+          ]
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestampApplicationV1"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "terminal_state": {
+                "const": "timed_out_effect_state_unknown"
+              }
+            },
+            "required": [
+              "terminal_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "retry_allowed": {
+                "const": false
+              },
+              "safe_next_action": {
+                "const": "reconcile_effects"
+              }
+            },
+            "required": [
+              "safe_next_action"
+            ]
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "budgetsApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_actions",
+        "max_segments",
+        "max_wall_ms",
+        "max_local_compute_ms",
+        "max_output_bytes",
+        "max_artifact_bytes",
+        "max_memory_bytes"
+      ],
+      "properties": {
+        "max_actions": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "max_segments": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "max_wall_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400000
+        },
+        "max_local_compute_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600000
+        },
+        "max_output_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741824
+        },
+        "max_artifact_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1099511627776
+        },
+        "max_memory_bytes": {
+          "type": "integer",
+          "minimum": 1048576,
+          "maximum": 68719476736
+        },
+        "max_representation_nodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "max_representation_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741824
+        }
+      }
+    },
+    "compiler_identityApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compiler_id",
+        "compiler_version",
+        "compiler_hash",
+        "browser_program_api_digest",
+        "capability_profile_hash"
+      ],
+      "properties": {
+        "compiler_id": {
+          "const": "pm_browser_program_compiler"
+        },
+        "compiler_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "compiler_hash": {
+          "$ref": "#/$defs/sha256ApplicationV1"
+        },
+        "browser_program_api_digest": {
+          "$ref": "#/$defs/sha256ApplicationV1"
+        },
+        "capability_profile_hash": {
+          "$ref": "#/$defs/sha256ApplicationV1"
+        }
+      }
+    },
+    "controller_fenceApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lease_id",
+        "lease_generation",
+        "lease_epoch",
+        "holder_id",
+        "page_generation",
+        "last_sequence"
+      ],
+      "properties": {
+        "lease_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "lease_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lease_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "holder_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "page_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "last_sequence": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "idApplicationV1": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 192,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+      "not": {
+        "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
+      }
+    },
+    "lineageApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "run_id",
+        "attempt_id",
+        "home_server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "application_context"
+      ],
+      "properties": {
+        "project_id": {
+          "const": null
+        },
+        "plan_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "goal_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/idApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/idApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "thread_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "agent_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "home_server_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "description": "Project/Host/Environment/SourceLocation are real owner identities. Ordinary manual browser and route work has null Run/Attempt, never invented ones; program execution uses run_bound_lineage.",
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "run_id": {
+                  "type": "null"
+                },
+                "attempt_id": {
+                  "type": "null"
+                }
+              }
+            },
+            {
+              "properties": {
+                "run_id": {
+                  "$ref": "#/$defs/idApplicationV1"
+                },
+                "attempt_id": {
+                  "$ref": "#/$defs/idApplicationV1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "local_operatorApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operator_id",
+        "operator",
+        "input_refs",
+        "output_name",
+        "source_span"
+      ],
+      "properties": {
+        "operator_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "operator": {
+          "type": "string",
+          "enum": [
+            "append",
+            "select",
+            "filter",
+            "map",
+            "reduce",
+            "group",
+            "sort",
+            "dedupe",
+            "count",
+            "join",
+            "schema",
+            "preview",
+            "spill"
+          ]
+        },
+        "input_refs": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/idApplicationV1"
+          }
+        },
+        "output_name": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "source_span": {
+          "$ref": "#/$defs/source_spanApplicationV1"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        }
+      }
+    },
+    "non_secret_refApplicationV1": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
+      "not": {
+        "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
+      }
+    },
+    "ordinary_browser_subjectApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "browser_session_id",
+        "browser_workspace_id",
+        "browser_page_id",
+        "page_generation",
+        "session_security_class",
+        "application_context"
+      ],
+      "properties": {
+        "browser_session_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "browser_workspace_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "browser_page_id": {
+          "$ref": "#/$defs/idApplicationV1"
+        },
+        "page_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "session_security_class": {
+          "const": "ordinary"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "representation_budgetApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_nodes",
+        "max_bytes",
+        "max_time_ms",
+        "max_frames",
+        "max_shadow_roots",
+        "max_listener_records",
+        "max_style_records",
+        "max_layout_records"
+      ],
+      "properties": {
+        "max_nodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "max_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741824
+        },
+        "max_time_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300000
+        },
+        "max_frames": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "max_shadow_roots": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "max_listener_records": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "max_style_records": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "max_layout_records": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        }
+      }
+    },
+    "run_bound_lineageApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "application_context",
+        "owner_record"
+      ],
+      "properties": {
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "owner_record": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/lineageApplicationV1"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "run_id": {
+                  "$ref": "#/$defs/idApplicationV1"
+                },
+                "attempt_id": {
+                  "$ref": "#/$defs/idApplicationV1"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "sha256ApplicationV1": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_spanApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start_byte",
+        "end_byte",
+        "start_line",
+        "start_column",
+        "end_line",
+        "end_column"
+      ],
+      "properties": {
+        "start_byte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_byte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "start_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start_column": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_column": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "timestampApplicationV1": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "BrowserActionRequestV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "scope",
+        "profile_id",
+        "workspace_id",
+        "session_id",
+        "page_id",
+        "page_generation",
+        "controller_lease_ref",
+        "controller_generation",
+        "action",
+        "permission_evidence",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "enum": [
+            "cmd.browser.add_full_screenshot_to_chat",
+            "cmd.browser.add_screenshot_to_chat",
+            "cmd.browser.add_selection_full_screenshot_to_chat",
+            "cmd.browser.add_selection_screenshot_to_chat",
+            "cmd.browser.add_selection_to_chat",
+            "cmd.browser.capture.full_to_chat",
+            "cmd.browser.capture.region_to_chat",
+            "cmd.browser.component.add_to_composer",
+            "cmd.browser.component.insert_at_cursor",
+            "cmd.browser.component.mode.set_default",
+            "cmd.browser.component.pick",
+            "cmd.browser.component.send_now",
+            "cmd.browser.detach_browser_tab",
+            "cmd.browser.focus_browser_tab",
+            "cmd.browser.keep_closed",
+            "cmd.browser.let_agent_continue",
+            "cmd.browser.navigate",
+            "cmd.browser.open_detached_preview",
+            "cmd.browser.open_devtools",
+            "cmd.browser.open_workspace_preview",
+            "cmd.browser.page.activate",
+            "cmd.browser.page.close",
+            "cmd.browser.page.create",
+            "cmd.browser.page.evaluate",
+            "cmd.browser.page.representation.capture",
+            "cmd.browser.page.representation.delta",
+            "cmd.browser.page.representation.query",
+            "cmd.browser.pause_agent",
+            "cmd.browser.pick_element_for_chat",
+            "cmd.browser.program.cancel",
+            "cmd.browser.program.inspect",
+            "cmd.browser.program.pause",
+            "cmd.browser.program.resume",
+            "cmd.browser.program.run",
+            "cmd.browser.promote_to_normal_browsing",
+            "cmd.browser.reload",
+            "cmd.browser.reopen",
+            "cmd.browser.retry",
+            "cmd.browser.revoke_share_with_agent",
+            "cmd.browser.share_with_agent",
+            "cmd.browser.stop_agent_keep_browser",
+            "cmd.browser.take_over",
+            "cmd.browser.toggle_devtools_dock",
+            "cmd.browser.workspace.close",
+            "cmd.browser.workspace.create",
+            "cmd.browser.workspace.reset"
+          ]
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "profile_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "workspace_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "page_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "page_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "controller_lease_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "controller_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "action": {
+          "$ref": "https://puppetmaster.local/Plans/section15_browser_program_contracts.schema.json#/$defs/browser_action"
+        },
+        "permission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "BrowserActionResultV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "scope",
+        "workspace_id",
+        "session_id",
+        "page_id",
+        "page_generation",
+        "status",
+        "owner_segment_receipt_ref",
+        "reason_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "workspace_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "page_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "page_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "status": {
+          "enum": [
+            "done",
+            "refused",
+            "unsupported",
+            "unknown"
+          ]
+        },
+        "owner_segment_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
       }
     }
   }

@@ -183,5 +183,10 @@
         }
       }
     }
+  },
+  "$defs": {
+    "ProjectsRefreshPresentationPolicy": {
+      "$ref": "https://puppetmaster.local/Plans/pm7_build_contracts.schema.json#/$defs/ProjectsRefreshPresentationPolicy"
+    }
   }
 }

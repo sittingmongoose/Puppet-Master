@@ -2546,7 +2546,7 @@
         "collaboration_run_id": "crun-bs-0001",
         "angle": "adjacent field",
         "claim": "Local queues may avoid remote upload.",
-        "tether": "A local queue could preserve the job\u2019s offline-only constraint.",
+        "tether": "A local queue could preserve the job’s offline-only constraint.",
         "source_refs": [
           "https://example.org/local-queues"
         ],
@@ -2569,7 +2569,7 @@
         "collaboration_run_id": "crun-bs-0001",
         "angle": "adjacent field",
         "claim": "Local queues may avoid remote upload.",
-        "tether": "A local queue could preserve the job\u2019s offline-only constraint.",
+        "tether": "A local queue could preserve the job’s offline-only constraint.",
         "source_refs": [
           "https://example.org/local-queues"
         ],
@@ -2592,7 +2592,7 @@
         "collaboration_run_id": "crun-bs-0001",
         "angle": "adjacent field",
         "claim": "Local queues may avoid remote upload.",
-        "tether": "A local queue could preserve the job\u2019s offline-only constraint.",
+        "tether": "A local queue could preserve the job’s offline-only constraint.",
         "source_refs": [
           "https://example.org/local-queues"
         ],
@@ -2615,7 +2615,7 @@
         "collaboration_run_id": "crun-bs-0001",
         "angle": "adjacent field",
         "claim": "Local queues may avoid remote upload.",
-        "tether": "A local queue could preserve the job\u2019s offline-only constraint.",
+        "tether": "A local queue could preserve the job’s offline-only constraint.",
         "source_refs": [
           "https://example.org/local-queues"
         ],
@@ -2638,7 +2638,7 @@
         "collaboration_run_id": "crun-bs-0001",
         "angle": "adjacent field",
         "claim": "Local queues may avoid remote upload.",
-        "tether": "A local queue could preserve the job\u2019s offline-only constraint.",
+        "tether": "A local queue could preserve the job’s offline-only constraint.",
         "source_refs": [
           "https://example.org/local-queues"
         ],
@@ -2663,7 +2663,7 @@
         "collaboration_run_id": "crun-bs-0001",
         "angle": "adjacent field",
         "claim": "Local queues may avoid remote upload.",
-        "tether": "A local queue could preserve the job\u2019s offline-only constraint.",
+        "tether": "A local queue could preserve the job’s offline-only constraint.",
         "source_refs": [
           "https://example.org/local-queues"
         ],
@@ -5570,6 +5570,3300 @@
         "turn_policy": "round_robin",
         "waiting_between_rounds": false
       }
+    }
+  ],
+  "projects_refresh_cases": [
+    {
+      "case_id": "fd-app-shape-CollaborativeDefinition",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationDefinitionApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.definition.application.v1",
+        "schema_version": "1.0.0",
+        "collaboration_id": "collab-crew-0001",
+        "kind": "crew",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "name": "Add CSV export with tests",
+        "purpose": "Add CSV export to the collection page",
+        "revision": 2,
+        "participant_specs": [
+          {
+            "schema_id": "pm.collaboration.participant.application.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-crew-0001-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "schema_id": "pm.collaboration.participant.application.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-crew-0001-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          }
+        ],
+        "coordinator_spec": {
+          "kind": "parent_assistant"
+        },
+        "context_policy_ref": "ctx-policy:mentioned-files",
+        "tool_policy_ref": "tool-policy:parent",
+        "permission_ceiling_ref": "ceiling:parent-thread",
+        "concurrency": 2,
+        "time_limit_seconds": 1800,
+        "token_limit": null,
+        "cost_limit": 4.0,
+        "transcript_policy": "keep_full",
+        "output_policy": "summary_and_artifacts",
+        "stuck_policy": "ask_user",
+        "shared_notes_policy": "shared_space",
+        "assignment_strategy": "manager_directed",
+        "grill_me_enabled": false,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborativeDefinition",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationDefinitionApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.definition.application.v1",
+        "schema_version": "1.0.0",
+        "collaboration_id": "collab-crew-0001",
+        "kind": "crew",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "name": "Add CSV export with tests",
+        "purpose": "Add CSV export to the collection page",
+        "revision": 2,
+        "participant_specs": [
+          {
+            "schema_id": "pm.collaboration.participant.application.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-crew-0001-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "schema_id": "pm.collaboration.participant.application.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-crew-0001-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          }
+        ],
+        "coordinator_spec": {
+          "kind": "parent_assistant"
+        },
+        "context_policy_ref": "ctx-policy:mentioned-files",
+        "tool_policy_ref": "tool-policy:parent",
+        "permission_ceiling_ref": "ceiling:parent-thread",
+        "concurrency": 2,
+        "time_limit_seconds": 1800,
+        "token_limit": null,
+        "cost_limit": 4.0,
+        "transcript_policy": "keep_full",
+        "output_policy": "summary_and_artifacts",
+        "stuck_policy": "ask_user",
+        "shared_notes_policy": "shared_space",
+        "assignment_strategy": "manager_directed",
+        "grill_me_enabled": false,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborativeRun",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationRunApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.run.application.v1",
+        "schema_version": "1.0.0",
+        "collaboration_run_id": "crun-crew-0001",
+        "collaboration_id": "collab-crew-0001",
+        "definition_revision": 2,
+        "kind": "crew",
+        "parent_run_id": null,
+        "assistant_plan_id": null,
+        "plan_version": null,
+        "goal_id": null,
+        "state": "running",
+        "participant_run_refs": [
+          "prun-1",
+          "prun-2"
+        ],
+        "coordinator_run_ref": "prun-coord",
+        "transcript_ref": "ctx-crew-0001",
+        "artifact_refs": [],
+        "usage_group_ref": "usage-crew-0001",
+        "requested_effective_snapshot_ref": "snap-crew-0001",
+        "admission_source": "user",
+        "crew_auto_revision": null,
+        "stop_reason": null,
+        "created_at": "2026-09-27T12:00:00Z",
+        "completed_at": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborativeRun",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationRunApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.run.application.v1",
+        "schema_version": "1.0.0",
+        "collaboration_run_id": "crun-crew-0001",
+        "collaboration_id": "collab-crew-0001",
+        "definition_revision": 2,
+        "kind": "crew",
+        "parent_run_id": null,
+        "assistant_plan_id": null,
+        "plan_version": null,
+        "goal_id": null,
+        "state": "running",
+        "participant_run_refs": [
+          "prun-1",
+          "prun-2"
+        ],
+        "coordinator_run_ref": "prun-coord",
+        "transcript_ref": "ctx-crew-0001",
+        "artifact_refs": [],
+        "usage_group_ref": "usage-crew-0001",
+        "requested_effective_snapshot_ref": "snap-crew-0001",
+        "admission_source": "user",
+        "crew_auto_revision": null,
+        "stop_reason": null,
+        "created_at": "2026-09-27T12:00:00Z",
+        "completed_at": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationMessage",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationMessageApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.message.application.v1",
+        "schema_version": "1.0.0",
+        "collaboration_message_id": "cmsg-0001",
+        "collaboration_run_id": "crun-room-0001",
+        "sender_kind": "system",
+        "sender_id": "system",
+        "recipient_ids": [],
+        "message_type": "message",
+        "body_ref": "body-0001",
+        "reply_to": null,
+        "attachment_refs": [],
+        "created_at": "2026-09-27T12:00:00Z",
+        "sequence": 7,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationMessage",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationMessageApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.message.application.v1",
+        "schema_version": "1.0.0",
+        "collaboration_message_id": "cmsg-0001",
+        "collaboration_run_id": "crun-room-0001",
+        "sender_kind": "system",
+        "sender_id": "system",
+        "recipient_ids": [],
+        "message_type": "message",
+        "body_ref": "body-0001",
+        "reply_to": null,
+        "attachment_refs": [],
+        "created_at": "2026-09-27T12:00:00Z",
+        "sequence": 7,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-QuestionBank",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationQuestionBankApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.question_bank.application.v1",
+        "schema_version": "1.0.0",
+        "baseline_limit": 20,
+        "grill_extension": 25,
+        "effective_limit": 45,
+        "asked_question_ids": [
+          "q-1",
+          "q-2"
+        ],
+        "resolved_question_ids": [
+          "q-1"
+        ],
+        "duplicate_question_ids": [],
+        "research_routed_question_ids": [
+          "q-3"
+        ],
+        "collaboration_run_id": "crun-bs-0001",
+        "kind": "brainstorm",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-QuestionBank",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationQuestionBankApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.question_bank.application.v1",
+        "schema_version": "1.0.0",
+        "baseline_limit": 20,
+        "grill_extension": 25,
+        "effective_limit": 45,
+        "asked_question_ids": [
+          "q-1",
+          "q-2"
+        ],
+        "resolved_question_ids": [
+          "q-1"
+        ],
+        "duplicate_question_ids": [],
+        "research_routed_question_ids": [
+          "q-3"
+        ],
+        "collaboration_run_id": "crun-bs-0001",
+        "kind": "brainstorm",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CompletionProjection",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CompletionProjectionApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.completion_projection.application.v1",
+        "schema_version": "1.0.0",
+        "run_id": "crun-crew-0001",
+        "kind": "crew",
+        "required_slots": [
+          "s1",
+          "s2"
+        ],
+        "completed_slots": [
+          "s1",
+          "s2"
+        ],
+        "failed_slots": [],
+        "waived_slots": [],
+        "output_status": "finalised",
+        "quorum_status": "not_applicable",
+        "attention_reason": null,
+        "clean_completion": true,
+        "allowed_actions": [
+          {
+            "action_id": "export",
+            "command_id": "cmd.collaboration.export"
+          }
+        ],
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CompletionProjection",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CompletionProjectionApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.completion_projection.application.v1",
+        "schema_version": "1.0.0",
+        "run_id": "crun-crew-0001",
+        "kind": "crew",
+        "required_slots": [
+          "s1",
+          "s2"
+        ],
+        "completed_slots": [
+          "s1",
+          "s2"
+        ],
+        "failed_slots": [],
+        "waived_slots": [],
+        "output_status": "finalised",
+        "quorum_status": "not_applicable",
+        "attention_reason": null,
+        "clean_completion": true,
+        "allowed_actions": [
+          {
+            "action_id": "export",
+            "command_id": "cmd.collaboration.export"
+          }
+        ],
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ParticipantActivity",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/ParticipantActivityApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.participant_activity_projection.application.v1",
+        "schema_version": "1.0.0",
+        "participant_id": "prun-1",
+        "state": "using_tools",
+        "verb": "Running tests",
+        "detail_text": "cargo test export",
+        "since": "2026-09-27T12:00:00Z",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ParticipantActivity",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/ParticipantActivityApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.participant_activity_projection.application.v1",
+        "schema_version": "1.0.0",
+        "participant_id": "prun-1",
+        "state": "using_tools",
+        "verb": "Running tests",
+        "detail_text": "cargo test export",
+        "since": "2026-09-27T12:00:00Z",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationConfigureRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationConfigureRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_configure_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.configure",
+        "command_instance_id": "ci-0001",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_modal",
+        "correlation_id": "corr-0001",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0001",
+        "causation_id": null,
+        "kind": "crew",
+        "seed_definition_ref": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationConfigureRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationConfigureRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_configure_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.configure",
+        "command_instance_id": "ci-0001",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_modal",
+        "correlation_id": "corr-0001",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0001",
+        "causation_id": null,
+        "kind": "crew",
+        "seed_definition_ref": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationConfigureResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationConfigureResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_configure_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.configure",
+        "command_instance_id": "ci-0001",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0001"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "collaboration_id": "collab-crew-0001",
+        "definition_revision": 2,
+        "start_blockers": [],
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationConfigureResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationConfigureResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_configure_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.configure",
+        "command_instance_id": "ci-0001",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0001"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "collaboration_id": "collab-crew-0001",
+        "definition_revision": 2,
+        "start_blockers": [],
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationStartRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationStartRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_start_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.start",
+        "command_instance_id": "ci-0003",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_modal",
+        "correlation_id": "corr-0003",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0003",
+        "causation_id": null,
+        "kind": "crew",
+        "collaboration_id": "collab-crew-0001",
+        "definition_revision": 2,
+        "admission_source": "user",
+        "crew_auto_revision": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationStartRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationStartRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_start_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.start",
+        "command_instance_id": "ci-0003",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_modal",
+        "correlation_id": "corr-0003",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0003",
+        "causation_id": null,
+        "kind": "crew",
+        "collaboration_id": "collab-crew-0001",
+        "definition_revision": 2,
+        "admission_source": "user",
+        "crew_auto_revision": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationStartResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationStartResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_start_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.start",
+        "command_instance_id": "ci-0003",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0003"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "state": "running",
+        "participant_slot_ids": [
+          "collab-crew-0001-slot-1",
+          "collab-crew-0001-slot-2"
+        ],
+        "requested_effective_snapshot_ref": "snap-crew-0001",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationStartResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationStartResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_start_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.start",
+        "command_instance_id": "ci-0003",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0003"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "state": "running",
+        "participant_slot_ids": [
+          "collab-crew-0001-slot-1",
+          "collab-crew-0001-slot-2"
+        ],
+        "requested_effective_snapshot_ref": "snap-crew-0001",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationPauseRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationPauseRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_pause_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.pause",
+        "command_instance_id": "ci-0006",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0006",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0006",
+        "causation_id": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationPauseRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationPauseRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_pause_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.pause",
+        "command_instance_id": "ci-0006",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0006",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0006",
+        "causation_id": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationPauseResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationPauseResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_pause_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.pause",
+        "command_instance_id": "ci-0006",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0006"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "run_state_after": "paused",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationPauseResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationPauseResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_pause_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.pause",
+        "command_instance_id": "ci-0006",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0006"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "run_state_after": "paused",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationResumeRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationResumeRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_resume_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.resume",
+        "command_instance_id": "ci-0007",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0007",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0007",
+        "causation_id": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationResumeRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationResumeRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_resume_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.resume",
+        "command_instance_id": "ci-0007",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0007",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0007",
+        "causation_id": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationResumeResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationResumeResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_resume_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.resume",
+        "command_instance_id": "ci-0007",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0007"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "run_state_after": "waiting",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationResumeResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationResumeResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_resume_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.resume",
+        "command_instance_id": "ci-0007",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0007"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "run_state_after": "waiting",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationCancelRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationCancelRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_cancel_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.cancel",
+        "command_instance_id": "ci-0008",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0008",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0008",
+        "causation_id": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationCancelRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationCancelRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_cancel_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.cancel",
+        "command_instance_id": "ci-0008",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0008",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0008",
+        "causation_id": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationCancelResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationCancelResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_cancel_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.cancel",
+        "command_instance_id": "ci-0008",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0008"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "run_state_after": "cancelled",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationCancelResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationCancelResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_cancel_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.cancel",
+        "command_instance_id": "ci-0008",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0008"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "run_state_after": "cancelled",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationMessageRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationMessageRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_message_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.message",
+        "command_instance_id": "ci-0009",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "composer",
+        "correlation_id": "corr-0009",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0009",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "recipient_ids": [],
+        "body_ref": "body-0100",
+        "reply_to": null,
+        "attachment_refs": [],
+        "destination_state_generation": 12,
+        "delivery_mode": "steer",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationMessageRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationMessageRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_message_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.message",
+        "command_instance_id": "ci-0009",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "composer",
+        "correlation_id": "corr-0009",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0009",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "recipient_ids": [],
+        "body_ref": "body-0100",
+        "reply_to": null,
+        "attachment_refs": [],
+        "destination_state_generation": 12,
+        "delivery_mode": "steer",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CollaborationMessageResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationMessageResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_message_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.message",
+        "command_instance_id": "ci-0009",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0009"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "collaboration_message_id": "cmsg-0100",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CollaborationMessageResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationMessageResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.collaboration_message_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.message",
+        "command_instance_id": "ci-0009",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0009"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "collaboration_message_id": "cmsg-0100",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CrewAutoSetRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CrewAutoSetRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.crew_auto_set_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.set",
+        "command_instance_id": "ci-0034",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "crew_auto_modal",
+        "correlation_id": "corr-0034",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0034",
+        "causation_id": null,
+        "scope": "project",
+        "enabled": true,
+        "expected_crew_auto_revision": 3,
+        "rules": {
+          "complexity_threshold": "high",
+          "min_parallel_parts": 2,
+          "independent_subsystems": true
+        },
+        "team": [
+          {
+            "schema_id": "pm.collaboration.participant.application.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "auto-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "schema_id": "pm.collaboration.participant.application.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "auto-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          }
+        ],
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CrewAutoSetRequest",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CrewAutoSetRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.crew_auto_set_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.set",
+        "command_instance_id": "ci-0034",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "actor_identity": "user:jared",
+        "source_surface": "crew_auto_modal",
+        "correlation_id": "corr-0034",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-0034",
+        "causation_id": null,
+        "scope": "project",
+        "enabled": true,
+        "expected_crew_auto_revision": 3,
+        "rules": {
+          "complexity_threshold": "high",
+          "min_parallel_parts": 2,
+          "independent_subsystems": true
+        },
+        "team": [
+          {
+            "schema_id": "pm.collaboration.participant.application.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "auto-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          },
+          {
+            "schema_id": "pm.collaboration.participant.application.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "auto-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none",
+            "application_context": {
+              "scope": {
+                "schema_id": "pm.workflow_scope.v2",
+                "schema_version": "2.0.0",
+                "scope_kind": "application",
+                "scope_partition": "app",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "server_id": "server-a"
+              },
+              "storage_instance_id": "storage-a",
+              "thread_id": "thread-a",
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "roots": [],
+              "command_instance_id": "command-a",
+              "idempotency_key": "idempotency-a",
+              "actor_ref": "actor-a",
+              "permission_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "writer_evidence": {
+                "schema_id": "pm.owner.evidence.v1",
+                "schema_version": "1.0.0",
+                "owner_ref": "owner-a",
+                "source_ref": "ref:source-a",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "revision": 1,
+                "generation": 1
+              },
+              "scope_stop_epoch": 1,
+              "task_stop_epoch": 1,
+              "expected_generation": 1,
+              "return_context_ref": "ref:return-a"
+            }
+          }
+        ],
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-CrewAutoSetResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CrewAutoSetResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.crew_auto_set_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.set",
+        "command_instance_id": "ci-0034",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0034"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "scope": "project",
+        "enabled_after": true,
+        "crew_auto_revision": 4,
+        "settings_transaction_ref": "settings-tx-0001",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-CrewAutoSetResult",
+      "schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/CrewAutoSetResultApplicationV1",
+      "record": {
+        "schema_id": "pm.collaboration.crew_auto_set_result.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.crew_auto.set",
+        "command_instance_id": "ci-0034",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-0034"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "scope": "project",
+        "enabled_after": true,
+        "crew_auto_revision": 4,
+        "settings_transaction_ref": "settings-tx-0001",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
     }
   ]
 }

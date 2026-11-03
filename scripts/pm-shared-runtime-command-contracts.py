@@ -38,6 +38,15 @@ def read_json(path: Path) -> Any:
 
 
 def resolve_definition(ref: str, schema: dict[str, Any]) -> str:
+    app_prefix = 'Plans/application_workflow_contracts.schema.json#/$defs/'
+    app_names = {'ThreadRequestFacadeRequestV2', 'ThreadRequestFacadeResultV2',
+                 'ThreadSpawnFacadeRequestV2', 'ThreadSpawnFacadeResultV2'}
+    if ref.startswith(app_prefix) and ref[len(app_prefix):] in app_names:
+        app_schema = read_json(PLANS / 'application_workflow_contracts.schema.json')
+        name = ref[len(app_prefix):]
+        if name not in app_schema['$defs']:
+            raise ValueError('missing selected app facade schema: ' + name)
+        return name
     prefix = "Plans/shared_runtime_command_contracts.schema.json#/$defs/"
     if not ref.startswith(prefix):
         raise ValueError(f"unsupported command schema ref {ref}")

@@ -157,8 +157,8 @@ class ProjectUnarchiveTests(unittest.TestCase):
         key, row = matches[0]
         self.assertEqual(key, "catalog.project_unarchive")
         self.assertEqual(row["handler_location"], "handlers::project::unarchive")
-        self.assertEqual(row["request_schema_ref"], "Plans/project_system_contracts.schema.json#/$defs/project_action_request")
-        self.assertEqual(row["result_schema_ref"], "Plans/project_system_contracts.schema.json#/$defs/project_action_result")
+        self.assertEqual(row["request_schema_ref"], "Plans/project_system_contracts.schema.json#/$defs/project_action_request_v2")
+        self.assertEqual(row["result_schema_ref"], "Plans/project_system_contracts.schema.json#/$defs/project_action_result_v2")
         self.assertEqual(row["expected_event_types"], [])
         self.assertNotIn(command, load("Plans/Wiring_Matrix.production.exclusions.json")["excluded_tokens"])
         touch = load("Plans/touch_closure.json")

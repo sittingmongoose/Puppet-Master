@@ -440,6 +440,9 @@
           "type": "null"
         }
       }
+    },
+    "ApplicationCoordinationScopeV2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
     }
   }
 }

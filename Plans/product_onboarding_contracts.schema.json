@@ -10064,6 +10064,288 @@
           }
         }
       ]
+    },
+    "onboarding_setup_plan_v3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "setup_consumer",
+        "session_id",
+        "draft_id",
+        "revision",
+        "source_plan_ref",
+        "source_plan_sha256",
+        "way",
+        "work_server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "project_id",
+        "projects_parent_setting_id",
+        "source_inspection_ref",
+        "acquisition_provenance",
+        "backend",
+        "create_options",
+        "starter",
+        "backup_destination_ref",
+        "backup_transport_ref",
+        "backup_policy_ref",
+        "backup_inclusion_ref",
+        "settings_preview_ref",
+        "settings_copy_basis",
+        "account_resolution_refs",
+        "app_auth_binding_ref",
+        "current_answers_sha256",
+        "valid_history_ref",
+        "review_sha256",
+        "setup_binding",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.onboarding_setup_plan.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "setup_consumer": {
+          "enum": [
+            "onboarding",
+            "new_project",
+            "chat_conversion"
+          ]
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "draft_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_plan_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_plan_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "way": {
+          "enum": [
+            "new",
+            "folder",
+            "online",
+            "device",
+            "restore",
+            "from_chat",
+            "later_no_project"
+          ]
+        },
+        "work_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projects_parent_setting_id": {
+          "const": "code.execution.projects-folder"
+        },
+        "source_inspection_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acquisition_provenance": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/acquisition_provenance_v1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "backend": {
+          "enum": [
+            "git",
+            "jujutsu",
+            null
+          ]
+        },
+        "create_options": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/create_options_v2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "starter": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/starter_file_set_v1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "backup_destination_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "backup_transport_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "backup_policy_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "backup_inclusion_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settings_preview_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settings_copy_basis": {
+          "enum": [
+            "own_values",
+            "effective_values",
+            null
+          ]
+        },
+        "account_resolution_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "app_auth_binding_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "current_answers_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "valid_history_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "review_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "setup_binding": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/project_setup_binding_v2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
     }
   },
   "x-product-rulings": {

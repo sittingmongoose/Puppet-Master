@@ -366,6 +366,16 @@
         },
         "retention_policy_ref": {
           "$ref": "#/$defs/retention_policy_ref"
+        },
+        "payload_versions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json#/$defs/payload_version_selector"
+          },
+          "minItems": 1
+        },
+        "payload_selection_policy": {
+          "const": "exact_scope_and_schema_id_no_fallback"
         }
       },
       "oneOf": [
@@ -446,6 +456,66 @@
         "policy_version": {
           "type": "string",
           "pattern": "^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$"
+        }
+      }
+    },
+    "payload_version_selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope_kind",
+        "payload_schema_id",
+        "payload_schema_ref",
+        "source_graph_ref",
+        "producer_admission",
+        "append_owner_ref",
+        "read_owner_ref",
+        "backup_owner_ref",
+        "retention_policy_ref"
+      ],
+      "properties": {
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "payload_schema_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "payload_schema_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json#/$defs/payloadSchemaRef"
+        },
+        "source_graph_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "producer_admission": {
+          "enum": [
+            "existing_project_policy",
+            "requires_owner_adoption"
+          ]
+        },
+        "append_owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "read_owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "backup_owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "retention_policy_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json#/$defs/retention_policy_ref"
         }
       }
     }

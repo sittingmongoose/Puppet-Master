@@ -6770,52 +6770,157 @@
         "runtime_claim"
       ],
       "properties": {
-        "record_type": {"const": "server_cross_owner_continuity_projection"},
-        "schema_id": {"const": "pm.server_cross_owner_continuity_projection.v1"},
-        "plan_unit_ref": {"const": "Plans/Server_System.md#SRV-013"},
-        "server_id": {"$ref": "#/$defs/server_id"},
+        "record_type": {
+          "const": "server_cross_owner_continuity_projection"
+        },
+        "schema_id": {
+          "const": "pm.server_cross_owner_continuity_projection.v1"
+        },
+        "plan_unit_ref": {
+          "const": "Plans/Server_System.md#SRV-013"
+        },
+        "server_id": {
+          "$ref": "#/$defs/server_id"
+        },
         "backup_owner_refs": {
           "type": "array",
           "prefixItems": [
-            {"const": "Plans/Backup_Restore_System.md#BRS-012"},
-            {"const": "Plans/Backup_Restore_System.md#BRS-015"},
-            {"const": "Plans/Backup_Restore_System.md#BRS-016"}
+            {
+              "const": "Plans/Backup_Restore_System.md#BRS-012"
+            },
+            {
+              "const": "Plans/Backup_Restore_System.md#BRS-015"
+            },
+            {
+              "const": "Plans/Backup_Restore_System.md#BRS-016"
+            }
           ],
           "items": false,
           "minItems": 3,
           "maxItems": 3
         },
-        "remote_access_owner_ref": {"const": "Plans/Remote_Access_System.md#RAS-015"},
+        "remote_access_owner_ref": {
+          "const": "Plans/Remote_Access_System.md#RAS-015"
+        },
         "schedule_occurrence": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["occurrence_id", "durable_outbox_ref", "writer_authority", "survives_client_exit", "restart_safe", "project_move_policy"],
+          "required": [
+            "occurrence_id",
+            "durable_outbox_ref",
+            "writer_authority",
+            "survives_client_exit",
+            "restart_safe",
+            "project_move_policy"
+          ],
           "properties": {
-            "occurrence_id": {"$ref": "#/$defs/stable_id"},
-            "durable_outbox_ref": {"$ref": "#/$defs/non_secret_ref"},
-            "writer_authority": {"const": "one_server_owned_writer"},
-            "survives_client_exit": {"const": true},
-            "restart_safe": {"const": true},
-            "project_move_policy": {"const": "owner_preflight_rebind_then_one_writer_transfer"}
+            "occurrence_id": {
+              "$ref": "#/$defs/stable_id"
+            },
+            "durable_outbox_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "writer_authority": {
+              "const": "one_server_owned_writer"
+            },
+            "survives_client_exit": {
+              "const": true
+            },
+            "restart_safe": {
+              "const": true
+            },
+            "project_move_policy": {
+              "const": "owner_preflight_rebind_then_one_writer_transfer"
+            }
           }
         },
         "bootstrap_recovery": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["safe_local_claim_first", "recovery_safe", "schedules_paused", "execution_paused", "remote_exposure_paused", "machine_relationship", "identity_policy", "collision_fence"],
+          "required": [
+            "safe_local_claim_first",
+            "recovery_safe",
+            "schedules_paused",
+            "execution_paused",
+            "remote_exposure_paused",
+            "machine_relationship",
+            "identity_policy",
+            "collision_fence"
+          ],
           "properties": {
-            "safe_local_claim_first": {"const": true},
-            "recovery_safe": {"type": "boolean"},
-            "schedules_paused": {"const": true},
-            "execution_paused": {"const": true},
-            "remote_exposure_paused": {"const": true},
-            "machine_relationship": {"enum": ["foreign_machine", "verified_same_host"]},
-            "identity_policy": {"enum": ["new_server_and_connector_identity_repair_clients", "recover_existing_identity"]},
-            "collision_fence": {"enum": ["new_identity_no_takeover", "exclusive_same_host_takeover"]}
+            "safe_local_claim_first": {
+              "const": true
+            },
+            "recovery_safe": {
+              "type": "boolean"
+            },
+            "schedules_paused": {
+              "const": true
+            },
+            "execution_paused": {
+              "const": true
+            },
+            "remote_exposure_paused": {
+              "const": true
+            },
+            "machine_relationship": {
+              "enum": [
+                "foreign_machine",
+                "verified_same_host"
+              ]
+            },
+            "identity_policy": {
+              "enum": [
+                "new_server_and_connector_identity_repair_clients",
+                "recover_existing_identity"
+              ]
+            },
+            "collision_fence": {
+              "enum": [
+                "new_identity_no_takeover",
+                "exclusive_same_host_takeover"
+              ]
+            }
           },
           "allOf": [
-            {"if": {"properties": {"machine_relationship": {"const": "foreign_machine"}}}, "then": {"properties": {"identity_policy": {"const": "new_server_and_connector_identity_repair_clients"}, "collision_fence": {"const": "new_identity_no_takeover"}}}},
-            {"if": {"properties": {"machine_relationship": {"const": "verified_same_host"}}}, "then": {"properties": {"identity_policy": {"const": "recover_existing_identity"}, "collision_fence": {"const": "exclusive_same_host_takeover"}}}}
+            {
+              "if": {
+                "properties": {
+                  "machine_relationship": {
+                    "const": "foreign_machine"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "identity_policy": {
+                    "const": "new_server_and_connector_identity_repair_clients"
+                  },
+                  "collision_fence": {
+                    "const": "new_identity_no_takeover"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "machine_relationship": {
+                    "const": "verified_same_host"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "identity_policy": {
+                    "const": "recover_existing_identity"
+                  },
+                  "collision_fence": {
+                    "const": "exclusive_same_host_takeover"
+                  }
+                }
+              }
+            }
           ]
         },
         "endpoint_provenance": {
@@ -6824,22 +6929,2296 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["endpoint_id", "route_kind", "observed_server_id", "identity_verified", "pairing_verified", "dedupe_basis", "connector_is_server_identity"],
+            "required": [
+              "endpoint_id",
+              "route_kind",
+              "observed_server_id",
+              "identity_verified",
+              "pairing_verified",
+              "dedupe_basis",
+              "connector_is_server_identity"
+            ],
             "properties": {
-              "endpoint_id": {"$ref": "#/$defs/server_endpoint_id"},
-              "route_kind": {"enum": ["connector_private", "hosted_funnel", "external_host_tailscale"]},
-              "observed_server_id": {"$ref": "#/$defs/server_id"},
-              "identity_verified": {"type": "boolean"},
-              "pairing_verified": {"type": "boolean"},
-              "dedupe_basis": {"const": "cryptographically_verified_server_id_only"},
-              "connector_is_server_identity": {"const": false}
+              "endpoint_id": {
+                "$ref": "#/$defs/server_endpoint_id"
+              },
+              "route_kind": {
+                "enum": [
+                  "connector_private",
+                  "hosted_funnel",
+                  "external_host_tailscale"
+                ]
+              },
+              "observed_server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "identity_verified": {
+                "type": "boolean"
+              },
+              "pairing_verified": {
+                "type": "boolean"
+              },
+              "dedupe_basis": {
+                "const": "cryptographically_verified_server_id_only"
+              },
+              "connector_is_server_identity": {
+                "const": false
+              }
             }
           }
         },
-        "command_availability": {"const": "handler_unavailable"},
-        "expected_event_types": {"type": "array", "maxItems": 0},
-        "runtime_claim": {"const": false}
+        "command_availability": {
+          "const": "handler_unavailable"
+        },
+        "expected_event_types": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "runtime_claim": {
+          "const": false
+        }
       }
+    },
+    "server_peer_trust_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "trust_id",
+        "owner_person_id",
+        "source_server_id",
+        "destination_server_id",
+        "scopes",
+        "generation",
+        "protected_pairing_evidence",
+        "expires_at_utc",
+        "revoked_at_utc"
+      ],
+      "properties": {
+        "trust_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_person_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "const": "settings.follow"
+          },
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "protected_pairing_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "revoked_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "settings_home_move_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation",
+        "source_server_id",
+        "destination_server_id",
+        "expected_home_generation",
+        "source_catalog_evidence",
+        "destination_catalog_evidence",
+        "trust_evidence",
+        "copy_sha256",
+        "history_sha256",
+        "old_writer_fence_evidence",
+        "preview_sha256",
+        "idempotency_key",
+        "person_evidence",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.server.settings_home.move"
+        },
+        "operation": {
+          "enum": [
+            "preview",
+            "apply"
+          ]
+        },
+        "source_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_home_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_catalog_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "destination_catalog_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "copy_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "history_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "old_writer_fence_evidence": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preview_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "person_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "settings_home_move_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "status",
+        "home_server_id",
+        "home_generation",
+        "copy_verification_evidence",
+        "writer_switch_evidence",
+        "join_undo_deadline_utc",
+        "return_context_ref"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "previewed",
+            "moved",
+            "refused",
+            "recovery_required"
+          ]
+        },
+        "home_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "home_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "copy_verification_evidence": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "writer_switch_evidence": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "join_undo_deadline_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "settings_peer_trust_command_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation",
+        "owner_person_id",
+        "source_server_id",
+        "destination_server_id",
+        "expected_generation",
+        "pairing_ref",
+        "protected_person_evidence",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.server.settings_peer_trust"
+        },
+        "operation": {
+          "enum": [
+            "start",
+            "approve",
+            "reject",
+            "cancel",
+            "revoke"
+          ]
+        },
+        "owner_person_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pairing_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "protected_person_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "settings_peer_trust_command_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "status",
+        "trust_record",
+        "receipt_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "started",
+            "approved",
+            "rejected",
+            "cancelled",
+            "revoked",
+            "refused"
+          ]
+        },
+        "trust_record": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/server_peer_trust_record"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "client_record_local_server_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "client_record_ref",
+        "client_id",
+        "local_server_id",
+        "protected_local_claim_evidence",
+        "client_generation"
+      ],
+      "properties": {
+        "client_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "client_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "local_server_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "protected_local_claim_evidence": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "SshReturnContextV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "client_id",
+        "invocation_token",
+        "caller_scope",
+        "context_revision",
+        "route",
+        "focus",
+        "continuation_generation"
+      ],
+      "properties": {
+        "client_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "invocation_token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "caller_scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "context_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "route": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "focus": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "continuation_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "SshExpectedCurrentnessV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_generation",
+        "topology_generation",
+        "trust_revision",
+        "auth_session_generation",
+        "permission_generation",
+        "stop_epoch",
+        "public_key_revision",
+        "authorized_keys_revision"
+      ],
+      "properties": {
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "trust_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "auth_session_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "public_key_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authorized_keys_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "SshTargetSourceV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_ref",
+        "source_kind",
+        "source_revision",
+        "source_sha256",
+        "server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "remote_host",
+        "remote_port",
+        "remote_account_ref",
+        "transport",
+        "target_generation",
+        "topology_generation",
+        "auth_session_generation",
+        "permission_generation",
+        "stop_epoch"
+      ],
+      "properties": {
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_kind": {
+          "enum": [
+            "connection",
+            "connection_draft"
+          ]
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "remote_host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "remote_port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "remote_account_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "transport": {
+          "const": "ssh"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "auth_session_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "SshHostKeyObservationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observation_ref",
+        "target_ref",
+        "target_generation",
+        "remote_host",
+        "remote_port",
+        "public_host_key_ref",
+        "fingerprint",
+        "algorithm",
+        "observed_at_utc",
+        "expires_at_utc",
+        "trust_revision",
+        "prior_trust_ref",
+        "prior_fingerprint",
+        "absence_proof_ref"
+      ],
+      "properties": {
+        "observation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "remote_host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "remote_port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "public_host_key_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "fingerprint": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "algorithm": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "observed_at_utc": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "trust_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prior_trust_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prior_fingerprint": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "absence_proof_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "SshPublicKeySourceV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "public_key_ref",
+        "public_key_id",
+        "revision",
+        "fingerprint",
+        "public_entry_ref",
+        "algorithm",
+        "strength_bits",
+        "key_policy_ref",
+        "private_key_owner_ref"
+      ],
+      "properties": {
+        "public_key_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "public_key_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fingerprint": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "public_entry_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "algorithm": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "strength_bits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "key_policy_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "private_key_owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "SshAuthorizedKeysObservationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observation_ref",
+        "target_ref",
+        "remote_account_ref",
+        "remote_home_ref",
+        "file_identity_ref",
+        "file_revision",
+        "content_sha256",
+        "absence_proof_ref",
+        "host_trust_ref",
+        "auth_session_ref",
+        "permissions_mode",
+        "file_kind",
+        "atomic_compare_write_capability_ref",
+        "existing_entry_fingerprints",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "observation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "remote_account_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "remote_home_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "file_identity_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "file_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "content_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "absence_proof_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "host_trust_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "auth_session_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permissions_mode": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4095
+        },
+        "file_kind": {
+          "enum": [
+            "regular",
+            "absent",
+            "symlink",
+            "other"
+          ]
+        },
+        "atomic_compare_write_capability_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "existing_entry_fingerprints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "SshProtectedPreviewV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preview_ref",
+        "operation_id",
+        "command_id",
+        "target_ref",
+        "intent_sha256",
+        "expected",
+        "host_key_observation_ref",
+        "public_key_ref",
+        "authorized_keys_observation_ref",
+        "expires_at_utc",
+        "return_context"
+      ],
+      "properties": {
+        "preview_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_id": {
+          "enum": [
+            "cmd.server.ssh.trust",
+            "cmd.server.ssh.public_key.install"
+          ]
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "intent_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected": {
+          "$ref": "#/$defs/SshExpectedCurrentnessV1"
+        },
+        "host_key_observation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "public_key_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authorized_keys_observation_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context": {
+          "$ref": "#/$defs/SshReturnContextV1"
+        }
+      }
+    },
+    "SshProtectedHumanDecisionV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "human_decision_ref",
+        "person_id",
+        "client_id",
+        "actor",
+        "operation_id",
+        "preview_ref",
+        "intent_sha256",
+        "decision",
+        "session_ref",
+        "session_generation",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "human_decision_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "person_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "client_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor": {
+          "enum": [
+            "human_gui",
+            "human_palette"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "intent_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "decision": {
+          "const": "approve"
+        },
+        "session_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "session_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "SshOwnerReceiptV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_ref",
+        "operation_id",
+        "idempotency_key",
+        "target_ref",
+        "preview_ref",
+        "intent_sha256",
+        "actor",
+        "human_decision_ref",
+        "host_trust_ref",
+        "public_key_ref",
+        "before_source_ref",
+        "after_source_ref",
+        "before_sha256",
+        "after_sha256",
+        "before_revision",
+        "after_revision",
+        "settled_effects",
+        "remaining_effects",
+        "readback_proof_ref",
+        "outcome_at_utc",
+        "original_result_replay_ref"
+      ],
+      "properties": {
+        "receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "intent_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "actor": {
+          "enum": [
+            "human_gui",
+            "human_palette"
+          ]
+        },
+        "human_decision_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "host_trust_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "public_key_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "before_source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "after_source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "before_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "before_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "settled_effects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "remaining_effects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "readback_proof_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "outcome_at_utc": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "original_result_replay_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "SshHostTrustCommandRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "phase",
+        "operation_id",
+        "command_instance_id",
+        "idempotency_key",
+        "actor",
+        "scope",
+        "target_ref",
+        "expected",
+        "permission_snapshot_ref",
+        "preview_ref",
+        "human_decision_ref",
+        "protected_input_ref",
+        "return_context",
+        "trust_action",
+        "host_key_observation_ref",
+        "expected_trust_revision",
+        "trust_absence_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.server.ssh_host_trust.request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "const": "cmd.server.ssh.trust"
+        },
+        "phase": {
+          "enum": [
+            "preview",
+            "apply"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor": {
+          "enum": [
+            "human_gui",
+            "human_palette"
+          ]
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected": {
+          "$ref": "#/$defs/SshExpectedCurrentnessV1"
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "human_decision_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "protected_input_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "$ref": "#/$defs/SshReturnContextV1"
+        },
+        "trust_action": {
+          "enum": [
+            "add",
+            "replace"
+          ]
+        },
+        "host_key_observation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_trust_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "trust_absence_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "preview"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "preview_ref": {
+                "type": "null"
+              },
+              "human_decision_ref": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "preview_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "human_decision_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SshHostTrustCommandResultV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "phase",
+        "operation_id",
+        "status",
+        "target_ref",
+        "preview",
+        "receipt",
+        "error",
+        "work_ref",
+        "return_context",
+        "expected_event_types"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.server.ssh_host_trust.result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "const": "cmd.server.ssh.trust"
+        },
+        "phase": {
+          "enum": [
+            "preview",
+            "apply"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "preview_ready",
+            "applied",
+            "unchanged",
+            "rejected",
+            "failed",
+            "effect_unknown"
+          ]
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SshProtectedPreviewV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SshOwnerReceiptV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "code",
+                "reason",
+                "settled_fact_refs"
+              ],
+              "properties": {
+                "code": {
+                  "enum": [
+                    "handler_unavailable",
+                    "human_action_required",
+                    "initiating_client_unavailable",
+                    "caller_unavailable",
+                    "permission_denied",
+                    "stale_target",
+                    "stale_preview",
+                    "preview_expired",
+                    "ssh_host_key_changed",
+                    "host_trust_required",
+                    "stale_trust",
+                    "authentication_required",
+                    "protected_input_expired",
+                    "unsupported_ssh_target",
+                    "unsupported_key",
+                    "weak_key",
+                    "key_unavailable",
+                    "remote_account_changed",
+                    "authorized_keys_changed",
+                    "unsafe_remote_target",
+                    "unsupported_remote_atomicity",
+                    "remote_effect_unknown",
+                    "idempotency_conflict",
+                    "recovery_required"
+                  ]
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "settled_fact_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "work_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "$ref": "#/$defs/SshReturnContextV1"
+        },
+        "expected_event_types": {
+          "type": "array",
+          "maxItems": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "preview_ready"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "phase": {
+                "const": "preview"
+              },
+              "preview": {
+                "$ref": "#/$defs/SshProtectedPreviewV1"
+              },
+              "receipt": {
+                "type": "null"
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "applied",
+                  "unchanged"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "phase": {
+                "const": "apply"
+              },
+              "receipt": {
+                "$ref": "#/$defs/SshOwnerReceiptV1"
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "rejected",
+                  "failed"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "code",
+                  "reason",
+                  "settled_fact_refs"
+                ],
+                "properties": {
+                  "code": {
+                    "enum": [
+                      "handler_unavailable",
+                      "human_action_required",
+                      "initiating_client_unavailable",
+                      "caller_unavailable",
+                      "permission_denied",
+                      "stale_target",
+                      "stale_preview",
+                      "preview_expired",
+                      "ssh_host_key_changed",
+                      "host_trust_required",
+                      "stale_trust",
+                      "authentication_required",
+                      "protected_input_expired",
+                      "unsupported_ssh_target",
+                      "unsupported_key",
+                      "weak_key",
+                      "key_unavailable",
+                      "remote_account_changed",
+                      "authorized_keys_changed",
+                      "unsafe_remote_target",
+                      "unsupported_remote_atomicity",
+                      "remote_effect_unknown",
+                      "idempotency_conflict",
+                      "recovery_required"
+                    ]
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "settled_fact_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "effect_unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "phase": {
+                "const": "apply"
+              },
+              "receipt": {
+                "type": "null"
+              },
+              "work_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "error": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "code",
+                  "reason",
+                  "settled_fact_refs"
+                ],
+                "properties": {
+                  "code": {
+                    "const": "remote_effect_unknown"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "settled_fact_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SshPublicKeyInstallCommandRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "phase",
+        "operation_id",
+        "command_instance_id",
+        "idempotency_key",
+        "actor",
+        "scope",
+        "target_ref",
+        "expected",
+        "permission_snapshot_ref",
+        "preview_ref",
+        "human_decision_ref",
+        "protected_input_ref",
+        "return_context",
+        "public_key_ref",
+        "authorized_keys_observation_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.server.ssh_public_key_install.request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "const": "cmd.server.ssh.public_key.install"
+        },
+        "phase": {
+          "enum": [
+            "preview",
+            "apply"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor": {
+          "enum": [
+            "human_gui",
+            "human_palette"
+          ]
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected": {
+          "$ref": "#/$defs/SshExpectedCurrentnessV1"
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "human_decision_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "protected_input_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "$ref": "#/$defs/SshReturnContextV1"
+        },
+        "public_key_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "authorized_keys_observation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "preview"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "preview_ref": {
+                "type": "null"
+              },
+              "human_decision_ref": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "preview_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "human_decision_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SshPublicKeyInstallCommandResultV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "phase",
+        "operation_id",
+        "status",
+        "target_ref",
+        "preview",
+        "receipt",
+        "error",
+        "work_ref",
+        "return_context",
+        "expected_event_types"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.server.ssh_public_key_install.result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "const": "cmd.server.ssh.public_key.install"
+        },
+        "phase": {
+          "enum": [
+            "preview",
+            "apply"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "preview_ready",
+            "applied",
+            "unchanged",
+            "rejected",
+            "failed",
+            "effect_unknown"
+          ]
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SshProtectedPreviewV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SshOwnerReceiptV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "code",
+                "reason",
+                "settled_fact_refs"
+              ],
+              "properties": {
+                "code": {
+                  "enum": [
+                    "handler_unavailable",
+                    "human_action_required",
+                    "initiating_client_unavailable",
+                    "caller_unavailable",
+                    "permission_denied",
+                    "stale_target",
+                    "stale_preview",
+                    "preview_expired",
+                    "ssh_host_key_changed",
+                    "host_trust_required",
+                    "stale_trust",
+                    "authentication_required",
+                    "protected_input_expired",
+                    "unsupported_ssh_target",
+                    "unsupported_key",
+                    "weak_key",
+                    "key_unavailable",
+                    "remote_account_changed",
+                    "authorized_keys_changed",
+                    "unsafe_remote_target",
+                    "unsupported_remote_atomicity",
+                    "remote_effect_unknown",
+                    "idempotency_conflict",
+                    "recovery_required"
+                  ]
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "settled_fact_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "work_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "$ref": "#/$defs/SshReturnContextV1"
+        },
+        "expected_event_types": {
+          "type": "array",
+          "maxItems": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "preview_ready"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "phase": {
+                "const": "preview"
+              },
+              "preview": {
+                "$ref": "#/$defs/SshProtectedPreviewV1"
+              },
+              "receipt": {
+                "type": "null"
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "applied",
+                  "unchanged"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "phase": {
+                "const": "apply"
+              },
+              "receipt": {
+                "$ref": "#/$defs/SshOwnerReceiptV1"
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "rejected",
+                  "failed"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "code",
+                  "reason",
+                  "settled_fact_refs"
+                ],
+                "properties": {
+                  "code": {
+                    "enum": [
+                      "handler_unavailable",
+                      "human_action_required",
+                      "initiating_client_unavailable",
+                      "caller_unavailable",
+                      "permission_denied",
+                      "stale_target",
+                      "stale_preview",
+                      "preview_expired",
+                      "ssh_host_key_changed",
+                      "host_trust_required",
+                      "stale_trust",
+                      "authentication_required",
+                      "protected_input_expired",
+                      "unsupported_ssh_target",
+                      "unsupported_key",
+                      "weak_key",
+                      "key_unavailable",
+                      "remote_account_changed",
+                      "authorized_keys_changed",
+                      "unsafe_remote_target",
+                      "unsupported_remote_atomicity",
+                      "remote_effect_unknown",
+                      "idempotency_conflict",
+                      "recovery_required"
+                    ]
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "settled_fact_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "effect_unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "phase": {
+                "const": "apply"
+              },
+              "receipt": {
+                "type": "null"
+              },
+              "work_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "error": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "code",
+                  "reason",
+                  "settled_fact_refs"
+                ],
+                "properties": {
+                  "code": {
+                    "const": "remote_effect_unknown"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "settled_fact_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "x-contract-status": "specified_static_only",
@@ -7622,5 +10001,13 @@
     "public_unclaimed_setup": false,
     "new_command_or_payload_field": false,
     "claim_bootstrap_restore_separate": true
+  },
+  "x-projects-refresh-ssh-adoption": {
+    "owner_ref": "Plans/Server_System.md#SRV-018",
+    "disposition": "specified_unimplemented",
+    "original_source_authentication": "not_run",
+    "secure_input_custody": "not_run",
+    "native_remote_cas_readback": "not_run",
+    "expected_event_types": []
   }
 }

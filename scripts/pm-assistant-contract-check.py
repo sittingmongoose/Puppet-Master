@@ -316,7 +316,13 @@ def check(root):
     if settings['safety.approvals.bsd-catch-up-seconds']['default']!='30 seconds':gap('catchup_default_drift','BSD','Adjudicate current owner default')
     if settings['safety.approvals.bsd-trigger-sensitivity'].get('options')!=['Conservative','Balanced','Frequent']:gap('sensitivity_mapping_drift','BSD','Expected reconciled display mapping')
     if 'Only `cmd.bsd.set` has an existing catalog row.'in bsd_text:gap('stale_registration_claim','BSD','Owner still denies existing catalogue rows')
-    return dict(schema_id='pm.assistant_contract_inspection.v1',status='gaps_found'if errors or planned else 'structure_checked_only',source_hashes=source_hashes,commands=commands,whole_wiring_inventory=whole_inventory,review_dimensions=dimensions,errors=errors,browser_events_pending_registry_admission=planned,browser_candidate_dispositions=observations,browser_successor_admission_check=admission_observation,formal_packet_audit_completed=False,native_runtime_proven=False,independent_semantic_review_performed=False,claim_boundary='This checker inspects actual source structure and references. It does not replace per-case review, receipt resolution, native producer tests, or Event Authority admission.')
+    from pm_projects_refresh_contracts import Corpus, binding_failures, graph_failures
+    corpus = Corpus(root)
+    refresh_errors = binding_failures(corpus.document('Plans/projects_refresh_command_bindings.json'), corpus)
+    refresh_errors += graph_failures(corpus)
+    for detail in refresh_errors:
+        gap('projects_refresh_static_contract', 'Projects refresh', detail)
+    return dict(schema_id='pm.assistant_contract_inspection.v1',status='gaps_found'if errors or planned else 'structure_checked_only',source_hashes=source_hashes,commands=commands,whole_wiring_inventory=whole_inventory,projects_refresh_static_failures=refresh_errors,review_dimensions=dimensions,errors=errors,browser_events_pending_registry_admission=planned,browser_candidate_dispositions=observations,browser_successor_admission_check=admission_observation,formal_packet_audit_completed=False,native_runtime_proven=False,independent_semantic_review_performed=False,claim_boundary='This checker inspects actual source structure and references. It does not replace per-case review, receipt resolution, native producer tests, or Event Authority admission.')
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--repo',type=Path,default=Path(__file__).resolve().parents[1]);a=p.parse_args()

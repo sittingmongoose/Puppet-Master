@@ -1740,6 +1740,1399 @@
           "minimum": 0
         }
       }
+    },
+    "context_transition_recordApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "transition_id",
+        "project_id",
+        "thread_id",
+        "run_lineage",
+        "old_context_window_id",
+        "new_context_window_id",
+        "requested_controller",
+        "effective_controller",
+        "route_snapshot_ref",
+        "reason",
+        "initiator",
+        "state",
+        "checkpoint_ref",
+        "policy_generation",
+        "application_context"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "transition_id": {
+          "type": "string",
+          "pattern": "^cwt_[A-Za-z0-9]+$"
+        },
+        "project_id": {
+          "const": null
+        },
+        "thread_id": {
+          "type": "string",
+          "pattern": "^thr_[A-Za-z0-9]+$"
+        },
+        "run_lineage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "run_id"
+          ],
+          "properties": {
+            "run_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "attempt_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            }
+          }
+        },
+        "old_context_window_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "new_context_window_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "requested_controller": {
+          "enum": [
+            "pm_managed",
+            "provider_native",
+            "unavailable"
+          ]
+        },
+        "effective_controller": {
+          "enum": [
+            "pm_managed",
+            "provider_native",
+            "unavailable",
+            "degraded_fallback"
+          ]
+        },
+        "route_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "enum": [
+            "proactive_before_overflow",
+            "pressure_rising",
+            "pre_overflow_material_progress",
+            "overflow_imminent",
+            "model_change",
+            "recovery_reconstruction"
+          ]
+        },
+        "initiator": {
+          "enum": [
+            "agent_request",
+            "user_request",
+            "runtime_policy"
+          ]
+        },
+        "state": {
+          "enum": [
+            "requested",
+            "preparing",
+            "checkpointed",
+            "admitted",
+            "activated",
+            "recovered_resumed",
+            "deferred",
+            "denied",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "checkpoint_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^nbc_[A-Za-z0-9]+$"
+        },
+        "policy_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stop_epoch_observed": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "admission_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "failure_reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "timestamps": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "requested_at_utc"
+          ],
+          "properties": {
+            "requested_at_utc": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "checkpointed_at_utc": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            },
+            "activated_at_utc": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            },
+            "terminal_at_utc": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            }
+          }
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "failure_reason": {
+                "type": "string",
+                "pattern": "^crash_after_(commit|native_activation)"
+              }
+            },
+            "required": [
+              "failure_reason"
+            ]
+          },
+          "then": {
+            "properties": {
+              "checkpoint_ref": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "failure_reason": {
+                "const": "crash_before_checkpoint_commit"
+              }
+            },
+            "required": [
+              "failure_reason"
+            ]
+          },
+          "then": {
+            "properties": {
+              "checkpoint_ref": {
+                "const": null
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "activated",
+                  "recovered_resumed"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "admission_receipt_ref",
+              "checkpoint_ref",
+              "new_context_window_id"
+            ],
+            "properties": {
+              "admission_receipt_ref": {
+                "type": "string"
+              },
+              "checkpoint_ref": {
+                "type": "string"
+              },
+              "new_context_window_id": {
+                "type": "string"
+              },
+              "effective_controller": {
+                "enum": [
+                  "pm_managed",
+                  "provider_native"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "identity_refApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "message",
+            "artifact",
+            "tool_result",
+            "commit",
+            "plan",
+            "goal",
+            "workflow_record",
+            "memory_gist",
+            "note_entry"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision_or_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "notebook_checkpoint_recordApplicationV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1"
+    },
+    "notebook_revision_mutationApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_id",
+        "notebook_id",
+        "entry_id",
+        "expected_revision",
+        "actor",
+        "policy_generation",
+        "operation",
+        "outcome",
+        "application_context"
+      ],
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notebook_id": {
+          "type": "string",
+          "pattern": "^nb_[A-Za-z0-9]+$"
+        },
+        "entry_id": {
+          "type": "string",
+          "pattern": "^wne_[A-Za-z0-9]+$"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "actor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policy_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "operation": {
+          "enum": [
+            "create",
+            "update",
+            "append",
+            "supersede",
+            "archive",
+            "tombstone"
+          ]
+        },
+        "outcome": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "applied",
+                "conflict_stale_revision",
+                "stale_policy_generation",
+                "duplicate_idempotent_replay",
+                "denied",
+                "scope_unavailable",
+                "limit_exceeded"
+              ]
+            },
+            "result_revision": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "conflicting_revision": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "applied"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              },
+              "then": {
+                "required": [
+                  "status",
+                  "result_revision"
+                ],
+                "properties": {
+                  "result_revision": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "conflict_stale_revision"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              },
+              "then": {
+                "required": [
+                  "status",
+                  "conflicting_revision"
+                ],
+                "properties": {
+                  "conflicting_revision": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "read_rangeApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "convention",
+        "start",
+        "end"
+      ],
+      "properties": {
+        "convention": {
+          "enum": [
+            "unicode_char_offsets",
+            "utf8_byte_offsets"
+          ]
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "restriction_refApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "restriction_kind",
+        "source_ref"
+      ],
+      "properties": {
+        "restriction_kind": {
+          "enum": [
+            "assistant_only_memory",
+            "blind_phase",
+            "muted_source",
+            "revoked_source",
+            "protected_evidence",
+            "participant_private"
+          ]
+        },
+        "source_ref": {
+          "$ref": "#/$defs/identity_refApplicationV1"
+        },
+        "inherited_from_entry_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "resume_capsuleApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "notebook_id",
+        "scope",
+        "source_revisions",
+        "current_position",
+        "unresolved_issues",
+        "suggested_next_inspection",
+        "selected_refs",
+        "estimated_tokens",
+        "body_bytes",
+        "application_context"
+      ],
+      "properties": {
+        "notebook_id": {
+          "type": "string",
+          "pattern": "^nb_[A-Za-z0-9]+$"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope_bindingApplicationV1"
+        },
+        "source_revisions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "entry_id",
+              "revision"
+            ],
+            "properties": {
+              "entry_id": {
+                "type": "string",
+                "pattern": "^wne_[A-Za-z0-9]+$"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "current_position": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "unresolved_issues": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "maxLength": 512
+          }
+        },
+        "suggested_next_inspection": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 512
+        },
+        "selected_refs": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "$ref": "#/$defs/identity_refApplicationV1"
+          }
+        },
+        "estimated_tokens": {
+          "type": "integer",
+          "maximum": 512
+        },
+        "body_bytes": {
+          "type": "integer",
+          "maximum": 2048
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "scope_bindingApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "project_id",
+        "binding_refs"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "thread",
+            "worker_lineage",
+            "coordinator_run",
+            "participant",
+            "shared_slice"
+          ]
+        },
+        "project_id": {
+          "const": null
+        },
+        "binding_refs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [],
+          "properties": {
+            "thread_id": {
+              "type": "string",
+              "pattern": "^thr_[A-Za-z0-9]+$"
+            },
+            "run_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "node_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "attempt_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "collaboration_run_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "participant_slot_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "recipient_policy_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "thread"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_refs": {
+                "required": [
+                  "thread_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "worker_lineage"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_refs": {
+                "required": [
+                  "run_id",
+                  "node_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "coordinator_run"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_refs": {
+                "required": [
+                  "run_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "participant"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_refs": {
+                "required": [
+                  "collaboration_run_id",
+                  "participant_slot_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "shared_slice"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_refs": {
+                "required": [
+                  "collaboration_run_id",
+                  "recipient_policy_ref"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tool_requestApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool",
+        "args",
+        "application_context"
+      ],
+      "properties": {
+        "tool": {
+          "enum": [
+            "notebook_search",
+            "notebook_read",
+            "notebook_write",
+            "notebook_supersede",
+            "fresh_context_request",
+            "chatread"
+          ]
+        },
+        "args": {
+          "type": "object"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "notebook_search"
+              }
+            },
+            "required": [
+              "tool"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "scope"
+                ],
+                "properties": {
+                  "query": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 512
+                  },
+                  "scope": {
+                    "$ref": "#/$defs/scope_bindingApplicationV1"
+                  },
+                  "filters": {
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  },
+                  "cursor": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 256
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "notebook_read"
+              }
+            },
+            "required": [
+              "tool"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "notebook_id",
+                  "entry_id"
+                ],
+                "properties": {
+                  "notebook_id": {
+                    "type": "string",
+                    "pattern": "^nb_[A-Za-z0-9]+$"
+                  },
+                  "entry_id": {
+                    "type": "string",
+                    "pattern": "^wne_[A-Za-z0-9]+$"
+                  },
+                  "revision": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 1
+                  },
+                  "range": {
+                    "$ref": "#/$defs/read_rangeApplicationV1"
+                  },
+                  "include_provenance": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "chatread"
+              }
+            },
+            "required": [
+              "tool"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "thread_id"
+                ],
+                "properties": {
+                  "thread_id": {
+                    "type": "string",
+                    "pattern": "^thr_[A-Za-z0-9]+$"
+                  },
+                  "message_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1
+                  },
+                  "item_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1
+                  },
+                  "revision": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 1
+                  },
+                  "range": {
+                    "$ref": "#/$defs/read_rangeApplicationV1"
+                  },
+                  "include_neighbors": {
+                    "type": "boolean"
+                  },
+                  "include_tool_pair": {
+                    "type": "boolean"
+                  }
+                },
+                "allOf": [
+                  {
+                    "oneOf": [
+                      {
+                        "required": [
+                          "message_id"
+                        ],
+                        "properties": {
+                          "message_id": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "required": [
+                          "item_id"
+                        ],
+                        "properties": {
+                          "item_id": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "notebook_write"
+              }
+            },
+            "required": [
+              "tool"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "operation",
+                  "request_id",
+                  "body",
+                  "epistemic_kind"
+                ],
+                "properties": {
+                  "notebook_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^nb_[A-Za-z0-9]+$"
+                  },
+                  "scope": {
+                    "$ref": "#/$defs/scope_bindingApplicationV1"
+                  },
+                  "entry_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^wne_[A-Za-z0-9]+$"
+                  },
+                  "operation": {
+                    "enum": [
+                      "create",
+                      "update",
+                      "append"
+                    ]
+                  },
+                  "request_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "expected_revision": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 1
+                  },
+                  "body": {
+                    "type": "string",
+                    "maxLength": 65536
+                  },
+                  "epistemic_kind": {
+                    "enum": [
+                      "hypothesis",
+                      "observation",
+                      "rejected_approach",
+                      "reference",
+                      "continuation",
+                      "user_note"
+                    ]
+                  },
+                  "provenance_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/identity_refApplicationV1"
+                    }
+                  },
+                  "validity_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/identity_refApplicationV1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "notebook_supersede"
+              }
+            },
+            "required": [
+              "tool"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "notebook_id",
+                  "entry_id",
+                  "request_id",
+                  "expected_revision",
+                  "operation"
+                ],
+                "properties": {
+                  "notebook_id": {
+                    "type": "string",
+                    "pattern": "^nb_[A-Za-z0-9]+$"
+                  },
+                  "entry_id": {
+                    "type": "string",
+                    "pattern": "^wne_[A-Za-z0-9]+$"
+                  },
+                  "request_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "expected_revision": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "operation": {
+                    "enum": [
+                      "supersede",
+                      "archive",
+                      "tombstone"
+                    ]
+                  },
+                  "supersedes_entry_revision": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "entry_id",
+                      "revision"
+                    ],
+                    "properties": {
+                      "entry_id": {
+                        "type": "string",
+                        "pattern": "^wne_[A-Za-z0-9]+$"
+                      },
+                      "revision": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "fresh_context_request"
+              }
+            },
+            "required": [
+              "tool"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "reason"
+                ],
+                "properties": {
+                  "reason": {
+                    "enum": [
+                      "proactive_before_overflow",
+                      "pressure_rising",
+                      "pre_overflow_material_progress",
+                      "overflow_imminent",
+                      "model_change",
+                      "recovery_reconstruction"
+                    ]
+                  },
+                  "checkpoint_required": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "notebook_write"
+              },
+              "args": {
+                "properties": {
+                  "operation": {
+                    "const": "create"
+                  }
+                },
+                "required": [
+                  "operation"
+                ]
+              }
+            },
+            "required": [
+              "tool",
+              "args"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "required": [
+                  "scope"
+                ],
+                "properties": {
+                  "entry_id": {
+                    "type": "null"
+                  },
+                  "expected_revision": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tool": {
+                "const": "notebook_write"
+              },
+              "args": {
+                "properties": {
+                  "operation": {
+                    "enum": [
+                      "update",
+                      "append"
+                    ]
+                  }
+                },
+                "required": [
+                  "operation"
+                ]
+              }
+            },
+            "required": [
+              "tool",
+              "args"
+            ]
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "required": [
+                  "entry_id",
+                  "expected_revision"
+                ],
+                "properties": {
+                  "entry_id": {
+                    "type": "string"
+                  },
+                  "expected_revision": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "working_notebook_entry_recordApplicationV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1"
+    },
+    "working_notebook_recordApplicationV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/WorkingNotebookApplicationV1"
+    },
+    "working_notebook_entry_recordApplicationV1PhysicalValueV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "owner_record",
+        "writer_evidence",
+        "content_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.application_working_notebook_entry.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_record": {
+          "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "notebook_checkpoint_recordApplicationV1PhysicalValueV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "owner_record",
+        "writer_evidence",
+        "content_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.application_working_notebook_checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_record": {
+          "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
     }
   }
 }

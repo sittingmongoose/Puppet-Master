@@ -1,0 +1,2592 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/projects_refresh_command_bindings/1.0.0/projects_refresh_command_bindings.schema.json",
+  "x-schema-id": "pm.projects_refresh_command_bindings.schema.v1",
+  "title": "pm.projects_refresh_command_bindings.schema.v1",
+  "$defs": {
+    "CommandBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "availability": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "availability_until_native_evidence": {
+          "enum": [
+            "handler_unavailable"
+          ]
+        },
+        "command_id": {
+          "enum": [
+            "cmd.chat.place.set",
+            "cmd.chat.move.preview",
+            "cmd.chat.move.apply",
+            "cmd.chat.move.resume",
+            "cmd.chat.move.cancel",
+            "cmd.chat.move.undo.preview",
+            "cmd.chat.move.undo.apply",
+            "cmd.chat.continue_elsewhere",
+            "cmd.chat.incoming.accept",
+            "cmd.chat.incoming.decline",
+            "cmd.chat.chat_folder.open",
+            "cmd.chat.chat_folder.delete",
+            "cmd.persona.save_as_override",
+            "cmd.mcp.server.copy",
+            "cmd.skill.copy",
+            "cmd.plugin.copy_configuration",
+            "cmd.server.settings_home.move",
+            "cmd.server.settings_peer_trust",
+            "cmd.project.rename",
+            "cmd.source_control.repository.inspect",
+            "cmd.source_control.remote.add",
+            "cmd.permissions.create_computer_rule",
+            "cmd.build_grant.preview",
+            "cmd.build_grant.approve",
+            "cmd.build_grant.revoke",
+            "cmd.computer_use.stop",
+            "cmd.thread.request",
+            "cmd.thread.spawn",
+            "cmd.source_control.remote.sync",
+            "cmd.chat.load_older",
+            "cmd.chat.create_restore_point",
+            "cmd.chat.delete_restore_point",
+            "cmd.brainstorm.next_round",
+            "cmd.browser.component.insert_at_cursor",
+            "cmd.browser.component.mode.set_default",
+            "cmd.browser.open_devtools",
+            "cmd.chat.attachment.details",
+            "cmd.chat.attachment.freeze_reference",
+            "cmd.chat.attachment.open",
+            "cmd.chat.attachment.remove",
+            "cmd.chat.attachment.retry",
+            "cmd.chat.attachment.save_to_project",
+            "cmd.chat.composer.destination.clear",
+            "cmd.chat.crew_auto.open_config",
+            "cmd.chat.goal.open_editor",
+            "cmd.chat.plan.cancel",
+            "cmd.chat.plan.open_details",
+            "cmd.chat.plan.open_version",
+            "cmd.chat.plan.view.set",
+            "cmd.chat_room.next_round",
+            "cmd.chat_room.summarize",
+            "cmd.chat.schedule_message.cancel",
+            "cmd.chat.schedule_message.update",
+            "cmd.chat.teach.cancel",
+            "cmd.chat.teach.confirm",
+            "cmd.chat.teach.open_memory",
+            "cmd.chat.todos.open",
+            "cmd.chat.todos.open_work",
+            "cmd.chat.todos.toggle_parent",
+            "cmd.collaboration.cancel",
+            "cmd.collaboration.configure",
+            "cmd.collaboration.export",
+            "cmd.collaboration.open",
+            "cmd.collaboration.participant.open",
+            "cmd.collaboration.pause",
+            "cmd.collaboration.reconfigure",
+            "cmd.collaboration.resume",
+            "cmd.execution_window.cancel",
+            "cmd.execution_window.create",
+            "cmd.execution_window.update",
+            "cmd.review.create_todos",
+            "cmd.review.run_again",
+            "cmd.review.send_findings_to_agent",
+            "cmd.chat.attachment.add",
+            "cmd.chat.attachment.download",
+            "cmd.chat.composer.destination.set",
+            "cmd.collaboration.message",
+            "cmd.chat.goal.start",
+            "cmd.chat.goal.pause",
+            "cmd.chat.goal.resume",
+            "cmd.chat.goal.cancel",
+            "cmd.chat.goal.update",
+            "cmd.chat.goal.propose_update",
+            "cmd.chat.plan.strategy.set",
+            "cmd.chat.plan.create",
+            "cmd.chat.plan.request_revision",
+            "cmd.chat.plan.build",
+            "cmd.chat.plan.build_with_crew",
+            "cmd.chat.plan.schedule_build",
+            "cmd.chat.plan.send_to_planning_wizard",
+            "cmd.chat.plan.export",
+            "cmd.collaboration.start",
+            "cmd.chat.crew_auto.set",
+            "cmd.brainstorm.synthesize_plan",
+            "cmd.chat_room.promote_to_goal",
+            "cmd.chat_room.promote_to_plan",
+            "cmd.chat_room.promote_to_todo",
+            "cmd.browser.capture.full_to_chat",
+            "cmd.browser.capture.region_to_chat",
+            "cmd.browser.component.pick",
+            "cmd.browser.component.send_now",
+            "cmd.browser.component.add_to_composer",
+            "cmd.chat.schedule_message",
+            "cmd.runtime.quota_resume.set",
+            "cmd.chat.teach.capture",
+            "cmd.chat.eli5.set",
+            "cmd.chat.revert",
+            "cmd.chat.thread.regenerate_title",
+            "cmd.settings.open",
+            "cmd.auth_profile.cancel",
+            "cmd.auth_profile.open_official_page",
+            "cmd.auth_profile.rename",
+            "cmd.auth_profile.retry",
+            "cmd.auth_profile.revoke",
+            "cmd.auth_profile.select",
+            "cmd.auth_profile.sign_in",
+            "cmd.auth_profile.sign_out",
+            "cmd.auth_profile.submit_code",
+            "cmd.auth_profile.transfer.apply",
+            "cmd.auth_profile.transfer.preview",
+            "cmd.auth_profile.verify",
+            "cmd.backup.archive.retrieve",
+            "cmd.backup.browse",
+            "cmd.backup.cancel",
+            "cmd.backup.delete",
+            "cmd.backup.destination.add",
+            "cmd.backup.destination.discover",
+            "cmd.backup.destination.remove",
+            "cmd.backup.destination.test",
+            "cmd.backup.destination.update",
+            "cmd.backup.export",
+            "cmd.backup.extract",
+            "cmd.backup.file.compare",
+            "cmd.backup.file.download",
+            "cmd.backup.open_details",
+            "cmd.backup.open_history",
+            "cmd.backup.policy.update",
+            "cmd.backup.project.create",
+            "cmd.backup.protect",
+            "cmd.backup.prune",
+            "cmd.backup.recovery_key.acknowledge_saved",
+            "cmd.backup.recovery_key.copy",
+            "cmd.backup.recovery_key.export",
+            "cmd.backup.recovery_key.print",
+            "cmd.backup.recovery_key.reencrypt",
+            "cmd.backup.recovery_key.rotate",
+            "cmd.backup.recovery_key.test",
+            "cmd.backup.retention.preview",
+            "cmd.backup.retry",
+            "cmd.backup.server.create",
+            "cmd.backup.test_restore",
+            "cmd.backup.unlock",
+            "cmd.backup.verify",
+            "cmd.browser.add_full_screenshot_to_chat",
+            "cmd.browser.add_screenshot_to_chat",
+            "cmd.browser.add_selection_full_screenshot_to_chat",
+            "cmd.browser.add_selection_screenshot_to_chat",
+            "cmd.browser.add_selection_to_chat",
+            "cmd.browser.detach_browser_tab",
+            "cmd.browser.focus_browser_tab",
+            "cmd.browser.keep_closed",
+            "cmd.browser.let_agent_continue",
+            "cmd.browser.navigate",
+            "cmd.browser.open_detached_preview",
+            "cmd.browser.open_workspace_preview",
+            "cmd.browser.page.activate",
+            "cmd.browser.page.close",
+            "cmd.browser.page.create",
+            "cmd.browser.page.evaluate",
+            "cmd.browser.page.representation.capture",
+            "cmd.browser.page.representation.delta",
+            "cmd.browser.page.representation.query",
+            "cmd.browser.pause_agent",
+            "cmd.browser.pick_element_for_chat",
+            "cmd.browser.program.cancel",
+            "cmd.browser.program.inspect",
+            "cmd.browser.program.pause",
+            "cmd.browser.program.resume",
+            "cmd.browser.program.run",
+            "cmd.browser.promote_to_normal_browsing",
+            "cmd.browser.reload",
+            "cmd.browser.reopen",
+            "cmd.browser.retry",
+            "cmd.browser.revoke_share_with_agent",
+            "cmd.browser.share_with_agent",
+            "cmd.browser.stop_agent_keep_browser",
+            "cmd.browser.take_over",
+            "cmd.browser.toggle_devtools_dock",
+            "cmd.browser.workspace.close",
+            "cmd.browser.workspace.create",
+            "cmd.browser.workspace.reset",
+            "cmd.chat.apply_code_block",
+            "cmd.chat.archive",
+            "cmd.chat.branch_from_restore",
+            "cmd.chat.close_thread_context_details",
+            "cmd.chat.compact_context",
+            "cmd.chat.context_lens.apply_subcompact",
+            "cmd.chat.context_lens.clear_selection",
+            "cmd.chat.context_lens.revert_subcompact",
+            "cmd.chat.context_lens.set_mode",
+            "cmd.chat.context_lens.toggle",
+            "cmd.chat.context_lens.toggle_message_selection",
+            "cmd.chat.context_lens.turn_off",
+            "cmd.chat.copy_code_block",
+            "cmd.chat.copy_message",
+            "cmd.chat.debug_investigation.dismiss",
+            "cmd.chat.debug_investigation.promote",
+            "cmd.chat.delete",
+            "cmd.chat.edit_last_user_message",
+            "cmd.chat.effort",
+            "cmd.chat.export",
+            "cmd.chat.export_investigation_bundle",
+            "cmd.chat.focus_thread_context_details",
+            "cmd.chat.insert_code_block",
+            "cmd.chat.memory.dedup_sweep",
+            "cmd.chat.memory.discard",
+            "cmd.chat.memory.edit",
+            "cmd.chat.memory.pin",
+            "cmd.chat.memory.preview_capsule",
+            "cmd.chat.memory.prune_archive",
+            "cmd.chat.memory.rebuild_lexical_index",
+            "cmd.chat.memory.rebuild_semantic_index",
+            "cmd.chat.memory.summarize_monthly",
+            "cmd.chat.memory.toggle_auto_save_unverified",
+            "cmd.chat.memory.verification_sweep",
+            "cmd.chat.memory.verify",
+            "cmd.chat.mode",
+            "cmd.chat.model",
+            "cmd.chat.new",
+            "cmd.chat.open_debug_target_picker",
+            "cmd.chat.open_thread",
+            "cmd.chat.open_thread_context_details",
+            "cmd.chat.pin",
+            "cmd.chat.plan_thoroughness",
+            "cmd.chat.platform",
+            "cmd.chat.queue.remove",
+            "cmd.chat.rename",
+            "cmd.chat.resend_last_user_message",
+            "cmd.chat.retry_message",
+            "cmd.chat.revoke_investigation_item",
+            "cmd.chat.rewind",
+            "cmd.chat.run_user_command",
+            "cmd.chat.search",
+            "cmd.chat.send",
+            "cmd.chat.settings",
+            "cmd.chat.stop",
+            "cmd.chat.switch_thread",
+            "cmd.chat.toggle_message_details",
+            "cmd.chat.web.cancel",
+            "cmd.chat.web.crawl",
+            "cmd.chat.web.extract",
+            "cmd.chat.web.fetch",
+            "cmd.chat.web.help",
+            "cmd.chat.web.map",
+            "cmd.chat.web.request_again",
+            "cmd.chat.web.research",
+            "cmd.chat.web.search",
+            "cmd.chat.worktree",
+            "cmd.chat.worktree.bind_existing",
+            "cmd.chat.worktree.create",
+            "cmd.chat.worktree.info",
+            "cmd.chat.worktree.merge",
+            "cmd.chat.worktree.pr",
+            "cmd.chat.worktree.remove",
+            "cmd.chat.worktree.unbind",
+            "cmd.docker.create_repository",
+            "cmd.docker.create_repository.cancel",
+            "cmd.docker.create_repository.confirm",
+            "cmd.docker.image.push",
+            "cmd.docker.registry.tag_push",
+            "cmd.docker.template.push",
+            "cmd.file.copy_full_path",
+            "cmd.file.copy_nodes",
+            "cmd.file.copy_path",
+            "cmd.file.copy_relative_path",
+            "cmd.file.cut_nodes",
+            "cmd.file.delete",
+            "cmd.file.expand_capped",
+            "cmd.file.new_file",
+            "cmd.file.new_folder",
+            "cmd.file.open",
+            "cmd.file.open_in_system_default",
+            "cmd.file.open_with",
+            "cmd.file.paste_nodes",
+            "cmd.file.refresh",
+            "cmd.file.rename",
+            "cmd.file.reveal",
+            "cmd.file.save_local_copy",
+            "cmd.forge.connection.reauthorize",
+            "cmd.forge.mirror.connect",
+            "cmd.forge.mirror.detach",
+            "cmd.forge.mirror.inspect",
+            "cmd.forge.mirror.sync",
+            "cmd.forge.pipeline.approve",
+            "cmd.forge.pipeline.cancel",
+            "cmd.forge.pipeline.list",
+            "cmd.forge.pipeline.open_in_browser",
+            "cmd.forge.pipeline.artifact.download",
+            "cmd.forge.pipeline.secret.set",
+            "cmd.forge.pipeline.secret.remove",
+            "cmd.forge.pipeline.variable.set",
+            "cmd.forge.pipeline.variable.remove",
+            "cmd.forge.pipeline.open_job",
+            "cmd.forge.pipeline.open_logs",
+            "cmd.forge.pipeline.refresh",
+            "cmd.forge.pipeline.retry",
+            "cmd.forge.pipeline.run",
+            "cmd.forge.release.asset.download",
+            "cmd.forge.release.list",
+            "cmd.forge.repository.create",
+            "cmd.forge.repository.fork",
+            "cmd.forge.repository.list",
+            "cmd.forge.repository.open_in_browser",
+            "cmd.forge.repository.delete",
+            "cmd.forge.repository.policy.apply",
+            "cmd.forge.repository.policy.preview",
+            "cmd.forge.repository.refresh",
+            "cmd.forge.review.approve",
+            "cmd.forge.review.checkout",
+            "cmd.forge.review.checks",
+            "cmd.forge.review.close",
+            "cmd.forge.review.comment",
+            "cmd.forge.review.create",
+            "cmd.forge.review.mark_ready",
+            "cmd.forge.review.merge",
+            "cmd.forge.review.open",
+            "cmd.forge.review.open_in_browser",
+            "cmd.forge.review.refresh",
+            "cmd.forge.review.reopen",
+            "cmd.forge.review.request_changes",
+            "cmd.forge.review.thread.list",
+            "cmd.forge.review.thread.reopen",
+            "cmd.forge.review.thread.reply",
+            "cmd.forge.review.thread.resolve",
+            "cmd.forge.review.version.compare",
+            "cmd.forge.review.version.open",
+            "cmd.forge.runner.registration.apply",
+            "cmd.forge.runner.remove",
+            "cmd.forge.webhook.delivery.list",
+            "cmd.forge.webhook.redeliver",
+            "cmd.git.push",
+            "cmd.integration.connection.activate",
+            "cmd.integration.connection.add",
+            "cmd.integration.connection.open_details",
+            "cmd.integration.connection.remove",
+            "cmd.integration.connection.test",
+            "cmd.integration.connection.update",
+            "cmd.jujutsu.git.clone",
+            "cmd.jujutsu.git.push",
+            "cmd.orchestrator.build_run",
+            "cmd.orchestrator.push_image",
+            "cmd.permissions.create_global_rule",
+            "cmd.permissions.create_project_rule",
+            "cmd.permissions.delete_rule",
+            "cmd.permissions.open",
+            "cmd.permissions.pick_external_directory",
+            "cmd.permissions.reorder_rule",
+            "cmd.permissions.review_request",
+            "cmd.permissions.revoke",
+            "cmd.permissions.update_rule",
+            "cmd.permissions.validate_rule",
+            "cmd.persona.create",
+            "cmd.persona.delete",
+            "cmd.persona.duplicate",
+            "cmd.persona.export",
+            "cmd.persona.import",
+            "cmd.persona.select",
+            "cmd.persona.update",
+            "cmd.project.add_existing",
+            "cmd.project.archive",
+            "cmd.project.chain_wizard_open_deferred",
+            "cmd.project.unarchive",
+            "cmd.project.duplicate_configuration",
+            "cmd.project.duplicate_with_history",
+            "cmd.project.execution_host.select",
+            "cmd.project.execution_policy.set",
+            "cmd.project.home_server.set",
+            "cmd.project.move.cancel",
+            "cmd.project.move.pause",
+            "cmd.project.move.preflight",
+            "cmd.project.move.resume",
+            "cmd.project.move.retry",
+            "cmd.project.move.rollback",
+            "cmd.project.move.start",
+            "cmd.project.new_github_repo",
+            "cmd.project.new_local",
+            "cmd.project.open",
+            "cmd.project.resume_creation",
+            "cmd.project.open_settings",
+            "cmd.project.refresh",
+            "cmd.project.remove",
+            "cmd.project.source_location.add",
+            "cmd.project.source_location.remove",
+            "cmd.project.source_location.set_primary",
+            "cmd.project.source_location.test",
+            "cmd.project.source_location.update",
+            "cmd.project_template.create_project",
+            "cmd.project_template.delete",
+            "cmd.project_template.rename",
+            "cmd.project_template.save",
+            "cmd.restore.cancel",
+            "cmd.restore.open_details",
+            "cmd.restore.preview",
+            "cmd.restore.project_as_new",
+            "cmd.restore.project_in_place",
+            "cmd.restore.retry",
+            "cmd.restore.rollback",
+            "cmd.restore.selective",
+            "cmd.restore.server_full",
+            "cmd.runtime.approve",
+            "cmd.runtime.decline",
+            "cmd.settings.export",
+            "cmd.settings.transaction.apply",
+            "cmd.settings.transaction.preview",
+            "cmd.settings.transaction.rollback",
+            "cmd.source_control.accept_commit_group",
+            "cmd.source_control.backend.detect",
+            "cmd.source_control.backend.select",
+            "cmd.source_control.branch.create",
+            "cmd.source_control.branch.switch",
+            "cmd.source_control.checkpoint.create",
+            "cmd.source_control.checkpoint.inspect",
+            "cmd.source_control.checkpoint.restore",
+            "cmd.source_control.diff.open",
+            "cmd.source_control.generate_commit_message",
+            "cmd.source_control.graph_filter",
+            "cmd.source_control.graph.filter",
+            "cmd.source_control.graph_focus",
+            "cmd.source_control.graph.focus",
+            "cmd.source_control.graph.layout",
+            "cmd.source_control.history.open",
+            "cmd.source_control.history_open_commit",
+            "cmd.source_control.mark_conflict_resolved",
+            "cmd.source_control.open_conflict",
+            "cmd.source_control.open_merge_editor",
+            "cmd.source_control.open_review",
+            "cmd.source_control.remote.fetch",
+            "cmd.source_control.remote.publish",
+            "cmd.source_control.repository.bind",
+            "cmd.source_control.repository.clone",
+            "cmd.source_control.repository.unbind",
+            "cmd.source_control.resolve_conflict_side",
+            "cmd.source_control.review.filter",
+            "cmd.source_control.review.open",
+            "cmd.source_control.review.swap",
+            "cmd.source_control.select_tab",
+            "cmd.source_control.set_compare_target",
+            "cmd.source_control.stash",
+            "cmd.source_control.stash.apply",
+            "cmd.source_control.stash.create",
+            "cmd.source_control.stash.drop",
+            "cmd.source_control.stash.list",
+            "cmd.source_control.stash.pop",
+            "cmd.source_control.status.refresh",
+            "cmd.source_control.suggest_commit_batches",
+            "cmd.source_control.suggest_commit_groups",
+            "cmd.source_control.toggle_generated_filter",
+            "cmd.source_control.workspace.create",
+            "cmd.source_control.workspace.list",
+            "cmd.source_control.workspace.open",
+            "cmd.source_control.workspace.remove",
+            "cmd.source_control.workspace.switch",
+            "cmd.terminal.clear_scrollback",
+            "cmd.terminal.focus",
+            "cmd.terminal.kill_session",
+            "cmd.terminal.open",
+            "cmd.terminal.rerun",
+            "cmd.terminal.restart_replace",
+            "cmd.terminal.reveal",
+            "cmd.terminal.show",
+            "cmd.terminal.terminate_session",
+            "cmd.project.delete_data",
+            "cmd.terminal.allow_agent_input",
+            "cmd.terminal.deny_agent_input",
+            "cmd.terminal.hand_back",
+            "cmd.terminal.interrupt",
+            "cmd.terminal.stop_agent",
+            "cmd.terminal.take_over",
+            "cmd.terminal.appearance.set",
+            "cmd.terminal.appearance.import_scheme",
+            "cmd.terminal.clear",
+            "cmd.terminal.revoke_agent_input",
+            "cmd.terminal.send_signal",
+            "cmd.source_control.remote.update",
+            "cmd.source_control.branch.delete",
+            "cmd.forge.review.edit",
+            "cmd.chat.queue.send_now",
+            "cmd.editor.appearance.set",
+            "cmd.project.switch_active_tab",
+            "cmd.project.open_in_new_workspace_tab",
+            "cmd.chat.processes.open",
+            "cmd.runtime.automation_pause.set",
+            "cmd.server.ssh.trust",
+            "cmd.server.ssh.public_key.install"
+          ]
+        },
+        "command_kind": {
+          "enum": [
+            "domain_action",
+            "navigation_wrapper",
+            "shell_view"
+          ]
+        },
+        "confirmation": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "contract_status": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "currentness": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "disabled_reason_projection": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "effect": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "error_schema_ref": {
+          "enum": [
+            "Plans/ui_command_response.schema.json#/$defs/UICommandError",
+            "Plans/ui_command_response.schema.json#/$defs/UICommandResponse"
+          ]
+        },
+        "event_policy": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "existing_primary_missing_production": {
+          "type": "boolean"
+        },
+        "expected_event_types": {
+          "type": "array",
+          "items": false,
+          "uniqueItems": true
+        },
+        "group": {
+          "enum": [
+            "automation",
+            "goal_crew",
+            "no_project",
+            "plan_schedule",
+            "projects",
+            "settings"
+          ]
+        },
+        "gui_consumers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 16384
+          },
+          "uniqueItems": true
+        },
+        "handler": {
+          "enum": [
+            "handlers::assistant_chat::chat_folder_delete",
+            "handlers::assistant_chat::chat_folder_open",
+            "handlers::assistant_chat::composer_destination_clear",
+            "handlers::assistant_chat::composer_destination_set",
+            "handlers::assistant_chat::continue_elsewhere",
+            "handlers::assistant_chat::eli5_set",
+            "handlers::assistant_chat::goal_open_editor",
+            "handlers::assistant_chat::incoming_accept",
+            "handlers::assistant_chat::incoming_decline",
+            "handlers::assistant_chat::move_apply",
+            "handlers::assistant_chat::move_cancel",
+            "handlers::assistant_chat::move_preview",
+            "handlers::assistant_chat::move_resume",
+            "handlers::assistant_chat::move_undo_apply",
+            "handlers::assistant_chat::move_undo_preview",
+            "handlers::assistant_chat::place_set",
+            "handlers::assistant_chat::thread_regenerate_title",
+            "handlers::assistant_memory::teach_cancel",
+            "handlers::assistant_memory::teach_capture",
+            "handlers::assistant_memory::teach_confirm",
+            "handlers::assistant_memory::teach_open_memory",
+            "handlers::assistant_plan::plan_build",
+            "handlers::assistant_plan::plan_build_with_crew",
+            "handlers::assistant_plan::plan_cancel",
+            "handlers::assistant_plan::plan_create",
+            "handlers::assistant_plan::plan_export",
+            "handlers::assistant_plan::plan_open_details",
+            "handlers::assistant_plan::plan_open_version",
+            "handlers::assistant_plan::plan_request_revision",
+            "handlers::assistant_plan::plan_strategy_set",
+            "handlers::assistant_plan::plan_view_set",
+            "handlers::backup_restore::backup_archive_retrieve",
+            "handlers::backup_restore::backup_browse",
+            "handlers::backup_restore::backup_cancel",
+            "handlers::backup_restore::backup_delete",
+            "handlers::backup_restore::backup_destination_add",
+            "handlers::backup_restore::backup_destination_discover",
+            "handlers::backup_restore::backup_destination_remove",
+            "handlers::backup_restore::backup_destination_test",
+            "handlers::backup_restore::backup_destination_update",
+            "handlers::backup_restore::backup_export",
+            "handlers::backup_restore::backup_extract",
+            "handlers::backup_restore::backup_file_compare",
+            "handlers::backup_restore::backup_file_download",
+            "handlers::backup_restore::backup_open_details",
+            "handlers::backup_restore::backup_open_history",
+            "handlers::backup_restore::backup_policy_update",
+            "handlers::backup_restore::backup_project_create",
+            "handlers::backup_restore::backup_protect",
+            "handlers::backup_restore::backup_prune",
+            "handlers::backup_restore::backup_retention_preview",
+            "handlers::backup_restore::backup_retry",
+            "handlers::backup_restore::backup_server_create",
+            "handlers::backup_restore::backup_test_restore",
+            "handlers::backup_restore::backup_unlock",
+            "handlers::backup_restore::backup_verify",
+            "handlers::backup_restore::preview_restore",
+            "handlers::backup_restore::recovery_key_acknowledge_saved",
+            "handlers::backup_restore::recovery_key_copy",
+            "handlers::backup_restore::recovery_key_export",
+            "handlers::backup_restore::recovery_key_print",
+            "handlers::backup_restore::recovery_key_reencrypt",
+            "handlers::backup_restore::recovery_key_rotate",
+            "handlers::backup_restore::recovery_key_test",
+            "handlers::backup_restore::restore_cancel",
+            "handlers::backup_restore::restore_open_details",
+            "handlers::backup_restore::restore_project_as_new",
+            "handlers::backup_restore::restore_project_in_place",
+            "handlers::backup_restore::restore_retry",
+            "handlers::backup_restore::restore_rollback",
+            "handlers::backup_restore::restore_selective",
+            "handlers::backup_restore::restore_server_full",
+            "handlers::browser::add_full_screenshot_to_chat",
+            "handlers::browser::add_screenshot_to_chat",
+            "handlers::browser::add_selection_full_screenshot_to_chat",
+            "handlers::browser::add_selection_screenshot_to_chat",
+            "handlers::browser::add_selection_to_chat",
+            "handlers::browser::detach_browser_tab",
+            "handlers::browser::focus_browser_tab",
+            "handlers::browser::keep_closed",
+            "handlers::browser::let_agent_continue",
+            "handlers::browser::navigate",
+            "handlers::browser::open_detached_preview",
+            "handlers::browser::open_workspace_preview",
+            "handlers::browser::pause_agent",
+            "handlers::browser::pick_element_for_chat",
+            "handlers::browser::promote_to_normal_browsing",
+            "handlers::browser::reload",
+            "handlers::browser::reopen",
+            "handlers::browser::retry",
+            "handlers::browser::revoke_share_with_agent",
+            "handlers::browser::share_with_agent",
+            "handlers::browser::stop_agent_keep_browser",
+            "handlers::browser::take_over",
+            "handlers::browser::toggle_devtools_dock",
+            "handlers::browser_program::inspect",
+            "handlers::browser_program::page_activate",
+            "handlers::browser_program::page_close",
+            "handlers::browser_program::page_create",
+            "handlers::browser_program::page_evaluate",
+            "handlers::browser_program::page_representation_capture",
+            "handlers::browser_program::page_representation_delta",
+            "handlers::browser_program::page_representation_query",
+            "handlers::browser_program::program_cancel",
+            "handlers::browser_program::program_pause",
+            "handlers::browser_program::program_resume",
+            "handlers::browser_program::program_run",
+            "handlers::browser_program::workspace_close",
+            "handlers::browser_program::workspace_create",
+            "handlers::browser_program::workspace_reset",
+            "handlers::browser_runtime::capture_full_to_chat",
+            "handlers::browser_runtime::capture_region_to_chat",
+            "handlers::browser_runtime::component_add_to_composer",
+            "handlers::browser_runtime::component_insert_at_cursor",
+            "handlers::browser_runtime::component_mode_set_default",
+            "handlers::browser_runtime::component_pick",
+            "handlers::browser_runtime::component_send_now",
+            "handlers::browser_runtime::devtools_open",
+            "handlers::chat::apply_code_block",
+            "handlers::chat::archive",
+            "handlers::chat::branch_from_restore",
+            "handlers::chat::close_thread_context_details",
+            "handlers::chat::compact_context",
+            "handlers::chat::context_lens_apply_subcompact",
+            "handlers::chat::context_lens_clear_selection",
+            "handlers::chat::context_lens_revert_subcompact",
+            "handlers::chat::context_lens_set_mode",
+            "handlers::chat::context_lens_toggle",
+            "handlers::chat::context_lens_toggle_message_selection",
+            "handlers::chat::context_lens_turn_off",
+            "handlers::chat::copy_code_block",
+            "handlers::chat::copy_message",
+            "handlers::chat::create_restore_point",
+            "handlers::chat::debug_investigation_dismiss",
+            "handlers::chat::debug_investigation_promote",
+            "handlers::chat::delete",
+            "handlers::chat::delete_restore_point",
+            "handlers::chat::edit_last_user_message",
+            "handlers::chat::effort",
+            "handlers::chat::export",
+            "handlers::chat::export_investigation_bundle",
+            "handlers::chat::focus_thread_context_details",
+            "handlers::chat::insert_code_block",
+            "handlers::chat::load_older",
+            "handlers::chat::memory_dedup_sweep",
+            "handlers::chat::memory_discard",
+            "handlers::chat::memory_edit",
+            "handlers::chat::memory_pin",
+            "handlers::chat::memory_preview_capsule",
+            "handlers::chat::memory_prune_archive",
+            "handlers::chat::memory_rebuild_lexical_index",
+            "handlers::chat::memory_rebuild_semantic_index",
+            "handlers::chat::memory_summarize_monthly",
+            "handlers::chat::memory_toggle_auto_save_unverified",
+            "handlers::chat::memory_verification_sweep",
+            "handlers::chat::memory_verify",
+            "handlers::chat::mode",
+            "handlers::chat::model",
+            "handlers::chat::new",
+            "handlers::chat::open_debug_target_picker",
+            "handlers::chat::open_processes",
+            "handlers::chat::open_thread",
+            "handlers::chat::open_thread_context_details",
+            "handlers::chat::pin",
+            "handlers::chat::plan_thoroughness",
+            "handlers::chat::platform",
+            "handlers::chat::queue_remove",
+            "handlers::chat::queue_send_now",
+            "handlers::chat::rename",
+            "handlers::chat::resend_last_user_message",
+            "handlers::chat::retry_message",
+            "handlers::chat::revert",
+            "handlers::chat::revoke_investigation_item",
+            "handlers::chat::rewind",
+            "handlers::chat::run_user_command",
+            "handlers::chat::search",
+            "handlers::chat::send",
+            "handlers::chat::settings",
+            "handlers::chat::stop",
+            "handlers::chat::switch_thread",
+            "handlers::chat::toggle_message_details",
+            "handlers::chat::web_cancel",
+            "handlers::chat::web_crawl",
+            "handlers::chat::web_extract",
+            "handlers::chat::web_fetch",
+            "handlers::chat::web_help",
+            "handlers::chat::web_map",
+            "handlers::chat::web_request_again",
+            "handlers::chat::web_research",
+            "handlers::chat::web_search",
+            "handlers::chat::worktree",
+            "handlers::chat::worktree_bind_existing",
+            "handlers::chat::worktree_create",
+            "handlers::chat::worktree_info",
+            "handlers::chat::worktree_merge",
+            "handlers::chat::worktree_pr",
+            "handlers::chat::worktree_remove",
+            "handlers::chat::worktree_unbind",
+            "handlers::chat_attachments::attachment_add",
+            "handlers::chat_attachments::attachment_details",
+            "handlers::chat_attachments::attachment_download",
+            "handlers::chat_attachments::attachment_freeze_reference",
+            "handlers::chat_attachments::attachment_open",
+            "handlers::chat_attachments::attachment_remove",
+            "handlers::chat_attachments::attachment_retry",
+            "handlers::chat_attachments::attachment_save_to_project",
+            "handlers::collaboration::brainstorm_next_round",
+            "handlers::collaboration::brainstorm_synthesize_plan",
+            "handlers::collaboration::cancel",
+            "handlers::collaboration::chat_room_next_round",
+            "handlers::collaboration::chat_room_promote_to_goal",
+            "handlers::collaboration::chat_room_promote_to_plan",
+            "handlers::collaboration::chat_room_promote_to_todo",
+            "handlers::collaboration::chat_room_summarize",
+            "handlers::collaboration::configure",
+            "handlers::collaboration::crew_auto_open_config",
+            "handlers::collaboration::crew_auto_set",
+            "handlers::collaboration::export",
+            "handlers::collaboration::message",
+            "handlers::collaboration::open",
+            "handlers::collaboration::participant_open",
+            "handlers::collaboration::pause",
+            "handlers::collaboration::reconfigure",
+            "handlers::collaboration::resume",
+            "handlers::collaboration::review_create_todos",
+            "handlers::collaboration::review_run_again",
+            "handlers::collaboration::review_send_findings_to_agent",
+            "handlers::collaboration::start",
+            "handlers::computer_use::stop",
+            "handlers::docker::create_repository",
+            "handlers::docker::create_repository_cancel",
+            "handlers::docker::create_repository_confirm",
+            "handlers::docker::image_push",
+            "handlers::docker::registry_tag_push",
+            "handlers::docker::template_push",
+            "handlers::editor::appearance_set",
+            "handlers::execution_topology::execution_host_select",
+            "handlers::execution_topology::execution_policy_set",
+            "handlers::execution_topology::home_server_set",
+            "handlers::execution_topology::source_location_add",
+            "handlers::execution_topology::source_location_remove",
+            "handlers::execution_topology::source_location_set_primary",
+            "handlers::execution_topology::source_location_test",
+            "handlers::execution_topology::source_location_update",
+            "handlers::file::copy_full_path",
+            "handlers::file::copy_nodes",
+            "handlers::file::copy_path",
+            "handlers::file::copy_relative_path",
+            "handlers::file::cut_nodes",
+            "handlers::file::delete",
+            "handlers::file::expand_capped",
+            "handlers::file::new_file",
+            "handlers::file::new_folder",
+            "handlers::file::open",
+            "handlers::file::open_in_system_default",
+            "handlers::file::open_with",
+            "handlers::file::paste_nodes",
+            "handlers::file::refresh",
+            "handlers::file::rename",
+            "handlers::file::reveal",
+            "handlers::file::save_local_copy",
+            "handlers::forge::connection_reauthorize",
+            "handlers::forge::mirror_connect",
+            "handlers::forge::mirror_detach",
+            "handlers::forge::mirror_inspect",
+            "handlers::forge::mirror_sync",
+            "handlers::forge::pipeline_approve",
+            "handlers::forge::pipeline_artifact_download",
+            "handlers::forge::pipeline_cancel",
+            "handlers::forge::pipeline_list",
+            "handlers::forge::pipeline_open_in_browser",
+            "handlers::forge::pipeline_open_job",
+            "handlers::forge::pipeline_open_logs",
+            "handlers::forge::pipeline_refresh",
+            "handlers::forge::pipeline_retry",
+            "handlers::forge::pipeline_run",
+            "handlers::forge::pipeline_secret_remove",
+            "handlers::forge::pipeline_secret_set",
+            "handlers::forge::pipeline_variable_remove",
+            "handlers::forge::pipeline_variable_set",
+            "handlers::forge::release_asset_download",
+            "handlers::forge::release_list",
+            "handlers::forge::repository_create",
+            "handlers::forge::repository_delete",
+            "handlers::forge::repository_fork",
+            "handlers::forge::repository_list",
+            "handlers::forge::repository_open_in_browser",
+            "handlers::forge::repository_policy_apply",
+            "handlers::forge::repository_policy_preview",
+            "handlers::forge::repository_refresh",
+            "handlers::forge::review_approve",
+            "handlers::forge::review_checkout",
+            "handlers::forge::review_checks",
+            "handlers::forge::review_close",
+            "handlers::forge::review_comment",
+            "handlers::forge::review_create",
+            "handlers::forge::review_edit",
+            "handlers::forge::review_mark_ready",
+            "handlers::forge::review_merge",
+            "handlers::forge::review_open",
+            "handlers::forge::review_open_in_browser",
+            "handlers::forge::review_refresh",
+            "handlers::forge::review_reopen",
+            "handlers::forge::review_request_changes",
+            "handlers::forge::review_thread_list",
+            "handlers::forge::review_thread_reopen",
+            "handlers::forge::review_thread_reply",
+            "handlers::forge::review_thread_resolve",
+            "handlers::forge::review_version_compare",
+            "handlers::forge::review_version_open",
+            "handlers::forge::runner_registration_apply",
+            "handlers::forge::runner_remove",
+            "handlers::forge::webhook_delivery_list",
+            "handlers::forge::webhook_redeliver",
+            "handlers::git::push",
+            "handlers::github::project_new_repo",
+            "handlers::goal_runtime::goal_cancel",
+            "handlers::goal_runtime::goal_pause",
+            "handlers::goal_runtime::goal_propose_update",
+            "handlers::goal_runtime::goal_resume",
+            "handlers::goal_runtime::goal_start",
+            "handlers::goal_runtime::goal_update",
+            "handlers::integration_connection::activate",
+            "handlers::integration_connection::add",
+            "handlers::integration_connection::open_details",
+            "handlers::integration_connection::remove",
+            "handlers::integration_connection::test",
+            "handlers::integration_connection::update",
+            "handlers::jujutsu::git_clone",
+            "handlers::jujutsu::git_push",
+            "handlers::mcp::copy_server",
+            "handlers::multi_account::cancel",
+            "handlers::multi_account::open_official_page",
+            "handlers::multi_account::rename",
+            "handlers::multi_account::retry",
+            "handlers::multi_account::revoke",
+            "handlers::multi_account::select",
+            "handlers::multi_account::sign_in",
+            "handlers::multi_account::sign_out",
+            "handlers::multi_account::submit_code",
+            "handlers::multi_account::transfer_apply",
+            "handlers::multi_account::transfer_preview",
+            "handlers::multi_account::verify",
+            "handlers::orchestrator::build_run",
+            "handlers::orchestrator::push_image",
+            "handlers::permissions::build_grant_approve",
+            "handlers::permissions::build_grant_preview",
+            "handlers::permissions::build_grant_revoke",
+            "handlers::permissions::create_computer_rule",
+            "handlers::permissions::create_global_rule",
+            "handlers::permissions::create_project_rule",
+            "handlers::permissions::delete_rule",
+            "handlers::permissions::open",
+            "handlers::permissions::pick_external_directory",
+            "handlers::permissions::reorder_rule",
+            "handlers::permissions::review_request",
+            "handlers::permissions::revoke",
+            "handlers::permissions::update_rule",
+            "handlers::permissions::validate_rule",
+            "handlers::persona::create",
+            "handlers::persona::delete",
+            "handlers::persona::duplicate",
+            "handlers::persona::export",
+            "handlers::persona::import",
+            "handlers::persona::save_as_override",
+            "handlers::persona::select",
+            "handlers::persona::update",
+            "handlers::planning_wizard::assistant_plan_intake",
+            "handlers::planning_wizard::chain_wizard_open_deferred_compatibility_alias",
+            "handlers::plugins::copy_configuration",
+            "handlers::project::add_existing",
+            "handlers::project::archive",
+            "handlers::project::delete_data",
+            "handlers::project::duplicate_configuration",
+            "handlers::project::duplicate_with_history",
+            "handlers::project::new_local",
+            "handlers::project::open",
+            "handlers::project::open_in_new_workspace_tab",
+            "handlers::project::open_settings",
+            "handlers::project::refresh",
+            "handlers::project::remove",
+            "handlers::project::rename",
+            "handlers::project::resume_creation",
+            "handlers::project::switch_active_tab",
+            "handlers::project::template_create_project",
+            "handlers::project::template_delete",
+            "handlers::project::template_rename",
+            "handlers::project::template_save",
+            "handlers::project::unarchive",
+            "handlers::project_move::cancel",
+            "handlers::project_move::pause",
+            "handlers::project_move::preflight",
+            "handlers::project_move::resume",
+            "handlers::project_move::retry",
+            "handlers::project_move::rollback",
+            "handlers::project_move::start",
+            "handlers::runtime::approve",
+            "handlers::runtime::decline",
+            "handlers::scheduling::automation_pause_set",
+            "handlers::scheduling::execution_window_cancel",
+            "handlers::scheduling::execution_window_create",
+            "handlers::scheduling::execution_window_update",
+            "handlers::scheduling::plan_schedule_build",
+            "handlers::scheduling::quota_resume_set",
+            "handlers::scheduling::schedule_message",
+            "handlers::scheduling::schedule_message_cancel",
+            "handlers::scheduling::schedule_message_update",
+            "handlers::server::settings_home_move",
+            "handlers::server::settings_peer_trust",
+            "handlers::settings::export",
+            "handlers::settings::open_route",
+            "handlers::settings::transaction_apply",
+            "handlers::settings::transaction_preview",
+            "handlers::settings::transaction_rollback",
+            "handlers::skills::copy",
+            "handlers::source_control::accept_commit_group",
+            "handlers::source_control::backend_detect",
+            "handlers::source_control::backend_select",
+            "handlers::source_control::branch_create",
+            "handlers::source_control::branch_delete",
+            "handlers::source_control::branch_switch",
+            "handlers::source_control::checkpoint_create",
+            "handlers::source_control::checkpoint_inspect",
+            "handlers::source_control::checkpoint_restore",
+            "handlers::source_control::diff_open",
+            "handlers::source_control::generate_commit_message",
+            "handlers::source_control::graph_filter",
+            "handlers::source_control::graph_focus",
+            "handlers::source_control::graph_layout",
+            "handlers::source_control::history_open",
+            "handlers::source_control::history_open_commit",
+            "handlers::source_control::mark_conflict_resolved",
+            "handlers::source_control::open_conflict",
+            "handlers::source_control::open_merge_editor",
+            "handlers::source_control::open_review",
+            "handlers::source_control::remote_add",
+            "handlers::source_control::remote_fetch",
+            "handlers::source_control::remote_publish",
+            "handlers::source_control::remote_sync",
+            "handlers::source_control::remote_update",
+            "handlers::source_control::repository_bind",
+            "handlers::source_control::repository_clone",
+            "handlers::source_control::repository_inspect",
+            "handlers::source_control::repository_unbind",
+            "handlers::source_control::resolve_conflict_side",
+            "handlers::source_control::review_filter",
+            "handlers::source_control::review_open",
+            "handlers::source_control::review_swap",
+            "handlers::source_control::select_tab",
+            "handlers::source_control::set_compare_target",
+            "handlers::source_control::stash",
+            "handlers::source_control::stash_apply",
+            "handlers::source_control::stash_create",
+            "handlers::source_control::stash_drop",
+            "handlers::source_control::stash_list",
+            "handlers::source_control::stash_pop",
+            "handlers::source_control::status_refresh",
+            "handlers::source_control::suggest_commit_batches",
+            "handlers::source_control::suggest_commit_groups",
+            "handlers::source_control::toggle_generated_filter",
+            "handlers::source_control::workspace_create",
+            "handlers::source_control::workspace_list",
+            "handlers::source_control::workspace_open",
+            "handlers::source_control::workspace_remove",
+            "handlers::source_control::workspace_switch",
+            "handlers::terminal::allow_agent_input",
+            "handlers::terminal::appearance_import_scheme",
+            "handlers::terminal::appearance_set",
+            "handlers::terminal::clear",
+            "handlers::terminal::clear_scrollback",
+            "handlers::terminal::deny_agent_input",
+            "handlers::terminal::focus",
+            "handlers::terminal::hand_back",
+            "handlers::terminal::interrupt",
+            "handlers::terminal::kill_session",
+            "handlers::terminal::open",
+            "handlers::terminal::rerun",
+            "handlers::terminal::restart_replace",
+            "handlers::terminal::reveal",
+            "handlers::terminal::revoke_agent_input",
+            "handlers::terminal::send_signal",
+            "handlers::terminal::show",
+            "handlers::terminal::stop_agent",
+            "handlers::terminal::take_over",
+            "handlers::terminal::terminate_session",
+            "handlers::thread::request",
+            "handlers::thread::spawn",
+            "handlers::todo_runtime::todos_open",
+            "handlers::todo_runtime::todos_open_work",
+            "handlers::todo_runtime::todos_toggle_parent",
+            "handlers::server::ssh_host_trust",
+            "handlers::server::ssh_public_key_install"
+          ]
+        },
+        "handler_status": {
+          "enum": [
+            "specified"
+          ]
+        },
+        "new_primary": {
+          "type": "boolean"
+        },
+        "normalization": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "alias_of_command_id": {
+              "type": "null"
+            },
+            "kind": {
+              "type": "string",
+              "maxLength": 16384
+            }
+          },
+          "required": [
+            "alias_of_command_id",
+            "kind"
+          ]
+        },
+        "owner_ref": {
+          "enum": [
+            "Plans/Assistant_Plan_Runtime.md#APR-073",
+            "Plans/Backup_Restore_System.md#BRS-033",
+            "Plans/Collaborative_Workflows.md#CWR-045",
+            "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
+            "Plans/FileManager.md#F-090",
+            "Plans/FinalGUISpec.md#F3-651",
+            "Plans/FinalGUISpec.md#F3-661",
+            "Plans/Forge_Integrations.md#FGI-023",
+            "Plans/Goal_Runtime_System.md#GRS-086",
+            "Plans/Jujutsu_Integration.md#JJI-023",
+            "Plans/MCP_Integration.md#MI-044",
+            "Plans/Multi-Account.md#MA-074",
+            "Plans/Orchestrator_Page.md#OP-038",
+            "Plans/Permissions_System.md#PS-144",
+            "Plans/Permissions_System.md#PS-145",
+            "Plans/Permissions_System.md#PS-147",
+            "Plans/Personas.md#P-060",
+            "Plans/Planning_Wizard.md#PWIZ-037",
+            "Plans/Plugins_System.md#PLUG-071",
+            "Plans/Project_System.md#PJCT-011",
+            "Plans/Project_System.md#PJCT-012",
+            "Plans/Scheduling_and_Quota_Resume.md#SQR-019",
+            "Plans/Scheduling_and_Quota_Resume.md#SQR-020",
+            "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-113",
+            "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180",
+            "Plans/Server_System.md#SRV-016",
+            "Plans/Settings_System.md#SSYS-059",
+            "Plans/Shared_Integration_Runtime.md#SIR-055",
+            "Plans/Skills_System.md#SS-039",
+            "Plans/Source_Control_System.md#SCS-025",
+            "Plans/ToDo_Runtime.md#TDR-009",
+            "Plans/Tools.md#T-186",
+            "Plans/assistant-chat-design.md#ACD-508",
+            "Plans/assistant-chat-design.md#ACD-509",
+            "Plans/assistant-chat-design.md#ACD-510",
+            "Plans/orchestrator-subagent-integration.md#OSI-439",
+            "Plans/Server_System.md#SRV-018"
+          ]
+        },
+        "permission": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "production_row_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 16384
+          },
+          "uniqueItems": true
+        },
+        "request_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 16384
+          },
+          "uniqueItems": true
+        },
+        "request_schema_ref": {
+          "enum": [
+            "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
+            "Plans/application_workflow_contracts.schema.json#/$defs/GoalCancelRequestScopeV2",
+            "Plans/application_workflow_contracts.schema.json#/$defs/GoalControlRequestScopeV2",
+            "Plans/application_workflow_contracts.schema.json#/$defs/GoalStartRequestScopeV2",
+            "Plans/application_workflow_contracts.schema.json#/$defs/GoalUpdateProposalRequestScopeV2",
+            "Plans/application_workflow_contracts.schema.json#/$defs/ThreadRequestFacadeRequestV2",
+            "Plans/application_workflow_contracts.schema.json#/$defs/ThreadSpawnFacadeRequestV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddRequestV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDetailsRequestV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDownloadRequestV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentFreezeReferenceRequestV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentOpenRequestV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRemoveRequestV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRetryRequestV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentSave_To_ProjectRequestV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatContinueElsewhereRequest",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatFolderDeleteRequest",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatFolderRoute",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatIncomingDecisionRequest",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveApplyRequest",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveCancelRequest",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewRequest",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResumeRequest",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveUndoApplyRequest",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveUndoPreviewRequest",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatNewRequestScopeV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatPlaceSetRequest",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatSendRequestScopeV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ComposerDestinationClearRequestScopeV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ComposerDestinationSetRequestScopeV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ELI5ThreadOverrideRequestScopeV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/GoalEditorRouteScopeV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ThreadTitleRegenerateRequestScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanBuildRequestScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCancelRequestScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCreateRequestScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCrewBuildRequestScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanExportRequestScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanHandoffRequestScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRevisionRequestScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRouteScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanStrategyRequestScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanVersionRouteScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanViewRequestScopeV2",
+            "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalDecisionRequestV2",
+            "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
+            "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_approve_request",
+            "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_preview_request",
+            "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_revoke_request",
+            "Plans/automation_authority_contracts.schema.json#/$defs/computer_rule_create_request",
+            "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+            "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request_v2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/BrainstormRoundRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/BrainstormSynthesisRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromoteGoalRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromotePlanRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromoteTodoRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomRoundRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomSummarizeRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationCancelRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationConfigureRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationExportRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationMessageRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationOpenRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationParticipantOpenRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationPauseRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationReconfigureRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationResumeRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationStartRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CrewAutoConfigRouteScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CrewAutoSetRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ReviewCreateTodosRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ReviewRunAgainRequestScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ReviewSendFindingsRequestScopeV2",
+            "Plans/computer_use_contracts.schema.json#/$defs/ComputerUseStopRequest",
+            "Plans/editor_appearance.schema.json#/$defs/request_scope_v2",
+            "Plans/forge_integration_contracts.schema.json#/$defs/command_request_v2",
+            "Plans/git_adapter_command_contracts.schema.json#/$defs/GitRemotePublicationRequestV2",
+            "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_request",
+            "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request",
+            "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request_v2",
+            "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest",
+            "Plans/plugin_contracts.schema.json#/$defs/PluginCopyConfigurationRequest",
+            "Plans/pm7_build_contracts.schema.json#/$defs/processes_open_request",
+            "Plans/pm7_build_contracts.schema.json#/$defs/project_open_new_request_v2",
+            "Plans/pm7_build_contracts.schema.json#/$defs/project_switch_request_v2",
+            "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
+            "Plans/project_system_contracts.schema.json#/$defs/project_action_request_v2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AssistantPlanScheduleRequestScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AutomationPauseSetRequestScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCancelRequestScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCreateRequestScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowUpdateRequestScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/QuotaResumeConsentRequestScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelRequestScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCreateRequestScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageUpdateRequestScopeV2",
+            "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2",
+            "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
+            "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_request",
+            "Plans/server_system_contracts.schema.json#/$defs/settings_peer_trust_command_request",
+            "Plans/settings_system_contracts.schema.json#/$defs/settings_export_request_v2",
+            "Plans/settings_system_contracts.schema.json#/$defs/settings_route_request_v2",
+            "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request_v2",
+            "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v2",
+            "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_rollback_request_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandRequest",
+            "Plans/shared_integration_runtime.schema.json#/$defs/mcp_server_copy_request",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_create_request_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_delete_request_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_duplicate_request_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_export_request_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_import_request_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_save_as_override_request",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_select_request_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_update_request_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/skill_copy_request",
+            "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest",
+            "Plans/shared_runtime_command_contracts.schema.json#/$defs/FileActionRequestV2",
+            "Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2",
+            "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2",
+            "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+            "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1"
+          ]
+        },
+        "result_schema_ref": {
+          "enum": [
+            "Plans/application_workflow_contracts.schema.json#/$defs/ApprovalRequestScopeV2",
+            "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+            "Plans/application_workflow_contracts.schema.json#/$defs/GoalCancelResultScopeV2",
+            "Plans/application_workflow_contracts.schema.json#/$defs/GoalControlResultScopeV2",
+            "Plans/application_workflow_contracts.schema.json#/$defs/GoalStartResultScopeV2",
+            "Plans/application_workflow_contracts.schema.json#/$defs/ThreadRequestFacadeResultV2",
+            "Plans/application_workflow_contracts.schema.json#/$defs/ThreadSpawnFacadeResultV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddResultV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDetailsResultV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDownloadResultV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentFreezeReferenceResultV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentOpenResultV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRemoveResultV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRetryResultV2",
+            "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentSave_To_ProjectResultV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatContinueElsewhereResult",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatFolderDeleteResult",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatIncomingDecisionResult",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewResult",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveUndoPreviewResult",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatNewResultScopeV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatPlaceSetResult",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ChatSendResultScopeV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ComposerDestinationClearResultScopeV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ComposerDestinationSetResultScopeV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ELI5ThreadOverrideResultScopeV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/RouteResult",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/RouteResultScopeV2",
+            "Plans/assistant_chat_contracts.schema.json#/$defs/ThreadTitleGenerationResultScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/ArtifactExportResultScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanBuildResultScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCancelResultScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCreateResultScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRevisionResultScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanStrategyResultScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanViewResultScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/PlanningWizardIntakeResultScopeV2",
+            "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/RouteResultScopeV2",
+            "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalResultV2",
+            "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_approve_result",
+            "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_preview_result",
+            "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_revoke_result",
+            "Plans/automation_authority_contracts.schema.json#/$defs/computer_rule_create_result",
+            "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_result_v2",
+            "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result_v2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ArtifactResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/AssistantPlanCreateResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/BrainstormRoundResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromoteGoalResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromotePlanResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromoteTodoResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomRoundResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationCancelResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationConfigureResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationExportResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationMessageResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationOpenResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationParticipantOpenResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationPauseResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationReconfigureResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationResumeResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationStartResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ComposerBufferResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/CrewAutoSetResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/ReviewCreateTodosResultScopeV2",
+            "Plans/collaborative_workflows_contracts.schema.json#/$defs/RouteResultScopeV2",
+            "Plans/computer_use_contracts.schema.json#/$defs/ComputerUseStopResult",
+            "Plans/editor_appearance.schema.json#/$defs/result_scope_v2",
+            "Plans/forge_integration_contracts.schema.json#/$defs/command_result_v2",
+            "Plans/git_adapter_command_contracts.schema.json#/$defs/GitRemotePublicationResultV2",
+            "Plans/git_adapter_command_contracts.schema.json#/$defs/git_command_result",
+            "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result",
+            "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result_v2",
+            "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult",
+            "Plans/plugin_contracts.schema.json#/$defs/PluginCopyConfigurationResult",
+            "Plans/pm7_build_contracts.schema.json#/$defs/command_result",
+            "Plans/pm7_build_contracts.schema.json#/$defs/command_result_v2",
+            "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+            "Plans/project_system_contracts.schema.json#/$defs/project_action_result_v2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AutomationPauseSetResultScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionScheduleResultScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCancelResultScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCreateResultScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowUpdateResultScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/QuotaResumeConsentResultScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelResultScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCreateResultScopeV2",
+            "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageUpdateResultScopeV2",
+            "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2",
+            "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
+            "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+            "Plans/server_system_contracts.schema.json#/$defs/settings_peer_trust_command_result",
+            "Plans/settings_system_contracts.schema.json#/$defs/settings_export_manifest_v2",
+            "Plans/settings_system_contracts.schema.json#/$defs/settings_route_return_v2",
+            "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_v2",
+            "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_result_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandResult",
+            "Plans/shared_integration_runtime.schema.json#/$defs/mcp_server_copy_result",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_create_result_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_delete_result_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_duplicate_result_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_export_result_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_import_result_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_save_as_override_result",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_select_result_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/persona_update_result_v2",
+            "Plans/shared_integration_runtime.schema.json#/$defs/skill_copy_result",
+            "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult",
+            "Plans/shared_runtime_command_contracts.schema.json#/$defs/FileActionResultV2",
+            "Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionResultV2",
+            "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2",
+            "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandResultV1",
+            "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandResultV1"
+          ]
+        },
+        "return_contract": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "row_id": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "scope_variant_contracts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "application_request_schema_ref": {
+              "type": "string",
+              "maxLength": 16384
+            },
+            "application_result_schema_ref": {
+              "type": "string",
+              "maxLength": 16384
+            },
+            "project_request_schema_ref": {
+              "type": "string",
+              "maxLength": 16384
+            },
+            "project_result_schema_ref": {
+              "type": "string",
+              "maxLength": 16384
+            }
+          },
+          "required": [
+            "application_request_schema_ref",
+            "application_result_schema_ref",
+            "project_request_schema_ref",
+            "project_result_schema_ref"
+          ]
+        },
+        "state_selector": {
+          "type": "string",
+          "maxLength": 16384
+        }
+      },
+      "required": [
+        "availability",
+        "availability_until_native_evidence",
+        "command_id",
+        "command_kind",
+        "confirmation",
+        "currentness",
+        "disabled_reason_projection",
+        "effect",
+        "error_schema_ref",
+        "event_policy",
+        "expected_event_types",
+        "group",
+        "gui_consumers",
+        "handler",
+        "handler_status",
+        "new_primary",
+        "normalization",
+        "owner_ref",
+        "permission",
+        "request_ids",
+        "request_schema_ref",
+        "result_schema_ref",
+        "return_contract",
+        "row_id",
+        "state_selector"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.place.set"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::assistant_chat::place_set"
+              },
+              "request_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatPlaceSetRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatPlaceSetResult"
+              },
+              "row_id": {
+                "const": "catalog.chat_place_set"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.move.preview"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::assistant_chat::move_preview"
+              },
+              "request_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewResult"
+              },
+              "row_id": {
+                "const": "catalog.chat_move_preview"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.move.apply"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::assistant_chat::move_apply"
+              },
+              "request_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveApplyRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult"
+              },
+              "row_id": {
+                "const": "catalog.chat_move_apply"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.move.resume"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::assistant_chat::move_resume"
+              },
+              "request_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResumeRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult"
+              },
+              "row_id": {
+                "const": "catalog.chat_move_resume"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.move.cancel"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::assistant_chat::move_cancel"
+              },
+              "request_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveCancelRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult"
+              },
+              "row_id": {
+                "const": "catalog.chat_move_cancel"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.move.undo.preview"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::assistant_chat::move_undo_preview"
+              },
+              "request_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveUndoPreviewRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveUndoPreviewResult"
+              },
+              "row_id": {
+                "const": "catalog.chat_move_undo_preview"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.move.undo.apply"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::assistant_chat::move_undo_apply"
+              },
+              "request_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveUndoApplyRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult"
+              },
+              "row_id": {
+                "const": "catalog.chat_move_undo_apply"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.continue_elsewhere"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::assistant_chat::continue_elsewhere"
+              },
+              "request_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatContinueElsewhereRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatContinueElsewhereResult"
+              },
+              "row_id": {
+                "const": "catalog.chat_continue_elsewhere"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.incoming.accept"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::assistant_chat::incoming_accept"
+              },
+              "request_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatIncomingDecisionRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatIncomingDecisionResult"
+              },
+              "row_id": {
+                "const": "catalog.chat_incoming_accept"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.incoming.decline"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::assistant_chat::incoming_decline"
+              },
+              "request_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatIncomingDecisionRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatIncomingDecisionResult"
+              },
+              "row_id": {
+                "const": "catalog.chat_incoming_decline"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.chat_folder.open"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::assistant_chat::chat_folder_open"
+              },
+              "request_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatFolderRoute"
+              },
+              "result_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/RouteResult"
+              },
+              "row_id": {
+                "const": "catalog.chat_chat_folder_open"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.chat_folder.delete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::assistant_chat::chat_folder_delete"
+              },
+              "request_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatFolderDeleteRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatFolderDeleteResult"
+              },
+              "row_id": {
+                "const": "catalog.chat_chat_folder_delete"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.persona.save_as_override"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::persona::save_as_override"
+              },
+              "request_schema_ref": {
+                "const": "Plans/shared_integration_runtime.schema.json#/$defs/persona_save_as_override_request"
+              },
+              "result_schema_ref": {
+                "const": "Plans/shared_integration_runtime.schema.json#/$defs/persona_save_as_override_result"
+              },
+              "row_id": {
+                "const": "catalog.persona_save_as_override"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.mcp.server.copy"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::mcp::copy_server"
+              },
+              "request_schema_ref": {
+                "const": "Plans/shared_integration_runtime.schema.json#/$defs/mcp_server_copy_request"
+              },
+              "result_schema_ref": {
+                "const": "Plans/shared_integration_runtime.schema.json#/$defs/mcp_server_copy_result"
+              },
+              "row_id": {
+                "const": "catalog.mcp_server_copy"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.skill.copy"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::skills::copy"
+              },
+              "request_schema_ref": {
+                "const": "Plans/shared_integration_runtime.schema.json#/$defs/skill_copy_request"
+              },
+              "result_schema_ref": {
+                "const": "Plans/shared_integration_runtime.schema.json#/$defs/skill_copy_result"
+              },
+              "row_id": {
+                "const": "catalog.skill_copy"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.plugin.copy_configuration"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::plugins::copy_configuration"
+              },
+              "request_schema_ref": {
+                "const": "Plans/plugin_contracts.schema.json#/$defs/PluginCopyConfigurationRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/plugin_contracts.schema.json#/$defs/PluginCopyConfigurationResult"
+              },
+              "row_id": {
+                "const": "catalog.plugin_copy_configuration"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.server.settings_home.move"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::server::settings_home_move"
+              },
+              "request_schema_ref": {
+                "const": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_request"
+              },
+              "result_schema_ref": {
+                "const": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result"
+              },
+              "row_id": {
+                "const": "catalog.server_settings_home_move"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.server.settings_peer_trust"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::server::settings_peer_trust"
+              },
+              "request_schema_ref": {
+                "const": "Plans/server_system_contracts.schema.json#/$defs/settings_peer_trust_command_request"
+              },
+              "result_schema_ref": {
+                "const": "Plans/server_system_contracts.schema.json#/$defs/settings_peer_trust_command_result"
+              },
+              "row_id": {
+                "const": "catalog.server_settings_peer_trust"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.rename"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::project::rename"
+              },
+              "request_schema_ref": {
+                "const": "Plans/project_system_contracts.schema.json#/$defs/project_action_request_v2"
+              },
+              "result_schema_ref": {
+                "const": "Plans/project_system_contracts.schema.json#/$defs/project_action_result_v2"
+              },
+              "row_id": {
+                "const": "catalog.project_rename"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.repository.inspect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::source_control::repository_inspect"
+              },
+              "request_schema_ref": {
+                "const": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+              },
+              "result_schema_ref": {
+                "const": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2"
+              },
+              "row_id": {
+                "const": "catalog.source_control_repository_inspect"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.source_control.remote.add"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::source_control::remote_add"
+              },
+              "request_schema_ref": {
+                "const": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+              },
+              "result_schema_ref": {
+                "const": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2"
+              },
+              "row_id": {
+                "const": "catalog.source_control_remote_add"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.permissions.create_computer_rule"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::permissions::create_computer_rule"
+              },
+              "request_schema_ref": {
+                "const": "Plans/automation_authority_contracts.schema.json#/$defs/computer_rule_create_request"
+              },
+              "result_schema_ref": {
+                "const": "Plans/automation_authority_contracts.schema.json#/$defs/computer_rule_create_result"
+              },
+              "row_id": {
+                "const": "catalog.permissions_create_computer_rule"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.build_grant.preview"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::permissions::build_grant_preview"
+              },
+              "request_schema_ref": {
+                "const": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_preview_request"
+              },
+              "result_schema_ref": {
+                "const": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_preview_result"
+              },
+              "row_id": {
+                "const": "catalog.build_grant_preview"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.build_grant.approve"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::permissions::build_grant_approve"
+              },
+              "request_schema_ref": {
+                "const": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_approve_request"
+              },
+              "result_schema_ref": {
+                "const": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_approve_result"
+              },
+              "row_id": {
+                "const": "catalog.build_grant_approve"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.build_grant.revoke"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::permissions::build_grant_revoke"
+              },
+              "request_schema_ref": {
+                "const": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_revoke_request"
+              },
+              "result_schema_ref": {
+                "const": "Plans/automation_authority_contracts.schema.json#/$defs/build_grant_revoke_result"
+              },
+              "row_id": {
+                "const": "catalog.build_grant_revoke"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.computer_use.stop"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "handler": {
+                "const": "handlers::computer_use::stop"
+              },
+              "request_schema_ref": {
+                "const": "Plans/computer_use_contracts.schema.json#/$defs/ComputerUseStopRequest"
+              },
+              "result_schema_ref": {
+                "const": "Plans/computer_use_contracts.schema.json#/$defs/ComputerUseStopResult"
+              },
+              "row_id": {
+                "const": "catalog.computer_use_stop"
+              },
+              "new_primary": {
+                "const": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ToolBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "availability": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "availability_until_native_evidence": {
+          "enum": [
+            "handler_unavailable"
+          ]
+        },
+        "effect": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "handler": {
+          "enum": [
+            "tools::projects::list",
+            "tools::projects::read_chat",
+            "tools::projects::read_file",
+            "tools::projects::read_plans",
+            "tools::projects::search",
+            "tools::projects::status",
+            "tools::computer::screen",
+            "tools::computer::pointer",
+            "tools::computer::keys"
+          ]
+        },
+        "handler_status": {
+          "enum": [
+            "specified"
+          ]
+        },
+        "owner_ref": {
+          "enum": [
+            "Plans/Tools.md#T-185",
+            "Plans/Tools.md#T-186"
+          ]
+        },
+        "request_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 16384
+          },
+          "uniqueItems": true
+        },
+        "request_schema_ref": {
+          "enum": [
+            "Plans/cross_project_access_contracts.schema.json#/$defs/CrossProjectAccessRequest",
+            "Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenRequestV1",
+            "Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerRequestV1",
+            "Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysRequestV1"
+          ]
+        },
+        "result_schema_ref": {
+          "enum": [
+            "Plans/cross_project_access_contracts.schema.json#/$defs/CrossProjectAccessResult",
+            "Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenResultV1",
+            "Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerResultV1",
+            "Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysResultV1"
+          ]
+        },
+        "return_contract": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "tool_id": {
+          "enum": [
+            "projects.list",
+            "projects.status",
+            "projects.search",
+            "projects.read_file",
+            "projects.read_chat",
+            "projects.read_plans",
+            "computer.screen",
+            "computer.pointer",
+            "computer.keys"
+          ]
+        }
+      },
+      "required": [
+        "availability",
+        "availability_until_native_evidence",
+        "effect",
+        "handler",
+        "handler_status",
+        "owner_ref",
+        "request_ids",
+        "request_schema_ref",
+        "result_schema_ref",
+        "return_contract",
+        "tool_id"
+      ]
+    },
+    "LocalActionBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "action_id": {
+          "enum": [
+            "ui.settings.level_panel.open",
+            "ui.settings.level_panel.close",
+            "ui.settings.level_target.select",
+            "ui.settings.level_view.change",
+            "ui.settings.level_filter.set",
+            "ui.settings.differences.open",
+            "ui.settings.differences.compare",
+            "ui.settings.manager_home.open",
+            "ui.settings.manager_reach.edit",
+            "ui.settings.manager_version.preview",
+            "ui.settings.copy_kind.select",
+            "ui.settings.copy_setting.select",
+            "ui.settings.reset_target.select",
+            "ui.settings.join_differences.open",
+            "ui.settings.history.inspect",
+            "ui.projects.launcher.open",
+            "ui.projects.way.select",
+            "ui.projects.section.open",
+            "ui.projects.section.edit",
+            "ui.projects.back",
+            "ui.projects.advanced.toggle",
+            "ui.projects.review.open",
+            "ui.projects.details.open",
+            "ui.projects.filter.set",
+            "ui.projects.archive_view.set",
+            "ui.projects.path.copy",
+            "ui.projects.starter.select",
+            "ui.projects.starter.open_details",
+            "ui.projects.saved_setup.select",
+            "ui.projects.online_choice.select",
+            "ui.projects.contribution_choice.select",
+            "ui.projects.backup_advanced.open",
+            "ui.projects.recovery_report.open",
+            "ui.chat.place_menu.open",
+            "ui.chat.list_scope.set",
+            "ui.chat.move_destination.select",
+            "ui.chat.move_files.select",
+            "ui.chat.move_conflict.select",
+            "ui.chat.move_preview.expand",
+            "ui.chat.move_report.open",
+            "ui.chat.move_report.expand",
+            "ui.chat.coverage.expand",
+            "ui.chat.incoming_request.open",
+            "ui.chat.computer_use.apps.select",
+            "ui.chat.computer_use.disclosure.open",
+            "ui.chat.computer_use.details.open",
+            "ui.permissions.always_scope.select",
+            "ui.permissions.repository_origin_review.open",
+            "ui.permissions.grant_review.open",
+            "ui.permissions.grant_review.cancel",
+            "ui.permissions.build_actions.filter",
+            "ui.permissions.build_actions.expand",
+            "ui.permissions.build_action.target.open",
+            "ui.permissions.build_action.receipt.open",
+            "ui.collaboration.scope_details.open",
+            "ui.collaboration.conversion_mapping.open",
+            "ui.scheduling.scope_details.open",
+            "ui.scheduling.conversion_mapping.open",
+            "ui.scheduling.pause_scope.select",
+            "ui.project_switcher.no_project",
+            "ui.thread.request.preview",
+            "ui.thread.spawn.preview"
+          ]
+        },
+        "availability": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "effect": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "group": {
+          "enum": [
+            "automation",
+            "goal_crew",
+            "no_project",
+            "plan_schedule",
+            "projects",
+            "settings"
+          ]
+        },
+        "gui_consumer": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "owner_ref": {
+          "enum": [
+            "Plans/FinalGUISpec.md#F3-661",
+            "Plans/UI_Command_Catalog.md#UCC-214",
+            "Plans/UI_Command_Catalog.md#UCC-215",
+            "Plans/UI_Command_Catalog.md#UCC-216",
+            "Plans/UI_Command_Catalog.md#UCC-217",
+            "Plans/UI_Command_Catalog.md#UCC-218",
+            "Plans/UI_Command_Catalog.md#UCC-219",
+            "Plans/orchestrator-subagent-integration.md#OSI-439"
+          ]
+        },
+        "permission": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "request_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 16384
+          },
+          "uniqueItems": true
+        },
+        "request_schema_ref": {
+          "enum": [
+            "Plans/application_workflow_contracts.schema.json#/$defs/ThreadFacadePreviewLocalActionRequestV2",
+            "Plans/final_gui_interaction_contracts.schema.json#/$defs/ProjectsRefreshLocalActionRequest"
+          ]
+        },
+        "result_schema_ref": {
+          "enum": [
+            "Plans/application_workflow_contracts.schema.json#/$defs/ThreadFacadePreviewLocalActionResultV2",
+            "Plans/final_gui_interaction_contracts.schema.json#/$defs/ProjectsRefreshLocalActionResult"
+          ]
+        },
+        "return_contract": {
+          "type": "string",
+          "maxLength": 16384
+        }
+      },
+      "required": [
+        "action_id",
+        "availability",
+        "effect",
+        "group",
+        "gui_consumer",
+        "owner_ref",
+        "permission",
+        "request_ids",
+        "request_schema_ref",
+        "result_schema_ref",
+        "return_contract"
+      ]
+    },
+    "NonDispatchControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "action_ids": {
+          "type": "array",
+          "items": false,
+          "uniqueItems": true
+        },
+        "control_id": {
+          "enum": [
+            "projects.import_other_app.unavailable"
+          ]
+        },
+        "disposition": {
+          "enum": [
+            "non_dispatch"
+          ]
+        },
+        "no_production_reason": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "owner_ref": {
+          "enum": [
+            "Plans/Project_System.md#PJCT-012"
+          ]
+        },
+        "payload": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "production_entries": {
+          "type": "array",
+          "items": false,
+          "uniqueItems": true
+        },
+        "setting_ids": {
+          "type": "array",
+          "items": false,
+          "uniqueItems": true
+        },
+        "surface": {
+          "type": "string",
+          "maxLength": 16384
+        }
+      },
+      "required": [
+        "action_ids",
+        "control_id",
+        "disposition",
+        "no_production_reason",
+        "owner_ref",
+        "payload",
+        "production_entries",
+        "setting_ids",
+        "surface"
+      ]
+    },
+    "BindingsManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "authority": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/projects_refresh_command_bindings/1.0.0/projects_refresh_command_bindings.schema.json#/$defs/CommandBinding"
+          },
+          "minItems": 494,
+          "maxItems": 494,
+          "uniqueItems": true
+        },
+        "implementation_status": {
+          "const": "not_started"
+        },
+        "local_actions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/projects_refresh_command_bindings/1.0.0/projects_refresh_command_bindings.schema.json#/$defs/LocalActionBinding"
+          },
+          "minItems": 62,
+          "maxItems": 62,
+          "uniqueItems": true
+        },
+        "non_dispatch_controls": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/projects_refresh_command_bindings/1.0.0/projects_refresh_command_bindings.schema.json#/$defs/NonDispatchControl"
+          },
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true
+        },
+        "owner_ref": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "runtime_enabled": {
+          "const": false
+        },
+        "schema_id": {
+          "const": "pm.projects_refresh_command_bindings.v1"
+        },
+        "scope_contract_ref": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "stage": {
+          "const": "canonical_specification_only"
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/projects_refresh_command_bindings/1.0.0/projects_refresh_command_bindings.schema.json#/$defs/ToolBinding"
+          },
+          "minItems": 9,
+          "maxItems": 9,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "authority",
+        "commands",
+        "implementation_status",
+        "local_actions",
+        "non_dispatch_controls",
+        "owner_ref",
+        "runtime_enabled",
+        "schema_id",
+        "scope_contract_ref",
+        "stage",
+        "tools"
+      ]
+    }
+  },
+  "$ref": "#/$defs/BindingsManifest"
+}

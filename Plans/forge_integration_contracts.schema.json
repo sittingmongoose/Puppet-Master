@@ -9678,6 +9678,728 @@
         }
       },
       "additionalProperties": false
+    },
+    "create_options_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider_id",
+        "instance_profile",
+        "instance_ref",
+        "account_ref",
+        "owner_ref",
+        "container_ref",
+        "team_project_ref",
+        "workspace_ref",
+        "project_key",
+        "name",
+        "slug",
+        "visibility",
+        "default_branch",
+        "description",
+        "initial_file_choices_ref",
+        "capability_evidence",
+        "admission_evidence"
+      ],
+      "properties": {
+        "provider_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "instance_profile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "instance_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "account_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "container_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "team_project_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "workspace_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "project_key": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "slug": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "visibility": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "default_branch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "initial_file_choices_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "capability_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "admission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        }
+      }
+    },
+    "repository_list_scope_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope_kind",
+        "provider_id",
+        "instance_ref",
+        "account_ref",
+        "owner_ref",
+        "query",
+        "public_discovery_explicit",
+        "repository_generation",
+        "project_id",
+        "coverage",
+        "currentness_evidence"
+      ],
+      "properties": {
+        "scope_kind": {
+          "const": "owner_discovery"
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "instance_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "account_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "query": {
+          "type": "string",
+          "maxLength": 16384
+        },
+        "public_discovery_explicit": {
+          "type": "boolean"
+        },
+        "repository_generation": {
+          "const": 0
+        },
+        "project_id": {
+          "const": null
+        },
+        "coverage": {
+          "$ref": "https://puppetmaster.local/schemas/cross_project_access_contracts/1.0.0/cross_project_access_contracts.schema.json#/$defs/CrossProjectCoverage"
+        },
+        "currentness_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        }
+      }
+    },
+    "cross_repository_review_target_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider_id",
+        "head_repository",
+        "head_revision",
+        "base_repository",
+        "base_revision",
+        "head_branch_ref",
+        "base_branch_ref",
+        "fork_provenance",
+        "binding_evidence",
+        "authority"
+      ],
+      "properties": {
+        "provider_id": {
+          "enum": [
+            "github",
+            "github_enterprise"
+          ]
+        },
+        "head_repository": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "head_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "base_repository": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "base_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "head_branch_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "base_branch_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "fork_provenance": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/acquisition_provenance_v1"
+        },
+        "binding_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        }
+      }
+    },
+    "forge_effect_authority_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exact_target_ref",
+        "target_sha256",
+        "authority",
+        "capability_evidence",
+        "account_evidence",
+        "remote_effect_status",
+        "reconciliation_ref"
+      ],
+      "properties": {
+        "exact_target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "capability_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "account_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "remote_effect_status": {
+          "enum": [
+            "not_attempted",
+            "verified_created",
+            "failed_before_effect",
+            "unknown"
+          ]
+        },
+        "reconciliation_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ForgeProfileSetupScenarioV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "setup_consumer",
+        "way",
+        "backend",
+        "registration_kind",
+        "remote_effect_origin",
+        "remote_status",
+        "verified_repository_id",
+        "original_result_sha256",
+        "captured_result_sha256",
+        "original_idempotency_replay",
+        "source_fresh",
+        "review_fresh",
+        "fork_provider",
+        "remote_name_taken",
+        "network_effect_requested",
+        "hook_execution_requested",
+        "jj_snapshot_requested",
+        "source_backing_device_ref",
+        "backup_backing_device_ref",
+        "backup_key_present",
+        "expected_policy_revision",
+        "archive",
+        "last_good_backup_ref",
+        "prune_requested",
+        "new_project_listed",
+        "admitted_profile"
+      ],
+      "properties": {
+        "setup_consumer": {
+          "enum": [
+            "onboarding",
+            "new_project",
+            "chat_conversion"
+          ]
+        },
+        "way": {
+          "enum": [
+            "new",
+            "folder",
+            "online",
+            "device",
+            "restore",
+            "from_chat",
+            "later_no_project"
+          ]
+        },
+        "backend": {
+          "enum": [
+            "git",
+            "jujutsu"
+          ]
+        },
+        "registration_kind": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/registration_kind_v2"
+        },
+        "remote_effect_origin": {
+          "enum": [
+            null,
+            "create",
+            "fork"
+          ]
+        },
+        "remote_status": {
+          "enum": [
+            "none",
+            "verified_created",
+            "failed_before_effect",
+            "unknown"
+          ]
+        },
+        "verified_repository_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "captured_result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_idempotency_replay": {
+          "type": "boolean"
+        },
+        "source_fresh": {
+          "type": "boolean"
+        },
+        "review_fresh": {
+          "type": "boolean"
+        },
+        "fork_provider": {
+          "enum": [
+            null,
+            "github",
+            "github_enterprise",
+            "gitlab"
+          ]
+        },
+        "remote_name_taken": {
+          "type": "boolean"
+        },
+        "network_effect_requested": {
+          "type": "boolean"
+        },
+        "hook_execution_requested": {
+          "type": "boolean"
+        },
+        "jj_snapshot_requested": {
+          "type": "boolean"
+        },
+        "source_backing_device_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "backup_backing_device_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "backup_key_present": {
+          "type": "boolean"
+        },
+        "expected_policy_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "archive": {
+          "type": "boolean"
+        },
+        "last_good_backup_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prune_requested": {
+          "type": "boolean"
+        },
+        "new_project_listed": {
+          "type": "boolean"
+        },
+        "admitted_profile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "command_request_v2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/command_request"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "command_id",
+            "operation_id",
+            "scope",
+            "create_options",
+            "repository_list_scope",
+            "cross_repository_review_target",
+            "selected_repository_ref",
+            "authority",
+            "idempotency_key",
+            "return_context_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.forge.command_request.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "command_id": {
+              "enum": [
+                "cmd.forge.repository.create",
+                "cmd.forge.repository.list",
+                "cmd.forge.repository.fork",
+                "cmd.forge.review.create"
+              ]
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "scope": {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            "create_options": {
+              "anyOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/create_options_v2"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "repository_list_scope": {
+              "anyOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/repository_list_scope_v2"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "cross_repository_review_target": {
+              "anyOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/cross_repository_review_target_v2"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "selected_repository_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "authority": {
+              "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+            },
+            "idempotency_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "return_context_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        }
+      ]
+    },
+    "command_result_v2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/command_result"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "command_id",
+            "operation_id",
+            "outcome",
+            "owner_result_ref",
+            "owner_result_sha256",
+            "owner_receipt_ref",
+            "verified_repository_ref",
+            "coverage",
+            "recovery_context_ref",
+            "return_context_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.forge.command_result.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "command_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "outcome": {
+              "enum": [
+                "succeeded",
+                "failed_before_effect",
+                "unknown",
+                "refused",
+                "unsupported"
+              ]
+            },
+            "owner_result_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "owner_result_sha256": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "owner_receipt_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "verified_repository_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "coverage": {
+              "anyOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/cross_project_access_contracts/1.0.0/cross_project_access_contracts.schema.json#/$defs/CrossProjectCoverage"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "recovery_context_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "return_context_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        }
+      ]
     }
   }
 }

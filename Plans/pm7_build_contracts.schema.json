@@ -3517,6 +3517,203 @@
           "visual_wrap_changes_copied_token": false
         }
       }
+    },
+    "WorkspaceTargetV2": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id",
+            "workspace_tab_id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "project"
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "workspace_tab_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id",
+            "server_id",
+            "workspace_tab_id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "no_project"
+            },
+            "project_id": {
+              "const": null
+            },
+            "server_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "workspace_tab_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        }
+      ]
+    },
+    "project_switch_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "target",
+        "invocation_token",
+        "initiating_client_id",
+        "expected_context_revision",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.project.switch_active_tab"
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/Plans/pm7_build_contracts.schema.json#/$defs/WorkspaceTargetV2"
+        },
+        "invocation_token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "initiating_client_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_context_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "project_open_new_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "target",
+        "invocation_token",
+        "initiating_client_id",
+        "expected_context_revision",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.project.open_in_new_workspace_tab"
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/Plans/pm7_build_contracts.schema.json#/$defs/WorkspaceTargetV2"
+        },
+        "invocation_token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "initiating_client_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_context_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "ProjectsRefreshPresentationPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "settings_origin_action",
+        "changed_word",
+        "changed_outline_px",
+        "scope_labels_default",
+        "no_project_label",
+        "always_name_work_computer_on_phone_web",
+        "new_project_label",
+        "backup_retention_label",
+        "saved_configuration_label",
+        "starter_route_label",
+        "notifications_copy_label",
+        "one_assistant_node",
+        "handler_status"
+      ],
+      "properties": {
+        "settings_origin_action": {
+          "const": "Details"
+        },
+        "changed_word": {
+          "const": "Changed"
+        },
+        "changed_outline_px": {
+          "const": 1
+        },
+        "scope_labels_default": {
+          "const": false
+        },
+        "no_project_label": {
+          "const": "No project"
+        },
+        "always_name_work_computer_on_phone_web": {
+          "const": true
+        },
+        "new_project_label": {
+          "const": "New Project"
+        },
+        "backup_retention_label": {
+          "const": "Standard"
+        },
+        "saved_configuration_label": {
+          "const": "Saved setups"
+        },
+        "starter_route_label": {
+          "const": "Starters"
+        },
+        "notifications_copy_label": {
+          "const": "Notifications & limits"
+        },
+        "one_assistant_node": {
+          "const": true
+        },
+        "handler_status": {
+          "const": "handler_unavailable"
+        }
+      }
+    },
+    "command_result_v2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_chat_contracts/1.0.0/schema.json#/$defs/RouteResult"
     }
   }
 }

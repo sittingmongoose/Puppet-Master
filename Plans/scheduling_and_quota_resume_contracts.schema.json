@@ -2481,6 +2481,3297 @@
           }
         }
       ]
+    },
+    "AssistantPlanScheduleRequestApplicationV1": {
+      "description": "AssistantPlanScheduleRequest for cmd.chat.plan.schedule_build. One Build At commit is this one command: the window specification rides inside the request, and the owner creates the exact-version binding and its ExecutionSchedule in one transaction, never paired with cmd.execution_window.create (SQR-013, REV-9). expected_revision is the Plan's revision at the sheet. Exactly one execution_topology is frozen; crew carries the validated CollaborationDefinition ref and the others carry none (PSCHED-001..003). Use V<n> on the Plan card is this command against the new version's exact hash with reschedule_of_schedule_id naming the invalidated schedule, which stays invalidated as its audit record. Sources: plan_schedule (the Build At sheet) and plan_card (Use V<n>).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "expected_revision",
+        "assistant_plan_id",
+        "exact_target_version",
+        "exact_target_hash",
+        "execution_topology",
+        "collaboration_definition_ref",
+        "window",
+        "reschedule_of_schedule_id",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.plan_schedule_request.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "AssistantPlanScheduleRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.plan.schedule_build"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "project_id": {
+          "const": null
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "source_surface": {
+          "enum": [
+            "plan_schedule",
+            "plan_card"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "expected_revision": {
+          "$ref": "#/$defs/positive_integerApplicationV1"
+        },
+        "assistant_plan_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "exact_target_version": {
+          "$ref": "#/$defs/positive_integerApplicationV1"
+        },
+        "exact_target_hash": {
+          "$ref": "#/$defs/sha256ApplicationV1"
+        },
+        "execution_topology": {
+          "enum": [
+            "agent",
+            "goal_driven",
+            "crew"
+          ]
+        },
+        "collaboration_definition_ref": {
+          "$ref": "#/$defs/nullable_non_secret_refApplicationV1"
+        },
+        "window": {
+          "$ref": "#/$defs/execution_window_specApplicationV1"
+        },
+        "reschedule_of_schedule_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_stringApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "execution_topology": {
+                "const": "crew"
+              }
+            },
+            "required": [
+              "execution_topology"
+            ]
+          },
+          "then": {
+            "properties": {
+              "collaboration_definition_ref": {
+                "$ref": "#/$defs/non_secret_refApplicationV1"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "collaboration_definition_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionOccurrenceSummaryApplicationV1": {
+      "description": "SQR-016/DL-138 projection keyed by schedule_id and occurrence_start. Started occurrences use exact PlanRun, dispatch, work/To-Do/adherence and safe-pause/terminal facts. A closed occurrence held before any build work uses retained Scheduling eligibility/hold and closure facts: execution_started false, end_reason held, zero built steps and null execution bounds; plan_run_id is null only if no run was admitted. A recorded not-started outcome is distinct from missing historical facts, which make the projection unavailable. No run or timestamp is fabricated.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "schedule_id",
+        "occurrence_start",
+        "execution_started",
+        "plan_run_id",
+        "plan_version",
+        "plan_hash",
+        "actual_start",
+        "actual_end",
+        "steps_built",
+        "steps_total",
+        "end_reason",
+        "scheduled_message_outcomes",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.occurrence_summary.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "schedule_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "occurrence_start": {
+          "$ref": "#/$defs/timestampApplicationV1"
+        },
+        "plan_run_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/non_empty_stringApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_version": {
+          "$ref": "#/$defs/positive_integerApplicationV1"
+        },
+        "plan_hash": {
+          "$ref": "#/$defs/sha256ApplicationV1"
+        },
+        "actual_start": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestampApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestampApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "steps_built": {
+          "$ref": "#/$defs/non_negative_integerApplicationV1"
+        },
+        "steps_total": {
+          "$ref": "#/$defs/non_negative_integerApplicationV1"
+        },
+        "end_reason": {
+          "enum": [
+            "paused_at_wind_down",
+            "completed",
+            "cancelled",
+            "held"
+          ]
+        },
+        "scheduled_message_outcomes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "scheduled_message_id",
+              "outcome"
+            ],
+            "properties": {
+              "scheduled_message_id": {
+                "$ref": "#/$defs/non_empty_stringApplicationV1"
+              },
+              "outcome": {
+                "enum": [
+                  "scheduled",
+                  "held",
+                  "dispatched",
+                  "cancelled",
+                  "failed",
+                  "expired"
+                ]
+              }
+            }
+          },
+          "uniqueItems": true
+        },
+        "execution_started": {
+          "type": "boolean"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "x-primary-identity-fields": [
+        "schedule_id",
+        "occurrence_start"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "execution_started": {
+                "const": true
+              }
+            },
+            "required": [
+              "execution_started"
+            ]
+          },
+          "then": {
+            "properties": {
+              "plan_run_id": {
+                "type": "string"
+              },
+              "actual_start": {
+                "type": "string"
+              },
+              "actual_end": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "execution_started": {
+                "const": false
+              }
+            },
+            "required": [
+              "execution_started"
+            ]
+          },
+          "then": {
+            "properties": {
+              "actual_start": {
+                "type": "null"
+              },
+              "actual_end": {
+                "type": "null"
+              },
+              "steps_built": {
+                "const": 0
+              },
+              "end_reason": {
+                "const": "held"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionScheduleResultApplicationV1": {
+      "description": "ExecutionScheduleResult. Accepted returns the schedule_id (the id Cancel schedule later targets) and the binding ref together, at revision 1 and state active, with the recorded window echoed value for value, so the sheet can read back exactly what it showed (SQR-015). Rejected returns neither: no half-created schedule exists. Neither path admits a run: no PlanRun, Goal, CrewRun, work binding or provider attempt exists before first eligible dispatch (PSCHED-001..003, PGOAL-015).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "schedule_id",
+        "binding_ref",
+        "revision",
+        "schedule_state",
+        "exact_target_version",
+        "exact_target_hash",
+        "execution_topology",
+        "window",
+        "superseded_schedule_id",
+        "run_admitted",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.schedule_result.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ExecutionScheduleResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.plan.schedule_build"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "schedule_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_stringApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binding_ref": {
+          "$ref": "#/$defs/nullable_non_secret_refApplicationV1"
+        },
+        "revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/positive_integerApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schedule_state": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/execution_schedule_stateApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exact_target_version": {
+          "$ref": "#/$defs/positive_integerApplicationV1"
+        },
+        "exact_target_hash": {
+          "$ref": "#/$defs/sha256ApplicationV1"
+        },
+        "execution_topology": {
+          "enum": [
+            "agent",
+            "goal_driven",
+            "crew"
+          ]
+        },
+        "window": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/execution_window_specApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "superseded_schedule_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_stringApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_admitted": {
+          "const": false
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "schedule_id": {
+                "$ref": "#/$defs/non_empty_stringApplicationV1"
+              },
+              "binding_ref": {
+                "$ref": "#/$defs/non_secret_refApplicationV1"
+              },
+              "revision": {
+                "const": 1
+              },
+              "schedule_state": {
+                "const": "active"
+              },
+              "window": {
+                "$ref": "#/$defs/execution_window_specApplicationV1"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+              },
+              "schedule_id": {
+                "type": "null"
+              },
+              "binding_ref": {
+                "type": "null"
+              },
+              "revision": {
+                "type": "null"
+              },
+              "schedule_state": {
+                "type": "null"
+              },
+              "window": {
+                "type": "null"
+              },
+              "superseded_schedule_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionWindowCancelRequestApplicationV1": {
+      "description": "ExecutionWindowCancelRequest for cmd.execution_window.cancel, including Cancel schedule, which targets the schedule_id cmd.chat.plan.schedule_build returned; there is no schedule_build.cancel (SQR-013). Surfaces are the registered plan_schedule, run_schedule and settings, schedule_manager (UCC-169), and plan_card for Cancel schedule on the Plan card's Schedule needs update line (SQR-013, SQR-015; plan_card is a registered source surface of the scheduling family).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "expected_revision",
+        "schedule_id",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.window_cancel_request.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ExecutionWindowCancelRequest"
+        },
+        "command_id": {
+          "const": "cmd.execution_window.cancel"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "project_id": {
+          "const": null
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "source_surface": {
+          "enum": [
+            "plan_schedule",
+            "run_schedule",
+            "settings",
+            "schedule_manager",
+            "plan_card"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "expected_revision": {
+          "$ref": "#/$defs/positive_integerApplicationV1"
+        },
+        "schedule_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionWindowCancelResultApplicationV1": {
+      "description": "ExecutionWindowCancelResult. Accepted is terminal cancelled. Work already admitted continues under its own owner: cancelling a window is not a Stop, so admitted_work_stopped is false on every path.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "schedule_id",
+        "resulting_revision",
+        "schedule_state",
+        "admitted_work_stopped",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.window_cancel_result.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ExecutionWindowCancelResult"
+        },
+        "command_id": {
+          "const": "cmd.execution_window.cancel"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "schedule_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "resulting_revision": {
+          "$ref": "#/$defs/positive_integerApplicationV1"
+        },
+        "schedule_state": {
+          "$ref": "#/$defs/execution_schedule_stateApplicationV1"
+        },
+        "admitted_work_stopped": {
+          "const": false
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "schedule_state": {
+                "const": "cancelled"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionWindowUpdateRequestApplicationV1": {
+      "description": "ExecutionWindowUpdateRequest for cmd.execution_window.update: editing a build schedule (SQR-013) under the expected revision, refused once dispatch has started. The exact target binding does not change here; a new Plan version is Use V<n>, not an edit. Surfaces are the registered plan_schedule, run_schedule and settings plus schedule_manager (UCC-169).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "expected_revision",
+        "schedule_id",
+        "window",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.window_update_request.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ExecutionWindowUpdateRequest"
+        },
+        "command_id": {
+          "const": "cmd.execution_window.update"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "project_id": {
+          "const": null
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "source_surface": {
+          "enum": [
+            "plan_schedule",
+            "run_schedule",
+            "settings",
+            "schedule_manager"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "expected_revision": {
+          "$ref": "#/$defs/positive_integerApplicationV1"
+        },
+        "schedule_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "window": {
+          "$ref": "#/$defs/execution_window_specApplicationV1"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionWindowUpdateResultApplicationV1": {
+      "description": "ExecutionWindowUpdateResult. The same schedule_id at a new revision with the recorded window echoed; an in-flight run's admission never changes silently, and a narrowed window takes effect at the next wind-down boundary. A rejected update echoes the unchanged record.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "schedule_id",
+        "resulting_revision",
+        "schedule_state",
+        "window",
+        "in_flight_admission_changed",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.window_update_result.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ExecutionWindowUpdateResult"
+        },
+        "command_id": {
+          "const": "cmd.execution_window.update"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "schedule_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "resulting_revision": {
+          "$ref": "#/$defs/positive_integerApplicationV1"
+        },
+        "schedule_state": {
+          "$ref": "#/$defs/execution_schedule_stateApplicationV1"
+        },
+        "window": {
+          "$ref": "#/$defs/execution_window_specApplicationV1"
+        },
+        "in_flight_admission_changed": {
+          "const": false
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ScheduledMessageCancelRequestApplicationV1": {
+      "description": "ScheduledMessageCancelRequest for cmd.chat.schedule_message.cancel, with the expected revision and currentness (SQR-013). Cancels exactly one schedule; siblings in the thread are untouched (SMSG-012, SMSG-016).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "expected_revision",
+        "scheduled_dispatch_id",
+        "expected_thread_currentness",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.scheduled_message_cancel_request.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ScheduledMessageCancelRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.schedule_message.cancel"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "project_id": {
+          "const": null
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "source_surface": {
+          "enum": [
+            "schedule_details",
+            "scheduled_message_card",
+            "schedule_manager"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "expected_revision": {
+          "$ref": "#/$defs/positive_integerApplicationV1"
+        },
+        "scheduled_dispatch_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "expected_thread_currentness": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ScheduledMessageCancelResultApplicationV1": {
+      "description": "ScheduledMessageCancelResult. Accepted is terminal cancelled; the snapshot is retained for audit on every path and is never dispatched.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "scheduled_dispatch_id",
+        "resulting_revision",
+        "state",
+        "snapshot_retained",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.scheduled_message_cancel_result.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ScheduledMessageCancelResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.schedule_message.cancel"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "scheduled_dispatch_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "resulting_revision": {
+          "$ref": "#/$defs/positive_integerApplicationV1"
+        },
+        "state": {
+          "$ref": "#/$defs/scheduled_message_stateApplicationV1"
+        },
+        "snapshot_retained": {
+          "const": true
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "state": {
+                "const": "cancelled"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ScheduledMessageCreateRequestApplicationV1": {
+      "description": "ScheduledMessageCreateRequest for cmd.chat.schedule_message (SQR-002, SQR-013; Commands_System.md central registration). The only GUI producer is the schedule_sheet primary; the wand row only opens the sheet. The text is the sheet's own editable text, prefilled from the composer; text_from_composer says whether the committed text is the composer's, and composer_buffer_ref names that buffer so the owner clears it only after the durable commit and only in that case. Contract shape only: handler_unavailable until admission.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "thread_id",
+        "destination_ref",
+        "expected_thread_currentness",
+        "text",
+        "text_from_composer",
+        "composer_buffer_ref",
+        "attachment_refs",
+        "requested_runtime_snapshot_ref",
+        "send_at",
+        "missed_policy",
+        "grace_seconds",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.scheduled_message_create_request.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ScheduledMessageCreateRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.schedule_message"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "project_id": {
+          "const": null
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "source_surface": {
+          "const": "schedule_sheet"
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "destination_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "expected_thread_currentness": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "text": {
+          "$ref": "#/$defs/schedule_textApplicationV1"
+        },
+        "text_from_composer": {
+          "type": "boolean"
+        },
+        "composer_buffer_ref": {
+          "$ref": "#/$defs/nullable_non_secret_refApplicationV1"
+        },
+        "attachment_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_refApplicationV1"
+          }
+        },
+        "requested_runtime_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "send_at": {
+          "$ref": "#/$defs/scheduled_send_timeApplicationV1"
+        },
+        "missed_policy": {
+          "$ref": "#/$defs/missed_policyApplicationV1"
+        },
+        "grace_seconds": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/grace_secondsApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/missed_policy_with_graceApplicationV1"
+        },
+        {
+          "if": {
+            "properties": {
+              "text_from_composer": {
+                "const": true
+              }
+            },
+            "required": [
+              "text_from_composer"
+            ]
+          },
+          "then": {
+            "properties": {
+              "composer_buffer_ref": {
+                "$ref": "#/$defs/non_secret_refApplicationV1"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "composer_buffer_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ScheduledMessageCreateResultApplicationV1": {
+      "description": "ScheduledMessageCreateResult. An accepted commit returns the scheduled_dispatch_id and frozen snapshot ref at revision 1 in state scheduled, and only then may the card render (SMSG-001). A rejection names its typed reason, creates nothing and leaves the composer untouched (composer_cleared false). Creates no Goal, Plan or To-Do.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "scheduled_dispatch_id",
+        "snapshot_ref",
+        "revision",
+        "state",
+        "composer_cleared",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.scheduled_message_create_result.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ScheduledMessageCreateResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.schedule_message"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "scheduled_dispatch_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_stringApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snapshot_ref": {
+          "$ref": "#/$defs/nullable_non_secret_refApplicationV1"
+        },
+        "revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/positive_integerApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/scheduled_message_stateApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "composer_cleared": {
+          "type": "boolean"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "scheduled_dispatch_id": {
+                "$ref": "#/$defs/non_empty_stringApplicationV1"
+              },
+              "snapshot_ref": {
+                "$ref": "#/$defs/non_secret_refApplicationV1"
+              },
+              "revision": {
+                "const": 1
+              },
+              "state": {
+                "const": "scheduled"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+              },
+              "scheduled_dispatch_id": {
+                "type": "null"
+              },
+              "snapshot_ref": {
+                "type": "null"
+              },
+              "revision": {
+                "type": "null"
+              },
+              "state": {
+                "type": "null"
+              },
+              "composer_cleared": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ScheduledMessageUpdateRequestApplicationV1": {
+      "description": "ScheduledMessageUpdateRequest for cmd.chat.schedule_message.update: Edit (changes), Reschedule (reschedule_to a new time), Edit and send (changes plus reschedule_to \"now\") and Send now on a held message, including a missed one (reschedule_to \"now\" and no changes). There is no separate send-now command (SQR-013, CDRY-008). Under the expected revision and currentness; refused dispatch_already_started once dispatch has started, and never applied to a dispatched message. Surfaces are the existing schedule_details plus scheduled_message_card and schedule_manager (UCC-169). A request that changes nothing is invalid.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "expected_revision",
+        "scheduled_dispatch_id",
+        "expected_thread_currentness",
+        "changes",
+        "reschedule_to",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.scheduled_message_update_request.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "ScheduledMessageUpdateRequest"
+        },
+        "command_id": {
+          "const": "cmd.chat.schedule_message.update"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "project_id": {
+          "const": null
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "source_surface": {
+          "enum": [
+            "schedule_details",
+            "scheduled_message_card",
+            "schedule_manager"
+          ]
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "expected_revision": {
+          "$ref": "#/$defs/positive_integerApplicationV1"
+        },
+        "scheduled_dispatch_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "expected_thread_currentness": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "changes": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/scheduled_message_changesApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reschedule_to": {
+          "oneOf": [
+            {
+              "const": "now"
+            },
+            {
+              "$ref": "#/$defs/scheduled_send_timeApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "anyOf": [
+        {
+          "properties": {
+            "changes": {
+              "$ref": "#/$defs/scheduled_message_changesApplicationV1"
+            }
+          },
+          "required": [
+            "changes"
+          ],
+          "allOf": [
+            {
+              "properties": {
+                "changes": {
+                  "minProperties": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "reschedule_to": {
+              "not": {
+                "type": "null"
+              }
+            }
+          },
+          "required": [
+            "reschedule_to"
+          ]
+        }
+      ],
+      "allOf": [
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ScheduledMessageUpdateResultApplicationV1": {
+      "description": "ScheduledMessageUpdateResult. An accepted update rebinds the exact snapshot as a new revision of the same scheduled_dispatch_id (no second schedule, SQR-010) in state scheduled; with reschedule_to now, scheduled_at_utc is the owner's server time and the internal scheduler dispatch follows in its own idempotency domain. A rejected update reports the unchanged record: its revision, state, snapshot and time stay as they were, and a prior failed attempt is never overwritten (SMSG-013).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "scheduled_dispatch_id",
+        "resulting_revision",
+        "state",
+        "snapshot_ref",
+        "scheduled_at_utc",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.scheduled_message_update_result.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "ScheduledMessageUpdateResult"
+        },
+        "command_id": {
+          "const": "cmd.chat.schedule_message.update"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "scheduled_dispatch_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "resulting_revision": {
+          "$ref": "#/$defs/positive_integerApplicationV1"
+        },
+        "state": {
+          "$ref": "#/$defs/scheduled_message_stateApplicationV1"
+        },
+        "snapshot_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "scheduled_at_utc": {
+          "$ref": "#/$defs/timestampApplicationV1"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "state": {
+                "const": "scheduled"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "execution_schedule_stateApplicationV1": {
+      "enum": [
+        "active",
+        "paused",
+        "cancelled",
+        "completed",
+        "invalidated"
+      ]
+    },
+    "execution_window_specApplicationV1": {
+      "description": "The window specification a Build At commit carries inside AssistantPlanScheduleRequest (SQR-013, REV-9) and an edit carries inside ExecutionWindowUpdateRequest. Field names follow pm.execution.schedule.v1 (section 3, Execution windows); local_start_date and grace_seconds are request-side fields that record exactly what the Build At sheet shows (SQR-015). one_time names a date and no weekdays; recurring_window names at least one weekday (1 = Monday .. 7 = Sunday) and no date.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schedule_kind",
+        "timezone",
+        "local_start_date",
+        "local_start",
+        "local_pause",
+        "days_of_week",
+        "wind_down_seconds",
+        "missed_policy",
+        "grace_seconds",
+        "auto_resume_next_window",
+        "dst_policy"
+      ],
+      "properties": {
+        "schedule_kind": {
+          "enum": [
+            "one_time",
+            "recurring_window"
+          ]
+        },
+        "timezone": {
+          "$ref": "#/$defs/iana_timezoneApplicationV1"
+        },
+        "local_start_date": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/local_dateApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "local_start": {
+          "$ref": "#/$defs/local_timeApplicationV1"
+        },
+        "local_pause": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/local_timeApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "days_of_week": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 7,
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        },
+        "wind_down_seconds": {
+          "$ref": "#/$defs/non_negative_integerApplicationV1"
+        },
+        "missed_policy": {
+          "$ref": "#/$defs/missed_policyApplicationV1"
+        },
+        "grace_seconds": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/grace_secondsApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "auto_resume_next_window": {
+          "type": "boolean"
+        },
+        "dst_policy": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/missed_policy_with_graceApplicationV1"
+        },
+        {
+          "if": {
+            "properties": {
+              "schedule_kind": {
+                "const": "one_time"
+              }
+            },
+            "required": [
+              "schedule_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "local_start_date": {
+                "$ref": "#/$defs/local_dateApplicationV1"
+              },
+              "days_of_week": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "schedule_kind": {
+                "const": "recurring_window"
+              }
+            },
+            "required": [
+              "schedule_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "local_start_date": {
+                "type": "null"
+              },
+              "days_of_week": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "grace_secondsApplicationV1": {
+      "description": "The grace recorded for cancel_after_grace. The sheets show whole minutes and record exactly the shown value in seconds (SQR-015, SQR-017), so it is a positive multiple of 60.",
+      "type": "integer",
+      "minimum": 60,
+      "multipleOf": 60
+    },
+    "iana_timezoneApplicationV1": {
+      "description": "An IANA zone name, never a fixed offset (section 3, Execution windows). UTC is a valid choice but is never the sheet's default (SQR-017); the default is a surface rule, not a shape.",
+      "type": "string",
+      "pattern": "^(?:UTC|[A-Z][A-Za-z_]+(?:/[A-Za-z0-9_+-]+)+)$"
+    },
+    "local_dateApplicationV1": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])$"
+    },
+    "local_timeApplicationV1": {
+      "type": "string",
+      "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][0-9]$"
+    },
+    "missed_policyApplicationV1": {
+      "description": "Stored missed-time policy (section 3). Surfaces label these values per SQR-017 and never rename them.",
+      "enum": [
+        "hold",
+        "next_available",
+        "cancel_after_grace"
+      ]
+    },
+    "missed_policy_with_graceApplicationV1": {
+      "description": "grace_seconds is a recorded value exactly when the policy is cancel_after_grace, and null otherwise (a value the sheet does not show is not recorded).",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "missed_policy": {
+                "const": "cancel_after_grace"
+              }
+            },
+            "required": [
+              "missed_policy"
+            ]
+          },
+          "then": {
+            "properties": {
+              "grace_seconds": {
+                "$ref": "#/$defs/grace_secondsApplicationV1"
+              }
+            },
+            "required": [
+              "grace_seconds"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "missed_policy": {
+                "enum": [
+                  "hold",
+                  "next_available"
+                ]
+              }
+            },
+            "required": [
+              "missed_policy"
+            ]
+          },
+          "then": {
+            "properties": {
+              "grace_seconds": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "non_empty_stringApplicationV1": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "non_negative_integerApplicationV1": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "non_secret_refApplicationV1": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "nullable_non_secret_refApplicationV1": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "positive_integerApplicationV1": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "schedule_command_error_codeApplicationV1": {
+      "description": "The closed typed-error set of Plans/Scheduling_and_Quota_Resume.md section 3 (Exact commands and required result boundaries). A failure never returns a success-shaped result and never advances a schedule.",
+      "enum": [
+        "invalid_request",
+        "schedule_not_found",
+        "stale_schedule_revision",
+        "target_not_found",
+        "target_version_changed",
+        "dispatch_already_started",
+        "manual_stop_latched",
+        "window_inactive",
+        "quota_unavailable",
+        "reset_truth_unknown",
+        "route_unavailable",
+        "command_not_registered",
+        "permission_denied",
+        "owner_unavailable",
+        "cancelled"
+      ]
+    },
+    "schedule_textApplicationV1": {
+      "description": "The Schedule Message sheet's own text (precondition schedule_text_not_empty, SQR-013): at least one non-whitespace character. An empty composer does not matter; empty sheet text is refused invalid_request.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200000,
+      "pattern": "\\S"
+    },
+    "scheduled_message_changesApplicationV1": {
+      "description": "The edited fields of a scheduled or held message. Every present field replaces the frozen value in a new snapshot revision; an absent field keeps it. text keeps the schedule_text_not_empty rule.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "$ref": "#/$defs/schedule_textApplicationV1"
+        },
+        "attachment_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_refApplicationV1"
+          }
+        },
+        "requested_runtime_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "missed_policy": {
+          "$ref": "#/$defs/missed_policyApplicationV1"
+        },
+        "grace_seconds": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/grace_secondsApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "dependentRequired": {
+        "missed_policy": [
+          "grace_seconds"
+        ],
+        "grace_seconds": [
+          "missed_policy"
+        ]
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/missed_policy_with_graceApplicationV1"
+        }
+      ]
+    },
+    "scheduled_message_stateApplicationV1": {
+      "enum": [
+        "scheduled",
+        "held",
+        "dispatched",
+        "cancelled",
+        "failed",
+        "expired"
+      ]
+    },
+    "scheduled_send_timeApplicationV1": {
+      "description": "A concrete send time: the owner's UTC instant plus the IANA zone and local wall time the user chose, validated as future in that zone before admission (SQR-010).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scheduled_at_utc",
+        "timezone",
+        "local_wall_time"
+      ],
+      "properties": {
+        "scheduled_at_utc": {
+          "$ref": "#/$defs/timestampApplicationV1"
+        },
+        "timezone": {
+          "$ref": "#/$defs/iana_timezoneApplicationV1"
+        },
+        "local_wall_time": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}$"
+        }
+      }
+    },
+    "sha256ApplicationV1": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "timestampApplicationV1": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?(?:Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "ApplicationAutomationPauseRecord": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/ApplicationAutomationPauseRecord"
+    },
+    "ApplicationAutomationPauseSetRequest": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1"
+    },
+    "ApplicationAutomationPauseSetResult": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1"
+    },
+    "ApplicationAutomationPauseRecordPhysicalValueV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "owner_record",
+        "writer_evidence",
+        "content_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.application_automation_pause.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_record": {
+          "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/ApplicationAutomationPauseRecord"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ApplicationScheduleRecordV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/ExecutionScheduleApplicationV1"
+    },
+    "ApplicationScheduleOccurrenceV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1"
+    },
+    "ApplicationQuotaResumeConsentV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/QuotaResumeConsentApplicationV1"
+    },
+    "ApplicationScheduleRecordV1PhysicalValueV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "owner_record",
+        "writer_evidence",
+        "content_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.application_schedule.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_record": {
+          "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/ExecutionScheduleApplicationV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ApplicationScheduleOccurrenceV1PhysicalValueV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "owner_record",
+        "writer_evidence",
+        "content_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.application_schedule_occurrence.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_record": {
+          "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ApplicationQuotaResumeConsentV1PhysicalValueV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "owner_record",
+        "writer_evidence",
+        "content_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.application_quota_resume_consent.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_record": {
+          "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/QuotaResumeConsentApplicationV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "AssistantPlanScheduleRequestScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/AssistantPlanScheduleRequest"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/AssistantPlanScheduleRequestApplicationV1"
+        }
+      ]
+    },
+    "AutomationPauseSetRequestApplicationV1": {
+      "description": "AutomationPauseSetRequest for cmd.runtime.automation_pause.set (SQR-018, DL-136; CS-087, UCC-174). Project-scoped: the target identity is the envelope's project_id and there is no other target. paused true turns \"Pause all automations\" on and latches a manual stop at project scope by advancing the project's user_stop_epoch the way Manual Stop does; paused false (\"Turn back on\", or the switch itself) is the only clear. The only source surface is schedule_manager (the Resume & Safety Policy tab), never settings: the switch is not a Settings value. The command sets an absolute value and is idempotent by value (a request that sets the value the switch already has returns the record unchanged and does not advance the epoch again), so it carries no expected_revision. actor_kind records who originated the dispatch; the owner accepts only user and refuses every other kind with permission_denied, and no automatic producer dispatches it. There is no toggle, inherit or automation_stop spelling. Contract shape only: handler_unavailable until admission.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_type",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route",
+        "actor_kind",
+        "paused",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.runtime.automation_pause_set_request.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_type": {
+          "const": "AutomationPauseSetRequest"
+        },
+        "command_id": {
+          "const": "cmd.runtime.automation_pause.set"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "project_id": {
+          "const": null
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "source_surface": {
+          "const": "schedule_manager"
+        },
+        "return_route": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "actor_kind": {
+          "$ref": "#/$defs/automation_pause_actor_kindApplicationV1"
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "automation_pause_actor_kindApplicationV1": {
+      "description": "Who originated the dispatch. Only user is ever accepted (SQR-018, DL-136; CS-087): an assistant or agent tool call, the scheduler, an execution window, a quota resume, Crew Auto, Goal or Plan continuation (automation) and system are all refused with permission_denied. Every non-user kind is listed so that a refused dispatch has a well-formed request to refuse.",
+      "enum": [
+        "user",
+        "assistant",
+        "agent",
+        "scheduler",
+        "automation",
+        "system"
+      ]
+    },
+    "AutomationPauseSetRequestScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/AutomationPauseSetRequest"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/AutomationPauseSetRequestApplicationV1"
+        }
+      ]
+    },
+    "AutomationPauseSetResultApplicationV1": {
+      "description": "AutomationPauseSetResult. Every path returns the project's pause record (paused, the project's user_stop_epoch, who changed it, when, and its revision). Accepted: the record holds the requested value; changed is true only when the value moved, and the owner owes one runtime.automation_pause_changed event only after family-specific Event Authority admission. Until then no EventRecord is appended; the outcome reports missing_event_registration through owner diagnostics (DL-138, DL-093). Only a change to paused true advances the epoch; an idempotent re-set (changed false) and turning the switch off never do. Rejected (for example permission_denied for a non-user actor, which is how an automatic clear is refused) changes nothing and echoes the unchanged record. The side_effects members are false on every path.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_type",
+        "command_id",
+        "command_instance_id",
+        "outcome",
+        "error_code",
+        "projection_ref",
+        "project_id",
+        "requested_paused",
+        "changed",
+        "epoch_advanced",
+        "pause",
+        "side_effects",
+        "application_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.runtime.automation_pause_set_result.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_type": {
+          "const": "AutomationPauseSetResult"
+        },
+        "command_id": {
+          "const": "cmd.runtime.automation_pause.set"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_stringApplicationV1"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection_ref": {
+          "$ref": "#/$defs/non_secret_refApplicationV1"
+        },
+        "project_id": {
+          "const": null
+        },
+        "requested_paused": {
+          "type": "boolean"
+        },
+        "changed": {
+          "type": "boolean"
+        },
+        "epoch_advanced": {
+          "type": "boolean"
+        },
+        "pause": {
+          "$ref": "#/$defs/ProjectAutomationPauseRecordApplicationV1"
+        },
+        "side_effects": {
+          "$ref": "#/$defs/automation_pause_side_effectsApplicationV1"
+        },
+        "application_context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "type": "null"
+              },
+              "changed": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_code": {
+                "$ref": "#/$defs/schedule_command_error_codeApplicationV1"
+              },
+              "changed": {
+                "const": false
+              },
+              "epoch_advanced": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              },
+              "requested_paused": {
+                "const": true
+              }
+            },
+            "required": [
+              "outcome",
+              "requested_paused"
+            ]
+          },
+          "then": {
+            "properties": {
+              "pause": {
+                "properties": {
+                  "paused": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              },
+              "requested_paused": {
+                "const": false
+              }
+            },
+            "required": [
+              "outcome",
+              "requested_paused"
+            ]
+          },
+          "then": {
+            "properties": {
+              "pause": {
+                "properties": {
+                  "paused": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "requested_paused": {
+                "const": false
+              }
+            },
+            "required": [
+              "requested_paused"
+            ]
+          },
+          "then": {
+            "properties": {
+              "epoch_advanced": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "changed": {
+                "const": false
+              }
+            },
+            "required": [
+              "changed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "epoch_advanced": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              },
+              "requested_paused": {
+                "const": true
+              },
+              "changed": {
+                "const": true
+              }
+            },
+            "required": [
+              "outcome",
+              "requested_paused",
+              "changed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "epoch_advanced": {
+                "const": true
+              },
+              "pause": {
+                "properties": {
+                  "revision": {
+                    "$ref": "#/$defs/positive_integerApplicationV1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "changed": {
+                "const": true
+              }
+            },
+            "required": [
+              "changed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "pause": {
+                "properties": {
+                  "revision": {
+                    "$ref": "#/$defs/positive_integerApplicationV1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "application_context": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ProjectAutomationPauseRecordApplicationV1": {
+      "description": "The project-scoped operational record behind \"Pause all automations\" (SQR-018): owned by Plans/Scheduling_and_Quota_Resume.md and never a Settings value; no Settings default seeds it. One record per project. user_stop_epoch is the project's monotonically increasing epoch that every eligibility evaluation for a target in the project captures beside the target's own (section 1; SQR-006, clause project_automation_paused). Only a user ever changes the record, so changed_by_actor_kind is user or, while the record is still at its initial revision 0 (switch off, never changed), null. A paused record always names the user who paused it and when (\"Paused by you at <time>\"). SP-323 registers the closed project_automation_pause physical family and exact key. This is a static custody contract, not a native writer or runtime proof (DL-138).",
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-identity-fields": [
+        "project_id"
+      ],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "paused",
+        "user_stop_epoch",
+        "changed_by_actor_ref",
+        "changed_by_actor_kind",
+        "changed_at",
+        "revision"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.runtime.project_automation_pause.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "const": null
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "user_stop_epoch": {
+          "$ref": "#/$defs/non_negative_integerApplicationV1"
+        },
+        "changed_by_actor_ref": {
+          "$ref": "#/$defs/nullable_non_secret_refApplicationV1"
+        },
+        "changed_by_actor_kind": {
+          "oneOf": [
+            {
+              "const": "user"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "changed_at": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/timestampApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revision": {
+          "$ref": "#/$defs/non_negative_integerApplicationV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "revision": {
+                "const": 0
+              }
+            },
+            "required": [
+              "revision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "paused": {
+                "const": false
+              },
+              "changed_by_actor_ref": {
+                "type": "null"
+              },
+              "changed_by_actor_kind": {
+                "type": "null"
+              },
+              "changed_at": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "changed_by_actor_ref": {
+                "$ref": "#/$defs/non_secret_refApplicationV1"
+              },
+              "changed_by_actor_kind": {
+                "const": "user"
+              },
+              "changed_at": {
+                "$ref": "#/$defs/timestampApplicationV1"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "paused": {
+                "const": true
+              }
+            },
+            "required": [
+              "paused"
+            ]
+          },
+          "then": {
+            "properties": {
+              "revision": {
+                "$ref": "#/$defs/positive_integerApplicationV1"
+              },
+              "user_stop_epoch": {
+                "$ref": "#/$defs/positive_integerApplicationV1"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "automation_pause_side_effectsApplicationV1": {
+      "description": "What the switch never does (SQR-018): turning it on cancels nothing, invalidates no schedule and disables no quota consent; neither direction changes a per-run manual Pause, Stop or Cancel latch; and the command dispatches nothing by itself (turning it off only lets the one predicate evaluate held items again). Every member is false on every path.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schedules_cancelled_or_invalidated",
+        "quota_consents_disabled",
+        "per_run_latches_changed",
+        "work_dispatched"
+      ],
+      "properties": {
+        "schedules_cancelled_or_invalidated": {
+          "const": false
+        },
+        "quota_consents_disabled": {
+          "const": false
+        },
+        "per_run_latches_changed": {
+          "const": false
+        },
+        "work_dispatched": {
+          "const": false
+        }
+      }
+    },
+    "AutomationPauseSetResultScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/AutomationPauseSetResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/AutomationPauseSetResultApplicationV1"
+        }
+      ]
+    },
+    "ExecutionScheduleResultScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ExecutionScheduleResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ExecutionScheduleResultApplicationV1"
+        }
+      ]
+    },
+    "ExecutionWindowCancelRequestScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ExecutionWindowCancelRequest"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ExecutionWindowCancelRequestApplicationV1"
+        }
+      ]
+    },
+    "ExecutionWindowCancelResultScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ExecutionWindowCancelResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ExecutionWindowCancelResultApplicationV1"
+        }
+      ]
+    },
+    "ExecutionWindowUpdateRequestScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ExecutionWindowUpdateRequest"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ExecutionWindowUpdateRequestApplicationV1"
+        }
+      ]
+    },
+    "ExecutionWindowUpdateResultScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ExecutionWindowUpdateResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ExecutionWindowUpdateResultApplicationV1"
+        }
+      ]
+    },
+    "ScheduledMessageCancelRequestScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ScheduledMessageCancelRequest"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ScheduledMessageCancelRequestApplicationV1"
+        }
+      ]
+    },
+    "ScheduledMessageCancelResultScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ScheduledMessageCancelResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ScheduledMessageCancelResultApplicationV1"
+        }
+      ]
+    },
+    "ScheduledMessageCreateRequestScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ScheduledMessageCreateRequest"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ScheduledMessageCreateRequestApplicationV1"
+        }
+      ]
+    },
+    "ScheduledMessageCreateResultScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ScheduledMessageCreateResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ScheduledMessageCreateResultApplicationV1"
+        }
+      ]
+    },
+    "ScheduledMessageUpdateRequestScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ScheduledMessageUpdateRequest"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ScheduledMessageUpdateRequestApplicationV1"
+        }
+      ]
+    },
+    "ScheduledMessageUpdateResultScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ScheduledMessageUpdateResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ScheduledMessageUpdateResultApplicationV1"
+        }
+      ]
+    },
+    "ExecutionWindowCreateRequestScopeV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "target_kind",
+        "target_ref",
+        "target_revision",
+        "target_sha256",
+        "window",
+        "runtime_snapshot_ref",
+        "person_consent_ref",
+        "creates_run"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.execution_window.create"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "target_kind": {
+          "enum": [
+            "scheduled_message",
+            "assistant_plan_run",
+            "crew_run",
+            "goal_run",
+            "agent_run"
+          ]
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "target_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "window": {
+          "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/execution_window_spec"
+        },
+        "runtime_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "person_consent_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "creates_run": {
+          "const": false
+        }
+      }
+    },
+    "ExecutionWindowCreateResultScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/scheduling_and_quota_resume_contracts/1.0.0/schema.json#/$defs/ExecutionScheduleResultScopeV2"
+    },
+    "QuotaResumeConsentRequestScopeV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "thread_id",
+        "run_id",
+        "target_ref",
+        "target_sha256",
+        "person_consent_evidence",
+        "scope_stop_epoch",
+        "task_stop_epoch",
+        "provider_id",
+        "account_id",
+        "consent_id",
+        "expires_at",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "person_consent_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "scope_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "task_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "account_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "consent_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "QuotaResumeConsentResultScopeV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "consent_id",
+        "status",
+        "canonical_consent_ref",
+        "owner_receipt_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "consent_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "recorded",
+            "revoked",
+            "refused"
+          ]
+        },
+        "canonical_consent_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
     }
   }
 }

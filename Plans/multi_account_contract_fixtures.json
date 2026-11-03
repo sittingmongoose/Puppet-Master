@@ -2010,5 +2010,218 @@
       5
     ],
     "first_time_selected_source_auth_shape_only": true
-  }
+  },
+  "projects_refresh_cases": [
+    {
+      "case_id": "fd-readiness-ready_here",
+      "schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AccountResolutionV1",
+      "record": {
+        "provider_id": "provider-a",
+        "account_id": "account-a",
+        "destination_server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "selected_for_copy": true,
+        "outcome": "ready_here",
+        "destination_local_credential_ref": "ref:local-credential",
+        "destination_local_profile_ref": "ref:local-profile",
+        "readiness_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "source_credentials_transferred": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "accounts.destination_local_readiness",
+          "expected": "ready_here"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-readiness-no-key-transfer",
+      "schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AccountResolutionV1",
+      "record": {
+        "provider_id": "provider-a",
+        "account_id": "account-a",
+        "destination_server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "selected_for_copy": true,
+        "outcome": "ready_here",
+        "destination_local_credential_ref": "ref:local-credential",
+        "destination_local_profile_ref": "ref:local-profile",
+        "readiness_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "source_credentials_transferred": true
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-readiness-check_there",
+      "schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AccountResolutionV1",
+      "record": {
+        "provider_id": "provider-a",
+        "account_id": "account-a",
+        "destination_server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "selected_for_copy": true,
+        "outcome": "check_there",
+        "destination_local_credential_ref": null,
+        "destination_local_profile_ref": null,
+        "readiness_evidence": null,
+        "source_credentials_transferred": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "accounts.destination_local_readiness",
+          "expected": "check_there"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-readiness-sign_in_there",
+      "schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AccountResolutionV1",
+      "record": {
+        "provider_id": "provider-a",
+        "account_id": "account-a",
+        "destination_server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "selected_for_copy": true,
+        "outcome": "sign_in_there",
+        "destination_local_credential_ref": null,
+        "destination_local_profile_ref": null,
+        "readiness_evidence": null,
+        "source_credentials_transferred": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "accounts.destination_local_readiness",
+          "expected": "sign_in_there"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-readiness-key_needed",
+      "schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AccountResolutionV1",
+      "record": {
+        "provider_id": "provider-a",
+        "account_id": "account-a",
+        "destination_server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "selected_for_copy": true,
+        "outcome": "key_needed",
+        "destination_local_credential_ref": null,
+        "destination_local_profile_ref": null,
+        "readiness_evidence": null,
+        "source_credentials_transferred": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "accounts.destination_local_readiness",
+          "expected": "key_needed"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-readiness-not_installed",
+      "schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AccountResolutionV1",
+      "record": {
+        "provider_id": "provider-a",
+        "account_id": "account-a",
+        "destination_server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "selected_for_copy": true,
+        "outcome": "not_installed",
+        "destination_local_credential_ref": null,
+        "destination_local_profile_ref": null,
+        "readiness_evidence": null,
+        "source_credentials_transferred": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "accounts.destination_local_readiness",
+          "expected": "not_installed"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-readiness-expired",
+      "schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AccountResolutionV1",
+      "record": {
+        "provider_id": "provider-a",
+        "account_id": "account-a",
+        "destination_server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "selected_for_copy": true,
+        "outcome": "expired",
+        "destination_local_credential_ref": null,
+        "destination_local_profile_ref": null,
+        "readiness_evidence": null,
+        "source_credentials_transferred": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "accounts.destination_local_readiness",
+          "expected": "expired"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-readiness-cannot_move",
+      "schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AccountResolutionV1",
+      "record": {
+        "provider_id": "provider-a",
+        "account_id": "account-a",
+        "destination_server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "selected_for_copy": true,
+        "outcome": "cannot_move",
+        "destination_local_credential_ref": null,
+        "destination_local_profile_ref": null,
+        "readiness_evidence": null,
+        "source_credentials_transferred": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "accounts.destination_local_readiness",
+          "expected": "cannot_move"
+        }
+      ],
+      "native_runtime_executed": false
+    }
+  ]
 }

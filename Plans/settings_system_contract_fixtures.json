@@ -892,10 +892,15 @@
         "cmd.settings.open"
       ],
       "required_target_fields": [
-        "project_id"
+        "level",
+        "level_key"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "rows",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
     },
     "general-appearance-input": {
       "title": "General, Appearance, Accessibility, and Input",
@@ -920,10 +925,15 @@
         "cmd.settings.transaction.rollback"
       ],
       "required_target_fields": [
-        "project_id"
+        "level",
+        "level_key"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "rows",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
     },
     "providers-accounts-models": {
       "title": "Providers, Accounts, Models, and Installations",
@@ -949,14 +959,17 @@
         "cmd.installation.verify"
       ],
       "required_target_fields": [
-        "project_id",
         "host_id",
         "environment_id",
         "provider_id",
         "provider_route_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "things",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Models_System.md"
     },
     "web-routes": {
       "title": "Web Routes",
@@ -979,12 +992,15 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "provider_id",
         "provider_route_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "things",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Tools.md"
     },
     "media-routes": {
       "title": "Media Routes",
@@ -1005,12 +1021,15 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "provider_id",
         "provider_route_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "things",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Models_System.md"
     },
     "back-seat-driver": {
       "title": "Back Seat Driver",
@@ -1031,10 +1050,15 @@
         "cmd.bsd.set"
       ],
       "required_target_fields": [
-        "project_id"
+        "level",
+        "level_key"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "rows",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
     },
     "memory-context-instructions": {
       "title": "Memory, Context, and Instructions",
@@ -1054,11 +1078,13 @@
       ],
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
-      "required_target_fields": [
-        "project_id"
-      ],
+      "required_target_fields": [],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "mixed",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/assistant-memory-subsystem.md"
     },
     "goals-crew-personas": {
       "title": "Goals, Crew, Personas, and Roles",
@@ -1080,11 +1106,15 @@
       ],
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
-      "required_target_fields": [
-        "project_id"
-      ],
+      "required_target_fields": [],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "things",
+      "project_switch_ids": [
+        "personas.library.disabled-bundled"
+      ],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Goal_Runtime_System.md"
     },
     "permissions-filesafe": {
       "title": "Permissions and FileSafe",
@@ -1103,11 +1133,13 @@
       ],
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
-      "required_target_fields": [
-        "project_id"
-      ],
+      "required_target_fields": [],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "things",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Permissions_System.md"
     },
     "commands-shortcuts": {
       "title": "Commands and Shortcuts",
@@ -1138,11 +1170,13 @@
         "commands.export",
         "commands.reset_all"
       ],
-      "required_target_fields": [
-        "project_id"
-      ],
+      "required_target_fields": [],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": "CS-081 eight-action census (see owner_local_action_refs) with machine companions; S1-S7 bind registered Project values extensions.commands.{keyboard-shortcuts, shortcut-hints, keyboard-layout, command-palette-visibility} via transaction preview/apply; rest view-only; sole handler handlers::commands::apply_local_action (native absent). No owner action IDs: commands.* is not cmd.*. Presets, not UICommands; scope selector never changes file roots."
+      "owner_gap_reason": "CS-081 eight-action census (see owner_local_action_refs) with machine companions; S1-S7 bind registered Project values extensions.commands.{keyboard-shortcuts, shortcut-hints, keyboard-layout, command-palette-visibility} via transaction preview/apply; rest view-only; sole handler handlers::commands::apply_local_action (native absent). No owner action IDs: commands.* is not cmd.*. Presets, not UICommands; scope selector never changes file roots.",
+      "scope_model": "things",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Commands_System.md"
     },
     "tools-integrations": {
       "title": "Tools and Integrations",
@@ -1169,12 +1203,20 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "host_id",
         "environment_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "things",
+      "project_switch_ids": [
+        "system.mcp.server-enabled",
+        "system.mcp.tool-toggle",
+        "extensions.skills.skill-on-off",
+        "extensions.plugins.plugin-on-off"
+      ],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Tools.md"
     },
     "testing-debug-capture": {
       "title": "Testing, Debug, and Capture",
@@ -1195,12 +1237,15 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "host_id",
         "environment_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "mixed",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Automated_Testing_System.md"
     },
     "files-editor-terminal": {
       "title": "Files, Editor, and Terminal",
@@ -1221,12 +1266,15 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "host_id",
         "environment_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "mixed",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/FileManager.md"
     },
     "notifications-sounds": {
       "title": "Notifications and Sounds",
@@ -1247,10 +1295,15 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id"
+        "level",
+        "level_key"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "rows",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
     },
     "source-control": {
       "title": "Source Control",
@@ -1279,7 +1332,11 @@
         "environment_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "mixed",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Forge_Integrations.md"
     },
     "browser-policy": {
       "title": "Browser Policy",
@@ -1299,12 +1356,15 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "host_id",
         "environment_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "mixed",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md"
     },
     "containers-registries": {
       "title": "Containers and Registries",
@@ -1324,12 +1384,15 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "host_id",
         "environment_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "mixed",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Containers_Registry_and_Unraid.md"
     },
     "storage-retention-recovery": {
       "title": "Storage, Retention, Recovery, and Cleanup",
@@ -1350,12 +1413,15 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "server_id",
         "vault_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "status_only",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/storage-plan.md"
     },
     "project-history-artifacts": {
       "title": "Project History, Sessions, Artifacts, and Outputs",
@@ -1375,11 +1441,13 @@
       ],
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
-      "required_target_fields": [
-        "project_id"
-      ],
+      "required_target_fields": [],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "status_only",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/storage-plan.md"
     },
     "settings-transfer": {
       "title": "Settings Transfer",
@@ -1402,11 +1470,13 @@
         "cmd.settings.transaction.apply",
         "cmd.settings.transaction.rollback"
       ],
-      "required_target_fields": [
-        "project_id"
-      ],
+      "required_target_fields": [],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "flow",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Settings_System.md"
     },
     "settings-export-migration": {
       "title": "Settings Export and Migration",
@@ -1431,11 +1501,13 @@
         "cmd.settings.transaction.apply",
         "cmd.settings.transaction.rollback"
       ],
-      "required_target_fields": [
-        "project_id"
-      ],
+      "required_target_fields": [],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "flow",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Settings_System.md"
     },
     "server-claim-bootstrap": {
       "title": "Server Claim and Bootstrap",
@@ -1453,13 +1525,16 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "server_id",
         "host_id",
         "environment_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "computer_records",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Shared_Integration_Runtime.md"
     },
     "servers-hosts-environments": {
       "title": "Servers, Hosts, and Environments",
@@ -1478,13 +1553,16 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "server_id",
         "host_id",
         "environment_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "computer_records",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Shared_Integration_Runtime.md"
     },
     "clients-continuity": {
       "title": "Clients and Continuity",
@@ -1503,12 +1581,15 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "server_id",
         "client_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "computer_records",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Shared_Integration_Runtime.md"
     },
     "project-hosting-files": {
       "title": "Project Hosting, Location, and Files",
@@ -1532,10 +1613,16 @@
         "server_id",
         "vault_id",
         "host_id",
-        "environment_id"
+        "environment_id",
+        "level",
+        "level_key"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "rows",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
     },
     "project-sync-move-copy": {
       "title": "Project Sync, Move, and Copy",
@@ -1554,7 +1641,6 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "server_id",
         "vault_id",
         "host_id",
@@ -1562,7 +1648,11 @@
         "operation_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "flow",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Project_Sync_and_Backbone.md"
     },
     "ssh-remote": {
       "title": "SSH Remotes",
@@ -1583,12 +1673,15 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "host_id",
         "environment_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "computer_records",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/GitHub_Integration.md"
     },
     "remote-access": {
       "title": "Remote Access",
@@ -1612,14 +1705,17 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "server_id",
         "host_id",
         "environment_id",
         "client_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "computer_records",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Remote_Access_System.md"
     },
     "server-backup-restore": {
       "title": "Full Server Backup and Restore",
@@ -1661,7 +1757,6 @@
         "cmd.restore.open_details"
       ],
       "required_target_fields": [
-        "project_id",
         "server_id",
         "vault_id",
         "host_id",
@@ -1669,7 +1764,11 @@
         "operation_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "computer_records",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Backup_Restore_System.md"
     },
     "project-backup": {
       "title": "Project Backup",
@@ -1714,10 +1813,16 @@
       "required_target_fields": [
         "project_id",
         "server_id",
-        "vault_id"
+        "vault_id",
+        "level",
+        "level_key"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "rows",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
     },
     "updates": {
       "title": "Updates",
@@ -1737,15 +1842,20 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "host_id",
-        "environment_id"
+        "environment_id",
+        "level",
+        "level_key"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "rows",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
     },
     "project-defaults-templates": {
-      "title": "Project Defaults and Templates",
+      "title": "Saved setups and Starters",
       "purpose": "Project creation defaults and reusable template settings without cross-Project inheritance.",
       "owner_refs": [
         "Plans/Settings_System.md",
@@ -1756,18 +1866,22 @@
       "search_aliases": [
         "project defaults",
         "templates",
-        "new project"
+        "new project",
+        "My starters",
+        "Saved setups"
       ],
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [
         "cmd.settings.transaction.preview",
         "cmd.settings.transaction.apply"
       ],
-      "required_target_fields": [
-        "project_id"
-      ],
+      "required_target_fields": [],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": "Template application must remain a detached previewed transaction and cannot create live inheritance."
+      "owner_gap_reason": "Template application must remain a detached previewed transaction and cannot create live inheritance.",
+      "scope_model": "things",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Settings_System.md"
     },
     "onboarding-guided-tour": {
       "title": "Onboarding and Guided Tour",
@@ -1787,7 +1901,6 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "server_id",
         "host_id",
         "environment_id",
@@ -1795,7 +1908,11 @@
         "operation_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": "Settings destination and exact continuation are current; full Onboarding and Guided Tour GUI implementation remains deferred."
+      "owner_gap_reason": "Settings destination and exact continuation are current; full Onboarding and Guided Tour GUI implementation remains deferred.",
+      "scope_model": "flow",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/Planning_Wizard.md"
     },
     "doctor": {
       "title": "Doctor",
@@ -1814,13 +1931,16 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "server_id",
         "host_id",
         "environment_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": "Doctor is an ongoing Settings destination, but Settings runs no probe and owns no repair; full Doctor GUI remains deferred."
+      "owner_gap_reason": "Doctor is an ongoing Settings destination, but Settings runs no probe and owns no repair; full Doctor GUI remains deferred.",
+      "scope_model": "status_only",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/newtools.md"
     },
     "usage-budgets": {
       "title": "Usage and Budgets",
@@ -1840,12 +1960,15 @@
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
       "required_target_fields": [
-        "project_id",
         "provider_id",
         "provider_route_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": null,
+      "scope_model": "status_only",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/usage-feature.md"
     },
     "teacher-help": {
       "title": "Teacher and Help",
@@ -1868,11 +1991,16 @@
         "cmd.chat.open_thread"
       ],
       "required_target_fields": [
-        "project_id",
-        "thread_id"
+        "thread_id",
+        "level",
+        "level_key"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": "Settings projects entry and state only; Assistant Chat owns the Teacher thread and help interaction."
+      "owner_gap_reason": "Settings projects entry and state only; Assistant Chat owns the Teacher thread and help interaction.",
+      "scope_model": "rows",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
     },
     "project-search-index": {
       "title": "Project Search Index",
@@ -1896,11 +2024,14 @@
         "cmd.search.evict_remote_cache"
       ],
       "required_target_fields": [
-        "project_id",
         "operation_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": "Settings projects Search-owner state and availability; it does not build, cancel, evict, or repair an index locally."
+      "owner_gap_reason": "Settings projects Search-owner state and availability; it does not build, cancel, evict, or repair an index locally.",
+      "scope_model": "status_only",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/FinalGUISpec.md"
     },
     "dry-method": {
       "title": "DRY Method",
@@ -1922,11 +2053,13 @@
         "cmd.settings.transaction.preview",
         "cmd.settings.transaction.apply"
       ],
-      "required_target_fields": [
-        "project_id"
-      ],
+      "required_target_fields": [],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": "DL-041: owner_contract_missing disables this guard mutation until the exact owner key is mapped to a valid Settings setting_id and writer; no mutation dispatch or setting write is allowed before that proof. The existing preview/apply action IDs are intended targets, not executable authority. The visible default guard cannot weaken instructions, safety, secrets, source authority, governance, permissions, or source-control rules."
+      "owner_gap_reason": "DL-041: owner_contract_missing disables this guard mutation until the exact owner key is mapped to a valid Settings setting_id and writer; no mutation dispatch or setting write is allowed before that proof. The existing preview/apply action IDs are intended targets, not executable authority. The visible default guard cannot weaken instructions, safety, secrets, source authority, governance, permissions, or source-control rules.",
+      "scope_model": "status_only",
+      "project_switch_ids": [],
+      "settings_is_runtime_owner": false,
+      "target_contract_ref": "Plans/DRY_Rules.md"
     }
   },
   "named_visible_state_projections": {
@@ -3977,6 +4110,1708 @@
         "nier_mode": true
       },
       "expected_keyword": "additionalProperties"
+    }
+  ],
+  "projects_refresh_cases": [
+    {
+      "case_id": "fd-settings-everywhere",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "general.interaction.mode": "ELI5"
+        },
+        "source_by_setting_id": {
+          "general.interaction.mode": "explicit"
+        },
+        "setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-settings-wrong-target-everywhere",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "general.interaction.mode": "ELI5"
+        },
+        "source_by_setting_id": {
+          "general.interaction.mode": "explicit"
+        },
+        "setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-settings-computer",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "computer",
+          "level_key": "server:server-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "general.interaction.mode": "ELI5"
+        },
+        "source_by_setting_id": {
+          "general.interaction.mode": "explicit"
+        },
+        "setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-settings-wrong-target-computer",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "computer",
+          "level_key": "execution_host:host-a",
+          "computer_key": {
+            "kind": "execution_host",
+            "id": "host-a"
+          },
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "general.interaction.mode": "ELI5"
+        },
+        "source_by_setting_id": {
+          "general.interaction.mode": "explicit"
+        },
+        "setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-settings-device",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "device",
+          "level_key": "client-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": "client-a",
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "general.interaction.mode": "ELI5"
+        },
+        "source_by_setting_id": {
+          "general.interaction.mode": "explicit"
+        },
+        "setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-settings-wrong-target-device",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "device",
+          "level_key": "client-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": "client-a",
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "general.interaction.mode": "ELI5"
+        },
+        "source_by_setting_id": {
+          "general.interaction.mode": "explicit"
+        },
+        "setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-settings-project",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "general.interaction.mode": "ELI5"
+        },
+        "source_by_setting_id": {
+          "general.interaction.mode": "explicit"
+        },
+        "setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-settings-wrong-target-project",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "general.interaction.mode": "ELI5"
+        },
+        "source_by_setting_id": {
+          "general.interaction.mode": "explicit"
+        },
+        "setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-settings-missing-sparse-revision",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "general.interaction.mode": "ELI5"
+        },
+        "source_by_setting_id": {
+          "general.interaction.mode": "explicit"
+        },
+        "setting_revisions": {},
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.identical_sparse_key_sets",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-classification-general.visual.theme",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "device",
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": "theme_pair",
+        "not_offered": {
+          "computer": "about_the_screen"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "general.visual.theme"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-classification-general.visual.theme-mode",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "device",
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": "theme_pair",
+        "not_offered": {
+          "computer": "about_the_screen"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "general.visual.theme-mode"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-classification-general.visual.reduce-animations",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "device",
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "more_careful",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "about_the_screen"
+        },
+        "careful_order": [
+          true,
+          false
+        ]
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "general.visual.reduce-animations"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-classification-safety.rules.permission-preset",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "computer",
+          "project"
+        ],
+        "computer_key": "server",
+        "combine": "more_careful",
+        "atomic_group": null,
+        "not_offered": {
+          "device": "not_about_the_screen"
+        },
+        "careful_order": [
+          "read_only",
+          "plan",
+          "regular",
+          "full"
+        ]
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "safety.rules.permission-preset"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-classification-safety.rules.default-tool-permission",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "computer",
+          "project"
+        ],
+        "computer_key": "server",
+        "combine": "more_careful",
+        "atomic_group": null,
+        "not_offered": {
+          "device": "not_about_the_screen"
+        },
+        "careful_order": [
+          "deny",
+          "ask",
+          "allow"
+        ]
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "safety.rules.default-tool-permission"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-classification-safety.rules.per-tool-permissions",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "computer",
+          "project"
+        ],
+        "computer_key": "server",
+        "combine": "per_item",
+        "atomic_group": null,
+        "not_offered": {
+          "device": "not_about_the_screen"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "safety.rules.per-tool-permissions"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-classification-ai.usage.usage-retention",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "same_for_you",
+          "device": "same_for_you",
+          "project": "same_for_you"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "ai.usage.usage-retention"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-classification-code.execution.docker-binary-path",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "computer",
+        "may_differ_by": [
+          "computer"
+        ],
+        "computer_key": "execution_host",
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "everywhere": "names_a_program",
+          "device": "names_a_program",
+          "project": "names_a_program"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "code.execution.docker-binary-path"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-classification-media.io.artifacts-location",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "project",
+        "may_differ_by": [
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "everywhere": "about_this_project",
+          "computer": "about_this_project",
+          "device": "about_this_project"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "media.io.artifacts-location"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-resolver-computer_cap",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "ai.usage.max-tool-rounds",
+        "everywhere_own": 10,
+        "computer_own": 3,
+        "device_own": null,
+        "project_own": 6,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": 3
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-resolver-stale_cas",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "ai.usage.max-tool-rounds",
+        "everywhere_own": 10,
+        "computer_own": 3,
+        "device_own": null,
+        "project_own": 6,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 2,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.cas",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-resolver-unrelated_revision",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "ai.usage.max-tool-rounds",
+        "everywhere_own": 10,
+        "computer_own": 3,
+        "device_own": null,
+        "project_own": 6,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.cas",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-resolver-mixed_theme_pair",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "general.visual.theme",
+        "everywhere_own": 10,
+        "computer_own": 3,
+        "device_own": null,
+        "project_own": 6,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 2
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.theme_atomic_pair",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-resolver-selector_escape",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "ai.usage.max-tool-rounds",
+        "everywhere_own": 10,
+        "computer_own": 3,
+        "device_own": null,
+        "project_own": 6,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "code.execution.docker-binary-path"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.selector_subset",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-resolver-secret_spill",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "ai.usage.max-tool-rounds",
+        "everywhere_own": 10,
+        "computer_own": 3,
+        "device_own": null,
+        "project_own": 6,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.no_credentials",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-resolver-unchosen_same_host",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "ai.usage.max-tool-rounds",
+        "everywhere_own": 10,
+        "computer_own": 3,
+        "device_own": null,
+        "project_own": 6,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": null,
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.account_reuse",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-resolver-wrong_account",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "ai.usage.max-tool-rounds",
+        "everywhere_own": 10,
+        "computer_own": 3,
+        "device_own": null,
+        "project_own": 6,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-b",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.account_reuse",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-resolver-different_host",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "ai.usage.max-tool-rounds",
+        "everywhere_own": 10,
+        "computer_own": 3,
+        "device_own": null,
+        "project_own": 6,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-b",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.account_reuse",
+          "expected": "resolve_there"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-resolver-custom_profile_computer",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.permission-preset",
+        "everywhere_own": "regular",
+        "computer_own": "custom",
+        "device_own": null,
+        "project_own": "read_only",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "custom"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-resolver-safety_careful",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.default-tool-permission",
+        "everywhere_own": "allow",
+        "computer_own": "ask",
+        "device_own": null,
+        "project_own": "allow",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "ask"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-resolver-motion_os",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "general.visual.reduce-animations",
+        "everywhere_own": false,
+        "computer_own": null,
+        "device_own": false,
+        "project_own": false,
+        "requested_value": 6,
+        "os_reduce_motion": true,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": true
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-standard-2",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Standard",
+        "precedence_tier": 2,
+        "source_kind": "scoped_owner",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-standard-3",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Standard",
+        "precedence_tier": 3,
+        "source_kind": "persona",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-standard-4",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Standard",
+        "precedence_tier": 4,
+        "source_kind": "surface_stage",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-standard-8",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Standard",
+        "precedence_tier": 8,
+        "source_kind": "permitted_last_used",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-standard-9",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Standard",
+        "precedence_tier": 9,
+        "source_kind": "provider",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-conservative-2",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Conservative",
+        "precedence_tier": 2,
+        "source_kind": "scoped_owner",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-conservative-3",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Conservative",
+        "precedence_tier": 3,
+        "source_kind": "persona",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-conservative-4",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Conservative",
+        "precedence_tier": 4,
+        "source_kind": "surface_stage",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-conservative-8",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Conservative",
+        "precedence_tier": 8,
+        "source_kind": "permitted_last_used",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-conservative-9",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Conservative",
+        "precedence_tier": 9,
+        "source_kind": "provider",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-aggressive-2",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Aggressive",
+        "precedence_tier": 2,
+        "source_kind": "scoped_owner",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-aggressive-3",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Aggressive",
+        "precedence_tier": 3,
+        "source_kind": "persona",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-aggressive-4",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Aggressive",
+        "precedence_tier": 4,
+        "source_kind": "surface_stage",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-aggressive-8",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Aggressive",
+        "precedence_tier": 8,
+        "source_kind": "permitted_last_used",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-model-aggressive-9",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Aggressive",
+        "precedence_tier": 9,
+        "source_kind": "provider",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }

@@ -153,6 +153,12 @@ def validate():
         require(q11_row_motion(case["value"]) == case["expected"],
                 "Q11 row eligibility differs: " + case["name"])
     touch_profiles = {p["profile_id"]: p for p in read("touch_closure.json")["profiles"]}
+    # These cases preserve the original Project identity/body boundary after
+    # the live Touch roster moves to per-action app-aware contracts. Retained
+    # fixture descriptors never substitute for current Touch obligations.
+    retained = fixtures['retained_project_touch_contracts']
+    require(retained['native_runtime_executed'] is False, 'Retained Touch fixture claims native proof')
+    historical_profiles = retained['profiles']
     schema_documents = [schema, read("ui_command_response.schema.json"),
                         read("full_thread_runtime_contracts.schema.json"),
                         read("scheduling_and_quota_resume_contracts.schema.json")]
@@ -168,7 +174,7 @@ def validate():
                                               format_checker=jsonschema.FormatChecker()).is_valid(value)
 
     for case in fixtures["reused_owner_touch_cases"]:
-        profile = touch_profiles[case["profile_id"]]
+        profile = historical_profiles[case["profile_id"]]
         part, value = case["part"], case["instance"]
         ref = profile[{"payload": "payload_schema_ref", "result": "result_schema_ref", "error": "error_schema_ref"}[part]]
         if part == "payload" and ".json" not in ref.partition("#")[0]:
@@ -185,13 +191,13 @@ def validate():
             "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelRequest",
             "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelResult")}
     for profile_id, (request, result) in expected_contracts.items():
-        profile = touch_profiles[profile_id]
+        profile = historical_profiles[profile_id]
         require((profile["payload_schema_ref"], profile["result_schema_ref"]) == (request, result),
                 profile_id + ": wrong owner contract references")
         require(profile["receipt_refs"] and "pm7_build_contracts.schema.json" not in profile["error_schema_ref"],
                 profile_id + ": wrong owner error/receipt contract")
     for case in fixtures["thread_consumer_cases"]:
-        require(thread_consumer_route(touch_profiles["TCP-TEACHER-HELP"], case["context"]) == case["expected"],
+        require(thread_consumer_route(historical_profiles["TCP-TEACHER-HELP"], case["context"]) == case["expected"],
                 "Thread consumer availability/return differs: " + case["name"])
     policy = fixtures["presentation_policy"]
     policy_schema = {**schema, "$ref": "#/$defs/PresentationPolicy"}
@@ -336,7 +342,7 @@ process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
             "S9 immutable brand/loader consumers became switchable")
     inventory = read("settings_inventory.json")["settings"]
     settings = {row["id"]: row for row in inventory}
-    require(len(settings) == len(inventory) == 1010, "Q22 Settings count differs after retiring the NieR override row")
+    require(len(settings) == len(inventory) == 1017, "Q22 plus seven reviewed refresh Settings identities differ")
     pip = settings["general.visual.pip-parts"]
     labels = [part["label"] for part in parts["parts"]]
     label_by_id = {part["id"]: part["label"] for part in parts["parts"]}
@@ -525,7 +531,11 @@ process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
     layout_schema = read("home_workspace_layout_v2.schema.json")
     registered_layout = next(row["value_schema"] for row in read("storage_value_registry.json")["families"]
                              if row["family_id"] == "home_workspace_layout_v2")
-    require(registered_layout == layout_schema, "Current registered v2 layout schema differs from its owner")
+    # The Project physical resource remains byte-for-byte interpreted through
+    # its original definitions; the app sibling is a separate selected root.
+    project_layout_schema = {**layout_schema, '$defs': {
+        k: v for k, v in layout_schema['$defs'].items() if k != 'HomeWorkspaceLayoutApplicationV1'}}
+    require(registered_layout == project_layout_schema, "Current registered Project v2 layout schema differs from its owner")
     for label, value_schema in (("owner", layout_schema), ("registry", registered_layout)):
         width = value_schema["$defs"]["chat_column"]["properties"]["width_px"]
         width_validator = jsonschema.Draft202012Validator(width)

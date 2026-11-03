@@ -14397,5 +14397,475 @@
       "note": "Original Project terminal result bytes and retained context are joined and digested; no retry authority is inferred.",
       "original_result_case": "project_creation_original_terminal_result_03"
     }
+  ],
+  "projects_refresh_cases": [
+    {
+      "case_id": "fd-setup-new_local",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/SetupRecoveryScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "new",
+        "backend": "git",
+        "registration_kind": "new_local",
+        "remote_effect_origin": null,
+        "remote_status": "none",
+        "verified_repository_id": null,
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "project.setup",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-setup-new_local_remote",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/SetupRecoveryScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "new",
+        "backend": "git",
+        "registration_kind": "new_local",
+        "remote_effect_origin": "create",
+        "remote_status": "verified_created",
+        "verified_repository_id": "repo-a",
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "project.setup",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-setup-unknown_remote",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/SetupRecoveryScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "new",
+        "backend": "git",
+        "registration_kind": "forge_created",
+        "remote_effect_origin": "create",
+        "remote_status": "unknown",
+        "verified_repository_id": null,
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "project.recovery",
+          "expected": "reconcile_only"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-setup-fork_as_create",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/SetupRecoveryScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "new",
+        "backend": "git",
+        "registration_kind": "git_clone",
+        "remote_effect_origin": "fork",
+        "remote_status": "none",
+        "verified_repository_id": null,
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": "gitlab",
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "project.contribution",
+          "expected": "unsupported"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-setup-replay",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/SetupRecoveryScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "new",
+        "backend": "git",
+        "registration_kind": "new_local",
+        "remote_effect_origin": null,
+        "remote_status": "none",
+        "verified_repository_id": null,
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": true,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "project.recovery",
+          "expected": "original_result_only"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-setup-wrong_result",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/SetupRecoveryScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "new",
+        "backend": "git",
+        "registration_kind": "new_local",
+        "remote_effect_origin": null,
+        "remote_status": "none",
+        "verified_repository_id": null,
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "project.recovery",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-setup-changed_review",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/SetupRecoveryScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "new",
+        "backend": "git",
+        "registration_kind": "new_local",
+        "remote_effect_origin": null,
+        "remote_status": "none",
+        "verified_repository_id": null,
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": false,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "project.setup",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-setup-changed_source",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/SetupRecoveryScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "new",
+        "backend": "git",
+        "registration_kind": "new_local",
+        "remote_effect_origin": null,
+        "remote_status": "none",
+        "verified_repository_id": null,
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": false,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "project.setup",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-setup-remote_taken",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/SetupRecoveryScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "new",
+        "backend": "git",
+        "registration_kind": "new_local",
+        "remote_effect_origin": null,
+        "remote_status": "none",
+        "verified_repository_id": null,
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": true,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scm.remote_add",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-setup-remote_add_network",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/SetupRecoveryScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "new",
+        "backend": "git",
+        "registration_kind": "new_local",
+        "remote_effect_origin": null,
+        "remote_status": "none",
+        "verified_repository_id": null,
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": true,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scm.remote_add",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-setup-inspect_hook",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/SetupRecoveryScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "new",
+        "backend": "git",
+        "registration_kind": "new_local",
+        "remote_effect_origin": null,
+        "remote_status": "none",
+        "verified_repository_id": null,
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": true,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scm.inspect",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-setup-inspect_jj_snapshot",
+      "schema_ref": "Plans/project_system_contracts.schema.json#/$defs/SetupRecoveryScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "new",
+        "backend": "jujutsu",
+        "registration_kind": "new_local",
+        "remote_effect_origin": null,
+        "remote_status": "none",
+        "verified_repository_id": null,
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": true,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scm.inspect",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    }
   ]
 }

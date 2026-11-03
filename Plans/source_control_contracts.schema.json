@@ -6112,6 +6112,985 @@
           }
         }
       }
+    },
+    "source_inspection_context_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_kind",
+        "project_id",
+        "draft_id",
+        "server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "transport_ref",
+        "locator_ref",
+        "trust_evidence",
+        "expected_generation",
+        "permission_evidence"
+      ],
+      "properties": {
+        "source_kind": {
+          "enum": [
+            "local_folder",
+            "server_folder",
+            "ssh_folder",
+            "pm_server_folder",
+            "smb_share",
+            "nfs_share",
+            "mounted_folder",
+            "git_transport"
+          ]
+        },
+        "project_id": {
+          "const": null
+        },
+        "draft_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "transport_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "locator_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        }
+      }
+    },
+    "repository_inspection_result_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_context",
+        "backend",
+        "native_revision",
+        "branch_or_bookmark",
+        "dirty",
+        "remote_evidence_refs",
+        "upstream_evidence_ref",
+        "submodules",
+        "lfs",
+        "hooks_present",
+        "registered_copy_matches",
+        "observed_at_utc",
+        "expires_at_utc",
+        "inspection_sha256",
+        "omitted",
+        "linked_from_observation",
+        "hooks_or_helpers_executed",
+        "jj_snapshot_created"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_context": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_inspection_context_v1"
+        },
+        "backend": {
+          "enum": [
+            "git",
+            "jujutsu",
+            "none",
+            "unknown"
+          ]
+        },
+        "native_revision": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "branch_or_bookmark": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dirty": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remote_evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "upstream_evidence_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "submodules": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lfs": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hooks_present": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "registered_copy_matches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "observed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "inspection_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "omitted": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "field",
+              "reason"
+            ],
+            "properties": {
+              "field": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        },
+        "linked_from_observation": {
+          "const": false
+        },
+        "hooks_or_helpers_executed": {
+          "const": false
+        },
+        "jj_snapshot_created": {
+          "const": false
+        }
+      }
+    },
+    "remote_sync_local_reconcile_target_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "original_repository_ref",
+        "original_remote_ref",
+        "original_fetched_revision",
+        "fork_repository_ref",
+        "fork_workspace_ref",
+        "expected_native_revision",
+        "head_repository_ref",
+        "base_repository_ref",
+        "reconciliation_strategy",
+        "backend",
+        "currentness_evidence",
+        "writer_lease_evidence",
+        "filesafe_evidence",
+        "permission_evidence",
+        "return_context_ref",
+        "push_targets",
+        "publish_performed",
+        "schema_id",
+        "schema_version",
+        "operation_id",
+        "command_instance_id",
+        "idempotency_key",
+        "project_id",
+        "original_binding_ref",
+        "original_fetch_receipt_ref",
+        "original_fetch_receipt_sha256",
+        "fork_binding_ref",
+        "fork_native_workspace_ref",
+        "head_revision",
+        "base_revision",
+        "review_binding_ref",
+        "contribution_binding_ref",
+        "strategy_policy_id",
+        "strategy_policy_revision",
+        "strategy_policy_sha256",
+        "source_generation",
+        "source_currentness_ref",
+        "source_currentness_sha256",
+        "destination_generation",
+        "destination_currentness_ref",
+        "destination_currentness_sha256",
+        "writer_lease_generation",
+        "scope_stop_epoch",
+        "task_stop_epoch",
+        "preview_ref",
+        "preview_sha256",
+        "preview_expires_at",
+        "capability_evidence"
+      ],
+      "properties": {
+        "kind": {
+          "const": "local_reconcile_only"
+        },
+        "original_repository_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "original_remote_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "original_fetched_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "fork_repository_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "fork_workspace_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_native_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "head_repository_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "base_repository_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "reconciliation_strategy": {
+          "enum": [
+            "merge",
+            "rebase"
+          ]
+        },
+        "backend": {
+          "enum": [
+            "git",
+            "jujutsu"
+          ]
+        },
+        "currentness_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "writer_lease_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "filesafe_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "permission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "push_targets": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "publish_performed": {
+          "const": false
+        },
+        "schema_id": {
+          "const": "pm.source_control.remote_sync_local_reconcile_target.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "original_binding_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "original_fetch_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "original_fetch_receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "fork_binding_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "fork_native_workspace_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "head_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "base_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "review_binding_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contribution_binding_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "strategy_policy_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "strategy_policy_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "strategy_policy_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_currentness_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_currentness_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "destination_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "destination_currentness_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_currentness_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "writer_lease_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scope_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "task_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "preview_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "preview_expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "capability_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        }
+      }
+    },
+    "remote_operation_target_v2": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "target"
+          ],
+          "properties": {
+            "kind": {
+              "const": "remote_effect"
+            },
+            "target": {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/remote_operation_target"
+            }
+          }
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/remote_sync_local_reconcile_target_v2"
+        }
+      ]
+    },
+    "source_control_command_scope_v2": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "scope"
+          ],
+          "properties": {
+            "kind": {
+              "const": "project"
+            },
+            "scope": {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_scope"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "source_context"
+          ],
+          "properties": {
+            "kind": {
+              "const": "source_context"
+            },
+            "source_context": {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_inspection_context_v1"
+            }
+          }
+        }
+      ]
+    },
+    "repository_inspect_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "source_context",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.source_control.repository.inspect"
+        },
+        "source_context": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_inspection_context_v1"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "remote_add_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "project_id",
+        "repository_ref",
+        "backend",
+        "workspace_ref",
+        "expected_native_revision",
+        "expected_config_generation",
+        "remote_name",
+        "scrubbed_remote_url_ref",
+        "role",
+        "writer_lease_evidence",
+        "permission_evidence",
+        "filesafe_evidence",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.source_control.remote.add"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "repository_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "backend": {
+          "enum": [
+            "git",
+            "jujutsu"
+          ]
+        },
+        "workspace_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_native_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_config_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "remote_name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+        },
+        "scrubbed_remote_url_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "role": {
+          "enum": [
+            "origin",
+            "upstream",
+            "other"
+          ]
+        },
+        "writer_lease_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "permission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "filesafe_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "source_control_command_request_v2": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "variant",
+            "legacy_request"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.source_control.command_request.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "variant": {
+              "const": "legacy_exact"
+            },
+            "legacy_request": {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request"
+            }
+          }
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/repository_inspect_request_v2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/remote_add_request_v2"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "command_id",
+            "scope",
+            "target",
+            "idempotency_key",
+            "return_context_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.source_control.command_request.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "command_id": {
+              "const": "cmd.source_control.remote.sync"
+            },
+            "scope": {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_scope_v2"
+            },
+            "target": {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/remote_sync_local_reconcile_target_v2"
+            },
+            "idempotency_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "return_context_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        }
+      ]
+    },
+    "source_control_command_result_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "operation_id",
+        "status",
+        "owner_result_ref",
+        "inspection",
+        "local_config_before_sha256",
+        "local_config_after_sha256",
+        "native_result_evidence",
+        "network_effect_performed",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.command_result.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "blocked",
+            "failed",
+            "unknown",
+            "unsupported"
+          ]
+        },
+        "owner_result_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inspection": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/repository_inspection_result_v1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "local_config_before_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "local_config_after_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "native_result_evidence": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "network_effect_performed": {
+          "type": "boolean"
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "publication_authority_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority",
+        "repository_ref",
+        "remote_ref",
+        "branch_ref",
+        "expected_remote_head",
+        "current_remote_head",
+        "lease_evidence",
+        "pm_created_for_this_work_receipt",
+        "is_main_or_default",
+        "is_protected",
+        "force_with_lease",
+        "filesafe_evidence",
+        "stop_epoch"
+      ],
+      "properties": {
+        "authority": {
+          "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "repository_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "remote_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "branch_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_remote_head": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "current_remote_head": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "lease_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "pm_created_for_this_work_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "is_main_or_default": {
+          "type": "boolean"
+        },
+        "is_protected": {
+          "type": "boolean"
+        },
+        "force_with_lease": {
+          "type": "boolean"
+        },
+        "filesafe_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
     }
   },
   "x-backup-source-claim-boundary": {

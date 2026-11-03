@@ -1,0 +1,626 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json",
+  "x-schema-id": "pm.assistant_plan_runtime_contracts.v1",
+  "title": "pm.assistant_plan_runtime_contracts.v1",
+  "$defs": {
+    "AssistantPlanRecordV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "source_revision",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.assistant_plan_record.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/AssistantPlanRecord"
+        }
+      }
+    },
+    "AssistantPlanRecordApplicationV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/AssistantPlanRecordApplicationV1"
+    },
+    "PlanRunV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "source_revision",
+        "record",
+        "run_completion_anchor"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.assistant_plan_run.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/PlanRun"
+        },
+        "run_completion_anchor": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunCompletionAnchor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "record": {
+                "properties": {
+                  "state": {
+                    "enum": [
+                      "completed",
+                      "cancelled"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "run_completion_anchor": {
+                "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunCompletionAnchor"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "run_completion_anchor": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PlanRunApplicationV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/AssistantPlanRunApplicationV1"
+    },
+    "AssistantPlanRevisionApplicationV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/AssistantPlanDocumentRevisionApplicationV1"
+    },
+    "AssistantPlanCommandRequestApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "assistant_plan_id",
+        "plan_version",
+        "plan_sha256",
+        "source_revision_ref",
+        "frozen_target_ref",
+        "goal_binding_ref",
+        "crew_definition_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "enum": [
+            "cmd.chat.plan.create",
+            "cmd.chat.plan.revise",
+            "cmd.chat.plan.build",
+            "cmd.chat.plan.build_with_crew",
+            "cmd.chat.plan.cancel",
+            "cmd.chat.plan.export",
+            "cmd.chat.plan.open_details",
+            "cmd.chat.plan.open_version",
+            "cmd.chat.plan.view.set"
+          ]
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "assistant_plan_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_version": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_revision_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "frozen_target_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "goal_binding_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "crew_definition_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "AssistantPlanCommandResultApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "assistant_plan_id",
+        "plan_version",
+        "plan_sha256",
+        "outcome",
+        "owner_result_evidence",
+        "plan_run_ref",
+        "artifact_ref",
+        "todo_binding_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "assistant_plan_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_version": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "rejected",
+            "blocked",
+            "unknown",
+            "cancelled"
+          ]
+        },
+        "owner_result_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "plan_run_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "artifact_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "todo_binding_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "DeepPlanLedgerSessionApplicationV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/AssistantDeepPlanLedgerApplicationV1"
+    },
+    "AssistantDeepPlanUnitBundleApplicationV1": {
+      "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/AssistantDeepPlanBundleApplicationV1"
+    },
+    "AssistantPlanRecordApplicationV1PhysicalValueV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "owner_record",
+        "writer_evidence",
+        "content_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.application_assistant_plan.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_record": {
+          "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/AssistantPlanRecordApplicationV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "PlanRunApplicationV1PhysicalValueV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "owner_record",
+        "writer_evidence",
+        "content_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.application_plan_run.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_record": {
+          "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/AssistantPlanRunApplicationV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "AssistantPlanRevisionApplicationV1PhysicalValueV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "owner_record",
+        "writer_evidence",
+        "content_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.application_plan_revision.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_record": {
+          "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/AssistantPlanDocumentRevisionApplicationV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "DeepPlanLedgerSessionApplicationV1PhysicalValueV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "owner_record",
+        "writer_evidence",
+        "content_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.application_deep_plan_ledger.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_record": {
+          "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/AssistantDeepPlanLedgerApplicationV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "AssistantDeepPlanUnitBundleApplicationV1PhysicalValueV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "owner_record",
+        "writer_evidence",
+        "content_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.application_deep_plan_bundle.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_record": {
+          "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/AssistantDeepPlanBundleApplicationV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ArtifactExportResultScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandResultApplicationV1"
+    },
+    "AssistantPlanBuildRequestScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandRequestApplicationV1"
+    },
+    "AssistantPlanBuildResultScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandResultApplicationV1"
+    },
+    "AssistantPlanCancelRequestScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandRequestApplicationV1"
+    },
+    "AssistantPlanCancelResultScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandResultApplicationV1"
+    },
+    "AssistantPlanCreateRequestScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandRequestApplicationV1"
+    },
+    "AssistantPlanCreateResultScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandResultApplicationV1"
+    },
+    "AssistantPlanCrewBuildRequestScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandRequestApplicationV1"
+    },
+    "AssistantPlanExportRequestScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandRequestApplicationV1"
+    },
+    "AssistantPlanHandoffRequestScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandRequestApplicationV1"
+    },
+    "AssistantPlanRevisionRequestScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandRequestApplicationV1"
+    },
+    "AssistantPlanRevisionResultScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandResultApplicationV1"
+    },
+    "AssistantPlanRouteScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandResultApplicationV1"
+    },
+    "AssistantPlanStrategyRequestScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandRequestApplicationV1"
+    },
+    "AssistantPlanStrategyResultScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandResultApplicationV1"
+    },
+    "AssistantPlanVersionRouteScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandResultApplicationV1"
+    },
+    "AssistantPlanViewRequestScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandRequestApplicationV1"
+    },
+    "AssistantPlanViewResultScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandResultApplicationV1"
+    },
+    "PlanningWizardIntakeResultScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandResultApplicationV1"
+    },
+    "RouteResultScopeV2": {
+      "$ref": "https://puppetmaster.local/schemas/assistant_plan_runtime_contracts/1.0.0/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCommandResultApplicationV1"
+    }
+  }
+}

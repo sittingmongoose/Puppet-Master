@@ -51,7 +51,7 @@ def check():
     inventory_document = read("settings_inventory.json")
     inventory = inventory_document["settings"]
     settings = {row["id"]: row for row in inventory}
-    require(len(inventory) == len(settings) == 1010, "Q22 inventory is not 1010 unique rows")
+    require(len(inventory) == len(settings) == 1017, "Q22 plus seven reviewed refresh Settings identities differ")
     require(settings["general.visual.theme"]["options"] == labels, "Theme is not the ten ordered variants")
     require(settings["general.visual.theme"]["default"] == "Basic Dark", "Q22 changed the factory seed")
     require("general.visual.nier-mode" not in settings, "Retired override remains an active row")

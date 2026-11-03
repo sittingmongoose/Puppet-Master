@@ -597,7 +597,7 @@ class BsdLifecycleRecordClosureTests(unittest.TestCase):
             self.assertIn(transform_id, registered)
         # The disposition adds no physical family (SP-251/SP-318 negative constraint).
         # SP-322 adds one Release-owned schedule family after the 294-family Event Authority pin.
-        self.assertEqual(len(REGISTRY["families"]), 295)
+        self.assertEqual(len(REGISTRY["families"]), 342)
 
     def test_lifecycle_not_folded_into_summary(self) -> None:
         self.assertNotIn("bsd_runtime_record", BSD_RECORDS["$defs"])
@@ -730,9 +730,13 @@ class TruthBoundaryTests(unittest.TestCase):
         self.assertFalse(GATE_REPORT["buildability_gate_passed"])
 
     def test_future_contract_files_declared_not_materialized(self) -> None:
-        self.assertIn("are required and do not exist yet", APR_TEXT)
+        # APR-073/074 materialize the static app companion. Native handler,
+        # original source, first receipt and durable current-slot evidence do not
+        # follow from the file's existence.
         self.assertIn("Naming them here does not create them", CS_TEXT)
-        self.assertFalse((ROOT / "Plans" / "assistant_plan_runtime_contracts.schema.json").exists())
+        self.assertTrue((ROOT / "Plans" / "assistant_plan_runtime_contracts.schema.json").exists())
+        graph = _load_json(ROOT / 'Plans/application_workflow_source_graph.json')
+        self.assertTrue(all(r['adoption_disposition'] == 'specified_unimplemented' for r in graph['graphs']))
         # The BSD typed companion now exists (CCR-01 repair) but strictly as record definitions:
         # none of the CS-078 command request/result definitions may appear in it, so every
         # CS-078 row keeps handler_unavailable truthfully.
@@ -763,6 +767,51 @@ class TruthBoundaryTests(unittest.TestCase):
         ]
         self.assertEqual(len(rows), 1)
         self.assertIn("handler_unavailable", rows[0])
+
+
+class ApplicationPauseRefreshTests(unittest.TestCase):
+    def setUp(self):
+        import pm_projects_refresh_contracts as refresh
+        self.refresh = refresh
+        self.pack = _load_json(ROOT / 'Plans/scheduling_and_quota_resume_contract_fixtures.json')
+        self.record = copy.deepcopy(next(c['record'] for c in self.pack['projects_refresh_cases'] if c['case_id'] == 'fd-pause-exact-server-record'))
+
+    def transition(self, before, desired, **changes):
+        args = dict(server_id='server-a', actor_ref='actor-a', actor_kind='user', changed_at='2026-11-03T01:00:00Z')
+        args.update(changes)
+        return self.refresh.pause_transition(before, desired, **args)
+
+    def test_absent_source_is_unavailable_and_other_server_or_agent_refuses(self):
+        with self.assertRaisesRegex(ValueError, 'app_automation_pause_unavailable'):
+            self.transition(None, False)
+        with self.assertRaises(ValueError):
+            self.transition(self.record, False, server_id='server-b')
+        with self.assertRaises(ValueError):
+            self.transition(self.record, False, actor_kind='agent')
+
+    def test_only_false_to_true_advances_epoch_and_noop_preserves_exact_record(self):
+        paused = self.transition(self.record, True)
+        self.assertEqual(paused['user_stop_epoch'], 1)
+        self.assertEqual(self.transition(paused, True), paused)
+        cleared = self.transition(paused, False)
+        self.assertEqual(cleared['user_stop_epoch'], 1)
+        self.assertEqual(self.transition(cleared, True)['user_stop_epoch'], 2)
+        self.assertEqual(len(cleared), 10)
+        self.assertNotIn('task_stop_epoch', cleared)
+
+
+class ApplicationAuthorityRefreshTests(unittest.TestCase):
+    def test_regular_force_push_retains_prompt_and_app_cannot_borrow_project_grant(self):
+        from pm_projects_refresh_contracts import publication_outcome
+        pack = _load_json(ROOT / 'Plans/automation_authority_contract_fixtures.json')
+        force = copy.deepcopy(next(c['record'] for c in pack['projects_refresh_cases'] if c['case_id'] == 'fd-final-dispatch-qualifying_force_lease'))
+        self.assertEqual(publication_outcome(force), 'allow')
+        force['authority']['mode'] = 'regular'
+        self.assertEqual(publication_outcome(force), 'retained_ask')
+        grant = copy.deepcopy(next(c['record'] for c in pack['projects_refresh_cases'] if c['case_id'] == 'fd-grant-created_cleanup'))
+        self.assertEqual(publication_outcome(grant), 'allow')
+        grant['project_id'] = None
+        self.assertEqual(publication_outcome(grant), 'refuse')
 
 
 if __name__ == "__main__":

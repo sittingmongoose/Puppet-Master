@@ -2856,6 +2856,1321 @@
           }
         }
       ]
+    },
+    "WorkflowRootRefV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "execution_host_id",
+        "execution_environment_id",
+        "root_ref",
+        "root_sha256",
+        "grant_ref",
+        "kind"
+      ],
+      "properties": {
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "root_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "root_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "grant_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "kind": {
+          "enum": [
+            "chat_folder",
+            "granted_directory",
+            "project_root"
+          ]
+        }
+      }
+    },
+    "WorkflowScopeV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "scope_partition",
+        "project_id",
+        "project_home_server_id",
+        "named_plan_id",
+        "server_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.workflow_scope.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "project_home_server_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "named_plan_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "const": null
+              },
+              "project_home_server_id": {
+                "const": null
+              },
+              "named_plan_id": {
+                "const": null
+              },
+              "scope_partition": {
+                "const": "app"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "project_home_server_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "scope_partition": {
+                "type": "string",
+                "pattern": "^project~[A-Za-z0-9_-]+$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "OwnerEvidenceRefV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "owner_ref",
+        "source_ref",
+        "source_sha256",
+        "revision",
+        "generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "WorkflowCommandContextV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "storage_instance_id",
+        "thread_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "roots",
+        "command_instance_id",
+        "idempotency_key",
+        "actor_ref",
+        "permission_evidence",
+        "writer_evidence",
+        "scope_stop_epoch",
+        "task_stop_epoch",
+        "expected_generation",
+        "return_context_ref"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "roots": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowRootRefV1"
+          },
+          "uniqueItems": true
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "scope_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "task_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "RefreshSemanticCheckV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "predicate_id",
+        "expected"
+      ],
+      "properties": {
+        "predicate_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected": {
+          "type": [
+            "string",
+            "boolean",
+            "number",
+            "array",
+            "object",
+            "null"
+          ]
+        }
+      }
+    },
+    "RefreshFixtureCaseV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "schema_ref",
+        "record",
+        "expected_schema_valid",
+        "semantic_checks",
+        "native_runtime_executed"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "schema_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "record": {
+          "type": [
+            "object",
+            "array",
+            "string",
+            "boolean",
+            "number",
+            "null"
+          ]
+        },
+        "expected_schema_valid": {
+          "type": "boolean"
+        },
+        "semantic_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/RefreshSemanticCheckV1"
+          }
+        },
+        "native_runtime_executed": {
+          "const": false
+        }
+      }
+    },
+    "RefreshFixturePackV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "owner_schema",
+        "evidence_level",
+        "native_runtime_executed",
+        "projects_refresh_cases"
+      ],
+      "properties": {
+        "schema_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "owner_schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "evidence_level": {
+          "const": "schema_fixture_only"
+        },
+        "native_runtime_executed": {
+          "const": false
+        },
+        "projects_refresh_cases": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/RefreshFixtureCaseV1"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "persona_save_as_override_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "source_id",
+        "source_revision",
+        "source_sha256",
+        "destination_home_ref",
+        "destination_project_id",
+        "expected_destination_revision",
+        "selected_switch_ids",
+        "reach_ref",
+        "source_trust_evidence"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.persona.save_as_override"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "destination_home_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_destination_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selected_switch_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "reach_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        }
+      }
+    },
+    "persona_save_as_override_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation_id",
+        "status",
+        "owner_thing_ref",
+        "owner_revision",
+        "content_sha256",
+        "readback_ref",
+        "rollback_ref",
+        "credential_copied",
+        "installed",
+        "trust_granted",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.persona.save_as_override"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "previewed",
+            "copied",
+            "refused",
+            "rolled_back",
+            "recovery_required"
+          ]
+        },
+        "owner_thing_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "content_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readback_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "credential_copied": {
+          "const": false
+        },
+        "installed": {
+          "const": false
+        },
+        "trust_granted": {
+          "const": false
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "mcp_server_copy_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "source_id",
+        "source_revision",
+        "source_sha256",
+        "destination_home_ref",
+        "destination_project_id",
+        "expected_destination_revision",
+        "selected_switch_ids",
+        "reach_ref",
+        "source_trust_evidence"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.mcp.server.copy"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "destination_home_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_destination_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selected_switch_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "reach_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        }
+      }
+    },
+    "mcp_server_copy_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation_id",
+        "status",
+        "owner_thing_ref",
+        "owner_revision",
+        "content_sha256",
+        "readback_ref",
+        "rollback_ref",
+        "credential_copied",
+        "installed",
+        "trust_granted",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.mcp.server.copy"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "previewed",
+            "copied",
+            "refused",
+            "rolled_back",
+            "recovery_required"
+          ]
+        },
+        "owner_thing_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "content_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readback_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "credential_copied": {
+          "const": false
+        },
+        "installed": {
+          "const": false
+        },
+        "trust_granted": {
+          "const": false
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "skill_copy_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "source_id",
+        "source_revision",
+        "source_sha256",
+        "destination_home_ref",
+        "destination_project_id",
+        "expected_destination_revision",
+        "selected_switch_ids",
+        "reach_ref",
+        "source_trust_evidence"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.skill.copy"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "destination_home_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_destination_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selected_switch_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "reach_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        }
+      }
+    },
+    "skill_copy_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation_id",
+        "status",
+        "owner_thing_ref",
+        "owner_revision",
+        "content_sha256",
+        "readback_ref",
+        "rollback_ref",
+        "credential_copied",
+        "installed",
+        "trust_granted",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.skill.copy"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "previewed",
+            "copied",
+            "refused",
+            "rolled_back",
+            "recovery_required"
+          ]
+        },
+        "owner_thing_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "content_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readback_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "credential_copied": {
+          "const": false
+        },
+        "installed": {
+          "const": false
+        },
+        "trust_granted": {
+          "const": false
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "persona_owner_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "scope",
+        "client_id",
+        "persona_id",
+        "source_id",
+        "source_revision",
+        "source_sha256",
+        "destination_home_ref",
+        "project_version_id",
+        "whole_record_ref",
+        "whole_record_sha256",
+        "reach_ref",
+        "project_switch_ids",
+        "expected_owner_revision",
+        "permission_evidence",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "enum": [
+            "cmd.persona.create",
+            "cmd.persona.delete",
+            "cmd.persona.duplicate",
+            "cmd.persona.export",
+            "cmd.persona.import",
+            "cmd.persona.select",
+            "cmd.persona.update"
+          ]
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "client_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "persona_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "destination_home_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_version_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "whole_record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "whole_record_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reach_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_switch_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "expected_owner_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "permission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "persona_owner_result_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation_id",
+        "persona_id",
+        "owner_revision",
+        "content_sha256",
+        "status",
+        "owner_result_ref",
+        "readback_ref",
+        "rollback_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "persona_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "content_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "created",
+            "updated",
+            "deleted",
+            "duplicated",
+            "exported",
+            "imported",
+            "selected",
+            "refused",
+            "conflict"
+          ]
+        },
+        "owner_result_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readback_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "persona_create_request_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_request_v2"
+    },
+    "persona_create_result_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_result_v2"
+    },
+    "persona_delete_request_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_request_v2"
+    },
+    "persona_delete_result_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_result_v2"
+    },
+    "persona_duplicate_request_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_request_v2"
+    },
+    "persona_duplicate_result_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_result_v2"
+    },
+    "persona_export_request_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_request_v2"
+    },
+    "persona_export_result_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_result_v2"
+    },
+    "persona_import_request_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_request_v2"
+    },
+    "persona_import_result_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_result_v2"
+    },
+    "persona_select_request_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_request_v2"
+    },
+    "persona_select_result_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_result_v2"
+    },
+    "persona_update_request_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_request_v2"
+    },
+    "persona_update_result_v2": {
+      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/persona_owner_result_v2"
     }
   }
 }

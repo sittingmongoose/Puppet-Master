@@ -1,0 +1,1916 @@
+{
+  "schema_id": "pm.application_workflow_source_graph.v1",
+  "schema_version": "1.0.0",
+  "resources": [
+    {
+      "retrieval_uri": "https://puppet-master.local/schemas/working_notebook_contracts.schema.json",
+      "path": "Plans/working_notebook_contracts.schema.json",
+      "whole_resource_sha256": "af48d54168b2b4569727aa5c0cb35a64887531cd2fdb05b8ad110708184e5608",
+      "resource_role": "selected_application_or_current_aggregate",
+      "literal_root_pointers": [
+        "#/$defs/identity_refApplicationV1",
+        "#/$defs/restriction_refApplicationV1",
+        "#/$defs/scope_bindingApplicationV1"
+      ]
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/Plans/section15_browser_program_contracts.schema.json",
+      "path": "Plans/section15_browser_program_contracts.schema.json",
+      "whole_resource_sha256": "53bd77453d0a4d2d941bad5f36f6ac1b0beef16b769a00f31870a1085688a534",
+      "resource_role": "selected_application_or_current_aggregate",
+      "literal_root_pointers": [
+        "#/$defs/browser_actionApplicationV1",
+        "#/$defs/browser_program_astApplicationV1",
+        "#/$defs/budgetsApplicationV1",
+        "#/$defs/compiler_identityApplicationV1",
+        "#/$defs/idApplicationV1",
+        "#/$defs/lineageApplicationV1",
+        "#/$defs/local_operatorApplicationV1",
+        "#/$defs/non_secret_refApplicationV1",
+        "#/$defs/ordinary_browser_subjectApplicationV1",
+        "#/$defs/run_bound_lineageApplicationV1",
+        "#/$defs/sha256ApplicationV1",
+        "#/$defs/source_spanApplicationV1"
+      ]
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json",
+      "path": "Plans/shared_integration_runtime.schema.json",
+      "whole_resource_sha256": "5293dd1e8d403a6e8da103bcd93e2811ddaec67aaa277541c26ede13064d3008",
+      "resource_role": "selected_application_or_current_aggregate",
+      "literal_root_pointers": [
+        "#/$defs/OwnerEvidenceRefV1",
+        "#/$defs/WorkflowCommandContextV1",
+        "#/$defs/WorkflowRootRefV1",
+        "#/$defs/WorkflowScopeV2"
+      ]
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json",
+      "path": "Plans/application_workflow_contracts.schema.json",
+      "whole_resource_sha256": "6b4644b52551fe97adab668a0e63d6a5ade68872564aca59ae77ece55f6c6186",
+      "resource_role": "selected_application_or_current_aggregate",
+      "literal_root_pointers": [
+        "#/$defs/AgentMessageApplicationV1",
+        "#/$defs/ApplicationAutomationPauseRecord",
+        "#/$defs/ApplicationAutomationPauseSetRequestV1",
+        "#/$defs/ApplicationAutomationPauseSetResultV1",
+        "#/$defs/ApplicationPermissionSnapshot",
+        "#/$defs/AssistantDeepPlanBundleApplicationV1",
+        "#/$defs/AssistantDeepPlanLedgerApplicationV1",
+        "#/$defs/AssistantPlanAdherenceApplicationV1",
+        "#/$defs/AssistantPlanCancelApplicationV1",
+        "#/$defs/AssistantPlanDocumentRevisionApplicationV1",
+        "#/$defs/AssistantPlanRecordApplicationV1",
+        "#/$defs/AssistantPlanRunApplicationV1",
+        "#/$defs/AssistantPlanRunCompletionAnchorApplicationV1",
+        "#/$defs/BrowserProgramApplicationV1",
+        "#/$defs/BrowserSessionApplicationV1",
+        "#/$defs/BrowserWorkspaceApplicationV1",
+        "#/$defs/ChatMoveManifestV1",
+        "#/$defs/ChatPlaceV1",
+        "#/$defs/ChatToolApprovalApplicationV1",
+        "#/$defs/CollaborationDefinitionApplicationV1",
+        "#/$defs/CollaborationMessageApplicationV1",
+        "#/$defs/CollaborationParticipantApplicationV1",
+        "#/$defs/CollaborationQuestionBankApplicationV1",
+        "#/$defs/CollaborationRunApplicationV1",
+        "#/$defs/CompactionCompletionApplicationV1",
+        "#/$defs/CoordinationCheckpointApplicationV1",
+        "#/$defs/CoordinationProjectionApplicationV1",
+        "#/$defs/CrewAutoApplicationV1",
+        "#/$defs/ExecutionOccurrenceApplicationV1",
+        "#/$defs/ExecutionScheduleApplicationV1",
+        "#/$defs/ExecutionUnitContextApplicationV1",
+        "#/$defs/GoalBlockedEventApplicationV1",
+        "#/$defs/GoalBodyControlApplicationV1",
+        "#/$defs/GoalCancelSourceApplicationV1",
+        "#/$defs/GoalCancelledEventApplicationV1",
+        "#/$defs/GoalCommandRequestApplicationV1",
+        "#/$defs/GoalCommandResultApplicationV1",
+        "#/$defs/GoalCompletedEventApplicationV1",
+        "#/$defs/GoalCreatedEventApplicationV1",
+        "#/$defs/GoalEvidenceCapturedEventApplicationV1",
+        "#/$defs/GoalExecutionBindingApplicationV1",
+        "#/$defs/GoalMutationReceiptApplicationV1",
+        "#/$defs/GoalObjectiveOriginApplicationV1",
+        "#/$defs/GoalObjectiveRevisionApplicationV1",
+        "#/$defs/GoalReceiptRecordedEventApplicationV1",
+        "#/$defs/GoalRecordApplicationV1",
+        "#/$defs/GoalRunBlockedEventApplicationV1",
+        "#/$defs/GoalRunCancelledEventApplicationV1",
+        "#/$defs/GoalRunStartedEventApplicationV1",
+        "#/$defs/GoalToolCheckRecordedEventApplicationV1",
+        "#/$defs/GoalUpdatedEventApplicationV1",
+        "#/$defs/Goal_bodyApplicationV1",
+        "#/$defs/Goal_pendingApplicationV1",
+        "#/$defs/HomeLayoutApplicationV1",
+        "#/$defs/MemoryViewApplicationV1",
+        "#/$defs/QuotaResumeConsentApplicationV1",
+        "#/$defs/RequestedEffectiveApplicationV1",
+        "#/$defs/RestorePointApplicationV1",
+        "#/$defs/RuntimeArtifactApplicationV1",
+        "#/$defs/ScheduleRunBindingApplicationV1",
+        "#/$defs/ScheduledMessageApplicationV1",
+        "#/$defs/TodoWorkBindingApplicationV1",
+        "#/$defs/WorkingNotebookApplicationV1",
+        "#/$defs/WorkingNotebookCheckpointApplicationV1",
+        "#/$defs/WorkingNotebookEntryApplicationV1"
+      ]
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/application-workflows/1.0.0/sources.schema.json",
+      "path": "Plans/application_workflow_sources.schema.json",
+      "whole_resource_sha256": "fa33642578d7ed29fa2edda2b9b5e7615749bdd660ad5db03f6057b5925d2c08",
+      "resource_role": "selected_application_or_current_aggregate",
+      "literal_root_pointers": [
+        "#/$defs/OriginalApplicationPauseSource",
+        "#/$defs/OriginalApplicationRunCancelSource",
+        "#/$defs/OriginalApplicationRunStartSource",
+        "#/$defs/OriginalAssistantPlanCancelSource",
+        "#/$defs/OriginalBrowserTransitionSource",
+        "#/$defs/OriginalChatMoveSource",
+        "#/$defs/OriginalCoordinationAppendSource",
+        "#/$defs/OriginalGoalCancelSource",
+        "#/$defs/OriginalGoalStartSource",
+        "#/$defs/OriginalGoalUpdateSource",
+        "#/$defs/OriginalHomeLayoutMutationSource",
+        "#/$defs/OriginalMemoryMutationSource",
+        "#/$defs/OriginalNotebookMutationSource",
+        "#/$defs/OriginalRestoreLifecycleSource",
+        "#/$defs/OriginalScheduleDispatchSource"
+      ]
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/assistant_chat_contracts/1.0.0/schema.json",
+      "path": "Plans/assistant_chat_contracts.schema.json",
+      "whole_resource_sha256": "3cbcc5c9a13d3fe725b9638ad33ea1edb11e5bae15521617795e2455ca86d572",
+      "resource_role": "selected_application_or_current_aggregate",
+      "literal_root_pointers": [
+        "#/$defs/ChatMoveAssociationV1"
+      ]
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/assistant_memory/1.0.0/assistant_memory_contracts.schema.json",
+      "path": "Plans/assistant_memory_contracts.schema.json",
+      "whole_resource_sha256": "8976176eefaec9ea3742f69c3bc84808b30b24fc158f3fe93a2dca4b32ee9c14",
+      "resource_role": "selected_application_or_current_aggregate",
+      "literal_root_pointers": [
+        "#/$defs/EvidenceRefApplicationV1",
+        "#/$defs/MemoryClaimEntryApplicationV1",
+        "#/$defs/MemoryGistExportEntryApplicationV1",
+        "#/$defs/TaughtRuleExportEntryApplicationV1",
+        "#/$defs/export_scopeApplicationV1",
+        "#/$defs/gist_kindApplicationV1",
+        "#/$defs/non_empty_stringApplicationV1",
+        "#/$defs/sha256_hexApplicationV1",
+        "#/$defs/utc_timestampApplicationV1",
+        "#/$defs/verification_stateApplicationV1"
+      ]
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json",
+      "path": "Plans/collaborative_workflows_contracts.schema.json",
+      "whole_resource_sha256": "99dc64f79b872620c6b852dbb118ed9c5f68f177d0adf9b742af6123b791f4e3",
+      "resource_role": "selected_application_or_current_aggregate",
+      "literal_root_pointers": [
+        "#/$defs/additive_role_kindApplicationV1",
+        "#/$defs/admission_sourceApplicationV1",
+        "#/$defs/assignment_strategyApplicationV1",
+        "#/$defs/collaboration_kindApplicationV1",
+        "#/$defs/coordinator_kindApplicationV1",
+        "#/$defs/coordinator_specApplicationV1",
+        "#/$defs/hard_constraintApplicationV1",
+        "#/$defs/message_typeApplicationV1",
+        "#/$defs/non_empty_stringApplicationV1",
+        "#/$defs/provisioning_postureApplicationV1",
+        "#/$defs/revisionApplicationV1",
+        "#/$defs/run_stateApplicationV1",
+        "#/$defs/sender_kindApplicationV1",
+        "#/$defs/shared_notes_policyApplicationV1",
+        "#/$defs/stop_reasonApplicationV1",
+        "#/$defs/turn_policyApplicationV1",
+        "#/$defs/utc_timestampApplicationV1"
+      ]
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/coordination_projection_contracts/1.0.0/coordination_projection_contracts.schema.json",
+      "path": "Plans/coordination_projection_contracts.schema.json",
+      "whole_resource_sha256": "1cdcc256711d9ca0fb607a74144ea81e9e185bbc907b650262ade7cac92b1ee8",
+      "resource_role": "selected_application_or_current_aggregate",
+      "literal_root_pointers": [
+        "#/$defs/agent_terminalApplicationV1",
+        "#/$defs/checkpoint_coreApplicationV1",
+        "#/$defs/durable_read_tokenApplicationV1",
+        "#/$defs/event_idApplicationV1",
+        "#/$defs/idApplicationV1",
+        "#/$defs/non_secret_refApplicationV1",
+        "#/$defs/retired_generationApplicationV1",
+        "#/$defs/status_reasonApplicationV1",
+        "#/$defs/timestampApplicationV1"
+      ]
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json",
+      "path": "Plans/event_record_index_checkpoint.schema.json",
+      "whole_resource_sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+      "resource_role": "unchanged_exact_project_dependency",
+      "literal_root_pointers": [
+        "#/$defs/coverage/properties/last_frame"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "interface_id": "owner.assistant_plan.cancel.application@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalAssistantPlanCancelSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.browser.transition.application@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalBrowserTransitionSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.chat.move@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalChatMoveSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.execution.application.cancel@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalApplicationRunCancelSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.execution.application.start@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalApplicationRunStartSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RequestedEffectiveApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.goal.body.mutation.application@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalGoalUpdateSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.goal.cancel.application@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalGoalCancelSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.goal.start.application@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalGoalStartSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.home_layout.mutation.application@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalHomeLayoutMutationSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.memory.mutation.application@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalMemoryMutationSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.notebook.mutation.application@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalNotebookMutationSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.restore_point.lifecycle.application@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalRestoreLifecycleSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.runtime.application_automation_pause.set@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalApplicationPauseSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.schedule.dispatch.application@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalScheduleDispatchSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "storage.coordination_append.application@1.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-366",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalCoordinationAppendSource",
+      "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AgentMessageApplicationV1",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    }
+  ],
+  "graphs": [
+    {
+      "graph_id": "app.application_pause.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.runtime.application_automation_pause.set@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.runtime.application_automation_pause.set@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.runtime.application_automation_pause.set@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.runtime.application_automation_pause.set@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.runtime.application_automation_pause.set@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.runtime.application_automation_pause.set@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.runtime.application_automation_pause.set@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.runtime.application_automation_pause.set@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.runtime.application_automation_pause.set@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.runtime.application_automation_pause.set@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.runtime.application_automation_pause.set@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1"
+        }
+      ],
+      "physical_family_ids": [],
+      "event_selectors": [],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.browser_transition.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.browser.transition.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.browser.transition.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.browser.transition.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.browser.transition.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.browser.transition.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.browser.transition.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.browser.transition.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.browser.transition.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.browser.transition.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.browser.transition.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.browser.transition.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1"
+        }
+      ],
+      "physical_family_ids": [],
+      "event_selectors": [],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.chat_move.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.chat.move@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.chat.move@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.chat.move@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.chat.move@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.chat.move@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.chat.move@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.chat.move@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.chat.move@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.chat.move@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.chat.move@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.chat.move@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1"
+        }
+      ],
+      "physical_family_ids": [
+        "chat_place_application",
+        "chat_draft_place_application",
+        "chat_folder_binding_application",
+        "chat_render_page_application"
+      ],
+      "event_selectors": [],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE",
+        "RP-GOAL-THREAD-LIFETIME"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.coordination_append.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "storage.coordination_append.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "storage.coordination_append.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AgentMessageApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "storage.coordination_append.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AgentMessageApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "storage.coordination_append.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AgentMessageApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "storage.coordination_append.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AgentMessageApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "storage.coordination_append.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AgentMessageApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "storage.coordination_append.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AgentMessageApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "storage.coordination_append.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AgentMessageApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "storage.coordination_append.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AgentMessageApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "storage.coordination_append.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AgentMessageApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "storage.coordination_append.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AgentMessageApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        }
+      ],
+      "physical_family_ids": [],
+      "event_selectors": [],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.goal_cancel.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.goal.cancel.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.goal.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.goal.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.goal.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.goal.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.goal.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.goal.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.goal.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.goal.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.goal.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.goal.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        }
+      ],
+      "physical_family_ids": [
+        "requested_effective_runtime_application",
+        "goal_body_record_application",
+        "goal_objective_revision_application",
+        "goal_objective_origin_application",
+        "goal_body_control_application",
+        "goal_body_mutation_receipt_application",
+        "goal_start_command_custody_application",
+        "goal_update_source_audit_application",
+        "goal_update_input_content_application",
+        "goal_update_progress_application",
+        "goal_update_terminal_audit_application",
+        "goal_cancel_source_audit_application",
+        "goal_host_stop_control_application",
+        "goal_cancel_stop_receipt_application",
+        "goal_cancel_receipt_application",
+        "goal_cancel_progress_application",
+        "goal_cancel_control_publication_application",
+        "goal_cancel_terminal_audit_application",
+        "goal_execution_writer_domain_application",
+        "goal_execution_writer_domain_head_application",
+        "goal_execution_binding_revision_application",
+        "goal_execution_binding_origin_application",
+        "goal_plan_binding_application",
+        "goal_execution_binding_control_application",
+        "goal_execution_binding_pending_resolution_application",
+        "goal_cancel_binding_selection_application",
+        "goal_cancel_assignment_audit_application",
+        "goal_receipt_application",
+        "goal_runtime_lineage_record_application",
+        "goal_run_started_projection_application",
+        "goal_run_started_checkpoint_application",
+        "goal_run_started_cancelled_projection_application",
+        "goal_run_started_cancelled_checkpoint_application"
+      ],
+      "event_selectors": [
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalRunBlockedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalRunCancelledEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalRunStartedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalBlockedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalCancelledEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalCompletedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalCreatedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalEvidenceCapturedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalReceiptRecordedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalToolCheckRecordedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalUpdatedEventApplicationV1"
+      ],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE",
+        "RP-GOAL-THREAD-LIFETIME"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.goal_start.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.goal.start.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.goal.start.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.goal.start.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.goal.start.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.goal.start.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.goal.start.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.goal.start.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.goal.start.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.goal.start.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.goal.start.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.goal.start.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        }
+      ],
+      "physical_family_ids": [
+        "requested_effective_runtime_application",
+        "goal_body_record_application",
+        "goal_objective_revision_application",
+        "goal_objective_origin_application",
+        "goal_body_control_application",
+        "goal_body_mutation_receipt_application",
+        "goal_start_command_custody_application",
+        "goal_update_source_audit_application",
+        "goal_update_input_content_application",
+        "goal_update_progress_application",
+        "goal_update_terminal_audit_application",
+        "goal_cancel_source_audit_application",
+        "goal_host_stop_control_application",
+        "goal_cancel_stop_receipt_application",
+        "goal_cancel_receipt_application",
+        "goal_cancel_progress_application",
+        "goal_cancel_control_publication_application",
+        "goal_cancel_terminal_audit_application",
+        "goal_execution_writer_domain_application",
+        "goal_execution_writer_domain_head_application",
+        "goal_execution_binding_revision_application",
+        "goal_execution_binding_origin_application",
+        "goal_plan_binding_application",
+        "goal_execution_binding_control_application",
+        "goal_execution_binding_pending_resolution_application",
+        "goal_cancel_binding_selection_application",
+        "goal_cancel_assignment_audit_application",
+        "goal_receipt_application",
+        "goal_runtime_lineage_record_application",
+        "goal_run_started_projection_application",
+        "goal_run_started_checkpoint_application",
+        "goal_run_started_cancelled_projection_application",
+        "goal_run_started_cancelled_checkpoint_application"
+      ],
+      "event_selectors": [
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalRunBlockedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalRunCancelledEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalRunStartedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalBlockedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalCancelledEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalCompletedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalCreatedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalEvidenceCapturedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalReceiptRecordedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalToolCheckRecordedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalUpdatedEventApplicationV1"
+      ],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE",
+        "RP-GOAL-THREAD-LIFETIME"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.goal_update.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.goal.body.mutation.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.goal.body.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.goal.body.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.goal.body.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.goal.body.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.goal.body.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.goal.body.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.goal.body.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.goal.body.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.goal.body.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.goal.body.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        }
+      ],
+      "physical_family_ids": [
+        "requested_effective_runtime_application",
+        "goal_body_record_application",
+        "goal_objective_revision_application",
+        "goal_objective_origin_application",
+        "goal_body_control_application",
+        "goal_body_mutation_receipt_application",
+        "goal_start_command_custody_application",
+        "goal_update_source_audit_application",
+        "goal_update_input_content_application",
+        "goal_update_progress_application",
+        "goal_update_terminal_audit_application",
+        "goal_cancel_source_audit_application",
+        "goal_host_stop_control_application",
+        "goal_cancel_stop_receipt_application",
+        "goal_cancel_receipt_application",
+        "goal_cancel_progress_application",
+        "goal_cancel_control_publication_application",
+        "goal_cancel_terminal_audit_application",
+        "goal_execution_writer_domain_application",
+        "goal_execution_writer_domain_head_application",
+        "goal_execution_binding_revision_application",
+        "goal_execution_binding_origin_application",
+        "goal_plan_binding_application",
+        "goal_execution_binding_control_application",
+        "goal_execution_binding_pending_resolution_application",
+        "goal_cancel_binding_selection_application",
+        "goal_cancel_assignment_audit_application",
+        "goal_receipt_application",
+        "goal_runtime_lineage_record_application",
+        "goal_run_started_projection_application",
+        "goal_run_started_checkpoint_application",
+        "goal_run_started_cancelled_projection_application",
+        "goal_run_started_cancelled_checkpoint_application"
+      ],
+      "event_selectors": [
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalRunBlockedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalRunCancelledEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalRunStartedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalBlockedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalCancelledEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalCompletedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalCreatedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalEvidenceCapturedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalReceiptRecordedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalToolCheckRecordedEventApplicationV1",
+        "Plans/application_workflow_contracts.schema.json#/$defs/GoalUpdatedEventApplicationV1"
+      ],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE",
+        "RP-GOAL-THREAD-LIFETIME"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.home_layout_mutation.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.home_layout.mutation.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.home_layout.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.home_layout.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.home_layout.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.home_layout.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.home_layout.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.home_layout.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.home_layout.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.home_layout.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.home_layout.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.home_layout.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1"
+        }
+      ],
+      "physical_family_ids": [],
+      "event_selectors": [],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.memory_mutation.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.memory.mutation.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.memory.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.memory.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.memory.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.memory.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.memory.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.memory.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.memory.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.memory.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.memory.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.memory.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1"
+        }
+      ],
+      "physical_family_ids": [],
+      "event_selectors": [],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.notebook_mutation.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.notebook.mutation.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.notebook.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.notebook.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.notebook.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.notebook.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.notebook.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.notebook.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.notebook.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.notebook.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.notebook.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.notebook.mutation.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookEntryApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/WorkingNotebookCheckpointApplicationV1"
+        }
+      ],
+      "physical_family_ids": [],
+      "event_selectors": [],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.plan_cancel.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.assistant_plan.cancel.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.assistant_plan.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.assistant_plan.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.assistant_plan.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.assistant_plan.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.assistant_plan.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.assistant_plan.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.assistant_plan.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.assistant_plan.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.assistant_plan.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.assistant_plan.cancel.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanCancelApplicationV1"
+        }
+      ],
+      "physical_family_ids": [
+        "assistant_plan_record_application",
+        "assistant_plan_document_revision_application",
+        "assistant_plan_current_slot_application",
+        "assistant_plan_run_application",
+        "assistant_plan_adherence_application",
+        "assistant_plan_cancel_result_application",
+        "assistant_plan_run_retirement_application"
+      ],
+      "event_selectors": [],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE",
+        "RP-RUNTIME-365D"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.restore_lifecycle.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.restore_point.lifecycle.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.restore_point.lifecycle.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.restore_point.lifecycle.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.restore_point.lifecycle.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.restore_point.lifecycle.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.restore_point.lifecycle.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.restore_point.lifecycle.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.restore_point.lifecycle.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.restore_point.lifecycle.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.restore_point.lifecycle.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.restore_point.lifecycle.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1"
+        }
+      ],
+      "physical_family_ids": [],
+      "event_selectors": [],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.run_cancel.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.execution.application.cancel@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.execution.application.cancel@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.execution.application.cancel@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.execution.application.cancel@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.execution.application.cancel@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.execution.application.cancel@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.execution.application.cancel@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.execution.application.cancel@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.execution.application.cancel@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.execution.application.cancel@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.execution.application.cancel@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandResultApplicationV1"
+        }
+      ],
+      "physical_family_ids": [
+        "requested_effective_runtime_application",
+        "goal_body_record_application",
+        "goal_objective_revision_application",
+        "goal_objective_origin_application",
+        "goal_body_control_application",
+        "goal_body_mutation_receipt_application",
+        "goal_start_command_custody_application",
+        "goal_update_source_audit_application",
+        "goal_update_input_content_application",
+        "goal_update_progress_application",
+        "goal_update_terminal_audit_application",
+        "goal_cancel_source_audit_application",
+        "goal_host_stop_control_application",
+        "goal_cancel_stop_receipt_application",
+        "goal_cancel_receipt_application",
+        "goal_cancel_progress_application",
+        "goal_cancel_control_publication_application",
+        "goal_cancel_terminal_audit_application",
+        "goal_execution_writer_domain_application",
+        "goal_execution_writer_domain_head_application",
+        "goal_execution_binding_revision_application",
+        "goal_execution_binding_origin_application",
+        "goal_plan_binding_application",
+        "goal_execution_binding_control_application",
+        "goal_execution_binding_pending_resolution_application",
+        "goal_cancel_binding_selection_application",
+        "goal_cancel_assignment_audit_application",
+        "goal_receipt_application",
+        "goal_runtime_lineage_record_application",
+        "goal_run_started_projection_application",
+        "goal_run_started_checkpoint_application",
+        "goal_run_started_cancelled_projection_application",
+        "goal_run_started_cancelled_checkpoint_application"
+      ],
+      "event_selectors": [],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE",
+        "RP-GOAL-THREAD-LIFETIME"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.run_start.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.execution.application.start@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.execution.application.start@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RequestedEffectiveApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.execution.application.start@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RequestedEffectiveApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.execution.application.start@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RequestedEffectiveApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.execution.application.start@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RequestedEffectiveApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.execution.application.start@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RequestedEffectiveApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.execution.application.start@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RequestedEffectiveApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.execution.application.start@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RequestedEffectiveApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.execution.application.start@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RequestedEffectiveApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.execution.application.start@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RequestedEffectiveApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.execution.application.start@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionUnitContextApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RequestedEffectiveApplicationV1"
+        }
+      ],
+      "physical_family_ids": [
+        "requested_effective_runtime_application",
+        "goal_body_record_application",
+        "goal_objective_revision_application",
+        "goal_objective_origin_application",
+        "goal_body_control_application",
+        "goal_body_mutation_receipt_application",
+        "goal_start_command_custody_application",
+        "goal_update_source_audit_application",
+        "goal_update_input_content_application",
+        "goal_update_progress_application",
+        "goal_update_terminal_audit_application",
+        "goal_cancel_source_audit_application",
+        "goal_host_stop_control_application",
+        "goal_cancel_stop_receipt_application",
+        "goal_cancel_receipt_application",
+        "goal_cancel_progress_application",
+        "goal_cancel_control_publication_application",
+        "goal_cancel_terminal_audit_application",
+        "goal_execution_writer_domain_application",
+        "goal_execution_writer_domain_head_application",
+        "goal_execution_binding_revision_application",
+        "goal_execution_binding_origin_application",
+        "goal_plan_binding_application",
+        "goal_execution_binding_control_application",
+        "goal_execution_binding_pending_resolution_application",
+        "goal_cancel_binding_selection_application",
+        "goal_cancel_assignment_audit_application",
+        "goal_receipt_application",
+        "goal_runtime_lineage_record_application",
+        "goal_run_started_projection_application",
+        "goal_run_started_checkpoint_application",
+        "goal_run_started_cancelled_projection_application",
+        "goal_run_started_cancelled_checkpoint_application"
+      ],
+      "event_selectors": [],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE",
+        "RP-GOAL-THREAD-LIFETIME"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.schedule_dispatch.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.schedule.dispatch.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.schedule.dispatch.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.schedule.dispatch.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.schedule.dispatch.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.schedule.dispatch.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.schedule.dispatch.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.schedule.dispatch.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.schedule.dispatch.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.schedule.dispatch.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.schedule.dispatch.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.schedule.dispatch.application@1.0.0",
+          "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionOccurrenceApplicationV1"
+        }
+      ],
+      "physical_family_ids": [
+        "execution_schedule_application",
+        "scheduled_message_application",
+        "quota_resume_consent_application",
+        "execution_schedule_run_binding_application",
+        "execution_occurrence_application",
+        "schedule_quota_cancel_effect_application"
+      ],
+      "event_selectors": [],
+      "reader_ids": [],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-AUTHORITY-INDEFINITE"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    }
+  ],
+  "graph_sha256": "48838166c251ce47fbe9638e78a0bc51c1f61c414b56e06e586556eafcc06f9a"
+}

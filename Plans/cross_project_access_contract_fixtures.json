@@ -1,0 +1,815 @@
+{
+  "schema_id": "pm.cross_project_access_contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "owner_schema": "Plans/cross_project_access_contracts.schema.json",
+  "evidence_level": "schema_fixture_only",
+  "native_runtime_executed": false,
+  "projects_refresh_cases": [
+    {
+      "case_id": "fd-coverage-offline-empty",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/CrossProjectCoverage",
+      "record": {
+        "requested": [
+          "project-a",
+          "project-b"
+        ],
+        "looked_in": [
+          {
+            "source_ref": "project-a",
+            "range_ref": null,
+            "index_generation": 1
+          }
+        ],
+        "not_looked_in": [
+          {
+            "source_ref": "project-b",
+            "reason": "not_answering"
+          }
+        ],
+        "partial": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "coverage.partition_requested_once",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-coverage-silent-omission",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/CrossProjectCoverage",
+      "record": {
+        "requested": [
+          "project-a",
+          "project-b"
+        ],
+        "looked_in": [
+          {
+            "source_ref": "project-a",
+            "range_ref": null,
+            "index_generation": 1
+          }
+        ],
+        "not_looked_in": [],
+        "partial": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "coverage.partition_requested_once",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-coverage-reading_off",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/CrossProjectCoverage",
+      "record": {
+        "requested": [
+          "project-a",
+          "project-b"
+        ],
+        "looked_in": [
+          {
+            "source_ref": "project-a",
+            "range_ref": null,
+            "index_generation": 1
+          }
+        ],
+        "not_looked_in": [
+          {
+            "source_ref": "project-b",
+            "reason": "reading_off"
+          }
+        ],
+        "partial": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "coverage.honest_and_redacted",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-coverage-archived_not_named",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/CrossProjectCoverage",
+      "record": {
+        "requested": [
+          "project-a",
+          "project-b"
+        ],
+        "looked_in": [
+          {
+            "source_ref": "project-a",
+            "range_ref": null,
+            "index_generation": 1
+          }
+        ],
+        "not_looked_in": [
+          {
+            "source_ref": "project-b",
+            "reason": "archived_not_named"
+          }
+        ],
+        "partial": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "coverage.honest_and_redacted",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-coverage-index_missing",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/CrossProjectCoverage",
+      "record": {
+        "requested": [
+          "project-a",
+          "project-b"
+        ],
+        "looked_in": [
+          {
+            "source_ref": "project-a",
+            "range_ref": null,
+            "index_generation": 1
+          }
+        ],
+        "not_looked_in": [
+          {
+            "source_ref": "project-b",
+            "reason": "index_missing"
+          }
+        ],
+        "partial": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "coverage.honest_and_redacted",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-coverage-index_rebuilding",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/CrossProjectCoverage",
+      "record": {
+        "requested": [
+          "project-a",
+          "project-b"
+        ],
+        "looked_in": [
+          {
+            "source_ref": "project-a",
+            "range_ref": null,
+            "index_generation": 1
+          }
+        ],
+        "not_looked_in": [
+          {
+            "source_ref": "project-b",
+            "reason": "index_rebuilding"
+          }
+        ],
+        "partial": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "coverage.honest_and_redacted",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-coverage-denied",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/CrossProjectCoverage",
+      "record": {
+        "requested": [
+          "project-a",
+          "project-b"
+        ],
+        "looked_in": [
+          {
+            "source_ref": "project-a",
+            "range_ref": null,
+            "index_generation": 1
+          }
+        ],
+        "not_looked_in": [
+          {
+            "source_ref": "project-b",
+            "reason": "denied"
+          }
+        ],
+        "partial": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "coverage.honest_and_redacted",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-coverage-hidden_source",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/CrossProjectCoverage",
+      "record": {
+        "requested": [
+          "project-a",
+          "project-b"
+        ],
+        "looked_in": [
+          {
+            "source_ref": "project-a",
+            "range_ref": null,
+            "index_generation": 1
+          }
+        ],
+        "not_looked_in": [
+          {
+            "source_ref": "project-b",
+            "reason": "hidden_source"
+          }
+        ],
+        "partial": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "coverage.honest_and_redacted",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-send-regular-off",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/ThreadTaskAuthorityV1",
+      "record": {
+        "sender_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "sender_thread_id": "thread-a",
+        "receiver_thread_id": "thread-b",
+        "sender_authority": {
+          "authority_kind": "human",
+          "human_confirmed": true,
+          "decision": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "person_id": "person-a",
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "receiver_policy": "off",
+        "receiver_ceiling_ref": "ref:receiver-ceiling",
+        "human_reviewed_message_evidence": null,
+        "automatic_round_trips": 3,
+        "expires_at_utc": "2026-11-04T00:00:00Z"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.receiver_ceiling",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-send-regular-ask_me",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/ThreadTaskAuthorityV1",
+      "record": {
+        "sender_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "sender_thread_id": "thread-a",
+        "receiver_thread_id": "thread-b",
+        "sender_authority": {
+          "authority_kind": "human",
+          "human_confirmed": true,
+          "decision": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "person_id": "person-a",
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "receiver_policy": "ask_me",
+        "receiver_ceiling_ref": "ref:receiver-ceiling",
+        "human_reviewed_message_evidence": null,
+        "automatic_round_trips": 3,
+        "expires_at_utc": "2026-11-04T00:00:00Z"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.receiver_ceiling",
+          "expected": "read_answer_only"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-send-regular-allowed",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/ThreadTaskAuthorityV1",
+      "record": {
+        "sender_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "sender_thread_id": "thread-a",
+        "receiver_thread_id": "thread-b",
+        "sender_authority": {
+          "authority_kind": "human",
+          "human_confirmed": true,
+          "decision": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "person_id": "person-a",
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "receiver_policy": "allowed",
+        "receiver_ceiling_ref": "ref:receiver-ceiling",
+        "human_reviewed_message_evidence": null,
+        "automatic_round_trips": 3,
+        "expires_at_utc": "2026-11-04T00:00:00Z"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.receiver_ceiling",
+          "expected": "receiver_scoped_turn"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-send-regular-yolo",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/ThreadTaskAuthorityV1",
+      "record": {
+        "sender_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "sender_thread_id": "thread-a",
+        "receiver_thread_id": "thread-b",
+        "sender_authority": {
+          "authority_kind": "human",
+          "human_confirmed": true,
+          "decision": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "person_id": "person-a",
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "receiver_policy": "yolo",
+        "receiver_ceiling_ref": "ref:receiver-ceiling",
+        "human_reviewed_message_evidence": null,
+        "automatic_round_trips": 3,
+        "expires_at_utc": "2026-11-04T00:00:00Z"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.receiver_ceiling",
+          "expected": "receiver_scoped_turn"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-loop-cap-regular",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/ThreadTaskAuthorityV1",
+      "record": {
+        "sender_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "sender_thread_id": "thread-a",
+        "receiver_thread_id": "thread-b",
+        "sender_authority": {
+          "authority_kind": "human",
+          "human_confirmed": true,
+          "decision": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "person_id": "person-a",
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "receiver_policy": "yolo",
+        "receiver_ceiling_ref": "ref:receiver-ceiling",
+        "human_reviewed_message_evidence": null,
+        "automatic_round_trips": 4,
+        "expires_at_utc": "2026-11-04T00:00:00Z"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-send-yolo-off",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/ThreadTaskAuthorityV1",
+      "record": {
+        "sender_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "sender_thread_id": "thread-a",
+        "receiver_thread_id": "thread-b",
+        "sender_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "receiver_policy": "off",
+        "receiver_ceiling_ref": "ref:receiver-ceiling",
+        "human_reviewed_message_evidence": null,
+        "automatic_round_trips": 3,
+        "expires_at_utc": "2026-11-04T00:00:00Z"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.receiver_ceiling",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-send-yolo-ask_me",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/ThreadTaskAuthorityV1",
+      "record": {
+        "sender_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "sender_thread_id": "thread-a",
+        "receiver_thread_id": "thread-b",
+        "sender_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "receiver_policy": "ask_me",
+        "receiver_ceiling_ref": "ref:receiver-ceiling",
+        "human_reviewed_message_evidence": null,
+        "automatic_round_trips": 3,
+        "expires_at_utc": "2026-11-04T00:00:00Z"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.receiver_ceiling",
+          "expected": "read_answer_only"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-send-yolo-allowed",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/ThreadTaskAuthorityV1",
+      "record": {
+        "sender_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "sender_thread_id": "thread-a",
+        "receiver_thread_id": "thread-b",
+        "sender_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "receiver_policy": "allowed",
+        "receiver_ceiling_ref": "ref:receiver-ceiling",
+        "human_reviewed_message_evidence": null,
+        "automatic_round_trips": 3,
+        "expires_at_utc": "2026-11-04T00:00:00Z"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.receiver_ceiling",
+          "expected": "receiver_scoped_turn"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-send-yolo-yolo",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/ThreadTaskAuthorityV1",
+      "record": {
+        "sender_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "sender_thread_id": "thread-a",
+        "receiver_thread_id": "thread-b",
+        "sender_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "receiver_policy": "yolo",
+        "receiver_ceiling_ref": "ref:receiver-ceiling",
+        "human_reviewed_message_evidence": null,
+        "automatic_round_trips": 3,
+        "expires_at_utc": "2026-11-04T00:00:00Z"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.receiver_ceiling",
+          "expected": "receiver_scoped_turn"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-loop-cap-yolo",
+      "schema_ref": "Plans/cross_project_access_contracts.schema.json#/$defs/ThreadTaskAuthorityV1",
+      "record": {
+        "sender_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "sender_thread_id": "thread-a",
+        "receiver_thread_id": "thread-b",
+        "sender_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "receiver_policy": "yolo",
+        "receiver_ceiling_ref": "ref:receiver-ceiling",
+        "human_reviewed_message_evidence": null,
+        "automatic_round_trips": 4,
+        "expires_at_utc": "2026-11-04T00:00:00Z"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    }
+  ]
+}

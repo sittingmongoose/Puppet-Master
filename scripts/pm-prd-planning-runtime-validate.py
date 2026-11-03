@@ -41,12 +41,14 @@ def load_json(path: Path) -> Any:
 def local_ref_failures(schema_path: Path, schema: Any) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
 
-    def walk(value: Any, pointer: str) -> None:
+    def walk(value: Any, pointer: str, resource: Any) -> None:
         if isinstance(value, dict):
+            if '$id' in value:
+                resource = value
             ref = value.get("$ref")
             if isinstance(ref, str) and ref.startswith("#/"):
                 try:
-                    VERIFY.resolve_ref(ref, schema)
+                    VERIFY.resolve_ref(ref, resource)
                 except Exception as exc:  # noqa: BLE001 - report exact unresolved pointer.
                     failures.append(
                         {
@@ -58,12 +60,12 @@ def local_ref_failures(schema_path: Path, schema: Any) -> list[dict[str, Any]]:
                         }
                     )
             for key, child in value.items():
-                walk(child, f"{pointer}.{key}")
+                walk(child, f"{pointer}.{key}", resource)
         elif isinstance(value, list):
             for index, child in enumerate(value):
-                walk(child, f"{pointer}[{index}]")
+                walk(child, f"{pointer}[{index}]", resource)
 
-    walk(schema, "$")
+    walk(schema, "$", schema)
     return failures
 
 

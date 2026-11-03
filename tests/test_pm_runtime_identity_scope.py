@@ -1,4 +1,6 @@
 import json
+import copy
+import sys
 import unittest
 from pathlib import Path
 
@@ -152,6 +154,46 @@ class RuntimeIdentityScopeTest(unittest.TestCase):
         self.assertIn("Application scope requires `project_id`, `project_home_server_id`, and `named_plan_id` to be present as null", runtime_owner)
         self.assertIn("other owner-specific Plan identities retain their owner-defined fields and are not broadly renamed", runtime_owner)
         self.assertIn("runtime owner lookup, adapter behavior, and migration execution remain unproved", runtime_owner)
+
+
+class ApplicationScopeRefreshTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        sys.path.insert(0, str(ROOT / 'scripts'))
+        import pm_projects_refresh_contracts as refresh
+        cls.refresh = refresh
+        cls.corpus = refresh.Corpus()
+
+    def test_goal_app_sibling_rejects_project_rebinding(self):
+        cases = load_json(ROOT / 'tests/fixtures/goal_runtime_events/golden/application_scope_contract_cases.json')['cases']
+        record = copy.deepcopy(cases[0]['record'])
+        validator = self.corpus.validator(cases[0]['schema_ref'])
+        self.assertTrue(validator.is_valid(record))
+        record['project_id'] = 'project-a'
+        self.assertFalse(validator.is_valid(record))
+
+    def test_tagged_hash_keeps_integer_float_unicode_and_domain_identity(self):
+        digest = self.refresh.semantic_hash
+        self.assertNotEqual(digest('operation_intent', 2 ** 80), digest('operation_intent', float(2 ** 80)))
+        huge = 10 ** 5000 + 1
+        self.assertEqual(self.refresh.parse_integer(self.refresh.typed_tree(huge)[1]), huge)
+        self.assertNotEqual(digest('operation_intent', 0.0), digest('operation_intent', -0.0))
+        self.assertNotEqual(digest('operation_intent', 'é'), digest('operation_intent', 'e\u0301'))
+        self.assertNotEqual(digest('operation_intent', {}), digest('accepted_source', {}))
+        self.assertEqual(digest('operation_intent', {'b': 1, 'a': 2}), digest('operation_intent', {'a': 2, 'b': 1}))
+
+    def test_unknown_hash_kind_and_duplicate_keys_fail_closed(self):
+        with self.assertRaises(ValueError):
+            self.refresh.semantic_hash('generic', {})
+        with self.assertRaises(ValueError):
+            json.loads('{"a":1,"a":2}', object_pairs_hook=self.refresh.unique_object)
+        with self.assertRaises(ValueError):
+            self.refresh.semantic_hash('operation_intent', float('nan'))
+
+    def test_frozen_graph_hashes_roots_and_source_role_joins(self):
+        self.assertEqual(self.refresh.graph_failures(self.corpus), [])
+        graph = self.corpus.document('Plans/application_workflow_source_graph.json')
+        self.assertTrue(all(g['adoption_disposition'] == 'specified_unimplemented' for g in graph['graphs']))
 
 
 if __name__ == "__main__":

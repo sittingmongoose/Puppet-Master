@@ -1,0 +1,1834 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/computer_use_contracts/1.0.0/computer_use_contracts.schema.json",
+  "x-schema-id": "pm.computer_use_contracts.v1",
+  "title": "pm.computer_use_contracts.v1",
+  "$defs": {
+    "ComputerUseSessionContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "session_id",
+        "scope",
+        "thread_id",
+        "execution_host_id",
+        "desktop_session_ref",
+        "allowed_app_ids",
+        "tool_namespace_receipt",
+        "controller_lease_ref",
+        "controller_generation",
+        "task_authority",
+        "screen_provider_disclosure_ref",
+        "permission_evidence",
+        "stopped"
+      ],
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "desktop_session_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "allowed_app_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "tool_namespace_receipt": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "controller_lease_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "controller_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "task_authority": {
+          "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "screen_provider_disclosure_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "stopped": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ComputerUseActionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "session",
+        "action_id",
+        "app_id",
+        "target_ref",
+        "target_sha256",
+        "controller_generation",
+        "idempotency_key"
+      ],
+      "properties": {
+        "session": {
+          "$ref": "https://puppetmaster.local/schemas/computer_use_contracts/1.0.0/computer_use_contracts.schema.json#/$defs/ComputerUseSessionContext"
+        },
+        "action_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "app_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "controller_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "ComputerUseActionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "session_id",
+        "action_id",
+        "status",
+        "transient_scrubbed_frame_ref",
+        "bounded_audit_ref",
+        "reason",
+        "raw_frame_retained"
+      ],
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "action_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "done",
+            "refused",
+            "stopped",
+            "unsupported"
+          ]
+        },
+        "transient_scrubbed_frame_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bounded_audit_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "reason": {
+          "enum": [
+            null,
+            "protected_auth",
+            "secret_prompt",
+            "wrong_app",
+            "wrong_host",
+            "stale_controller",
+            "namespace_unavailable",
+            "disclosure_missing"
+          ]
+        },
+        "raw_frame_retained": {
+          "const": false
+        }
+      }
+    },
+    "ComputerUseStopRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "session_id",
+        "execution_host_id",
+        "controller_generation",
+        "idempotency_key",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.computer_use.stop"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "controller_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "ComputerUseStopResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "session_id",
+        "status",
+        "released_controller_ref",
+        "stop_evidence",
+        "return_context_ref"
+      ],
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "stopped",
+            "already_stopped",
+            "refused"
+          ]
+        },
+        "released_controller_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stop_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "ComputerScreenRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "tool_id",
+        "operation",
+        "scope",
+        "session_id",
+        "thread_id",
+        "server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "desktop_session_ref",
+        "controller_lease_ref",
+        "namespace_receipt_ref",
+        "native_mapping_ref",
+        "app_id",
+        "window_ref",
+        "target_ref",
+        "permission_evidence_ref",
+        "disclosure_ref",
+        "idempotency_key",
+        "return_context_ref",
+        "controller_generation",
+        "namespace_generation",
+        "window_generation",
+        "permission_generation",
+        "disclosure_generation",
+        "stop_epoch",
+        "target_sha256",
+        "task_authority",
+        "operation_data",
+        "observation_ref",
+        "observation_sha256",
+        "geometry_ref",
+        "foreground_window_ref",
+        "request_schema_sha256",
+        "result_schema_sha256",
+        "observation_generation",
+        "geometry_generation",
+        "scale_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.computer_use.screen.request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "tool_id": {
+          "const": "computer.screen"
+        },
+        "operation": {
+          "enum": [
+            "capture"
+          ]
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "desktop_session_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "controller_lease_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "namespace_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "native_mapping_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "app_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "window_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_evidence_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "disclosure_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "controller_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "namespace_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "window_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "disclosure_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "target_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "task_authority": {
+          "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "operation_data": {},
+        "observation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "observation_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "geometry_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "foreground_window_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "request_schema_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "result_schema_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "observation_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "geometry_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scale_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "capture"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ComputerScreenResultV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "tool_id",
+        "session_id",
+        "idempotency_key",
+        "status",
+        "effect_state",
+        "original_operation_ref",
+        "original_result_ref",
+        "owner_result_evidence",
+        "transient_scrubbed_frame_ref",
+        "raw_frame_retained",
+        "protected_surface_captured",
+        "return_context_ref",
+        "reason",
+        "frame_expires_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.computer_use.screen.result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "tool_id": {
+          "const": "computer.screen"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "refused",
+            "unavailable",
+            "cancelled",
+            "failed",
+            "unknown_effect"
+          ]
+        },
+        "effect_state": {
+          "enum": [
+            "not_started",
+            "performed",
+            "unknown"
+          ]
+        },
+        "original_operation_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_result_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_result_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "transient_scrubbed_frame_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "raw_frame_retained": {
+          "const": false
+        },
+        "protected_surface_captured": {
+          "const": false
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "reason": {
+          "enum": [
+            null,
+            "protected_auth",
+            "secret_prompt",
+            "wrong_app",
+            "wrong_host",
+            "stale_controller",
+            "namespace_unavailable",
+            "disclosure_missing",
+            "stopped",
+            "handler_unavailable",
+            "unknown_effect",
+            "native_failed"
+          ]
+        },
+        "frame_expires_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "succeeded"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "performed"
+              },
+              "original_operation_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "original_result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "reason": {
+                "const": null
+              },
+              "transient_scrubbed_frame_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "frame_expires_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "refused",
+                  "unavailable",
+                  "cancelled"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "not_started"
+              },
+              "transient_scrubbed_frame_ref": {
+                "type": "null"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "frame_expires_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "unknown"
+              },
+              "original_operation_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "reason": {
+                "const": "unknown_effect"
+              },
+              "transient_scrubbed_frame_ref": {
+                "type": "null"
+              },
+              "frame_expires_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ComputerPointerRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "tool_id",
+        "operation",
+        "scope",
+        "session_id",
+        "thread_id",
+        "server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "desktop_session_ref",
+        "controller_lease_ref",
+        "namespace_receipt_ref",
+        "native_mapping_ref",
+        "app_id",
+        "window_ref",
+        "target_ref",
+        "permission_evidence_ref",
+        "disclosure_ref",
+        "idempotency_key",
+        "return_context_ref",
+        "controller_generation",
+        "namespace_generation",
+        "window_generation",
+        "permission_generation",
+        "disclosure_generation",
+        "stop_epoch",
+        "target_sha256",
+        "task_authority",
+        "operation_data",
+        "observation_ref",
+        "observation_sha256",
+        "geometry_ref",
+        "foreground_window_ref",
+        "request_schema_sha256",
+        "result_schema_sha256",
+        "observation_generation",
+        "geometry_generation",
+        "scale_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.computer_use.pointer.request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "tool_id": {
+          "const": "computer.pointer"
+        },
+        "operation": {
+          "enum": [
+            "move",
+            "click",
+            "scroll",
+            "drag"
+          ]
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "desktop_session_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "controller_lease_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "namespace_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "native_mapping_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "app_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "window_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_evidence_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "disclosure_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "controller_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "namespace_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "window_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "disclosure_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "target_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "task_authority": {
+          "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "operation_data": {},
+        "observation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "observation_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "geometry_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "foreground_window_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "request_schema_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "result_schema_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "observation_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "geometry_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scale_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "move"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "click"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "x",
+                  "y",
+                  "button",
+                  "count"
+                ],
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  },
+                  "button": {
+                    "enum": [
+                      "primary",
+                      "secondary",
+                      "middle"
+                    ]
+                  },
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "scroll"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "delta_x",
+                  "delta_y"
+                ],
+                "properties": {
+                  "delta_x": {
+                    "type": "number"
+                  },
+                  "delta_y": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "drag"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "from",
+                  "to",
+                  "button"
+                ],
+                "properties": {
+                  "from": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "x",
+                      "y"
+                    ],
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "to": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "x",
+                      "y"
+                    ],
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "button": {
+                    "enum": [
+                      "primary",
+                      "secondary",
+                      "middle"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ComputerPointerResultV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "tool_id",
+        "session_id",
+        "idempotency_key",
+        "status",
+        "effect_state",
+        "original_operation_ref",
+        "original_result_ref",
+        "owner_result_evidence",
+        "transient_scrubbed_frame_ref",
+        "raw_frame_retained",
+        "protected_surface_captured",
+        "return_context_ref",
+        "reason",
+        "frame_expires_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.computer_use.pointer.result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "tool_id": {
+          "const": "computer.pointer"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "refused",
+            "unavailable",
+            "cancelled",
+            "failed",
+            "unknown_effect"
+          ]
+        },
+        "effect_state": {
+          "enum": [
+            "not_started",
+            "performed",
+            "unknown"
+          ]
+        },
+        "original_operation_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_result_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_result_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "transient_scrubbed_frame_ref": {
+          "type": "null"
+        },
+        "raw_frame_retained": {
+          "const": false
+        },
+        "protected_surface_captured": {
+          "const": false
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "reason": {
+          "enum": [
+            null,
+            "protected_auth",
+            "secret_prompt",
+            "wrong_app",
+            "wrong_host",
+            "stale_controller",
+            "namespace_unavailable",
+            "disclosure_missing",
+            "stopped",
+            "handler_unavailable",
+            "unknown_effect",
+            "native_failed"
+          ]
+        },
+        "frame_expires_at_utc": {
+          "type": "null"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "succeeded"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "performed"
+              },
+              "original_operation_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "original_result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "reason": {
+                "const": null
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "refused",
+                  "unavailable",
+                  "cancelled"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "not_started"
+              },
+              "transient_scrubbed_frame_ref": {
+                "type": "null"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "frame_expires_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "unknown"
+              },
+              "original_operation_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "reason": {
+                "const": "unknown_effect"
+              },
+              "transient_scrubbed_frame_ref": {
+                "type": "null"
+              },
+              "frame_expires_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ComputerKeysRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "tool_id",
+        "operation",
+        "scope",
+        "session_id",
+        "thread_id",
+        "server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "desktop_session_ref",
+        "controller_lease_ref",
+        "namespace_receipt_ref",
+        "native_mapping_ref",
+        "app_id",
+        "window_ref",
+        "target_ref",
+        "permission_evidence_ref",
+        "disclosure_ref",
+        "idempotency_key",
+        "return_context_ref",
+        "controller_generation",
+        "namespace_generation",
+        "window_generation",
+        "permission_generation",
+        "disclosure_generation",
+        "stop_epoch",
+        "target_sha256",
+        "task_authority",
+        "operation_data",
+        "observation_ref",
+        "observation_sha256",
+        "geometry_ref",
+        "foreground_window_ref",
+        "request_schema_sha256",
+        "result_schema_sha256",
+        "observation_generation",
+        "geometry_generation",
+        "scale_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.computer_use.keys.request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "tool_id": {
+          "const": "computer.keys"
+        },
+        "operation": {
+          "enum": [
+            "press",
+            "type"
+          ]
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "desktop_session_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "controller_lease_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "namespace_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "native_mapping_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "app_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "window_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_evidence_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "disclosure_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "controller_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "namespace_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "window_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "disclosure_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "target_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "task_authority": {
+          "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "operation_data": {},
+        "observation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "observation_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "geometry_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "foreground_window_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "request_schema_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "result_schema_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "observation_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "geometry_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scale_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "press"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "keys"
+                ],
+                "properties": {
+                  "keys": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "type"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ComputerKeysResultV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "tool_id",
+        "session_id",
+        "idempotency_key",
+        "status",
+        "effect_state",
+        "original_operation_ref",
+        "original_result_ref",
+        "owner_result_evidence",
+        "transient_scrubbed_frame_ref",
+        "raw_frame_retained",
+        "protected_surface_captured",
+        "return_context_ref",
+        "reason",
+        "frame_expires_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.computer_use.keys.result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "tool_id": {
+          "const": "computer.keys"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "refused",
+            "unavailable",
+            "cancelled",
+            "failed",
+            "unknown_effect"
+          ]
+        },
+        "effect_state": {
+          "enum": [
+            "not_started",
+            "performed",
+            "unknown"
+          ]
+        },
+        "original_operation_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_result_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_result_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "transient_scrubbed_frame_ref": {
+          "type": "null"
+        },
+        "raw_frame_retained": {
+          "const": false
+        },
+        "protected_surface_captured": {
+          "const": false
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "reason": {
+          "enum": [
+            null,
+            "protected_auth",
+            "secret_prompt",
+            "wrong_app",
+            "wrong_host",
+            "stale_controller",
+            "namespace_unavailable",
+            "disclosure_missing",
+            "stopped",
+            "handler_unavailable",
+            "unknown_effect",
+            "native_failed"
+          ]
+        },
+        "frame_expires_at_utc": {
+          "type": "null"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "succeeded"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "performed"
+              },
+              "original_operation_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "original_result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "reason": {
+                "const": null
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "refused",
+                  "unavailable",
+                  "cancelled"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "not_started"
+              },
+              "transient_scrubbed_frame_ref": {
+                "type": "null"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "frame_expires_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "effect_state": {
+                "const": "unknown"
+              },
+              "original_operation_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "reason": {
+                "const": "unknown_effect"
+              },
+              "transient_scrubbed_frame_ref": {
+                "type": "null"
+              },
+              "frame_expires_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -19,6 +19,9 @@ from typing import Any, Iterable
 from urllib.parse import unquote
 
 from jsonschema import Draft202012Validator
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pm_wiring_inventory import projects_refresh_action_inventory
 
 
 def find_repository_root(start: Path) -> Path:
@@ -67,7 +70,9 @@ COMMANDSC_SETTINGS_ACTIONS = frozenset({
 })
 ACTION_RE = re.compile(
     r"^(?:(?:cmd|ui|settings)\.[a-z0-9_.-]+"
-    r"|commands\.(?:create|update|delete|preview|import_preview|import_commit|export|reset_all))$"
+    r"|commands\.(?:create|update|delete|preview|import_preview|import_commit|export|reset_all)"
+    r"|projects\.(?:list|status|search|read_file|read_chat|read_plans)"
+    r"|computer\.(?:screen|pointer|keys))$"
 )
 # TOKEN_RE stays narrow on purpose: commands.* local IDs are admitted only via
 # the exact census enum below, never by promoting ambient prose mentions.
@@ -169,7 +174,10 @@ def plans_action_sources() -> dict[str, set[str]]:
     if not isinstance(document["scope"], str) or not document["scope"].strip():
         raise ValueError("Touch action sources: missing scope")
     sources = document["sources"]
-    if not isinstance(sources, dict) or set(sources) != {"systems_local", "guided_tour", "home_layout"}:
+    if not isinstance(sources, dict) or set(sources) != {
+        "systems_local", "guided_tour", "home_layout", "projects_refresh_commands",
+        "projects_refresh_local", "projects_refresh_tools",
+    }:
         raise ValueError("Touch action sources: invalid source groups")
     found: dict[str, set[str]] = {}
     for name, source in sources.items():
@@ -183,7 +191,7 @@ def plans_action_sources() -> dict[str, set[str]]:
             path_ref, separator, fragment = ref.partition("#")
             path = Path(path_ref)
             if (path.parent != Path("Plans") or path.suffix not in {".md", ".json"}
-                    or not separator or not fragment):
+                    or path.suffix == '.md' and (not separator or not fragment)):
                 raise ValueError(f"Touch action sources {name}: invalid owner reference {ref!r}")
             failure = validate_repository_ref(ref)
             if failure:
@@ -693,6 +701,9 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
             "Guided Tour effective emitted actions lack retained owner/concept inventory entries: "
             f"{uncovered_guided_actions}"
         )
+    # The finite companion supplies revised per-action contracts. Its census
+    # is checked against independent typed/local/Tools owners, never Touch data.
+    expected.update(projects_refresh_action_inventory(ROOT, action_sources))
     return expected, inventory_failures
 
 
@@ -1246,6 +1257,37 @@ def permissions_rule_reference_failures(registry: dict[str, Any]) -> list[str]:
     """
     failures: list[str] = []
 
+    if registry.get('schema_version') == '2.2.0':
+        profile_list = registry.get('profiles', [])
+        profiles = {p['profile_id']: p for p in profile_list}
+        actions = ['cmd.permissions.' + action for action in
+                   ('create_project_rule', 'update_rule', 'reorder_rule', 'delete_rule', 'validate_rule')]
+        refs = {'Plans/Permissions_System.md#' + anchor for anchor in
+                ('PS-065', 'PS-072', 'Permissions-UI-Commands-And-Error-States',
+                 'TOML-Persistence-Failure-And-Atomicity-Rules')}
+        refs |= {'Plans/UI_Command_Catalog.md#UCC-113', 'Plans/Settings_System.md#SSYS-023'}
+        for number, action in enumerate(actions, 1):
+            rows = [r for r in registry['rows'] if r[3] == action]
+            if len(rows) != 1 or rows[0][0] != f'TOUCH-PERM-{number:03d}' or rows[0][2:5] != ['command', action, 'partial']:
+                failures.append('Permissions rule references: missing/duplicate partial obligation ' + action)
+                continue
+            profile = profiles.get(rows[0][1], {})
+            required_refs = refs | {'Plans/Permissions_System.md#PS-144',
+                                    'Plans/UI_Command_Catalog.md#UCC-217', 'Plans/Wiring_Matrix.md#WM-103'}
+            if (profile.get('owner_plan') != 'Plans/Permissions_System.md'
+                    or profile.get('plan_unit') != 'PS-144'
+                    or profile.get('dry_contract_ref') != 'Plans/DRY_Rules.md#DR-090'
+                    or profile.get('handler_status') != 'specified'
+                    or profile.get('wiring_status') != 'specified'
+                    or profile.get('handler_owner') != 'handlers::permissions::' + action.rsplit('.', 1)[1]
+                    or not required_refs <= set(profile.get('requirement_refs', []))
+                    or len([p for p in profile_list if p['profile_id'] == rows[0][1]]) != 1
+                    or not rows[0][5].strip()
+                    or not any(w in profile.get('production_or_simulation', '').lower() for w in ('static', 'specified'))
+                    or 'static' not in ' '.join(profile.get('evidence_refs', [])).lower()):
+                failures.append('Permissions rule references: per-action owner/semantic contract mismatch ' + action)
+        return failures
+
     def require(condition: bool, detail: str) -> None:
         if not condition:
             failures.append(f"Permissions rule references: {detail}")
@@ -1315,17 +1357,19 @@ def central_ui_reference_failures(
                 failures.append(f"central archived-Project adapter: {detail}")
 
         target_rows = [row for row in rows if row[3] == target]
+        refresh = registry.get('schema_version') == '2.2.0'
+        expected_profile = 'TCP-FB-372' if refresh else 'TCP-PROJECT'
         require(len(target_rows) == 1 and target_rows[0][:5] == [
-            "TOUCH-PJCT-010", "TCP-PROJECT", "command", target, "partial"
+            "TOUCH-PJCT-010", expected_profile, "command", target, "partial"
         ], "expected the one partial TCP-PROJECT unarchive command obligation")
         profiles = registry.get("profiles", [])
         profiles = profiles if isinstance(profiles, list) else []
         selected = [profile for profile in profiles if isinstance(profile, dict)
-                    and profile.get("profile_id") == "TCP-PROJECT"]
+                    and profile.get("profile_id") == expected_profile]
         require(len(selected) == 1, "expected one TCP-PROJECT owner profile")
         profile = selected[0] if selected else {}
         for field, expected in {
-            "owner_plan": "Plans/Project_System.md", "plan_unit": "PJCT-002",
+            "owner_plan": "Plans/Project_System.md", "plan_unit": "PJCT-012" if refresh else "PJCT-002",
             "handler_status": "specified", "wiring_status": "specified",
         }.items():
             require(profile.get(field) == expected, f"successor {field} must remain {expected!r}")
@@ -1335,8 +1379,8 @@ def central_ui_reference_failures(
         entry = target_entries[0] if target_entries else {}
         for field, expected in {
             "handler_location": "handlers::project::unarchive",
-            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
-            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
+            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request" + ('_v2' if refresh else ''),
+            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result" + ('_v2' if refresh else ''),
         }.items():
             require(entry.get(field) == expected, f"successor production {field} must remain {expected!r}")
         require(not any(row[3] == adapter for row in rows), "adapter cannot have a peer Touch row")
@@ -1622,6 +1666,12 @@ def verify() -> tuple[list[str], dict[str, Any]]:
             )
     try:
         for action, (profile_id, owner, unit) in gap_repair_inventory().items():
+            if expected.get(action, ('',))[0].startswith('TCP-FB-'):
+                # The refresh retains this obligation with its current exact
+                # owner unit; the WM-056 table remains historical lineage.
+                profile_id = expected[action][0]
+                row = next(r for r in load_json(ROOT / 'Plans/projects_refresh_command_bindings.json')['commands'] if r['command_id'] == action)
+                owner, unit = row['owner_ref'].split('#', 1)
             profile = profiles.get(profile_id, {})
             if profile.get("owner_plan") != owner or profile.get("plan_unit") != unit:
                 failures.append(f"{action}: gap-repair owner/profile must match the WM-056 table")
@@ -1671,6 +1721,9 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         declared = profiles.get(profile_id, {}).get("command_ids")
         if declared is not None and action not in declared:
             failures.append(f"{touch_id}: action outside its profile command_ids fence")
+        tool_ids = profiles.get(profile_id, {}).get("tool_ids")
+        if kind == 'tool' and (not isinstance(tool_ids, list) or action not in tool_ids):
+            failures.append(f"{touch_id}: tool outside its profile tool_ids fence")
         profile = profiles.get(profile_id, {})
         if not residual.strip():
             failures.append(f"{touch_id}: residual risk is empty")
@@ -1876,13 +1929,13 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # PM7 adds eleven production entries over main's 1259: the merged denominator
     # is 1270; PM7's existing 715 Touch rows and 140 profiles remain unchanged.
     exact_resolved_denominators = {
-        "row_count": 715,
+        "row_count": 1044,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
-        "profile_count": 140,
+        "profile_count": 656,
         "excluded_token_count": 59,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1271,
+        "production_wiring_entry_count": 1300,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

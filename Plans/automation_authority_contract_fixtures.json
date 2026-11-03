@@ -1,0 +1,923 @@
+{
+  "schema_id": "pm.automation_authority_contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "owner_schema": "Plans/automation_authority_contracts.schema.json",
+  "evidence_level": "schema_fixture_only",
+  "native_runtime_executed": false,
+  "projects_refresh_cases": [
+    {
+      "case_id": "fd-authority-mode",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence",
+      "record": {
+        "authority_kind": "mode",
+        "human_confirmed": false,
+        "mode": "yolo",
+        "task_ref": "task-a",
+        "mode_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-authority-human",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence",
+      "record": {
+        "authority_kind": "human",
+        "human_confirmed": true,
+        "decision": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "person_id": "person-a",
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-no-forged-human",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence",
+      "record": {
+        "authority_kind": "mode",
+        "human_confirmed": true,
+        "mode": "yolo",
+        "task_ref": "task-a",
+        "mode_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-qualifying_force_lease",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "force_push",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "allow"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-ordinary_push",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "push",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "foreign",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "allow"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-publish",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "publish",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "allow"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-main",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "force_push",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "main",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-protected",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "force_push",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "protected",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-default",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "force_push",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "default",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-foreign_force",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "force_push",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "foreign",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "retained_ask"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-lost_lease",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "force_push",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": false,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-remote_head_changed",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "force_push",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-b",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-stop_race",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "force_push",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 2,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-changed_plan",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "force_push",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-revoked",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "force_push",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": true,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-child_ceiling",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "force_push",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-paid_signup",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "paid_signup",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "retained_ask"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-final-dispatch-secret_export",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "export_secret",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "retained_ask"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-grant-created_cleanup",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "build_grant",
+          "human_confirmed": false,
+          "grant_ref": "grant-a",
+          "grant_revision": 1,
+          "grant_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_resource_manifest_ref": "manifest-a",
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "delete_resource",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "allow"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-grant-preexisting",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "build_grant",
+          "human_confirmed": false,
+          "grant_ref": "grant-a",
+          "grant_revision": 1,
+          "grant_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_resource_manifest_ref": "manifest-a",
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "delete_resource",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": null,
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "retained_ask"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-grant-same_name_replaced",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "build_grant",
+          "human_confirmed": false,
+          "grant_ref": "grant-a",
+          "grant_revision": 1,
+          "grant_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_resource_manifest_ref": "manifest-a",
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "delete_resource",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-b",
+        "created_resource_uid": "uid-a",
+        "listed_operation": true,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-grant-unlisted_operation",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationDispatchScenarioV1",
+      "record": {
+        "authority": {
+          "authority_kind": "build_grant",
+          "human_confirmed": false,
+          "grant_ref": "grant-a",
+          "grant_revision": 1,
+          "grant_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_resource_manifest_ref": "manifest-a",
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "operation": "delete_resource",
+        "project_id": "project-a",
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "current_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_revoked": false,
+        "captured_stop_epoch": 1,
+        "current_stop_epoch": 1,
+        "branch_kind": "pm_for_this_work",
+        "expected_remote_head": "revision-a",
+        "actual_remote_head": "revision-a",
+        "lease_held": true,
+        "target_uid": "uid-a",
+        "current_target_uid": "uid-a",
+        "created_resource_uid": "uid-a",
+        "listed_operation": false,
+        "parent_ceiling_allows": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "automation.final_dispatch",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    }
+  ]
+}

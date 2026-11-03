@@ -36,9 +36,9 @@ class OwnerActionSourceTests(unittest.TestCase):
         profiles = {profile["profile_id"]: profile for profile in registry["profiles"]}
         targets = {
             "ui.guided_tour.show_me": ("TCP-TOUR", "ui_action", "Plans/Planning_Wizard.md"),
-            "cmd.persona.select": ("TCP-TOUR-PERSONA", "command", "Plans/Personas.md"),
-            "cmd.chat.send": ("TCP-TOUR-CHAT", "command", "Plans/assistant-chat-design.md"),
-            "cmd.chat.eli5.set": ("TCP-TOUR-CHAT", "command", "Plans/assistant-chat-design.md"),
+            "cmd.persona.select": ("TCP-FB-367", "command", "Plans/Personas.md"),
+            "cmd.chat.send": ("TCP-FB-244", "command", "Plans/assistant-chat-design.md"),
+            "cmd.chat.eli5.set": ("TCP-FB-106", "command", "Plans/assistant-chat-design.md"),
         }
         for action, (profile, kind, owner) in targets.items():
             with self.subTest(action=action):
@@ -46,7 +46,7 @@ class OwnerActionSourceTests(unittest.TestCase):
                 self.assertEqual(rows[action][1:5], [profile, kind, action, "partial"])
                 self.assertEqual(profiles[profile]["owner_plan"], owner)
                 self.assertEqual(profiles[profile]["handler_status"], "specified")
-                self.assertEqual(profiles[profile]["wiring_status"], "concept_simulated")
+                self.assertEqual(profiles[profile]["wiring_status"], "concept_simulated" if kind == 'ui_action' else 'specified')
 
     def test_extra_tour_action_cannot_expand_the_closed_inventory(self) -> None:
         actual = validator.schema_enum_actions
@@ -96,7 +96,7 @@ class OwnerActionSourceTests(unittest.TestCase):
                 mock.patch.object(validator, "load_json", side_effect=load):
             expected, failures = validator.expected_inventory()
         self.assertEqual(failures, [])
-        self.assertEqual(len(expected), 507)
+        self.assertEqual(len(expected), 897)
         self.assertNotIn("ui.guided_tour.keep_layout", expected)
         self.assertNotIn("ui.guided_tour.restore_layout", expected)
 
@@ -429,18 +429,27 @@ class BoundedGapRepairInventoryTests(unittest.TestCase):
         self.assertEqual(sum(c.startswith("cmd.bsd.") for c in admitted), 9)
         self.assertEqual(sum(c.startswith("cmd.chat.context_lens.") for c in admitted), 7)
         self.assertNotIn("cmd.bsd.set", admitted)
-        self.assertEqual(len(rows), 681)
-        self.assertEqual(len(profiles), 134)
+        self.assertEqual(len(rows), 1044)
+        self.assertEqual(len(profiles), 656)
+        refresh = {r['command_id']: r for r in json.loads((ROOT / 'Plans/projects_refresh_command_bindings.json').read_text())['commands']}
         for command, (profile_id, owner, unit) in admitted.items():
             with self.subTest(command=command):
+                if command in refresh:
+                    profile_id = rows[command][1]
+                    owner, unit = refresh[command]['owner_ref'].split('#', 1)
                 self.assertEqual(rows[command][1:5], [profile_id, "command", command, "partial"])
                 profile = profiles[profile_id]
                 self.assertEqual((profile["owner_plan"], profile["plan_unit"]), (owner, unit))
                 self.assertEqual(profile["handler_status"], "specified")
                 self.assertEqual(profile["wiring_status"], "specified")
-                self.assertIn("Machine request/result/error schema materialization", profile["production_or_simulation"])
-                self.assertTrue(all(profile[field].endswith("#" + unit)
-                                    for field in ("dry_contract_ref", "payload_schema_ref", "result_schema_ref", "error_schema_ref")))
+                if command in refresh:
+                    self.assertEqual(profile['payload_schema_ref'], refresh[command]['request_schema_ref'])
+                    self.assertEqual(profile['result_schema_ref'], refresh[command]['result_schema_ref'])
+                    self.assertIn('evidence remains unproved', profile['production_or_simulation'])
+                else:
+                    self.assertIn("Machine request/result/error schema materialization", profile["production_or_simulation"])
+                    self.assertTrue(all(profile[field].endswith("#" + unit)
+                                        for field in ("dry_contract_ref", "payload_schema_ref", "result_schema_ref", "error_schema_ref")))
 
     def test_unrelated_catalog_or_prose_cannot_expand_the_gap_roster(self):
         expected = validator.gap_repair_inventory()
@@ -516,10 +525,16 @@ class PacketCommandTouchCoverageTests(unittest.TestCase):
         rows = {row[3]: row for row in registry["rows"]}
         for command, handler in self.GIT_HANDLERS.items():
             with self.subTest(command=command):
-                self.assertEqual(expected[command], ("TCP-GIT-ADAPTER", "command", "partial"))
+                refreshed_profiles = {'cmd.source_control.remote.update': 'TCP-FB-484',
+                                      'cmd.source_control.stash.create': 'TCP-FB-450',
+                                      'cmd.source_control.stash.apply': 'TCP-FB-449',
+                                      'cmd.source_control.branch.create': 'TCP-FB-419',
+                                      'cmd.source_control.branch.delete': 'TCP-FB-485'}
+                profile_id = refreshed_profiles.get(command, 'TCP-GIT-ADAPTER')
+                self.assertEqual(expected[command], (profile_id, "command", "partial"))
                 self.assertEqual(rows[command][1:5],
-                                 ["TCP-GIT-ADAPTER", "command", command, "partial"])
-                self.assertIn("handler_unavailable", rows[command][5])
+                                 [profile_id, "command", command, "partial"])
+                self.assertIn('native', rows[command][5].lower())
                 entry = wiring["catalog." + command.removeprefix("cmd.").replace(".", "_")]
                 self.assertEqual((entry["ui_command_id"], entry["handler_location"]),
                                  (command, handler))
@@ -531,12 +546,12 @@ class PacketCommandTouchCoverageTests(unittest.TestCase):
         schema = json.loads((ROOT / "Plans/forge_integration_contracts.schema.json").read_text())
         fixtures = json.loads((ROOT / "Plans/forge_integration_contract_fixtures.json").read_text())
         wiring = json.loads((ROOT / "Plans/Wiring_Matrix.production.json").read_text())["entries"]
-        profile = next(item for item in registry["profiles"] if item["profile_id"] == "TCP-FORGE")
+        profile = next(item for item in registry["profiles"] if item["profile_id"] == "TCP-FB-486")
         row = next(row for row in registry["rows"] if row[3] == "cmd.forge.review.edit")
-        self.assertEqual(row[1:5], ["TCP-FORGE", "command", "cmd.forge.review.edit", "partial"])
-        self.assertIn("Plans/Forge_Integrations.md#FGI-022", profile["requirement_refs"])
-        self.assertIn("scripts/pm_forge_command_followup.py", profile["test_refs"])
-        self.assertIn("runner list/preview read producers", profile["availability_rule"])
+        self.assertEqual(row[1:5], ["TCP-FB-486", "command", "cmd.forge.review.edit", "partial"])
+        self.assertIn("Plans/Forge_Integrations.md#FGI-023", profile["requirement_refs"])
+        self.assertEqual(profile['payload_schema_ref'], 'Plans/forge_integration_contracts.schema.json#/$defs/command_request_v2')
+        self.assertIn("scripts/pm-projects-refresh-contracts.py", profile["test_refs"])
         self.assertIn("runner.list_projection", (ROOT / "Plans/Forge_Integrations.md").read_text())
         for definition in ("runner_list_request", "runner_list_projection",
                            "runner_registration_preview_request", "runner_registration_preview_record",
@@ -582,7 +597,7 @@ class ForgeReviewAliasConsumerTests(unittest.TestCase):
         self.assertEqual(self.row(self.registry)[:5],
                          ["TOUCH-GHPR-001", "TCP-GITHUB-PR", "command_alias", self.ALIAS, "partial"])
         self.assertEqual(sum(row[3] == self.ALIAS for row in self.registry["rows"]), 1)
-        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (681, 134))
+        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (1044, 656))
         binding = self.registry["alias_bindings"][self.ALIAS]
         for field in ("exact_target", "availability_source", "handler_dispatch_token"):
             self.assertEqual(binding[field], self.TARGET)
@@ -692,19 +707,20 @@ class PermissionsRuleReferenceTests(unittest.TestCase):
         self.registry = json.loads((ROOT / "Plans/touch_closure.json").read_text(encoding="utf-8"))
 
     def profile(self, registry):
+        row = next(row for row in registry['rows'] if row[3] == 'cmd.permissions.create_project_rule')
         return next(profile for profile in registry["profiles"]
-                    if profile["profile_id"] == "TCP-PERMISSIONS")
+                    if profile["profile_id"] == row[1])
 
     def test_editor_and_precise_contracts_cover_all_five_partial_rows(self):
         self.assertEqual(validator.permissions_rule_reference_failures(self.registry), [])
-        rows = [row for row in self.registry["rows"] if row[1] == "TCP-PERMISSIONS"]
+        rows = [row for row in self.registry["rows"] if row[0].startswith('TOUCH-PERM-')]
         self.assertEqual([row[3] for row in rows], [
             "cmd.permissions.create_project_rule", "cmd.permissions.update_rule",
             "cmd.permissions.reorder_rule", "cmd.permissions.delete_rule",
             "cmd.permissions.validate_rule",
         ])
         self.assertTrue(all(row[4] == "partial" and "native" in row[5] for row in rows))
-        self.assertEqual(self.profile(self.registry)["plan_unit"], "PS-065")
+        self.assertEqual(self.profile(self.registry)["plan_unit"], "PS-144")
 
     def test_approval_lease_unit_and_owner_swap_are_rejected(self):
         for field, value in (("plan_unit", "PS-130"),
@@ -738,7 +754,7 @@ class PermissionsRuleReferenceTests(unittest.TestCase):
                 self.assertTrue(validator.permissions_rule_reference_failures(registry))
 
     def test_missing_or_duplicate_profile_or_obligation_is_rejected(self):
-        for collection, identity in (("profiles", "TCP-PERMISSIONS"), ("rows", "TOUCH-PERM-004")):
+        for collection, identity in (("profiles", self.profile(self.registry)['profile_id']), ("rows", "TOUCH-PERM-004")):
             for duplicate in (False, True):
                 registry = copy.deepcopy(self.registry)
                 item = next(item for item in registry[collection]
@@ -797,7 +813,8 @@ class CentralArchivedProjectAdapterTests(unittest.TestCase):
         for field, value in (("owner_plan", "Plans/UI_Command_Catalog.md"), ("plan_unit", "PJCT-003"),
                              ("handler_status", "implemented")):
             registry = copy.deepcopy(self.registry)
-            next(p for p in registry["profiles"] if p["profile_id"] == "TCP-PROJECT")[field] = value
+            row = next(r for r in registry['rows'] if r[3] == self.TARGET)
+            next(p for p in registry["profiles"] if p["profile_id"] == row[1])[field] = value
             with self.subTest(field=field):
                 self.assertTrue(self.check(registry=registry))
 
@@ -889,7 +906,7 @@ class CommandsShortcutsCensusTests(unittest.TestCase):
         self.assertEqual(sum(row[1] == "TCP-CMDSC" for row in registry["rows"]), 16)
         self.assertEqual((len(registry["rows"]), len(registry["profiles"]),
                           len(registry["excluded_tokens"]), len(registry["alias_bindings"])),
-                         (681, 134, 59, 65))
+                         (1044, 656, 59, 65))
 
     def test_unknown_commands_ids_are_rejected(self) -> None:
         for unknown in self.UNKNOWN:
@@ -914,12 +931,40 @@ class CommandsShortcutsCensusTests(unittest.TestCase):
         production_actions = {entry["ui_command_id"] for entry in matrix["entries"].values()}
         registry = json.loads((ROOT / "Plans/touch_closure.json").read_text(encoding="utf-8"))
         kinds = {row[3]: row[2] for row in registry["rows"]}
-        self.assertEqual(len(matrix["entries"]), 1258)
+        self.assertEqual(len(matrix["entries"]), 1300)
         for action in self.ALL:
             with self.subTest(action=action):
                 self.assertEqual(kinds[action], "ui_action")
                 self.assertNotIn(action, production_actions)
                 self.assertIsNone(re.search(r"^\| `" + re.escape(action) + r"` \|", catalog, re.M))
+
+
+class ProjectsRefreshActionSourceTests(unittest.TestCase):
+    """Mutations in the new source lists must not self-certify Touch closure."""
+    changed_sources = OwnerActionSourceTests.changed_sources
+
+    def test_deleted_or_invented_tool_fails_against_owner_census(self):
+        for mutate in (
+            lambda d: d['sources']['projects_refresh_tools']['actions'].remove('computer.screen'),
+            lambda d: d['sources']['projects_refresh_tools']['actions'].append('computer.stop'),
+            lambda d: d['sources']['projects_refresh_tools']['actions'].append('projects.write_file'),
+        ):
+            with self.changed_sources(mutate):
+                with self.assertRaises(ValueError):
+                    validator.expected_inventory()
+
+    def test_deleted_local_action_cannot_remove_a_typed_obligation(self):
+        with self.changed_sources(lambda d: d['sources']['projects_refresh_local']['actions'].pop()):
+            with self.assertRaisesRegex(ValueError, 'independent source inventory drift'):
+                validator.expected_inventory()
+
+    def test_bounded_tools_have_their_exact_kind_and_partial_status(self):
+        expected, errors = validator.expected_inventory()
+        self.assertEqual(errors, [])
+        for tool in ('projects.read_file', 'computer.screen', 'computer.pointer', 'computer.keys'):
+            self.assertEqual(expected[tool][1:], ('tool', 'partial'))
+        for alias in ('computer.stop', 'cmd.projects.read_file', 'projects.write_file'):
+            self.assertNotIn(alias, expected)
 
 
 if __name__ == "__main__":

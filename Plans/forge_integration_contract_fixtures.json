@@ -11458,5 +11458,407 @@
         "currentness": "current"
       }
     }
+  ],
+  "projects_refresh_cases": [
+    {
+      "case_id": "fd-create-github_dotcom",
+      "schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/ForgeProfileSetupScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "online",
+        "backend": "git",
+        "registration_kind": "forge_created",
+        "remote_effect_origin": "create",
+        "remote_status": "verified_created",
+        "verified_repository_id": "repo-a",
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true,
+        "admitted_profile": "github_dotcom"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "forge.admitted_profile_setup",
+          "expected": "accept_with_provider_specific_fields"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-create-github_enterprise",
+      "schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/ForgeProfileSetupScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "online",
+        "backend": "git",
+        "registration_kind": "forge_created",
+        "remote_effect_origin": "create",
+        "remote_status": "verified_created",
+        "verified_repository_id": "repo-a",
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true,
+        "admitted_profile": "github_enterprise"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "forge.admitted_profile_setup",
+          "expected": "accept_with_provider_specific_fields"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-create-gitlab_dotcom",
+      "schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/ForgeProfileSetupScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "online",
+        "backend": "git",
+        "registration_kind": "forge_created",
+        "remote_effect_origin": "create",
+        "remote_status": "verified_created",
+        "verified_repository_id": "repo-a",
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true,
+        "admitted_profile": "gitlab_dotcom"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "forge.admitted_profile_setup",
+          "expected": "accept_with_provider_specific_fields"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-create-gitlab_self_managed",
+      "schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/ForgeProfileSetupScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "online",
+        "backend": "git",
+        "registration_kind": "forge_created",
+        "remote_effect_origin": "create",
+        "remote_status": "verified_created",
+        "verified_repository_id": "repo-a",
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true,
+        "admitted_profile": "gitlab_self_managed"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "forge.admitted_profile_setup",
+          "expected": "accept_with_provider_specific_fields"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-create-azure_devops_services",
+      "schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/ForgeProfileSetupScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "online",
+        "backend": "git",
+        "registration_kind": "forge_created",
+        "remote_effect_origin": "create",
+        "remote_status": "verified_created",
+        "verified_repository_id": "repo-a",
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true,
+        "admitted_profile": "azure_devops_services"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "forge.admitted_profile_setup",
+          "expected": "accept_with_provider_specific_fields"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-create-azure_devops_server",
+      "schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/ForgeProfileSetupScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "online",
+        "backend": "git",
+        "registration_kind": "forge_created",
+        "remote_effect_origin": "create",
+        "remote_status": "verified_created",
+        "verified_repository_id": "repo-a",
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true,
+        "admitted_profile": "azure_devops_server"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "forge.admitted_profile_setup",
+          "expected": "accept_with_provider_specific_fields"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-create-bitbucket_cloud",
+      "schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/ForgeProfileSetupScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "online",
+        "backend": "git",
+        "registration_kind": "forge_created",
+        "remote_effect_origin": "create",
+        "remote_status": "verified_created",
+        "verified_repository_id": "repo-a",
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true,
+        "admitted_profile": "bitbucket_cloud"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "forge.admitted_profile_setup",
+          "expected": "accept_with_provider_specific_fields"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-create-bitbucket_data_center",
+      "schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/ForgeProfileSetupScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "online",
+        "backend": "git",
+        "registration_kind": "forge_created",
+        "remote_effect_origin": "create",
+        "remote_status": "verified_created",
+        "verified_repository_id": "repo-a",
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true,
+        "admitted_profile": "bitbucket_data_center"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "forge.admitted_profile_setup",
+          "expected": "accept_with_provider_specific_fields"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-create-forgejo_self_managed",
+      "schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/ForgeProfileSetupScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "online",
+        "backend": "git",
+        "registration_kind": "forge_created",
+        "remote_effect_origin": "create",
+        "remote_status": "verified_created",
+        "verified_repository_id": "repo-a",
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true,
+        "admitted_profile": "forgejo_self_managed"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "forge.admitted_profile_setup",
+          "expected": "accept_with_provider_specific_fields"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-create-gitea_self_managed",
+      "schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/ForgeProfileSetupScenarioV1",
+      "record": {
+        "setup_consumer": "new_project",
+        "way": "online",
+        "backend": "git",
+        "registration_kind": "forge_created",
+        "remote_effect_origin": "create",
+        "remote_status": "verified_created",
+        "verified_repository_id": "repo-a",
+        "original_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "captured_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_idempotency_replay": false,
+        "source_fresh": true,
+        "review_fresh": true,
+        "fork_provider": null,
+        "remote_name_taken": false,
+        "network_effect_requested": false,
+        "hook_execution_requested": false,
+        "jj_snapshot_requested": false,
+        "source_backing_device_ref": "device-a",
+        "backup_backing_device_ref": "device-b",
+        "backup_key_present": false,
+        "expected_policy_revision": null,
+        "archive": false,
+        "last_good_backup_ref": "backup-a",
+        "prune_requested": false,
+        "new_project_listed": true,
+        "admitted_profile": "gitea_self_managed"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "forge.admitted_profile_setup",
+          "expected": "accept_with_provider_specific_fields"
+        }
+      ],
+      "native_runtime_executed": false
+    }
   ]
 }

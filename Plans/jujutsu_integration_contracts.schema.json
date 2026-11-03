@@ -72,13 +72,57 @@
         "continuation_generation"
       ],
       "properties": {
-        "surface_id": {"$ref": "#/$defs/non_empty_string"},
-        "route_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
-        "focus_id": {"$ref": "#/$defs/non_secret_ref"},
-        "invocation_token": {"$ref": "#/$defs/non_secret_ref"},
-        "caller_context_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
-        "expected_caller_revision": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}]},
-        "continuation_generation": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}]}
+        "surface_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "route_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "focus_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "invocation_token": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "caller_context_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_caller_revision": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "continuation_generation": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
       },
       "additionalProperties": false
     },
@@ -1205,11 +1249,19 @@
         },
         {
           "if": {
-            "properties": {"command_id": {"const": "cmd.jujutsu.git.clone"}},
-            "required": ["command_id"]
+            "properties": {
+              "command_id": {
+                "const": "cmd.jujutsu.git.clone"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
           },
           "then": {
-            "required": ["return_context"]
+            "required": [
+              "return_context"
+            ]
           }
         },
         {
@@ -2382,11 +2434,20 @@
         },
         {
           "if": {
-            "properties": {"command_id": {"const": "cmd.jujutsu.git.clone"}},
-            "required": ["command_id"]
+            "properties": {
+              "command_id": {
+                "const": "cmd.jujutsu.git.clone"
+              }
+            },
+            "required": [
+              "command_id"
+            ]
           },
           "then": {
-            "required": ["currentness", "return_context"]
+            "required": [
+              "currentness",
+              "return_context"
+            ]
           }
         }
       ],
@@ -3619,6 +3680,87 @@
         "expected_event_types remains empty until Event Authority separately admits a producer and payload"
       ],
       "additionalProperties": false
+    },
+    "LocalRemoteAddRequestV2": {
+      "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/remote_add_request_v2"
+    },
+    "command_request_v2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/command_request"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "command_id",
+            "native_workspace_ref",
+            "expected_native_revision",
+            "original_owner_request_ref",
+            "original_owner_request_sha256",
+            "publication_admission",
+            "native_capability_evidence",
+            "writer_lease_evidence",
+            "idempotency_key",
+            "return_context_ref"
+          ],
+          "properties": {
+            "command_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "native_workspace_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected_native_revision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "original_owner_request_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "original_owner_request_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "publication_admission": {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/publication_authority_v2"
+            },
+            "native_capability_evidence": {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            "writer_lease_evidence": {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            "idempotency_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "return_context_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        }
+      ]
+    },
+    "command_result_v2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/command_result"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/action_receipt"
+        }
+      ]
     }
   },
   "x-backup-jj-claim-boundary": {

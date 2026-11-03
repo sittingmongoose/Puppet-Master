@@ -2902,7 +2902,12 @@ def event_family_payload_schema(family: dict[str, Any]) -> tuple[dict[str, Any] 
             schema = json_pointer_value(schema, pointer[1:])
         if not isinstance(schema, dict):
             return None, None
-        return schema, schema.get("$id") or schema.get("schema_id")
+        # Current owner-selected $defs may identify a payload through its
+        # closed schema_id member rather than a second resource $id. This
+        # resolves identity only; it does not admit the app producer or change
+        # the fixed Event Authority kernel denominator.
+        constant_id = schema.get('properties', {}).get('schema_id', {}).get('const')
+        return schema, schema.get("$id") or schema.get("schema_id") or constant_id
     except Exception:  # noqa: BLE001 - converted to a deterministic structural failure.
         return None, None
 

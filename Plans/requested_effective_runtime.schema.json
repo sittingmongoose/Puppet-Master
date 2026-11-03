@@ -693,5 +693,59 @@
     "persona_resolution_ref",
     "auth_resolution_ref"
   ],
-  "type": "object"
+  "type": "object",
+  "$defs": {
+    "ModelPrecedenceAuditV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tier_version",
+        "strategy",
+        "precedence_tier",
+        "source_kind",
+        "scope",
+        "source_evidence",
+        "historical_audit_recast"
+      ],
+      "properties": {
+        "tier_version": {
+          "const": "scoped_owner_ladder_v2"
+        },
+        "strategy": {
+          "enum": [
+            "Standard",
+            "Conservative",
+            "Aggressive"
+          ]
+        },
+        "precedence_tier": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9
+        },
+        "source_kind": {
+          "enum": [
+            "explicit",
+            "scoped_owner",
+            "persona",
+            "surface_stage",
+            "project_own",
+            "computer_own",
+            "everywhere_factory",
+            "permitted_last_used",
+            "provider"
+          ]
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "source_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "historical_audit_recast": {
+          "const": false
+        }
+      }
+    }
+  }
 }

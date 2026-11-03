@@ -1,0 +1,1791 @@
+{
+  "schema_id": "pm.computer_use_contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "owner_schema": "Plans/computer_use_contracts.schema.json",
+  "evidence_level": "schema_fixture_only",
+  "native_runtime_executed": false,
+  "projects_refresh_cases": [
+    {
+      "case_id": "fd-computer-session",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerUseSessionContext",
+      "record": {
+        "session_id": "session-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "thread_id": "thread-a",
+        "execution_host_id": "host-a",
+        "desktop_session_ref": "desktop-a",
+        "allowed_app_ids": [
+          "app-a"
+        ],
+        "tool_namespace_receipt": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "controller_lease_ref": "lease-a",
+        "controller_generation": 1,
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "screen_provider_disclosure_ref": "disclosure-a",
+        "permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "stopped": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-protected_auth",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerUseActionResult",
+      "record": {
+        "session_id": "session-a",
+        "action_id": "action-a",
+        "status": "refused",
+        "transient_scrubbed_frame_ref": null,
+        "bounded_audit_ref": "audit-a",
+        "reason": "protected_auth",
+        "raw_frame_retained": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-no-retained-frame",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerUseActionResult",
+      "record": {
+        "session_id": "session-a",
+        "action_id": "action-a",
+        "status": "refused",
+        "transient_scrubbed_frame_ref": null,
+        "bounded_audit_ref": "audit-a",
+        "reason": "protected_auth",
+        "raw_frame_retained": true
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-wrong_app",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerUseActionResult",
+      "record": {
+        "session_id": "session-a",
+        "action_id": "action-a",
+        "status": "refused",
+        "transient_scrubbed_frame_ref": null,
+        "bounded_audit_ref": "audit-a",
+        "reason": "wrong_app",
+        "raw_frame_retained": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-stale_controller",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerUseActionResult",
+      "record": {
+        "session_id": "session-a",
+        "action_id": "action-a",
+        "status": "refused",
+        "transient_scrubbed_frame_ref": null,
+        "bounded_audit_ref": "audit-a",
+        "reason": "stale_controller",
+        "raw_frame_retained": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-disclosure_missing",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerUseActionResult",
+      "record": {
+        "session_id": "session-a",
+        "action_id": "action-a",
+        "status": "refused",
+        "transient_scrubbed_frame_ref": null,
+        "bounded_audit_ref": "audit-a",
+        "reason": "disclosure_missing",
+        "raw_frame_retained": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-namespace_unavailable",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerUseActionResult",
+      "record": {
+        "session_id": "session-a",
+        "action_id": "action-a",
+        "status": "unsupported",
+        "transient_scrubbed_frame_ref": null,
+        "bounded_audit_ref": "audit-a",
+        "reason": "namespace_unavailable",
+        "raw_frame_retained": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-screen-request",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.screen.request.v1",
+        "tool_id": "computer.screen",
+        "operation": "capture",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "native-mapping-ref-a",
+        "app_id": "app-a",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {},
+        "controller_generation": 1,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "computer.session_source_join",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-computer-owner-screen"
+    },
+    {
+      "case_id": "fd-computer-screen-reject-app_id",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.screen.request.v1",
+        "tool_id": "computer.screen",
+        "operation": "capture",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "native-mapping-ref-a",
+        "app_id": "other-app",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {},
+        "controller_generation": 1,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "computer.session_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-computer-owner-screen"
+    },
+    {
+      "case_id": "fd-computer-screen-reject-controller_generation",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.screen.request.v1",
+        "tool_id": "computer.screen",
+        "operation": "capture",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "native-mapping-ref-a",
+        "app_id": "app-a",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {},
+        "controller_generation": 2,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "computer.session_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-computer-owner-screen"
+    },
+    {
+      "case_id": "fd-computer-screen-reject-native_mapping_ref",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.screen.request.v1",
+        "tool_id": "computer.screen",
+        "operation": "capture",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "other-native",
+        "app_id": "app-a",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {},
+        "controller_generation": 1,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "computer.session_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-computer-owner-screen"
+    },
+    {
+      "case_id": "fd-computer-screen-no-stop-alias",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.screen.request.v1",
+        "tool_id": "computer.screen",
+        "operation": "stop",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "native-mapping-ref-a",
+        "app_id": "app-a",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {},
+        "controller_generation": 1,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-screen-unknown-effect",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenResultV1",
+      "record": {
+        "schema_id": "pm.computer_use.screen.result.v1",
+        "schema_version": "1.0.0",
+        "tool_id": "computer.screen",
+        "session_id": "session-a",
+        "idempotency_key": "idempotency-key-a",
+        "status": "unknown_effect",
+        "effect_state": "unknown",
+        "original_operation_ref": "operation-a",
+        "original_result_ref": null,
+        "owner_result_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "transient_scrubbed_frame_ref": null,
+        "raw_frame_retained": false,
+        "protected_surface_captured": false,
+        "return_context_ref": "return-context-ref-a",
+        "reason": "unknown_effect",
+        "frame_expires_at_utc": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-screen-no-false-success",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenResultV1",
+      "record": {
+        "schema_id": "pm.computer_use.screen.result.v1",
+        "schema_version": "1.0.0",
+        "tool_id": "computer.screen",
+        "session_id": "session-a",
+        "idempotency_key": "idempotency-key-a",
+        "status": "done",
+        "effect_state": "unknown",
+        "original_operation_ref": "operation-a",
+        "original_result_ref": null,
+        "owner_result_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "transient_scrubbed_frame_ref": null,
+        "raw_frame_retained": false,
+        "protected_surface_captured": false,
+        "return_context_ref": "return-context-ref-a",
+        "reason": "unknown_effect",
+        "frame_expires_at_utc": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-pointer-request",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.pointer.request.v1",
+        "tool_id": "computer.pointer",
+        "operation": "move",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "native-mapping-ref-a",
+        "app_id": "app-a",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {
+          "x": 12,
+          "y": 18
+        },
+        "controller_generation": 1,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "computer.session_source_join",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-computer-owner-pointer"
+    },
+    {
+      "case_id": "fd-computer-pointer-reject-app_id",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.pointer.request.v1",
+        "tool_id": "computer.pointer",
+        "operation": "move",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "native-mapping-ref-a",
+        "app_id": "other-app",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {
+          "x": 12,
+          "y": 18
+        },
+        "controller_generation": 1,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "computer.session_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-computer-owner-pointer"
+    },
+    {
+      "case_id": "fd-computer-pointer-reject-controller_generation",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.pointer.request.v1",
+        "tool_id": "computer.pointer",
+        "operation": "move",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "native-mapping-ref-a",
+        "app_id": "app-a",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {
+          "x": 12,
+          "y": 18
+        },
+        "controller_generation": 2,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "computer.session_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-computer-owner-pointer"
+    },
+    {
+      "case_id": "fd-computer-pointer-reject-native_mapping_ref",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.pointer.request.v1",
+        "tool_id": "computer.pointer",
+        "operation": "move",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "other-native",
+        "app_id": "app-a",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {
+          "x": 12,
+          "y": 18
+        },
+        "controller_generation": 1,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "computer.session_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-computer-owner-pointer"
+    },
+    {
+      "case_id": "fd-computer-pointer-no-stop-alias",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.pointer.request.v1",
+        "tool_id": "computer.pointer",
+        "operation": "stop",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "native-mapping-ref-a",
+        "app_id": "app-a",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {
+          "x": 12,
+          "y": 18
+        },
+        "controller_generation": 1,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-pointer-unknown-effect",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerResultV1",
+      "record": {
+        "schema_id": "pm.computer_use.pointer.result.v1",
+        "schema_version": "1.0.0",
+        "tool_id": "computer.pointer",
+        "session_id": "session-a",
+        "idempotency_key": "idempotency-key-a",
+        "status": "unknown_effect",
+        "effect_state": "unknown",
+        "original_operation_ref": "operation-a",
+        "original_result_ref": null,
+        "owner_result_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "transient_scrubbed_frame_ref": null,
+        "raw_frame_retained": false,
+        "protected_surface_captured": false,
+        "return_context_ref": "return-context-ref-a",
+        "reason": "unknown_effect",
+        "frame_expires_at_utc": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-pointer-no-false-success",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerResultV1",
+      "record": {
+        "schema_id": "pm.computer_use.pointer.result.v1",
+        "schema_version": "1.0.0",
+        "tool_id": "computer.pointer",
+        "session_id": "session-a",
+        "idempotency_key": "idempotency-key-a",
+        "status": "done",
+        "effect_state": "unknown",
+        "original_operation_ref": "operation-a",
+        "original_result_ref": null,
+        "owner_result_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "transient_scrubbed_frame_ref": null,
+        "raw_frame_retained": false,
+        "protected_surface_captured": false,
+        "return_context_ref": "return-context-ref-a",
+        "reason": "unknown_effect",
+        "frame_expires_at_utc": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-keys-request",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.keys.request.v1",
+        "tool_id": "computer.keys",
+        "operation": "press",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "native-mapping-ref-a",
+        "app_id": "app-a",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {
+          "keys": [
+            "Escape"
+          ]
+        },
+        "controller_generation": 1,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "computer.session_source_join",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-computer-owner-keys"
+    },
+    {
+      "case_id": "fd-computer-keys-reject-app_id",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.keys.request.v1",
+        "tool_id": "computer.keys",
+        "operation": "press",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "native-mapping-ref-a",
+        "app_id": "other-app",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {
+          "keys": [
+            "Escape"
+          ]
+        },
+        "controller_generation": 1,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "computer.session_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-computer-owner-keys"
+    },
+    {
+      "case_id": "fd-computer-keys-reject-controller_generation",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.keys.request.v1",
+        "tool_id": "computer.keys",
+        "operation": "press",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "native-mapping-ref-a",
+        "app_id": "app-a",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {
+          "keys": [
+            "Escape"
+          ]
+        },
+        "controller_generation": 2,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "computer.session_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-computer-owner-keys"
+    },
+    {
+      "case_id": "fd-computer-keys-reject-native_mapping_ref",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.keys.request.v1",
+        "tool_id": "computer.keys",
+        "operation": "press",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "other-native",
+        "app_id": "app-a",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {
+          "keys": [
+            "Escape"
+          ]
+        },
+        "controller_generation": 1,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "computer.session_source_join",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "fd-computer-owner-keys"
+    },
+    {
+      "case_id": "fd-computer-keys-no-stop-alias",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysRequestV1",
+      "record": {
+        "schema_id": "pm.computer_use.keys.request.v1",
+        "tool_id": "computer.keys",
+        "operation": "stop",
+        "session_id": "session-a",
+        "thread_id": "thread-a",
+        "server_id": "server-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "desktop_session_ref": "desktop-session-ref-a",
+        "controller_lease_ref": "controller-lease-ref-a",
+        "namespace_receipt_ref": "namespace-receipt-ref-a",
+        "native_mapping_ref": "native-mapping-ref-a",
+        "app_id": "app-a",
+        "window_ref": "window-ref-a",
+        "target_ref": "target-ref-a",
+        "permission_evidence_ref": "permission-evidence-ref-a",
+        "disclosure_ref": "disclosure-ref-a",
+        "idempotency_key": "idempotency-key-a",
+        "return_context_ref": "return-context-ref-a",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "task_authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation_data": {
+          "keys": [
+            "Escape"
+          ]
+        },
+        "controller_generation": 1,
+        "namespace_generation": 1,
+        "window_generation": 1,
+        "permission_generation": 1,
+        "disclosure_generation": 1,
+        "stop_epoch": 1,
+        "observation_ref": "observation-ref-a",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "geometry_ref": "geometry-ref-a",
+        "foreground_window_ref": "foreground-window-ref-a",
+        "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+        "observation_generation": 1,
+        "geometry_generation": 1,
+        "scale_generation": 1
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-keys-unknown-effect",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysResultV1",
+      "record": {
+        "schema_id": "pm.computer_use.keys.result.v1",
+        "schema_version": "1.0.0",
+        "tool_id": "computer.keys",
+        "session_id": "session-a",
+        "idempotency_key": "idempotency-key-a",
+        "status": "unknown_effect",
+        "effect_state": "unknown",
+        "original_operation_ref": "operation-a",
+        "original_result_ref": null,
+        "owner_result_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "transient_scrubbed_frame_ref": null,
+        "raw_frame_retained": false,
+        "protected_surface_captured": false,
+        "return_context_ref": "return-context-ref-a",
+        "reason": "unknown_effect",
+        "frame_expires_at_utc": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-computer-keys-no-false-success",
+      "schema_ref": "Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysResultV1",
+      "record": {
+        "schema_id": "pm.computer_use.keys.result.v1",
+        "schema_version": "1.0.0",
+        "tool_id": "computer.keys",
+        "session_id": "session-a",
+        "idempotency_key": "idempotency-key-a",
+        "status": "done",
+        "effect_state": "unknown",
+        "original_operation_ref": "operation-a",
+        "original_result_ref": null,
+        "owner_result_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "transient_scrubbed_frame_ref": null,
+        "raw_frame_retained": false,
+        "protected_surface_captured": false,
+        "return_context_ref": "return-context-ref-a",
+        "reason": "unknown_effect",
+        "frame_expires_at_utc": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    }
+  ],
+  "owner_session_sources": {
+    "fd-computer-owner-screen": {
+      "tool_id": "computer.screen",
+      "session_id": "session-a",
+      "thread_id": "thread-a",
+      "server_id": "server-a",
+      "execution_host_id": "host-a",
+      "execution_environment_id": "environment-a",
+      "desktop_session_ref": "desktop-session-ref-a",
+      "controller_lease_ref": "controller-lease-ref-a",
+      "namespace_receipt_ref": "namespace-receipt-ref-a",
+      "native_mapping_ref": "native-mapping-ref-a",
+      "app_id": "app-a",
+      "window_ref": "window-ref-a",
+      "target_ref": "target-ref-a",
+      "permission_evidence_ref": "permission-evidence-ref-a",
+      "disclosure_ref": "disclosure-ref-a",
+      "return_context_ref": "return-context-ref-a",
+      "scope": {
+        "schema_id": "pm.workflow_scope.v2",
+        "schema_version": "2.0.0",
+        "scope_kind": "application",
+        "scope_partition": "app",
+        "project_id": null,
+        "project_home_server_id": null,
+        "named_plan_id": null,
+        "server_id": "server-a"
+      },
+      "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "controller_generation": 1,
+      "namespace_generation": 1,
+      "window_generation": 1,
+      "permission_generation": 1,
+      "disclosure_generation": 1,
+      "stop_epoch": 1,
+      "allowed_app_ids": [
+        "app-a"
+      ],
+      "protected_surface": false,
+      "stopped": false,
+      "native_operations": {
+        "computer.screen": [
+          "capture"
+        ]
+      },
+      "namespace_tools": {
+        "computer.screen": "native-mapping-ref-a"
+      },
+      "observation_ref": "observation-ref-a",
+      "geometry_ref": "geometry-ref-a",
+      "foreground_window_ref": "foreground-window-ref-a",
+      "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+      "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+      "observation_generation": 1,
+      "geometry_generation": 1,
+      "scale_generation": 1,
+      "width_px": 1920,
+      "height_px": 1080,
+      "native_max_clicks": 2,
+      "native_max_text_bytes": 4096,
+      "task_authority": {
+        "authority_kind": "mode",
+        "human_confirmed": false,
+        "mode": "yolo",
+        "task_ref": "task-a",
+        "mode_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    "fd-computer-owner-pointer": {
+      "tool_id": "computer.pointer",
+      "session_id": "session-a",
+      "thread_id": "thread-a",
+      "server_id": "server-a",
+      "execution_host_id": "host-a",
+      "execution_environment_id": "environment-a",
+      "desktop_session_ref": "desktop-session-ref-a",
+      "controller_lease_ref": "controller-lease-ref-a",
+      "namespace_receipt_ref": "namespace-receipt-ref-a",
+      "native_mapping_ref": "native-mapping-ref-a",
+      "app_id": "app-a",
+      "window_ref": "window-ref-a",
+      "target_ref": "target-ref-a",
+      "permission_evidence_ref": "permission-evidence-ref-a",
+      "disclosure_ref": "disclosure-ref-a",
+      "return_context_ref": "return-context-ref-a",
+      "scope": {
+        "schema_id": "pm.workflow_scope.v2",
+        "schema_version": "2.0.0",
+        "scope_kind": "application",
+        "scope_partition": "app",
+        "project_id": null,
+        "project_home_server_id": null,
+        "named_plan_id": null,
+        "server_id": "server-a"
+      },
+      "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "controller_generation": 1,
+      "namespace_generation": 1,
+      "window_generation": 1,
+      "permission_generation": 1,
+      "disclosure_generation": 1,
+      "stop_epoch": 1,
+      "allowed_app_ids": [
+        "app-a"
+      ],
+      "protected_surface": false,
+      "stopped": false,
+      "native_operations": {
+        "computer.pointer": [
+          "move",
+          "click",
+          "scroll",
+          "drag"
+        ]
+      },
+      "namespace_tools": {
+        "computer.pointer": "native-mapping-ref-a"
+      },
+      "observation_ref": "observation-ref-a",
+      "geometry_ref": "geometry-ref-a",
+      "foreground_window_ref": "foreground-window-ref-a",
+      "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+      "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+      "observation_generation": 1,
+      "geometry_generation": 1,
+      "scale_generation": 1,
+      "width_px": 1920,
+      "height_px": 1080,
+      "native_max_clicks": 2,
+      "native_max_text_bytes": 4096,
+      "task_authority": {
+        "authority_kind": "mode",
+        "human_confirmed": false,
+        "mode": "yolo",
+        "task_ref": "task-a",
+        "mode_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    "fd-computer-owner-keys": {
+      "tool_id": "computer.keys",
+      "session_id": "session-a",
+      "thread_id": "thread-a",
+      "server_id": "server-a",
+      "execution_host_id": "host-a",
+      "execution_environment_id": "environment-a",
+      "desktop_session_ref": "desktop-session-ref-a",
+      "controller_lease_ref": "controller-lease-ref-a",
+      "namespace_receipt_ref": "namespace-receipt-ref-a",
+      "native_mapping_ref": "native-mapping-ref-a",
+      "app_id": "app-a",
+      "window_ref": "window-ref-a",
+      "target_ref": "target-ref-a",
+      "permission_evidence_ref": "permission-evidence-ref-a",
+      "disclosure_ref": "disclosure-ref-a",
+      "return_context_ref": "return-context-ref-a",
+      "scope": {
+        "schema_id": "pm.workflow_scope.v2",
+        "schema_version": "2.0.0",
+        "scope_kind": "application",
+        "scope_partition": "app",
+        "project_id": null,
+        "project_home_server_id": null,
+        "named_plan_id": null,
+        "server_id": "server-a"
+      },
+      "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "controller_generation": 1,
+      "namespace_generation": 1,
+      "window_generation": 1,
+      "permission_generation": 1,
+      "disclosure_generation": 1,
+      "stop_epoch": 1,
+      "allowed_app_ids": [
+        "app-a"
+      ],
+      "protected_surface": false,
+      "stopped": false,
+      "native_operations": {
+        "computer.keys": [
+          "press",
+          "type"
+        ]
+      },
+      "namespace_tools": {
+        "computer.keys": "native-mapping-ref-a"
+      },
+      "observation_ref": "observation-ref-a",
+      "geometry_ref": "geometry-ref-a",
+      "foreground_window_ref": "foreground-window-ref-a",
+      "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+      "result_schema_sha256": "14baa17e7c56701cbdd47dc8507f7d3900274747594c897986fec351249b8fae",
+      "observation_generation": 1,
+      "geometry_generation": 1,
+      "scale_generation": 1,
+      "width_px": 1920,
+      "height_px": 1080,
+      "native_max_clicks": 2,
+      "native_max_text_bytes": 4096,
+      "task_authority": {
+        "authority_kind": "mode",
+        "human_confirmed": false,
+        "mode": "yolo",
+        "task_ref": "task-a",
+        "mode_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    }
+  }
+}

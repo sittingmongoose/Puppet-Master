@@ -77,7 +77,7 @@
         "destination": {
           "destination_kind": "brainstorm",
           "destination_id": "collab-run:fixture:bs-1",
-          "display_label": "BrainStorm \u00b7 Provider Architecture \u00b7 4 helpers",
+          "display_label": "BrainStorm · Provider Architecture · 4 helpers",
           "state_generation": 3
         }
       }
@@ -102,7 +102,7 @@
           "destination_kind": "crew",
           "destination_id": "collab-run:fixture:crew-1",
           "participant_id": "participant:fixture:crew-1:2",
-          "display_label": "Crew \u00b7 Storage migration \u00b7 Helper 2",
+          "display_label": "Crew · Storage migration · Helper 2",
           "state_generation": 7
         }
       }
@@ -126,7 +126,7 @@
         "destination": {
           "destination_kind": "plan_revision",
           "destination_id": "assistant-plan:fixture:1@r4",
-          "display_label": "Plan \u00b7 Storage migration \u00b7 revision 4",
+          "display_label": "Plan · Storage migration · revision 4",
           "state_generation": 4
         }
       }
@@ -147,7 +147,7 @@
         "destination": {
           "destination_kind": "brainstorm",
           "destination_id": "collab-run:fixture:bs-1",
-          "display_label": "BrainStorm \u00b7 Provider Architecture \u00b7 4 helpers",
+          "display_label": "BrainStorm · Provider Architecture · 4 helpers",
           "state_generation": 3
         },
         "side_effects": {
@@ -1029,7 +1029,7 @@
         "destination": {
           "destination_kind": "brainstorm",
           "destination_id": "collab-run:fixture:bs-1",
-          "display_label": "BrainStorm \u00b7 Provider Architecture \u00b7 4 helpers",
+          "display_label": "BrainStorm · Provider Architecture · 4 helpers",
           "state_generation": 3
         }
       }
@@ -1498,6 +1498,563 @@
       "patch": {
         "agreement_confirmed": true
       }
+    }
+  ],
+  "projects_refresh_cases": [
+    {
+      "case_id": "fd-move-cutover",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.cutover",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-project_not_listed",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": false,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.cutover",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-file_verification",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": false,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.cutover",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-goal_live",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": false,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.cutover",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-crew_live",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": false,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.cutover",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-plan_live",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": false,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.cutover",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-timer_live",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": false,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.cutover",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-late_source",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 1,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.cutover",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-two_writers",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": true,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.cutover",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-undo_new_work",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": "2026-11-03T01:00:00Z",
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.undo",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-undo_seven_days",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-10T00:00:01Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.undo",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-undo_modified",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": false,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.undo",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-no_remote_delete",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.undo_remote",
+          "expected": "keep"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-retained_goal",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-11T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.independent_custody",
+          "expected": "keep"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-move-old_app_backup",
+      "schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ConversionSafetyScenarioV1",
+      "record": {
+        "source_thread_id": "thread-a",
+        "source_server_id": "server-a",
+        "destination_server_id": "server-b",
+        "source_scope_kind": "application",
+        "destination_project_id": "project-a",
+        "new_project_listed": true,
+        "files_verified": true,
+        "active_goal_fenced": true,
+        "active_crew_fenced": true,
+        "active_plan_fenced": true,
+        "source_timers_fenced": true,
+        "cutover_generation": 2,
+        "observed_generation": 2,
+        "source_writer_live": false,
+        "destination_writer_live": true,
+        "first_new_work_at_utc": null,
+        "move_committed_at_utc": "2026-11-03T00:00:00Z",
+        "now_utc": "2026-11-04T00:00:00Z",
+        "undo_max_seconds": 604800,
+        "independent_goal_hold": true,
+        "unchanged_destination_files": true,
+        "remote_repository_created": true,
+        "stale_app_backup_restore": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "conversion.restore_lineage",
+          "expected": "historical_only"
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }

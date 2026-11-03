@@ -13,6 +13,39 @@ COMMAND = "cmd.project.new_github_repo"
 SCHEMA = "Plans/project_system_contracts.schema.json"
 
 
+def setup_scenario_outcome(predicate, record):
+    """Pure acceptance model for the shared setup/recovery fixture protocol.
+
+    These inputs model owner observations; real receipts still need the genuine
+    authenticated joins implemented by the existing request/result oracles.
+    """
+    if predicate == 'project.setup':
+        if (not record['source_fresh'] or not record['review_fresh']
+                or record['remote_effect_origin'] is not None and record['registration_kind'] == 'new_local'
+                or record['remote_status'] == 'verified_created' and not record['verified_repository_id']):
+            return 'refuse'
+        return 'accept'
+    if predicate == 'project.recovery':
+        if record['original_result_sha256'] != record['captured_result_sha256']:
+            return 'refuse'
+        if record['original_idempotency_replay']:
+            return 'original_result_only'
+        return 'reconcile_only' if record['remote_status'] == 'unknown' else 'refuse'
+    if predicate == 'project.contribution':
+        return 'accept' if record['fork_provider'] in ('github', 'github_enterprise') else 'unsupported'
+    if predicate == 'scm.remote_add':
+        return 'refuse' if record['remote_name_taken'] or record['network_effect_requested'] else 'accept'
+    if predicate == 'scm.inspect':
+        return 'refuse' if record['hook_execution_requested'] or record['jj_snapshot_requested'] else 'accept'
+    if predicate == 'backup.destination':
+        return 'refuse' if record['source_backing_device_ref'] == record['backup_backing_device_ref'] else 'accept'
+    if predicate == 'backup.policy_first_write':
+        return 'create_once' if not record['backup_key_present'] and record['expected_policy_revision'] is None else 'conflict'
+    if predicate == 'backup.archive':
+        return 'refuse_prune' if record['prune_requested'] else 'pause_keep_last_good' if record['archive'] and record['last_good_backup_ref'] else 'refuse'
+    raise ValueError('unknown setup predicate: ' + predicate)
+
+
 def request_failures(request: dict[str, Any]) -> list[str]:
     import pm_ui_command_response as response
 

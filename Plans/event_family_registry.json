@@ -10,7 +10,7 @@
       "family_id": "event-family-goal-run-blocked",
       "family_revision": "2.0.0",
       "event_type": "goal_run.blocked",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
       "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
       "payload_schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v2",
@@ -46,13 +46,54 @@
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v2",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v2"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "existing_project_policy",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+          "read_owner_ref": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.goal_runtime_event.goal_run_blocked.application.v1",
+          "payload_schema_ref": {
+            "path": "Plans/application_workflow_contracts.schema.json",
+            "json_pointer": "#/$defs/GoalRunBlockedEventApplicationV1",
+            "schema_id": "pm.goal_runtime_event.goal_run_blocked.application.v1"
+          },
+          "source_graph_ref": "Plans/application_workflow_source_graph.json",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     },
     {
       "family_id": "event-family-goal-run-cancelled",
       "family_revision": "3.0.0",
       "event_type": "goal_run.cancelled",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-080",
       "payload_owner_doc": "Plans/storage-plan.md#SP-312",
       "payload_schema_id": "pm.goal_runtime_event.goal_run_cancelled.schema.v3",
@@ -96,7 +137,48 @@
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.goal_runtime_event.goal_run_cancelled.schema.v3",
+          "payload_schema_ref": {
+            "path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.goal_runtime_event.goal_run_cancelled.schema.v3"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "existing_project_policy",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-080",
+          "read_owner_ref": "Plans/storage-plan.md#SP-312",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.goal_runtime_event.goal_run_cancelled.application.v1",
+          "payload_schema_ref": {
+            "path": "Plans/application_workflow_contracts.schema.json",
+            "json_pointer": "#/$defs/GoalRunCancelledEventApplicationV1",
+            "schema_id": "pm.goal_runtime_event.goal_run_cancelled.application.v1"
+          },
+          "source_graph_ref": "Plans/application_workflow_source_graph.json",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     },
     {
       "family_id": "event-family-goal-run-certified",
@@ -188,7 +270,7 @@
       "family_id": "event-family-goal-run-started",
       "family_revision": "3.0.0",
       "event_type": "goal_run.started",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-079",
       "payload_owner_doc": "Plans/storage-plan.md#SP-311",
       "payload_schema_id": "pm.goal_runtime_event.goal_run_started.schema.v3",
@@ -237,7 +319,48 @@
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-RUNTIME-365D",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.goal_runtime_event.goal_run_started.schema.v3",
+          "payload_schema_ref": {
+            "path": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.goal_runtime_event.goal_run_started.schema.v3"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "existing_project_policy",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-079",
+          "read_owner_ref": "Plans/storage-plan.md#SP-311",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.goal_runtime_event.goal_run_started.application.v1",
+          "payload_schema_ref": {
+            "path": "Plans/application_workflow_contracts.schema.json",
+            "json_pointer": "#/$defs/GoalRunStartedEventApplicationV1",
+            "schema_id": "pm.goal_runtime_event.goal_run_started.application.v1"
+          },
+          "source_graph_ref": "Plans/application_workflow_source_graph.json",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     },
     {
       "family_id": "event-family-goal-run-stopped",
@@ -285,7 +408,7 @@
       "family_id": "event-family-goal-blocked",
       "family_revision": "2.0.0",
       "event_type": "goal.blocked",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
       "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
       "payload_schema_id": "pm.goal_runtime_event.goal_blocked.schema.v2",
@@ -321,13 +444,54 @@
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.goal_runtime_event.goal_blocked.schema.v2",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.goal_runtime_event.goal_blocked.schema.v2"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "existing_project_policy",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+          "read_owner_ref": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.goal_runtime_event.goal_blocked.application.v1",
+          "payload_schema_ref": {
+            "path": "Plans/application_workflow_contracts.schema.json",
+            "json_pointer": "#/$defs/GoalBlockedEventApplicationV1",
+            "schema_id": "pm.goal_runtime_event.goal_blocked.application.v1"
+          },
+          "source_graph_ref": "Plans/application_workflow_source_graph.json",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     },
     {
       "family_id": "event-family-goal-cancelled",
       "family_revision": "3.0.0",
       "event_type": "goal.cancelled",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-073",
       "payload_owner_doc": "Plans/storage-plan.md#SP-304",
       "payload_schema_id": "pm.goal_runtime_event.goal_cancelled.schema.v3",
@@ -363,7 +527,48 @@
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.goal_runtime_event.goal_cancelled.schema.v3",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.goal_runtime_event.goal_cancelled.schema.v3"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "existing_project_policy",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-073",
+          "read_owner_ref": "Plans/storage-plan.md#SP-304",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.goal_runtime_event.goal_cancelled.application.v1",
+          "payload_schema_ref": {
+            "path": "Plans/application_workflow_contracts.schema.json",
+            "json_pointer": "#/$defs/GoalCancelledEventApplicationV1",
+            "schema_id": "pm.goal_runtime_event.goal_cancelled.application.v1"
+          },
+          "source_graph_ref": "Plans/application_workflow_source_graph.json",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     },
     {
       "family_id": "event-family-goal-child-status-changed",
@@ -411,7 +616,7 @@
       "family_id": "event-family-goal-completed",
       "family_revision": "2.0.0",
       "event_type": "goal.completed",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
       "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
       "payload_schema_id": "pm.goal_runtime_event.goal_completed.schema.v2",
@@ -447,13 +652,54 @@
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.goal_runtime_event.goal_completed.schema.v2",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.goal_runtime_event.goal_completed.schema.v2"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "existing_project_policy",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+          "read_owner_ref": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.goal_runtime_event.goal_completed.application.v1",
+          "payload_schema_ref": {
+            "path": "Plans/application_workflow_contracts.schema.json",
+            "json_pointer": "#/$defs/GoalCompletedEventApplicationV1",
+            "schema_id": "pm.goal_runtime_event.goal_completed.application.v1"
+          },
+          "source_graph_ref": "Plans/application_workflow_source_graph.json",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     },
     {
       "family_id": "event-family-goal-created",
       "family_revision": "3.0.0",
       "event_type": "goal.created",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Goal_Runtime_System.md#original-goal-creation-command-settlement",
       "payload_owner_doc": "Plans/storage-plan.md#goal-start-original-command-custody-and-publication",
       "payload_schema_id": "pm.goal_runtime_event.goal_created.schema.v3",
@@ -490,7 +736,48 @@
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.goal_runtime_event.goal_created.schema.v3",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.goal_runtime_event.goal_created.schema.v3"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "existing_project_policy",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#original-goal-creation-command-settlement",
+          "read_owner_ref": "Plans/storage-plan.md#goal-start-original-command-custody-and-publication",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.goal_runtime_event.goal_created.application.v1",
+          "payload_schema_ref": {
+            "path": "Plans/application_workflow_contracts.schema.json",
+            "json_pointer": "#/$defs/GoalCreatedEventApplicationV1",
+            "schema_id": "pm.goal_runtime_event.goal_created.application.v1"
+          },
+          "source_graph_ref": "Plans/application_workflow_source_graph.json",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     },
     {
       "family_id": "event-family-goal-degraded",
@@ -538,7 +825,7 @@
       "family_id": "event-family-goal-evidence-captured",
       "family_revision": "2.0.0",
       "event_type": "goal.evidence_captured",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
       "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
       "payload_schema_id": "pm.goal_runtime_event.goal_evidence_captured.schema.v2",
@@ -574,7 +861,48 @@
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.goal_runtime_event.goal_evidence_captured.schema.v2",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.goal_runtime_event.goal_evidence_captured.schema.v2"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "existing_project_policy",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+          "read_owner_ref": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.goal_runtime_event.goal_evidence_captured.application.v1",
+          "payload_schema_ref": {
+            "path": "Plans/application_workflow_contracts.schema.json",
+            "json_pointer": "#/$defs/GoalEvidenceCapturedEventApplicationV1",
+            "schema_id": "pm.goal_runtime_event.goal_evidence_captured.application.v1"
+          },
+          "source_graph_ref": "Plans/application_workflow_source_graph.json",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     },
     {
       "family_id": "event-family-goal-progressed",
@@ -622,7 +950,7 @@
       "family_id": "event-family-goal-receipt-recorded",
       "family_revision": "2.0.0",
       "event_type": "goal.receipt_recorded",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
       "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
       "payload_schema_id": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2",
@@ -658,7 +986,48 @@
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "existing_project_policy",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+          "read_owner_ref": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.goal_runtime_event.goal_receipt_recorded.application.v1",
+          "payload_schema_ref": {
+            "path": "Plans/application_workflow_contracts.schema.json",
+            "json_pointer": "#/$defs/GoalReceiptRecordedEventApplicationV1",
+            "schema_id": "pm.goal_runtime_event.goal_receipt_recorded.application.v1"
+          },
+          "source_graph_ref": "Plans/application_workflow_source_graph.json",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     },
     {
       "family_id": "event-family-goal-replanned",
@@ -790,7 +1159,7 @@
       "family_id": "event-family-goal-tool-check-recorded",
       "family_revision": "2.0.0",
       "event_type": "goal.tool_check_recorded",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
       "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
       "payload_schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2",
@@ -826,13 +1195,54 @@
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "existing_project_policy",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+          "read_owner_ref": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.application.v1",
+          "payload_schema_ref": {
+            "path": "Plans/application_workflow_contracts.schema.json",
+            "json_pointer": "#/$defs/GoalToolCheckRecordedEventApplicationV1",
+            "schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.application.v1"
+          },
+          "source_graph_ref": "Plans/application_workflow_source_graph.json",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     },
     {
       "family_id": "event-family-goal-updated",
       "family_revision": "3.0.0",
       "event_type": "goal.updated",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/Goal_Runtime_System.md#original-goal-objective-update-acceptance-and-settlement",
       "payload_owner_doc": "Plans/storage-plan.md#goal-update-original-command-custody-and-publication",
       "payload_schema_id": "pm.goal_runtime_event.goal_updated.schema.v3",
@@ -872,7 +1282,48 @@
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.goal_runtime_event.goal_updated.schema.v3",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.goal_runtime_event.goal_updated.schema.v3"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "existing_project_policy",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#original-goal-objective-update-acceptance-and-settlement",
+          "read_owner_ref": "Plans/storage-plan.md#goal-update-original-command-custody-and-publication",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.goal_runtime_event.goal_updated.application.v1",
+          "payload_schema_ref": {
+            "path": "Plans/application_workflow_contracts.schema.json",
+            "json_pointer": "#/$defs/GoalUpdatedEventApplicationV1",
+            "schema_id": "pm.goal_runtime_event.goal_updated.application.v1"
+          },
+          "source_graph_ref": "Plans/application_workflow_source_graph.json",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     },
     {
       "family_id": "event-family-goal-verification-decided",
@@ -2631,6 +3082,227 @@
         "policy_id": "RP-COORDINATION-180D",
         "policy_version": "1.0.0"
       }
+    },
+    {
+      "family_id": "event-family-settings-layer-changed",
+      "family_revision": "1.0.0",
+      "event_type": "settings.layer.changed",
+      "scope_policy": "application_only",
+      "semantic_owner_doc": "Plans/Settings_System.md#SSYS-060",
+      "payload_owner_doc": "Plans/Settings_System.md#SSYS-060",
+      "payload_schema_id": "pm.settings.layer_changed.v1",
+      "payload_schema_ref": {
+        "path": "Plans/settings_system_contracts.schema.json",
+        "json_pointer": "#/$defs/settings_layer_changed_payload_v1",
+        "schema_id": "pm.settings.layer_changed.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/scope/project_id"
+          ],
+          "thread_id": []
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/Settings_System.md#SSYS-060",
+        "Plans/Contracts_V0.md#CV-366"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.settings.layer_changed.v1",
+          "payload_schema_ref": {
+            "path": "Plans/settings_system_contracts.schema.json",
+            "json_pointer": "#/$defs/settings_layer_changed_payload_v1",
+            "schema_id": "pm.settings.layer_changed.v1"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Settings_System.md#SSYS-060",
+          "read_owner_ref": "Plans/Settings_System.md#SSYS-060",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+    },
+    {
+      "family_id": "event-family-approval-chat-tool-requested",
+      "family_revision": "1.0.0",
+      "event_type": "approval.chat_tool_requested",
+      "scope_policy": "application_or_project",
+      "semantic_owner_doc": "Plans/Permissions_System.md#PS-145",
+      "payload_owner_doc": "Plans/Permissions_System.md#PS-145",
+      "payload_schema_id": "pm.chat_tool_approval_request.v1",
+      "payload_schema_ref": {
+        "path": "Plans/automation_authority_contracts.schema.json",
+        "json_pointer": "#/$defs/ChatToolApprovalRequest",
+        "schema_id": "pm.chat_tool_approval_request.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/scope/project_id"
+          ],
+          "thread_id": []
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/Permissions_System.md#PS-145",
+        "Plans/Contracts_V0.md#CV-366"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.chat_tool_approval_request.v1",
+          "payload_schema_ref": {
+            "path": "Plans/automation_authority_contracts.schema.json",
+            "json_pointer": "#/$defs/ChatToolApprovalRequest",
+            "schema_id": "pm.chat_tool_approval_request.v1"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Permissions_System.md#PS-145",
+          "read_owner_ref": "Plans/Permissions_System.md#PS-145",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.chat_tool_approval_request.v1",
+          "payload_schema_ref": {
+            "path": "Plans/automation_authority_contracts.schema.json",
+            "json_pointer": "#/$defs/ChatToolApprovalRequest",
+            "schema_id": "pm.chat_tool_approval_request.v1"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Permissions_System.md#PS-145",
+          "read_owner_ref": "Plans/Permissions_System.md#PS-145",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+    },
+    {
+      "family_id": "event-family-approval-chat-tool-resolved",
+      "family_revision": "1.0.0",
+      "event_type": "approval.chat_tool_resolved",
+      "scope_policy": "application_or_project",
+      "semantic_owner_doc": "Plans/Permissions_System.md#PS-145",
+      "payload_owner_doc": "Plans/Permissions_System.md#PS-145",
+      "payload_schema_id": "pm.chat_tool_approval_result.v1",
+      "payload_schema_ref": {
+        "path": "Plans/automation_authority_contracts.schema.json",
+        "json_pointer": "#/$defs/ChatToolApprovalResult",
+        "schema_id": "pm.chat_tool_approval_result.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/scope/project_id"
+          ],
+          "thread_id": []
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/Permissions_System.md#PS-145",
+        "Plans/Contracts_V0.md#CV-366"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.chat_tool_approval_result.v1",
+          "payload_schema_ref": {
+            "path": "Plans/automation_authority_contracts.schema.json",
+            "json_pointer": "#/$defs/ChatToolApprovalResult",
+            "schema_id": "pm.chat_tool_approval_result.v1"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Permissions_System.md#PS-145",
+          "read_owner_ref": "Plans/Permissions_System.md#PS-145",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.chat_tool_approval_result.v1",
+          "payload_schema_ref": {
+            "path": "Plans/automation_authority_contracts.schema.json",
+            "json_pointer": "#/$defs/ChatToolApprovalResult",
+            "schema_id": "pm.chat_tool_approval_result.v1"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Permissions_System.md#PS-145",
+          "read_owner_ref": "Plans/Permissions_System.md#PS-145",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     }
   ],
   "retention_assignment_id": "RET-K37-ASSIGNMENT-001",

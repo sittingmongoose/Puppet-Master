@@ -2357,6 +2357,185 @@
           }
         }
       ]
+    },
+    "AccountResolutionV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider_id",
+        "account_id",
+        "destination_server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "selected_for_copy",
+        "outcome",
+        "destination_local_credential_ref",
+        "destination_local_profile_ref",
+        "readiness_evidence",
+        "source_credentials_transferred"
+      ],
+      "properties": {
+        "provider_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "account_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "selected_for_copy": {
+          "type": "boolean"
+        },
+        "outcome": {
+          "enum": [
+            "ready_here",
+            "check_there",
+            "sign_in_there",
+            "key_needed",
+            "not_installed",
+            "expired",
+            "cannot_move"
+          ]
+        },
+        "destination_local_credential_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "destination_local_profile_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readiness_evidence": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_credentials_transferred": {
+          "const": false
+        }
+      }
+    },
+    "AppFirstTimeAuthBindingV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "initiating_client_id",
+        "server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "provider_id",
+        "verified_account_id",
+        "verified_profile_id",
+        "protected_broker_evidence",
+        "return_context_ref"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "initiating_client_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "verified_account_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verified_profile_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "protected_broker_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
     }
   },
   "x-owner-command-count": 12,

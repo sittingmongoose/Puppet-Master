@@ -1725,5 +1725,2196 @@
       ],
       "expected_error": "execution_started is required and never inferred from missing history"
     }
+  ],
+  "projects_refresh_cases": [
+    {
+      "case_id": "fd-app-shape-ScheduledMessageCreateRequest",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCreateRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.scheduled_message_create_request.application.v1",
+        "request_type": "ScheduledMessageCreateRequest",
+        "command_id": "cmd.chat.schedule_message",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-create:1",
+        "project_id": null,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-create:1",
+        "source_surface": "schedule_sheet",
+        "return_route": "route:assistant:thread:fixture",
+        "thread_id": "thread-a",
+        "destination_ref": "destination:assistant:thread:fixture:1",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r12",
+        "text": "Please rebase the storage branch onto main and run the migration tests.",
+        "text_from_composer": true,
+        "composer_buffer_ref": "composer-buffer:thread:fixture:1",
+        "attachment_refs": [
+          "attachment:fixture:log-1"
+        ],
+        "requested_runtime_snapshot_ref": "runtime-snapshot:fixture:model-a",
+        "send_at": {
+          "scheduled_at_utc": "2026-09-28T13:00:00Z",
+          "timezone": "Europe/Berlin",
+          "local_wall_time": "2026-09-28T15:00"
+        },
+        "missed_policy": "hold",
+        "grace_seconds": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ScheduledMessageCreateRequest",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCreateRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.scheduled_message_create_request.application.v1",
+        "request_type": "ScheduledMessageCreateRequest",
+        "command_id": "cmd.chat.schedule_message",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-create:1",
+        "project_id": null,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-create:1",
+        "source_surface": "schedule_sheet",
+        "return_route": "route:assistant:thread:fixture",
+        "thread_id": "thread-a",
+        "destination_ref": "destination:assistant:thread:fixture:1",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r12",
+        "text": "Please rebase the storage branch onto main and run the migration tests.",
+        "text_from_composer": true,
+        "composer_buffer_ref": "composer-buffer:thread:fixture:1",
+        "attachment_refs": [
+          "attachment:fixture:log-1"
+        ],
+        "requested_runtime_snapshot_ref": "runtime-snapshot:fixture:model-a",
+        "send_at": {
+          "scheduled_at_utc": "2026-09-28T13:00:00Z",
+          "timezone": "Europe/Berlin",
+          "local_wall_time": "2026-09-28T15:00"
+        },
+        "missed_policy": "hold",
+        "grace_seconds": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ScheduledMessageCreateResult",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCreateResultApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.scheduled_message_create_result.application.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageCreateResult",
+        "command_id": "cmd.chat.schedule_message",
+        "command_instance_id": "cmdi:sched-create:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:scheduled-message:fixture:1",
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "snapshot_ref": "snapshot:scheduled-message:fixture:1:r1",
+        "revision": 1,
+        "state": "scheduled",
+        "composer_cleared": true,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ScheduledMessageCreateResult",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCreateResultApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.scheduled_message_create_result.application.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageCreateResult",
+        "command_id": "cmd.chat.schedule_message",
+        "command_instance_id": "cmdi:sched-create:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:scheduled-message:fixture:1",
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "snapshot_ref": "snapshot:scheduled-message:fixture:1:r1",
+        "revision": 1,
+        "state": "scheduled",
+        "composer_cleared": true,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ScheduledMessageUpdateRequest",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageUpdateRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.scheduled_message_update_request.application.v1",
+        "request_type": "ScheduledMessageUpdateRequest",
+        "command_id": "cmd.chat.schedule_message.update",
+        "expected_revision": 2,
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r14",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-update:1",
+        "project_id": null,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-update:1",
+        "source_surface": "scheduled_message_card",
+        "return_route": "route:assistant:thread:fixture",
+        "changes": null,
+        "reschedule_to": "now",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ScheduledMessageUpdateRequest",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageUpdateRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.scheduled_message_update_request.application.v1",
+        "request_type": "ScheduledMessageUpdateRequest",
+        "command_id": "cmd.chat.schedule_message.update",
+        "expected_revision": 2,
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r14",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-update:1",
+        "project_id": null,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-update:1",
+        "source_surface": "scheduled_message_card",
+        "return_route": "route:assistant:thread:fixture",
+        "changes": null,
+        "reschedule_to": "now",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ScheduledMessageUpdateResult",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageUpdateResultApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.scheduled_message_update_result.application.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageUpdateResult",
+        "command_id": "cmd.chat.schedule_message.update",
+        "command_instance_id": "cmdi:sched-update:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:scheduled-message:fixture:1",
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "resulting_revision": 3,
+        "state": "scheduled",
+        "snapshot_ref": "snapshot:scheduled-message:fixture:1:r3",
+        "scheduled_at_utc": "2026-09-28T07:12:05Z",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ScheduledMessageUpdateResult",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageUpdateResultApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.scheduled_message_update_result.application.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageUpdateResult",
+        "command_id": "cmd.chat.schedule_message.update",
+        "command_instance_id": "cmdi:sched-update:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:scheduled-message:fixture:1",
+        "scheduled_dispatch_id": "sched-dispatch:fixture:1",
+        "resulting_revision": 3,
+        "state": "scheduled",
+        "snapshot_ref": "snapshot:scheduled-message:fixture:1:r3",
+        "scheduled_at_utc": "2026-09-28T07:12:05Z",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ScheduledMessageCancelRequest",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.scheduled_message_cancel_request.application.v1",
+        "request_type": "ScheduledMessageCancelRequest",
+        "command_id": "cmd.chat.schedule_message.cancel",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-cancel:1",
+        "project_id": null,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-cancel:1",
+        "source_surface": "scheduled_message_card",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 2,
+        "scheduled_dispatch_id": "sched-dispatch:fixture:2",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r14",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ScheduledMessageCancelRequest",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.scheduled_message_cancel_request.application.v1",
+        "request_type": "ScheduledMessageCancelRequest",
+        "command_id": "cmd.chat.schedule_message.cancel",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:sched-cancel:1",
+        "project_id": null,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:sched-cancel:1",
+        "source_surface": "scheduled_message_card",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 2,
+        "scheduled_dispatch_id": "sched-dispatch:fixture:2",
+        "expected_thread_currentness": "currentness:thread:fixture:1:r14",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ScheduledMessageCancelResult",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelResultApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.scheduled_message_cancel_result.application.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageCancelResult",
+        "command_id": "cmd.chat.schedule_message.cancel",
+        "command_instance_id": "cmdi:sched-cancel:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:scheduled-message:fixture:2",
+        "scheduled_dispatch_id": "sched-dispatch:fixture:2",
+        "resulting_revision": 3,
+        "state": "cancelled",
+        "snapshot_retained": true,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ScheduledMessageCancelResult",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelResultApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.scheduled_message_cancel_result.application.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ScheduledMessageCancelResult",
+        "command_id": "cmd.chat.schedule_message.cancel",
+        "command_instance_id": "cmdi:sched-cancel:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:scheduled-message:fixture:2",
+        "scheduled_dispatch_id": "sched-dispatch:fixture:2",
+        "resulting_revision": 3,
+        "state": "cancelled",
+        "snapshot_retained": true,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-AssistantPlanScheduleRequest",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AssistantPlanScheduleRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.plan_schedule_request.application.v1",
+        "request_type": "AssistantPlanScheduleRequest",
+        "command_id": "cmd.chat.plan.schedule_build",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:plan-schedule:1",
+        "project_id": null,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:plan-schedule:1",
+        "source_surface": "plan_schedule",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 4,
+        "assistant_plan_id": "assistant-plan:fixture:storage",
+        "exact_target_version": 2,
+        "exact_target_hash": "3f2a9c1e5b7d4f608a1c2e3b4d5f60718293a4b5c6d7e8f90a1b2c3d4e5f6071",
+        "execution_topology": "crew",
+        "collaboration_definition_ref": "collaboration-definition:fixture:crew-3",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "02:00",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "cancel_after_grace",
+          "grace_seconds": 900,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "reschedule_of_schedule_id": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-AssistantPlanScheduleRequest",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AssistantPlanScheduleRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.chat.plan_schedule_request.application.v1",
+        "request_type": "AssistantPlanScheduleRequest",
+        "command_id": "cmd.chat.plan.schedule_build",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:plan-schedule:1",
+        "project_id": null,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:plan-schedule:1",
+        "source_surface": "plan_schedule",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 4,
+        "assistant_plan_id": "assistant-plan:fixture:storage",
+        "exact_target_version": 2,
+        "exact_target_hash": "3f2a9c1e5b7d4f608a1c2e3b4d5f60718293a4b5c6d7e8f90a1b2c3d4e5f6071",
+        "execution_topology": "crew",
+        "collaboration_definition_ref": "collaboration-definition:fixture:crew-3",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "02:00",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "cancel_after_grace",
+          "grace_seconds": 900,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "reschedule_of_schedule_id": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ExecutionScheduleResult",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionScheduleResultApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.schedule_result.application.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ExecutionScheduleResult",
+        "command_id": "cmd.chat.plan.schedule_build",
+        "command_instance_id": "cmdi:plan-schedule:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:plan-card:fixture:storage",
+        "schedule_id": "exec-schedule:fixture:1",
+        "binding_ref": "schedule-run-binding:fixture:1",
+        "revision": 1,
+        "schedule_state": "active",
+        "exact_target_version": 2,
+        "exact_target_hash": "3f2a9c1e5b7d4f608a1c2e3b4d5f60718293a4b5c6d7e8f90a1b2c3d4e5f6071",
+        "execution_topology": "crew",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "02:00",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "cancel_after_grace",
+          "grace_seconds": 900,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "superseded_schedule_id": null,
+        "run_admitted": false,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ExecutionScheduleResult",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionScheduleResultApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.schedule_result.application.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ExecutionScheduleResult",
+        "command_id": "cmd.chat.plan.schedule_build",
+        "command_instance_id": "cmdi:plan-schedule:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:plan-card:fixture:storage",
+        "schedule_id": "exec-schedule:fixture:1",
+        "binding_ref": "schedule-run-binding:fixture:1",
+        "revision": 1,
+        "schedule_state": "active",
+        "exact_target_version": 2,
+        "exact_target_hash": "3f2a9c1e5b7d4f608a1c2e3b4d5f60718293a4b5c6d7e8f90a1b2c3d4e5f6071",
+        "execution_topology": "crew",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "02:00",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "cancel_after_grace",
+          "grace_seconds": 900,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "superseded_schedule_id": null,
+        "run_admitted": false,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ExecutionWindowUpdateRequest",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowUpdateRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.window_update_request.application.v1",
+        "request_type": "ExecutionWindowUpdateRequest",
+        "command_id": "cmd.execution_window.update",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:window-update:1",
+        "project_id": null,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:window-update:1",
+        "source_surface": "schedule_manager",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 1,
+        "schedule_id": "exec-schedule:fixture:1",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "01:30",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "next_available",
+          "grace_seconds": null,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ExecutionWindowUpdateRequest",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowUpdateRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.window_update_request.application.v1",
+        "request_type": "ExecutionWindowUpdateRequest",
+        "command_id": "cmd.execution_window.update",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:window-update:1",
+        "project_id": null,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:window-update:1",
+        "source_surface": "schedule_manager",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 1,
+        "schedule_id": "exec-schedule:fixture:1",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "01:30",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "next_available",
+          "grace_seconds": null,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ExecutionWindowUpdateResult",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowUpdateResultApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.window_update_result.application.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ExecutionWindowUpdateResult",
+        "command_id": "cmd.execution_window.update",
+        "command_instance_id": "cmdi:window-update:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:schedule-manager:fixture",
+        "schedule_id": "exec-schedule:fixture:1",
+        "resulting_revision": 2,
+        "schedule_state": "active",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "01:30",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "next_available",
+          "grace_seconds": null,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "in_flight_admission_changed": false,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ExecutionWindowUpdateResult",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowUpdateResultApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.window_update_result.application.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ExecutionWindowUpdateResult",
+        "command_id": "cmd.execution_window.update",
+        "command_instance_id": "cmdi:window-update:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:schedule-manager:fixture",
+        "schedule_id": "exec-schedule:fixture:1",
+        "resulting_revision": 2,
+        "schedule_state": "active",
+        "window": {
+          "schedule_kind": "recurring_window",
+          "timezone": "America/Chicago",
+          "local_start_date": null,
+          "local_start": "22:00",
+          "local_pause": "01:30",
+          "days_of_week": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "wind_down_seconds": 600,
+          "missed_policy": "next_available",
+          "grace_seconds": null,
+          "auto_resume_next_window": true,
+          "dst_policy": "preserve_local_wall_clock"
+        },
+        "in_flight_admission_changed": false,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ExecutionWindowCancelRequest",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCancelRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.window_cancel_request.application.v1",
+        "request_type": "ExecutionWindowCancelRequest",
+        "command_id": "cmd.execution_window.cancel",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:window-cancel:1",
+        "project_id": null,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:window-cancel:1",
+        "source_surface": "schedule_manager",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 1,
+        "schedule_id": "exec-schedule:fixture:1",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ExecutionWindowCancelRequest",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCancelRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.window_cancel_request.application.v1",
+        "request_type": "ExecutionWindowCancelRequest",
+        "command_id": "cmd.execution_window.cancel",
+        "schema_version": "1.0.0",
+        "command_instance_id": "cmdi:window-cancel:1",
+        "project_id": null,
+        "actor_ref": "actor:user:fixture",
+        "permission_snapshot_ref": "permission-snapshot:fixture:7",
+        "idempotency_key": "idem:cmdi:window-cancel:1",
+        "source_surface": "schedule_manager",
+        "return_route": "route:assistant:thread:fixture",
+        "expected_revision": 1,
+        "schedule_id": "exec-schedule:fixture:1",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ExecutionWindowCancelResult",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCancelResultApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.window_cancel_result.application.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ExecutionWindowCancelResult",
+        "command_id": "cmd.execution_window.cancel",
+        "command_instance_id": "cmdi:window-cancel:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:schedule-manager:fixture",
+        "schedule_id": "exec-schedule:fixture:1",
+        "resulting_revision": 2,
+        "schedule_state": "cancelled",
+        "admitted_work_stopped": false,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ExecutionWindowCancelResult",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCancelResultApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.window_cancel_result.application.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ExecutionWindowCancelResult",
+        "command_id": "cmd.execution_window.cancel",
+        "command_instance_id": "cmdi:window-cancel:1",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:schedule-manager:fixture",
+        "schedule_id": "exec-schedule:fixture:1",
+        "resulting_revision": 2,
+        "schedule_state": "cancelled",
+        "admitted_work_stopped": false,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-shape-ExecutionOccurrenceSummary",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionOccurrenceSummaryApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.occurrence_summary.application.v1",
+        "schema_version": "1.0.0",
+        "schedule_id": "exec-schedule:fixture:1",
+        "occurrence_start": "2026-09-27T22:00:00Z",
+        "plan_run_id": "plan-run:fixture:1",
+        "plan_version": 2,
+        "plan_hash": "3333333333333333333333333333333333333333333333333333333333333333",
+        "actual_start": "2026-09-27T22:01:00Z",
+        "actual_end": "2026-09-28T01:52:00Z",
+        "steps_built": 2,
+        "steps_total": 5,
+        "end_reason": "paused_at_wind_down",
+        "scheduled_message_outcomes": [
+          {
+            "scheduled_message_id": "scheduled-message:fixture:1",
+            "outcome": "dispatched"
+          },
+          {
+            "scheduled_message_id": "scheduled-message:fixture:2",
+            "outcome": "held"
+          }
+        ],
+        "execution_started": true,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-app-reject-mixed-project-ExecutionOccurrenceSummary",
+      "schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionOccurrenceSummaryApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.occurrence_summary.application.v1",
+        "schema_version": "1.0.0",
+        "schedule_id": "exec-schedule:fixture:1",
+        "occurrence_start": "2026-09-27T22:00:00Z",
+        "plan_run_id": "plan-run:fixture:1",
+        "plan_version": 2,
+        "plan_hash": "3333333333333333333333333333333333333333333333333333333333333333",
+        "actual_start": "2026-09-27T22:01:00Z",
+        "actual_end": "2026-09-28T01:52:00Z",
+        "steps_built": 2,
+        "steps_total": 5,
+        "end_reason": "paused_at_wind_down",
+        "scheduled_message_outcomes": [
+          {
+            "scheduled_message_id": "scheduled-message:fixture:1",
+            "outcome": "dispatched"
+          },
+          {
+            "scheduled_message_id": "scheduled-message:fixture:2",
+            "outcome": "held"
+          }
+        ],
+        "execution_started": true,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": "project-a",
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "ref:return-a"
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-pause-exact-server-record",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseRecord",
+      "record": {
+        "schema_id": "pm.runtime.application_automation_pause.v1",
+        "schema_version": "1.0.0",
+        "server_id": "server-a",
+        "project_id": null,
+        "paused": false,
+        "user_stop_epoch": 0,
+        "changed_by_actor_ref": null,
+        "changed_by_actor_kind": null,
+        "changed_at": null,
+        "revision": 0
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-pause-user-desired-value",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+      "record": {
+        "schema_id": "pm.runtime.application_automation_pause_set_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ApplicationAutomationPauseSetRequestV1",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "command_instance_id": "command-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "actor_ref": "actor-a",
+        "actor_kind": "user",
+        "permission_snapshot_ref": "permission-a",
+        "idempotency_key": "key-a",
+        "source_surface": "schedule_manager",
+        "return_route": "route-a",
+        "paused": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-pause-no-client-cas",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+      "record": {
+        "schema_id": "pm.runtime.application_automation_pause_set_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ApplicationAutomationPauseSetRequestV1",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "command_instance_id": "command-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "actor_ref": "actor-a",
+        "actor_kind": "user",
+        "permission_snapshot_ref": "permission-a",
+        "idempotency_key": "key-a",
+        "source_surface": "schedule_manager",
+        "return_route": "route-a",
+        "paused": true,
+        "expected_revision": 1
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-pause-no-agent-clear",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetRequestV1",
+      "record": {
+        "schema_id": "pm.runtime.application_automation_pause_set_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "ApplicationAutomationPauseSetRequestV1",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "command_instance_id": "command-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "actor_ref": "actor-a",
+        "actor_kind": "agent",
+        "permission_snapshot_ref": "permission-a",
+        "idempotency_key": "key-a",
+        "source_surface": "schedule_manager",
+        "return_route": "route-a",
+        "paused": true
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-pause-unavailable-null",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1",
+      "record": {
+        "schema_id": "pm.runtime.application_automation_pause_set_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ApplicationAutomationPauseSetResultV1",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "command_instance_id": "command-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "requested_paused": true,
+        "outcome": "unavailable",
+        "error_code": "app_automation_pause_unavailable",
+        "projection_ref": null,
+        "changed": false,
+        "epoch_advanced": false,
+        "pause": null,
+        "original_operation_ref": null,
+        "side_effects": {
+          "schedules_cancelled_or_invalidated": false,
+          "quota_consents_disabled": false,
+          "per_run_latches_changed": false,
+          "work_dispatched": false
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-pause-missing-not-off",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1",
+      "record": {
+        "schema_id": "pm.runtime.application_automation_pause_set_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ApplicationAutomationPauseSetResultV1",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "command_instance_id": "command-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "requested_paused": true,
+        "outcome": "unavailable",
+        "error_code": "app_automation_pause_unavailable",
+        "projection_ref": null,
+        "changed": false,
+        "epoch_advanced": false,
+        "pause": {
+          "schema_id": "pm.runtime.application_automation_pause.v1",
+          "schema_version": "1.0.0",
+          "server_id": "server-a",
+          "project_id": null,
+          "paused": false,
+          "user_stop_epoch": 0,
+          "changed_by_actor_ref": null,
+          "changed_by_actor_kind": null,
+          "changed_at": null,
+          "revision": 0
+        },
+        "original_operation_ref": null,
+        "side_effects": {
+          "schedules_cancelled_or_invalidated": false,
+          "quota_consents_disabled": false,
+          "per_run_latches_changed": false,
+          "work_dispatched": false
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fd-pause-no-dispatch",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ApplicationAutomationPauseSetResultV1",
+      "record": {
+        "schema_id": "pm.runtime.application_automation_pause_set_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "ApplicationAutomationPauseSetResultV1",
+        "command_id": "cmd.runtime.automation_pause.set",
+        "command_instance_id": "command-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "requested_paused": true,
+        "outcome": "unavailable",
+        "error_code": "app_automation_pause_unavailable",
+        "projection_ref": null,
+        "changed": false,
+        "epoch_advanced": false,
+        "pause": null,
+        "original_operation_ref": null,
+        "side_effects": {
+          "schedules_cancelled_or_invalidated": false,
+          "quota_consents_disabled": false,
+          "per_run_latches_changed": false,
+          "work_dispatched": true
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    }
   ]
 }

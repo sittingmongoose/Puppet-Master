@@ -726,6 +726,65 @@
           }
         }
       ]
+    },
+    "request_scope_v2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/editor_appearance.schema.json#/$defs/request"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope",
+            "client_id",
+            "target",
+            "selected_setting_ids",
+            "settings_preview_request",
+            "owner_return_context_ref"
+          ],
+          "properties": {
+            "scope": {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            "client_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "target": {
+              "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
+            },
+            "selected_setting_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "settings_preview_request": {
+              "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_layered_preview_request_v1"
+            },
+            "owner_return_context_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        }
+      ]
+    },
+    "result_scope_v2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/editor_appearance.schema.json#/$defs/result"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_layered_result_v1"
+        }
+      ]
     }
   }
 }
