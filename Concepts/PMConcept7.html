@@ -175987,6 +175987,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   function railJump(ch) {
     flushOpen();
     if (!canBack()) return;
+    txnDiscard();
     prune();
     const at = backTo(ch); if (at < 0) return;
     const id = S.sess.history[at];
@@ -176432,7 +176433,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const from = SCREENS.defs[S.sess.screen];
     /* a step Review's Edit opened is left by going on from it (or away by the rail), not by entering a step inside it */
     const rt = S.sess.ui && S.sess.ui.returnTo;
-    if (rt && rt.from === S.sess.screen && id !== rt.from && id !== rt.screen && !(O55.branch && O55.branch.within && O55.branch.within(id, S) === rt.from)) rt.left = true;
+    if (rt && rt.from === S.sess.screen && id !== rt.from && id !== rt.screen && !(O55.branch && O55.branch.hub && O55.branch.hub(id, S) === rt.from)) rt.left = true;
     const path = opts.path || (rt && rt.screen === id && !opts.fromHistory && Array.isArray(rt.path) ? rt.path : null), editFrom = opts.editFrom || (rt && rt.from);
     if (from && from.leave) from.leave(S);
     /* (a walk on from a step a jump opened carries what it picks there: nothing is reconciled until it reaches a step its
@@ -176451,6 +176452,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     S.save();
     const def = SCREENS.defs[id];
     if (def.enter && onBranch(id)) def.enter(S, opts);
+    txnOpen(id); S.save(); /* (the answers as this screen was reached, its own entry included) */
     /* the music follows the journey: the chapter's chord, and how far along the person is (the first forward sound
        after a chapter change becomes that chapter's own sting, O55.sound's chapterSting) */
     /* (a skin that plays this chapter's sting itself, on a beat of its own, claims it: NieR's act card lands on it and
@@ -176460,10 +176462,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!opts.silent) O55.sound.play(opts.dir === 'back' ? 'back' : 'next');
     transition(opts.dir || 'fwd');
   }
-  function back() {
+  function back(o) {
     flushOpen();
     const def = SCREENS.defs[S.sess.screen];
     if (def && def.onBack && def.onBack(S) === false) return;
+    if (o && o.discard) txnDiscard();
     /* on a step Review's Edit opened, before going on from it, Back returns to Review, which Back then leaves for the steps
        before it in the order they were walked (lead's Back ruling 1103011909, rule 2) */
     const rt = S.sess.ui && S.sess.ui.returnTo;
@@ -176499,6 +176502,29 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const h = S.sess.history || [];
     let to = null; while (h.length) { const id = h.pop(); if (onBranch(id) && SCREENS.defs[id]) { to = id; break; } }
     S.sess.screen = to || 'welcome';
+  }
+
+  /* An un-continued selection is not an answer (lead's ruling 1103040758). What a screen's picks and typed values changed
+     is taken back when the person leaves it by Back or the rail before going on: the answers are kept as they were when
+     the screen was reached, and any step on from it commits them. The steps whose own work is a check, a sign-in, a
+     pairing, an install, a Server's setup or the plan's confirmation keep what that work verified: those are facts, not
+     picks. The kept answers are part of the saved session, so Back after Close and Resume takes the picks back too. */
+  const TXN_KEYS = ['drafts', 'active', 'nas', 'restore', 'online', 'backup', 'folder', 'folderInfo', 'like', 'ui', 'azureProjects', 'connect'];
+  const NO_TXN = new Set(['welcome', 'look', 'nas-identity', 'nas-key', 'nas-signin', 'nas-install', 'nas-pmpair', 'online-signin', 'r-unlock', 'r-preview',
+    's-kind', 's-wait', 's-confirm', 's-ready', 'c-review', 'c-pair', 'c-ready', 'review', 'creating', 'protect', 'away-setup', 'ai', 'ai-all', 'ai-none', 'free', 'ready']);
+  const copyOf = (v) => (v === undefined ? undefined : JSON.parse(JSON.stringify(v)));
+  function txnOpen(id) {
+    if (!S.sess) return;
+    if (NO_TXN.has(id)) { S.sess.txn = null; return; }
+    const snap = {}; TXN_KEYS.forEach((k) => { snap[k] = copyOf(S.sess[k]); });
+    S.sess.txn = { screen: id, snap };
+  }
+  function txnDiscard() {
+    const t = S.sess && S.sess.txn;
+    if (!t || t.screen !== S.sess.screen || !t.snap) return false;
+    TXN_KEYS.forEach((k) => { if (t.snap[k] === undefined) delete S.sess[k]; else S.sess[k] = copyOf(t.snap[k]); });
+    S.sess.txn = null;
+    return true;
   }
 
   /* the history keeps only the active branch, as a simple path: a step reached again cuts the path back to it, so a run of
@@ -176588,7 +176614,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
     if (e) e.preventDefault();
     if (action === 'close') return close('close');
-    if (action === 'back') return back();
+    if (action === 'back') return back({ discard: true });
     if (action === 'sound') { O55.sound.toggle('onboarding'); renderSound(); return; }
     if (action === 'talk') { if (O55.talk.toggle('onboarding')) O55.sound.play('select'); return; }
     /* the look menu is a small sheet: it opens and closes with the sheet sounds, as in the tour's bar */
@@ -176834,6 +176860,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!SCREENS.defs[S.sess.screen]) S.sess.screen = 'welcome';
     if (!opts.screen && O55.branch) O55.branch.reconcile(S);
     settleBranch(); prune();
+    if (!S.sess.txn || S.sess.txn.screen !== S.sess.screen) txnOpen(S.sess.screen);
     if (opts.screen && opts.committed !== false && POSTCOMMIT.has(S.sess.screen) && !S.ctx().committed) seedCommit();
     /* a screen opened straight (Demo Studio's Open at one screen) gets what the screens before it would have left: the
        screen's own seed(S), which fills only what is missing (QA2 hunter H1; opt out with seed: false) */
@@ -179127,15 +179154,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     do: {
       pick(S, v, el) { S.sess.ui.where = v; S.save(); if (v === 'this') runCheck(S); O55.ui.refresh(); O55.ui.charm(el, T('where.' + v + '.short'), { this: 'computer', connect: 'link', server: 'server' }[v]); },
       next(S) {
-        const v = S.sess.ui.where || 'this';
-        /* This computer: whatever an abandoned Server path set (its reference, trust, access route) is cleared */
+        const v = S.sess.ui.where || 'this', was = S.sess.drafts.main.server_mode;
+        S.sess.ui.whereAt = v; /* (the answer, committed by this Continue; ui.where is only the card picked) */
+        /* This computer: whatever an abandoned Server path set (its reference, trust, access route) is cleared. This computer
+           kept writes nothing: its files place (a Home NAS folder) stays (an unchanged answer clears nothing, Astra AST-D4) */
+        if (v === 'this' && was === 'this_device') { S.sess.active = 'main'; S.save(); return O55.ui.go('begin'); }
         if (v === 'this') { S.sess.active = 'main'; O55.draft.set(S.sess.drafts.main, { server_mode: 'this_device', server_ref: '', server_trust_confirmed: false, server_connection_mode: 'discover', storage_mode: 'this_device', storage_location: '', remote_mode: 'none', remote_more: false, tailscale_control: null, headscale_url: '', remote_endpoint: '', proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null }); S.save(); return O55.ui.go('begin'); }
         if (v === 'connect') { S.sess.active = 'connect'; S.save(); return O55.ui.go('c-route'); }
         /* A new Server replacing another computer answer (an existing Server connected to, or This computer): the plan names
            no Server and no trust until this new Server's own setup completes; the old pairing stays where it was (Sol FO22-N3).
            The new Server chosen again keeps everything it holds. */
-        const was = S.sess.drafts.main.server_mode;
-        S.sess.active = 'main'; O55.draft.set(S.sess.drafts.main, Object.assign({ server_mode: 'new_server', storage_mode: 'with_server' }, was === 'new_server' ? {} : { server_ref: '', server_trust_confirmed: false, server_connection_mode: 'discover', remote_endpoint: '', proxy_hostname: '', headscale_url: '' })); S.save();
+        S.sess.active = 'main'; if (was !== 'new_server') O55.draft.set(S.sess.drafts.main, Object.assign({ server_mode: 'new_server', storage_mode: 'with_server' }, { server_ref: '', server_trust_confirmed: false, server_connection_mode: 'discover', remote_endpoint: '', proxy_hostname: '', headscale_url: '' })); S.save();
         return O55.ui.go('s-kind');
       },
       /* (the same restore chosen again keeps what it holds: an unchanged answer clears nothing) */
@@ -179642,14 +179671,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       pickProject(S, id) { S.sess.connect.openProject = id; S.save(); O55.ui.refresh(); },
       createNew(S, arg, el) {
         const c = cd(S), m = S.sess.drafts.main, th = O55.theme();
+        /* (the same Server kept, from Review's Edit: the Project's own answers stay as they are; an unchanged answer clears
+           nothing) */
+        const kept = m.server_mode === 'existing_server' && !!m.server_ref && m.server_ref === c.server_ref;
         S.sess.connect.newProject = true; S.sess.active = 'main';
-        O55.draft.set(m, {
-          journey: 'new_or_local', theme_family: th.chosen, theme_mode: th.mode, project_mode: 'new', server_mode: 'existing_server', server_ref: c.server_ref,
+        O55.draft.set(m, Object.assign(kept ? {} : { journey: 'new_or_local', project_mode: 'new', storage_mode: 'with_server' }, {
+          theme_family: th.chosen, theme_mode: th.mode, server_mode: 'existing_server', server_ref: c.server_ref,
           server_connection_mode: c.server_connection_mode, remote_mode: c.remote_mode, remote_more: c.remote_more, include_vpn_networks: c.include_vpn_networks,
           connection_pairing: c.connection_pairing, tailscale_control: c.tailscale_control, headscale_url: c.headscale_url, remote_endpoint: c.remote_endpoint,
           proxy_hostname: c.proxy_hostname, proxy_hosting: c.remote_mode === 'reverse_proxy' ? 'existing_proxy' : null, proxy_kind: null, proxy_tls: null,
-          server_trust_confirmed: c.server_trust_confirmed, storage_mode: 'with_server'
-        });
+          server_trust_confirmed: c.server_trust_confirmed
+        }));
         S.save();
         O55.ui.charm(el, T('begin.new.title'), 'seed');
         O55.ui.go('begin');
@@ -180579,7 +180611,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     S.sess.folderInfo = null; S.sess.folder = null;
     Object.keys(S.sess.ops || {}).forEach((k) => { if (/^(folder|mounted|smb|nfs):/.test(k)) F.reset(S, k); });
     if (S.sess.nas && O55.nas && O55.nas.remember) O55.nas.remember(S); /* (its settled host and keys stay, 70) */
-    if (S.sess.nas) { if (S.sess.nas.purpose === 'source' || was === 'existing:device') S.sess.nas = null; else { delete S.sess.nas.at; delete S.sess.nas.folderLabel; } }
+    /* (the NAS of the abandoned beginning goes; a files place on the NAS is the files answer's, not the beginning's, and
+       keeps its folder and label, Muse delta2 minor 1 remainder; a restore's backup NAS goes with its restore) */
+    if (S.sess.nas) { const p = S.sess.nas.purpose || 'source'; if (p === 'source' || p === 'backup') S.sess.nas = null; }
     if (S.sess.backup && S.sess.backup.fromRestore) { S.sess.backup.dest = null; S.sess.backup.fromRestore = false; }
     S.sess.restore = null;
     if (was === 'existing:online' || d.project_mode === 'existing_online') {
@@ -180798,11 +180832,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       change(S) { S.sess.ui.sheet = 'loc'; S.save(); O55.ui.refresh(); seeSheet(S); },
       loc(S, v) {
         const d = md(S);
-        /* (files on the NAS given up: its device, folder and checks go with it, as a beginning's do) */
-        if (v !== 'network' && d.storage_mode === 'network_location' && S.sess.nas && S.sess.nas.purpose === 'storage') { if (O55.nas && O55.nas.remember) O55.nas.remember(S); S.sess.nas = null; Object.keys(S.sess.ops || {}).forEach((k) => { if (/^(mounted|smb|nfs):/.test(k)) F.reset(S, k); }); }
+        /* (files on the NAS given up: its device, folder, checks and the access it was given go when the Name step's
+           Continue commits it, 76-branch.js reconcile (Astra AST-D6); until then Back takes the pick back, lead's ruling
+           1103040758) */
         if (v === 'auto') O55.draft.set(d, { local_location_mode: 'automatic', local_location: '', storage_mode: 'this_device' });
         if (v === 'custom') O55.draft.set(d, { local_location_mode: 'custom', local_location: d.local_location || '~/Documents/' + (d.project_name || 'Project'), storage_mode: 'this_device' });
-        if (v === 'network') { S.sess.ui.sheet = null; S.sess.nas = Object.assign(S.sess.nas || {}, { purpose: 'storage' }); O55.draft.set(d, { storage_mode: 'network_location', storage_transport: 'ssh' }); S.save(); return O55.ui.go('nas-find'); }
+        /* (the NAS kept as the files place keeps its way in until a folder is used again) */
+        if (v === 'network') { S.sess.ui.sheet = null; S.sess.nas = Object.assign(S.sess.nas || {}, { purpose: 'storage' }); if (d.storage_mode !== 'network_location') O55.draft.set(d, { storage_mode: 'network_location', storage_transport: 'ssh' }); S.save(); return O55.ui.go('nas-find'); }
         S.save(); O55.ui.refresh();
       },
       next(S) {
@@ -180988,9 +181024,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     n.method = 'ssh';
     if (!dev(S)) { const pick = (id === 'nas-pmpair' && S.env.devices.find((x) => x.pm)) || S.env.devices.find((x) => x.ssh); if (pick) n.device = pick.id; }
     const d = dev(S), step = SEED_STEP[id] || 0;
-    if (d && step >= 1 && !n.trusted) { n.trusted = true; knownHosts(S)[hostId(S)] = d.hostKey; }
+    if (d && step >= 1 && !n.trusted) { n.trusted = true; n.trustedFor = hostId(S); knownHosts(S)[hostId(S)] = d.hostKey; }
     if (d && step >= 2 && !usableKey(S, n.key)) n.key = defaultKey(S);
-    if (d && step >= 3 && !n.installed) { if (n.key === 'new') makeNewKey(S); authorize(S, d, n.key); n.installed = true; }
+    if (d && step >= 3 && !n.installed) { if (n.key === 'new') makeNewKey(S); authorize(S, d, n.key); n.installed = true; n.installedFor = keyFor(S); }
     S.save();
   }
 
@@ -181008,7 +181044,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         const st = F.state(S, 'discover:ssh');
         /* what the chosen device needs (it runs Puppet Master; its SSH is off): under its own card, or under the typed
            address (QA round 2, Q7) */
-        const d = dev(S);
+        const d = picked(S);
         let about = '';
         if (d && d.pm) about += C.note(T('nas.find.pmNote', { name: d.name }), 'ok', 'link');
         if (d && !d.ssh && !d.pm) {
@@ -181027,7 +181063,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         } else {
           const cards = S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
             .concat(S.env.devices.filter((d) => !(n.purpose === 'storage' && workOn(S) === d.id)).map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
-          const chosen = n.device ? n.device + (n.fromConfig ? '|cfg' : '') : null;
+          const chosen = n.choice ? n.choice.id + (n.choice.cfg ? '|cfg' : '') : n.device ? n.device + (n.fromConfig ? '|cfg' : '') : null;
           out += C.cards('device', cards.map((c) => (c.v === chosen && about ? Object.assign(c, { under: about }) : c)), chosen, { label: T('nas.find.titleSource') });
           about = '';
         }
@@ -181050,7 +181086,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     },
     mounted(S) { if ((N(S).method || 'ssh') === 'ssh' && !N(S).manual) F.op(S, 'discover:ssh', 'cmd.server.discovery.refresh', [{ key: 'mdns', ms: 1100 }], { payload: { services: ['_ssh._tcp', '_sftp-ssh._tcp', '_smb._tcp'] }, sound: FOUND_SOUND }); },
     foot(S) {
-      const n = N(S), m = n.method || 'ssh', d = dev(S);
+      const n = N(S), m = n.method || 'ssh', d = picked(S);
       let ok = false, reason = T('missing.storage');
       if (m === 'ssh') {
         const pBad = n.manual && n.port != null && n.port !== '' && !portOk(n.port);
@@ -181072,23 +181108,28 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       shareManual(S, v) { const n = N(S); n.shareManual = v === 'on'; if (!n.shareManual && n.share === 'manual') n.share = null; S.save(); O55.ui.refresh(); if (n.shareManual) { O55.sound.play('reveal'); const i = S.root.querySelector('#o55f-shareText'); if (i) i.focus(); } },
       device(S, v, el) {
         const [id, cfg] = v.split('|'), n = N(S), h = cfg ? S.env.here.sshConfigHosts.find((x) => S.env.devices.find((d) => d.id === id && d.address === x.host)) : null;
-        /* another device ends what was started for the one before (its pairing request is cancelled with the owner) */
-        if (n.device !== id) { remember(S); if (n.pairAsked && !n.paired) O55.nas.endPair(S, 'target_changed'); Object.assign(n, { trusted: false, installed: false, key: null, paired: false, viaPm: false, pairAsked: false, useSsh: false, pairing: null, pairFail: null, user: '', userEdit: false, opKey: null, at: undefined, folderLabel: undefined, profile: undefined }); delete n.code; }
-        n.device = id; n.fromConfig = !!cfg; if (h) { n.user = h.user; n.key = usableKey(S, h.key) ? h.key : null; }
-        S.save(); O55.ui.refresh(); O55.ui.charm(el, dev(S).name, 'server');
+        /* (a device picked is this screen's own until Continue: nothing of the device before changes yet, lead's ruling
+           1103040758 and final-onb's D1 film) */
+        n.choice = { id, cfg: !!cfg, user: h ? h.user : null, key: h ? (usableKey(S, h.key) ? h.key : null) : null };
+        if (id === n.device && !!cfg === !!n.fromConfig) delete n.choice;
+        S.save(); O55.ui.refresh(); O55.ui.charm(el, (picked(S) || {}).name || '', 'server');
       },
       checkAgain(S) {
-        const d = dev(S); if (!d) return;
+        const d = picked(S); if (!d) return;
         F.reset(S, 'sshcheck:' + d.id);
         /* detection runs only on this click (read-only probe); in the concept the person has switched SSH on meanwhile */
         F.op(S, 'sshcheck:' + d.id, 'cmd.ssh_connection.device.probe', [{ key: 'probe', ms: 900 }], { onDone: () => { d.ssh = true; S.save(); O55.ui.refresh(); } });
       },
       share(S, v) { N(S).share = v; S.save(); O55.ui.refresh(); },
-      volume(S, v) { const n = N(S); if (n.volume !== v) F.reset(S, 'mounted:' + n.volume); n.volume = v; S.save(); O55.ui.refresh(); },
+      /* (another volume picked keeps the check of the one before: each check is the volume's own, and an un-continued pick
+         changes nothing it cannot take back, lead's ruling 1103040758) */
+      volume(S, v) { const n = N(S); n.volume = v; S.save(); O55.ui.refresh(); },
       manualOn(S) { N(S).manual = true; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
       next(S) {
         const n = N(S), m = n.method || 'ssh';
-        if (m === 'ssh' && n.manual) { const d = S.env.devices.find((x) => x.address === String(n.addr || '').trim()); n.device = d && d.id; }
+        /* Continue commits the device: picked or typed, another one takes the same way and starts from nothing (Astra AST-D5) */
+        if (m === 'ssh' && n.manual) { const d = S.env.devices.find((x) => x.address === String(n.addr || '').trim()); delete n.choice; target(S, d && d.id); }
+        else if (m === 'ssh' && n.choice) { const c = n.choice; delete n.choice; target(S, c.id); n.fromConfig = c.cfg; if (c.cfg) { n.user = c.user || ''; n.key = c.key; } }
         S.save();
         O55.ui.go(m === 'ssh' ? entry(S) : { smb: 'nas-smb', nfs: 'nas-nfs', mounted: 'nas-mounted' }[m]);
       }
@@ -181133,9 +181174,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       return { secondary: [{ label: T('nas.identity.stop'), do: 'stop' }], primary: { label: T('nas.identity.confirm'), do: 'trust' } };
     },
     do: {
-      trust(S) { const n = N(S); n.trusted = true; knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
+      trust(S) { const n = N(S); n.trusted = true; n.trustedFor = hostId(S); knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
       /* (p23: I reset it is the trust itself: the new ID is kept and the key step follows) */
-      trustNew(S) { const n = N(S); n.acceptedNew = true; n.trusted = true; knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
+      trustNew(S) { const n = N(S); n.acceptedNew = true; n.trusted = true; n.trustedFor = hostId(S); knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
       stop(S) { O55.ui.back(); }
     }
   });
@@ -181441,7 +181482,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       onDone: () => {
         if (!still()) return;
         if (!n.verifyOnly) { if (n.key === 'new') makeNewKey(S); authorize(S, d, n.key); }
-        n.installed = true;
+        n.installed = true; n.installedFor = keyFor(S);
         const dd = md(S);
         n.profile = profileId(S);
         O55.draft.set(dd, { source_access_authorization_refs: Array.from(new Set(dd.source_access_authorization_refs.concat(['ssh-key:' + n.profile + ':' + (n.key || 'new')]))).slice(0, 16), preflight_result_refs: Array.from(new Set(dd.preflight_result_refs.concat(['preflight:ssh:' + n.profile]))).slice(0, 32) });
@@ -181741,12 +181782,30 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* Settled facts outside the plan, kept per device apart from the picker's choice (Astra AST-D2): a host the person
      trusted and keys installed on it stay true when the NAS is given up or another device is chosen, and a resumed
      session re-applies them without choosing that NAS again */
+  /* what a host's trust and a key's install were verified for: the device's address and port, and the device, port, account
+     and key. A settled fact is recorded, and re-applied on resume, only while it still describes them (Astra AST-D5: a
+     typed address of another device inherited the first one's trust and install, and resume invented its facts) */
+  const keyFor = (S) => { const n = N(S), d = dev(S); return d ? d.id + '|' + sshPort(S) + '|' + sshUser(S) + '|' + (n.key || '') : ''; };
+  const trustOk = (S) => { const n = S.sess.nas; return !!(n && n.trusted && hostId(S) && n.trustedFor === hostId(S)); };
+  const keyOk = (S) => { const n = S.sess.nas; return !!(n && n.installed && n.key && !n.viaPm && n.installedFor === keyFor(S)); };
   function remember(S) {
     const n = S.sess.nas, d = n && dev(S); if (!d) return;
     const all = S.sess.nasFacts = S.sess.nasFacts || {}, r = Object.assign({}, all[d.id]);
-    if (n.trusted && hostId(S)) { r.host = hostId(S); r.hostKey = d.hostKey; }
-    if (n.installed && n.key && sshUser(S)) { r.keys = Array.from(new Set((r.keys || []).concat([sshUser(S) + ':' + n.key]))); if (n.key === 'k-pm') r.kpm = true; }
+    if (trustOk(S)) { r.host = hostId(S); r.hostKey = d.hostKey; }
+    if (keyOk(S) && sshUser(S)) { r.keys = Array.from(new Set((r.keys || []).concat([sshUser(S) + ':' + n.key]))); if (n.key === 'k-pm') r.kpm = true; }
     if (r.host || r.keys) all[d.id] = r;
+  }
+  /* the device shown as chosen on the device step: the one picked there, before Continue commits it, or the one committed */
+  const picked = (S) => { const n = N(S); return n.choice ? S.env.devices.find((x) => x.id === n.choice.id) || null : dev(S); };
+  /* one way to another device, picked or typed, taken before anything is saved or reconciled: what was settled for the one
+     before is recorded as its own, its pairing request ends, and the new one starts with nothing trusted, installed or
+     chosen on it */
+  function target(S, id) {
+    const n = N(S); if (n.device === id) return false;
+    remember(S); if (n.pairAsked && !n.paired) O55.nas.endPair(S, 'target_changed');
+    Object.assign(n, { trusted: false, trustedFor: undefined, installed: false, installedFor: undefined, key: null, paired: false, viaPm: false, pairAsked: false, useSsh: false, pairing: null, pairFail: null, user: '', userEdit: false, opKey: null, at: undefined, folderLabel: undefined, profile: undefined });
+    delete n.code; n.device = id;
+    return true;
   }
   O55.onOpen = (O55.onOpen || []).concat([(S) => {
     Object.entries(S.sess.nasFacts || {}).forEach(([id, r]) => {
@@ -181757,8 +181816,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     });
     const n = S.sess.nas; if (!n || !n.device) return;
     const d = S.env.devices.find((x) => x.id === n.device); if (!d) return;
+    /* (a trust or an install that does not describe this device, port and account is not this device's: it is dropped,
+       never applied to it) */
+    if (n.trusted && !trustOk(S)) Object.assign(n, { trusted: false, trustedFor: undefined, installed: n.viaPm ? n.installed : false, installedFor: undefined });
+    if (n.installed && !n.viaPm && !keyOk(S)) Object.assign(n, { installed: false, installedFor: undefined });
     if (n.trusted) knownHosts(S)[hostId(S)] = d.hostKey;
-    if (keyGate(S) && n.installed && n.key) authorize(S, d, n.key);
+    if (keyGate(S) && n.installed && n.key && !n.viaPm) authorize(S, d, n.key);
     if (n.key === 'k-pm' && !keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
     if (S.sess.ops && S.sess.ops['sshcheck:' + d.id] && S.sess.ops['sshcheck:' + d.id].state === 'done') d.ssh = true;
   }]);
@@ -181905,7 +181968,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       S.sess.forgeAccounts[si.instance_key] = login;
       const d = md(S);
       if (method) d.forge_auth_method = method;
-      O55.draft.set(d, { forge_account_action: action, forge_account_ref: 'account:' + U.slug(si.instance_key) + ':' + U.slug(login) });
+      /* (the same account, already the plan's, keeps how it was connected: walking the sign-in again with nothing
+         changed changes nothing, the lead's generated row 20) */
+      const ref = 'account:' + U.slug(si.instance_key) + ':' + U.slug(login), same = d.forge_account_ref === ref && !!d.forge_account_action;
+      O55.draft.set(d, { forge_account_action: same ? d.forge_account_action : action, forge_account_ref: ref });
       if (method === 'token' && d.forge_instance_profile) d.forge_instance_profile.credential_ref = 'credential:' + U.slug(si.instance_key) + ':token';
       if (OL(S).purpose === 'source') O55.draft.set(d, { source_access_authorization_refs: Array.from(new Set(d.source_access_authorization_refs.concat(['auth:' + U.slug(si.instance_key) + ':' + U.slug(login)]))).slice(0, 16) });
     }
@@ -185035,7 +185101,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   'use strict';
   const O55 = window.O55;
   const md = (S) => S.sess.drafts.main;
-  const where = (S) => (S.sess.ui && S.sess.ui.where) || 'this';
+  /* the computer answer as committed (Continue on the Computer screen), never the card picked before it (lead's ruling
+     1103040758 rule 3; Sol: Computer > This computer > Back left the Server's steps off the path). A session from before
+     the answer was recorded reads it from the plan */
+  const where = (S) => { const u = S.sess.ui || {}, d = md(S); if (u.whereAt) return u.whereAt;
+    return d.server_mode === 'new_server' ? 'server' : d.server_mode === 'existing_server' || S.sess.active === 'connect' ? 'connect' : 'this'; };
   /* how the Project begins: the plan says (an existing online or local Project, a restore, later); while a restore is
      still being chosen the plan is not yet a restore, and the beginning's Continue has recorded it (69) */
   function began(S) {
@@ -185054,7 +185124,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      the backups of a place left are never offered) */
   /* (where the backup is: a kit names its place, as the restore flow reads it, O55.restore.placeOf; Muse delta minor 4) */
   const place = (S) => { const r = S.sess.restore || {}; try { return O55.restore && O55.restore.placeOf ? O55.restore.placeOf(S) : r.source; } catch (_) { return r.source; } };
-  const placeReady = (S) => { const r = S.sess.restore || {}, pl = place(S); return ['cloud', 'nas', 's3'].includes(pl) ? !!r.reachedFor : r.source === 'kit' ? !!r.kit : !!r.source; };
+  /* (a drive, NAS or bucket reached counts only for the place chosen now: another service's or device's reach does not,
+     Muse delta minor 4) */
+  const reachedHere = (S) => { const r = S.sess.restore; if (!r || !r.reachedFor) return false; try { return !O55.restore || !O55.restore.reachKey || r.reachedFor === O55.restore.reachKey(S); } catch (_) { return true; } };
+  const placeReady = (S) => { const r = S.sess.restore || {}, pl = place(S); return pl === 'cloud' || pl === 'nas' ? reachedHere(S) : pl === 's3' ? !!r.reachedFor : r.source === 'kit' ? !!r.kit : !!r.source; };
   /* the online source of an existing Project; Safe's online copy: chosen (the plan's copy is new) or being chosen (Add one
      or Change pressed, not given up since: Not now, Skip the online copy, Later) */
   const source = (S) => began(S) === 'existing:online';
@@ -185107,17 +185180,28 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!rule || !S || !S.sess) return true;
     try { return !!rule(S); } catch (_) { return true; }
   }
-  /* the step a step sits inside: Safe's online copy is chosen, signed in to and named on steps of its own that hand back
-     to Safe, so a Back from Safe after them walks them before the step ahead of Safe, and Safe reached again after them
-     does not cut them from the path (lead's Back ruling 1103011909, row B's admitted own server) */
+  /* the step a step sits inside: each screen owns the chain of steps its answer opens, and Back from after them walks
+     them, in order, before the step ahead of their owner; the owner reached again after only its own chain does not cut
+     them from the path (lead's Back ruling 1103011909; Astra at 41d: Back from Review skipped a files place's NAS steps).
+     Safe owns its online copy's steps; Name owns the NAS steps of a files place on the NAS; Begins as owns a source's
+     steps (a folder, an online repository, a NAS source) and a Project restore's; Computer owns a Server's setup, a
+     connection's steps, and a whole-computer or Server restore's */
   function within(id, S) {
     if (!S || !S.sess) return null;
     try {
-      if (id === 'online-service' || id === 'online-details') return copy(S) ? 'safe' : null;
-      if (id === 'online-signin') { const si = S.sess.signin || {}; return (!si.kind || si.kind === 'forge') && copy(S) ? 'safe' : null; }
+      const r = S.sess.restore, rOwner = () => (r && r.scope && r.scope !== 'project' ? 'where' : 'begin');
+      if (/^nas-/.test(id)) { const p = (S.sess.nas && S.sess.nas.purpose) || 'source'; return p === 'storage' ? 'name' : p === 'source' ? 'begin' : p === 'backup' ? rOwner() : null; }
+      if (/^(s|c)-/.test(id)) return 'where';
+      if (/^r-/.test(id)) return rOwner();
+      if (id === 'ex-folder' || id === 'ex-repos') return 'begin';
+      if (id === 'online-service' || id === 'online-details') return copy(S) ? 'safe' : source(S) ? 'begin' : null;
+      if (id === 'online-signin') { const si = S.sess.signin || {}; if (si.kind && si.kind !== 'forge') return restoring(S) ? rOwner() : null; return copy(S) ? 'safe' : source(S) ? 'begin' : null; }
     } catch (_) {}
     return null;
   }
+  /* a chain that hands back to its owner (Safe's online copy, Name's files place on a NAS): entering it is not the owner's
+     Continue, so a step Review's Edit opened is still that Edit's until the owner's own Continue (60-ui-core go) */
+  const hub = (id, S) => { const w = within(id, S); return w === 'safe' || w === 'name' ? w : null; };
   /* what a picker kept for an answer that no longer applies goes: run on every screen change and on resume */
   const F = () => O55.flow;
   const dropOps = (S, re) => Object.keys(S.sess.ops || {}).forEach((k) => { if (re.test(k)) F().reset(S, k); });
@@ -185157,6 +185241,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         }
       }
     }
+    /* the files place on a NAS, and the NAS access behind any answer, describe the current answers as the source does: a
+       files place no longer on the NAS goes, and the access and preflight of a NAS no current answer uses go with it (Astra
+       AST-D6: This computer chosen for the files kept the NAS place and its key) */
+    if (d.storage_mode !== 'network_location' && (d.storage_location || d.storage_transport !== 'mounted')) { O55.draft.set(d, { storage_location: '', storage_transport: 'mounted' }); changed = true; }
+    const nasUsed = b === 'existing:device' || d.storage_mode === 'network_location' || (restoring(S) && place(S) === 'nas') || !!(S.sess.nas && S.sess.nas.purpose === 'dest' && attempt(S));
+    if (!nasUsed && ((d.source_access_authorization_refs || []).some((r) => /^(ssh-key|pairing):/.test(r)) || (d.preflight_result_refs || []).some((r) => /^preflight:(ssh|paired-source):/.test(r)))) {
+      O55.draft.set(d, { source_access_authorization_refs: keepRefs(d.source_access_authorization_refs, /^(ssh-key|pairing):/), preflight_result_refs: keepRefs(d.preflight_result_refs, /^preflight:(ssh|paired-source):/) }); changed = true;
+    }
     if (S.sess.restore && S.sess.restore.scope === 'project' && b !== 'restore') { S.sess.restore = null; changed = true; }
     /* a Project restore whose backup is no longer the one picked (its source or place changed, or the restore was started
        again): the plan's backup, its transport and the backup place the restore suggested go, and Review asks for a pick */
@@ -185172,7 +185264,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!copy(S) && !source(S) && S.sess.online && (S.sess.online.forge || S.sess.online.variant)) { S.sess.online.forge = null; S.sess.online.variant = null; S.sess.online.unchosen = true; changed = true; }
     return changed;
   }
-  O55.branch = { applies, within, reconcile, began, copy, source };
+  O55.branch = { applies, within, hub, reconcile, began, copy, source };
 })();
 
 /* ---- js/80-tour-core.js ---- */

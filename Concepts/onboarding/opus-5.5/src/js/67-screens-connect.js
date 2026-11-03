@@ -495,14 +495,17 @@
       pickProject(S, id) { S.sess.connect.openProject = id; S.save(); O55.ui.refresh(); },
       createNew(S, arg, el) {
         const c = cd(S), m = S.sess.drafts.main, th = O55.theme();
+        /* (the same Server kept, from Review's Edit: the Project's own answers stay as they are; an unchanged answer clears
+           nothing) */
+        const kept = m.server_mode === 'existing_server' && !!m.server_ref && m.server_ref === c.server_ref;
         S.sess.connect.newProject = true; S.sess.active = 'main';
-        O55.draft.set(m, {
-          journey: 'new_or_local', theme_family: th.chosen, theme_mode: th.mode, project_mode: 'new', server_mode: 'existing_server', server_ref: c.server_ref,
+        O55.draft.set(m, Object.assign(kept ? {} : { journey: 'new_or_local', project_mode: 'new', storage_mode: 'with_server' }, {
+          theme_family: th.chosen, theme_mode: th.mode, server_mode: 'existing_server', server_ref: c.server_ref,
           server_connection_mode: c.server_connection_mode, remote_mode: c.remote_mode, remote_more: c.remote_more, include_vpn_networks: c.include_vpn_networks,
           connection_pairing: c.connection_pairing, tailscale_control: c.tailscale_control, headscale_url: c.headscale_url, remote_endpoint: c.remote_endpoint,
           proxy_hostname: c.proxy_hostname, proxy_hosting: c.remote_mode === 'reverse_proxy' ? 'existing_proxy' : null, proxy_kind: null, proxy_tls: null,
-          server_trust_confirmed: c.server_trust_confirmed, storage_mode: 'with_server'
-        });
+          server_trust_confirmed: c.server_trust_confirmed
+        }));
         S.save();
         O55.ui.charm(el, T('begin.new.title'), 'seed');
         O55.ui.go('begin');

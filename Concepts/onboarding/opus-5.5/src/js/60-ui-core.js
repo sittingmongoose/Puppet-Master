@@ -361,6 +361,7 @@
   function railJump(ch) {
     flushOpen();
     if (!canBack()) return;
+    txnDiscard();
     prune();
     const at = backTo(ch); if (at < 0) return;
     const id = S.sess.history[at];
@@ -806,7 +807,7 @@
     const from = SCREENS.defs[S.sess.screen];
     /* a step Review's Edit opened is left by going on from it (or away by the rail), not by entering a step inside it */
     const rt = S.sess.ui && S.sess.ui.returnTo;
-    if (rt && rt.from === S.sess.screen && id !== rt.from && id !== rt.screen && !(O55.branch && O55.branch.within && O55.branch.within(id, S) === rt.from)) rt.left = true;
+    if (rt && rt.from === S.sess.screen && id !== rt.from && id !== rt.screen && !(O55.branch && O55.branch.hub && O55.branch.hub(id, S) === rt.from)) rt.left = true;
     const path = opts.path || (rt && rt.screen === id && !opts.fromHistory && Array.isArray(rt.path) ? rt.path : null), editFrom = opts.editFrom || (rt && rt.from);
     if (from && from.leave) from.leave(S);
     /* (a walk on from a step a jump opened carries what it picks there: nothing is reconciled until it reaches a step its
@@ -825,6 +826,7 @@
     S.save();
     const def = SCREENS.defs[id];
     if (def.enter && onBranch(id)) def.enter(S, opts);
+    txnOpen(id); S.save(); /* (the answers as this screen was reached, its own entry included) */
     /* the music follows the journey: the chapter's chord, and how far along the person is (the first forward sound
        after a chapter change becomes that chapter's own sting, O55.sound's chapterSting) */
     /* (a skin that plays this chapter's sting itself, on a beat of its own, claims it: NieR's act card lands on it and
@@ -834,10 +836,11 @@
     if (!opts.silent) O55.sound.play(opts.dir === 'back' ? 'back' : 'next');
     transition(opts.dir || 'fwd');
   }
-  function back() {
+  function back(o) {
     flushOpen();
     const def = SCREENS.defs[S.sess.screen];
     if (def && def.onBack && def.onBack(S) === false) return;
+    if (o && o.discard) txnDiscard();
     /* on a step Review's Edit opened, before going on from it, Back returns to Review, which Back then leaves for the steps
        before it in the order they were walked (lead's Back ruling 1103011909, rule 2) */
     const rt = S.sess.ui && S.sess.ui.returnTo;
@@ -873,6 +876,29 @@
     const h = S.sess.history || [];
     let to = null; while (h.length) { const id = h.pop(); if (onBranch(id) && SCREENS.defs[id]) { to = id; break; } }
     S.sess.screen = to || 'welcome';
+  }
+
+  /* An un-continued selection is not an answer (lead's ruling 1103040758). What a screen's picks and typed values changed
+     is taken back when the person leaves it by Back or the rail before going on: the answers are kept as they were when
+     the screen was reached, and any step on from it commits them. The steps whose own work is a check, a sign-in, a
+     pairing, an install, a Server's setup or the plan's confirmation keep what that work verified: those are facts, not
+     picks. The kept answers are part of the saved session, so Back after Close and Resume takes the picks back too. */
+  const TXN_KEYS = ['drafts', 'active', 'nas', 'restore', 'online', 'backup', 'folder', 'folderInfo', 'like', 'ui', 'azureProjects', 'connect'];
+  const NO_TXN = new Set(['welcome', 'look', 'nas-identity', 'nas-key', 'nas-signin', 'nas-install', 'nas-pmpair', 'online-signin', 'r-unlock', 'r-preview',
+    's-kind', 's-wait', 's-confirm', 's-ready', 'c-review', 'c-pair', 'c-ready', 'review', 'creating', 'protect', 'away-setup', 'ai', 'ai-all', 'ai-none', 'free', 'ready']);
+  const copyOf = (v) => (v === undefined ? undefined : JSON.parse(JSON.stringify(v)));
+  function txnOpen(id) {
+    if (!S.sess) return;
+    if (NO_TXN.has(id)) { S.sess.txn = null; return; }
+    const snap = {}; TXN_KEYS.forEach((k) => { snap[k] = copyOf(S.sess[k]); });
+    S.sess.txn = { screen: id, snap };
+  }
+  function txnDiscard() {
+    const t = S.sess && S.sess.txn;
+    if (!t || t.screen !== S.sess.screen || !t.snap) return false;
+    TXN_KEYS.forEach((k) => { if (t.snap[k] === undefined) delete S.sess[k]; else S.sess[k] = copyOf(t.snap[k]); });
+    S.sess.txn = null;
+    return true;
   }
 
   /* the history keeps only the active branch, as a simple path: a step reached again cuts the path back to it, so a run of
@@ -962,7 +988,7 @@
     }
     if (e) e.preventDefault();
     if (action === 'close') return close('close');
-    if (action === 'back') return back();
+    if (action === 'back') return back({ discard: true });
     if (action === 'sound') { O55.sound.toggle('onboarding'); renderSound(); return; }
     if (action === 'talk') { if (O55.talk.toggle('onboarding')) O55.sound.play('select'); return; }
     /* the look menu is a small sheet: it opens and closes with the sheet sounds, as in the tour's bar */
@@ -1208,6 +1234,7 @@
     if (!SCREENS.defs[S.sess.screen]) S.sess.screen = 'welcome';
     if (!opts.screen && O55.branch) O55.branch.reconcile(S);
     settleBranch(); prune();
+    if (!S.sess.txn || S.sess.txn.screen !== S.sess.screen) txnOpen(S.sess.screen);
     if (opts.screen && opts.committed !== false && POSTCOMMIT.has(S.sess.screen) && !S.ctx().committed) seedCommit();
     /* a screen opened straight (Demo Studio's Open at one screen) gets what the screens before it would have left: the
        screen's own seed(S), which fills only what is missing (QA2 hunter H1; opt out with seed: false) */

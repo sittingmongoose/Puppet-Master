@@ -62,7 +62,9 @@
     S.sess.folderInfo = null; S.sess.folder = null;
     Object.keys(S.sess.ops || {}).forEach((k) => { if (/^(folder|mounted|smb|nfs):/.test(k)) F.reset(S, k); });
     if (S.sess.nas && O55.nas && O55.nas.remember) O55.nas.remember(S); /* (its settled host and keys stay, 70) */
-    if (S.sess.nas) { if (S.sess.nas.purpose === 'source' || was === 'existing:device') S.sess.nas = null; else { delete S.sess.nas.at; delete S.sess.nas.folderLabel; } }
+    /* (the NAS of the abandoned beginning goes; a files place on the NAS is the files answer's, not the beginning's, and
+       keeps its folder and label, Muse delta2 minor 1 remainder; a restore's backup NAS goes with its restore) */
+    if (S.sess.nas) { const p = S.sess.nas.purpose || 'source'; if (p === 'source' || p === 'backup') S.sess.nas = null; }
     if (S.sess.backup && S.sess.backup.fromRestore) { S.sess.backup.dest = null; S.sess.backup.fromRestore = false; }
     S.sess.restore = null;
     if (was === 'existing:online' || d.project_mode === 'existing_online') {
@@ -281,11 +283,13 @@
       change(S) { S.sess.ui.sheet = 'loc'; S.save(); O55.ui.refresh(); seeSheet(S); },
       loc(S, v) {
         const d = md(S);
-        /* (files on the NAS given up: its device, folder and checks go with it, as a beginning's do) */
-        if (v !== 'network' && d.storage_mode === 'network_location' && S.sess.nas && S.sess.nas.purpose === 'storage') { if (O55.nas && O55.nas.remember) O55.nas.remember(S); S.sess.nas = null; Object.keys(S.sess.ops || {}).forEach((k) => { if (/^(mounted|smb|nfs):/.test(k)) F.reset(S, k); }); }
+        /* (files on the NAS given up: its device, folder, checks and the access it was given go when the Name step's
+           Continue commits it, 76-branch.js reconcile (Astra AST-D6); until then Back takes the pick back, lead's ruling
+           1103040758) */
         if (v === 'auto') O55.draft.set(d, { local_location_mode: 'automatic', local_location: '', storage_mode: 'this_device' });
         if (v === 'custom') O55.draft.set(d, { local_location_mode: 'custom', local_location: d.local_location || '~/Documents/' + (d.project_name || 'Project'), storage_mode: 'this_device' });
-        if (v === 'network') { S.sess.ui.sheet = null; S.sess.nas = Object.assign(S.sess.nas || {}, { purpose: 'storage' }); O55.draft.set(d, { storage_mode: 'network_location', storage_transport: 'ssh' }); S.save(); return O55.ui.go('nas-find'); }
+        /* (the NAS kept as the files place keeps its way in until a folder is used again) */
+        if (v === 'network') { S.sess.ui.sheet = null; S.sess.nas = Object.assign(S.sess.nas || {}, { purpose: 'storage' }); if (d.storage_mode !== 'network_location') O55.draft.set(d, { storage_mode: 'network_location', storage_transport: 'ssh' }); S.save(); return O55.ui.go('nas-find'); }
         S.save(); O55.ui.refresh();
       },
       next(S) {

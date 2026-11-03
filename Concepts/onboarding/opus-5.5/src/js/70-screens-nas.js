@@ -61,9 +61,9 @@
     n.method = 'ssh';
     if (!dev(S)) { const pick = (id === 'nas-pmpair' && S.env.devices.find((x) => x.pm)) || S.env.devices.find((x) => x.ssh); if (pick) n.device = pick.id; }
     const d = dev(S), step = SEED_STEP[id] || 0;
-    if (d && step >= 1 && !n.trusted) { n.trusted = true; knownHosts(S)[hostId(S)] = d.hostKey; }
+    if (d && step >= 1 && !n.trusted) { n.trusted = true; n.trustedFor = hostId(S); knownHosts(S)[hostId(S)] = d.hostKey; }
     if (d && step >= 2 && !usableKey(S, n.key)) n.key = defaultKey(S);
-    if (d && step >= 3 && !n.installed) { if (n.key === 'new') makeNewKey(S); authorize(S, d, n.key); n.installed = true; }
+    if (d && step >= 3 && !n.installed) { if (n.key === 'new') makeNewKey(S); authorize(S, d, n.key); n.installed = true; n.installedFor = keyFor(S); }
     S.save();
   }
 
@@ -81,7 +81,7 @@
         const st = F.state(S, 'discover:ssh');
         /* what the chosen device needs (it runs Puppet Master; its SSH is off): under its own card, or under the typed
            address (QA round 2, Q7) */
-        const d = dev(S);
+        const d = picked(S);
         let about = '';
         if (d && d.pm) about += C.note(T('nas.find.pmNote', { name: d.name }), 'ok', 'link');
         if (d && !d.ssh && !d.pm) {
@@ -100,7 +100,7 @@
         } else {
           const cards = S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
             .concat(S.env.devices.filter((d) => !(n.purpose === 'storage' && workOn(S) === d.id)).map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
-          const chosen = n.device ? n.device + (n.fromConfig ? '|cfg' : '') : null;
+          const chosen = n.choice ? n.choice.id + (n.choice.cfg ? '|cfg' : '') : n.device ? n.device + (n.fromConfig ? '|cfg' : '') : null;
           out += C.cards('device', cards.map((c) => (c.v === chosen && about ? Object.assign(c, { under: about }) : c)), chosen, { label: T('nas.find.titleSource') });
           about = '';
         }
@@ -123,7 +123,7 @@
     },
     mounted(S) { if ((N(S).method || 'ssh') === 'ssh' && !N(S).manual) F.op(S, 'discover:ssh', 'cmd.server.discovery.refresh', [{ key: 'mdns', ms: 1100 }], { payload: { services: ['_ssh._tcp', '_sftp-ssh._tcp', '_smb._tcp'] }, sound: FOUND_SOUND }); },
     foot(S) {
-      const n = N(S), m = n.method || 'ssh', d = dev(S);
+      const n = N(S), m = n.method || 'ssh', d = picked(S);
       let ok = false, reason = T('missing.storage');
       if (m === 'ssh') {
         const pBad = n.manual && n.port != null && n.port !== '' && !portOk(n.port);
@@ -145,23 +145,28 @@
       shareManual(S, v) { const n = N(S); n.shareManual = v === 'on'; if (!n.shareManual && n.share === 'manual') n.share = null; S.save(); O55.ui.refresh(); if (n.shareManual) { O55.sound.play('reveal'); const i = S.root.querySelector('#o55f-shareText'); if (i) i.focus(); } },
       device(S, v, el) {
         const [id, cfg] = v.split('|'), n = N(S), h = cfg ? S.env.here.sshConfigHosts.find((x) => S.env.devices.find((d) => d.id === id && d.address === x.host)) : null;
-        /* another device ends what was started for the one before (its pairing request is cancelled with the owner) */
-        if (n.device !== id) { remember(S); if (n.pairAsked && !n.paired) O55.nas.endPair(S, 'target_changed'); Object.assign(n, { trusted: false, installed: false, key: null, paired: false, viaPm: false, pairAsked: false, useSsh: false, pairing: null, pairFail: null, user: '', userEdit: false, opKey: null, at: undefined, folderLabel: undefined, profile: undefined }); delete n.code; }
-        n.device = id; n.fromConfig = !!cfg; if (h) { n.user = h.user; n.key = usableKey(S, h.key) ? h.key : null; }
-        S.save(); O55.ui.refresh(); O55.ui.charm(el, dev(S).name, 'server');
+        /* (a device picked is this screen's own until Continue: nothing of the device before changes yet, lead's ruling
+           1103040758 and final-onb's D1 film) */
+        n.choice = { id, cfg: !!cfg, user: h ? h.user : null, key: h ? (usableKey(S, h.key) ? h.key : null) : null };
+        if (id === n.device && !!cfg === !!n.fromConfig) delete n.choice;
+        S.save(); O55.ui.refresh(); O55.ui.charm(el, (picked(S) || {}).name || '', 'server');
       },
       checkAgain(S) {
-        const d = dev(S); if (!d) return;
+        const d = picked(S); if (!d) return;
         F.reset(S, 'sshcheck:' + d.id);
         /* detection runs only on this click (read-only probe); in the concept the person has switched SSH on meanwhile */
         F.op(S, 'sshcheck:' + d.id, 'cmd.ssh_connection.device.probe', [{ key: 'probe', ms: 900 }], { onDone: () => { d.ssh = true; S.save(); O55.ui.refresh(); } });
       },
       share(S, v) { N(S).share = v; S.save(); O55.ui.refresh(); },
-      volume(S, v) { const n = N(S); if (n.volume !== v) F.reset(S, 'mounted:' + n.volume); n.volume = v; S.save(); O55.ui.refresh(); },
+      /* (another volume picked keeps the check of the one before: each check is the volume's own, and an un-continued pick
+         changes nothing it cannot take back, lead's ruling 1103040758) */
+      volume(S, v) { const n = N(S); n.volume = v; S.save(); O55.ui.refresh(); },
       manualOn(S) { N(S).manual = true; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
       next(S) {
         const n = N(S), m = n.method || 'ssh';
-        if (m === 'ssh' && n.manual) { const d = S.env.devices.find((x) => x.address === String(n.addr || '').trim()); n.device = d && d.id; }
+        /* Continue commits the device: picked or typed, another one takes the same way and starts from nothing (Astra AST-D5) */
+        if (m === 'ssh' && n.manual) { const d = S.env.devices.find((x) => x.address === String(n.addr || '').trim()); delete n.choice; target(S, d && d.id); }
+        else if (m === 'ssh' && n.choice) { const c = n.choice; delete n.choice; target(S, c.id); n.fromConfig = c.cfg; if (c.cfg) { n.user = c.user || ''; n.key = c.key; } }
         S.save();
         O55.ui.go(m === 'ssh' ? entry(S) : { smb: 'nas-smb', nfs: 'nas-nfs', mounted: 'nas-mounted' }[m]);
       }
@@ -206,9 +211,9 @@
       return { secondary: [{ label: T('nas.identity.stop'), do: 'stop' }], primary: { label: T('nas.identity.confirm'), do: 'trust' } };
     },
     do: {
-      trust(S) { const n = N(S); n.trusted = true; knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
+      trust(S) { const n = N(S); n.trusted = true; n.trustedFor = hostId(S); knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
       /* (p23: I reset it is the trust itself: the new ID is kept and the key step follows) */
-      trustNew(S) { const n = N(S); n.acceptedNew = true; n.trusted = true; knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
+      trustNew(S) { const n = N(S); n.acceptedNew = true; n.trusted = true; n.trustedFor = hostId(S); knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
       stop(S) { O55.ui.back(); }
     }
   });
@@ -514,7 +519,7 @@
       onDone: () => {
         if (!still()) return;
         if (!n.verifyOnly) { if (n.key === 'new') makeNewKey(S); authorize(S, d, n.key); }
-        n.installed = true;
+        n.installed = true; n.installedFor = keyFor(S);
         const dd = md(S);
         n.profile = profileId(S);
         O55.draft.set(dd, { source_access_authorization_refs: Array.from(new Set(dd.source_access_authorization_refs.concat(['ssh-key:' + n.profile + ':' + (n.key || 'new')]))).slice(0, 16), preflight_result_refs: Array.from(new Set(dd.preflight_result_refs.concat(['preflight:ssh:' + n.profile]))).slice(0, 32) });
@@ -814,12 +819,30 @@
   /* Settled facts outside the plan, kept per device apart from the picker's choice (Astra AST-D2): a host the person
      trusted and keys installed on it stay true when the NAS is given up or another device is chosen, and a resumed
      session re-applies them without choosing that NAS again */
+  /* what a host's trust and a key's install were verified for: the device's address and port, and the device, port, account
+     and key. A settled fact is recorded, and re-applied on resume, only while it still describes them (Astra AST-D5: a
+     typed address of another device inherited the first one's trust and install, and resume invented its facts) */
+  const keyFor = (S) => { const n = N(S), d = dev(S); return d ? d.id + '|' + sshPort(S) + '|' + sshUser(S) + '|' + (n.key || '') : ''; };
+  const trustOk = (S) => { const n = S.sess.nas; return !!(n && n.trusted && hostId(S) && n.trustedFor === hostId(S)); };
+  const keyOk = (S) => { const n = S.sess.nas; return !!(n && n.installed && n.key && !n.viaPm && n.installedFor === keyFor(S)); };
   function remember(S) {
     const n = S.sess.nas, d = n && dev(S); if (!d) return;
     const all = S.sess.nasFacts = S.sess.nasFacts || {}, r = Object.assign({}, all[d.id]);
-    if (n.trusted && hostId(S)) { r.host = hostId(S); r.hostKey = d.hostKey; }
-    if (n.installed && n.key && sshUser(S)) { r.keys = Array.from(new Set((r.keys || []).concat([sshUser(S) + ':' + n.key]))); if (n.key === 'k-pm') r.kpm = true; }
+    if (trustOk(S)) { r.host = hostId(S); r.hostKey = d.hostKey; }
+    if (keyOk(S) && sshUser(S)) { r.keys = Array.from(new Set((r.keys || []).concat([sshUser(S) + ':' + n.key]))); if (n.key === 'k-pm') r.kpm = true; }
     if (r.host || r.keys) all[d.id] = r;
+  }
+  /* the device shown as chosen on the device step: the one picked there, before Continue commits it, or the one committed */
+  const picked = (S) => { const n = N(S); return n.choice ? S.env.devices.find((x) => x.id === n.choice.id) || null : dev(S); };
+  /* one way to another device, picked or typed, taken before anything is saved or reconciled: what was settled for the one
+     before is recorded as its own, its pairing request ends, and the new one starts with nothing trusted, installed or
+     chosen on it */
+  function target(S, id) {
+    const n = N(S); if (n.device === id) return false;
+    remember(S); if (n.pairAsked && !n.paired) O55.nas.endPair(S, 'target_changed');
+    Object.assign(n, { trusted: false, trustedFor: undefined, installed: false, installedFor: undefined, key: null, paired: false, viaPm: false, pairAsked: false, useSsh: false, pairing: null, pairFail: null, user: '', userEdit: false, opKey: null, at: undefined, folderLabel: undefined, profile: undefined });
+    delete n.code; n.device = id;
+    return true;
   }
   O55.onOpen = (O55.onOpen || []).concat([(S) => {
     Object.entries(S.sess.nasFacts || {}).forEach(([id, r]) => {
@@ -830,8 +853,12 @@
     });
     const n = S.sess.nas; if (!n || !n.device) return;
     const d = S.env.devices.find((x) => x.id === n.device); if (!d) return;
+    /* (a trust or an install that does not describe this device, port and account is not this device's: it is dropped,
+       never applied to it) */
+    if (n.trusted && !trustOk(S)) Object.assign(n, { trusted: false, trustedFor: undefined, installed: n.viaPm ? n.installed : false, installedFor: undefined });
+    if (n.installed && !n.viaPm && !keyOk(S)) Object.assign(n, { installed: false, installedFor: undefined });
     if (n.trusted) knownHosts(S)[hostId(S)] = d.hostKey;
-    if (keyGate(S) && n.installed && n.key) authorize(S, d, n.key);
+    if (keyGate(S) && n.installed && n.key && !n.viaPm) authorize(S, d, n.key);
     if (n.key === 'k-pm' && !keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
     if (S.sess.ops && S.sess.ops['sshcheck:' + d.id] && S.sess.ops['sshcheck:' + d.id].state === 'done') d.ssh = true;
   }]);

@@ -12,7 +12,11 @@
   'use strict';
   const O55 = window.O55;
   const md = (S) => S.sess.drafts.main;
-  const where = (S) => (S.sess.ui && S.sess.ui.where) || 'this';
+  /* the computer answer as committed (Continue on the Computer screen), never the card picked before it (lead's ruling
+     1103040758 rule 3; Sol: Computer > This computer > Back left the Server's steps off the path). A session from before
+     the answer was recorded reads it from the plan */
+  const where = (S) => { const u = S.sess.ui || {}, d = md(S); if (u.whereAt) return u.whereAt;
+    return d.server_mode === 'new_server' ? 'server' : d.server_mode === 'existing_server' || S.sess.active === 'connect' ? 'connect' : 'this'; };
   /* how the Project begins: the plan says (an existing online or local Project, a restore, later); while a restore is
      still being chosen the plan is not yet a restore, and the beginning's Continue has recorded it (69) */
   function began(S) {
@@ -31,7 +35,10 @@
      the backups of a place left are never offered) */
   /* (where the backup is: a kit names its place, as the restore flow reads it, O55.restore.placeOf; Muse delta minor 4) */
   const place = (S) => { const r = S.sess.restore || {}; try { return O55.restore && O55.restore.placeOf ? O55.restore.placeOf(S) : r.source; } catch (_) { return r.source; } };
-  const placeReady = (S) => { const r = S.sess.restore || {}, pl = place(S); return ['cloud', 'nas', 's3'].includes(pl) ? !!r.reachedFor : r.source === 'kit' ? !!r.kit : !!r.source; };
+  /* (a drive, NAS or bucket reached counts only for the place chosen now: another service's or device's reach does not,
+     Muse delta minor 4) */
+  const reachedHere = (S) => { const r = S.sess.restore; if (!r || !r.reachedFor) return false; try { return !O55.restore || !O55.restore.reachKey || r.reachedFor === O55.restore.reachKey(S); } catch (_) { return true; } };
+  const placeReady = (S) => { const r = S.sess.restore || {}, pl = place(S); return pl === 'cloud' || pl === 'nas' ? reachedHere(S) : pl === 's3' ? !!r.reachedFor : r.source === 'kit' ? !!r.kit : !!r.source; };
   /* the online source of an existing Project; Safe's online copy: chosen (the plan's copy is new) or being chosen (Add one
      or Change pressed, not given up since: Not now, Skip the online copy, Later) */
   const source = (S) => began(S) === 'existing:online';
@@ -84,17 +91,28 @@
     if (!rule || !S || !S.sess) return true;
     try { return !!rule(S); } catch (_) { return true; }
   }
-  /* the step a step sits inside: Safe's online copy is chosen, signed in to and named on steps of its own that hand back
-     to Safe, so a Back from Safe after them walks them before the step ahead of Safe, and Safe reached again after them
-     does not cut them from the path (lead's Back ruling 1103011909, row B's admitted own server) */
+  /* the step a step sits inside: each screen owns the chain of steps its answer opens, and Back from after them walks
+     them, in order, before the step ahead of their owner; the owner reached again after only its own chain does not cut
+     them from the path (lead's Back ruling 1103011909; Astra at 41d: Back from Review skipped a files place's NAS steps).
+     Safe owns its online copy's steps; Name owns the NAS steps of a files place on the NAS; Begins as owns a source's
+     steps (a folder, an online repository, a NAS source) and a Project restore's; Computer owns a Server's setup, a
+     connection's steps, and a whole-computer or Server restore's */
   function within(id, S) {
     if (!S || !S.sess) return null;
     try {
-      if (id === 'online-service' || id === 'online-details') return copy(S) ? 'safe' : null;
-      if (id === 'online-signin') { const si = S.sess.signin || {}; return (!si.kind || si.kind === 'forge') && copy(S) ? 'safe' : null; }
+      const r = S.sess.restore, rOwner = () => (r && r.scope && r.scope !== 'project' ? 'where' : 'begin');
+      if (/^nas-/.test(id)) { const p = (S.sess.nas && S.sess.nas.purpose) || 'source'; return p === 'storage' ? 'name' : p === 'source' ? 'begin' : p === 'backup' ? rOwner() : null; }
+      if (/^(s|c)-/.test(id)) return 'where';
+      if (/^r-/.test(id)) return rOwner();
+      if (id === 'ex-folder' || id === 'ex-repos') return 'begin';
+      if (id === 'online-service' || id === 'online-details') return copy(S) ? 'safe' : source(S) ? 'begin' : null;
+      if (id === 'online-signin') { const si = S.sess.signin || {}; if (si.kind && si.kind !== 'forge') return restoring(S) ? rOwner() : null; return copy(S) ? 'safe' : source(S) ? 'begin' : null; }
     } catch (_) {}
     return null;
   }
+  /* a chain that hands back to its owner (Safe's online copy, Name's files place on a NAS): entering it is not the owner's
+     Continue, so a step Review's Edit opened is still that Edit's until the owner's own Continue (60-ui-core go) */
+  const hub = (id, S) => { const w = within(id, S); return w === 'safe' || w === 'name' ? w : null; };
   /* what a picker kept for an answer that no longer applies goes: run on every screen change and on resume */
   const F = () => O55.flow;
   const dropOps = (S, re) => Object.keys(S.sess.ops || {}).forEach((k) => { if (re.test(k)) F().reset(S, k); });
@@ -134,6 +152,14 @@
         }
       }
     }
+    /* the files place on a NAS, and the NAS access behind any answer, describe the current answers as the source does: a
+       files place no longer on the NAS goes, and the access and preflight of a NAS no current answer uses go with it (Astra
+       AST-D6: This computer chosen for the files kept the NAS place and its key) */
+    if (d.storage_mode !== 'network_location' && (d.storage_location || d.storage_transport !== 'mounted')) { O55.draft.set(d, { storage_location: '', storage_transport: 'mounted' }); changed = true; }
+    const nasUsed = b === 'existing:device' || d.storage_mode === 'network_location' || (restoring(S) && place(S) === 'nas') || !!(S.sess.nas && S.sess.nas.purpose === 'dest' && attempt(S));
+    if (!nasUsed && ((d.source_access_authorization_refs || []).some((r) => /^(ssh-key|pairing):/.test(r)) || (d.preflight_result_refs || []).some((r) => /^preflight:(ssh|paired-source):/.test(r)))) {
+      O55.draft.set(d, { source_access_authorization_refs: keepRefs(d.source_access_authorization_refs, /^(ssh-key|pairing):/), preflight_result_refs: keepRefs(d.preflight_result_refs, /^preflight:(ssh|paired-source):/) }); changed = true;
+    }
     if (S.sess.restore && S.sess.restore.scope === 'project' && b !== 'restore') { S.sess.restore = null; changed = true; }
     /* a Project restore whose backup is no longer the one picked (its source or place changed, or the restore was started
        again): the plan's backup, its transport and the backup place the restore suggested go, and Review asks for a pick */
@@ -149,5 +175,5 @@
     if (!copy(S) && !source(S) && S.sess.online && (S.sess.online.forge || S.sess.online.variant)) { S.sess.online.forge = null; S.sess.online.variant = null; S.sess.online.unchosen = true; changed = true; }
     return changed;
   }
-  O55.branch = { applies, within, reconcile, began, copy, source };
+  O55.branch = { applies, within, hub, reconcile, began, copy, source };
 })();

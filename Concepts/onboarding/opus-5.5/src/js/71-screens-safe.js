@@ -137,7 +137,10 @@
       S.sess.forgeAccounts[si.instance_key] = login;
       const d = md(S);
       if (method) d.forge_auth_method = method;
-      O55.draft.set(d, { forge_account_action: action, forge_account_ref: 'account:' + U.slug(si.instance_key) + ':' + U.slug(login) });
+      /* (the same account, already the plan's, keeps how it was connected: walking the sign-in again with nothing
+         changed changes nothing, the lead's generated row 20) */
+      const ref = 'account:' + U.slug(si.instance_key) + ':' + U.slug(login), same = d.forge_account_ref === ref && !!d.forge_account_action;
+      O55.draft.set(d, { forge_account_action: same ? d.forge_account_action : action, forge_account_ref: ref });
       if (method === 'token' && d.forge_instance_profile) d.forge_instance_profile.credential_ref = 'credential:' + U.slug(si.instance_key) + ':token';
       if (OL(S).purpose === 'source') O55.draft.set(d, { source_access_authorization_refs: Array.from(new Set(d.source_access_authorization_refs.concat(['auth:' + U.slug(si.instance_key) + ':' + U.slug(login)]))).slice(0, 16) });
     }
