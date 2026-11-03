@@ -805,11 +805,14 @@
     if (!SCREENS.defs[id]) { console.warn('O55: unknown screen', id); return; }
     const from = SCREENS.defs[S.sess.screen];
     if (from && from.leave) from.leave(S);
-    if (S.sess.ui.openedAt && S.sess.ui.openedAt !== id) delete S.sess.ui.openedAt;
-    if (O55.branch) O55.branch.reconcile(S);
+    /* (a walk on from a step a jump opened carries what it picks there: nothing is reconciled until it reaches a step its
+       answers lead to, Demo Studio's Open at one screen and its click-walk, FO-17) */
+    const walking = !!S.openedAt && S.openedAt === S.sess.screen;
+    if (S.openedAt && S.openedAt !== id) delete S.openedAt;
+    if (O55.branch && !walking) O55.branch.reconcile(S);
     prune();
     if (!opts.replace && S.sess.screen !== id && !opts.noHistory) S.sess.history.push(S.sess.screen);
-    if (opts.noHistory && !opts.fromHistory && O55.branch && !O55.branch.applies(id, S)) S.sess.ui.openedAt = id;
+    if (!opts.fromHistory && O55.branch && !O55.branch.applies(id, S)) S.openedAt = id;
     S.resumedShownOn = null;
     if (S.tip) { S.tip = null; skin('tip', null); }
     stopHover(); hv.want = null; S.pipHover = null; S.pipTyping = null;
@@ -840,11 +843,12 @@
      (canon FO-22: Back visits only steps that remain valid for the current choices, and going on never reinstates an
      abandoned branch, its source or its authorization). Whether a step applies is a pure function of the person's current
      answers, declared per step in 76-branch.js (O55.branch); nothing is recorded at navigation time, so a history from any
-     build, a Review Edit or a jump is judged alike. The one exception is a tool's straight jump (Demo Studio's Open at one
-     screen, a ?o55=screen= link, a check's noHistory jump to a step its answers do not lead to): that step applies while it
-     is the screen on show, never once left, and never to Back or a resumed session. */
+     build, a Review Edit or a jump is judged alike. The one exception is a step reached by a jump forward that its answers
+     do not lead to (Demo Studio's Open at one screen and its click-walk on from there, a ?o55=screen= link, a scenario's
+     direct go): that step applies while it is the screen on show, never once left, and never to Back or a resumed
+     session. */
   function onBranch(id) {
-    if (S.sess && S.sess.ui && S.sess.ui.openedAt === id && S.sess.screen === id) return true;
+    if (S.sess && S.openedAt === id && S.sess.screen === id) return true;
     return !O55.branch || O55.branch.applies(id, S);
   }
   /* a step that does not apply is never shown: what would show it (a history entry, a resumed session, a redraw after its
@@ -857,11 +861,13 @@
     S.sess.screen = to || 'welcome';
   }
 
-  /* the history keeps only the active branch, and no entry for the screen you are on (a resumed screen that gave way) */
+  /* the history keeps only the active branch, as a simple path: a step reached again cuts the path back to it, so Back never
+     repeats a screen nor loops (final-onb FO22-Later: Review > Begin > Review after Later), and holds no entry for the screen
+     on show */
   function prune() {
     const out = [];
-    (S.sess.history || []).forEach((id) => { if (onBranch(id) && out[out.length - 1] !== id) out.push(id); });
-    while (out.length && out[out.length - 1] === S.sess.screen) out.pop();
+    (S.sess.history || []).forEach((id) => { if (!onBranch(id)) return; const at = out.indexOf(id); if (at >= 0) out.length = at + 1; else out.push(id); });
+    const here = out.indexOf(S.sess.screen); if (here >= 0) out.length = here;
     S.sess.history = out;
   }
 
@@ -1163,7 +1169,7 @@
     /* facts the person established earlier (a trusted device, an installed key) are re-applied to the fixture world */
     (O55.onOpen || []).forEach((fn) => { try { fn(S); } catch (_) {} });
     S.sess.status = 'active';
-    if (opts.screen && SCREENS.defs[opts.screen]) { S.sess.screen = opts.screen; S.sess.ui.openedAt = opts.screen; }
+    if (opts.screen && SCREENS.defs[opts.screen]) { S.sess.screen = opts.screen; S.openedAt = opts.screen; } else delete S.openedAt;
     if (!SCREENS.defs[S.sess.screen]) S.sess.screen = 'welcome';
     if (!opts.screen && O55.branch) O55.branch.reconcile(S);
     settleBranch(); prune();
