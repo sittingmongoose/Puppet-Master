@@ -146,7 +146,7 @@
       device(S, v, el) {
         const [id, cfg] = v.split('|'), n = N(S), h = cfg ? S.env.here.sshConfigHosts.find((x) => S.env.devices.find((d) => d.id === id && d.address === x.host)) : null;
         /* another device ends what was started for the one before (its pairing request is cancelled with the owner) */
-        if (n.device !== id) { if (n.pairAsked && !n.paired) O55.nas.endPair(S, 'target_changed'); Object.assign(n, { trusted: false, installed: false, key: null, paired: false, viaPm: false, pairAsked: false, useSsh: false, pairing: null, pairFail: null, user: '', userEdit: false, opKey: null }); delete n.code; }
+        if (n.device !== id) { remember(S); if (n.pairAsked && !n.paired) O55.nas.endPair(S, 'target_changed'); Object.assign(n, { trusted: false, installed: false, key: null, paired: false, viaPm: false, pairAsked: false, useSsh: false, pairing: null, pairFail: null, user: '', userEdit: false, opKey: null, at: undefined, folderLabel: undefined, profile: undefined }); delete n.code; }
         n.device = id; n.fromConfig = !!cfg; if (h) { n.user = h.user; n.key = usableKey(S, h.key) ? h.key : null; }
         S.save(); O55.ui.refresh(); O55.ui.charm(el, dev(S).name, 'server');
       },
@@ -811,7 +811,23 @@
     do: { other(S) { O55.ui.back(); }, use(S) { const v = N(S).volume; finishMounted(S, v, 'mounted:' + v, 'mounted'); } }
   });
 
+  /* Settled facts outside the plan, kept per device apart from the picker's choice (Astra AST-D2): a host the person
+     trusted and keys installed on it stay true when the NAS is given up or another device is chosen, and a resumed
+     session re-applies them without choosing that NAS again */
+  function remember(S) {
+    const n = S.sess.nas, d = n && dev(S); if (!d) return;
+    const all = S.sess.nasFacts = S.sess.nasFacts || {}, r = Object.assign({}, all[d.id]);
+    if (n.trusted && hostId(S)) { r.host = hostId(S); r.hostKey = d.hostKey; }
+    if (n.installed && n.key && sshUser(S)) { r.keys = Array.from(new Set((r.keys || []).concat([sshUser(S) + ':' + n.key]))); if (n.key === 'k-pm') r.kpm = true; }
+    if (r.host || r.keys) all[d.id] = r;
+  }
   O55.onOpen = (O55.onOpen || []).concat([(S) => {
+    Object.entries(S.sess.nasFacts || {}).forEach(([id, r]) => {
+      const d = S.env.devices.find((x) => x.id === id); if (!d) return;
+      if (r.host) knownHosts(S)[r.host] = r.hostKey || d.hostKey;
+      (r.keys || []).forEach((k) => { if (!d.authorized.includes(k)) d.authorized.push(k); });
+      if (r.kpm && !keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
+    });
     const n = S.sess.nas; if (!n || !n.device) return;
     const d = S.env.devices.find((x) => x.id === n.device); if (!d) return;
     if (n.trusted) knownHosts(S)[hostId(S)] = d.hostKey;
@@ -819,5 +835,5 @@
     if (n.key === 'k-pm' && !keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
     if (S.sess.ops && S.sess.ops['sshcheck:' + d.id] && S.sess.ops['sshcheck:' + d.id].state === 'done') d.ssh = true;
   }]);
-  O55.nas = { dev, N, pubLine, entry, transport, endPair };
+  O55.nas = { dev, N, pubLine, entry, transport, endPair, remember };
 })();

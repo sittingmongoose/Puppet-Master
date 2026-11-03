@@ -64,8 +64,8 @@
     /* leaving Creating while its made moment waits for the app (Continue pressed at once): the moment is skipped */
     if (cm && S.settling && S.settling === cm.key && id !== 'creating') { S.settling = null; cm.doneAt = Date.now(); }
     if (rt && !(opts && opts.dir === 'back') && FLOW.includes(id) && FLOW.indexOf(id) > FLOW.indexOf(rt.from) && !O55.draft.missing(md(S)).length) {
-      S.sess.ui.returnTo = null; S.save();
-      return baseGo('review', opts);
+      const path = rt.path, editFrom = rt.from; S.sess.ui.returnTo = null; S.save();
+      return baseGo('review', Array.isArray(path) ? Object.assign({}, opts, { path, editFrom, editThen: id }) : opts);
     }
     return baseGo(id, opts);
   };
@@ -230,7 +230,7 @@
     },
     do: {
       /* (the backup's Edit opens its sheet on Keep your work safe) */
-      edit(S, target) { const to = target === 'backup' ? 'safe' : target; if (target === 'backup') S.sess.ui.sheet = 'backup'; S.sess.ui.returnTo = { screen: 'review', from: to }; S.save(); O55.ui.go(to); },
+      edit(S, target) { const to = target === 'backup' ? 'safe' : target; if (target === 'backup') S.sess.ui.sheet = 'backup'; S.sess.ui.returnTo = { screen: 'review', from: to, path: (S.sess.history || []).slice() }; S.save(); O55.ui.go(to); },
       commit(S) {
         const d = md(S);
         /* a deferred Project: nothing is created, but a new Server's access away from home is prepared now */
@@ -655,7 +655,7 @@
       /* the name field, ready to type into; on GitHub a fresh attempt, so its Continue goes back to Review (RV-12) */
       rename(S) {
         S.sess.ui.focusName = true;
-        if (PR().isGithubRemoteChain(md(S))) { reviewFresh(S, true); S.sess.ui.returnTo = { screen: 'review', from: 'online-details' }; S.save(); return O55.ui.go('online-details'); }
+        if (PR().isGithubRemoteChain(md(S))) { reviewFresh(S, true); S.sess.ui.returnTo = { screen: 'review', from: 'online-details', path: (S.sess.history || []).slice() }; S.save(); return O55.ui.go('online-details'); }
         S.sess.ui.returnTo = null; S.sess.commit.renaming = true; S.save(); O55.ui.go('online-details');
       },
       askSkip(S) { if (S.sess.commit.recovery) return; S.sess.commit.confirmSkip = true; S.save(); O55.ui.refresh(); },
