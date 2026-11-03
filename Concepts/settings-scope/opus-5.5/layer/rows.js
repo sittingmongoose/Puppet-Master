@@ -33,6 +33,8 @@
     const fromName = r.from.level === 'project' ? 'This project' : r.from.level === 'computer' ? placeName('computer', r.from.key) : r.from.level === 'device' ? placeName('device', r.from.key) : '';
     if (def.home === 'computer') {
       out.word = placeName('computer', c.host || c.on); out.here = true;
+      // "Show where each setting comes from" On: a found value says where it was found (2.5)
+      if (S.scopeLabels && r.from.level !== 'computer') out.word = `Found on ${out.word}`;
       out.aria = r.from.level === 'computer' ? `set for ${out.word}` : `found automatically on ${out.word}`;
       out.mark2 = r.from.level === 'computer' ? `Set for ${out.word}` : '';
       out.sentence = r.missing ? `${def.program || 'It'} isn’t installed on ${out.word}` : r.from.level === 'computer' ? `Set for ${out.word} · each computer has its own` : `Found automatically on ${out.word}`;
@@ -52,10 +54,17 @@
       out.sentence = `Set for ${r.from.level === 'project' ? c.project : fromName} · everywhere else ${vt(id, elsewhere)}`;
       return out;
     }
+    const owners = r.owners || [];
+    if (!own.length && owners.length) {
+      // an AI service's own value decides for that service's work (MA-073): the row's value is the shared one
+      out.word = 'Each AI service'; out.aria = `the shared value is the same everywhere; ${list(owners.map((o) => placeName('provider', o.key)))} ${owners.length === 1 ? 'has its' : 'have their'} own`;
+      out.mark2 = 'Each AI service'; out.sentence = `${list(owners.map((o) => `${placeName('provider', o.key)} uses its own ${vt(id, o.value)}`))}`;
+      return out;
+    }
     if (own.length) {
-      out.word = 'Varies'; out.aria = `from ${r.from.level === 'everywhere' ? 'everywhere' : 'the default'}, and different in ${own.length} ${own.length === 1 ? 'place' : 'places'}`;
+      out.word = 'Varies'; out.aria = `from ${r.from.level === 'everywhere' ? 'everywhere' : 'the default'}, and different in ${own.length + owners.length} ${own.length + owners.length === 1 ? 'place' : 'places'}`;
       out.mark2 = 'Varies';
-      const names = own.map((v) => (v.level === 'project' ? v.key : placeName(v.level, v.key)));
+      const names = own.map((v) => (v.level === 'project' ? v.key : placeName(v.level, v.key))).concat(owners.map((o) => placeName('provider', o.key)));
       out.sentence = own.length <= 2 ? `Different in ${list(names)}` : `Different in ${own.length} places`;
       return out;
     }
@@ -77,6 +86,7 @@
       else out.push({ key: 'offline', text: `May differ ${s.level === 'project' ? 'in ' + s.key : 'on ' + placeName('computer', s.key)} · ${wr} isn’t answering` });
     }
     if (r.missing) out.push({ key: 'off', text: `${DEF[id].program || 'It'} isn’t installed on ${placeName('computer', c.on)}` });
+    if (r.owners && r.owners.length && r.from.level !== 'provider') r.owners.forEach((o) => out.push({ key: 'info', text: `${placeName('provider', o.key)} uses its own: ${vt(id, o.value)}` }));
     return out;
   }
 
@@ -86,7 +96,13 @@
     const id = btn.getAttribute('data-setting'); if (!id) return;
     const row = rowOf(btn); if (!row) return;
     const kind = row.classList.contains('o55-field') ? 'field' : row.classList.contains('o55-scoped') ? 'scoped' : 'row';
-    if (kind === 'field' && row.classList.contains('o55-policy-field')) return;   // provider fields keep Own and Shared
+    // provider policy fields keep their own Own and Shared; their "?" becomes the word Details, never an icon alone
+    if (kind === 'field' && row.classList.contains('o55-policy-field')) {
+      if (!btn.__psxOrig) btn.__psxOrig = { html: btn.innerHTML, aria: btn.getAttribute('aria-label') || '', hover: btn.getAttribute('data-pm-hover-label') || '', detail: btn.getAttribute('data-pm-hover-detail') || '' };
+      const want = S.opt.end === 'today' ? btn.__psxOrig.html : `<span class="psx-end-word">Details</span>${CHEV}`;
+      if (btn.innerHTML !== want) { btn.innerHTML = want; btn.classList.toggle('psx-end', S.opt.end !== 'today'); btn.classList.toggle('is-quiet', S.opt.end !== 'today'); if (S.opt.end !== 'today') btn.setAttribute('aria-label', `${(btn.__psxOrig.aria || '').replace(/^About /, '')}: details. Open what it does.`); }
+      return;
+    }
     if (!btn.__psxOrig) btn.__psxOrig = { html: btn.innerHTML, aria: btn.getAttribute('aria-label') || '', hover: btn.getAttribute('data-pm-hover-label') || '', detail: btn.getAttribute('data-pm-hover-detail') || '' };
     const opt = S.opt.end;
     const demo = !!DEF[id];
@@ -164,7 +180,7 @@
     // FileSafe off for one project carries the risk word on that row (4.4)
     if (id === 'safety.protection.filesafe-integration') {
       const r = PSX.resolve(id, S.ctx);
-      if (r.value === false && !lab.querySelector('.psx-risk')) lab.insertAdjacentHTML('beforeend', `<span class="o55-risk psx-risk" data-o55-foreign>${icon('alert')}<span>${r.from.level === 'project' ? 'Off for this project' : 'Off'}</span></span>`);
+      if (r.value === false && !lab.querySelector('.psx-risk')) lab.insertAdjacentHTML('beforeend', `<span class="o55-risk psx-risk" data-o55-foreign>${mark('warning')}<span>${r.from.level === 'project' ? 'Off for this project' : 'Off'}</span></span>`);
     }
   }
   function drawLines(row, id, ln) {
@@ -205,15 +221,18 @@
   /* ------------------------------------------------------------------ the Settings head line (7.7) */
   function headLine() {
     const bar = D.querySelector('#pm-settings-root .document-toolbar'); if (!bar) return;
-    const c = PSX.ctxFull(S.ctx), dev = PSX.DEVICES[c.device];
-    const youre = c.device === 'here' ? 'This computer' : dev.name;
+    const c = PSX.ctxFull(S.ctx), dev = PSX.DEVICES[S.actor] || PSX.DEVICES.here;
+    const youre = S.actor === 'here' ? 'This computer' : dev.name;
     const proj = c.project ? c.project : 'No project';
+    const home = PSX.home(), hn = PSX.homeName();
     const lines2 = [];
-    if (!PSX.answering('homenas')) lines2.push(`<div class="psx-head-line" data-k="offline">${mark('offline')}<span>Can’t reach Home NAS, which keeps your settings. You’re seeing them as of ${esc(PSX.W.asOf)}.</span></div>`);
+    // the settings home, whichever computer it is (7.2); a project's work computer that isn't answering is the row's line
+    if (!PSX.answering(home)) lines2.push(`<div class="psx-head-line" data-k="offline">${mark('offline')}<span>Can’t reach ${esc(hn)}, which keeps your settings. You’re seeing them as of ${esc(PSX.W.asOf)}.</span></div>`);
     if (S.firstStart) lines2.push(`<div class="psx-head-line" data-k="first">${mark('info')}<span>Set up Puppet Master on this computer first. Until then nothing is kept, so Settings is a preview in Basic Dark.</span></div>`);
     else if (!c.project) lines2.push(`<div class="psx-head-line" data-k="none">${mark('info')}<span>No project is open. Changes here apply everywhere or on this computer.</span></div>`);
-    if (S.viewAs || c.view) lines2.push(`<div class="psx-head-line" data-k="view">${mark('info')}<span>You’re changing settings as ${esc(c.project || 'No project')} on ${esc(placeName('computer', c.on))}.</span><button type="button" class="psx-tb" data-psx-head="mine">Back to my view</button></div>`);
+    if (S.viewAs || c.view || c.device !== S.actor) lines2.push(`<div class="psx-head-line" data-k="view">${mark('info')}<span>You’re changing settings as ${esc(c.project || 'No project')} on ${esc(placeName('computer', c.on))}${c.device !== S.actor ? `, with ${esc(placeName('device', c.device))}’s screen` : ''}.</span><button type="button" class="psx-tb" data-psx-head="mine">Back to my view</button></div>`);
     if (dev && dev.limited) lines2.push(`<div class="psx-head-line" data-k="limited">${mark('info')}<span>${esc(PSX.REASONS.limited_device[0])}</span></div>`);
+    if (S.runMode === 'yolo') lines2.push(`<div class="psx-head-line" data-k="yolo">${mark('info')}<span>YOLO: changes don’t wait for a yes. Each one is reported, with Undo; the guards YOLO never skips still ask.</span></div>`);
     const html = `<div class="psx-head-main"><span class="psx-head-ctx"><b>${esc(proj)}</b><span aria-hidden="true">·</span><span>works on ${esc(placeName('computer', c.on))}</span><span aria-hidden="true">·</span><span>you’re on ${esc(youre)}</span></span><button type="button" class="psx-tb psx-head-btn" data-psx-head="view" aria-haspopup="menu">Change view${CHEV}</button></div>${lines2.join('')}`;
     let el = bar.querySelector(':scope > .psx-head');
     // the page's own actions (the project button, Page options) sit over the toolbar's right end: keep the line clear of them
@@ -228,13 +247,16 @@
   function viewMenu(anchor) {
     const c = PSX.ctxFull(S.ctx);
     const projects = PSX.PROJECTS.map((p) => ({ label: p.id, meta: `works on ${placeName('computer', p.home)}`, run: () => { S.viewAs = p.id !== 'tastebook'; PSX.setCtx({ project: p.id, on: null }); } }));
-    const comps = Object.keys(PSX.COMPUTERS).map((k) => ({ label: PSX.COMPUTERS[k].name, meta: c.project ? `${c.project} as if it worked there` : 'chats with no project', disabled: PSX.W.up[k] === false ? `${PSX.COMPUTERS[k].name} isn’t answering` : null, run: () => { S.viewAs = true; PSX.setCtx({ on: k }); } }));
-    const devs = Object.keys(PSX.DEVICES).map((k) => ({ label: PSX.DEVICES[k].name, meta: PSX.DEVICES[k].limited ? 'its own screen settings only' : 'its screen settings', run: () => PSX.setCtx({ device: k }) }));
+    const comps = PSX.computerIds().map((k) => ({ label: PSX.COMPUTERS[k].name, meta: c.project ? `${c.project} as if it worked there` : 'chats with no project', disabled: PSX.W.up[k] === false ? `${PSX.COMPUTERS[k].name} isn’t answering` : null, run: () => { S.viewAs = true; PSX.setCtx({ on: k }); } }));
+    // viewing another device's screen values never gives that device's rights: you stay on the device you're using
+    const devs = Object.keys(PSX.DEVICES).map((k) => ({ label: PSX.DEVICES[k].name, meta: k === S.actor ? 'the one you’re using' : 'see its screen settings', run: () => PSX.setCtx({ device: k }) }));
     PSX.menu(anchor, [
       { label: 'Another project', items: projects },
       { label: 'Another computer', items: comps },
       { label: 'Another device', items: devs },
-      { label: 'No project', items: [{ label: 'No project', meta: 'chats with no project', run: () => { S.viewAs = false; PSX.setCtx({ project: 'none', on: null }); } }] }
+      { label: 'No project', items: [{ label: 'No project', meta: 'chats with no project', run: () => { S.viewAs = false; PSX.setCtx({ project: 'none', on: null }); } }] },
+      // one place to see every difference (3.6), from any page
+      { label: 'Everything at once', items: [{ label: 'All the differences…', meta: 'every project’s and computer’s own values', run: () => { if (PSX.moments) PSX.moments.differences(); } }] }
     ], { label: 'Change view', search: true, width: 300 });
   }
 
@@ -271,7 +293,7 @@
       if (btn && btn.classList.contains('psx-more')) { e.preventDefault(); e.stopImmediatePropagation(); rowMenu(btn); return; }
       if (btn && btn.hasAttribute('data-psx-own-panel')) { e.preventDefault(); e.stopImmediatePropagation(); openPanel(btn); return; }
       const head = e.target.closest && e.target.closest('[data-psx-head]');
-      if (head) { e.preventDefault(); e.stopImmediatePropagation(); if (head.dataset.psxHead === 'view') viewMenu(head); else { S.viewAs = false; PSX.setCtx({ project: 'tastebook', on: null, device: 'here' }); } return; }
+      if (head) { e.preventDefault(); e.stopImmediatePropagation(); if (head.dataset.psxHead === 'view') viewMenu(head); else if (head.dataset.psxHead === 'diff') { if (PSX.moments) PSX.moments.differences(); } else { S.viewAs = false; PSX.setCtx({ project: 'tastebook', on: null, device: S.actor }); } return; }
       // the setting's name opens its panel too (a bigger target, S5 A)
       const lab = e.target.closest && e.target.closest('#pm-settings-root .setting-row.o55-row .setting-label');
       if (lab && S.opt.end !== 'today' && !e.target.closest('.o55-changed, .psx-mark2, .o55-risk, a, button, input, select')) {
@@ -303,9 +325,37 @@
     D.addEventListener('click', (e) => {
       const b = e.target.closest && e.target.closest('[data-psx-browse]'); if (!b) return;
       e.preventDefault(); e.stopImmediatePropagation();
-      PSX.note({ title: 'Choose a folder', body: 'In the app this opens a folder picker on the computer that keeps the folder.', mark: 'info' });
+      PSX.note({ title: 'Choose a folder', body: `The folder picker opens for ${placeName('computer', PSX.ctxFull(S.ctx).on)}, the computer that keeps the folder.`, mark: 'info' });
     }, true);
   }
+
+  /* ------------------------------------------------------------------ plain words over the engine's furniture
+     Where PMConcept7 says "server" for the computer Puppet Master works on, the concept says Computer (decision S1); an
+     MCP server and a language server keep their protocol names. The stand-in id psx-none never shows. Text nodes only,
+     so the engine's own patcher and the layer's observers are not woken */
+  const GLOBAL_WORDS = [
+    [/^Server & Project Location$/, 'Computers & Project Location'],
+    [/your server and project location/, 'your computers and project location'],
+    [/^Claude Code on your server$/, 'Claude Code on your computer'],
+    [/^Wait for a server this long$/, 'Wait for an MCP server this long'],
+    [/psx-none/g, 'No project']
+  ];
+  function plainWords(rootEl) {
+    const fix = (root, rules) => {
+      if (!root) return;
+      const tw = D.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n;
+      while ((n = tw.nextNode())) {
+        if (n.parentElement && n.parentElement.closest('[data-psx-block="tech"], code, .o55-insp-tech')) continue;
+        let v = n.data; rules.forEach(([re, to]) => { v = v.replace(re, to); });
+        if (v !== n.data) n.data = v;
+      }
+    };
+    fix(rootEl, GLOBAL_WORDS);
+    // the Servers manager is about the computers themselves: every "server" there is one
+    rootEl.querySelectorAll('.manager-page[data-pm51-manager="servers"] .manager-head, .manager-page[data-pm51-manager="servers"] .manager-scroll').forEach((m) => fix(m, [[/\bServers\b/g, 'Computers'], [/\bservers\b/g, 'computers'], [/\bServer\b/g, 'Computer'], [/\bserver\b/g, 'computer']]));
+    rootEl.querySelectorAll('[data-workspace="servers"], [data-nav-workspace="servers"]').forEach((m) => fix(m, [[/\bServers\b/g, 'Computers'], [/\bServer\b/g, 'Computer']]));
+  }
+  PSX.plainWords = () => plainWords(PSX.root());
 
   /* ------------------------------------------------------------------ decorate everything (rAF-batched) */
   let raf = 0;
@@ -318,6 +368,7 @@
     H.setAttribute('data-psx-changed', S.opt.changed);
     if (W.PM_PAGES && W.PM_PAGES.current === 'settings') { placeFolderRow(); headLine(); }
     rootEl.querySelectorAll('.o55-about').forEach((b) => { try { decorateButton(b); } catch (e) { console.error('[psx rows]', e); } });
+    try { plainWords(rootEl); } catch (e) { console.error('[psx words]', e); }
     if (PSX.managers) try { PSX.managers.decorate(); } catch (e) { console.error('[psx managers]', e); }
   }
   const soon = () => { if (!raf) raf = requestAnimationFrame(decorate); };

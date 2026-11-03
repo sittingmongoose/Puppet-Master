@@ -8,9 +8,13 @@
 <style>
   html, body { margin: 0; height: 100%; background: #101012; overflow: hidden; font: 500 12px/1.2 Inter, system-ui, sans-serif; color: #e6e6ea; }
   :root { --dock-h: 124px; }
+  body.pc-compare { --dock-h: 162px; }
   /* the review strip sits under PMConcept7, so the page being judged keeps the whole window above it */
   .pc-dock { position: fixed; inset: auto 0 0 0; height: var(--dock-h); box-sizing: border-box; display: grid; grid-template-rows: 40px 38px 1fr;
     background: #18181b; border-top: 1px solid #2a2a30; z-index: 3; }
+  body.pc-compare .pc-dock { grid-template-rows: 40px 38px 38px 1fr; }
+  .pc-bar[hidden] { display: none; }
+  .pc-btn[aria-expanded="true"] { background: #e6e6ea !important; color: #111; }
   .pc-bar { display: flex; align-items: center; gap: 8px; padding: 0 12px; white-space: nowrap; overflow-x: auto; scrollbar-width: none; }
   .pc-bar + .pc-bar { border-top: 1px solid #222228; }
   .pc-bar b { font-weight: 650; }
@@ -41,9 +45,45 @@
 <div class="pc-stage"><iframe id="pm7" title="PMConcept7 with the settings everywhere concept" src="../../PMConcept7.html?o55=off"></iframe></div>
 <div class="pc-wait" id="wait">Loading PMConcept7…</div>
 <div class="pc-dock">
-  <div class="pc-bar" role="toolbar" aria-label="How the rows show it">
+  <div class="pc-bar" role="toolbar" aria-label="The review">
     <b>Settings everywhere</b><span class="pc-model" data-concept-model="Opus 5.5">Opus 5.5</span>
     <span class="pc-sep" aria-hidden="true"></span>
+    <span class="pc-lab">Run mode</span>
+    <div class="pc-seg" id="runmode" role="group" aria-label="Run mode">
+      <button type="button" data-v="regular" aria-pressed="true">Regular</button>
+      <button type="button" data-v="yolo" aria-pressed="false">YOLO</button>
+    </div>
+    <span class="pc-sep" aria-hidden="true"></span>
+    <select id="moment" aria-label="Moments">
+      <option value="">Moments…</option>
+      <option value="11.1">11.1 Home NAS isn’t answering</option>
+      <option value="11.2">11.2 A conflict</option>
+      <option value="11.3">11.3 Everywhere, then only for tastebook</option>
+      <option value="11.4">11.4 An everywhere change a project refuses</option>
+      <option value="11.5">11.5 Move where your settings are kept</option>
+      <option value="11.5-flight">11.5 … while a change is on its way</option>
+      <option value="11.5-lost">11.5 … Home NAS is gone for good</option>
+      <option value="11.6">11.6 Two setups joining</option>
+      <option value="11.7">11.7 A new computer joins</option>
+      <option value="11.8">11.8 No project</option>
+      <option value="11.9">11.9 A project with its own look</option>
+      <option value="11.10">11.10 The assistant changes a setting</option>
+      <option value="11.11">11.11 A device with limited access</option>
+      <option value="11.12">11.12 An update changed defaults</option>
+      <option value="11.13">11.13 Rules a project brings</option>
+      <option value="11.14">11.14 Settings now apply everywhere</option>
+      <option value="11.15">11.15 First start</option>
+      <option value="11.16">11.16 Filters and the Differences view</option>
+      <option value="11.17">11.17 A batch that can’t finish</option>
+      <option value="11.18">11.18 What asks you: Always allow, push, publish</option>
+      <option value="copy">Copy settings, in Settings</option>
+      <option value="copy-new">Copy settings, in New Project</option>
+    </select>
+    <button type="button" class="pc-btn" id="reset">Reset demo</button>
+    <span class="pc-sep" aria-hidden="true"></span>
+    <button type="button" class="pc-btn" id="compareopts" aria-expanded="false" aria-controls="comparebar">Compare options</button>
+  </div>
+  <div class="pc-bar" id="comparebar" role="toolbar" aria-label="How the rows show it: the options compared" hidden>
     <span class="pc-lab">End of the row</span>
     <div class="pc-seg" id="end" role="group" aria-label="End of the row">
       <button type="button" data-v="origin" aria-pressed="true">A · Origin word<kbd>1</kbd></button>
@@ -60,30 +100,8 @@
       <button type="button" data-v="today" aria-pressed="false">Today</button>
     </div>
     <span class="pc-sep" aria-hidden="true"></span>
-    <button type="button" class="pc-btn" id="compare">Compare<kbd style="font:600 10px/1 ui-monospace,monospace;opacity:.55;margin-left:4px">C</kbd></button>
-    <select id="moment" aria-label="Moments">
-      <option value="">Moments…</option>
-      <option value="11.1">11.1 Home NAS isn’t answering</option>
-      <option value="11.2">11.2 A conflict</option>
-      <option value="11.3">11.3 Everywhere, then only for tastebook</option>
-      <option value="11.4">11.4 An everywhere change a project refuses</option>
-      <option value="11.5">11.5 Move where your settings are kept</option>
-      <option value="11.6">11.6 Two setups joining</option>
-      <option value="11.7">11.7 A new computer joins</option>
-      <option value="11.8">11.8 No project</option>
-      <option value="11.9">11.9 A project with its own look</option>
-      <option value="11.10">11.10 The assistant changes a setting</option>
-      <option value="11.11">11.11 A device with limited access</option>
-      <option value="11.12">11.12 An update changed defaults</option>
-      <option value="11.13">11.13 Rules a project brings</option>
-      <option value="11.14">11.14 Settings now apply everywhere</option>
-      <option value="11.15">11.15 First start</option>
-      <option value="11.16">11.16 Filters and the Differences view</option>
-      <option value="11.17">11.17 A batch that can’t finish</option>
-      <option value="copy">Copy settings, in Settings</option>
-      <option value="copy-new">Copy settings, in New Project</option>
-    </select>
-    <button type="button" class="pc-btn" id="reset">Reset demo</button>
+    <button type="button" class="pc-btn" id="compare">Compare board<kbd style="font:600 10px/1 ui-monospace,monospace;opacity:.55;margin-left:4px">C</kbd></button>
+    <button type="button" class="pc-btn" id="decided">Back to the decided design</button>
   </div>
   <div class="pc-bar" role="toolbar" aria-label="Whose settings, and how the page looks">
     <span class="pc-lab">Project</span>
@@ -103,6 +121,10 @@
     </select>
     <span class="pc-lab">Home NAS</span>
     <select id="homenas" aria-label="Home NAS">
+      <option value="up">Answering</option><option value="down">Not answering</option>
+    </select>
+    <span class="pc-lab">Studio Mac</span>
+    <select id="studio" aria-label="Studio Mac">
       <option value="up">Answering</option><option value="down">Not answering</option>
     </select>
     <span class="pc-sep" aria-hidden="true"></span>
@@ -130,7 +152,7 @@
   const frame = document.getElementById('pm7');
   const base = new URL('./', location.href);
   const STEPS = [
-    ['css', 'layer/core.css'], ['js', 'layer/world.js'], ['js', 'layer/resolve.js'], ['js', 'layer/feed.js'],
+    ['css', 'layer/core.css'], ['js', 'layer/world.js'], ['js', 'layer/resolve.js'], ['js', 'layer/guard.js'], ['js', 'layer/feed.js'],
     ['css', 'layer/rows.css'], ['js', 'layer/rows.js'],
     ['css', 'layer/panel.css'], ['js', 'layer/panel.js'],
     ['js', 'layer/managers.js'], ['js', 'layer/copy.js'], ['js', 'layer/moments.js'], ['js', 'layer/board.js'],
@@ -140,14 +162,14 @@
   /* the strip's notes: what each option and moment shows, which proposal section it is, and what is NEW CANON.
      Every value in the demo is an example ([Demo only]); the notes say so, the design never does. */
   const END = {
-    origin: '<b>End of the row · A, origin word (S5 A, recommended).</b> Where the “?” was, a quiet word names where the value comes from: <b>This project</b>, <b>Home NAS</b>, <b>Varies</b>, or <b>Details</b> when nothing differs. The setting’s name opens the panel too; right-click any row for the More menu. NEW CANON: the ladder and the end word (SETTINGS-PROPOSAL 2.3, 2.4).',
+    origin: '<b>End of the row · A, origin word (S5 A, decided by Jared 2026-11-03).</b> Where the “?” was, a quiet word names where the value comes from: <b>This project</b>, <b>Home NAS</b>, <b>Varies</b>, or <b>Details</b> when nothing differs. The setting’s name opens the panel too; right-click any row for the More menu. NEW CANON: the ladder and the end word (SETTINGS-PROPOSAL 2.3, 2.4).',
     mark: '<b>End of the row · B, second mark.</b> “Details” at the end of every row; after the title, the info mark and “Set for this project” or “Varies”. Weak: two marks crowd a short title at narrow widths (SETTINGS-PROPOSAL 2.3).',
     line: '<b>End of the row · C, sentence line.</b> “Details” at the end; under the description, a sentence such as “Different in docs-site”. Weak: one more line on every row that differs (SETTINGS-PROPOSAL 2.3).',
     more: '<b>End of the row · D, More menu.</b> Jared’s “…” with its word visible, opening a labelled menu: Where it applies…, Set for this project, Set for This computer, Go back to the default, Copy setting name. Weak: it hides the state until opened (SETTINGS-PROPOSAL 2.4 C).',
     today: '<b>Today.</b> PMConcept7’s round “?” untouched, for comparison: icon only, no word, nothing about where a value comes from.'
   };
   const CHANGED = {
-    outline: ' <b>Changed · A, word and outline (S6 A).</b> “Changed” at 11.5px and a 1px outline around the control itself, never a side bar.',
+    outline: ' <b>Changed · A, word and outline (S6 A, decided).</b> “Changed” at 11.5px and a 1px outline around the control itself, never a side bar.',
     word: ' <b>Changed · B, word only.</b> Today’s mark made readable at 11.5px.',
     frame: ' <b>Changed · C, framed row.</b> A hairline on all four sides of the row and a faint tint.',
     today: ' <b>Changed · Today.</b> The 10.5px word, under the 11px floor.'
@@ -157,23 +179,30 @@
     '11.2': '<b>11.2 A conflict.</b> Change Text size here while a change from Studio Mac lands first: the conflict card with the change-conflict mark, Keep or Use. NEW CANON wording over SSYS-009’s compare-and-set (7.6).',
     '11.3': '<b>11.3 Change it everywhere, then only for tastebook.</b> Follow the steps: a row that comes from tastebook’s own writes tastebook; a row from everywhere writes everywhere and the note offers <b>Only for tastebook</b>. NEW CANON (3.2, decision S4).',
     '11.4': '<b>11.4 An everywhere change a project refuses.</b> Switch when this much is left, set everywhere to 15%: harbor’s Codex account would switch at once, so it is refused before commit, with <b>Change it everywhere except harbor</b>. NEW CANON generalising MA-073’s crossing check (1.7). <em>Example</em>: harbor’s account has 12% left.',
-    '11.5': '<b>11.5 Move where your settings are kept.</b> cmd.server.settings_home.move: the preview, refused while a change is in flight, and the lost-for-good variant with its freshness line. NEW CANON (7.2, SRV-016).',
-    '11.6': '<b>11.6 Two setups joining.</b> Studio Mac was set up on its own: one sheet lists the 9 differences with a choice per line, applied as one batch with Undo. NEW CANON (7.8, decision S12). <em>Example</em> values.',
-    '11.7': '<b>11.7 A new computer joins.</b> The Add a server recap for “Office PC”: it follows your settings from now on; programs and folders are found on it (7.7).',
+    '11.5': '<b>11.5 Move where your settings are kept.</b> cmd.server.settings_home.move (proposed SRV-016): the preview, then every surface names the new home (the head line, Computers, For experts). The two variants below: refused while a change is on its way, and Home NAS gone for good with its freshness line. An owner choice: YOLO still asks. NEW CANON (7.2).',
+    '11.5-flight': '<b>11.5, a change on its way.</b> A change from iPhone is still travelling to Home NAS, so Move is refused until it has been saved (7.2).',
+    '11.5-lost': '<b>11.5, Home NAS gone for good.</b> Home NAS isn’t answering; another computer keeps your settings from its own copy, with the freshness line. NEW CANON (7.2).',
+    '11.6': '<b>11.6 Two setups joining.</b> Studio Mac was set up on its own: choose which computer keeps your settings (it becomes the settings home), then a choice per difference, applied as one batch with Undo; what isn’t kept stays in History. In YOLO the keeper is still your choice; the merge then needs no second yes. NEW CANON (7.8, S12). <em>Example</em> values.',
+    '11.7': '<b>11.7 A new computer joins.</b> The recap for “Office PC”: Done adds it to your computers (it shows in every panel), and Start like This computer brings This computer’s own limits. Pairing and identity are yours in both run modes (7.7).',
     '11.8': '<b>11.8 No project.</b> Settings with no project open: your own look, writes go everywhere or to this computer, project-only rows read “Each project”, and a project’s own value is still changeable by name in a panel. NEW CANON (section 6). Concept mechanic: the engine needs a project to accept writes, so the layer uses a hidden stand-in; the product never uses a stand-in project id.',
     '11.9': '<b>11.9 A project with its own look.</b> tastebook’s own Retro Dark and Studio Mac’s own Basic Light: switch Project between tastebook and harbor and You’re using between This computer and Studio Mac; the look follows the resolver (the pair as one, project beats device). NEW CANON (1.3). <em>Example</em> looks.',
-    '11.10': '<b>11.10 The assistant changes a setting.</b> In loom the assistant writes the narrowest place (loom); changing Everyday model everywhere needs your yes in a card that names how many projects it changes. NEW CANON (7.9, decision S13).',
-    '11.11': '<b>11.11 A device with limited access.</b> You’re using Sam’s iPad, a Member’s device: every everywhere, computer and project line is read-only; its own Text size still changes. NEW CANON access scope settings.everywhere.write (7.10).',
+    '11.10': '<b>11.10 The assistant changes a setting.</b> In loom the assistant writes the narrowest place (loom). Regular: changing Everyday model everywhere needs your yes in a card that names how many projects it changes (S13). YOLO: the same preview becomes the report, the change is made without the card, with Undo. NEW CANON (7.9).',
+    '11.11': '<b>11.11 A device with limited access.</b> You’re using Sam’s iPad, a Member’s device: only its own screen values change; every other line, the managers, Copy and Undo refuse, and Change view never lends another device’s rights. NEW CANON access scope settings.everywhere.write (7.10).',
     '11.12': '<b>11.12 An update changed defaults.</b> One note on Settings Home, with <b>Keep the old ones</b> (written as your everywhere values, source migrated). NEW CANON (7.11). <em>Example</em> defaults.',
-    '11.13': '<b>11.13 Rules a project brings.</b> A forked project brings its own rules; anything looser than yours is held until you accept it. NEW CANON PS-144 (4.4, decision S15). <em>Example</em> rules.',
-    '11.14': '<b>11.14 Settings now apply everywhere.</b> The fold as a concept moment: a value is promoted to everywhere only where every project already agrees; nothing you use changes (section 8).',
-    '11.15': '<b>11.15 First start.</b> Before any computer is set up there is nowhere to keep anything: the ephemeral Basic Dark Settings, every change refused with one sentence (SSYS-002’s ephemeral context, kept).',
-    '11.16': '<b>11.16 Filters and the Differences view.</b> Changed, Set here, Varies, Per computer and Per project with counts, and every difference grouped by project or by computer, with bulk actions. NEW CANON (3.6).',
-    '11.17': '<b>11.17 A batch that can’t finish.</b> Studio Mac is off; copying tastebook’s settings into five projects finishes four and says why the fifth wasn’t changed. Nothing is queued; History offers <b>Finish lighting-rig</b> when Studio Mac answers. NEW CANON (5.6).',
+    '11.13': '<b>11.13 Rules a project brings.</b> A forked project brings its own rules; anything looser than yours is held until you accept it, in YOLO too (a trust choice). The choice is kept, with Undo. NEW CANON PS-144 (4.4, S15). <em>Example</em> rules.',
+    '11.14': '<b>11.14 Settings now apply everywhere.</b> The fold as a concept moment: a value is promoted to everywhere only where every project already agrees; the look suggestion is a real everywhere change with Undo (section 8).',
+    '11.15': '<b>11.15 First start.</b> Before any computer is set up there is nowhere to keep anything: the ephemeral Basic Dark Settings, every control unavailable and every write (row, panel, copy, managers) refused with one sentence (SSYS-002’s ephemeral context, kept).',
+    '11.16': '<b>11.16 Filters and the Differences view.</b> Changed, Set here, Varies, Per computer and Per project filter the list; group by project or computer; bulk actions refuse two values for one setting, keep project-only rows, and keep a careful safety value. Also from any page: Change view › All the differences. NEW CANON (3.6).',
+    '11.17': '<b>11.17 A batch that can’t finish.</b> Studio Mac is off; copying tastebook’s settings into five projects finishes four and says why the fifth wasn’t changed. Nothing is queued. Set Studio Mac to Answering above; History’s <b>Finish lighting-rig</b> brings the values the batch copied, and the batch’s Undo all of it then undoes every part. NEW CANON (5.6).',
+    '11.18': '<b>11.18 What asks you.</b> One run in loom’s chat. Regular: each step asks; <b>Always allow</b> offers This project, This computer or Everywhere, never chosen for you and never Everywhere for a path (S16). YOLO: the test, the <b>git push</b> and the <b>publish</b> run without asking (Jared, 2026-11-03) and are reported; a path outside the project and a deletion on the remote still ask; no Always rule is made.',
     copy: '<b>Copy settings, in Settings.</b> Settings Transfer › Copy settings from another project: what makes it different, its own things and its AI accounts, with Advanced to pick one by one. NEW CANON (5.1 to 5.6, decisions S9 to S11). <em>Example</em> counts.',
-    'copy-new': '<b>Copy settings, in New Project.</b> The same sheet as Split v2’s “Start like another Project?” for a new project, recipe-box, that will work on Home NAS: the AI account rows say what each needs there. NEW CANON (5.2, 5.4).'
+    'copy-new': '<b>Copy settings, in New Project.</b> The same sheet as Split v2’s “Start like another Project?” for a new project, recipe-box, that will work on Home NAS. It starts on Your usual settings; this moment picks Like tastebook for you, to show Advanced. The AI account rows say what each needs there. NEW CANON (5.2, 5.4).'
   };
-  const UI = { end: 'origin', changed: 'outline', moment: '' };
+  const RUN = {
+    regular: ' <b>Run mode · Regular.</b> Every yes-point asks.',
+    yolo: ' <b>Run mode · YOLO</b> (the run mode <code>yolo</code>, never the Full profile). An ordinary yes is skipped: the preview is shown as the report after the change, with Undo. Still asked: FileSafe off, a looser rule from someone else’s repository, which computer keeps your settings, pairing, sign-ins, a path outside the project, a deletion on the remote. Still refused: a project that can’t take a change, a computer that isn’t answering, a Member’s device.'
+  };
+  const UI = { end: 'origin', changed: 'outline', moment: '', run: 'regular', compare: false };
   const $ = (id) => document.getElementById(id);
   let live = false;
 
@@ -181,7 +210,10 @@
   function paintBar() {
     document.querySelectorAll('#end button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === UI.end)));
     document.querySelectorAll('#changed button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === UI.changed)));
-    $('note').innerHTML = UI.moment && MOMENT[UI.moment] ? MOMENT[UI.moment] : END[UI.end] + CHANGED[UI.changed] + ' <em>Every value shown is an example.</em>';
+    document.querySelectorAll('#runmode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === UI.run)));
+    $('compareopts').setAttribute('aria-expanded', String(UI.compare));
+    $('comparebar').hidden = !UI.compare; document.body.classList.toggle('pc-compare', UI.compare);
+    $('note').innerHTML = (UI.moment && MOMENT[UI.moment] ? MOMENT[UI.moment] : (UI.compare ? END[UI.end] + CHANGED[UI.changed] : '<b>The decided design:</b> end of the row A, the origin word; Changed A, the word and a 1px outline (Jared, 2026-11-03). Compare options shows the others.')) + (UI.run === 'yolo' ? RUN.yolo : '') + ' <em>Every value shown is an example.</em>';
   }
 
   /* PMConcept7 keeps each project's Settings in localStorage; the concept feeds its own values and the engine saves
@@ -194,7 +226,9 @@
   window.addEventListener('pagehide', () => {
     try {
       KEYS.forEach((k) => { if (SNAP[k] === null) localStorage.removeItem(k); else if (SNAP[k] !== undefined) localStorage.setItem(k, SNAP[k]); });
-      if (SNAP[OB] === null && /settings-scope/.test(localStorage.getItem(OB) || '')) localStorage.removeItem(OB);
+      // the onboarding record: removed when this page wrote it, put back exactly when it was there before
+      if (SNAP[OB] === null) { if (/settings-scope/.test(localStorage.getItem(OB) || '')) localStorage.removeItem(OB); }
+      else if (SNAP[OB] !== undefined && localStorage.getItem(OB) !== SNAP[OB]) localStorage.setItem(OB, SNAP[OB]);
     } catch (e) { /* ignore */ }
   });
 
@@ -231,6 +265,8 @@
         live = true;
         const w = $('wait'); if (w) w.remove();
         send({ cmd: 'opt', end: UI.end, changed: UI.changed });
+        send({ cmd: 'runmode', mode: UI.run });
+        send({ cmd: 'compare', open: UI.compare });
         if ($('reduced').checked) send({ cmd: 'motion', reduced: true });
         if ($('look').value !== 'basic-dark' && m.state && m.state.look !== $('look').value) send({ cmd: 'look', look: $('look').value });
       }
@@ -243,8 +279,11 @@
           $('device').value = s.ctx.device || 'here';
           $('on').value = s.ctx.on || '';
           $('homenas').value = s.ctx.homenas === false ? 'down' : 'up';
+          $('studio').value = s.ctx.studio === false ? 'down' : 'up';
+          if (s.ctx.actor) $('device').value = s.ctx.actor;
         }
         UI.moment = s.moment || '';
+        if (s.runMode) UI.run = s.runMode;
         paintBar();
         if (m.type === 'look-done') { $('look').disabled = false; if (s.look) $('look').value = s.look; }
       }
@@ -264,15 +303,20 @@
   $('on').addEventListener('change', (e) => send({ cmd: 'ctx', on: e.target.value }));
   $('device').addEventListener('change', (e) => send({ cmd: 'ctx', device: e.target.value }));
   $('homenas').addEventListener('change', (e) => send({ cmd: 'ctx', homenas: e.target.value }));
+  $('studio').addEventListener('change', (e) => send({ cmd: 'ctx', studio: e.target.value }));
+  $('runmode').addEventListener('click', (e) => { const b = e.target.closest('button[data-v]'); if (!b) return; UI.run = b.dataset.v; paintBar(); send({ cmd: 'runmode', mode: UI.run }); });
+  $('compareopts').addEventListener('click', () => { UI.compare = !UI.compare; if (!UI.compare && (UI.end !== 'origin' || UI.changed !== 'outline')) { UI.end = 'origin'; UI.changed = 'outline'; send({ cmd: 'opt', end: 'origin', changed: 'outline' }); } paintBar(); send({ cmd: 'compare', open: UI.compare }); });
+  $('decided').addEventListener('click', () => { UI.end = 'origin'; UI.changed = 'outline'; UI.moment = ''; paintBar(); send({ cmd: 'opt', end: 'origin', changed: 'outline' }); });
   $('moment').addEventListener('change', (e) => { const v = e.target.value; if (!v) return; UI.moment = v; paintBar(); send({ cmd: 'moment', id: v }); setTimeout(() => { e.target.value = ''; }, 0); });
   $('compare').addEventListener('click', () => send({ cmd: 'board' }));
   $('reset').addEventListener('click', () => { UI.moment = ''; paintBar(); send({ cmd: 'reset' }); });
   $('look').addEventListener('change', (e) => { e.target.disabled = true; send({ cmd: 'look', look: e.target.value }); setTimeout(() => { e.target.disabled = false; }, 5000); });
   $('width').addEventListener('change', (e) => { frame.style.width = e.target.value ? e.target.value + 'px' : '100%'; });
   $('reduced').addEventListener('change', (e) => send({ cmd: 'motion', reduced: e.target.checked }));
-  // 1 to 4 pick the end-of-row option and 0 shows today's, C opens Compare (outside text fields; inside PMConcept7 the
-  // layer listens for the same keys)
+  // while Compare options is open: 1 to 4 pick the end-of-row option and 0 shows today's, C opens the board (outside text
+  // fields; inside PMConcept7 the layer listens for the same keys, also only while it is open)
   document.addEventListener('keydown', (e) => {
+    if (!UI.compare) return;
     if (e.ctrlKey || e.metaKey || e.altKey || /input|select|textarea/i.test((e.target && e.target.tagName) || '')) return;
     const map = { 1: 'origin', 2: 'mark', 3: 'line', 4: 'more', 0: 'today' };
     if (map[e.key]) { UI.end = map[e.key]; UI.moment = ''; paintBar(); send({ cmd: 'opt', end: UI.end }); }

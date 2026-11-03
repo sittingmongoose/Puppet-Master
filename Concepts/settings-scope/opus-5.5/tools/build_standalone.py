@@ -34,15 +34,16 @@ FIRST = ("<script>(function(){var ok=true;try{localStorage.getItem('x');}catch(e
          "JSON.stringify({schema:'pm.o55.onboarding.v1',status:'done',source:'settings-scope'}));}}catch(e){}})();</script>")
 # the app file has no stand-in storage: the kit opens it with ?o55=off, PMConcept7 keeps Settings in memory on a page
 # with no storage, and the layer does too, so a sandboxed run still sees the opaque origin the kit's sandbox check asserts
-FIRST_APP = ("<script>(function(){try{if(!localStorage.getItem('pm.o55.onboarding.v1')){localStorage.setItem('pm.o55.onboarding.v1',"
+FIRST_APP = ("<script>(function(){try{window.__psxOB=localStorage.getItem('pm.o55.onboarding.v1');if(!window.__psxOB){localStorage.setItem('pm.o55.onboarding.v1',"
              "JSON.stringify({schema:'pm.o55.onboarding.v1',status:'done',source:'settings-scope'}));}}catch(e){}})();</script>")
 # the app file only: PMConcept7's own per-project Settings keys are put back when the page closes (the host page does
 # this for settings-scope.html and for the served concept)
 RESTORE = ("<script>(function(){if(window.parent!==window)return;var P=['tastebook','harbor','loom','docs-site','legacy-app',"
            "'experiment','garden-notes','recipe-app','lighting-rig','psx-none'],K=P.map(function(p){return 'pm7:settings:tome-tabs:v1:'+"
-           "encodeURIComponent(p);}),S={};try{K.forEach(function(k){S[k]=localStorage.getItem(k);});}catch(e){}"
+           "encodeURIComponent(p);}),S={},OB='pm.o55.onboarding.v1';try{K.forEach(function(k){S[k]=localStorage.getItem(k);});}catch(e){}"
            "window.addEventListener('pagehide',function(){try{K.forEach(function(k){if(S[k]===null)localStorage.removeItem(k);"
-           "else localStorage.setItem(k,S[k]);});}catch(e){}});})();</script>")
+           "else localStorage.setItem(k,S[k]);});var v=localStorage.getItem(OB);if(window.__psxOB===null){if(/settings-scope/.test(v||''))localStorage.removeItem(OB);}"
+           "else if(typeof window.__psxOB==='string'&&v!==window.__psxOB)localStorage.setItem(OB,window.__psxOB);}catch(e){}});})();</script>")
 
 
 def parts(host):

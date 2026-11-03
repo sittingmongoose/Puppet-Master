@@ -64,9 +64,14 @@
   /* ------------------------------------------------------------------ the demo world [Demo only] */
   const COMPUTERS = {
     here: { id: 'here', name: 'This computer', detail: 'Jared’s MacBook Pro · the app and its own Puppet Master' },
-    homenas: { id: 'homenas', name: 'Home NAS', detail: 'Synology DS923+ · always on · Keeps your settings' },
-    studio: { id: 'studio', name: 'Studio Mac', detail: 'Mac mini · set up on its own in October' }
+    homenas: { id: 'homenas', name: 'Home NAS', detail: 'Synology DS923+ · always on' },
+    studio: { id: 'studio', name: 'Studio Mac', detail: 'Mac mini · set up on its own in October' },
+    office: { id: 'office', name: 'Office PC', detail: 'Windows PC · joins in moment 11.7' }
   };
+  /* the computers that are part of your setup now (Office PC only after it joins, moment 11.7) */
+  const computerIds = () => Object.keys(COMPUTERS).filter((k) => k !== 'office' || (PSX.W && PSX.W.joined && PSX.W.joined.office));
+  /* the computer that keeps your settings (7.2): Home NAS until it is moved or two setups join */
+  const home = () => (PSX.W && PSX.W.home) || 'homenas';
   /* places that run work under a computer: shown only on program and folder rows, nested under their computer */
   const HOSTS = {
     'homenas:pm-worker': { id: 'homenas:pm-worker', name: 'Docker container pm-worker', parent: 'homenas', full: 'Home NAS · Docker container pm-worker' },
@@ -153,18 +158,25 @@
         'general.interaction.eli5-default': true,
         'general.interaction.sound-effects': false
       },
-      computer: lv(['here', 'homenas', 'studio', 'homenas:pm-worker', 'buildbox']),
+      computer: lv(['here', 'homenas', 'studio', 'office', 'homenas:pm-worker', 'buildbox']),
       device: lv(Object.keys(DEVICES)),
       project: lv(PROJECTS.map((p) => p.id).concat('psx-none')),
       provider: { claude: { 'ai.accounts.hard-switch-level': 15 } },
       /* what Puppet Master found on each computer (programs and folders): a found value is the default, not a change */
       found: {
-        'system.advanced.cli-path-claude': { here: '/opt/homebrew/bin/claude', homenas: '/usr/local/bin/claude', 'homenas:pm-worker': '/usr/local/bin/claude', buildbox: '/usr/bin/claude', studio: null },
-        'code.terminal.shell': { here: 'zsh', homenas: 'sh', 'homenas:pm-worker': 'sh', buildbox: 'bash', studio: 'zsh' },
-        'psx.projects-folder': { here: '~/Projects', homenas: '/volume1/homes/jared/Projects', 'homenas:pm-worker': '/data/Projects', buildbox: '/home/jared/Projects', studio: '~/Projects' }
+        'system.advanced.cli-path-claude': { here: '/opt/homebrew/bin/claude', homenas: '/usr/local/bin/claude', 'homenas:pm-worker': '/usr/local/bin/claude', buildbox: '/usr/bin/claude', studio: null, office: 'C:\\Program Files\\Claude\\claude.exe' },
+        'code.terminal.shell': { here: 'zsh', homenas: 'sh', 'homenas:pm-worker': 'sh', buildbox: 'bash', studio: 'zsh', office: 'PowerShell' },
+        'psx.projects-folder': { here: '~/Projects', homenas: '/volume1/homes/jared/Projects', 'homenas:pm-worker': '/data/Projects', buildbox: '/home/jared/Projects', studio: '~/Projects', office: 'C:\\Users\\jared\\Projects' }
       },
-      up: { here: true, homenas: true, studio: true },
+      up: { here: true, homenas: true, studio: true, office: true },
+      home: 'homenas',
       studioJoined: false,
+      joined: { office: false },
+      /* which AI accounts each project chose (S10 A); a project with none here uses your usual ones [Demo only] */
+      uses: { tastebook: ['work-claude', 'codex', 'openrouter'], experiment: ['personal-claude'], 'lighting-rig': ['personal-claude'] },
+      usualAccounts: ['work-claude'],
+      /* rules a project brought from someone else's repository, and what you chose (S15) */
+      rules: {},
       asOf: 'Tuesday 10:45',
       history: [],
       batches: {},
@@ -180,7 +192,7 @@
           'work-claude': { name: 'Work Claude', service: 'Claude', tool: 'Claude Code', kind: 'tool', reach: 'every', order: 1, on: { here: 'ready', homenas: 'checked', studio: 'missing' } },
           'personal-claude': { name: 'Personal', service: 'Claude', tool: 'Claude Code', kind: 'tool', reach: 'only', projects: ['experiment', 'lighting-rig'], order: 2, on: { here: 'ready' } },
           codex: { name: 'ChatGPT sign-in', service: 'Codex', tool: 'Codex', kind: 'tool', reach: 'every', on: { here: 'ready' } },
-          openrouter: { name: 'key', service: 'OpenRouter', kind: 'key', reach: 'every', on: { here: 'ready' } }
+          openrouter: { name: 'API key', service: 'OpenRouter', kind: 'key', reach: 'every', on: { here: 'ready' } }
         },
         personas: { reviewer: { name: 'Reviewer', home: 'library', versions: ['tastebook'] } }
       }
@@ -246,12 +258,13 @@
     return key || lvl;
   };
   const setting = (id) => (W.PM51 && W.PM51.setting ? W.PM51.setting(id) : null);
-  const LABELS = { 'psx.projects-folder': 'Projects folder', 'general.visual.theme': 'Theme' };
+  const LABELS = { 'psx.projects-folder': 'Projects folder', 'general.visual.theme': 'Theme', 'system.mcp.timeout': 'Wait for an MCP server this long' };
   const engineSetting = (id) => setting(id);
   /* the choices a row offers, for the panel's inline Change */
   function optionsFor(id) {
-    if (id === 'general.visual.theme') return ['Basic Dark', 'Basic Light', 'Friendly Dark', 'Friendly Light', 'Glass Dark', 'Glass Light', 'Retro Dark', 'Retro Light'];
-    const s = setting(id); if (!s) return null;
+    const s = setting(id);
+    if (id === 'general.visual.theme' && !(s && Array.isArray(s.options) && s.options.length)) return ['Basic Dark', 'Basic Light', 'Friendly Dark', 'Friendly Light', 'Glass Dark', 'Glass Light', 'Retro Dark', 'Retro Light', 'NieR Dark', 'NieR Light'];
+    if (!s) return null;
     if (!['select', 'segmented', 'radio'].includes(s.control)) return null;
     const o = Array.isArray(s.options) ? s.options.map((x) => (x && typeof x === 'object' ? (x.value != null ? x.value : x.id) : x)) : [];
     return o.length ? o : null;
@@ -280,6 +293,9 @@
   const S = {
     opt: Object.assign({ end: 'origin', changed: 'outline' }, saved.opt || {}),
     ctx: { project: 'tastebook', device: 'here', on: null },
+    actor: 'here',        // the device in use (the strip's You're using); Change view's device is only what you see
+    runMode: saved.runMode === 'yolo' ? 'yolo' : 'regular',   // the run mode the yes-points follow (Regular or YOLO)
+    keys: false,          // the review keys 1 to 4, 0 and C work only while the strip's Compare options is open
     tipShown: !!saved.tipShown,
     reviewChange: false,
     moment: null,
@@ -296,20 +312,28 @@
     const project = c.project && c.project !== 'none' && c.project !== 'psx-none' ? c.project : null;
     const p = projectById(project);
     const on = c.on || (p ? p.home : 'here');
-    return { project, on, host: c.host || null, device: c.device || 'here', view: !!c.on && !!p && c.on !== p.home };
+    return { project, on, host: c.host || null, device: c.device || 'here', provider: c.provider || null, view: !!c.on && !!p && c.on !== p.home };
   }
 
   /* ------------------------------------------------------------------ world transactions, history and undo
      A transaction is a list of writes { level, key, id, value } (value undefined removes an own value). It records its
      inverse, so Undo is exact while the setting still holds what it wrote. */
-  function getAt(w, level, key, id) {
-    if (level === 'everywhere') return w.everywhere[id];
-    const bag = w[level] && w[level][key]; return bag ? bag[id] : undefined;
+  /* besides the four setting levels, a transaction can hold a thing (key: mcp, personas, accounts), a project's AI
+     account choice (uses), a project's accepted rules (rules), a computer joining (joined) and the settings home (meta) */
+  function bagOf(w, level, key, make) {
+    if (level === 'everywhere') return w.everywhere;
+    if (level === 'meta') return w;
+    if (level === 'thing') return w.things[key] || (make ? (w.things[key] = {}) : null);
+    if (level === 'uses' || level === 'rules' || level === 'joined') return w[level] || (make ? (w[level] = {}) : null);
+    if (!w[level]) return null;
+    return w[level][key] || (make ? (w[level][key] = {}) : null);
   }
+  function getAt(w, level, key, id) { const bag = bagOf(w, level, key, false); return bag ? clone(bag[id]) : undefined; }
   function putAt(w, level, key, id, v) {
-    const bag = level === 'everywhere' ? w.everywhere : (w[level][key] = w[level][key] || {});
+    const bag = bagOf(w, level, key, true);
     if (v === undefined) delete bag[id]; else bag[id] = clone(v);
   }
+  const SETTING_LEVEL = { everywhere: 1, computer: 1, device: 1, project: 1 };
   const listeners = {};
   const on = (ev, fn) => { (listeners[ev] = listeners[ev] || []).push(fn); };
   const emit = (ev, data) => (listeners[ev] || []).slice().forEach((fn) => { try { fn(data); } catch (e) { console.error('[psx]', ev, e); } });
@@ -319,11 +343,12 @@
     const undo = writes.map((x) => ({ level: x.level, key: x.key, id: x.id, value: getAt(w, x.level, x.key, x.id) }));
     writes.forEach((x) => putAt(w, x.level, x.key, x.id, x.value));
     w.rev++;
-    const tx = { id: uid('tx'), writes: clone(writes), undo, meta, rev: w.rev };
+    const tx = { id: uid('tx'), writes: clone(writes), undo, meta, rev: w.rev, links: [] };
     if (meta.history !== false) {
       const from = meta.from || S.ctx.device || 'here';
-      if (meta.batch) w.history.unshift({ id: tx.id, when: 'Just now', by: meta.by || 'you', from, batch: meta.batch, text: meta.text, tx: tx.id, extra: meta.extra || null });
-      else writes.forEach((x, i) => w.history.unshift({ id: tx.id + '-' + i, when: 'Just now', by: meta.by || 'you', from, level: x.level, key: x.key, sid: x.id, before: undo[i].value, after: x.value, tx: tx.id }));
+      const yolo = !!meta.yolo;
+      if (meta.batch || writes.some((x) => !SETTING_LEVEL[x.level])) w.history.unshift({ id: tx.id, when: 'Just now', by: meta.by || 'you', from, batch: meta.batch || 'change', text: meta.text || 'A change', tx: tx.id, extra: meta.extra || null, yolo });
+      else writes.forEach((x, i) => w.history.unshift({ id: tx.id + '-' + i, when: 'Just now', by: meta.by || 'you', from, level: x.level, key: x.key, sid: x.id, before: undo[i].value, after: x.value, tx: tx.id, yolo }));
     }
     w.batches[tx.id] = tx;
     emit('world', { tx });
@@ -334,6 +359,8 @@
     const w = PSX.W, tx = w.batches[txId]; if (!tx || tx.undone) return { ok: false };
     const later = [];
     const writes = [];
+    // a batch's parts finished later (Finish lighting-rig) are undone with it: "Undo all of it" means all of it
+    (tx.links || []).forEach((lid) => { const r = undo(lid); if (r.later) later.push(...r.later); });
     tx.writes.forEach((x, i) => {
       if (!same(getAt(w, x.level, x.key, x.id), x.value)) { later.push(x.id); return; }
       writes.push(tx.undo[i]);
@@ -360,19 +387,33 @@
   /* ------------------------------------------------------------------ the note after a change (6.4)
      The layer's own div.psx-note[role=status] in #pm-settings-portals, in Settings' toast material; one at a time, six
      seconds, paused while hovered or focused. Never a PM Notify toast (its actions are a closed set, F3-461). */
-  let noteEl = null, noteTimer = 0, notePaused = false, noteLeft = 0, noteStart = 0;
+  let noteEl = null, noteTimer = 0, notePaused = false, noteLeft = 0, noteStart = 0, noteActs = null;
+  /* one live region that stays in the page, so a screen reader hears each note (a region inserted with its text
+     already in it is the one they most often miss); the visible note itself is not a second live region */
+  function live() {
+    const host = portal(); if (!host) return null;
+    let el = host.querySelector(':scope > .psx-live');
+    if (!el) { el = h('div', { class: 'psx-live', role: 'status', 'aria-live': 'polite', 'aria-atomic': 'true' }); host.appendChild(el); }
+    return el;
+  }
   function note(o) {
     const host = portal(); if (!host) return null;
     if (!noteEl || !noteEl.isConnected) {
-      noteEl = h('div', { class: 'psx-note', role: 'status', 'aria-live': 'polite', 'data-lg-surface': 'menu', 'data-lg-dense': '' });
-      noteEl.addEventListener('mouseenter', pauseNote); noteEl.addEventListener('mouseleave', resumeNote);
-      noteEl.addEventListener('focusin', pauseNote); noteEl.addEventListener('focusout', (e) => { if (!noteEl.contains(e.relatedTarget)) resumeNote(); });
-      host.appendChild(noteEl);
+      const el = h('div', { class: 'psx-note', role: 'group', 'aria-label': 'What just changed', 'data-lg-surface': 'menu', 'data-lg-dense': '' });
+      el.addEventListener('mouseenter', pauseNote); el.addEventListener('mouseleave', resumeNote);
+      el.addEventListener('focusin', pauseNote);
+      // the element the listener belongs to, never the shared variable (it is null once the note is going)
+      el.addEventListener('focusout', (e) => { if (el.isConnected && !el.contains(e.relatedTarget)) resumeNote(); });
+      el.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); hideNote(); } });
+      noteEl = el;
+      host.appendChild(el);
     }
     clearTimeout(noteTimer);
     const tip = o.tip ? `<div class="psx-note-tip">${mark('info')}<span>${esc(o.tip)}</span></div>` : '';
     noteEl.innerHTML = `${tip}<div class="psx-note-main">${o.mark ? mark(o.mark) : mark('complete')}<div class="psx-note-copy"><div class="psx-note-title">${esc(o.title)}</div>${o.body ? `<div class="psx-note-body">${esc(o.body)}</div>` : ''}</div></div>`
-      + ((o.actions && o.actions.length) ? `<div class="psx-note-actions">${o.actions.map((a, i) => `<button type="button" class="psx-tb${a.primary ? ' is-primary' : ''}" data-i="${i}"${a.hover ? ` data-pm-hover-label="${esc(a.label)}" data-pm-hover-detail="${esc(a.hover)}"` : ''}>${esc(a.label)}</button>`).join('')}<button type="button" class="psx-tb is-quiet" data-close>Dismiss</button></div>` : '');
+      + ((o.actions && o.actions.length) ? `<div class="psx-note-actions">${o.actions.map((a, i) => `<button type="button" class="psx-tb${a.primary ? ' is-primary' : ''}" data-i="${i}"${a.label === 'Undo' ? ' aria-keyshortcuts="Control+Z Meta+Z"' : ''}${a.hover ? ` data-pm-hover-label="${esc(a.label)}" data-pm-hover-detail="${esc(a.hover)}"` : ''}>${esc(a.label)}</button>`).join('')}<button type="button" class="psx-tb is-quiet" data-close>Dismiss</button></div>` : '');
+    noteActs = o.actions || null;
+    const lv = live(); if (lv) { lv.textContent = ''; setTimeout(() => { lv.textContent = [o.title, o.body, (o.actions || []).some((a) => a.label === 'Undo') ? 'Undo with Control Z, or F6 to reach the note.' : ''].filter(Boolean).join(' '); }, 30); }
     noteEl.querySelectorAll('button[data-i]').forEach((b) => b.addEventListener('click', () => { const a = o.actions[+b.dataset.i]; hideNote(); if (a && a.run) a.run(); }));
     const x = noteEl.querySelector('[data-close]'); if (x) x.addEventListener('click', () => hideNote());
     noteEl.removeAttribute('data-leaving'); noteEl.setAttribute('data-open', '');
@@ -392,9 +433,25 @@
     const el = noteEl;
     const hadFocus = el.contains(D.activeElement);
     if (reduced()) el.remove(); else { el.setAttribute('data-leaving', ''); setTimeout(() => el.remove(), 180); }
-    noteEl = null;
+    noteEl = null; noteActs = null;
     if (hadFocus && PSX.lastFocus && PSX.lastFocus.isConnected) try { PSX.lastFocus.focus({ preventScroll: true }); } catch (e) { /* gone */ }
   }
+
+  /* Undo is reachable by keyboard while the note shows (SETTINGS-PROPOSAL 3.5): Control or Command Z runs it outside a
+     text field, and F6 moves focus into the note (Esc there hides it and focus goes back) */
+  W.addEventListener('keydown', (e) => {
+    if (!noteEl || !noteEl.isConnected || noteEl.hasAttribute('data-leaving')) return;
+    const t = e.target, tag = (t && t.tagName) || '';
+    const typing = /input|select|textarea/i.test(tag) || (t && t.isContentEditable);
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && (e.key === 'z' || e.key === 'Z') && !typing) {
+      const a = (noteActs || []).find((x) => x.label === 'Undo'); if (!a) return;
+      e.preventDefault(); e.stopPropagation(); hideNote(); a.run(); return;
+    }
+    if (e.key === 'F6' && !typing) {
+      const b = noteEl.querySelector('button'); if (!b) return;
+      e.preventDefault(); PSX.lastFocus = D.activeElement; b.focus({ preventScroll: true });
+    }
+  }, true);
 
   /* ------------------------------------------------------------------ sheets (dialogs) in #pm-settings-portals
      Settings' own dialog material (.dialog, .dialog-head, .dialog-body, .dialog-footer and .btn), so all ten looks draw
@@ -428,7 +485,8 @@
     function close(why) {
       const i = sheets.indexOf(api); if (i >= 0) sheets.splice(i, 1);
       if (!back.isConnected) return;
-      const done = () => { back.remove(); const f = o.returnFocus || opener; if (f && f.isConnected && f.focus) try { f.focus({ preventScroll: true }); } catch (e) { /* gone */ } if (o.onClose) o.onClose(why); };
+      // the opener may have been redrawn while the sheet was open: a function finds its new self
+      const done = () => { back.remove(); let f = typeof o.returnFocus === 'function' ? o.returnFocus() : (o.returnFocus || opener); if (f && !f.isConnected && opener && opener.getAttribute && opener.getAttribute('data-psx-key')) f = D.querySelector(`[data-psx-key="${CSS.escape(opener.getAttribute('data-psx-key'))}"]`); if (f && f.isConnected && f.focus) try { f.focus({ preventScroll: true }); } catch (e) { /* gone */ } if (o.onClose) o.onClose(why); };
       if (reduced()) done(); else { back.setAttribute('data-leaving', ''); setTimeout(done, 150); }
     }
     box.querySelector('[data-psx-close]').addEventListener('click', () => close('x'));
@@ -443,7 +501,9 @@
     setActions(o.actions);
     host.appendChild(back);
     sheets.push(api);
-    requestAnimationFrame(() => { back.setAttribute('data-open', ''); const f = box.querySelector('[data-autofocus]') || box.querySelector('.psx-sheet-body button, .psx-sheet-body input, .psx-sheet-body summary') || box.querySelector('.btn.primary') || box.querySelector('[data-psx-close]'); if (f) try { f.focus({ preventScroll: true }); } catch (e) { /* gone */ } });
+    // first focus: a marked control, the chosen radio, the first enabled control in the body, the primary, then Close
+    const enabled = ':not([aria-disabled="true"]):not(:disabled)';
+    requestAnimationFrame(() => { back.setAttribute('data-open', ''); const f = box.querySelector('[data-autofocus]') || box.querySelector('.psx-sheet-body input[type="radio"]:checked') || box.querySelector(`.psx-sheet-body button${enabled}, .psx-sheet-body input${enabled}, .psx-sheet-body select${enabled}, .psx-sheet-body summary`) || box.querySelector(`.btn.primary${enabled}`) || box.querySelector('[data-psx-close]'); if (f) try { f.focus({ preventScroll: true }); } catch (e) { /* gone */ } });
     if (o.onOpen) o.onOpen(api);
     return api;
   }
@@ -490,7 +550,8 @@
 
   Object.assign(PSX, {
     D, H, esc, icon, mark, st, wait, reduced, uid, clone, same, list, h, portal, root, tip,
-    store, COMPUTERS, HOSTS, DEVICES, PROJECTS, MENU_PROJECTS, projectById, DEFAULTS, DEF, IDS, REASONS,
+    store, COMPUTERS, HOSTS, DEVICES, PROJECTS, MENU_PROJECTS, projectById, DEFAULTS, DEF, IDS, REASONS, computerIds, home,
+    homeName: () => placeName('computer', home()), bagOf,
     projectName, placeName, label, vt, ctxFull, engineSetting, optionsFor, getAt, putAt, apply, undo, run, on, emit,
     note, hideNote, sheet, topSheet, closeSheets, sheets, menu
   });

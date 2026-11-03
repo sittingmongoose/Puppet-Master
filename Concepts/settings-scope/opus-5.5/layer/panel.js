@@ -23,89 +23,138 @@
   let editing = null;      // { id, level, key, isNew }
   let lastOpen = null;     // the setting whose panel is open, for focus on close
 
-  /* ------------------------------------------------------------------ writing one level, with its note */
-  function blockedWrite(tg) {
-    const c = PSX.ctxFull(S.ctx), dev = DEVICES[c.device];
-    if (dev && dev.limited && tg.level !== 'device') return PSX.REASONS.limited_device[0];
-    const wr = PSX.writer(tg.level, tg.key);
-    if (wr && !PSX.answering(wr)) {
-      if (tg.level === 'everywhere') return 'Change it when Home NAS is back';
-      if (tg.level === 'project') return `${tg.key}’s settings can be changed when ${placeName('computer', wr)} answers`;
-      return `${placeName('computer', wr)} isn’t answering`;
-    }
-    if (tg.level === 'computer' && tg.key === 'studio' && !PSX.W.studioJoined) return null;
-    return null;
+  /* ------------------------------------------------------------------ writing one level, with its note
+     Every write here goes through the one write path (guard.js): first start, the device in use, the level, the value,
+     the writer and pairing are checked there, the same as for a row, a copy, a batch or an Undo. */
+  function blockedWrite(tg, id, value) {
+    const y = PSX.guard.why({ level: tg.level, key: tg.key, id: id || '', value: id ? value : undefined });
+    if (!y) return null;
+    if (y.kind === 'offline' && tg.level === 'everywhere') return `Change it when ${PSX.homeName()} is back`;
+    if (y.kind === 'offline' && tg.level === 'project') return `${tg.key}’s settings can be changed when ${placeName('computer', y.wr)} answers`;
+    return y.text;
+  }
+  /* where the value comes from after a level's own is taken away, in words */
+  function fromWords(id, r) {
+    if (r.ceiling) return `held by ${placeName('computer', r.ceiling.key)}’s limit`;
+    if (r.careful) return `for safety, ${placeName(r.careful.by.level, r.careful.by.key)}’s own`;
+    if (r.from.level === 'computer') return `from ${placeName('computer', r.from.key)}`;
+    if (r.from.level === 'device') return `from ${placeName('device', r.from.key)}`;
+    if (r.from.level === 'project') return `${r.from.key}’s own`;
+    if (r.from.level === 'provider') return `${placeName('provider', r.from.key)}’s own`;
+    return r.from.level === 'everywhere' ? 'from everywhere' : 'Puppet Master’s default';
+  }
+  /* the context a line of Where it applies speaks for */
+  function lineCtx(level, key) {
+    const c = PSX.ctxFull(S.ctx);
+    if (level === 'project') return { project: key, device: c.device, on: null };
+    if (level === 'computer') return { project: 'none', device: c.device, on: key };
+    if (level === 'device') return { project: 'none', device: key, on: c.on };
+    return S.ctx;
+  }
+  /* "Same as everywhere" only when that is what taking the own value away gives; otherwise say what it does */
+  function removeAction(id, level, key, name) {
+    const w1 = clone(PSX.W); PSX.putAt(w1, level, key, id, undefined);
+    const r = PSX.resolve(id, lineCtx(level, key), w1);
+    const follows = !r || r.from.level === 'everywhere' || r.from.level === 'default';
+    return follows ? { label: 'Same as everywhere', aria: `Make ${name} the same as everywhere` } : { label: `Take away ${name}’s own`, aria: `Take away ${name}’s own value; it then uses ${vt(id, r.value)}, ${fromWords(id, r)}` };
   }
   PSX.setOwn = function (id, tg, value, o) {
     o = o || {};
-    const why = blockedWrite(tg);
-    if (why) { PSX.note({ title: 'Not saved', body: why + '.', mark: /answer|back/.test(why) ? 'offline' : 'info', kind: 'refused' }); return null; }
+    const writes = [{ level: tg.level, key: tg.key, id, value }];
+    const a = PSX.guard.admit(writes);
+    if (!a.clear) { const m = a.missed[0]; PSX.note({ title: 'Not saved', body: `${blockedWrite(tg, id, value) || m.text}. Nothing was saved or queued.`, mark: m.kind === 'offline' ? 'offline' : 'info', kind: 'refused' }); return null; }
     if (tg.level === 'everywhere' && value !== undefined && PSX.check) {
       const blocked = PSX.check.everywhere(id, value);
       if (blocked) { PSX.check.refuse(id, value, PSX.getAt(PSX.W, 'everywhere', null, id), blocked); return null; }
     }
+    const c = PSX.ctxFull(S.ctx);
+    const go = (y) => doSet(id, tg, value, Object.assign({}, o, { yolo: !!(y && y.yolo), yoloBody: y && y.body }));
+    if (!o.confirmed && PSX.check.needs(id, writes)) return PSX.check.preview(id, writes, go, { narrow: tg.level === 'everywhere' && c.project && DEF[id].may && DEF[id].may.includes('project') ? { level: 'project', key: c.project } : null });
+    return go();
+  };
+  function doSet(id, tg, value, o) {
+    const c = PSX.ctxFull(S.ctx);
     const before = PSX.getAt(PSX.W, tg.level, tg.key, id);
-    const tx = PSX.apply([{ level: tg.level, key: tg.key, id, value }], { by: o.by || 'you' });
-    PSX.feed.push();
-    if (o.quiet) return tx;
-    const where = tg.level === 'device' && tg.key === PSX.ctxFull(S.ctx).device ? 'this screen' : placeName(tg.level, tg.key);
-    const title = value === undefined
-      ? (tg.level === 'everywhere' ? `${label(id)} is back to the default everywhere.` : `${where} follows everywhere again.`)
-      : `Saved for ${tg.level === 'everywhere' ? 'everywhere' : where}.`;
-    const body = value === undefined ? (before !== undefined ? `It had its own: ${vt(id, before)}.` : '') : `${label(id)}: ${vt(id, value)}.`;
+    const tx = PSX.write([{ level: tg.level, key: tg.key, id, value }], { by: o.by || 'you', yolo: !!o.yolo });
+    if (!tx || o.quiet) return tx;
+    const where = tg.level === 'device' && tg.key === c.device ? 'this screen' : placeName(tg.level, tg.key);
+    let title, body;
+    if (value === undefined) {
+      if (tg.level === 'everywhere') { title = `${label(id)} is back to the default everywhere.`; body = before !== undefined ? `Everywhere had ${vt(id, before)}.` : ''; }
+      else {
+        const after = PSX.resolve(id, lineCtx(tg.level, tg.key));
+        const follows = after.from.level === 'everywhere' || after.from.level === 'default';
+        title = follows ? `${where} follows everywhere again.` : `${where}’s own is taken away.`;
+        body = `It had its own: ${vt(id, before)}.${follows ? '' : ` It now uses ${vt(id, after.value)}, ${fromWords(id, after)}.`}`;
+      }
+    } else { title = `Saved for ${tg.level === 'everywhere' ? 'everywhere' : where}.`; body = `${label(id)}: ${vt(id, value)}.`; }
+    if (o.yolo) body += ` ${o.yoloBody ? o.yoloBody + ' ' : ''}YOLO didn’t ask for a yes.`;
     PSX.note({ title, body, actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, id) }], kind: 'saved' });
     return tx;
-  };
+  }
 
   /* ------------------------------------------------------------------ 1.7: an Everywhere change is checked against
-     every context that follows it; safety rows are previewed first. [Demo only]: harbor's Codex account has 12% left. */
+     every context that follows it; safety rows are previewed first. [Demo only]: harbor's Codex account has 12% left.
+     The check runs over every project whose value in use would change (PSX.simulate), against what each can take. */
   const HARBOR_CODEX_LEFT = 12;
+  const FOLLOWER_LIMITS = [{ id: 'ai.accounts.hard-switch-level', project: 'harbor', test: (v) => Number(v) >= HARBOR_CODEX_LEFT, why: 'its Codex account would switch at once' }];
   function followers(id, value) {
-    // the projects whose value in use would change, each in its own work context
-    const w0 = PSX.W, w1 = clone(w0);
-    if (value === undefined) delete w1.everywhere[id]; else w1.everywhere[id] = value;
-    const changes = [], keeps = [];
-    PROJECTS.forEach((p) => {
-      const a = PSX.resolve(id, { project: p.id, device: S.ctx.device, on: null }, w0), b = PSX.resolve(id, { project: p.id, device: S.ctx.device, on: null }, w1);
-      if (!same(a.value, b.value)) changes.push(p.id); else if (a.from.level !== 'everywhere' && a.from.level !== 'default') keeps.push(p.id);
-    });
-    return { changes, keeps };
+    const sim = PSX.simulate([{ level: 'everywhere', key: null, id, value }], id);
+    return { changes: sim.changes.map((r) => r.project), keeps: sim.keeps.map((r) => r.project), sim };
   }
   PSX.followers = followers;
   PSX.check = {
     everywhere(id, value) {
-      if (id === 'ai.accounts.hard-switch-level' && Number(value) >= HARBOR_CODEX_LEFT && !PSX.has(PSX.W.project.harbor, id)) return { project: 'harbor', why: 'its Codex account would switch at once', left: HARBOR_CODEX_LEFT };
-      return null;
+      const lim = FOLLOWER_LIMITS.filter((x) => x.id === id); if (!lim.length) return null;
+      const f = followers(id, value);
+      const hit = lim.find((x) => f.changes.includes(x.project) && x.test(value));
+      return hit ? { project: hit.project, why: hit.why, left: HARBOR_CODEX_LEFT } : null;
     },
+    /* a project that can't take the change refuses it, in both run modes; YOLO never picks "except harbor" itself */
     refuse(id, value, old, b) {
-      PSX.sheet({
+      const keep = PSX.resolve(id, { project: b.project }).value;
+      PSX.confirm({
         title: `${label(id)} wasn’t changed everywhere`, kicker: 'Checked before it was saved',
-        body: `<p class="psx-p">${mark('blocked')} <b>${esc(b.project)} can’t use this:</b> ${esc(b.why)}. Every project that follows your everywhere value was checked first, and ${esc(b.project)} is the first one it would stop.</p><p class="psx-p">You can change it everywhere except ${esc(b.project)}: ${esc(b.project)} keeps ${esc(vt(id, PSX.resolve(id, { project: b.project }).value))} as its own, in the same change.</p>`,
-        actions: [
-          { label: 'Cancel', run: (s) => s.close('cancel') },
-          { spacer: true },
-          { label: `Change it everywhere except ${b.project}`, primary: true, run: (s) => {
-            s.close('ok');
-            const keep = PSX.resolve(id, { project: b.project }).value;
-            const tx = PSX.apply([{ level: 'everywhere', key: null, id, value }, { level: 'project', key: b.project, id, value: keep }], { batch: 'except', text: `${label(id)}: ${vt(id, value)} everywhere, except ${b.project}` });
-            PSX.feed.push();
-            PSX.note({ title: 'Saved for everywhere.', body: `${b.project} keeps ${vt(id, keep)} as its own.`, actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, id) }], kind: 'saved' });
-          } }
-        ]
+        body: `<p class="psx-p">${mark('blocked')} <b>${esc(b.project)} can’t use this:</b> ${esc(b.why)}. Every project that follows your everywhere value was checked first, and ${esc(b.project)} is the first one it would stop.</p><p class="psx-p">You can change it everywhere except ${esc(b.project)}: ${esc(b.project)} keeps ${esc(vt(id, keep))} as its own, in the same change.</p>`,
+        guard: `A project that can’t take a change refuses it, in YOLO too, and YOLO never chooses “except ${b.project}” by itself.`,
+        okLabel: `Change it everywhere except ${b.project}`,
+        ok: () => {
+          const tx = PSX.write([{ level: 'everywhere', key: null, id, value }, { level: 'project', key: b.project, id, value: keep }], { batch: 'except', text: `${label(id)}: ${vt(id, value)} everywhere, except ${b.project}` });
+          if (tx) PSX.note({ title: 'Saved for everywhere.', body: `${b.project} keeps ${vt(id, keep)} as its own.`, actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, id) }], kind: 'saved' });
+          return tx;
+        }
       });
     },
-    preview(id, value, old, ok) {
-      const f = followers(id, value), c = PSX.ctxFull(S.ctx);
-      const body = `<p class="psx-p">${mark('info')} <b>This changes ${f.changes.length} project${f.changes.length === 1 ? '' : 's'}.</b> ${f.keeps.length ? esc(list(f.keeps)) + (f.keeps.length === 1 ? ' keeps its own value.' : ' keep their own values.') : ''}</p>`
-        + `<p class="psx-p">${esc(label(id))} becomes ${esc(vt(id, value))} for ${esc(list(f.changes, 6) || 'no project')}. Safety settings are shown before they change.</p>`;
-      PSX.sheet({
-        title: `Change ${label(id)} everywhere?`, kicker: 'A safety setting', body,
-        actions: [
-          { label: 'Cancel', run: (s) => s.close('cancel') },
-          { spacer: true },
-          c.project ? { label: `Only for ${c.project}`, run: (s) => { s.close('ok'); PSX.commit(id, value, old, { level: 'project', key: c.project }); } } : null,
-          { label: 'Change everywhere', primary: true, run: (s) => { s.close('ok'); ok(); } }
-        ].filter(Boolean)
+    /* which writes need a look first: a safety row changed everywhere, FileSafe turned off anywhere (one confirmation and
+       the risk word, 4.4), or a removal that would leave a project less careful */
+    needs(id, writes) {
+      const def = DEF[id]; if (!def || !def.safety) return false;
+      if (writes.some((x) => x.level === 'everywhere')) return true;
+      if (def.risk && writes.some((x) => x.value === false)) return true;
+      return PSX.simulate(writes, id).looser.length > 0;
+    },
+    preview(id, writes, ok, o) {
+      o = o || {};
+      const def = DEF[id], sim = PSX.simulate(writes, id);
+      const ev = writes.find((x) => x.level === 'everywhere'), w0 = ev || writes[0];
+      const fsOff = !!def.risk && writes.some((x) => x.value === false);
+      const where = ev ? 'everywhere' : `for ${placeName(w0.level, w0.key)}`;
+      const n = sim.changes.length;
+      const keeps = sim.keeps.map((r) => r.project);
+      const body = `<p class="psx-p">${mark(sim.looser.length || fsOff ? 'warning' : 'info')} <b>This changes ${n} project${n === 1 ? '' : 's'}.</b> ${keeps.length ? esc(list(keeps, 4)) + (keeps.length === 1 ? ' keeps its own value.' : ' keep their own values.') : ''}</p>`
+        + PSX.guard.changeList(id, sim)
+        + (sim.looser.length ? `<p class="psx-p">${mark('warning')} ${esc(list(sim.looser.map((r) => PSX.projectName(r.project))))} would be less careful.</p>` : '')
+        + (fsOff ? `<p class="psx-p">${PSX.st('warning', 'Off ' + (ev ? 'everywhere' : 'for ' + placeName(w0.level, w0.key)))} FileSafe stops checking file and command changes there. The row keeps this word while it is off.</p>` : '')
+        + `<p class="psx-p psx-muted">Safety settings are shown before they change.</p>`;
+      const reportBody = n ? `It changed ${n} project${n === 1 ? '' : 's'}: ${list(sim.changes.map((r) => PSX.projectName(r.project)), 4)}.` : 'No project’s value in use changed.';
+      return PSX.confirm({
+        title: fsOff ? `Turn FileSafe off ${where}?` : w0.value === undefined ? `Take away ${label(id)}’s own value ${where}?` : `Change ${label(id)} ${where}?`,
+        kicker: 'A safety setting', body,
+        guard: fsOff ? 'Turning FileSafe off is never done without you: YOLO doesn’t skip this one.' : null,
+        okLabel: fsOff ? 'Turn it off' : ev ? 'Change everywhere' : 'Change it',
+        alt: o.narrow && w0.value !== undefined ? [{ label: `Only for ${o.narrow.key}`, run: () => PSX.setOwn(id, o.narrow, w0.value, { confirmed: true }) }] : [],
+        ok: (y) => ok(Object.assign({}, y, { body: y && y.yolo ? reportBody : '' })),
+        selfReport: true
       });
     }
   };
@@ -139,7 +188,8 @@
     const { page, body, head, id } = cur;
     lastOpen = id;
     PSX.adopt && PSX.adopt(id);
-    const sig = JSON.stringify([id, PSX.W.rev, S.ctx, S.opt.end, S.targets[id] || null, editing, S.firstStart]);
+    // a draft being typed is not a reason to redraw (it would lose the caret and the reason shown under it)
+    const sig = JSON.stringify([id, PSX.W.rev, S.ctx, S.actor, S.runMode, S.opt.end, S.targets[id] || null, editing && [editing.id, editing.level, editing.key, editing.isNew, editing.error], S.firstStart]);
     if (!o.force && page.dataset.psxDone === sig && (body.querySelector('[data-psx-block="where"]') || !DEF[id])) return;
     const act = D.activeElement;
     const keep = o.focusKey || (act && page.contains(act) && act.closest('[data-psx-key]') ? act.closest('[data-psx-key]').dataset.psxKey : null);
@@ -211,14 +261,15 @@
     foot.insertAdjacentHTML('beforeend', `<span>${defTxt}</span>`);
     let act = null;
     if (r.notOffered) act = null;
-    else if (r.here && (r.from.level !== 'computer' || def.home !== 'computer') && def.home !== 'project') act = { label: 'Same as everywhere', run: () => PSX.setOwn(id, r.from, undefined) };
+    else if (r.from.level === 'provider') act = null;
+    else if (r.here && (r.from.level !== 'computer' || def.home !== 'computer') && def.home !== 'project') { const ra = removeAction(id, r.from.level, r.from.key, placeName(r.from.level, r.from.key)); act = { label: ra.label, run: () => PSX.setOwn(id, r.from, undefined) }; }
     else if (def.home === 'computer' && r.from.level === 'computer') act = { label: 'Use what’s found here', run: () => PSX.setOwn(id, r.from, undefined) };
     else if (def.home === 'project' && r.from.level === 'project') act = { label: `Clear it for ${r.from.key}`, run: () => PSX.setOwn(id, r.from, undefined) };
     else if (r.from.level === 'everywhere' && r.changed) act = { label: 'Go back to the default everywhere', run: () => backToDefault(id) };
     if (act) {
       const b = D.createElement('button'); b.type = 'button'; b.className = 'o55-textbtn psx-tb'; b.setAttribute('data-psx-key', 'now-act');
       b.innerHTML = `${icon('restore')}<span>${esc(act.label)}</span>`;
-      const why = act.label === 'Go back to the default everywhere' ? blockedWrite({ level: 'everywhere' }) : blockedWrite(r.from);
+      const why = act.label === 'Go back to the default everywhere' ? blockedWrite({ level: 'everywhere' }) : blockedWrite(r.from, id, undefined);
       if (why) { b.setAttribute('aria-disabled', 'true'); PSX.tip(b, act.label, why); }
       b.addEventListener('click', () => { if (b.getAttribute('aria-disabled') === 'true') { PSX.note({ title: 'Not now', body: why + '.', mark: 'offline' }); return; } act.run(); });
       foot.appendChild(b);
@@ -226,10 +277,11 @@
   }
   function backToDefault(id) {
     const f = followers(id, undefined);
-    PSX.sheet({
+    PSX.confirm({
       title: `Go back to the default everywhere?`, kicker: label(id),
       body: `<p class="psx-p">${mark('info')} <b>${esc(label(id))} becomes ${esc(vt(id, DEFAULTS[id]))}</b> in ${f.changes.length} project${f.changes.length === 1 ? '' : 's'}: ${esc(list(f.changes, 6) || 'none')}.</p>${f.keeps.length ? `<p class="psx-p">${esc(list(f.keeps))} ${f.keeps.length === 1 ? 'keeps its' : 'keep their'} own.</p>` : ''}`,
-      actions: [{ label: 'Cancel', run: (s) => s.close() }, { spacer: true }, { label: 'Go back to the default', primary: true, run: (s) => { s.close(); PSX.setOwn(id, { level: 'everywhere', key: null }, undefined); } }]
+      okLabel: 'Go back to the default', selfReport: true,
+      ok: (y) => PSX.setOwn(id, { level: 'everywhere', key: null }, undefined, { confirmed: !DEF[id].safety || !!y, yolo: y && y.yolo })
     });
   }
 
@@ -269,8 +321,9 @@
     else if (o.actions !== false) {
       const acts = D.createElement('div'); acts.className = 'psx-wacts';
       const why = blockedWrite({ level: o.level, key: o.key });
-      if (o.change !== false) acts.appendChild(btn(`Change`, `Change ${o.name}’s value`, `${k}:change`, why, () => { editing = { id, level: o.level, key: o.key, value: o.value }; rerender(); }));
-      if (o.removable) acts.appendChild(btn(def.home === 'computer' ? 'Use what’s found' : 'Same as everywhere', def.home === 'computer' ? `Make ${o.name} use what Puppet Master finds` : `Make ${o.name} the same as everywhere`, `${k}:same`, why, () => PSX.setOwn(id, { level: o.level, key: o.key }, undefined)));
+      const noEdit = editorKind(id) === 'none' ? 'Change this one with the row’s own control' : null;
+      if (o.change !== false) acts.appendChild(btn(`Change`, `Change ${o.name}’s value`, `${k}:change`, why || noEdit, () => { editing = { id, level: o.level, key: o.key, value: o.value }; rerender(); }));
+      if (o.removable) { const ra = def.home === 'computer' ? { label: 'Use what’s found', aria: `Make ${o.name} use what Puppet Master finds` } : removeAction(id, o.level, o.key, o.name); acts.appendChild(btn(ra.label, ra.aria, `${k}:same`, why, () => PSX.setOwn(id, { level: o.level, key: o.key }, undefined))); }
       if (acts.children.length) el.appendChild(acts);
     }
     return el;
@@ -282,40 +335,72 @@
     b.addEventListener('click', (e) => { e.preventDefault(); if (b.getAttribute('aria-disabled') === 'true') { PSX.note({ title: 'Not now', body: why + '.', mark: /answer|back/.test(why) ? 'offline' : 'info' }); return; } run(); });
     return b;
   }
-  /* the row's own control type, inline: a list, a number, a switch, or words. Enter saves, Esc cancels. */
+  /* the row's own control type, inline: a list of choices, a number with its range, a switch, words, or a list of
+     words one per line. Values the inline editor can't hold as they are (a map, a list of records) are changed with the
+     row's own control. A draft survives the engine redrawing the panel; a value outside the row's range stays unsaved,
+     with the reason next to it. Enter saves, Esc cancels. */
+  function editorKind(id) {
+    const d = DEFAULTS[id], opts = PSX.optionsFor(id);
+    if (opts && opts.length) return 'select';
+    if (typeof d === 'boolean') return 'bool';
+    if (typeof d === 'number') return 'number';
+    if (id === 'memory.assembly.project-rules') return 'area';
+    if (Array.isArray(d)) return d.every((x) => typeof x === 'string') ? 'lines' : 'none';
+    if (d && typeof d === 'object') return 'none';
+    return 'text';
+  }
   function editor(id, o) {
     const wrap = D.createElement('div'); wrap.className = 'psx-wedit';
     const s = PSX.engineSetting(id), cur = o.value === undefined ? PSX.resolve(id, S.ctx).value : o.value;
+    const draft = editing && editing.draft !== undefined ? editing.draft : undefined;
     let ctl, read;
-    const opts = PSX.optionsFor(id);
-    if (opts && opts.length) {
+    const kind = editorKind(id);
+    if (kind === 'select') {
+      const opts = PSX.optionsFor(id);
       ctl = D.createElement('select'); ctl.className = 'psx-input psx-select';
-      opts.forEach((v) => { const op = D.createElement('option'); op.value = JSON.stringify(v); op.textContent = vt(id, v); if (same(v, cur)) op.selected = true; ctl.appendChild(op); });
+      opts.forEach((v) => { const op = D.createElement('option'); op.value = JSON.stringify(v); op.textContent = vt(id, v); if (same(v, draft !== undefined ? JSON.parse(draft) : cur)) op.selected = true; ctl.appendChild(op); });
       read = () => JSON.parse(ctl.value);
-    } else if (typeof DEFAULTS[id] === 'boolean') {
-      ctl = D.createElement('button'); ctl.type = 'button'; ctl.className = 'toggle pm51-toggle' + (cur ? ' on' : ''); ctl.setAttribute('role', 'switch'); ctl.setAttribute('aria-checked', cur ? 'true' : 'false');
-      ctl.addEventListener('click', () => { const on = ctl.getAttribute('aria-checked') !== 'true'; ctl.setAttribute('aria-checked', String(on)); ctl.classList.toggle('on', on); });
+    } else if (kind === 'bool') {
+      const on0 = draft !== undefined ? draft === 'true' : !!cur;
+      ctl = D.createElement('button'); ctl.type = 'button'; ctl.className = 'toggle pm51-toggle' + (on0 ? ' on' : ''); ctl.setAttribute('role', 'switch'); ctl.setAttribute('aria-checked', on0 ? 'true' : 'false');
+      ctl.addEventListener('click', () => { const on = ctl.getAttribute('aria-checked') !== 'true'; ctl.setAttribute('aria-checked', String(on)); ctl.classList.toggle('on', on); if (editing) editing.draft = String(on); });
       read = () => ctl.getAttribute('aria-checked') === 'true';
-    } else if (typeof DEFAULTS[id] === 'number') {
-      ctl = D.createElement('input'); ctl.type = 'number'; ctl.className = 'psx-input psx-num'; ctl.value = String(cur == null ? '' : cur);
-      read = () => (ctl.value === '' ? undefined : Number(ctl.value));
-    } else if (id === 'memory.assembly.project-rules') {
-      ctl = D.createElement('textarea'); ctl.className = 'psx-input psx-area'; ctl.value = String(cur || ''); ctl.rows = 3;
-      read = () => ctl.value;
+    } else if (kind === 'number') {
+      ctl = D.createElement('input'); ctl.type = 'number'; ctl.className = 'psx-input psx-num'; ctl.value = draft !== undefined ? draft : String(cur == null ? '' : cur);
+      if (s && Number.isFinite(+s.min)) ctl.min = String(s.min); else if (DEFAULTS[id] >= 0) ctl.min = DEF[id].combine === 'computer_ceiling' ? '1' : '0';
+      if (s && Number.isFinite(+s.max)) ctl.max = String(s.max);
+      ctl.step = Number.isInteger(DEFAULTS[id]) ? '1' : 'any';
+      read = () => (ctl.value === '' ? NaN : Number(ctl.value));
+    } else if (kind === 'area' || kind === 'lines') {
+      ctl = D.createElement('textarea'); ctl.className = 'psx-input psx-area'; ctl.rows = 3;
+      ctl.value = draft !== undefined ? draft : kind === 'lines' ? (Array.isArray(cur) ? cur.join('\n') : '') : String(cur || '');
+      read = () => (kind === 'lines' ? ctl.value.split('\n').map((x) => x.trim()).filter(Boolean) : ctl.value);
+      if (kind === 'lines') ctl.setAttribute('aria-description', 'One per line');
     } else {
-      ctl = D.createElement('input'); ctl.type = 'text'; ctl.className = 'psx-input psx-text'; ctl.value = String(cur == null ? '' : cur); ctl.spellcheck = false;
+      ctl = D.createElement('input'); ctl.type = 'text'; ctl.className = 'psx-input psx-text'; ctl.value = draft !== undefined ? draft : String(cur == null ? '' : cur); ctl.spellcheck = false;
       read = () => ctl.value.trim();
     }
+    if (ctl.tagName !== 'BUTTON') ctl.addEventListener('input', () => { if (editing) editing.draft = ctl.value; });
+    if (ctl.tagName === 'SELECT') ctl.addEventListener('change', () => { if (editing) editing.draft = ctl.value; });
     ctl.setAttribute('data-psx-edit-control', '1');
     ctl.__psxCancel = () => cancel();
     ctl.setAttribute('aria-label', `${label(id)} for ${o.name}`);
-    const save = () => { const v = read(); const key = `${o.level}:${o.key || ''}:change`; editing = null; PSX.panel.focusAfter = key; PSX.setOwn(id, { level: o.level, key: o.key }, v); rerender(); };
+    const errId = PSX.uid('psx-err');
+    const err = D.createElement('div'); err.className = 'psx-err'; err.id = errId; err.hidden = !(editing && editing.error);
+    if (editing && editing.error) { err.innerHTML = `${mark('warning')}<span>${esc(editing.error)}. Nothing was saved.</span>`; ctl.setAttribute('aria-invalid', 'true'); ctl.setAttribute('aria-describedby', errId); }
+    const save = () => {
+      const v = read();
+      const bad = PSX.guard.invalid({ id, value: Number.isNaN(v) ? NaN : v }) || (Number.isNaN(v) ? 'It has to be a number' : null);
+      if (bad) { if (editing) editing.error = bad; err.hidden = false; err.innerHTML = `${mark('warning')}<span>${esc(bad)}. Nothing was saved.</span>`; ctl.setAttribute('aria-invalid', 'true'); ctl.setAttribute('aria-describedby', errId); try { ctl.focus(); } catch (e) { /* gone */ } return; }
+      const key = `${o.level}:${o.key || ''}:change`; editing = null; PSX.panel.focusAfter = key; PSX.setOwn(id, { level: o.level, key: o.key }, v); rerender();
+    };
     const cancel = () => { const key = `${o.level}:${o.key || ''}:change`; editing = null; rerender({ focusKey: o.isNew ? 'add:' + o.level : key }); };
     ctl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !(ctl.tagName === 'TEXTAREA' && e.shiftKey)) { e.preventDefault(); e.stopPropagation(); save(); }
+      if (e.key === 'Enter' && !(ctl.tagName === 'TEXTAREA' && e.shiftKey) && !(kind === 'lines' && !e.metaKey && !e.ctrlKey)) { e.preventDefault(); e.stopPropagation(); save(); }
       else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); cancel(); }
     });
     wrap.appendChild(ctl);
+    wrap.appendChild(err);
     const acts = D.createElement('div'); acts.className = 'psx-wacts';
     acts.appendChild(btn('Save', `Save ${o.name}’s value`, `${o.level}:${o.key || ''}:save`, null, save));
     acts.appendChild(btn('Cancel', 'Cancel the change', `${o.level}:${o.key || ''}:cancel`, null, cancel));
@@ -336,8 +421,8 @@
     const sec = D.createElement('section');
     sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
     sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">${esc(sentence(id, r))}</p>`;
-    if (r.stale.length) sec.insertAdjacentHTML('beforeend', `<div class="psx-wstate psx-where-note">${mark('offline')}<span>Home NAS isn’t answering. What it keeps is shown as of ${esc(PSX.W.asOf)}.</span></div>`);
-    if (DEVICES[c.device] && DEVICES[c.device].limited) sec.insertAdjacentHTML('beforeend', `<div class="psx-wstate psx-where-note">${mark('info')}<span>${esc(PSX.REASONS.limited_device[0])} The other lines are read only here.</span></div>`);
+    if (r.stale.length) { const wr = [...new Set(r.stale.map((x) => PSX.writer(x.level, x.key)).filter(Boolean))]; sec.insertAdjacentHTML('beforeend', `<div class="psx-wstate psx-where-note">${mark('offline')}<span>${esc(list(wr.map((k) => placeName('computer', k))))} ${wr.length === 1 ? 'isn’t' : 'aren’t'} answering. What ${wr.length === 1 ? 'it keeps is' : 'they keep is'} shown as of ${esc(PSX.W.asOf)}.</span></div>`); }
+    if (DEVICES[S.actor] && DEVICES[S.actor].limited) sec.insertAdjacentHTML('beforeend', `<div class="psx-wstate psx-where-note">${mark('info')}<span>${esc(PSX.REASONS.limited_device[0])} The other lines are read only here.</span></div>`);
     const off = r.offered;
     const own = (lvl) => r.varies.filter((v) => v.level === lvl);
     const decides = (lvl, key) => r.from.level === lvl && (r.from.key || '') === (key || '');
@@ -350,22 +435,22 @@
       const why = blockedWrite({ level: 'everywhere' });
       const states = [];
       if (decides('everywhere') || (!has && r.from.level === 'default')) states.push({ key: 'complete', text: 'In use here' });
-      if (why && /back/.test(why) && !PSX.answering('homenas')) states.push({ key: 'offline', text: `Kept on Home NAS, which isn’t answering · as of ${PSX.W.asOf}` });
+      if (why && /back/.test(why) && !PSX.answering(PSX.home())) states.push({ key: 'offline', text: `Kept on ${PSX.homeName()}, which isn’t answering · as of ${PSX.W.asOf}` });
       const ln = line(id, r, { level: 'everywhere', key: null, name: 'Everywhere', value: has ? r.everywhere : DEFAULTS[id], valueText: has ? vt(id, r.everywhere) : `${vt(id, DEFAULTS[id])} · the default`, inUse: decides('everywhere'), states });
-      if (why && /back/.test(why)) { const ch = ln.querySelector('[data-psx-key$=":change"]'); if (ch) ch.textContent = 'Change it when Home NAS is back'; }
+      if (why && /back/.test(why)) { const ch = ln.querySelector('[data-psx-key$=":change"]'); if (ch) ch.textContent = `Change it when ${PSX.homeName()} is back`; }
       g.appendChild(ln);
     }
     // Computers (or Devices)
     const placeLevel = off.device ? 'device' : off.computer ? 'computer' : null;
     if (placeLevel === 'computer' && def.home === 'computer') {
       const g = mkGroup('Computers');
-      Object.keys(COMPUTERS).forEach((k) => {
+      PSX.computerIds().forEach((k) => {
         g.appendChild(hostLine(id, r, k, false));
         Object.keys(HOSTS).filter((h) => HOSTS[h].parent === k).forEach((h) => g.appendChild(hostLine(id, r, h, true)));
       });
     } else if (placeLevel) {
       const g = mkGroup(placeLevel === 'device' ? 'Devices' : 'Computers');
-      const list0 = own(placeLevel).filter((v) => placeLevel === 'device' ? DEVICES[v.key] : COMPUTERS[v.key]);
+      const list0 = own(placeLevel).filter((v) => placeLevel === 'device' ? DEVICES[v.key] : COMPUTERS[v.key] && PSX.computerIds().includes(v.key));
       const shown = list0.slice(0, MAX_LINES);
       const pending = editing && editing.id === id && editing.level === placeLevel && !list0.find((v) => v.key === editing.key) ? editing : null;
       shown.forEach((v) => {
@@ -381,7 +466,7 @@
       });
       if (list0.length > MAX_LINES) g.insertAdjacentHTML('beforeend', `<div class="psx-wrest">and ${list0.length - MAX_LINES} more</div>`);
       if (pending) g.appendChild(line(id, r, { level: placeLevel, key: pending.key, name: placeName(placeLevel, pending.key), value: pending.value, isNew: true }));
-      const all = placeLevel === 'device' ? Object.keys(DEVICES) : Object.keys(COMPUTERS);
+      const all = placeLevel === 'device' ? Object.keys(DEVICES) : PSX.computerIds();
       const rest = all.filter((k) => !list0.find((v) => v.key === k) && !(pending && pending.key === k)).map((k) => placeName(placeLevel, k));
       if (rest.length) g.insertAdjacentHTML('beforeend', `<div class="psx-wrest">${esc(list(rest, rest.length <= 3 ? 0 : 2))}: same as everywhere</div>`);
       g.appendChild(addButton(id, placeLevel, r));
@@ -416,8 +501,11 @@
     // owner rungs (MA-073): AI services, then accounts
     if (def.owner) {
       const g = mkGroup('AI services and accounts');
-      const pv = r.varies.filter((v) => v.level === 'provider');
-      g.insertAdjacentHTML('beforeend', `<div class="psx-wrest">AI services: ${pv.length ? esc(pv.map((v) => `Claude ${v.value}`).join(', ')) : '(none)'}</div><div class="psx-wrest">Accounts: (none)</div>`);
+      (r.owners || r.varies.filter((v) => v.level === 'provider')).forEach((v) => {
+        const inUse = r.from.level === 'provider' && r.from.key === v.key;
+        g.appendChild(line(id, r, { level: 'provider', key: v.key, name: placeName('provider', v.key), value: v.value, inUse, states: [{ key: inUse ? 'complete' : 'info', text: inUse ? 'In use here' : `Used for ${placeName('provider', v.key)}’s work, wherever it runs` }], actions: false }));
+      });
+      g.insertAdjacentHTML('beforeend', `<div class="psx-wrest">Accounts: none has its own. A service’s own value beats the project and everywhere for that service’s work.</div>`);
     }
     // the reason sentence where a group isn't offered (never a muted line per level)
     const why = [];
@@ -461,7 +549,8 @@
     const el = line(id, r, { level: 'computer', key, name, value: ownV !== undefined ? ownV : (found || DEFAULTS[id]), valueText, states, removable: ownV !== undefined, sub: sub && !HOSTS[key].own, change: found !== null || ownV !== undefined });
     if (found === null && ownV === undefined) {
       const acts = el.querySelector('.psx-wacts') || el.appendChild(Object.assign(D.createElement('div'), { className: 'psx-wacts' }));
-      acts.appendChild(btn(`Install on ${placeName('computer', key)}`, `Install ${def.program || 'it'} on ${placeName('computer', key)}`, `computer:${key}:install`, null, () => PSX.run('cmd.provider.install', [700, 600], () => { w.found[id][key] = '/opt/homebrew/bin/claude'; PSX.W.rev++; PSX.emit('world', {}); PSX.note({ title: `${def.program || 'It'} is installed on ${placeName('computer', key)}`, body: 'Found automatically there.', mark: 'complete' }); rerender(); })));
+      const INSTALLED = { studio: '/opt/homebrew/bin/claude', homenas: '/usr/local/bin/claude', office: 'C:\\Program Files\\Claude\\claude.exe' };
+      acts.appendChild(btn(`Install on ${placeName('computer', key)}`, `Install ${def.program || 'it'} on ${placeName('computer', key)}`, `computer:${key}:install`, PSX.guard.act(key), () => PSX.run('cmd.provider.install', [700, 600], () => { w.found[id][key] = INSTALLED[key] || '/usr/local/bin/claude'; PSX.W.rev++; PSX.emit('world', {}); PSX.note({ title: `${def.program || 'It'} is installed on ${placeName('computer', key)}`, body: `Found automatically there: ${w.found[id][key]}.`, mark: 'complete' }); rerender(); })));
     }
     return el;
   }
@@ -476,10 +565,10 @@
     let items;
     if (level === 'project') items = PROJECTS.map((p) => ({ label: p.id, meta: have.has(p.id) ? 'has its own already' : `works on ${placeName('computer', p.home)}`, disabled: have.has(p.id) ? 'Has its own already' : blockedWrite({ level: 'project', key: p.id }), run: () => startNew(id, 'project', p.id) }));
     else if (level === 'device') items = Object.keys(DEVICES).map((k) => ({ label: DEVICES[k].name, meta: have.has(k) ? 'has its own already' : 'its screen', disabled: have.has(k) ? 'Has its own already' : null, run: () => startNew(id, 'device', k) }));
-    else items = Object.keys(COMPUTERS).map((k) => ({ label: COMPUTERS[k].name, meta: have.has(k) ? 'has its own already' : (k === 'studio' && !PSX.W.studioJoined ? 'not joined yet' : COMPUTERS[k].detail.split(' · ')[0]), disabled: have.has(k) ? 'Has its own already' : blockedWrite({ level: 'computer', key: k }), run: () => startNew(id, 'computer', k) }));
+    else items = PSX.computerIds().map((k) => ({ label: COMPUTERS[k].name, meta: have.has(k) ? 'has its own already' : (k === 'studio' && !PSX.W.studioJoined ? 'not joined yet' : COMPUTERS[k].detail.split(' · ')[0]), disabled: have.has(k) ? 'Has its own already' : blockedWrite({ level: 'computer', key: k }), run: () => startNew(id, 'computer', k) }));
     // levels the row doesn't offer stay in the menu, focusable and greyed, with their short reason
     if (level === 'project' && def.screen === true && !(def.may || []).includes('project')) items = items.map((x) => Object.assign(x, { disabled: PSX.REASONS.about_the_screen[1] }));
-    if (level !== 'device' && def.screen) items.push({ label: 'A computer', disabled: PSX.REASONS.about_the_screen[1] });
+    if (level === 'computer' && def.screen) items.push({ label: 'A computer', disabled: PSX.REASONS.about_the_screen[1] });
     PSX.menu(anchor, items, { label: level === 'project' ? 'Set for a project' : level === 'device' ? 'Set for a device' : 'Set for a computer', width: 280, search: items.length > 8 });
   }
   function startNew(id, level, key) {
@@ -491,32 +580,58 @@
     const items = r.varies.filter((v) => v.level !== 'provider').map((v) => ({ label: `${placeName(v.level, v.key)}’s ${vt(id, v.value)}`, run: () => promote(id, v) }));
     PSX.menu(anchor, items, { label: 'Make one the everywhere value', width: 300 });
   }
+  /* Make one the everywhere value: the whole transaction is simulated (the everywhere write and the source's own value
+     taken away), so the preview lists every project whose value in use changes. On a safety row the source's own is
+     kept when taking it away would leave a project less careful (Home NAS's Plan only stays, or garden-notes would
+     use Full) */
   function promote(id, v) {
-    const f = followers(id, v.value);
-    PSX.sheet({
-      title: `Make ${vt(id, v.value)} the everywhere value?`, kicker: label(id),
-      body: `<p class="psx-p">${mark('info')} <b>${esc(list(f.changes, 5) || 'No project')}</b> ${f.changes.length === 1 ? 'will use' : f.changes.length ? 'will use' : 'changes'} ${esc(vt(id, v.value))}. ${f.keeps.length ? esc(list(f.keeps)) + (f.keeps.length === 1 ? ' keeps its own.' : ' keep their own.') : ''}</p><p class="psx-p">${esc(placeName(v.level, v.key))}’s own value is no longer needed and is taken away in the same change.</p>`,
-      actions: [{ label: 'Cancel', run: (s) => s.close() }, { spacer: true }, { label: 'Make it everywhere', primary: true, run: (s) => {
-        s.close();
-        const tx = PSX.apply([{ level: 'everywhere', key: null, id, value: v.value }, { level: v.level, key: v.key, id, value: undefined }], { batch: 'promote', text: `${label(id)}: ${placeName(v.level, v.key)}’s ${vt(id, v.value)} made the everywhere value` });
-        PSX.feed.push();
-        PSX.note({ title: 'Saved for everywhere.', body: `${f.changes.length} project${f.changes.length === 1 ? '' : 's'} now use ${vt(id, v.value)}.`, actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, id) }] });
-      } }]
+    const def = DEF[id];
+    let writes = [{ level: 'everywhere', key: null, id, value: v.value }, { level: v.level, key: v.key, id, value: undefined }];
+    let sim = PSX.simulate(writes, id), kept = false;
+    if (def.safety && sim.looser.length) { writes = writes.slice(0, 1); sim = PSX.simulate(writes, id); kept = true; }
+    const n = sim.changes.length, keeps = sim.keeps.map((r) => r.project);
+    const blocked = PSX.check.everywhere(id, v.value);
+    if (blocked) { PSX.check.refuse(id, v.value, r0(id), blocked); return; }
+    const body = `<p class="psx-p">${mark('info')} <b>This changes ${n} project${n === 1 ? '' : 's'}.</b> ${keeps.length ? esc(list(keeps, 4)) + (keeps.length === 1 ? ' keeps its own.' : ' keep their own.') : ''}</p>${PSX.guard.changeList(id, sim)}`
+      + (kept ? `<p class="psx-p">${mark('warning')} ${esc(placeName(v.level, v.key))} keeps its own ${esc(vt(id, v.value))}: without it, a project there would be less careful.</p>` : `<p class="psx-p">${esc(placeName(v.level, v.key))}’s own value is no longer needed and is taken away in the same change.</p>`)
+      + (sim.looser.length ? `<p class="psx-p">${mark('warning')} ${esc(list(sim.looser.map((r) => r.project)))} would be less careful.</p>` : '');
+    PSX.confirm({
+      title: `Make ${vt(id, v.value)} the everywhere value?`, kicker: label(id), body, okLabel: 'Make it everywhere',
+      report: { title: 'Saved for everywhere.', body: `${placeName(v.level, v.key)}’s ${vt(id, v.value)} is the everywhere value. It changed ${n} project${n === 1 ? '' : 's'}${kept ? `; ${placeName(v.level, v.key)} keeps its own` : ''}.` },
+      undoId: id,
+      ok: (y) => {
+        const tx = PSX.write(writes, { batch: 'promote', yolo: !!(y && y.yolo), text: `${label(id)}: ${placeName(v.level, v.key)}’s ${vt(id, v.value)} made the everywhere value` });
+        if (tx && !(y && y.yolo)) PSX.note({ title: 'Saved for everywhere.', body: `${n} project${n === 1 ? '' : 's'} now use ${vt(id, v.value)}.${kept ? ` ${placeName(v.level, v.key)} keeps its own.` : ''}`, actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, id) }] });
+        return tx;
+      }
     });
   }
+  const r0 = (id) => PSX.getAt(PSX.W, 'everywhere', null, id);
+  /* Use this everywhere: a batch. Each own value is taken away only where its computer answers; the rest are left as
+     they are, not queued, and the note names them */
   function useEverywhere(id, r) {
+    const def = DEF[id];
     const own = r.varies.filter((v) => v.level !== 'provider');
     const value = r.asked !== undefined ? r.asked : r.value;
-    PSX.sheet({
+    const writes = [{ level: 'everywhere', key: null, id, value }].concat(own.map((v) => ({ level: v.level, key: v.key, id, value: undefined })));
+    const a = PSX.guard.admit(writes);
+    const missedTxt = (m) => `${placeName(m.write.level, m.write.key)}: ${m.text}`;
+    const blocked = PSX.check.everywhere(id, value);
+    if (blocked) { PSX.check.refuse(id, value, r0(id), blocked); return; }
+    const sim = PSX.simulate(a.ok, id);
+    const looser = def.safety ? sim.looser : [];
+    PSX.confirm({
       title: `Use ${vt(id, value)} everywhere?`, kicker: label(id),
-      body: `<p class="psx-p">${mark('info')} Everywhere takes ${esc(vt(id, value))}, and every own value of this setting is taken away:</p><ul class="psx-list">${own.map((v) => `<li class="psx-li"><span class="psx-li-name">${esc(placeName(v.level, v.key))}</span><span class="psx-li-end psx-muted">${esc(vt(id, v.value))} → ${esc(vt(id, value))}</span></li>`).join('')}</ul>`,
-      actions: [{ label: 'Cancel', run: (s) => s.close() }, { spacer: true }, { label: 'Use it everywhere', primary: true, run: (s) => {
-        s.close();
-        const writes = [{ level: 'everywhere', key: null, id, value }].concat(own.map((v) => ({ level: v.level, key: v.key, id, value: undefined })));
-        const tx = PSX.apply(writes, { batch: 'use-everywhere', text: `${label(id)}: ${vt(id, value)} everywhere, ${own.length} own value${own.length === 1 ? '' : 's'} taken away` });
-        PSX.feed.push();
-        PSX.note({ title: 'Saved for everywhere.', body: `${own.length} own value${own.length === 1 ? ' was' : 's were'} taken away.`, actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, id) }] });
-      } }]
+      body: `<p class="psx-p">${mark('info')} Everywhere takes ${esc(vt(id, value))}, and every own value of this setting is taken away:</p><ul class="psx-list">${own.map((v) => { const m = a.missed.find((x) => x.write.level === v.level && x.write.key === v.key); return `<li class="psx-li"><span class="psx-li-name">${esc(placeName(v.level, v.key))}</span><span class="psx-li-end psx-muted">${m ? PSX.st('offline', m.text + ' · left as it is') : `${esc(vt(id, v.value))} → ${esc(vt(id, value))}`}</span></li>`; }).join('')}</ul>`
+        + (looser.length ? `<p class="psx-p">${mark('warning')} ${esc(list(looser.map((x) => x.project)))} would be less careful.</p>` : ''),
+      guard: looser.length ? 'A project would be less careful: a safety relaxation is never made without you.' : null,
+      okLabel: 'Use it everywhere', undoId: id,
+      report: { title: 'Saved for everywhere.', body: `${own.length - a.missed.length} own value${own.length - a.missed.length === 1 ? ' was' : 's were'} taken away.${a.missed.length ? ' Not changed: ' + a.missed.map(missedTxt).join('; ') + '. Nothing was queued.' : ''}` },
+      ok: (y) => {
+        const tx = PSX.write(writes, { batch: 'use-everywhere', yolo: !!(y && y.yolo), text: `${label(id)}: ${vt(id, value)} everywhere, ${own.length - a.missed.length} own value${own.length - a.missed.length === 1 ? '' : 's'} taken away` }, { atomic: false });
+        if (tx && !(y && y.yolo)) PSX.note({ title: 'Saved for everywhere.', body: `${own.length - tx.missed.length} own value${own.length - tx.missed.length === 1 ? ' was' : 's were'} taken away.${tx.missed.length ? ' Not changed: ' + tx.missed.map(missedTxt).join('; ') + '. Nothing was queued.' : ''}`, actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, id) }] });
+        return tx;
+      }
     });
   }
 
@@ -549,7 +664,7 @@
     else here.push({ label: `This computer (${placeName('computer', c.on)})`, disabled: off.computer ? blockedWrite({ level: 'computer', key: c.on }) : PSX.REASONS.same_for_you[1], run: pick({ level: 'computer', key: c.on }) });
     const groups = [{ label: 'Here', items: here }];
     if (off.project) groups.push({ label: 'Another project', items: PROJECTS.filter((p) => p.id !== c.project).map((p) => ({ label: p.id, disabled: blockedWrite({ level: 'project', key: p.id }), run: pick({ level: 'project', key: p.id }) })) });
-    if (off.computer && !off.device) groups.push({ label: 'Another computer', items: Object.keys(COMPUTERS).filter((k) => k !== c.on).map((k) => ({ label: COMPUTERS[k].name, disabled: blockedWrite({ level: 'computer', key: k }), run: pick({ level: 'computer', key: k }) })) });
+    if (off.computer && !off.device) groups.push({ label: 'Another computer', items: PSX.computerIds().filter((k) => k !== c.on).map((k) => ({ label: COMPUTERS[k].name, disabled: blockedWrite({ level: 'computer', key: k }), run: pick({ level: 'computer', key: k }) })) });
     if (off.device) groups.push({ label: 'Another device', items: Object.keys(DEVICES).filter((k) => k !== c.device).map((k) => ({ label: DEVICES[k].name, run: pick({ level: 'device', key: k }) })) });
     PSX.menu(anchor, groups, { label: 'Choosing here changes', width: 280, search: true });
   }
@@ -589,9 +704,11 @@
     const tb = body.querySelector('.o55-insp-techbody'); if (!tb) return;
     const def = DEF[id];
     const may = def.home === 'computer' ? `each Execution Host only (${def.reason})` : def.home === 'project' ? 'each project only (about_this_project)' : def.home === 'everywhere' ? 'nothing (same_for_you)' : (def.may || []).map((m) => m === 'computer' && def.combine === 'computer_ceiling' ? 'computer (at most)' : m === 'computer' && def.combine === 'more_careful' ? 'computer (more careful)' : m).join(', ');
-    const kept = def.home === 'computer' ? 'each Server (its own Execution Hosts)' : def.home === 'project' ? 'each project’s Home Server' : def.screen ? 'Home NAS, the settings home (everywhere) · each device (its own)' + ((def.may || []).includes('project') ? ' · each project’s Home Server (its own)' : '') : 'Home NAS, the settings home (everywhere) · each Server (its own) · each project’s Home Server (its own)';
+    const hn = PSX.homeName();
+    const kept = def.home === 'computer' ? 'each Server (its own Execution Hosts)' : def.home === 'project' ? 'each project’s Home Server' : def.screen ? `${hn}, the settings home (everywhere) · each device (its own)` + ((def.may || []).includes('project') ? ' · each project’s Home Server (its own)' : '') : `${hn}, the settings home (everywhere) · each Server (its own) · each project’s Home Server (its own)`;
     const rows = D.createElement('div'); rows.setAttribute('data-psx-block', 'tech'); rows.className = 'psx-tech';
-    rows.innerHTML = `<div><span>Can differ by</span><code>${esc(may)}</code></div><div><span>Kept on</span><code>${esc(kept)}</code></div><div><span>Command</span><code>cmd.settings.transaction.apply</code></div>`;
+    const rule = def.adopted ? (def.reviewed ? 'reviewed in this concept (fix pass)' : 'concept heuristic; the reviewed rule is a Plans task') : 'demo row';
+    rows.innerHTML = `<div><span>Can differ by</span><code>${esc(may)}</code></div><div><span>Kept on</span><code>${esc(kept)}</code></div><div><span>Rule</span><code>${esc(rule)}</code></div><div><span>Command</span><code>cmd.settings.transaction.preview, then .apply (${esc(PSX.COMMANDS['cmd.settings.transaction.apply'])}); Undo is .rollback</code></div>`;
     const copy = tb.querySelector('.o55-textbtn');
     if (copy) tb.insertBefore(rows, copy); else tb.appendChild(rows);
   }
@@ -600,7 +717,7 @@
      the Settings side sheet (PM51.panel) holding the same Where it applies block */
   function openOwn(id, opener) {
     if (!(W.PM51 && W.PM51.panel)) return;
-    const wrap = W.PM51.panel({ title: label(id), eyebrow: 'Servers › Home & Location', subtitle: 'Where a new project’s folder is made', icon: 'folder', body: `<div class="psx-own" data-psx-own="${esc(id)}"></div>` });
+    const wrap = W.PM51.panel({ title: label(id), eyebrow: 'Computers › Home & Location', subtitle: 'Where a new project’s folder is made', icon: 'folder', body: `<div class="psx-own" data-psx-own="${esc(id)}"></div>` });
     PSX.panel.own = wrap && wrap.querySelector('[data-psx-own]');
     PSX.panel.ownId = id;
     renderOwn();
@@ -611,7 +728,7 @@
     const act = D.activeElement, keep = focusKey || (act && host.contains(act) && act.closest('[data-psx-key]') ? act.closest('[data-psx-key]').dataset.psxKey : null);
     host.innerHTML = `<div class="o55-insp-now${r.changed ? ' is-changed' : ''}"><div class="o55-insp-now-label">${esc(ctxLine(id, r))}</div><div class="o55-insp-now-value">${esc(r.from.level === 'computer' ? r.value : r.found || r.value)}</div><div class="psx-now-from"><span>${esc(fromLine(id, r))}</span>${r.changed ? `<span class="o55-changed">${mark('change-modified')}<span>Changed</span></span>` : ''}</div></div>`;
     host.appendChild(whereBlock(id, r, { context: 'own' }));
-    host.insertAdjacentHTML('beforeend', `<p class="psx-wrule">A new project made to work on Home NAS goes to /volume1/projects/&lt;name&gt;, and New Project shows the whole path. Copy settings never moves it.</p>`);
+    host.insertAdjacentHTML('beforeend', `<p class="psx-wrule">A new project made to work on Home NAS goes to ${esc(PSX.resolve(id, { on: 'homenas', project: 'none' }).value)}/&lt;name&gt;, and New Project shows the whole path. Copy settings never moves it.</p>`);
     if (keep) { const f = host.querySelector(`[data-psx-key="${CSS.escape(keep)}"]`); if (f) f.focus({ preventScroll: true }); }
   }
 
@@ -667,5 +784,5 @@
   PSX.on('redraw', () => rerender());
   PSX.on('fed', () => rerender());
   PSX.on('ctx', () => { editing = null; rerender(); });
-  PSX.panel = { decorate, strip, install, soon, openOwn, current, whereBlock, sentence, own: null, ownId: null, focusAfter: null, rerender };
+  PSX.panel = { decorate, strip, install, soon, openOwn, current, whereBlock, sentence, promote, removeAction, own: null, ownId: null, focusAfter: null, rerender };
 })(window);
