@@ -415,9 +415,11 @@ const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.ma
     facts: JSON.stringify(canon({ hosts: S.env.here.knownHosts || {}, auth: (S.env.devices || []).map((x) => [x.id, (x.authorized || []).slice().sort()]), nasFacts: S.sess.nasFacts || {} })),
     nas: [n.device || null, n.method || null, n.share || null, n.volume || null, n.at || null, n.profile || null, !!n.trusted, !!n.installed, n.choice ? n.choice.id : null],
     restore: [r.source || null, r.kit || null, r.cloud || null, r.device || null, r.pick || null, r.reachedFor || null], online: [ol.forge || null, ol.variant || null, ol.wanted === undefined ? null : !!ol.wanted],
-    backup: [b.dest || null, b.sub || null], ui: [u.where || null, u.whereAt || null, u.begin || null, u.beginSub || null] }; };
+    backup: [b.dest || null, b.sub || null], ui: [u.where || null, u.whereAt || null, u.begin || null, u.beginSub || null],
+    server: [(S.sess.server || {}).kind || null], signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
+    nasPick: [n.key || null, n.user || '', n.userEdit || false] }; };
 /* the steps whose own work is a check, a sign-in, a pairing, an install or a Server's setup (60-ui-core's NO_TXN): no pick */
-const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-key', 'nas-signin', 'nas-install', 'nas-pmpair', 'online-signin', 'r-unlock', 'r-preview', 's-kind', 's-wait', 's-confirm', 's-ready', 'c-review', 'c-pair', 'c-ready'];
+const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'nas-pmpair', 'r-unlock', 'r-preview', 's-wait', 's-confirm', 's-ready', 'c-review', 'c-pair', 'c-ready']; /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
 /* Back from Review to Welcome, and on every step on the way another value picked (or typed) first: Back must take the
    pick back, so the answers after it are those the step was reached with (lead: every picker, not only Review's Edit
    links: the restore source and place, the NAS device, method and folder, the service, the computer kind, the files
@@ -971,6 +973,42 @@ export const tests = {
         const w = await keepOn(A); if (w[w.length - 1] !== 'review') { bad.push(`typed ${what}: never back to Review: ${w.join(' > ')}`); return; }
         const end = await A.frame().evaluate(SNAP20), dk = Object.keys(Object.assign({}, start.draft, end.draft)).filter((k) => JSON.stringify(start.draft[k]) !== JSON.stringify(end.draft[k]));
         if (dk.length) bad.push(`typed ${what}: on to Review again, the draft changed: ${dk.join(', ')}`); });
+    /* the lead's ruling 1103074359: no exception for steps with an operation. The key chosen, the user typed, the token
+       typed and the Server kind picked are taken back by Back like any pick; only a verification that completed persists */
+    const toKeyStep = async (A) => { await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+      await A.click('device', 'nas-home'); await A.click('next', undefined, 'nas-identity'); if (await A.has('trust')) await A.click('trust'); await A.screen('nas-key');
+      await A.waitFor(() => Object.entries(O55.S.sess.ops || {}).some(([k, v]) => k.startsWith('keys:nas-home') && v.state === 'done'), null, 8000); await A.sleep(400); };
+    const VERIFY = [
+      ['the key chosen on nas-key', toKeyStep, async (A) => pickOther(A)],
+      ['the user typed on nas-signin', async (A) => { await toKeyStep(A); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900); await A.screen('nas-signin'); },
+        async (A) => { await A.fill('o55f-user', 'someone-else'); return 'typed o55f-user'; }],
+      ['the token typed on online-signin', async (A) => { await A.toSafe('Notes'); await A.click('online', undefined, 'online-service'); await pickSvc(A, 'gitea'); await A.sleep(300);
+          if (await A.has('variant', 'gitea_self_managed')) await A.click('variant', 'gitea_self_managed'); await A.fill('o55f-address', GITEA); await A.sleep(300); await A.click('next', undefined, 'online-signin'); },
+        async (A) => { const f = (await A.snap()).fields.find((x) => /token/i.test(x.id)); if (!f) { if (await A.has('useToken')) await A.click('useToken'); } const g = (await A.snap()).fields.find((x) => /token/i.test(x.id)); if (!g) return null; await A.fill(g.id, 'ghp_typed_but_not_continued'); return 'typed ' + g.id; }],
+      ['the Server kind on s-kind', async (A) => { await A.click('pick', 'server'); await A.click('next', undefined, 's-kind'); await A.sleep(600); }, async (A) => pickOther(A)]
+    ];
+    for (const [what, reach, act] of VERIFY)
+      await flow(t, `21 verification step: ${what}, then Back`, async (A, bad) => { await reach(A); const at = (await A.snap()).screen, a0 = await A.frame().evaluate(ANSWERS), f0 = await A.frame().evaluate(SEL);
+        const did = await act(A); if (!did) { bad.push(`${what}: nothing to pick or type on ${at}`); return; } await A.sleep(400); if ((await A.snap()).screen !== at) { bad.push(`${what}: ${did} left ${at}`); return; }
+        const mid = await A.frame().evaluate(ANSWERS);
+        await pressBack(A); await A.sleep(800);
+        const a1 = await A.frame().evaluate(ANSWERS), ch = Object.keys(a0).filter((k) => JSON.stringify(a0[k]) !== JSON.stringify(a1[k]));
+        if (ch.length) bad.push(`${what}: ${did} on ${at}, then Back, changed ${ch.map((k) => k + ' ' + String(JSON.stringify(a0[k])).slice(0, 80) + ' > ' + String(JSON.stringify(a1[k])).slice(0, 80)).join('; ')}`);
+        if (JSON.stringify(mid) === JSON.stringify(a0)) t.log(`21 ${what}: ${did} changed nothing in the session even before Back`);
+        await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900);
+        if ((await A.snap()).screen === at) { const f1 = await A.frame().evaluate(SEL); if (JSON.stringify(f0) !== JSON.stringify(f1)) bad.push(`${what}: ${at} reached again shows ${JSON.stringify(f1).slice(0, 220)}, not ${JSON.stringify(f0).slice(0, 220)}`); }
+        t.log(`21 ${what}: ${did} on ${at}, Back`); });
+    /* a record whose stored Begins-as pick disagrees with its plan (constructed or older): Begins as shows the plan's
+       beginning, and Continue there keeps it (lead 1103074359; Sol reader-b's K9a case 6) */
+    await flow(t, '21 a record whose Begins-as pick disagrees with its plan', async (A, bad) => { await toRepoProject(A); await A.screen('review');
+      const plan0 = await A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return [d.project_mode, d.online_mode, d.repository_ref]; });
+      await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(900);
+      await A.frame().evaluate(() => { const saved = O55.store.get('onboarding', null); saved.ui = Object.assign({}, saved.ui, { begin: 'new', beginSub: null, beganAs: 'new' }); O55.store.set('onboarding', saved); if (O55.boot && O55.boot.chip) O55.boot.chip(); });
+      await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 15000 }); await A.sleep(1500); await A.screen('review');
+      await editBeginTo(A); await A.sleep(500); const sel = await A.frame().evaluate(SEL);
+      if (!sel.on.includes('pick:existing') || !sel.on.includes('sub:online')) bad.push('disagreeing record: Begins as shows ' + JSON.stringify(sel.on) + ', not the plan\'s existing online Project');
+      await keepOn(A); const plan1 = await A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return [d.project_mode, d.online_mode, d.repository_ref]; });
+      if (JSON.stringify(plan0) !== JSON.stringify(plan1)) bad.push('disagreeing record: Continue on Begins as changed the plan ' + JSON.stringify(plan0) + ' > ' + JSON.stringify(plan1)); });
     /* final-onb's D1 film: a kept Home NAS, Media Server picked at the device step: before Continue nothing of the Home
        NAS changes; after Continue the plan holds none of it */
     await flow(t, '21 D1 film: Media Server picked, then Continue', async (A, bad) => { await toNasProject(A); await A.screen('review');

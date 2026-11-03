@@ -170,7 +170,9 @@
     title: (S) => T('online.signin.title', { name: SI(S).name }),
     /* true for every service and way in (Astra FA-11 / RV-20: "only asks for access to the Project you choose" was not
        true of the tokens it then asked for); what a token reaches is said in its form, before it is pasted */
-    lead: (S) => { const si = SI(S); return T(si.kind !== 'forge' ? 'online.signin.leadCloud' : methodsOf(S, si)[0] === 'token' ? 'online.signin.leadToken' : 'online.signin.lead', { name: si.name }); },
+    /* (signed in with a token: the reach was said before the paste and is no longer shown, so the lead no longer points
+       below, final-onb FO-32) */
+    lead: (S) => { const si = SI(S); return T(si.kind !== 'forge' ? 'online.signin.leadCloud' : methodsOf(S, si)[0] === 'token' ? (si.state === 'done' ? 'online.signin.leadTokenDone' : 'online.signin.leadToken') : 'online.signin.lead', { name: si.name }); },
     body(S) {
       const si = SI(S), env = si.kind === 'forge' ? world(S) : { accounts: [], signup: true }, methods = methodsOf(S, si);
       /* a server with no sign-in app for Puppet Master (another Forgejo or Gitea server) signs in with an access token */

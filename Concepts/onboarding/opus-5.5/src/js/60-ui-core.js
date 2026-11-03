@@ -883,9 +883,13 @@
      the screen was reached, and any step on from it commits them. The steps whose own work is a check, a sign-in, a
      pairing, an install, a Server's setup or the plan's confirmation keep what that work verified: those are facts, not
      picks. The kept answers are part of the saved session, so Back after Close and Resume takes the picks back too. */
-  const TXN_KEYS = ['drafts', 'active', 'nas', 'restore', 'online', 'backup', 'folder', 'folderInfo', 'like', 'ui', 'azureProjects', 'connect'];
-  const NO_TXN = new Set(['welcome', 'look', 'nas-identity', 'nas-key', 'nas-signin', 'nas-install', 'nas-pmpair', 'online-signin', 'r-unlock', 'r-preview',
-    's-kind', 's-wait', 's-confirm', 's-ready', 'c-review', 'c-pair', 'c-ready', 'review', 'creating', 'protect', 'away-setup', 'ai', 'ai-all', 'ai-none', 'free', 'ready']);
+  /* (the key chosen, the user or token typed and the Server kind are picks like any other, the lead's ruling 1103074359:
+     their steps keep answers too. What a verification completed is kept outside them: a signed-in account in
+     forgeAccounts, a device's authorization and known host in the fixture world and the settled NAS facts, bound to the
+     device, port, account and key) */
+  const TXN_KEYS = ['drafts', 'active', 'nas', 'restore', 'online', 'backup', 'folder', 'folderInfo', 'like', 'ui', 'azureProjects', 'connect', 'signin', 'server'];
+  const NO_TXN = new Set(['welcome', 'look', 'nas-identity', 'nas-install', 'nas-pmpair', 'r-unlock', 'r-preview',
+    's-wait', 's-confirm', 's-ready', 'c-review', 'c-pair', 'c-ready', 'review', 'creating', 'protect', 'away-setup', 'ai', 'ai-all', 'ai-none', 'free', 'ready']);
   const copyOf = (v) => (v === undefined ? undefined : JSON.parse(JSON.stringify(v)));
   function txnOpen(id) {
     if (!S.sess) return;
