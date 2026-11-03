@@ -1253,7 +1253,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
 canonical_text: >-
-  Planning Ledger System owns an Assistant Deep Plan profile that provides a run-scoped native ledger for Deep Plan Thorough, Exhaustive, and BrainStorm only. One DeepPlanLedgerSession binds exactly one assistant_plan_id and plan_version, carries status collecting, ready, sealed, or cancelled, and holds design-atom, decision, question, correction, research, current-state, and source_hash refs using the standard ledger record shapes. The profile does not run the bootstrap migration or transfer pipeline, does not shard, does not modify Plans product canon, generated indexes, evidence, or Spec Lock, and is not available to regular Plan Quick, Standard, or Thorough, which create no ledger at all.
+  Planning Ledger System owns an Assistant Deep Plan profile that provides a run-scoped native ledger for
+  Deep Plan Thorough, Exhaustive, and BrainStorm only. One DeepPlanLedgerSession binds exactly one
+  assistant_plan_id and plan_version, carries status collecting, ready, sealed, or cancelled, and holds
+  design-atom, decision, question, correction, research, current-state, and source_hash refs using the
+  standard ledger record shapes. The profile does not run the bootstrap migration or transfer pipeline,
+  does not shard, does not modify Plans product canon, generated indexes, evidence, or Spec Lock, and is
+  not available to regular Plan Quick, Standard, or Thorough, which create no ledger at all. PLS-024 adds
+  actual application Server/thread/Computer ownership and immutable N25 lineage; it does not add a product
+  bootstrap ledger or broaden regular Plan eligibility.
 gui_related: false
 gui_classification_reason: Ledger session shape, scope, and pipeline exclusion are backend planning-memory semantics; the Assistant surfaces only a read-only plan-process projection owned elsewhere.
 depends_on:
@@ -1280,11 +1288,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-002
-  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-003
-  - pm-assistant-implementation-2026-09-02-recovered:PLAN-008
+  - "pm-assistant-implementation-2026-09-02-recovered:DPLAN-002"
+  - "pm-assistant-implementation-2026-09-02-recovered:DPLAN-003"
+  - "pm-assistant-implementation-2026-09-02-recovered:PLAN-008"
   - "packet:02_RUNTIME_AND_STORAGE_CONTRACTS.md#5.4"
   - "packet:01_IMPLEMENTATION_SPEC.md#5.4"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "DeepPlanLedgerSession"
   - "pm.assistant_plan.deep_ledger_session.v1"
@@ -1306,7 +1317,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
 canonical_text: >-
-  A ready Deep Plan ledger session compiles into exactly one standardized Assistant Plan document revision and creates no PlanUnits by that act; scoped PlanUnit materialization happens later on Build approval under the Plan Document System scoped profile. Send To Planning Wizard is the only promotion route out of the Assistant and carries the sealed session ref, question, decision, correction, and research records, source and answer identity, and source_hash into Planning Wizard, which then owns its own run ledger and never writes back into a sealed session. Question records in a session form one shared registry across every participant so the strategy's question base (Plan 3/6/8, Deep Plan 10/15/20), the configurable Grill extension defaulting to plus twenty-five, duplicate merging, imported thread answers, and researched dispositions are counted once for the whole run rather than per agent.
+  A ready Deep Plan ledger session compiles into exactly one standardized Assistant Plan document revision
+  and creates no PlanUnits by that act; scoped PlanUnit materialization happens later on Build approval
+  under the Plan Document System scoped profile. Send To Planning Wizard is the only promotion route out
+  of the Assistant and carries the sealed session ref, question, decision, correction, and research
+  records, source and answer identity, and source_hash into Planning Wizard, which then owns its own run
+  ledger and never writes back into a sealed session. Question records in a session form one shared
+  registry across every participant so the strategy's question base (Plan 3/6/8, Deep Plan 10/15/20), the
+  configurable Grill extension defaulting to plus twenty-five, duplicate merging, imported thread answers,
+  and researched dispositions are counted once for the whole run rather than per agent. An app Deep Plan
+  conversion/handoff uses PLS-024 and exact source/version/hash lineage through APR-074. Scope movement
+  does not reinterpret a sealed session or run the development bootstrap compile workflow.
 gui_related: false
 gui_classification_reason: Conversion, promotion payload, and registry counting are backend record semantics; the visible questionnaire and Plan card are owned by other documents.
 depends_on:
@@ -1333,12 +1354,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-003
-  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-008
-  - pm-assistant-implementation-2026-09-02-recovered:BRAIN-003
-  - pm-assistant-implementation-2026-09-02-recovered:BRAIN-004
-  - pm-assistant-implementation-2026-09-02-recovered:BRAIN-005
+  - "pm-assistant-implementation-2026-09-02-recovered:DPLAN-003"
+  - "pm-assistant-implementation-2026-09-02-recovered:DPLAN-008"
+  - "pm-assistant-implementation-2026-09-02-recovered:BRAIN-003"
+  - "pm-assistant-implementation-2026-09-02-recovered:BRAIN-004"
+  - "pm-assistant-implementation-2026-09-02-recovered:BRAIN-005"
   - "packet:15_EDGE_CASE_CLOSURES.md#4"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Send To Planning Wizard"
   - "Grill Me"
@@ -1450,3 +1474,65 @@ owner_hints: [Plans/Planning_Ledger_System.md, Plans/External_Research.md]
 ```
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/External_Research.md
+
+### PLS-024 - Application Deep Plan Ledger Custody And Lineage
+
+```yaml
+plan_unit_id: PLS-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: The Assistant Deep Plan profile admits a DeepPlanLedgerSession in application scope with project_id=null,
+  actual Server/thread/Computer, exact assistant_plan_id/plan_version and source_hash. It reuses the existing design-atom/decision/question/correction/research/current-state
+  registry, statuses and question counter; regular Plan opens no ledger. Scope belongs to the session's execution/custody
+  wrapper and is not a Project sentinel. App canonical records use the same bounded retention/holds/backup owners.
+  A source app ledger stays immutable when sealed; N25 carries an explicit linked destination session/source map
+  or a separately owner-admitted binding and never reinterprets accepted source bytes. Runtime Deep Plan does not
+  run the PM bootstrap transfer pipeline or write product Plans/**, owner docs, shards, .plan_index, .evidence or
+  Spec_Lock.json. Scoped ledger/bundle details remain secondary to the readable Assistant Plan.
+gui_related: false
+gui_classification_reason: Defines identity, custody, admission or compiler boundaries; visual placement is consumed
+  from GUI owners.
+depends_on:
+- PLS-020
+- AI-069
+unblocks: []
+acceptance_criteria:
+- App Deep Plan session keeps exact Plan/version/source and shared question state through restart/export/backup.
+- Regular Plan creates no ledger; conversion preserves sealed source and exact destination lineage.
+- No runtime operation writes product canon or governance.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/Planning_Ledger_System.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#N21-N22; Plan-Deep-Plan
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
+preserved_exact_tokens:
+- DeepPlanLedgerSession
+- project_id=null
+- assistant_plan_id/plan_version
+- source_hash
+- N25
+- Plans/**
+- .plan_index
+- .evidence
+- Spec_Lock.json
+negative_constraints:
+- No bootstrap-ledger reuse, Project sentinel, duplicated question counter or canonical-product authority.
+owner_hints:
+- Plans/Planning_Ledger_System.md
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md#PLS-024, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md

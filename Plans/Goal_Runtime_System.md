@@ -59,7 +59,7 @@ Runtime_Artifacts_Panel owns user-visible runtime-artifact browsing and retentio
 
 A Goal is one concise text objective plus a lifecycle. There is no title field, no separate summary, no structured decomposition, and no second text field of any kind. The objective prose itself carries the outcome, the finish condition, and the constraints, because a user who wants to change any of those edits one paragraph rather than reconciling five fields.
 
-`GoalRecordV2` is the only active writer schema:
+`GoalRecordV2` below is the exact original Project writer edition; GRS-086 admits a distinct application edition with the same eleven fields and `project_id=null` at birth. Scope/Computer metadata belongs to the wrapper/execution record. Neither edition permits ordinary binding mutation, and original Project bytes/hashes remain valid.
 
 ```yaml
 schema_id: pm.goal.record.v2
@@ -261,7 +261,7 @@ ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Collaborativ
 
 `cmd.chat.goal.start` and `cmd.chat.goal.update` are pre-existing registered command IDs. This wave revises their request and result contracts in place to `GoalStartRequestV2`/`GoalStartResultV2` and `GoalUpdateRequestV2`/`GoalUpdateResultV2`. They keep one registration, one sole future handler, and one wiring identity; no peer row, compatibility spelling, or second handler is minted for them.
 
-Every request carries `schema_id`, `schema_version`, command ID, command instance ID, `project_id`, `thread_id`, `goal_id` where applicable, expected revision, expected `currentness_hash`, actor, permission snapshot, idempotency key, source surface, and return route. Typed errors are `invalid_request`, `goal_not_found`, `stale_goal_revision`, `stale_currentness`, `objective_too_long`, `approval_required`, `approval_not_resolved`, `manual_stop_latched`, `blocked_condition_unresolved`, `command_not_registered`, `permission_denied`, `owner_unavailable`, or `cancelled`. A rejection or proven no-effect before original body admission writes no body/revision and emits no success-shaped receipt. For cmd.chat.goal.start, a later refusal or unresolved event/result step after a valid joined body commit preserves that accepted original revision and pending custody, emits no success-shaped receipt and creates no additional revision under GRS-066/SP-294. Other commands retain their existing atomic mutation and typed-error boundaries.
+Every request carries `schema_id`, `schema_version`, command ID, command instance ID, explicit app/Project scope, `project_id` (null for app), actual Server/Computer, `thread_id`, `goal_id` where applicable, expected revision, expected `currentness_hash`, actor, permission snapshot, idempotency key, source surface, and return route. Typed errors are `invalid_request`, `goal_not_found`, `stale_goal_revision`, `stale_currentness`, `objective_too_long`, `approval_required`, `approval_not_resolved`, `manual_stop_latched`, `blocked_condition_unresolved`, `command_not_registered`, `permission_denied`, `owner_unavailable`, or `cancelled`. A rejection or proven no-effect before original body admission writes no body/revision and emits no success-shaped receipt. For cmd.chat.goal.start, a later refusal or unresolved event/result step after a valid joined body commit preserves that accepted original revision and pending custody, emits no success-shaped receipt and creates no additional revision under GRS-066/SP-294. Other commands retain their existing atomic mutation and typed-error boundaries. GRS-086 selects a new exact app edition and source/result graph; old Project commands/results remain unchanged.
 
 Until the central command catalog, Event Authority, and production wiring rows close for a given ID, its controls render disabled with `command_not_registered`. No page-local handler, alias, fixture, or toast may simulate success.
 
@@ -271,7 +271,7 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Comman
 
 The required semantic event names are `goal.created`, `goal.updated`, `goal.paused`, `goal.resumed`, `goal.blocked`, `goal.completed`, `goal.cancelled`, and `goal.continuation_evaluated`. Each exact name requires its own central EventRecord registration and payload schema before emission. `goal.created` is admitted only through CV-341/SP-294 and `goal.updated` only through CV-342/SP-299; their current source/receipt/result obligations and native availability still apply. Other names retain their own individual admission state; no sibling registration grants emission.
 
-Envelopes carry Project, thread, and Goal identity, revision, `currentness_hash`, actor, correlation and causation, idempotency key, and redacted source refs. `goal.updated` carries `change_source` and, for the agent path, `approval_id`. `goal.continuation_evaluated` carries `result`, `user_stop_epoch`, and completion-evidence refs by reference rather than by value.
+Envelopes carry explicit app/Project scope, null or actual Project as appropriate, real thread/Computer and Goal identity, revision, `currentness_hash`, actor, correlation and causation, idempotency key, and redacted source refs. `goal.updated` carries `change_source` and, for the agent path, `approval_id`. `goal.continuation_evaluated` carries `result`, `user_stop_epoch`, and completion-evidence refs by reference rather than by value. Each app payload/source/append/read/backup version is admitted explicitly under GRS-086; no historical-only family is revived.
 
 No event may carry `objective_text` in full where a hash and a revision reference suffice for audit, and no event may carry secrets, tokens, provider credentials, or raw file bodies.
 
@@ -316,7 +316,12 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Mode is a native autonomous execution mode for finished Puppet Master product behavior. It replaces the failed long prompt-packet/D2 handoff approach for long or cross-referential work. It must support arbitrary assistant goals and must not be narrowed to planning-doc transfer, bootstrapped PM Goal Mode, prompt loops, or staged prompt packets under a different name.
+  Goal Mode is a native autonomous execution mode for finished Puppet Master product behavior. It replaces
+  the failed long prompt-packet/D2 handoff approach for long or cross-referential work. It must support
+  arbitrary assistant goals and must not be narrowed to planning-doc transfer, bootstrapped PM Goal Mode,
+  prompt loops, or staged prompt packets under a different name. The same native Goal owner admits
+  ordinary app-thread Goals under GRS-086; no Project/NamedPlan/WorkNode is fabricated and no prompt
+  packet substitutes for canonical state.
 gui_related: false
 gui_classification_reason: This unit defines runtime/product scope and retired workflow boundaries, not GUI implementation.
 depends_on: []
@@ -338,17 +343,20 @@ node_compile_hint:
   mode: runtime_scope_contract
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0002
-  - pldg-20260616-001-goal-runtime-system:atom-0003
-  - pldg-20260616-001-goal-runtime-system:atom-0004
-  - pldg-20260616-001-goal-runtime-system:atom-0005
-  - pldg-20260616-001-goal-runtime-system:atom-0081
-  - pldg-20260616-001-goal-runtime-system:dec-0002
-  - pldg-20260616-001-goal-runtime-system:dec-0004
-  - pldg-20260616-001-goal-runtime-system:dec-0005
-  - pldg-20260616-001-goal-runtime-system:corr-0001
-  - pldg-20260616-001-goal-runtime-system:corr-0002
-  - pldg-20260616-001-goal-runtime-system:corr-0004
+  - "pldg-20260616-001-goal-runtime-system:atom-0002"
+  - "pldg-20260616-001-goal-runtime-system:atom-0003"
+  - "pldg-20260616-001-goal-runtime-system:atom-0004"
+  - "pldg-20260616-001-goal-runtime-system:atom-0005"
+  - "pldg-20260616-001-goal-runtime-system:atom-0081"
+  - "pldg-20260616-001-goal-runtime-system:dec-0002"
+  - "pldg-20260616-001-goal-runtime-system:dec-0004"
+  - "pldg-20260616-001-goal-runtime-system:dec-0005"
+  - "pldg-20260616-001-goal-runtime-system:corr-0001"
+  - "pldg-20260616-001-goal-runtime-system:corr-0002"
+  - "pldg-20260616-001-goal-runtime-system:corr-0004"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "native autonomous execution mode"
   - "not merely a smarter prompt"
@@ -373,7 +381,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  A Goal is one concise text objective plus a lifecycle. GoalRecordV2 (pm.goal.record.v2) carries goal_id, project_id, thread_id, objective_text, revision, state, blocked_reason_ref, active_run_ref, created_at, updated_at, and currentness_hash and nothing else. There is no title, no second text field, no phase, no tranche, no child_goal_ids, no goal_budget, no planner/verifier/adjudicator role field, no separate done_when/scope/constraints, and no attachment manifest. The lifecycle enum is exactly active|paused|blocked|completed; cancellation is a receipt plus removal from the active projection, not a fifth state. currentness_hash is the compare-and-swap token for every mutation, and an objective that exceeds the approximately 4,000-character product maximum is rejected with a typed error rather than truncated. GRS-064/SP-287 supply the concrete scalar limit, semantic codec/currentness recipe and shared owner.goal.body.mutation@1.0.0 custody route without adding a Goal field.
+  A Goal is one concise text objective plus a lifecycle. GoalRecordV2 (pm.goal.record.v2) carries goal_id,
+  project_id, thread_id, objective_text, revision, state, blocked_reason_ref, active_run_ref, created_at,
+  updated_at, and currentness_hash and nothing else. There is no title, no second text field, no phase, no
+  tranche, no child_goal_ids, no goal_budget, no planner/verifier/adjudicator role field, no separate
+  done_when/scope/constraints, and no attachment manifest. The lifecycle enum is exactly
+  active|paused|blocked|completed; cancellation is a receipt plus removal from the active projection, not
+  a fifth state. currentness_hash is the compare-and-swap token for every mutation, and an objective that
+  exceeds the approximately 4,000-character product maximum is rejected with a typed error rather than
+  truncated. GRS-064/SP-287 supply the concrete scalar limit, semantic codec/currentness recipe and shared
+  owner.goal.body.mutation@1.0.0 custody route without adding a Goal field. GRS-086 adds a distinct
+  application edition with the same eleven fields and a null project_id at birth; the existing Project
+  pm.goal.record.v2 semantic codec is not relaxed. Wrapper/execution scope supplies real Computer
+  metadata. All binding fields remain immutable; no Goal budget or child hierarchy is reintroduced.
 gui_related: true
 gui_classification_reason: The record shape decides what the Goal Activity bar and Goal Activity Detail may render, and forbids every retired projection.
 depends_on: []
@@ -397,9 +417,12 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Concepts/chat-assistant-concepts/5.6 Pro/goals.js (5.6 Pro prototype; behaviour reference only)"
-  - pm-assistant-implementation-2026-09-02-recovered:GOAL-001
-  - pm-assistant-implementation-2026-09-02-recovered:GOAL-002
-  - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#4.1
+  - "pm-assistant-implementation-2026-09-02-recovered:GOAL-001"
+  - "pm-assistant-implementation-2026-09-02-recovered:GOAL-002"
+  - "pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#4.1"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "pm.goal.record.v2"
   - "objective_text"
@@ -462,7 +485,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Continuation is host-owned and durable. One model response ending is never completion. At each turn boundary the host reloads canonical Goal state, checks currentness, compares the user stop epoch, evaluates owner-supplied completion evidence, and records a GoalContinuationRecord (pm.goal.continuation.v2) with result continue|complete|pause|blocked|cancelled. The next turn is an ordinary agent turn with bounded current workflow context; the host never accumulates a growing Goal prompt. result complete requires completion_evidence_refs supplied by the owning caller -- a model asserting it is finished is a proposal, not a completion. Continuation is idempotent per goal_id, goal_revision, owning_run_id, and next_attempt_ref, and survives compaction, restart, model switch, provider switch, and account switch.
+  Continuation is host-owned and durable. One model response ending is never completion. At each turn
+  boundary the host reloads canonical Goal state, checks currentness, compares the user stop epoch,
+  evaluates owner-supplied completion evidence, and records a GoalContinuationRecord
+  (pm.goal.continuation.v2) with result continue|complete|pause|blocked|cancelled. The next turn is an
+  ordinary agent turn with bounded current workflow context; the host never accumulates a growing Goal
+  prompt. result complete requires completion_evidence_refs supplied by the owning caller -- a model
+  asserting it is finished is a proposal, not a completion. Continuation is idempotent per goal_id,
+  goal_revision, owning_run_id, and next_attempt_ref, and survives compaction, restart, model switch,
+  provider switch, and account switch. App continuation checks the Server-owned app pause and scope epoch
+  as well as target Stop, permissions, working roots and storage writer. Owner outage is unavailable
+  state, not completion/failure or a move; budgets and parent ceilings do not reset per chat.
 gui_related: false
 gui_classification_reason: Continuation is runtime behavior; its only GUI consequence is the Goal state shown in Activity.
 depends_on: [GRS-048]
@@ -485,8 +518,11 @@ node_compile_hint:
   mode: goal_continuation_contract
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:GOAL-004
-  - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#4.3
+  - "pm-assistant-implementation-2026-09-02-recovered:GOAL-004"
+  - "pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#4.3"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "pm.goal.continuation.v2"
   - "completion_evidence_refs"
@@ -507,7 +543,16 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  A manual Stop, Pause, or Cancel is authoritative and terminal for automation. It defeats Goal continuation, scheduled resume, Usage-reset resume, execution-window resume, Crew Auto, and provider-native retry until the user explicitly resumes or creates a new schedule. A continuation decided before a Stop that would dispatch after it is discarded by stop-epoch comparison at dispatch time. Goal Runtime consumes Scheduling and Quota Resume for window and quota mechanics and takes precedence over it on this one point. Quota waiting does not mutate objective_text, does not create a phase, and does not change state by itself; the Goal stays active with its run waiting.
+  A manual Stop, Pause, or Cancel is authoritative and terminal for automation. It defeats Goal
+  continuation, scheduled resume, Usage-reset resume, execution-window resume, Crew Auto, and
+  provider-native retry until the user explicitly resumes or creates a new schedule. A continuation
+  decided before a Stop that would dispatch after it is discarded by stop-epoch comparison at dispatch
+  time. Goal Runtime consumes Scheduling and Quota Resume for window and quota mechanics and takes
+  precedence over it on this one point. Quota waiting does not mutate objective_text, does not create a
+  phase, and does not change state by itself; the Goal stays active with its run waiting. The app-scope
+  SQR-020 latch participates independently of a Project latch. No new schedule, conversion, YOLO
+  continuation or reconnect clears either scope latch; a per-run new user-schedule exception never clears
+  scope pause.
 gui_related: true
 gui_classification_reason: The Resume control must render disabled with the exact latched-stop reason rather than appearing available.
 depends_on: [GRS-050]
@@ -531,8 +576,11 @@ node_compile_hint:
   mode: goal_stop_precedence
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:GOAL-005
-  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#1.5
+  - "pm-assistant-implementation-2026-09-02-recovered:GOAL-005"
+  - "pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#1.5"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "manual_stop_latched"
   - "user_stop_epoch"
@@ -639,18 +687,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Exactly two paths write objective_text. A direct user edit in Goal Activity Detail writes revision n+1 with
-  change_source user_direct; Save is the approved change and requires no confirmation dialog, no agent review,
-  and no material-difference analysis. An agent-proposed complete replacement, permitted only after an explicit
-  user instruction to change the Goal, dispatches cmd.chat.goal.propose_update, returns an ApprovalRequest, and
-  writes nothing until the user approves, at which point the accepted text is written with change_source
-  agent_proposed_user_approved and the originating approval_id. The agent may create a Goal on an explicit user
-  request without a second approval, and may never infer one from a long task, repeated failures, a Plan Build,
-  or a schedule. The system must never silently rewrite, narrow, broaden, summarize, reformat, translate, or
-  clarify objective_text; an attempt is a typed error, not a quiet no-op. Q22, Jared 2026-10-30 (DL-257): Goal
-  Activity Detail consumes the same five-family/ten-variant Project theme snapshot, including NieR Light/Dark
-  and its retained Adjust parts/background. No Goal-local NieR override, appearance command, stored theme or
-  lifecycle mutation is introduced; SSYS-043 owns appearance and migration.
+  Exactly two paths write objective_text. A direct user edit in Goal Activity Detail writes revision n+1
+  with change_source user_direct; Save is the approved change and requires no confirmation dialog, no
+  agent review, and no material-difference analysis. An agent-proposed complete replacement, permitted
+  only after an explicit user instruction to change the Goal, dispatches cmd.chat.goal.propose_update,
+  returns an ApprovalRequest, and writes nothing until the user approves, at which point the accepted text
+  is written with change_source agent_proposed_user_approved and the originating approval_id. The agent
+  may create a Goal on an explicit user request without a second approval, and may never infer one from a
+  long task, repeated failures, a Plan Build, or a schedule. The system must never silently rewrite,
+  narrow, broaden, summarize, reformat, translate, or clarify objective_text; an attempt is a typed error,
+  not a quiet no-op. Q22, Jared 2026-10-30 (DL-257): Goal Activity Detail consumes the same
+  five-family/ten-variant Project theme snapshot, including NieR Light/Dark and its retained Adjust
+  parts/background. No Goal-local NieR override, appearance command, stored theme or lifecycle mutation is
+  introduced; SSYS-043 owns appearance and migration. For app Goal Activity Detail the same
+  five-family/ten-variant appearance comes from the Settings resolver without a Project rung. Goal text
+  authority is unchanged by YOLO and scope conversion is not an objective update.
 gui_related: true
 gui_classification_reason: This defines the Goal editor Save behavior and the approval dialog contents for agent proposals.
 depends_on: [GRS-048]
@@ -673,9 +724,12 @@ node_compile_hint:
   mode: goal_change_authority
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:GOAL-008
-  - pm-assistant-implementation-2026-09-02-recovered:GOAL-009
-  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#4.6
+  - "pm-assistant-implementation-2026-09-02-recovered:GOAL-008"
+  - "pm-assistant-implementation-2026-09-02-recovered:GOAL-009"
+  - "pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#4.6"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "user_direct"
   - "agent_proposed_user_approved"
@@ -696,7 +750,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal and To-Dos are Activity domains, not transcript cards. The Activity bar renders a compact Goal projection with state and a truncated objective, and a hover menu offering Pause, Resume, Cancel, and an edit icon that opens Goal Activity Detail in edit mode. Goal Activity Detail shows the full objective, an editable field with Save and Cancel edit, the lifecycle controls, and a compact revision History listing revision number, timestamp, change_source, and the objective text at that revision. The detail view must not show a title field, phases, tranches, child Goals, budgets, a current action, a next action, a task drawer, an invented percentage progress bar, or separate scope, done-when, and constraints fields. Goal progress is visible through To-Dos and the ordinary transcript.
+  Goal and To-Dos are Activity domains, not transcript cards. The Activity bar renders a compact Goal
+  projection with state and a truncated objective, and a hover menu offering Pause, Resume, Cancel, and an
+  edit icon that opens Goal Activity Detail in edit mode. Goal Activity Detail shows the full objective,
+  an editable field with Save and Cancel edit, the lifecycle controls, and a compact revision History
+  listing revision number, timestamp, change_source, and the objective text at that revision. The detail
+  view must not show a title field, phases, tranches, child Goals, budgets, a current action, a next
+  action, a task drawer, an invented percentage progress bar, or separate scope, done-when, and
+  constraints fields. Goal progress is visible through To-Dos and the ordinary transcript. The identical
+  Activity/Detail/history controls work in application scope and disclose No project/Computer through
+  shared chrome; no app-only Goal card, state or task grouping is created.
 gui_related: true
 gui_classification_reason: This unit defines the Goal Activity bar projection, hover menu, and Activity Detail surface.
 depends_on: [GRS-048, GRS-054]
@@ -722,8 +785,11 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Concepts/chat-assistant-concepts/5.6 Pro/goals.js (5.6 Pro prototype; behaviour reference only)"
-  - pm-assistant-implementation-2026-09-02-recovered:GOAL-010
-  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#8
+  - "pm-assistant-implementation-2026-09-02-recovered:GOAL-010"
+  - "pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#8"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Goal Activity Detail"
   - "Pause/Resume"
@@ -743,7 +809,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Migration reads pm.goal.record.v1 and writes pm.goal.record.v2 as a one-way structural reduction with explicit custody. objective maps to objective_text unchanged and an oversized objective quarantines rather than truncating. title, phases, currentPhaseId, tranches, subgoals, child_goal_ids, budget, and role-cast fields are dropped and recorded in the migration receipt; evidence attached to a completed phase is re-parented to the workflow owner that produced it or retained as an immutable historical artifact reference, never deleted to make a migration pass. V1 cancelled maps to a cancellation receipt plus removal from the active projection because cancellation is not a V2 state. Revision history is synthesized as a single revision 1 with change_source user_direct when none exists; migration never fabricates intermediate revisions. In-flight V1 Goals are paused across the boundary and require an explicit user resume, and a manually stopped V1 Goal stays stopped.
+  Migration reads pm.goal.record.v1 and writes pm.goal.record.v2 as a one-way structural reduction with
+  explicit custody. objective maps to objective_text unchanged and an oversized objective quarantines
+  rather than truncating. title, phases, currentPhaseId, tranches, subgoals, child_goal_ids, budget, and
+  role-cast fields are dropped and recorded in the migration receipt; evidence attached to a completed
+  phase is re-parented to the workflow owner that produced it or retained as an immutable historical
+  artifact reference, never deleted to make a migration pass. V1 cancelled maps to a cancellation receipt
+  plus removal from the active projection because cancellation is not a V2 state. Revision history is
+  synthesized as a single revision 1 with change_source user_direct when none exists; migration never
+  fabricates intermediate revisions. In-flight V1 Goals are paused across the boundary and require an
+  explicit user resume, and a manually stopped V1 Goal stays stopped. App birth is a deliberate new scope
+  edition, not a reinterpretation of migrated Project V1/V2 bodies. Migration never supplies a null
+  Project by guessing and never reenrolls an old source under a new hash.
 gui_related: false
 gui_classification_reason: Migration is a storage and custody operation with no user-visible surface of its own.
 depends_on: [GRS-048]
@@ -767,8 +844,11 @@ node_compile_hint:
   mode: goal_v1_to_v2_migration
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:GOAL-011
-  - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#12.1
+  - "pm-assistant-implementation-2026-09-02-recovered:GOAL-011"
+  - "pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#12.1"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "pm.goal.record.v1"
   - "pm.goal.record.v2"
@@ -793,7 +873,7 @@ owner_hints:
 
 All six are `handler_unavailable` until central registration, schema binding, the named sole native handler, permission/FileSafe route, production wiring, and receipt-or-admitted-event disposition are current. No fixture or Plan text makes a handler available. Source token `cmd.goal.handoff.open_details` is retained only as the adjudicated spelling for `ui.goal.handoff.open_details`, a typed, bounded, redacted, lazy local projection with no domain handler and no domain EventRecord. Its exact consumers are Goal/Assistant status, Project activity, Goal handoff modal, status bar, and Doctor.
 
-Checkpoint and pause serialize only a durable continuation boundary, source/worktree identity, artifact refs, owner state, generations, and non-secret credential refs; they never freeze, serialize, or migrate a live process. Continue and resume revalidate exact Goal/GoalRun/Project/source location/current Host/target Host, topology, source, worktree, capability, credential, permission, and checkpoint generations. Retry keeps the same idempotent handoff identity but revalidates the typed failure and all currentness inputs. Cancel targets only the exact cancellable handoff operation. Restart converges from the durable handoff journal to resume, rollback, or `recovery_required`; duplicated, stale, or racing requests cannot produce two continuations. Results restore the exact initiating surface, route, focus, and invocation generation or report `caller_unavailable` without redirecting to a convenient fallback. Requests, results, receipts, logs, details projections, and ObservableWork expose no raw secret, protected authentication content, credential value, or unrestricted filesystem path.
+Checkpoint and pause serialize only a durable continuation boundary, source/worktree identity, artifact refs, owner state, generations, and non-secret credential refs; they never freeze, serialize, or migrate a live process. Continue and resume revalidate exact Goal/GoalRun, explicit application or Project scope, source location/current Host/target Host, topology, source, worktree, capability, credential, permission, and checkpoint generations. Retry keeps the same idempotent handoff identity but revalidates the typed failure and all currentness inputs. Cancel targets only the exact cancellable handoff operation. Restart converges from the durable handoff journal to resume, rollback, or `recovery_required`; duplicated, stale, or racing requests cannot produce two continuations. Results restore the exact initiating surface, route, focus, and invocation generation or report `caller_unavailable` without redirecting to a convenient fallback. Requests, results, receipts, logs, details projections, and ObservableWork expose no raw secret, protected authentication content, credential value, or unrestricted filesystem path. App handoff uses GRS-086 current scope/roots/writer and does not invent a Project; source and destination authority are independent.
 
 ### GRS-047 - Goal Handoff Command And Local-Projection Closure
 
@@ -836,7 +916,14 @@ plan_unit_id: GRS-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: A GoalRun freezes its requested and effective provider, model, account, route, Persona, mode, topology, policy generations, and resolver evidence at admission. Replan, provider rotation, fallback, or user route change creates an explicit revisioned rebind with reason, authority/currentness checks, prior/new snapshots, and owner epoch; focus, thread selection, reconnect, compaction, or current Settings never silently retarget an admitted GoalRun.
+canonical_text: >-
+  A GoalRun freezes its requested and effective provider, model, account, route, Persona, mode, topology,
+  policy generations, and resolver evidence at admission. Replan, provider rotation, fallback, or user
+  route change creates an explicit revisioned rebind with reason, authority/currentness checks, prior/new
+  snapshots, and owner epoch; focus, thread selection, reconnect, compaction, or current Settings never
+  silently retarget an admitted GoalRun. App admission uses real thread/Computer/roots with null Project;
+  scope conversion cannot use this ordinary runtime rebind to change Goal identity. GRS-087 requires
+  linked birth or its separate association transaction.
 gui_related: false
 depends_on: [GRS-044, MS-137]
 unblocks: []
@@ -851,7 +938,10 @@ context_scope: frozen_goal_route
 implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Models_System.md, Plans/Multi-Account.md]
 node_compile_hint: {mode: goal_route_binding_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-003
+  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-003"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints: [Do not retarget a Goal from focus or current settings., Do not commit late prior-binding work.]
 ```
 
@@ -1327,18 +1417,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime, not the worker model alone, drives runtime-driven idle continuation until completion, blocked, stopped, failed, cancelled, or budget-limited. When the thread is idle and eligible, `try_start_turn_if_idle` reloads canonical goal state, checks currentness, budgets, and user preemption, and starts the next bounded turn; this is not model self-recursion. User preemption, constraints, scope changes, and goal updates are revisioned with goal_revision, previous_revision, objective_update, constraint_added, active_subgoals_notified, and stale child goals so the scheduler can pause, re-evaluate impact, cancel or re-scope child goals, and resume from a coherent state.
+  Host-owned try_start_turn_if_idle reloads canonical concise Goal/body/control and exact thread scope,
+  verifies currentness, owner permission/root/storage/recovery and Stop epochs, and admits one bounded
+  ordinary turn under the existing run limits. App continuation uses GRS-086; scope conversion uses
+  GRS-087. Objective updates retain the exact two accepted sources and revision chain. Legacy
+  previous_revision/objective_update/constraint_added/active_subgoals_notified fields, child Goal
+  re-scoping and Goal budgets are compatibility/source-lineage only under GRS-048/051; they are not active
+  Goal fields or a second scheduler.
 gui_related: false
 gui_classification_reason: Scheduler continuation and revisioning are runtime behavior; visible controls are Assistant Chat consumer behavior.
 depends_on:
   - GRS-005
 unblocks: []
 acceptance_criteria:
-  - A running goal can be paused by user instruction before new scheduling work begins.
-  - Runtime state records revisions for material goal updates.
-  - Scheduler continuation stops only at explicit lifecycle/budget/authority states.
-  - "`try_start_turn_if_idle` starts continuation only after canonical-state reload, currentness checks, budget checks, and user preemption checks."
-  - Material goal updates preserve goal_revision, previous_revision, objective_update, constraint_added, active_subgoals_notified, and stale child goals.
+  - "The host reloads canonical state and Stop/currentness/root/permission/writer evidence before every bounded turn."
+  - "Goal revision writes use the current two-source text contract; retired child/role/budget fields stay lineage-only."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future scheduler state-machine tests
@@ -1352,9 +1445,12 @@ node_compile_hint:
   mode: scheduler_revision_contract
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0035
-  - pldg-20260616-001-goal-runtime-system:atom-0036
-  - pldg-20260616-001-goal-runtime-system:atom-0037
+  - "pldg-20260616-001-goal-runtime-system:atom-0035"
+  - "pldg-20260616-001-goal-runtime-system:atom-0036"
+  - "pldg-20260616-001-goal-runtime-system:atom-0037"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Runtime-driven continuation"
   - "runtime-driven idle continuation"
@@ -2215,7 +2311,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime handles ordinary ambiguity and large-work recovery autonomously by preserving open questions, conflicts, or unplaced requirements in appropriate docs/artifacts, selecting a safe canonical destination when policy is clear, retrying, inspecting, replanning, spawning verifier/subagents, escalating model tier, narrowing scope, running repair gates, rolling back isolated changes when appropriate, and recording precise blockers when it cannot proceed. Large, cross-referential, ambiguous-in-ordinary-ways, or many-shard tasks do not route to manual decision merely because they are large. Blocked status must store and display blocker_class, cause, affected scope, last attempted recovery, why autonomous recovery cannot continue safely, and next safe action rather than a generic failure label.
+  Goal Runtime handles ordinary ambiguity and large-work recovery autonomously by preserving open
+  questions, conflicts, or unplaced requirements in appropriate docs/artifacts, selecting a safe canonical
+  destination when policy is clear, retrying, inspecting, replanning, spawning verifier/subagents,
+  escalating model tier, narrowing scope, running repair gates, rolling back isolated changes when
+  appropriate, and recording precise blockers when it cannot proceed. Large, cross-referential,
+  ambiguous-in-ordinary-ways, or many-shard tasks do not route to manual decision merely because they are
+  large. Blocked status must store and display blocker_class, cause, affected scope, last attempted
+  recovery, why autonomous recovery cannot continue safely, and next safe action rather than a generic
+  failure label. For app Goals autonomous recovery stays inside real task roots and authority; missing
+  permission/capability/Computer remains a recorded blocker. Large work does not justify inventing a
+  Project, borrowing a grant or issuing a protected approval.
 gui_related: true
 gui_classification_reason: Exact blocker status is a user-visible goal status surface as well as runtime state.
 depends_on:
@@ -2242,10 +2348,13 @@ node_compile_hint:
   mode: autonomous_recovery_and_blockers
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0069
-  - pldg-20260616-001-goal-runtime-system:atom-0070
-  - pldg-20260616-001-goal-runtime-system:atom-0071
-  - pldg-20260616-001-goal-runtime-system:atom-0072
+  - "pldg-20260616-001-goal-runtime-system:atom-0069"
+  - "pldg-20260616-001-goal-runtime-system:atom-0070"
+  - "pldg-20260616-001-goal-runtime-system:atom-0071"
+  - "pldg-20260616-001-goal-runtime-system:atom-0072"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Autonomous ambiguity handling"
   - "ordinary ambiguity"
@@ -2628,7 +2737,7 @@ Goal Runtime requires these data-shape families:
 
 - Goal state: `goal_id`, `parent_goal_id`, `status`, `objective`, `acceptance_criteria`, `non_goals`, `allowed_scope`, constraints, budget, `work_queue`, task list, `model_policy`, attachment manifest, child goals, `evidence_index`, evidence references, completion receipt, `goal_revision`, and recovery state.
 - Goal event log: append-only events using the Contracts_V0 registered names `goal.created`, `goal.scheduled`, `goal.progressed`, `goal.tool_check_recorded`, `goal.updated`, `goal.replanned`, `goal.child_status_changed`, `goal.evidence_captured`, `goal.verification_decided`, `goal.receipt_recorded`, `goal.completed`, `goal.degraded`, `goal.stopped`, `goal.blocked`, and `goal.cancelled`, plus Orchestrator GoalRun projections from `goal_run.started`, `goal_run.replanned`, `goal_run.blocked`, `goal_run.certified`, `goal_run.cancelled`, and `goal_run.stopped`. `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. The independent exact-family rulings for `goal.progressed` (GRS-069/CV-343), `goal.replanned` (GRS-070/CV-344), `goal.stopped` (GRS-071/CV-345), and `goal.verification_decided` (GRS-072/CV-346) likewise prohibit their current writes and preserve original historical interpretation. Historical records preserve original custody and cannot rebuild retired current Goal states or child topology.
-- Goal update event fields: `goal_revision`, `previous_revision`, `objective_update`, `constraint_added`, `active_subgoals_notified`, and stale child goals.
+- **Compatibility/source lineage only:** older Goal update event fields goal_revision/previous_revision/objective_update/constraint_added/active_subgoals_notified/stale child goals do not define active body/event writers. Current updates consume GRS-048/054/064/068 and app GRS-086 with exact two-source objective history, no child Goals or constraint-role fields.
 - Goal Completion Receipt: tier, changed files/artifacts, checklist disposition, checks run/skipped, evidence refs, validator outputs, child receipts, verifier/adjudicator decision, unresolved/open items, degraded-mode reason, and source-to-target mapping when applicable.
 - Child goal state: `child_goal_id`, `parent_goal_id`, `agent_id`, `status`, `objective`, `allowed_scope`, `write_policy`, `budget`, `task_list`, `result_artifacts`, `completion_receipt`, stale/re-steer state, and `recovery_state`.
 - Progress state: `progress_fingerprint`, `blocker_signature`, artifact hashes, retry count, `repeat_count`, and no-progress continuation markers.
@@ -3420,7 +3529,7 @@ This local-only construction removes the external-resolution dependency and pres
 
 ##### 3.2 Common fields
 
-Every field not listed here or in the row payload is forbidden. All strings have `minLength:1`; all ref arrays use `uniqueItems:true`; arrays permit zero items unless the reusable type or row branch says `minItems:1`.
+These are the exact original Project event common fields; GRS-086 app siblings use their own closed scope-aware versions with null Project, not a relaxation of this codec. Every field not listed here or in the row payload is forbidden. All strings have `minLength:1`; all ref arrays use `uniqueItems:true`; arrays permit zero items unless the reusable type or row branch says `minItems:1`.
 
 | Field | Exact type / constraint | Presence and branch |
 | --- | --- | --- |
@@ -3447,7 +3556,7 @@ Every field not listed here or in the row payload is forbidden. All strings have
 
 ##### 3.3 Outer EventRecord join
 
-For all new rows, outer `schema_id="pm.event.v0"`, `schema_version="2.0.0"`, `scope_kind="project"`, `project_id` is non-empty, `event_type=payload.event_name`, `payload_schema_id=payload.schema_version=row schema ID`, and `payload_ref=null` when the payload is inline. `run_id=payload.payload.goal_run_id` for the six GoalRun rows and is null for the 15 Goal rows unless a separate Contracts-owned relation applies. `node_id` and `attempt_id` stay contract-owned nullable values; this matrix does not invent them. Outer `event_id` is app-root globally unique. Outer `idempotency_key` is always required by EventRecord even though the mirrored inner key is optional.
+For these original Project row editions, outer `schema_id="pm.event.v0"`, `schema_version="2.0.0"`, `scope_kind="project"`, `project_id` is non-empty, `event_type=payload.event_name`, `payload_schema_id=payload.schema_version=row schema ID`, and `payload_ref=null` when the payload is inline. `run_id=payload.payload.goal_run_id` for the six GoalRun rows and is null for the 15 Goal rows unless a separate Contracts-owned relation applies. `node_id` and `attempt_id` stay contract-owned nullable values; this matrix does not invent them. Outer `event_id` is app-root globally unique. Outer `idempotency_key` is always required by EventRecord even though the mirrored inner key is optional. Newly versioned app rows follow GRS-086 and match outer/inner application scope, null Project and real thread/Goal/run/Computer; historical Project identities are not rehashed.
 
 Authority order for validation is:
 
@@ -3839,7 +3948,7 @@ This owner repair does not create or execute fixtures, oracle artifacts, checker
 ## 4. Integration Surfaces
 
 - Assistant Chat consumes Goal Runtime for visible activation, status, task tracker, pause/resume/stop/clear/update controls, evidence/activity display, completion reports, and child-goal expansion.
-- Final GUI consumes Goal Runtime for Settings placement of worker and verifier/adjudicator model selectors.
+- Final GUI consumes ordinary model/Persona selection and GRS-055 Activity/Detail. Worker and verifier/adjudicator Goal model selectors remain retired by GRS-049; no Settings placement or app scope restores them.
 - Planning Ledger and Plan Document systems provide source-lineage and PlanUnit contracts for ledger-to-Plans goals.
 - Plan_To_Node_Compilation owns the accepted compiler boundary for plan graph build goals and prevents PlanUnit indexing from creating NodeSeed/WorkNode artifacts.
 - Permissions_System resolves global approval policy; Goal Runtime invokes approval for high-risk goal actions.
@@ -4522,7 +4631,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  P1-INTERRUPT-CANCEL-SETTLEMENT (P1) is compiled as canonical Puppet Master intent for User stop/interrupt halts active agent and tools safely: Imported external-repo finding extrepo-20260703-0028 / P1-INTERRUPT-CANCEL-SETTLEMENT (P1). The preserved PM gap/delta is: Define cancellation propagation and settlement: provider stream, subprocess, MCP call, browser/device, child run; no conversion to success/failure; history interruption boundary. The observed external-repo signal remains source-lineage evidence: Agent Zero issue requests stop/interrupt for active chat/tool calls without container restart and with history preserved; OpenCode v2 includes sessions.interrupt and Effect interruption.
+  P1-INTERRUPT-CANCEL-SETTLEMENT (P1) is compiled as canonical Puppet Master intent for User
+  stop/interrupt halts active agent and tools safely: Imported external-repo finding extrepo-20260703-0028
+  / P1-INTERRUPT-CANCEL-SETTLEMENT (P1). The preserved PM gap/delta is: Define cancellation propagation
+  and settlement: provider stream, subprocess, MCP call, browser/device, child run; no conversion to
+  success/failure; history interruption boundary. The observed external-repo signal remains source-lineage
+  evidence: Agent Zero issue requests stop/interrupt for active chat/tool calls without container restart
+  and with history preserved; OpenCode v2 includes sessions.interrupt and Effect interruption. App
+  cancellation binds the real thread/Computer and same tool/child/session settlement owners; Stop before
+  conversion fences all old-scope follow-on dispatch, without converting interruption into completion.
 gui_related: true
 gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
 depends_on:
@@ -4553,13 +4670,16 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- pldg-20260703-001-feature-intake:atom-0032
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0032
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0028/P1-INTERRUPT-CANCEL-SETTLEMENT@line=28
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0028/P1-INTERRUPT-CANCEL-SETTLEMENT
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:8
+  - "pldg-20260703-001-feature-intake:atom-0032"
+  - "Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0032"
+  - "Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0028/P1-INTERRUPT-CANCEL-SETTLEMENT@line=28"
+  - "Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0028/P1-INTERRUPT-CANCEL-SETTLEMENT"
+  - "Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md"
+  - "Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json"
+  - "Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:8"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids:
 - atom-0032
 external_atom_id: extrepo-20260703-0028
@@ -5261,7 +5381,7 @@ Goal receipt, completion, degraded, stopped, blocked, recovery, evidence, and ce
 
 ### EventRecord 2.0 scope, idempotency, and replay consumption
 
-Every new canonical `goal.*` and `goal_run.*` event is project-scoped EventRecord `2.0.0` with `scope_kind = project` and a non-empty `project_id`. Goal Runtime never uses an application sentinel. Application-scoped storage/root/lock/recovery events that affect many goals remain `scope_kind = application`, `project_id = null`; Goal Runtime references their event/recovery IDs and proven affected project/goal refs from payload evidence instead of republishing them as fake project events.
+New canonical Goal events use the explicitly selected original Project or newly versioned live application contract (GRS-043/086). Project means nonempty actual `project_id`; application means `scope_kind=application`, `project_id=null` and real thread/Goal/run/Computer. No application sentinel, empty Project string or focus fallback is permitted. Preserve global event identity, reversible scope/lifetime idempotency, original semantic/hash/producer/custody editions and complete writer/read/backup joins. Root/lock/recovery events remain application-scoped under their own owners and are referenced as evidence, never republished as fake Project events. Historical-only goal.scheduled/goal.degraded/retired child events stay passive; real Project Workflow certification prerequisites remain intact.
 
 Goal history inspection of an EventRecord `2.0.0` root requires a reader that validates `2.0.0`; an unsupported reader refuses the live Goal view with `unsupported_schema_version` rather than projecting partial or best-effort history. Goal event routing consumes the storage-owned key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` with the registered reversible project partition. Goal Runtime does not derive this key from the selected project, omit `event_id`, or treat the index as lifecycle/receipt authority.
 
@@ -5334,23 +5454,24 @@ plan_unit_id: GRS-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: |-
-  Goal Runtime emits project-scoped EventRecord 2.0 goal and goal-run events, preserves global event identity and scoped lifetime idempotency, fails closed on dedupe_unavailable, and limits replay-only compatibility input to disposable projection effects. Scheduler admission additionally requires storage writer and continuity truth, resolved exact-restore or recovery-hold state, and current permission evidence; viewer, root, integrity, restore-recovery, and permission blockers cannot become failure or completion.
-
-  The admission and recovery safeguards do not authorize goal.scheduled: GRS-062/CV-336 make that exact row historical-only. Current run scheduling still applies every actual storage/permission/recovery/stop-epoch gate, while SP-280 reads cannot dispatch or mutate.
+canonical_text: >-
+  Goal Runtime emits only explicitly admitted application-or-project Goal event editions. Application
+  scope has null Project and real thread/Goal/run/Computer; exact original Project payload/wrapper/hash
+  domains stay valid. Preserve global event identity, reversible scope partition, lifetime idempotency,
+  dedupe_unavailable refusal and replay-only disposable projection effects. Admission still requires
+  current storage writer/continuity, exact-restore/recovery-hold resolution, permission and Stop truth;
+  viewer/root/integrity/recovery/permission blockers cannot become failure or completion. GRS-086 selects
+  complete app writer/read/backup graphs and GRS-087 controls immutable conversion. goal.scheduled,
+  goal.degraded and retired child-state writers remain historical-only; SP-280 passive reads cannot
+  dispatch or mutate.
 gui_related: true
 gui_classification_reason: Goal blocked, historical viewer, recovery, permission, and resume states are visible control-plane behavior.
 depends_on: [GRS-006, GRS-019, GRS-020, CV-317, CV-318, CV-320, SP-239, SP-240, SP-241, SP-242]
 unblocks: []
 acceptance_criteria:
-  - Goal and GoalRun events validate only with project scope and non-empty project identity; app storage events remain app scoped.
-  - A reader lacking EventRecord 2.0 validation refuses Goal-history inspection, and routing consumes the full storage-owned v2 scope, sequence, and event lookup key.
-  - Duplicate/idempotency conflicts or dedupe_unavailable append no transition and enable no dependent scheduling or certification.
-  - projector_replay_only input changes no canonical receipt, scheduler, permission, child, usage, or external state.
-  - Viewer/root/integrity fixtures expose historical or blocked posture and start no goal continuation or writer-capable subsystem.
-  - Exact-replace recovery-required or recovery-unavailable fixtures retain fencing, local work, and anchors until an explicit owner terminal action.
-  - Permission denial stays blocked with exact payload and a later resume revalidates current permission evidence.
-  - Goal recovery exposes no generic storage repair, salvage, force-open, or try-anyway path, and Retry storage cannot auto-resume a blocked goal.
+  - "Each live adopted app family joins explicit outer/inner app scope/null Project and actual owner identity; original Project editions remain exact."
+  - "Global event identity and scoped lifetime idempotency survive restart; dedupe_unavailable fences."
+  - "No historical-only Goal writer, app sentinel, passive-read dispatch or blocker-as-completion is introduced."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future EventRecord goal scope/dedupe/replay and Goal Runtime storage/restore/permission admission fixtures
@@ -5364,14 +5485,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Case-L:L-006
-  - Case-L:L-010
-  - Case-L:L-013
-  - Case-L:L-014
-  - Case-L:L-018
-  - Case-L:L-020
-  - Case-L:EVT-01..EVT-07
-  - Case-L:PD-RSP-01..PD-RSP-09
+  - "Case-L:L-006"
+  - "Case-L:L-010"
+  - "Case-L:L-013"
+  - "Case-L:L-014"
+  - "Case-L:L-018"
+  - "Case-L:L-020"
+  - "Case-L:EVT-01..EVT-07"
+  - "Case-L:PD-RSP-01..PD-RSP-09"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
   - Do not use application sentinel project identity for goal events.
   - Do not let viewer promotion, retry, timer, model switch, or child completion clear storage, restore, recovery, or permission blockers.
@@ -6055,20 +6179,23 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Preserve the exact eleven-field GoalRecordV2, nine-field objective revision and seven-field
-  accepted origin. The Goal body currentness and history contract defines the exact local
-  canonical JSON semantic hashes, concrete scalar limit, single ordinary revision/history
-  chain and owner.goal.body.mutation@1.0.0 shared body/control transaction. Original accepted
-  source authority, current approval/owner/stop/access facts and whole reserved control gate
-  terminal writes. Independent current body/history and content-free receipt readers use
-  actual canonical origin; original receipt audit survives lawful body purge without
-  recreating text. SP-287 supplies separate physical wrappers/custody and DL-047 lifetime.
-  The explicitly adopted active updated-v3 Activity/body/control/history views use those current
-  canonical readers; separate SP-299 event/audit/input and original SIR replay boundaries preserve
-  accepted effects and original terminal meaning without event-built Goal state.
-  GRS-073/SP-304 select the shared current BodyControlV2 with independent cancellation_pending;
-  every current mutation/read/backup route preserves genuine Stop and cancellation effects.
-  No sibling Goal event or Workflow certification closure follows from this prerequisite.
+  Preserve the exact eleven-field GoalRecordV2, nine-field objective revision and seven-field accepted
+  origin. The Goal body currentness and history contract defines the exact local canonical JSON semantic
+  hashes, concrete scalar limit, single ordinary revision/history chain and owner.goal.body.mutation@1.0.0
+  shared body/control transaction. Original accepted source authority, current approval/owner/stop/access
+  facts and whole reserved control gate terminal writes. Independent current body/history and content-free
+  receipt readers use actual canonical origin; original receipt audit survives lawful body purge without
+  recreating text. SP-287 supplies separate physical wrappers/custody and DL-047 lifetime. The explicitly
+  adopted active updated-v3 Activity/body/control/history views use those current canonical readers;
+  separate SP-299 event/audit/input and original SIR replay boundaries preserve accepted effects and
+  original terminal meaning without event-built Goal state. GRS-073/SP-304 select the shared current
+  BodyControlV2 with independent cancellation_pending; every current mutation/read/backup route preserves
+  genuine Stop and cancellation effects. No sibling Goal event or Workflow certification closure follows
+  from this prerequisite. These exact Project semantic/physical editions remain immutable. GRS-086
+  requires separately versioned app body/origin/control/history/currentness and backup/source siblings as
+  one adopted graph, using real thread/Computer authority. Ordinary updates still cannot change
+  goal_id/project_id/thread_id/created_at, including a null binding; GRS-087 supplies conversion by linked
+  birth or separate association-owner transaction.
 gui_related: true
 gui_classification_reason: Preserves exact accepted Goal text, direct Save/approval behavior and authorized history visibility through deletion and recovery.
 depends_on: [GRS-048, GRS-050, GRS-051, GRS-054, GRS-056, DL-045, DL-047]
@@ -6100,11 +6227,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Goal_Runtime_System.md#GRS-048
-  - Plans/Goal_Runtime_System.md#GRS-054
-  - Plans/Goal_Runtime_System.md#GRS-056
-  - Plans/Decision_Log.md#DL-045
-  - Plans/Decision_Log.md#DL-047
+  - "Plans/Goal_Runtime_System.md#GRS-048"
+  - "Plans/Goal_Runtime_System.md#GRS-054"
+  - "Plans/Goal_Runtime_System.md#GRS-056"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
   - No Goal title/phase/child/budget/role fields, fifth state, inferred Goal, fabricated accepted lineage or certification exception.
   - No automatic Goal event adoption/depth, native proof, WorkNode, NodeSeed, readiness or governance seal.
@@ -6150,12 +6280,16 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Original Standard certification comes from the actual owning Workflow controller or assigned
-  canonical artifact owner and complete independently resolved source, target authority, workgraph,
-  validator, WorkNode and acceptance evidence, with authentically empty current child-Goal
-  requirements under GRS-052/GRS-075 and unchanged historical receipt grammar. The Original Standard certification receipt
-  contract preserves its immutable decision and truthful labels through SP-289 custody, keeps
-  existing generic receipts and exception semantics separate, and grants no Goal/body/event action.
+  Original Standard certification comes from the actual owning Workflow controller or assigned canonical
+  artifact owner and complete independently resolved source, target authority, workgraph, validator,
+  WorkNode and acceptance evidence, with authentically empty current child-Goal requirements under
+  GRS-052/GRS-075 and unchanged historical receipt grammar. The Original Standard certification receipt
+  contract preserves its immutable decision and truthful labels through SP-289 custody, keeps existing
+  generic receipts and exception semantics separate, and grants no Goal/body/event action. This exact
+  historical/Project Workflow source edition remains Project-bound and unchanged in its schema, hashes and
+  original predicates. Ordinary application Goal continuation is GRS-086 and cannot synthesize this
+  Workflow/WorkGraph/WorkNode/certification evidence. An app-needed source/event requires its own complete
+  admitted sibling rather than casting a null Project into this contract; native proof remains separate.
 gui_related: false
 gui_classification_reason: Defines internal original certification metadata, custody and owner interfaces; no GUI presentation is specified.
 depends_on: [GRS-042, GRS-064, CV-288, CV-340, DL-045]
@@ -6183,7 +6317,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - reports/event-authority-20260911/step-08-certified-custody-checks.json
+  - "reports/event-authority-20260911/step-08-certified-custody-checks.json"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
   - Do not infer certification from an accepted marker, worker success, body receipt, event or projection.
   - Do not claim native installation, event/body publication, exception authority or complete event depth from this prerequisite.
@@ -6214,10 +6351,15 @@ plan_unit_id: GRS-066
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: Original text-only Goal creation settles its accepted revision, original goal.created event/first
-  receipt and immutable command result once. A body accepted before later refusal remains preserved; successful
-  creation settlement plus all current Goal/run/thread/permission/Stop rules precedes first continuation without
-  a new Goal state or objective-completion claim.
+canonical_text: >-
+  Original text-only Goal creation settles its accepted revision, original goal.created event/first
+  receipt and immutable command result once. A body accepted before later refusal remains preserved;
+  successful creation settlement plus all current Goal/run/thread/permission/Stop rules precedes first
+  continuation without a new Goal state or objective-completion claim. The complete application sibling
+  selects explicit null-Project scope and actual thread/Computer under GRS-086, retaining original
+  acceptance/current source/control/Stop/partial-effect/replay predicates. GRS-087 conversion cannot
+  mutate ordinary immutable body or association inputs; each live writer/read/backup edge adopts the
+  selected app edition or stays disabled.
 gui_related: false
 gui_classification_reason: Defines original internal command/source/body/event/result and retained audit authority
   without a visual surface.
@@ -6259,8 +6401,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- reports/event-authority-20260911/step-08-goal-start-validation.md
-- Plans/Decision_Log.md#DL-047
+  - "reports/event-authority-20260911/step-08-goal-start-validation.md"
+  - "Plans/Decision_Log.md#DL-047"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
 - Do not infer original authority from unchanged invalid values, selected helper results, hashes, schema registration
   or installed-role declarations.
@@ -6372,11 +6517,16 @@ plan_unit_id: GRS-068
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: The existing complete Goal objective replacement accepts authentic direct Save or the
-  existing original approved agent source, uses only the shared Goal body writer and preserves each original
-  accepted effect through later event/result settlement without granting continuation or changing approved
-  Plan behavior. Current updated-v3 consumer composition follows the separately adopted canonical body/control/history,
+canonical_text: >-
+  The existing complete Goal objective replacement accepts authentic direct Save or the existing original
+  approved agent source, uses only the shared Goal body writer and preserves each original accepted effect
+  through later event/result settlement without granting continuation or changing approved Plan behavior.
+  Current updated-v3 consumer composition follows the separately adopted canonical body/control/history,
   selected-event/audit/input and immutable original replay owners without deriving state from an event.
+  The complete application sibling selects explicit null-Project scope and actual thread/Computer under
+  GRS-086, retaining original acceptance/current source/control/Stop/partial-effect/replay predicates.
+  GRS-087 conversion cannot mutate ordinary immutable body or association inputs; each live
+  writer/read/backup edge adopts the selected app edition or stays disabled.
 gui_related: false
 gui_classification_reason: Defines existing-command source, event, storage and result publication without
   a new visual surface.
@@ -6423,10 +6573,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-039
-- Plans/Decision_Log.md#DL-045
-- Plans/Decision_Log.md#DL-047
-- Plans/Goal_Runtime_System.md#GRS-064
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "Plans/Goal_Runtime_System.md#GRS-064"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
 - Do not infer accepted source or native atomicity from a schema, copied owner map, result-shaped value
   or fixture.
@@ -6815,11 +6968,16 @@ plan_unit_id: GRS-073
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: The original explicit Cancel operation preserves the exact four-state Goal body and revision,
-  latches the actual host Stop before cancellation effects, publishes a content-free minimal receipt and current
-  v3 fact, then changes only hidden control to remove active display. Whole v2 D-R02 remains historical only.
-  All existing body writers and current readers use the shared v2 control; genuine partial effects and original
-  SIR replay remain immutable.
+canonical_text: >-
+  The original explicit Cancel operation preserves the exact four-state Goal body and revision, latches
+  the actual host Stop before cancellation effects, publishes a content-free minimal receipt and current
+  v3 fact, then changes only hidden control to remove active display. Whole v2 D-R02 remains historical
+  only. All existing body writers and current readers use the shared v2 control; genuine partial effects
+  and original SIR replay remain immutable. The complete application sibling selects explicit null-Project
+  scope and actual thread/Computer under GRS-086, retaining original acceptance/current
+  source/control/Stop/partial-effect/replay predicates. GRS-087 conversion cannot mutate ordinary
+  immutable body or association inputs; each live writer/read/backup edge adopts the selected app edition
+  or stays disabled.
 gui_related: true
 gui_classification_reason: Defines truthful current Goal Activity removal, pending visibility and retained
   history.
@@ -6855,9 +7013,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-039
-- Plans/Decision_Log.md#DL-045
-- Plans/Decision_Log.md#DL-047
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
 - No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
 - No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
@@ -6906,10 +7067,15 @@ plan_unit_id: GRS-074
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: Actual Goal, Plan and Workflow association owners share an exhaustively enrolled writer domain
-  and canonical immutable binding origin/revision with current control. Genuine Goal birth and association
-  custody publish together. Cancellation reads complete current original association and pending state; null
-  active_run_ref, cache absence or retained metadata cannot establish no execution association.
+canonical_text: >-
+  Actual Goal, Plan and Workflow association owners share an exhaustively enrolled writer domain and
+  canonical immutable binding origin/revision with current control. Genuine Goal birth and association
+  custody publish together. Cancellation reads complete current original association and pending state;
+  null active_run_ref, cache absence or retained metadata cannot establish no execution association. The
+  complete application sibling selects explicit null-Project scope and actual thread/Computer under
+  GRS-086, retaining original acceptance/current source/control/Stop/partial-effect/replay predicates.
+  GRS-087 conversion cannot mutate ordinary immutable body or association inputs; each live
+  writer/read/backup edge adopts the selected app edition or stays disabled.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -6943,9 +7109,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-039
-- Plans/Decision_Log.md#DL-045
-- Plans/Decision_Log.md#DL-047
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
 - No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
 - No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
@@ -7309,9 +7478,14 @@ plan_unit_id: GRS-077
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: Original Workflow source, association and current activation custody. The actual T0 binding reservation,
-  T1 original joint birth/metadata/association publication and later T2 materialization preserve exact whole sources
-  and original owner identity.
+canonical_text: >-
+  Original Workflow source, association and current activation custody. The actual T0 binding reservation,
+  T1 original joint birth/metadata/association publication and later T2 materialization preserve exact
+  whole sources and original owner identity. This exact historical/Project Workflow source edition remains
+  Project-bound and unchanged in its schema, hashes and original predicates. Ordinary application Goal
+  continuation is GRS-086 and cannot synthesize this Workflow/WorkGraph/WorkNode/certification evidence.
+  An app-needed source/event requires its own complete admitted sibling rather than casting a null Project
+  into this contract; native proof remains separate.
 gui_related: false
 gui_classification_reason: Defines original source, owner, storage and verification semantics without a visual surface.
 split_recommended: false
@@ -7348,11 +7522,14 @@ node_compile_hint:
   create_nodeseeds: false
   runtime_enabled: false
 source_lineage:
-- Plans/Decision_Log.md#DL-039
-- Plans/Decision_Log.md#DL-045
-- Plans/Decision_Log.md#DL-047
-- Plans/workflow_activation_contracts/methods.json
-- Plans/workflow_activation_contracts/physical-families.json
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "Plans/workflow_activation_contracts/methods.json"
+  - "Plans/workflow_activation_contracts/physical-families.json"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids: []
 negative_constraints:
 - No public command, event or Goal lifecycle expansion and no fabricated original source or receipt.
@@ -7505,7 +7682,13 @@ plan_unit_id: GRS-079
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: Complete original started-v3 source and bounded consumer ownership; native execution remains unproved.
+canonical_text: >-
+  Complete original started-v3 source and bounded consumer ownership; native execution remains unproved.
+  This exact historical/Project Workflow source edition remains Project-bound and unchanged in its schema,
+  hashes and original predicates. Ordinary application Goal continuation is GRS-086 and cannot synthesize
+  this Workflow/WorkGraph/WorkNode/certification evidence. An app-needed source/event requires its own
+  complete admitted sibling rather than casting a null Project into this contract; native proof remains
+  separate.
 gui_related: false
 gui_classification_reason: Defines original runtime source, custody, replay and retention contracts without a visual surface.
 split_recommended: false
@@ -7538,9 +7721,12 @@ node_compile_hint:
   create_nodeseeds: false
   runtime_enabled: false
 source_lineage:
-- Plans/Executor_Protocol.md#EP-118
-- Plans/storage-plan.md#SP-309
-- Plans/Backup_Restore_System.md#BRS-025
+  - "Plans/Executor_Protocol.md#EP-118"
+  - "Plans/storage-plan.md#SP-309"
+  - "Plans/Backup_Restore_System.md#BRS-025"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids: []
 ```
 
@@ -7570,7 +7756,13 @@ plan_unit_id: GRS-080
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: Complete positive original cancelled-v3 source consumer and bounded versioned projector ownership; native execution remains unproved.
+canonical_text: >-
+  Complete positive original cancelled-v3 source consumer and bounded versioned projector ownership;
+  native execution remains unproved. This exact historical/Project Workflow source edition remains
+  Project-bound and unchanged in its schema, hashes and original predicates. Ordinary application Goal
+  continuation is GRS-086 and cannot synthesize this Workflow/WorkGraph/WorkNode/certification evidence.
+  An app-needed source/event requires its own complete admitted sibling rather than casting a null Project
+  into this contract; native proof remains separate.
 gui_related: false
 gui_classification_reason: Original runtime custody and derived source currentness contract without visual presentation.
 split_recommended: false
@@ -7607,9 +7799,12 @@ node_compile_hint:
   create_nodeseeds: false
   runtime_enabled: false
 source_lineage:
-- Plans/Executor_Protocol.md#EP-118
-- Plans/storage-plan.md#SP-309
-- Plans/Backup_Restore_System.md#BRS-025
+  - "Plans/Executor_Protocol.md#EP-118"
+  - "Plans/storage-plan.md#SP-309"
+  - "Plans/Backup_Restore_System.md#BRS-025"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids: []
 ```
 
@@ -7857,35 +8052,47 @@ plan_unit_id: GRS-084
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: 'Certified admission selects the entire goal-run-certified.v3 payload schema and the complete coordinator
-  identity EventRecord root; the original twenty-five-field payload, required-present null payload_ref, exact typed
-  owner values and canonical identity preimage are mandatory. Actor/cause/time/Event identity, Unicode bytes and
-  numeric representations are not normalized or reconstructed. The existing goal_run.certified Event family remains
-  the same family with its existing scope, alias/redaction and authority retention semantics; only its explicit
-  version/payload selection and corresponding source refs advance. Receipt/native retention, full Event inspection,
-  historical graph disclosure and live-current consumer reads are separate whole methods. Retained native receipt
-  disclosure requires surviving original custody and current permission, but does not imply surviving full Event
-  content or grant action authority. Full Event inspection authenticates the whole original frame, payload, append
-  group, operation, original origin, release and current visibility. Historical reads validate the whole immutable
-  original graph without reacquiring mutable source history; current reads independently obtain the complete current
-  native, separate Goal and Guard sources. All consumer methods are passive: no append, native mutation, source
-  reissuance, missing-row repair, commit, release or inherited reader capability. This version-scoped complete family
-  supplies the previously unbound certified-v3 identity/coordinator/Event selection and passive consumer source
-  roles only for a genuine fresh pm.executor.workflow_source.all_writers.v7 birth and pm.goal_run_certified.producer_source.v2
-  prepare.v2 binding. Earlier native-v6 and producer-v1 source editions and old started/cancelled branches retain
-  their original closed scope; no existing birth is enrolled or cast. The complete methods, protocols, schemas,
-  phase and participant tuples, isolated resource banks and physical/lifetime contracts under Plans/goal_certified_event_coordinator_contracts/,
-  Plans/workflow_standard_source_contracts/native-v7/, Plans/goal_certified_producer_source_contracts/ (including
-  native-v7/) and Plans/goal_run_certified_consumer_contracts/ are normative together. Source acceptance and registry
-  classification establish neither installed native authority nor execution, codec, transaction, durability, recovery,
-  Event-depth or readiness proof. All such native evidence remains NOT_RUN. No WorkNode or NodeSeed is created.'
+canonical_text: >-
+  Certified admission selects the entire goal-run-certified.v3 payload schema and the complete coordinator
+  identity EventRecord root; the original twenty-five-field payload, required-present null payload_ref,
+  exact typed owner values and canonical identity preimage are mandatory. Actor/cause/time/Event identity,
+  Unicode bytes and numeric representations are not normalized or reconstructed. The existing
+  goal_run.certified Event family remains the same family with its existing scope, alias/redaction and
+  authority retention semantics; only its explicit version/payload selection and corresponding source refs
+  advance. Receipt/native retention, full Event inspection, historical graph disclosure and live-current
+  consumer reads are separate whole methods. Retained native receipt disclosure requires surviving
+  original custody and current permission, but does not imply surviving full Event content or grant action
+  authority. Full Event inspection authenticates the whole original frame, payload, append group,
+  operation, original origin, release and current visibility. Historical reads validate the whole
+  immutable original graph without reacquiring mutable source history; current reads independently obtain
+  the complete current native, separate Goal and Guard sources. All consumer methods are passive: no
+  append, native mutation, source reissuance, missing-row repair, commit, release or inherited reader
+  capability. This version-scoped complete family supplies the previously unbound certified-v3
+  identity/coordinator/Event selection and passive consumer source roles only for a genuine fresh
+  pm.executor.workflow_source.all_writers.v7 birth and pm.goal_run_certified.producer_source.v2 prepare.v2
+  binding. Earlier native-v6 and producer-v1 source editions and old started/cancelled branches retain
+  their original closed scope; no existing birth is enrolled or cast. The complete methods, protocols,
+  schemas, phase and participant tuples, isolated resource banks and physical/lifetime contracts under
+  Plans/goal_certified_event_coordinator_contracts/, Plans/workflow_standard_source_contracts/native-v7/,
+  Plans/goal_certified_producer_source_contracts/ (including native-v7/) and
+  Plans/goal_run_certified_consumer_contracts/ are normative together. Source acceptance and registry
+  classification establish neither installed native authority nor execution, codec, transaction,
+  durability, recovery, Event-depth or readiness proof. All such native evidence remains NOT_RUN. No
+  WorkNode or NodeSeed is created. This exact historical/Project Workflow source edition remains
+  Project-bound and unchanged in its schema, hashes and original predicates. Ordinary application Goal
+  continuation is GRS-086 and cannot synthesize this Workflow/WorkGraph/WorkNode/certification evidence.
+  An app-needed source/event requires its own complete admitted sibling rather than casting a null Project
+  into this contract; native proof remains separate.
 gui_related: false
 source_lineage:
-- certified-family-placement:sha256:41a4d703b475c2668b243b043934bf0e3a0f22f33c1e663b339aa1aa2395099c
-- root-placement-review:sha256:00981271bf2b645c3610804251ce240f83f3d121ab2c654b0fe98b3c5396909c
-- accepted-header-source:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe
-- producer-repin-source:sha256:ad4c49b5e1fb43425a390c9cb666a95503483699779dfdb860ec770d2e06376a
-- consumer-repin-source:sha256:e6f9be4094e68b5d690e93db45ba3199ccff20a1c72fe93264aadf822ed1896d
+  - "certified-family-placement:sha256:41a4d703b475c2668b243b043934bf0e3a0f22f33c1e663b339aa1aa2395099c"
+  - "root-placement-review:sha256:00981271bf2b645c3610804251ce240f83f3d121ab2c654b0fe98b3c5396909c"
+  - "accepted-header-source:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe"
+  - "producer-repin-source:sha256:ad4c49b5e1fb43425a390c9cb666a95503483699779dfdb860ec770d2e06376a"
+  - "consumer-repin-source:sha256:e6f9be4094e68b5d690e93db45ba3199ccff20a1c72fe93264aadf822ed1896d"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 depends_on:
 - PDS-003
 - GRS-083
@@ -7993,3 +8200,155 @@ ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Pla
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+### GRS-086 - Application Goal Birth Continuation And Versioned Custody
+
+```yaml
+plan_unit_id: GRS-086
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: 'An explicitly requested Goal may be born in an app thread with project_id=null and real thread/Computer/working-root
+  identity. Its application record edition preserves the concise eleven Goal fields, exact objective_text/currentness,
+  four states active|paused|blocked|completed, two text-change sources and existing Save/propose-update authority.
+  Scope/Server metadata belongs to the canonical wrapper/execution envelope, not additional Goal body fields. Internal
+  app Goal custody creates no user folder until a file save/command requires one. The existing Goal host reloads
+  canonical state, checks owner/current permission/recovery/storage/Stop epochs and evidence and admits bounded
+  ordinary continuations; no Assistant Plan, NamedPlan, repository, WorkGraph, WorkNode or Orchestrator run is required.
+  It may use Crew only under parent ceilings. Body/revisions/origin/control/pending, creation/update/cancel results,
+  associations and every needed active event/read/backup edge adopt one explicit app-version map together or stay
+  unavailable. Original pm.goal.record.v2 and owner.goal.body.mutation@1.0.0 Project codecs and hashes remain exact
+  and readable; app siblings have distinct schema IDs and hash domains, never null coerced into a Project string.
+  Active family registration must join outer/inner app scope, real thread/Goal/run, global event identity, reversible
+  partition and lifetime idempotency. dedupe_unavailable fences effects; replay is projection-only and cannot rebuild
+  a missing objective. goal.scheduled, goal.degraded and retired child-state/worker/verifier writers remain historical-only.
+  Actual Project Workflow certification/source predicates remain intact and cannot certify absent WorkNodes for
+  an app Goal. App families share counterpart caps/retention/holds and coherent mandatory Full Server Backup; Stop,
+  cancellation and independently retained receipts keep their original semantics. Activity/History/Agents show actual
+  scope/Computer, objective and canonical owner state without a new Goal card or lifecycle. CV-366 selects the new
+  app goal_start, goal_update, goal_cancel and ordinary run source graphs in Plans/application_workflow_source_graph.json,
+  with complete original sources in Plans/application_workflow_sources.schema.json and app values in Plans/application_workflow_contracts.schema.json.
+  App objective mutation uses owner.goal.body.mutation.application@1.0.0; the original Project owner.goal.body.mutation@1.0.0
+  resource stays exact. The complete CV-366 event-family table governs: goal.progressed, goal.replanned, goal.stopped
+  and goal.verification_decided also remain historical-only with zero current writes, alongside the other retired
+  families. SP-351 owns the app physical families and counterpart policy joins; absent durable materialization or
+  native source/read/backup proof keeps the affected operation unavailable.'
+gui_related: true
+gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
+depends_on:
+- ACD-508
+- SIR-055
+- PS-145
+unblocks: []
+acceptance_criteria:
+- App Goal create/direct Save/approved proposal/pause/resume/Stop/cancel/history/restart/backup succeeds through
+  genuine app custody with null Project.
+- Original Project fixtures remain byte/hash exact; ordinary null-to-Project update and reconstructed canonical
+  body refuse.
+- No fifth state, child Goals, Goal budget/role fields, fake Plan, silent objective edit or fake Workflow certification
+  appears.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#Q11-Goals-Crew; N24
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: Those look good, except goals and crew should be allowed in no project.'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#fc-c01
+preserved_exact_tokens:
+- project_id=null
+- objective_text
+- active|paused|blocked|completed
+- pm.goal.record.v2
+- owner.goal.body.mutation@1.0.0
+- dedupe_unavailable
+- goal.scheduled
+- goal.degraded
+negative_constraints:
+- Do not infer native support from a schema or globally loosen Project-only exact event/producer/certification contracts.
+- Never borrow another Project build grant, clear Stop, or derive canonical Goal content from events.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-086, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/storage-plan.md#SP-351
+
+### GRS-087 - Immutable Goal Conversion And Linked Destination Birth
+
+```yaml
+plan_unit_id: GRS-087
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: 'N25 conversion of unfinished Goal work defaults to a new destination Goal linked to the immutable
+  source Goal and exact accepted revision, with fresh destination permission/root/runtime and canonical body/control/association
+  custody. Preview names source active continuation disposition: finish, Stop/cancel, or fence at its admitted safe
+  boundary before cutover. No live Goal continues in both scopes. Completed/cancelled source work stays historical
+  and creates no new active continuation or synthesized completion receipt. Ordinary owner.goal.body.mutation@1.0.0
+  and app sibling objective updates never change goal_id, project_id, thread_id or created_at, including a null
+  Project binding; historical bodies, origin, objective revisions, events, receipts, certification and accepted
+  source bytes remain fixed. An explicit rebind requires a separately versioned Goal association-owner transaction
+  with genuine source/target authority, currentness, exhaustive writer enrollment, hidden control/pending state,
+  Stop/lease/topology epochs, safe-stop checks and atomic binding publication. Until that entire transaction/version
+  is admitted, only linked new birth is available; no metadata update impersonates rebind. The converted thread''s
+  stable identity does not itself change a Goal''s binding. Revalidate exact Goal/Plan/Crew/To-Do edges through
+  the conversion map and quarantine invalid ones. Source history remains access-controlled canonical custody under
+  its own lifetime and backup rules after chat Undo expires; ending Undo cannot erase completion/cancel truth or
+  restart a stopped source. CV-367/SP-350 supply the exhaustive per-family source/destination map and retained cutover
+  lineage. The linked new birth uses the selected CV-366 app or Project source edition; copied history or certification
+  never enrolls that birth. Optional association rebind remains unavailable until the entire separately versioned
+  owner protocol is admitted.'
+gui_related: true
+gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
+depends_on:
+- GRS-086
+- SIR-055
+unblocks: []
+acceptance_criteria:
+- Ordinary updates reject null-to-real Project changes, even with unchanged objective text.
+- Linked destination birth publishes once after source fence; late continuation/cancel/update races cannot create
+  two live owners.
+- Explicit rebind is typed unavailable until complete owner transaction/version and all graph edges are admitted.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#N25; Q11-Goals-Crew
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: Those look good, except goals and crew should be allowed in no project.'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#fc-c02
+preserved_exact_tokens:
+- N25
+- owner.goal.body.mutation@1.0.0
+- goal_id
+- project_id
+- thread_id
+- created_at
+negative_constraints:
+- Never mutate a Goal binding in place, transplant certification, synthesize completion or repeat settled effects.
+- A transcript move, pointer, receipt or copied control state is not new association authority.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-087, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-367, ContractName:Plans/storage-plan.md#SP-350

@@ -713,26 +713,22 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
-  The storage-owned row key family is `artifacts_index.v1:{project_id}:{artifact_id}`; the older
-  `artifacts_index:v1:{project_id}` shorthand names only the project-level contract, not row identity.
-  The index is a versioned rebuildable identity contract, not a vague lookup cache. Each row is keyed by
-  `artifact_id` and must carry artifact_id, artifact_kind, artifact_identity_ref, project_id, run_id,
-  package/seam/lane/worktree/account identity, producer/runtime refs, attempt_id, node_id,
-  provider_attempt_ref when available, output owner, storage URI/path, provenance/evidence refs,
-  lifecycle status, integrity/version data, trust state, open target, display/open handlers,
-  preview capability, permissions/visibility boundary, permission/degraded state, and
-  tombstone/rebuild metadata. Open-by-artifact-identity resolves through this index and then dispatches
-  to FileManager, owner-surface routes, or generated/object-backed previews without replacing project
-  output ownership.
+  Runtime Artifacts consumes Storage's scope-aware artifact index: original
+  artifacts_index.v1:{project_id}:{artifact_id} Project rows stay exact, and new app rows bind explicit
+  app partition/Server/thread/artifact with project_id=null. Canonical artifact/producer identity, output
+  owner, real optional run/attempt/node/lane/worktree/account refs, URI,
+  provenance/integrity/trust/permission/lifecycle/open/preview/tombstone/rebuild fields remain complete.
+  Open-by-identity routes to FileManager/owner/generated preview without becoming canonical artifact
+  authority. N25 maps carried refs and shares same-store or copies cross-Server payloads while preserving
+  independent holds and source history.
 gui_related: true
 gui_classification_reason: Runtime artifact panel open actions, previews, degraded state, and permissions are user-visible panel behavior.
 depends_on: [RAP-019, RAP-020, CV-281]
 unblocks: []
 acceptance_criteria:
-  - The live storage key family is `artifacts_index.v1:{project_id}:{artifact_id}` and preserves `artifact_id` as row identity.
-  - The artifacts index has a versioned row contract with project/run/package/seam/lane/worktree/account identity, runtime, owner, storage, provenance, lifecycle, integrity/version, permissions, open, preview, and rebuild fields.
-  - Open-by-artifact-identity resolves through the index before dispatching to FileManager or owner-surface routes.
-  - Missing or stale index rows degrade to record-backed views rather than becoming canonical artifact truth.
+  - "Original Project artifact row keys/codecs remain exact and scope-aware app rows use real Server/thread/artifact identity with null Project."
+  - "Every row retains complete owner, runtime, provenance, integrity, permission, open/preview and rebuild/tombstone fields with honest inapplicable refs."
+  - "Conversion maps refs and preserves independently held/shared payloads; no Project focus fallback."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
@@ -742,10 +738,13 @@ context_scope: runtime_artifacts_index_open_by_identity
 implementation_surfaces: [Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md, Plans/FileManager.md, Plans/storage-plan.md]
 node_compile_hint: {mode: artifacts_index_identity_contract, create_worknodes: false}
 source_lineage:
-  - pldg-20260614-002-part-3-fable-cleanup:atom-0040
-  - pldg-20260614-002-part-3-fable-cleanup:atom-0051
-  - pldg-20260614-002-part-3-fable-cleanup:atom-0097
-  - pldg-20260614-002-part-3-fable-cleanup:atom-0098
+  - "pldg-20260614-002-part-3-fable-cleanup:atom-0040"
+  - "pldg-20260614-002-part-3-fable-cleanup:atom-0051"
+  - "pldg-20260614-002-part-3-fable-cleanup:atom-0097"
+  - "pldg-20260614-002-part-3-fable-cleanup:atom-0098"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens: ["artifacts_index.v1:{project_id}:{artifact_id}", "artifacts_index:v1:{project_id}", "artifact_id", "project/run/package/seam/lane/worktree/account identity", "artifact kind", "storage URI/path", "producer/runtime_identity", "provenance/evidence refs", "lifecycle status", "integrity/version data", "permissions/visibility boundary", "display/open handlers", "open-by-artifact-identity", "artifact_identity_ref", "FileManager", "FileManager open-by-artifact-identity resolution semantics", "sole canonical index contract"]
 compatibility_only_notes:
   - "`artifacts_index:v1:{project_id}` is retained as source-lineage shorthand for the project-level index contract; storage owns the canonical row key family `artifacts_index.v1:{project_id}:{artifact_id}`."
@@ -2524,14 +2523,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
-  Runtime Artifacts owns exactly 19 Option 2 runtime_artifact.* semantic transitions and their
-  closed per-type payload schemas. Every transition is project-scoped, recommends
-  RP-AUTHORITY-INDEFINITE for later storage adjudication, uses the exact dedupe tuple
-  [event_type, project_id, artifact_id, schema_id], rejects unhandled secrets, inline previews,
-  private chain-of-thought, unknown fields, and generic subtype routing, and can be produced only
-  by the named domain owner after durable artifact materialization. This owner/schema closure does
-  not register a family or authorize EventRecord append, dispatch, projection, checkpoint advance,
-  replay, retention execution, runtime implementation, buildability, or PNC-019.
+  Runtime Artifacts owns exactly 19 Option 2 runtime_artifact.* semantic transitions and their closed
+  per-type payload schemas. Every transition is project-scoped, recommends RP-AUTHORITY-INDEFINITE for
+  later storage adjudication, uses the exact dedupe tuple [event_type, project_id, artifact_id,
+  schema_id], rejects unhandled secrets, inline previews, private chain-of-thought, unknown fields, and
+  generic subtype routing, and can be produced only by the named domain owner after durable artifact
+  materialization. This owner/schema closure does not register a family or authorize EventRecord append,
+  dispatch, projection, checkpoint advance, replay, retention execution, runtime implementation,
+  buildability, or PNC-019. The original 19 Project transition codecs/dedupe tuples are not relaxed.
+  Approved app artifacts require separate exact scope-aware payload/identity editions and explicit
+  per-family registration; absent native writer remains non-emitting. Scope extension never registers or
+  certifies an event by itself.
 gui_related: false
 gui_classification_reason: This unit closes semantic ownership and machine payload depth without changing the visible Runtime Artifacts surface.
 depends_on: [RAP-004, RAP-043]
@@ -2578,10 +2580,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Runtime_Artifacts_Panel.md:514-538
-  - scratchpad/pm-integration-20260831/event-authority-successor-20260901/aggregate-adjudication/owner-adjudication/CANONICAL_REPAIR_PROPOSAL.jsonl:158-177
-  - scripts/pm-plans-verify.py:2627-2647
-  - tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json
+  - "Plans/Runtime_Artifacts_Panel.md:514-538"
+  - "scratchpad/pm-integration-20260831/event-authority-successor-20260901/aggregate-adjudication/owner-adjudication/CANONICAL_REPAIR_PROPOSAL.jsonl:158-177"
+  - "scripts/pm-plans-verify.py:2627-2647"
+  - "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - Option 2 only
   - RP-AUTHORITY-INDEFINITE
@@ -2927,15 +2932,20 @@ plan_unit_id: RAP-059
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
-canonical_text: Runtime Artifacts defines one passive restore-point record reader using Chat native or
-  supported historical completion proof, or the separate typed terminal-retention-summary result, and
-  Storage current snapshot authority. It preserves existing status/permission/hold/source visibility and
-  branch preflight, emits no runtime_artifact.restore_point event, and never treats a projection as canonical
+canonical_text: >-
+  Runtime Artifacts defines one passive restore-point record reader using Chat native or supported
+  historical completion proof, or the separate typed terminal-retention-summary result, and Storage
+  current snapshot authority. It preserves existing status/permission/hold/source visibility and branch
+  preflight, emits no runtime_artifact.restore_point event, and never treats a projection as canonical
   point or custody authority. For restore_point.created only, current read publication explicitly adopts
   the named 2.0.0 reader successors under SP-281/SP-278; v1 bindings are compatibility-only and original
-  creation controls remain required at admission; the current native branch explicitly adopts SP-285 retained_creation
-  for available and retained_custody for supported expired/deleted points without disposed original controls.
-  Creation, fresh lifecycle admission, admitted pending recovery and passive retained inspection follow their distinct SP-285 routes.
+  creation controls remain required at admission; the current native branch explicitly adopts SP-285
+  retained_creation for available and retained_custody for supported expired/deleted points without
+  disposed original controls. Creation, fresh lifecycle admission, admitted pending recovery and passive
+  retained inspection follow their distinct SP-285 routes. App restore-point inspection selects its
+  admitted app source/custody/index sibling and exact thread/Computer, retaining the same passive
+  proof/hold/visibility/branch-preflight boundaries. Conversion lineage never rewrites a historical record
+  or fabricates current custody.
 gui_related: true
 gui_classification_reason: This unit governs existing visible restore-point history and branch availability.
 split_recommended: false
@@ -2981,9 +2991,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-045
-- reports/event-authority-20260911/step-08-depth-binding-work-records.md#ea-s8-restore-binding--restore-consumercheckpoint-evidence
-- Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption
+  - "Plans/Decision_Log.md#DL-045"
+  - "reports/event-authority-20260911/step-08-depth-binding-work-records.md#ea-s8-restore-binding--restore-consumercheckpoint-evidence"
+  - "Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - restore_point.created
 - event-family-restore-point-created

@@ -65,7 +65,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/ToDo_Runtime.md
 canonical_text: >-
-  Exactly one current To-Do list exists per thread. The list may be restructured as the active task evolves but is never grouped by Goal, Plan, request, Crew, source, or other threads, and is never aggregated across threads. Goal, Plan, plan-step, and PlanUnit refs on an item are internal lineage that enable navigation and audit only; they must not produce a visible source group, section header, or origin filter that partitions the list.
+  Exactly one current To-Do list exists per thread. The list may be restructured as the active task
+  evolves but is never grouped by Goal, Plan, request, Crew, source, or other threads, and is never
+  aggregated across threads. Goal, Plan, plan-step, and PlanUnit refs on an item are internal lineage that
+  enable navigation and audit only; they must not produce a visible source group, section header, or
+  origin filter that partitions the list. The same sole thread-local list works with null Project in an
+  app thread; No project/Computer is shared scope chrome, not a new grouping. All no-project threads use
+  counterpart capacity policy and no cross-thread aggregation.
 gui_related: true
 gui_classification_reason: This unit decides the structure of the To-Do Activity hover and Activity Detail list.
 depends_on: []
@@ -88,8 +94,11 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Concepts/chat-assistant-concepts/5.6 Pro/todos.js (5.6 Pro prototype; behaviour reference only)"
-  - pm-assistant-implementation-2026-09-02-recovered:TODO-001
-  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#6.1
+  - "pm-assistant-implementation-2026-09-02-recovered:TODO-001"
+  - "pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#6.1"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "To-Dos"
   - "one current list per thread"
@@ -237,7 +246,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/ToDo_Runtime.md
 canonical_text: >-
-  ToDoController is the sole writer of To-Do state and the only component permitted to change status. It owns stable item creation and update, parent/child and dependency validation, work-admission binding, transactional state changes, derived rollups, recovery and replay, and the thread projection. A model -- assistant, subagent, Crew participant, or provider-native tool -- may propose add, split, reorder, dependency, skip, and reopen actions; the controller validates each proposal against the current graph and applies exact item changes or rejects with a typed error. A proposal never carries a status assertion the controller has not independently derived from a work binding and an accepted outcome receipt. Bulk completion without per-item evidence fails and applies nothing; a batch commits every validated change or none.
+  ToDoController is the sole writer of To-Do state and the only component permitted to change status. It
+  owns stable item creation and update, parent/child and dependency validation, work-admission binding,
+  transactional state changes, derived rollups, recovery and replay, and the thread projection. A model --
+  assistant, subagent, Crew participant, or provider-native tool -- may propose add, split, reorder,
+  dependency, skip, and reopen actions; the controller validates each proposal against the current graph
+  and applies exact item changes or rejects with a typed error. A proposal never carries a status
+  assertion the controller has not independently derived from a work binding and an accepted outcome
+  receipt. Bulk completion without per-item evidence fails and applies nothing; a batch commits every
+  validated change or none. App work bindings join actual thread/Computer/roots/scope and admitted
+  Goal/Plan/Crew work. N25 conversion maps exact destination Plan steps/units/associations through this
+  controller under fresh authority; copied statuses are not accepted outcomes.
 gui_related: false
 gui_classification_reason: This unit defines runtime write authority; its GUI effect is only that displayed status is trustworthy.
 depends_on: [TDR-004]
@@ -260,8 +279,11 @@ node_compile_hint:
   mode: todo_controller_authority
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:TODO-006
-  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#6.6
+  - "pm-assistant-implementation-2026-09-02-recovered:TODO-006"
+  - "pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#6.6"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "ToDoController"
 negative_constraints:
@@ -411,7 +433,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/ToDo_Runtime.md
 canonical_text: >-
-  Recovery recomputes item status from durable TodoWorkBinding and TodoTransition records rather than from conversation context; a restart mid-run leaves an item in_progress with its binding intact and the controller transitions it exactly once when the executing owner reports the terminal result. Replay of a committed transition is idempotent on transition_id, and a binding reporting recovery_required leaves the item in_progress and surfaces the condition rather than silently completing or reverting. Migration drops verification state and creates an explicit validation To-Do where the verification was real work, maps replanned to pending or skipped with a recorded cause, maps canceled to skipped with a reason, drops source-group and done-category membership into the receipt, requires separately validated conversion of whole-list snapshots to per-item records, with import-marked transition representation still blocked by the cause-enum gap recorded in TDR-012, and splits cross-thread aggregations back to their owning threads, quarantining any item whose thread edge cannot validate. Migration never marks an item completed on the strength of a legacy snapshot alone.
+  Recovery recomputes item status from durable TodoWorkBinding and TodoTransition records rather than from
+  conversation context; a restart mid-run leaves an item in_progress with its binding intact and the
+  controller transitions it exactly once when the executing owner reports the terminal result. Replay of a
+  committed transition is idempotent on transition_id, and a binding reporting recovery_required leaves
+  the item in_progress and surfaces the condition rather than silently completing or reverting. Migration
+  drops verification state and creates an explicit validation To-Do where the verification was real work,
+  maps replanned to pending or skipped with a recorded cause, maps canceled to skipped with a reason,
+  drops source-group and done-category membership into the receipt, requires separately validated
+  conversion of whole-list snapshots to per-item records, with import-marked transition representation
+  still blocked by the cause-enum gap recorded in TDR-012, and splits cross-thread aggregations back to
+  their owning threads, quarantining any item whose thread edge cannot validate. Migration never marks an
+  item completed on the strength of a legacy snapshot alone. App recovery uses the same canonical
+  controller facts and scope-specific owner/writer/Stop evidence. Conversion preserves original
+  transitions and maps new destination work without replaying settled effects or manufacturing completion.
 gui_related: false
 gui_classification_reason: Recovery and migration are storage and controller operations with no surface of their own.
 depends_on: [TDR-006]
@@ -434,9 +469,12 @@ node_compile_hint:
   mode: todo_recovery_and_migration
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:TODO-010
-  - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#12.2
-  - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#13
+  - "pm-assistant-implementation-2026-09-02-recovered:TODO-010"
+  - "pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#12.2"
+  - "pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#13"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "recovery_required"
   - "transition_id"

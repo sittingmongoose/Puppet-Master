@@ -180,7 +180,7 @@ For Assistant display, message metadata, and context-detail filtering, the workf
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
 
-**Requires a project:** many assistant capabilities (for example `@` file mention, project-scoped commands, local browser targets, run/debug presets, and project-bound debugging) do not work when no project is selected. When no project is selected, only application-wide rules and non-project target kinds remain available.
+**Availability with No project:** Ask, Agent, Debug, Plan, Deep Plan, Goals, Crew (including Crew Auto), BrainStorm, Review, Chat Room, scheduled messages/tasks and Build At work in explicit application scope (ACD-508, GRS-086, CWR-045, APR-073/074, SQR-019/020). Only Planning Wizard, PRD Builder and Orchestrator retain **Requires a project**, shown as Needs a project with the two ACD-510 conversion choices. File references, commands, browser previews, debug presets, testing, source control and other resource actions check their actual permitted folder/file/history/connection/target and capability instead of a blanket mode gate. A PM Project operation still requires its real target and fresh authority. Missing prerequisites name the actual input; no automatic conversion clears a refusal.
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
 
@@ -208,12 +208,12 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes
 
 ## 2. ELI5 Mode
 
-There are **two separate ELI5 toggles**; they are independent and must not be conflated. The authoritative dual-copy checklist for in-scope strings is `Plans/FinalGUISpec.md` F3-572 (the dual-copy checklist; FinalGUISpec has no §7.4.0, and references to that number mean F3-572). Chat ELI5 (§2.1) is resolved from three levels, a chat's own override, a project default and an app default, and the app-level Interaction Mode (§2.2) is a different setting that changes only tooltips and interviewer copy; ACD-484 holds the contract (DL-126).
+There are **two separate ELI5 toggles**; they are independent and must not be conflated. The authoritative dual-copy checklist for in-scope strings is `Plans/FinalGUISpec.md` F3-572 (the dual-copy checklist; FinalGUISpec has no §7.4.0, and references to that number mean F3-572). Chat ELI5 (§2.1) is resolved by the one Settings resolver from the chat override, applicable Project, Computer, Everywhere and factory (app chats omit Project), and the app-level Interaction Mode (§2.2) is a different setting that changes only tooltips and interviewer copy; ACD-484 holds the contract (DL-126).
 
 ### 2.1 Chat-level ELI5 (in chat only)
 
 - **What:** A setting **in the chat UI** that, when **on**, instructs the Assistant to explain technical terms and steps in simpler terms and with more detail (ELI5 = "Explain Like I'm 5") in **that chat**. It is set from the ELI5 popup (the wand's ELI5 row) or with one click on the quick dot by the message box (ACD-484, FinalGUISpec F3-581).
-- **Default:** a chat's ELI5 is resolved in this order: the chat's own override (`general.interaction.chat-eli5`), otherwise the project default, otherwise the app default `general.interaction.eli5-default` (Explain Terms Everywhere), which Settings registers as **OFF** (Expert/default LLM behavior). With nothing turned on, no extra "explain simply" instruction is added. The project default is the project scope of that same app-default setting; Settings owns and persists that scope under DL-138 (SSYS-028), retaining the order of DL-126.
+- **Default:** a chat's ELI5 is resolved in this order: the chat's own override (`general.interaction.chat-eli5`), otherwise the applicable Project default, Computer, Everywhere, then factory; app chats skip Project. The shared default key is `general.interaction.eli5-default` (Explain Terms Everywhere), which Settings registers as **OFF** (Expert/default LLM behavior). With nothing turned on, no extra "explain simply" instruction is added. The project default is the project scope of that same app-default setting; Settings owns and persists that scope under DL-138 (SSYS-028), with the current SSYS-002/059 ladder superseding the older three-level order.
 - **Switching:** a switch changes only the replies started after it. It never re-sends, regenerates or rewrites an earlier reply, so a switch never produces a second response. A finished reply may offer "Explain this reply simply", which writes one extra, simpler reply only when the user asks (ACD-484).
 - **Scope:** Affects **Assistant chat behavior only** (explanations, follow-ups, teaching in the conversation).
 - **Does NOT affect:** Interviewer **documentation writing style**. When the interview generates PRD, AGENTS.md, requirements, or other docs, chat ELI5 is **ignored**; generated docs remain technical and precise for agent consumption.
@@ -969,7 +969,7 @@ Chat consumes file context through explicit file-reference handoff and canonical
 
 Rules:
 - `@` mention and picker flows may discover files and symbols, but actual file insertion into the composer is represented as visible chips
-- `cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }` is the canonical file-reference insertion command
+- `cmd.chat.add_file_reference` carries explicit app/Project scope, `project_id` present null for app or nonempty for Project, exact thread/draft/Computer/path and optional line range. File-only insertion remains the canonical route; cross-Project references are read-only grant-bound (ACD-509).
 - File Manager `Add to Assistant Chat` uses that command to insert a visible canonical file reference into the active composer/thread context; it must not inline full file contents as a hidden side effect
 - the cmd.chat.add_file_reference alias is file-only and rejects a folder; folder attachment uses cmd.chat.attachment.add with semantic_kind folder
 - clicking a file chip or file citation opens through the shared open-file contract rather than through chat-local navigation rules
@@ -979,7 +979,7 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Ca
 Restore and review boundaries:
 - `cmd.chat.revert` is the canonical entrypoint for `Revert last agent edit`; the files row under the reply that changed files offers Revert only on the latest eligible turn, and older turns print why instead (ACD-478)
 - omitted `target_message_id` resolves once to the latest eligible assistant turn in the current thread with persisted file mutations; no eligible turn returns `no_eligible_mutating_turn` without opening a FileSafe restore transaction
-- the resolved target is one immutable whole-turn mutation record containing `project_id`, `repo_id`, `worktree_id`, `target_message_id`, the complete canonical-absolute affected-path set, mutation lineage, and the expected whole-turn manifest ref/SHA-256; Chat never re-resolves that record through current focus, branch, `working_directory`, or a later assistant turn
+- the resolved target is one immutable whole-turn mutation record containing its explicit source scope and Computer/root identity, `project_id` (null for app), actual optional `repo_id` and `worktree_id`, `target_message_id`, the complete canonical-absolute affected-path set, mutation lineage, and the expected whole-turn manifest ref/SHA-256; Chat never re-resolves that record through current focus, branch, `working_directory`, or a later assistant turn. The app manifest is a separately versioned exact contract; original Project manifests and hashes remain unchanged.
 - if that assistant turn touched multiple files, the revert exact-replaces the whole manifest scope across all affected files through FileSafe; it never reports per-file or partial success
 - FileSafe owns target and blob verification, the pre-restore rollback snapshot, durable operation journal, path CAS, same-directory promotion, post-state equality, rollback equality, restart reconciliation, remote custody, and recovery holds; Chat consumes the closed outcomes `restored_clean | restore_skipped | restore_refused | restore_failed | restore_recovery_required` without relabeling them
 - `restored_clean` requires exact target equality; `restore_skipped` requires preflight equality and zero path mutation; `restore_refused` is pre-mutation; `restore_failed` requires verified equality with the recorded pre-restore state after rollback; and `restore_recovery_required` retains the mutation fence, transaction, holds, and worktree ownership. `restored_with_conflicts` is invalid for Chat revert.
@@ -1018,11 +1018,11 @@ ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md
 In addition to explicit human/agent search, the Assistant Chat context pipeline supports **smart auto-retrieval** that can pull **relevant slices** from **project chat history**, **project workspace code**, and **project logs** to keep long threads usable without overloading the context window.
 
 **Hard rules:**
-- **Project-only by default:** Auto-retrieval searches **only within the current project** (project-scoped indices; see §10.3). It MUST NOT search other projects or external sources unless the user explicitly requests external navigation/import (§7.4).
+- **Local by default:** Project threads retrieve only their current Project sources; app threads retrieve only their own messages and admitted chat-folder/working-root sources. Explicit cross-Project reads use ACD-509/T-185 coverage and source permissions; automatic retrieval never merges Projects or private memory.
 - **Not always-on for everything:** Auto-retrieval MUST be **triggered and budgeted**, not “search everything every turn.”
 - **Deterministic budget caps:** Auto-retrieval has strict per-source limits (queries/hits/bytes) so it cannot crowd out user/assistant messages.
 
-**Retrieval sources (project-only):**
+**Retrieval sources (local Project or app thread/roots under ACD-063):**
 - **Chat history retrieval:** Tantivy chat index; enables “what did we decide earlier / in another thread.”
 - **Code retrieval:** Tantivy code index (MVP) + LSP symbol search + ripgrep fallback (Plans/Tools.md + Plans/storage-plan.md).
 - **Logs retrieval:** Tantivy logs index (MVP) over log summaries + pointers to full payload (Plans/storage-plan.md).
@@ -1046,9 +1046,9 @@ In addition to explicit human/agent search, the Assistant Chat context pipeline 
 - Retrieved Context is **not** “memory” and must not be written into the Assistant memory store unless separately captured as a verified gist (Plans/assistant-memory-subsystem.md).
 - Auto-retrieval MUST respect **Context Lens** overlays (§17): muted messages are excluded; focused messages are prioritized; subcompacted messages use the subcompact summary instead of raw messages.
 
-### 10.2 Agent-callable search tools (project-only)
+### 10.2 Agent-callable search tools (explicit local scope)
 
-To support both explicit agent reasoning and smart retrieval, provide project-scoped agent-callable tools (or MCP equivalents) that query the project indices:
+To support explicit agent reasoning and local retrieval, use Tools-owned chatsearch/codesearch/logsearch/logread/grep with an explicit Project context or app thread/Computer/roots. T-185 projects.* is the only admitted cross-Project merge path and always returns coverage; missing scope never defaults to a hidden Project.
 
 - `chatsearch(query, filters={thread_id?, time_range?}, k)` -> hits with `thread_id`, `message_id`, `ts`, snippet, score.
 - `codesearch(query, path?, mode={text|symbol}, k)` -> hits with `path`, line/range, snippet (symbol-aware when LSP is available).
@@ -1067,14 +1067,14 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.
 ### 10.3 Scoping and performance: per-project indices (required)
 
 
-To guarantee **project-only search** and keep performance stable as threads grow:
+To preserve local isolation and bounded performance, Project corpora keep the following paths; the app/chat corpus is separately Server-owned under Storage, and explicit cross-Project result merging consumes T-185 coverage:
 
 - Tantivy indices for chat/code/logs MUST be stored **per project**:
   - `storage/tantivy/projects/{project_id}/chat`
   - `storage/tantivy/projects/{project_id}/code`
   - `storage/tantivy/projects/{project_id}/logs`
 - Amended 2026-10-31 (DL-270): these paths are relative to the store root, which SP-345 places inside a directory ending .noindex on macOS, under AppData on Windows and in the XDG data directory on Linux. Nothing relies on .metadata_never_index or the not-content-indexed flag.
-- This enables fast queries in long-lived projects, supports clean retention/cleanup per project, and does not block future cross-project search (future enhancement: query multiple project indices and merge top-K).
+- Separate corpora retain per-scope performance/retention. Cross-Project top-K merging is now admitted only for explicit T-185 reads and one coverage formatter; ambient retrieval remains local. Successful conversion publishes destination entries once and removes the live app entries, retaining source recovery if reindexing fails.
 
 ContractRef: ContractName:Plans/storage-plan.md
 
@@ -1142,7 +1142,7 @@ Rules:
 - archiving does not rewrite message ids, thread lineage, or worktree lineage
 - deletion is terminal for ordinary user navigation even if compliance metadata is retained elsewhere
 - physical purge delay under a hold is not an undo or restore promise, and deleting a thread never clears restore-point descendant/application/preserve/legal/source-lineage holds
-- restore commands must validate that retained attachments, worktree refs, and source-thread refs still belong to the same project or degrade with an inline restore error
+- Restore validates the original explicit source thread/scope/Computer and each retained attachment/worktree/reference under current permissions. Project sources retain same-Project checks; app sources accept null Project and real thread/roots, and any deliberate cross-Project ref needs its own read grant. Invalid/missing edges degrade with the exact restore error, never a guessed target.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
 
@@ -1232,13 +1232,13 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Acc
 
 #### Immutable conversation restore-point lifecycle
 
-Assistant Chat owns user-facing restore-point creation, application/branching, and lifecycle under approved `PD-RSP-08`. Storage owns the materialized `restore_point_record` at `rp:{project_id}:{restore_point_id}`, its canonical value schema, persistence, holds, and retention. Contracts owns the `restore_point.created | applied | expired | deleted | corrupt` event envelopes. Runtime Artifacts may project the record, but `runtime_artifact.restore_point` is neither the record nor a runtime safe point.
+Assistant Chat owns user-facing restore-point creation, application/branching, and lifecycle under approved `PD-RSP-08`. Storage owns the materialized `restore_point_record` at original Project `rp:{project_id}:{restore_point_id}` or the SP-349 app `restore_point_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}` edition, its canonical value schema, persistence, holds, and retention. Contracts owns the `restore_point.created | applied | expired | deleted | corrupt` event envelopes. Runtime Artifacts may project the record, but `runtime_artifact.restore_point` is neither the record nor a runtime safe point. App records share the same Server-wide 2,048 counterpart cap, exact retention/holds and canonical custody; the original Project codec is unchanged.
 
-Creation is explicit through `cmd.chat.create_restore_point { project_id, thread_id, source_message_id, idempotency_key }`. Chat resolves one inclusive message boundary in one current conversation branch and persists an immutable record containing `source_thread_id`, `source_branch_id`, `source_message_id`, context/provenance refs, attachment refs, citation refs, `record_sha256`, `status = available`, creation time, hold refs, and optional `safe_point_id`. The record freezes the conversation state needed to materialize that boundary; it contains no workspace file bodies, secrets, credentials, ephemeral stream state, or queued messages. An optional `safe_point_id` is lineage only. Equal create identity plus equal semantic content returns the original record/result; the same identity with different content is refused and never overwrites the record.
+For the original Project edition, creation is explicit through `cmd.chat.create_restore_point { project_id, thread_id, source_message_id, idempotency_key }`. Chat resolves one inclusive message boundary in one current conversation branch and persists an immutable record containing `source_thread_id`, `source_branch_id`, `source_message_id`, context/provenance refs, attachment refs, citation refs, `record_sha256`, `status = available`, creation time, hold refs, and optional `safe_point_id`. The record freezes the conversation state needed to materialize that boundary; it contains no workspace file bodies, secrets, credentials, ephemeral stream state, or queued messages. An optional `safe_point_id` is lineage only. Equal create identity plus equal semantic content returns the original record/result; the same identity with different content is refused and never overwrites the record. The separately admitted app variant keeps every corresponding hash/custody/lifecycle/permission check, with null Project and exact thread/Computer/root identity under ACD-086; no old Project codec is relaxed.
 
-Application is only `cmd.chat.branch_from_restore { project_id, restore_point_id, source_thread_id, expected_restore_point_sha256, new_thread_title? }`. Before creation, the surface discloses the exact source thread/branch/message boundary, whether the source is running or dirty, and that the target will be a new thread/conversation branch. Chat verifies the canonical record, project/source identity, expected hash, status, permissions, storage-writer posture, refs, and holds, then materializes the frozen boundary into a new `thread_id` and `branch_id`. Only result `branched` creates those identities and emits exactly one `restore_point.applied`; `refused` and `failed` return no target IDs and emit no application event. Replaying the same command execution identity/application intent returns its recorded result and, for `branched`, the same new thread/branch IDs without emitting a duplicate event or creating a second branch. A deliberate second branch from the same available record requires a new command execution identity and produces a distinct application record. Successful application appends an application ref and does not consume or mutate the record. Every `branched`, `refused`, `failed`, and replay path leaves the source thread, source conversation branch, source worktree, files, Git/index state, queue, and runtime safe points unchanged. A combined conversation-plus-filesystem restore is not this command and would require a separately registered, explicitly confirmed composite transaction.
+For the original Project edition, application is only `cmd.chat.branch_from_restore { project_id, restore_point_id, source_thread_id, expected_restore_point_sha256, new_thread_title? }`. Before creation, the surface discloses the exact source thread/branch/message boundary, whether the source is running or dirty, and that the target will be a new thread/conversation branch. Chat verifies the canonical record, project/source identity, expected hash, status, permissions, storage-writer posture, refs, and holds, then materializes the frozen boundary into a new `thread_id` and `branch_id`. Only result `branched` creates those identities and emits exactly one `restore_point.applied`; `refused` and `failed` return no target IDs and emit no application event. Replaying the same command execution identity/application intent returns its recorded result and, for `branched`, the same new thread/branch IDs without emitting a duplicate event or creating a second branch. A deliberate second branch from the same available record requires a new command execution identity and produces a distinct application record. Successful application appends an application ref and does not consume or mutate the record. Every `branched`, `refused`, `failed`, and replay path leaves the source thread, source conversation branch, source worktree, files, Git/index state, queue, and runtime safe points unchanged. A combined conversation-plus-filesystem restore is not this command and would require a separately registered, explicitly confirmed composite transaction. The separately admitted app variant keeps every corresponding hash/custody/lifecycle/permission check, with null Project and exact thread/Computer/root identity under ACD-086; no old Project codec is relaxed.
 
-Status is closed to immutable `available -> expired | deleted | corrupt`. `cmd.chat.delete_restore_point { project_id, restore_point_id, expected_restore_point_sha256 }` may transition an available record to `deleted` only after exact-hash and permission/storage preflight and only when descendant-branch, in-flight-application, explicit-preserve, legal-hold, and required source-lineage refs permit it. A protected record stays available and delete is refused; delete never clears a hold. The same delete identity is idempotent and returns the recorded terminal result, while a stale expected hash is refused. A successful application is not a lifecycle transition.
+For the original Project edition, status is closed to immutable `available -> expired | deleted | corrupt`. `cmd.chat.delete_restore_point { project_id, restore_point_id, expected_restore_point_sha256 }` may transition an available record to `deleted` only after exact-hash and permission/storage preflight and only when descendant-branch, in-flight-application, explicit-preserve, legal-hold, and required source-lineage refs permit it. A protected record stays available and delete is refused; delete never clears a hold. The same delete identity is idempotent and returns the recorded terminal result, while a stale expected hash is refused. A successful application is not a lifecycle transition. The separately admitted app variant keeps every corresponding hash/custody/lifecycle/permission check, with null Project and exact thread/Computer/root identity under ACD-086; no old Project codec is relaxed.
 
 The current machine registry binds every `restore_point.*` row to `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0`. Expiry eligibility begins inclusively at the owner-proven `reference_release + 7,776,000 seconds`, never at creation time, payload time, filename time, mtime, or an inferred release. The project cap is `2,048`; count pressure selects only the oldest eligible record, and eligible expiry retains the required hash summary. Descendant `branch:<branch_id>`, `application:<application_id>`, preserve/legal holds, in-flight application, source-lineage refs, live refs, backup/rollback refs, recovery anchors, and maintenance refs override both age and count eligibility until their owner-defined release evidence is durable. Assistant Chat does not invent a timer or window, infer release from an observed absence of holds, or clear any ref. Artifact projections may become unavailable or expire independently only when regenerable from the retained canonical record; they never delete the `rp:` record or clear holds.
 
@@ -1700,7 +1700,7 @@ Transcript, alternate-screen, and reset semantics:
 - Clear, reset, replace, and close remain separate card actions: clear affects reviewable and `/reviewable` history visibility, reset reinitializes display `/parser` state when supported, interrupt requests stop of the foreground command, terminate ends the session/process, kill force-stops where policy allows, replace starts a new runtime in the slot, and close is a workspace-structure action unless an explicit runtime termination policy is chosen (amended 2026-10-09, DL-181: closing a terminal tab ends its session after its inline ask, SMPFS-180, ACD-140).
 - block-level copy/export indicates partial backing history when only pruned transcript remains.
 - metadata-only command blocks may expose command metadata, duration, cwd, and exit status without fabricating output text.
-- per-project Terminal settings distinguish live scrollback depth, persisted transcript retention, clear-on-close, and preserve-on-close behavior.
+- Terminal defaults for scrollback/transcript retention/close behavior resolve through the Settings inventory's admitted levels and the Terminal owner's actual Computer/session/tab overrides; app context omits Project. Frozen session and retained transcript custody remain owner records, not portable settings.
 
 Terminal labels and accessibility:
 - pane headers carry the primary label, runtime status chip, and lightweight context badges such as cwd/shell/remote/profile (amended 2026-10-09, DL-181, DL-184: the pane header is the terminal tab's header row, which shows the folder, the branch and, while a command runs, the command and its elapsed time as plain words, with no status chip; the state shows on the tab and in the tab's notice rows, `Plans/FinalGUISpec.md#F3-640`, ACD-139, ACD-141).
@@ -2005,7 +2005,7 @@ Rule: The chat UI MUST surface an “Injected Context” breakdown per run/turn,
 
 ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
 
-Rule: The three context injectors MUST be user-configurable (per-project; optional per-run override) with deterministic defaults; budget defaults (bytes/lines/headings) MUST be decided deterministically and recorded via `auto_decisions.jsonl`.
+Rule: The three context injectors consume ACD-181 and the one Settings resolver at exact admitted Everywhere/Computer/Project levels plus explicit run override; app omits Project. Defaults/budgets remain deterministic owner policy, never a runtime write to auto_decisions.jsonl or a feature-local store.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles, ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement
 
@@ -2269,7 +2269,7 @@ All of the following are **MVP requirements** and are already reflected in the m
 9. **Revert last agent edit** -- §9: revert from thread via the canonical file-restore pipeline.
 10. **Session share** -- §11: produce a shareable bundle (messages + metadata, no secrets).
 11. **HITL: new thread spawned** -- §21: CtA on Dashboard; a **new thread** is spawned with an appropriate name for the HITL prompt.
-12. **No project selected** -- §1: many chat features do not work when no project is selected; only application rules apply.
+12. **No project selected** -- §1: ACD-508 admits app chat/Goal/Crew/Plan/Deep Plan/schedules with real Computer/roots; only Planning Wizard, PRD Builder and Orchestrator require Project selection. Other actions validate their actual target/capability.
 13. **Queued messages** -- §4: two-slot FIFO queue with edit/send-now/cancel controls; no clear-queue action.
 14. **Keyboard shortcuts** -- §4: chat actions reachable via shortcuts and command palette (`newfeatures.md` §11).
 15. **Streaming** -- §12: response streams when platform supports it; normalized stream; fallback to batch.
@@ -2955,7 +2955,7 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contra
 - The dropdown is hosted as a click-to-open corner-origin sprout popout with the theme-matched popout chrome shared by the other chat header menus (ACD-442); the trigger's state color is applied through stylesheet rules only (no inline style pinning), and trigger hover matches the Context Lens trigger hover treatment in all themes
 - Changing binding mid-thread is allowed; change applies to the next turn (same semantics as platform/model changes per §1.1)
 - While a turn is in-flight, the dropdown is read-only (no binding changes during execution)
-- `Unbind` sets thread binding to None; agent's next turn uses main project dir
+- `Unbind` sets the optional binding to None; the next turn resolves the owning Project root, or for an app thread the exact Computer/chat-folder/granted root. No current-focus/main-Project fallback is permitted.
 - `Remove Worktree` calls `WorktreeManager::remove_worktree`, then sets binding to None
 - Remove is blocked with error toast if worktree has an active run in any thread or orch tier
 - The button is visible in all chat modes (Ask, Agent, Debug, Plan, Deep Plan)
@@ -2996,15 +2996,15 @@ Thread-to-worktree binding is durable, explicit, and identity-bearing.
 **Startup revalidation:** After PM startup rehydrates thread state from redb/seglog, the next focus of a thread with `thread_state:{thread_id}:worktree_binding` lazily verifies that the recorded path exists and appears in `git worktree list`. If the path is missing, PM auto-unbinds by deleting the binding and reverse lookup, emits `chat.thread_worktree_unbound` with `reason=path_missing`, and notifies the user; it does not silently re-create the missing worktree.
 
 **Worktree-aware same-file identity rules:**
-- The canonical file identity for thread-bound chat, debug, Source Control, and GitHub pivots is `{ repo_id, worktree_id, relative_path }`; path alone is not sufficient.
+- Repository-backed pivots preserve `{repo_id, worktree_id, relative_path}`. App files without history use actual Host/Computer and canonical absolute root/path identity; historical cards and mutations stay pinned to their captured source (ACD-329).
 - The same relative path in two worktrees is treated as two different open subjects unless a compare session explicitly binds them together.
-- Thread-scoped opens default to the thread's bound `worktree_id`. If the thread has no bound worktree, the UI may fall back to the currently selected worktree but must label that fallback explicitly.
+- Thread-scoped opens use the frozen actual binding or explicit owning Project/app root. They never borrow another visible Project/worktree; any deliberate compare or cross-Project read names both identities and current grants.
 - Historical cards, receipts, and debug evidence remain pinned to the captured `worktree_id` even if the thread later rebinds to a different worktree.
 - Merge-back, compare, and PR creation flows may intentionally bridge the bound worktree to a base branch, but they must preserve both identities rather than collapsing them into one generic path.
 - At turn-start, Chat populates and freezes `execution_unit_context.worktree_id` plus `working_directory` for the whole turn; safe points include worktree snapshot fields `worktree_id`, `worktree_path`, `branch_name`, and `HEAD_sha`.
 - Project switch marks the worktree binding inactive rather than unbound; the button stays disabled until switch-back, then reactivates against the same binding.
 
-**1:1 enforcement:** One worktree per thread, one thread per worktree. If a user tries to bind a worktree already bound to another thread, the action is blocked with an explicit error and a deep link to the owning thread when available.
+**0..1 enforcement:** One optional managed worktree per thread and at most one owning thread per worktree. A PM Project worktree operation needs its real target/binding. An ordinary app chat creates no PM Project worktree; its permitted raw history folder remains actual source context. A duplicate binding refuses and links the owning thread when visible.
 
 **Mode-worktree invariant:** Worktree binding is thread-level state, orthogonal to Ask, Agent, Debug, Plan, and Deep Plan mode. Mode transitions never rebind, unbind, or change the frozen `working_directory` for an in-flight turn; the next turn observes the same bound worktree unless the user explicitly changes the binding.
 
@@ -3044,7 +3044,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Wiring_Matri
 
 ### W.4 Auto-create flow (when setting is on)
 
-**Trigger:** New thread creation while `branching.assistant_auto_worktree` is `true`.
+**Trigger:** New Project-bound thread with a real supported repository while the resolved `branching.assistant_auto_worktree` value is true. App chat alone never auto-creates a Project/worktree; explicit owner actions must bind their actual target.
 
 **Step by step:**
 1. User creates new thread (via `cmd.chat.new` or first message in fresh chat)
@@ -3071,7 +3071,7 @@ Title-less threads keep the temporary branch name `assistant/thread-{short_id}` 
 
 ### W.5 Settings — Branching tab
 
-**New settings (project-level, persisted in redb):**
+**Existing preference definitions:** exact logical key/type/default/label is retained. The config:project:{pid}: strings below preserve original Project own-key examples only; current consumers use Settings' admitted level resolver/transaction and Storage's versioned physical keys. No feature directly writes the examples or assumes every key permits every level.
 
 | Setting key (redb) | Type | Default | UI label | Description |
 |-----|------|---------|----------|-------------|
@@ -3417,8 +3417,8 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.
 - File manager search scope follows current file manager root
 - `@file` resolves relative to thread's `working_directory` (worktree root when bound)
 - MCP tools and `/providers` receive the thread worktree path as `working_directory` when a worktree binding is active.
-- Quick-open (Ctrl+P) remains project-scoped regardless of worktree context
-- If thread unbound mid-session: file manager falls back to project root with toast "Worktree unbound — showing project root."
+- Quick-open (Ctrl+P) follows the explicit Project or app Computer/root context; cross-Project sources remain separately grant-bound and read-only.
+- If unbound, show the owning Project root or app chat folder/granted root with a truthful note; no selected-main-Project fallback.
 
 File-edit card path semantics follow the same execution context: chat file-edit cards display paths relative to the active `working_directory`, so a bound thread naturally shows worktree-relative paths without rewriting captured absolute mutation-log paths.
 
@@ -3543,7 +3543,7 @@ Cross-doc parity references are `Plans/assistant-chat-design.md`, `/assistant-ch
 
 Permission approval state must not leak across lanes, accounts, or shared-runtime actors just because they share a UI session. `always`, reject-cascade, and doom-loop behavior require a canonical actor/account/lane scope key; `Permissions_System.md` / `Permissions_System` default-deny hints for `todoread` and `todowrite` must narrow by execution-entity, actor-scoped context, and `/member/lane/account-bounded` permissions.
 
-Worker-facing handoff and `/retry` memory are project-scoped structured runtime records, not vague "JSON-like" logs. The design must say whether the backing records/projections are `/JSONL/redb-backed` (answered 2026-10-31, DL-270, SP-339: handoff and /retry records are typed redb or MessagePack records with no JSONL backing; JSONL appears only as on-demand pm export output), which concrete `/path/delivery` or storage domain owns them, and how a worker receives the bounded packet, while keeping `/projections` and worker-facing handoff separate from full raw history.
+Worker-facing handoff and `/retry` memory are explicit Project or application thread/Computer-scoped structured runtime records, not vague "JSON-like" logs. The design must say whether the backing records/projections are `/JSONL/redb-backed` (answered 2026-10-31, DL-270, SP-339: handoff and /retry records are typed redb or MessagePack records with no JSONL backing; JSONL appears only as on-demand pm export output), which concrete `/path/delivery` or storage domain owns them, and how a worker receives the bounded packet, while keeping `/projections` and worker-facing handoff separate from full raw history. ACD-408 and the conversion manifest preserve historical source and admit fresh destination refs.
 
 `History` remains chronological but windowed: initial load shows a recent slice, `load-older` or jump controls bring in older items, dense event bursts collapse low-level records, and initial viewports do not force every low-level record into the thread. Amended 2026-10-31 (DL-270): load-older paging is mandatory, not one option among jump controls. History opens from the thread's render-page store (thread_head, hot tail, newest sealed 50-item page) and loads older pages on demand (SP-338, ACD-242); jump controls are additional. `Settings` is source-axis heavy and must show inheritance plus override origin so the user can answer what will be requested from the current surface. `origin` is audit-only even when actor identity is first-class elsewhere; it must never become behavior-driving actor identity.
 
@@ -4027,16 +4027,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant workflow identity is closed to ask, agent, debug, plan, and
-  deep_plan. Only runtime posture normalizes to the run-envelope mode, and
-  project-scoped capabilities require a selected project.
+  Assistant workflow identity stays ask, agent, debug, plan and deep_plan; only runtime posture normalizes
+  to the run-envelope mode. ACD-508 and AI-069 admit genuine app chat, Goal, Crew, Plan/Deep Plan and
+  scheduled-message/task workflows. Requires a project is a workflow gate only for Planning Wizard, PRD
+  Builder and Orchestrator. Other actions validate their actual permitted
+  folder/file/history/connection/target and capability, never infer a Project from focus.
 gui_related: true
 gui_classification_reason: Workflow identity, mode display, and project-gated capability disclosure are user-visible chat behavior.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Debug and deep_plan do not mint extra canonical runtime-mode enum values.
-  - Project-scoped capabilities are unavailable or gated when no project is selected.
+  - "Debug and deep_plan mint no extra runtime mode."
+  - "App Plan/Deep Plan/Goals/Crew/scheduled messages/tasks are positive cases; only the three named workflows show Requires a project."
+  - "Missing actual resource/authority remains a typed refusal without automatic conversion."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4051,7 +4054,10 @@ node_compile_hint:
   mode: runtime_mode_normalization
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0013
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0013"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "ask | agent | debug | plan | deep_plan"
   - "run-envelope"
@@ -4074,11 +4080,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The chat header exposes model, reasoning/effort, and worktree
-  controls; requested platform/provider selection is owned by the assistant chat
-  surface rather than a standing header dropdown or a status-bar chip. Selections
-  apply to the next turn and do not interrupt a streaming
-  response.
+  The existing header runtime controls retain applies-next-turn behavior without interrupting streams. Add
+  ACD-508 Where/place and named Computer/folder disclosure, a New split action and No project
+  switcher/list context. Where chooses place only before the first message; afterward its
+  conversion/continuation routes preserve explicit identity. It is distinct from ACD-462 composer message
+  destination. Worktree chrome follows the actual admitted binding/backend and is absent for an ordinary
+  app chat; no standing provider header dropdown returns.
 gui_related: true
 gui_classification_reason: Header dropdowns, icons, and worktree visual states are direct UI controls.
 depends_on: []
@@ -4101,7 +4108,10 @@ node_compile_hint:
   mode: chat_header_controls
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0014
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0014"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Provider -> models"
   - "fallback_chain"
@@ -4168,7 +4178,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-Amended 2026-09-27: chat ELI5 is resolved from the chat's own override (`general.interaction.chat-eli5`), then the project default, then the app default, which is the Explain Terms Everywhere setting `general.interaction.eli5-default`; a switch changes only later replies; and the plain helper lines under controls are single copy, the Expert and ELI5 pair staying on tooltips and help (ACD-484, DL-126). The two toggles above stay separate: chat ELI5 and the app-level Interaction Mode (Expert/ELI5). The chat ELI5 app default is a level of chat ELI5's resolution, not the Interaction Mode toggle, which keeps its own default (section 2.2).
+Amended 2026-09-27: chat ELI5 is resolved from the chat's own override (`general.interaction.chat-eli5`), then applicable Project, Computer, Everywhere and factory (app skips Project), which is the Explain Terms Everywhere setting `general.interaction.eli5-default`; a switch changes only later replies; and the plain helper lines under controls are single copy, the Expert and ELI5 pair staying on tooltips and help (ACD-484, DL-126). The two toggles above stay separate: chat ELI5 and the app-level Interaction Mode (Expert/ELI5). The chat ELI5 app default is a level of chat ELI5's resolution, not the Interaction Mode toggle, which keeps its own default (section 2.2). Current SSYS-002/059 supersedes the old three-level source order; frozen reply style remains unchanged.
 
 ### ACD-011 - Permission Posture And Approval Ladder
 
@@ -5714,7 +5724,11 @@ plan_unit_id: ACD-044
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: todowrite and todoread use the normalized TODO schema; todowrite is not blanket auto-denied in ask or plan mode, and Deep Plan markdown edits resync TODO projection before execution begins.
+canonical_text: >-
+  todowrite and todoread use the normalized TODO schema; todowrite is not blanket auto-denied in ask or
+  plan mode, and Deep Plan markdown edits resync TODO projection before execution begins. Application
+  To-Dos retain the one thread-local controller/list and real nullable-Project execution bindings.
+  Conversion uses the exact target map and fresh work admission, never status copied from a transcript.
 gui_related: false
 gui_classification_reason: TODO tool mutation, read behavior, and execution gating are runtime/tool behavior, not GUI implementation.
 depends_on: [ACD-043]
@@ -5737,7 +5751,10 @@ node_compile_hint:
   mode: todo_tool_mutation_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0040
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0040"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "todowrite"
   - "todoread"
@@ -6282,9 +6299,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Chat file references are explicit visible composer chips inserted through the
-  canonical add-file-reference command, file-only for MVP, and never hidden
-  full-file context injection.
+  Chat file references are explicit visible composer chips inserted through the canonical
+  add-file-reference command, file-only for MVP, and never hidden full-file context injection. The command
+  accepts an explicit application thread/draft with null project_id and actual Computer/path identity;
+  Project or cross-Project chips require their exact granted source. No hidden full-file load or focus
+  fallback follows from a chip.
 gui_related: true
 gui_classification_reason: File chips, pickers, and Add to Assistant Chat handoff are visible chat/file-manager UI behavior.
 depends_on: [ACD-025]
@@ -6308,7 +6327,10 @@ node_compile_hint:
   mode: file_reference_handoff
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0045
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0045"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "@"
   - "cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }"
@@ -6617,17 +6639,19 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Smart auto-retrieval is project-only by default across chat history, project
-  workspace code, and project logs; it must not search other projects or
-  external sources unless the user explicitly requests external navigation or
-  import.
+  Automatic retrieval is local: current Project chat/code/log sources for a Project thread, or the app
+  thread's own messages and permitted chat-folder/working-root sources for No project. Explicit projects.*
+  reads use T-185/ACD-509 and D's source/time/provider grants, never ambient index or private-memory
+  merge. After the recorded grant or task-scoped YOLO admission, an explicit question about my projects or
+  my tasks may request all permitted Projects; every empty/partial result states coverage. An unspecified
+  cross-Project scope never silently falls back to current Project.
 gui_related: false
 gui_classification_reason: Retrieval scope is context-pipeline behavior, not GUI implementation.
 depends_on: [ACD-061, ACD-062]
 unblocks: [ACD-064, ACD-065, ACD-066]
 acceptance_criteria:
-  - Auto-retrieval searches only within the current project by default.
-  - External or cross-project retrieval requires explicit user request.
+  - "Auto-retrieval stays within the owning Project or app thread/roots; explicit cross-Project T-185 reads require recorded scope/authority and coverage."
+  - "External or cross-project retrieval requires explicit user request."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6642,7 +6666,10 @@ node_compile_hint:
   mode: auto_retrieval_scope
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Project-only by default"
   - "current project"
@@ -6800,16 +6827,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Project-scoped agent search tools expose chatsearch, codesearch, logsearch,
-  logread, and grep contracts over project indices to support explicit agent
-  reasoning and smart retrieval.
+  chatsearch, codesearch, logsearch, logread and grep consume the Tools-owned admitted source/index
+  contracts. Project requests retain Project indexes; app requests bind real thread/Computer/roots and app
+  indexes, with source-bound payload dereference and current permissions. Explicit cross-Project tools are
+  T-185 with ACD-509 coverage, not silent widening of these local tools. Missing index/freshness/partial
+  results remain truthful.
 gui_related: false
 gui_classification_reason: Agent search tools and query contracts are backend/tool behavior.
 depends_on: [ACD-063]
 unblocks: [ACD-068, ACD-069]
 acceptance_criteria:
-  - chatsearch, codesearch, logsearch, logread, and grep expose project-scoped query contracts.
-  - logread payloads are bounded by size caps and stricter permission defaults.
+  - "The Tools-owned local search contracts accept exact Project or app thread/Computer/root source context without ambient merge."
+  - "logread payloads are bounded by size caps and stricter permission defaults."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6825,7 +6854,10 @@ node_compile_hint:
   mode: agent_search_tool_contracts
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0048
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0048"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "chatsearch(query, filters={thread_id?, time_range?}, k)"
   - "codesearch(query, path?, mode={text|symbol}, k)"
@@ -6940,17 +6972,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Chat, code, and log Tantivy indices are stored per project under
-  storage/tantivy/projects/{project_id}/chat, /code, and /logs for project-only
-  search, performance, retention, cleanup, and future cross-project top-K merge.
+  Project chat/code/log Tantivy paths stay storage/tantivy/projects/{project_id}/chat, /code and /logs.
+  No-project chat uses the Server app/chat corpus under Storage's admitted app index home and the same
+  single-writer/build-slot/retention policies. Explicit T-185 queries may merge permitted source results
+  through one coverage formatter; ambient retrieval never merges corpora. Conversion removes the live app
+  entry only after destination publication, keeps source recoverable on reindex failure and does not index
+  a thread live in both scopes.
 gui_related: false
 gui_classification_reason: Per-project index storage and retention are storage architecture behavior.
 depends_on: [ACD-063, ACD-067]
 unblocks: []
 acceptance_criteria:
-  - Chat, code, and log indices are partitioned by project_id.
-  - Per-project storage supports cleanup and retention per project.
-  - The design does not block future cross-project top-K merge as an enhancement.
+  - "Project corpora retain Project keys and the Server-owned app corpus has explicit scope; no live thread is indexed in both after cutover."
+  - "Per-project storage supports cleanup and retention per project."
+  - "Explicit T-185 cross-Project top-K results are admitted with one coverage formatter; ambient retrieval remains local."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6964,7 +6999,10 @@ node_compile_hint:
   mode: per_project_tantivy_indices
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0049
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0049"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "storage/tantivy/projects/{project_id}/chat"
   - "storage/tantivy/projects/{project_id}/code"
@@ -6982,7 +7020,11 @@ plan_unit_id: ACD-071
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Section 11 groups thread and chat management requirements for message taxonomy, lifecycle, identity, debug investigation state, shared navigation, branching, and session browser behavior.
+canonical_text: >-
+  Section 11 groups thread and chat management requirements for message taxonomy, lifecycle, identity,
+  debug investigation state, shared navigation, branching, and session browser behavior. The same
+  lifecycle applies to app threads. ACD-508 adds explicit place/Computer/lazy folder, Here/All chats
+  coverage and no auto-archive; ACD-510/511 own conversion/retention.
 gui_related: false
 gui_classification_reason: This is a scope/anchor unit for thread-management semantics, not GUI implementation by itself.
 depends_on: []
@@ -7002,7 +7044,10 @@ node_compile_hint:
   mode: thread_management_scope
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0050
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0050"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Threads and chat management"
 negative_constraints: []
@@ -7017,7 +7062,13 @@ plan_unit_id: ACD-072
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Canonical chat records use the closed message_type taxonomy with required senders, properties, and rendering categories for user, assistant, system, tool_result, operation_card, blocked_notice, subagent_card, and error records.
+canonical_text: >-
+  Canonical chat records retain user, assistant, system, tool_result, operation_card, blocked_notice,
+  subagent_card and error and add chat_message_in for an authenticated thread-request projection. The
+  latter names another chat as sender and never impersonates a user; source/target/request/reply lineage
+  stays with continuity owners. Computer notices and move dividers use system; conversion/read/send
+  results use existing operation-card/blocked/approval owners. ACD-469 maps these to existing transcript
+  families; no new runtime state store.
 gui_related: false
 gui_classification_reason: Message record taxonomy and persisted properties are data-contract behavior, not visual implementation.
 depends_on: [ACD-071]
@@ -7039,7 +7090,10 @@ node_compile_hint:
   mode: message_type_taxonomy
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0051
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0051"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "message_type"
   - "user"
@@ -7695,11 +7749,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat owns immutable conversation-boundary restore points. Explicit
-  creation freezes conversation and provenance refs without file bodies; applying
-  an available exact-hash record creates a new thread_id and branch_id while leaving
-  the source thread/worktree unchanged; holds govern delete/expiry eligibility; and
-  unavailable or source-deleted-content states refuse without fabricating a branch.
+  Assistant Chat owns immutable conversation-boundary restore points. Explicit creation freezes
+  conversation and provenance refs without file bodies; applying an available exact-hash record creates a
+  new thread_id and branch_id while leaving the source thread/worktree unchanged; holds govern
+  delete/expiry eligibility; and unavailable or source-deleted-content states refuse without fabricating a
+  branch. Application restore-point editions bind null Project plus real source thread/Computer/scope and
+  use restore_point_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}. All no-project threads on the Server share the counterpart 2,048 cap and
+  exact retention/hold rules; no per-chat limit reset. Creation/application/delete keep
+  exact-hash/custody/permission and new-branch semantics; conversion maps refs without rewriting old
+  points. Exact old Project records remain readable.
 gui_related: true
 gui_classification_reason: Conversation restore-point creation, status, unavailable reasons, branching, and source-preservation disclosure are user-visible behavior.
 depends_on: [ACD-071, CV-320, SP-242, CS-057]
@@ -7738,9 +7796,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056
-  - Case-L:L-022
-  - Case-L:PD-RSP-08
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056"
+  - "Case-L:L-022"
+  - "Case-L:PD-RSP-08"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "restore-and-branch"
   - "thread_id"
@@ -7766,11 +7827,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Restore-point controls disclose the exact source conversation boundary and new
-  target before branching, expose record/artifact status and unavailable reason,
-  and consume their current canonical command rows and one-handler wiring.
-  Branching is a new conversation branch and never source-thread undo or
-  filesystem restore.
+  Restore-point controls disclose the exact source conversation boundary and new target before branching,
+  expose record/artifact status and unavailable reason, and consume their current canonical command rows
+  and one-handler wiring. Branching is a new conversation branch and never source-thread undo or
+  filesystem restore. App restore controls disclose No project and the actual Computer, exact source
+  boundary and destination, preserving user-only branching choices and the same unavailable/hold reasons.
+  No safe-point substitution or Project fallback is permitted.
 gui_related: true
 gui_classification_reason: Branch labels and confirmation prompts are user-visible UI behavior.
 depends_on: [ACD-086]
@@ -7802,9 +7864,12 @@ node_compile_hint:
   mode: branch_conversation_ui_confirmation
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056
-  - Case-L:L-022
-  - Case-L:PD-RSP-08
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056"
+  - "Case-L:L-022"
+  - "Case-L:PD-RSP-08"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "branch labels"
   - "running or dirty thread"
@@ -12385,16 +12450,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The three context injectors are user-configurable per project with optional
-  per-run override and deterministic defaults.
+  The three context injectors consume the one Settings resolver at their declared
+  Everywhere/Computer/Project levels plus an existing explicit run override. App threads omit Project; no
+  new injector key or private memory tier is added. Defaults, budgets and run-start snapshots remain
+  deterministic, and changing a default never rewrites admitted context. Source-integrity/currentness and
+  exact app thread/Computer roots are independently required.
 gui_related: true
 gui_classification_reason: Context injector configuration and per-run override are user-facing settings/controls.
 depends_on: [ACD-178]
 unblocks: [ACD-182]
 acceptance_criteria:
-  - Three context injectors can be configured per project.
-  - Optional per-run override exists.
-  - Defaults are deterministic.
+  - "Each injector resolves one explicit context through Settings, omitting Project for app work."
+  - "Per-run overrides, deterministic defaults, source integrity and frozen snapshots remain unchanged."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -12409,7 +12476,10 @@ node_compile_hint:
   mode: context_injector_user_configuration
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0088
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0088"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "per-project"
   - "per-run override"
@@ -12612,17 +12682,20 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant turns with a selected project call Assistant-memory SSOT interfaces
-  `build_capsule(project_id, now)` and `search(project_id, user_message, now,
-  k)` and enforce configured capsule and retrieval budgets.
+  Assistant memory capsule/search remains owned by assistant-memory-subsystem. Project turns use
+  build_capsule(project_id, now) and search(project_id, user_message, now, k) under their admitted
+  version. App siblings bind null Project plus real thread/Computer and only that thread's memory/capsule
+  plus admitted public_safe taught rules, under the same budgets. Conversion adopts destination memory
+  with explicit gist/capsule lineage, never another chat's private memory or event-reconstructed content.
 gui_related: false
 gui_classification_reason: Assistant memory capsule/retrieval injection is prompt/context pipeline behavior.
 depends_on: [ACD-178]
 unblocks: [ACD-187, ACD-188, ACD-189]
 acceptance_criteria:
-  - Assistant turns call build_capsule for selected project.
-  - Assistant turns call search with project_id, user_message, now, and k.
-  - Capsule and retrieval budgets are enforced.
+  - "Assistant turns call build_capsule for selected project."
+  - "Assistant turns call search with project_id, user_message, now, and k."
+  - "Capsule and retrieval budgets are enforced."
+  - "App capsule/search uses only that thread plus admitted public_safe taught rules, with no Project sentinel or other-thread private memory."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -12636,7 +12709,10 @@ node_compile_hint:
   mode: assistant_memory_capsule_retrieval_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "build_capsule(project_id, now)"
   - "search(project_id, user_message, now, k)"
@@ -15781,7 +15857,13 @@ plan_unit_id: ACD-259
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor validation loop selections are app settings only, not project artifacts, not emitted to seglog as project data, and not included in project exports.
+canonical_text: >-
+  Auditor validation-loop preferences are ordinary Settings values at exactly their inventory-admitted
+  Everywhere/Computer/Project/owner levels. They are not Project artifacts or event-built configuration.
+  App work skips Project; every consumer uses one resolver/transaction and freezes its actual run
+  selection. Source/export includes only the chosen permitted own configuration under Settings exclusions;
+  live loop progress/history is never copied as a default. No competing app-only preference store or
+  direct feature YAML writer is added.
 gui_related: false
 gui_classification_reason: Auditor validation settings storage scope is persistence/config behavior.
 depends_on: [ACD-257]
@@ -15803,7 +15885,10 @@ node_compile_hint:
   mode: app_settings_only
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "not stored in project artifacts"
   - "not emitted to seglog as project data"
@@ -18443,18 +18528,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Per-project Source Control accordion open/close state persists at
-  `config:project:{pid}:source_control.accordion_state` using the JSON shape `{
-  "Changes": true, "Worktrees": false, "Branches/Stash": false, "History":
-  false, "Graph": false }`, and inline diagnostics may render the same object.
+  Source Control accordion presentation consumes the Settings/UI-state owner for exact declared levels and
+  actual app or Project context. The original config:project:{pid}:source_control.accordion_state object
+  remains Project own-state lineage, not a universal physical key or second writer. Shared defaults and
+  any admitted Device/Computer/Project overrides resolve once; explicit context view choices stay
+  independent and conversion never merges target boards/panels.
+  Changes/Worktrees/Branches/Stash/History/Graph identities and diagnostics remain unchanged.
 gui_related: false
 gui_classification_reason: Accordion state persistence is storage/config behavior.
 depends_on: [ACD-319]
 unblocks: [ACD-321]
 acceptance_criteria:
-  - Source Control accordion open/close state persists per project at the specified config key.
-  - Persisted accordion state uses the specified JSON shape.
-  - Inline diagnostics may render the same persisted object.
+  - "Same panel state resolves by exact scope/Computer/Project through its owner, never current focus."
+  - "Original Project own-state remains valid; app state has a real explicit owner/key and no target-state merge."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -18469,7 +18555,10 @@ node_compile_hint:
   mode: source_control_accordion_state
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0147
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0147"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "config:project:{pid}:source_control.accordion_state"
   - "{\"Changes\": true, \"Worktrees\": false, \"Branches/Stash\": false, \"History\": false, \"Graph\": false}"
@@ -18487,19 +18576,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Source Control section order is Changes, Worktrees, Branches/Stash, History,
-  Graph; scroll position is not persisted; each project state is independent;
-  expanded sections may scroll internally while the outer accordion scrolls;
-  Worktrees filter is `All | Threads | Orchestrator | Manual`, persists as
-  `worktree_filter`, defaults to `All`, and is not shared across projects.
+  Source Control section order remains Changes, Worktrees, Branches/Stash, History, Graph; scroll position
+  is not persisted and expanded sections may scroll internally. Worktree filter retains All | Threads |
+  Orchestrator | Manual and default All, using exact owner-admitted preference/state levels and
+  app/Project root context. Independent explicit view choices are not silently shared across Projects or
+  overwritten on conversion; broader defaults exist only through the Settings-owned resolver/transaction.
+  No null Project key or fake Orchestrator target is created.
 gui_related: true
 gui_classification_reason: Source Control section order, scrolling, and Worktrees filter are visible UI behavior.
 depends_on: [ACD-319, ACD-320]
 unblocks: []
 acceptance_criteria:
-  - Source Control sections use the fixed order Changes, Worktrees, Branches/Stash, History, Graph.
-  - Scroll position is not persisted and each project's accordion state remains independent.
-  - Worktrees filter options, persistence key, default, and per-project scope match the source contract.
+  - "Section order/filter enums and nonpersisted scroll remain unchanged."
+  - "Owner-resolved defaults and explicit app/Project view state preserve independent contexts and target conversion state."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -18514,7 +18603,10 @@ node_compile_hint:
   mode: source_control_worktree_filter_state
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0147
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0147"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Changes, Worktrees, Branches/Stash, History, Graph"
   - "All | Threads | Orchestrator | Manual"
@@ -18873,18 +18965,20 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  File identity for chat/debug/Source Control/GitHub pivots is `{ repo_id,
-  worktree_id, relative_path }`; turn start freezes
-  `execution_unit_context.worktree_id` and `working_directory`; historical cards
-  remain pinned.
+  Repository-backed file pivots preserve {repo_id, worktree_id, relative_path}; an ordinary app file uses
+  execution Host/Computer plus canonical absolute root/path identity, with nullable repo/worktree only
+  where inapplicable. Turn start freezes execution_unit_context.working_directory and the actual worktree
+  if present; historical mutations/cards remain pinned. Cross-Project references are read-only grant-bound
+  sources, not current-focus file identities.
 gui_related: false
 gui_classification_reason: Worktree-aware file identity and turn-start freezing are runtime/contract behavior.
 depends_on: [ACD-326]
 unblocks: [ACD-330, ACD-367]
 acceptance_criteria:
-  - Worktree-aware file identity uses repo, worktree, and relative path.
-  - Turn start freezes worktree ID and working directory for the whole turn.
-  - Historical cards, receipts, and debug evidence remain pinned to captured worktree identity.
+  - "Worktree-aware file identity uses repo, worktree, and relative path."
+  - "Turn start freezes worktree ID and working directory for the whole turn."
+  - "Historical cards, receipts, and debug evidence remain pinned to captured worktree identity."
+  - "An app file without history uses actual Host/canonical absolute root/path, never an invented repository or focused Project."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -18900,7 +18994,10 @@ node_compile_hint:
   mode: worktree_aware_file_identity
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0149
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0149"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "{ repo_id, worktree_id, relative_path }"
   - "execution_unit_context.worktree_id"
@@ -19277,18 +19374,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Settings registry adds project-level worktree settings with exact keys, types,
-  defaults, labels, and descriptions for auto-create, cleanup default, base ref,
-  follow-thread, warning threshold, create timeout, pre-merge test, test
-  command, timeout, and test target.
+  The ten existing worktree preference keys/types/defaults/labels retain their Settings inventory identity
+  and exact admitted level classification. Each uses the one resolver/transaction for
+  Everywhere/Computer/Project/owner levels where allowed; no universal config:project:{pid}: writer
+  remains. Actual backend/repo/base-ref/path/resource prerequisites and Computer ceilings still govern.
+  App mode does not auto-create a PM Project worktree, and absence of a worktree uses only that app
+  thread's owned/granted root. Pre-merge tests remain real-target actions, never a mode-wide Project ban.
 gui_related: true
 gui_classification_reason: The settings registry includes visible labels and project settings UI values.
 depends_on: [ACD-335]
 unblocks: [ACD-339, ACD-340, ACD-369]
 acceptance_criteria:
-  - Project-level assistant worktree settings preserve their exact keys, types, defaults, labels, and descriptions.
-  - Cleanup default supports `ask`, `keep`, and `remove`.
-  - Pre-merge test target supports `merged_result` and `branch_only`.
+  - "All ten logical keys retain their types/defaults and exact inventory-declared levels."
+  - "No feature-local physical Settings write, fake Project worktree or main-Project fallback occurs."
+  - "Cleanup ask/keep/remove and pre-merge merged_result/branch_only remain unchanged."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -19303,7 +19402,10 @@ node_compile_hint:
   mode: assistant_worktree_settings_registry
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0152
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0152"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "config:project:{pid}:branching.assistant_auto_worktree"
   - "config:project:{pid}:branching.assistant_worktree_cleanup_default"
@@ -19454,10 +19556,12 @@ unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Status rendering preserves projection wording as compatibility lineage: icons
-  read `worktree_projection.v1:{project_id}:{worktree_id}` with `dirty_state`,
-  `conflict_state`, and stale freshness display, without making Assistant Chat
-  the storage projection owner.
+  Status rendering preserves projection wording as compatibility lineage: icons read
+  `worktree_projection.v1:{project_id}:{worktree_id}` with `dirty_state`, `conflict_state`, and stale
+  freshness display, without making Assistant Chat the storage projection owner. That key names the exact
+  original Project projection. App resource-bound editions use Storage's scope/Host/root identity and
+  current binding; an app thread without a real managed worktree has no worktree status, never the main
+  Project's status.
 gui_related: true
 gui_classification_reason: Stale projection status changes visible icon and tooltip behavior.
 depends_on: [ACD-341]
@@ -19480,7 +19584,10 @@ node_compile_hint:
   mode: worktree_projection_status_compatibility
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0153
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0153"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "worktree_projection.v1:{project_id}:{worktree_id}"
   - "dirty_state"
@@ -20579,7 +20686,11 @@ plan_unit_id: ACD-369
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Pre-merge test gate runs project tests before committing a merge to verify integration, controlled by the four settings listed in W.9.
+canonical_text: >-
+  Pre-merge test gate runs project tests before committing a merge to verify integration, controlled by
+  the four settings listed in W.9. Its four defaults resolve through Settings' declared levels and
+  Computer ceilings; the actual merge/test still binds a real repository/target/currentness under SCM
+  authority. App context alone neither disables these defaults nor fabricates a Project merge.
 gui_related: false
 gui_classification_reason: Pre-merge test gate purpose and settings are backend merge behavior.
 depends_on: [ACD-338]
@@ -20601,7 +20712,10 @@ node_compile_hint:
   mode: pre_merge_test_gate_settings
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0163
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0163"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "branching.assistant_worktree_pre_merge_test"
   - "branching.assistant_worktree_pre_merge_cmd"
@@ -21218,7 +21332,13 @@ plan_unit_id: ACD-384
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Command visibility and enablement follow binding, git, active-run, merge-lock, dirty, conflict, detached HEAD, and GitHub-remote conditions.
+canonical_text: >-
+  Worktree commands validate the actual supported backend/repository/binding, current roots,
+  run/merge/dirty/conflict/detached/remote predicates and owner authority. An app chat does not acquire a
+  PM Project worktree automatically; a PM Project operation still binds its explicit real target. Ordinary
+  commands against an explicitly permitted history folder are not blanket mode-gated by No project.
+  Missing history/folder/connection reports that actual prerequisite. Git/Jujutsu differences stay with
+  their owners.
 gui_related: true
 gui_classification_reason: Command visibility and enablement are visible UI state.
 depends_on: [ACD-383, ACD-351]
@@ -21240,7 +21360,10 @@ node_compile_hint:
   mode: worktree_command_visibility_enablement
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0168
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0168"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Visible when"
   - "Enabled when"
@@ -21303,16 +21426,20 @@ plan_unit_id: ACD-386
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: File manager UI scope rules preserve unaffected editor tabs, search under current root, project-scoped quick-open, and unbound fallback toast.
+canonical_text: >-
+  File-manager root follows the actual selected thread worktree or explicit Project root for Project work;
+  app work follows its Computer/chat folder/granted roots. Quick-open searches that explicit context and
+  marks cross-Project read-only sources; unbind falls back only within the owning context, never a
+  currently focused main Project. Editor tabs keep absolute/source identities and are unaffected by
+  root-switch presentation.
 gui_related: true
 gui_classification_reason: File manager search/root behavior, quick-open scope, and fallback toast are visible UI behavior.
 depends_on: [ACD-385]
 unblocks: []
 acceptance_criteria:
-  - Editor tabs are not affected by file manager root switches.
-  - File manager search follows the current file manager root.
-  - Quick-open remains project-scoped.
-  - Unbinding falls back to project root with the specified toast.
+  - "Editor tabs preserve their captured file identities across root switches."
+  - "Search and quick-open follow explicit owning Project or app Computer/root context."
+  - "Unbind resolves only that context and never a selected-main-Project fallback."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -21327,13 +21454,16 @@ node_compile_hint:
   mode: file_manager_worktree_ui_scope
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0169
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0169"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Open editor tabs NOT affected"
   - "Quick-open (Ctrl+P)"
   - "Worktree unbound — showing project root."
 negative_constraints:
-  - "Quick-open remains project-scoped regardless of worktree context."
+  - "Do not retarget an existing editor tab, cross-Project reference or in-flight turn through current focus."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FileManager.md
@@ -21808,13 +21938,20 @@ plan_unit_id: ACD-398
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: UI/MVP non-goals preserve no GUI emojis, no Bind Existing MVP, no inline chat history markers, main-repo Changes scope, and no thread export metadata.
+canonical_text: >-
+  Existing worktree UI non-goals remain: no GUI emoji, no unsupported Bind Existing route, and no invented
+  thread export authority. Changes uses actual mutation manifests and selected admitted
+  repository/worktree; an app chat without repository history shows its changed files or an honest
+  no-changes/no-history state, never an assumed main repository. Conversion lineage dividers are ACD-511
+  system notices, not inlined Git history.
 gui_related: true
 gui_classification_reason: UI/MVP non-goals constrain visible Worktree UI behavior.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Worktree UI excludes GUI emojis, Bind Existing MVP, inline chat history markers, worktree-scoped Changes, and thread export metadata.
+  - "No GUI emoji, unsupported Bind Existing or new export authority is added."
+  - "Changes uses exact mutations/actual repository context or a truthful app no-history state."
+  - "ACD-511 conversion divider is a system lineage record, not a Git history marker."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -21828,7 +21965,10 @@ node_compile_hint:
   mode: worktree_ui_mvp_non_goals
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0174
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0174"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "No emojis in the GUI"
   - "No \"Bind Existing\" in MVP"
@@ -22253,8 +22393,12 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Worker handoff and `/retry` memory are project-scoped structured runtime records, not vague JSON-like logs; projections and bounded worker packets stay separate from full raw history.
-  Amended 2026-10-31 (DL-270): the backing is one canonical redb family with typed fields or MessagePack values, not a JSONL file or JSONL mirror (SP-339). The family declares a maximum value size of at most 16 KiB; larger bodies are payload-store references (SP-337, SP-340). The preserved token /JSONL/redb-backed records the original question only.
+  Worker handoff and /retry memory are structured owner records with explicit Project or app
+  thread/Computer scope. They never use current Project focus, full raw history as a prompt, or
+  other-thread private memory. DL-270 backing remains canonical redb typed/MessagePack values at most 16
+  KiB with BLAKE3 payload references for larger bodies; /JSONL/redb-backed is preserved historical
+  wording, never an always-on JSON/JSONL mirror. Conversion creates destination refs and preserves
+  original history.
 gui_related: false
 gui_classification_reason: Worker handoff/retry memory records are runtime/storage behavior.
 depends_on: []
@@ -22277,7 +22421,10 @@ node_compile_hint:
   mode: worker_handoff_retry_memory_records
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0180
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0180"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "/retry"
   - "/JSONL/redb-backed"
@@ -22702,9 +22849,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat must expose visible Goal Mode activation and control paths without re-owning Goal Runtime policy. Users can start goals through a button, chip, icon, `/goal`, or natural-language activation. Assistant Chat supports a pre-goal shaping flow where the assistant helps create a goal prompt, acceptance criteria, constraints, and stop conditions before the user switches to Goal Mode. A visible active-goal indicator shows goal state labels including Running, Stopped, Paused, Blocked, and Complete, with Blocked carrying the precise blocker reason when available. Thread controls support pause, resume, stop, clear, edit, and update; stopped_by_user and cleared_from_thread remain distinct runtime states. The active Goal chip/status opens a menu or drawer with View goal, Edit goal, Pause, Resume, Stop, Clear, Show tasks, Show subgoals, and Show evidence/logs. Active-goal updates can be initiated with `/goal again`, asking for an update, or clicking a little icon next to the goal status. The Goal chip is separate from chat mode so Ask, Agent, Debug, Plan, Deep Plan, Agent + Goal, Debug + Goal, Plan + Goal, and Crew + Goal remain compatible presentation concepts. Goal UI reuses PMConcept cues including chat mode dropdown, slash command menu, sticky plan tracker, thread working pulse, context usage, active subagent indicator, files touched, message blocks, and hover/runtime popovers.
-  Amended 2026-10-09 (DL-180): View goal shows the Goal in Activity Detail's Goal panel
-  (Plans/FinalGUISpec.md#F3-593); there is no Goal tab (DL-147, ACD-500).
+  Goal activation and controls consume GRS-048/050/051/054/055/086 in Project and app threads. An explicit
+  request starts one concise Goal; Activity/Goal Detail shows its objective, four-state lifecycle, exact
+  direct Save or approved proposal and revision History. Pause/Resume/Cancel/Stop keep their actual owner
+  semantics and currentness. No title, phase, tranche, child Goal, task drawer, budget field, extra Goal
+  tab/card or implicit long-task Goal is restored. App context names the real Computer and working roots;
+  conversion uses GRS-087.
 gui_related: true
 gui_classification_reason: This unit defines user-visible chat activation paths, chips, indicators, and thread controls.
 depends_on:
@@ -22713,15 +22863,9 @@ depends_on:
   - ACD-500
 unblocks: []
 acceptance_criteria:
-  - Assistant Chat exposes button/chip/icon, `/goal`, and natural-language activation paths.
-  - Running goals have a visible indicator and do not disappear into ordinary chat mode state.
-  - Pause/resume/stop/clear/edit/update controls project canonical Goal Runtime state.
-  - Goal status labels include Running, Stopped, Paused, Blocked, and Complete, with Blocked preserving a precise blocker reason when known.
-  - Goal menu or drawer actions include View goal, Edit goal, Pause, Resume, Stop, Clear, Show tasks, Show subgoals, and Show evidence/logs.
-  - Pre-goal shaping can turn a rough request into a goal prompt, acceptance criteria, constraints, and stop conditions before switching to Goal Mode.
-  - Goal remains an additive wrapper compatible with Ask, Agent, Debug, Plan, Deep Plan, Agent + Goal, Debug + Goal, Plan + Goal, and Crew + Goal.
-  - stopped_by_user and cleared_from_thread remain distinct states in visible controls and runtime projection.
-  - Goal UI alignment preserves PMConcept cues for chat mode dropdown, slash command menu, sticky plan tracker, thread working pulse, context usage, active subagent indicator, files touched, message blocks, and hover/runtime popovers.
+  - "An explicit request creates one concise Goal in app or Project scope."
+  - "Activity/Goal Detail uses the exact four states and direct Save/approved-update owner routes."
+  - "No child Goal/title/phase/budget/drawer or alternate stopped/cleared lifecycle is revived."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Assistant Chat Goal UI review
@@ -22735,17 +22879,20 @@ node_compile_hint:
   mode: assistant_chat_goal_controls
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0017
-  - pldg-20260616-001-goal-runtime-system:atom-0018
-  - pldg-20260616-001-goal-runtime-system:atom-0019
-  - pldg-20260616-001-goal-runtime-system:atom-0020
-  - pldg-20260616-001-goal-runtime-system:atom-0021
-  - pldg-20260616-001-goal-runtime-system:atom-0024
-  - pldg-20260616-001-goal-runtime-system:atom-0025
-  - pldg-20260616-001-goal-runtime-system:atom-0026
-  - pldg-20260616-001-goal-runtime-system:atom-0027
-  - pldg-20260616-001-goal-runtime-system:atom-0030
-  - pldg-20260616-001-goal-runtime-system:dec-0008
+  - "pldg-20260616-001-goal-runtime-system:atom-0017"
+  - "pldg-20260616-001-goal-runtime-system:atom-0018"
+  - "pldg-20260616-001-goal-runtime-system:atom-0019"
+  - "pldg-20260616-001-goal-runtime-system:atom-0020"
+  - "pldg-20260616-001-goal-runtime-system:atom-0021"
+  - "pldg-20260616-001-goal-runtime-system:atom-0024"
+  - "pldg-20260616-001-goal-runtime-system:atom-0025"
+  - "pldg-20260616-001-goal-runtime-system:atom-0026"
+  - "pldg-20260616-001-goal-runtime-system:atom-0027"
+  - "pldg-20260616-001-goal-runtime-system:atom-0030"
+  - "pldg-20260616-001-goal-runtime-system:dec-0008"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "button/chip/icon"
   - "/goal"
@@ -22818,7 +22965,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat projects Goal Runtime task state through a goal task/TODO tracker with item states, update entry points, and visible replan feedback. Material mid-goal changes produce Goal Replan Event feedback in the visible task list. Blocked goal status must show the exact blocker instead of a generic failure label, including blocker_class, cause, affected scope, last attempted recovery, why autonomous recovery cannot continue safely, and next safe action when available.
+  Goal progress uses the one thread-local To-Do list and actual outcome receipts, never Goal-owned
+  child-task state or an invented percentage. Goal Activity Detail and ordinary transcript show owner
+  blockers/current state for Project and app threads; scope changes are GRS-087 owner operations, never
+  automatic replan metadata.
 gui_related: true
 gui_classification_reason: This unit defines visible task tracker, TODO state, replan feedback, and blocked-state presentation.
 depends_on:
@@ -22826,10 +22976,8 @@ depends_on:
   - GRS-019
 unblocks: []
 acceptance_criteria:
-  - Goal task items show current state and remain stable while updates occur.
-  - Replan events visibly update the task list after impact analysis.
-  - Blocked goals name the exact blocker in the chat surface.
-  - Blocked goal projections expose blocker_class, cause, affected scope, last attempted recovery, why autonomous recovery cannot continue safely, and next safe action when available.
+  - "The thread-local To-Do controller owns progress and per-item accepted outcomes."
+  - "App/Project Goal blockers and history use exact owner state without child Goal replans or copied completion."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Assistant Chat task tracker review
@@ -22843,12 +22991,15 @@ node_compile_hint:
   mode: assistant_chat_goal_task_tracker
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0022
-  - pldg-20260616-001-goal-runtime-system:atom-0023
-  - pldg-20260616-001-goal-runtime-system:atom-0036
-  - pldg-20260616-001-goal-runtime-system:atom-0072
-  - pldg-20260616-001-goal-runtime-system:atom-0095
-  - pldg-20260616-001-goal-runtime-system:dec-0014
+  - "pldg-20260616-001-goal-runtime-system:atom-0022"
+  - "pldg-20260616-001-goal-runtime-system:atom-0023"
+  - "pldg-20260616-001-goal-runtime-system:atom-0036"
+  - "pldg-20260616-001-goal-runtime-system:atom-0072"
+  - "pldg-20260616-001-goal-runtime-system:atom-0095"
+  - "pldg-20260616-001-goal-runtime-system:dec-0014"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Goal task / todo tracker"
   - "Goal task item states"
@@ -22887,7 +23038,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat displays goal evidence and activity disclosure through runtime popovers, metadata, activity cards, message blocks, thread-sidebar goal summaries, and final goal completion reports. Thread-sidebar goal summaries preserve exact formats such as Running · 8/14 tasks · 3 subgoals active and equivalent subagent-count wording. Runtime popovers/metadata preserve labels Mode, Provider, Model, Effort, Subagents, Tokens, Context, Est. Cost, Worktree, Merge Status, and takeover_state. Activity cards/message blocks preserve examples such as Automation, Starting login flow verification, Agent took control, and user_paused -> resumed. These displays summarize Goal Runtime receipts and evidence without becoming the canonical evidence store.
+  Goal evidence/activity and exact revision/continuation/Stop receipts are projected through
+  Activity/History/ordinary transcript and shared agent/work surfaces. App scope/Computer is explicit and
+  missing evidence stays unavailable. No child-goal counts, subgoal summaries or noncanonical
+  Running/Stopped lifecycle fields are introduced; completion follows authentic owner evidence, never a
+  model report.
 gui_related: true
 gui_classification_reason: This unit defines user-visible evidence, activity, metadata, thread summary, and completion-report displays.
 depends_on:
@@ -22895,12 +23050,8 @@ depends_on:
   - GRS-014
 unblocks: []
 acceptance_criteria:
-  - Users can inspect goal activity and evidence summaries from the chat surface.
-  - Thread-sidebar goal summaries can show exact progress and child/subagent counts such as Running · 8/14 tasks · 3 subgoals active.
-  - Runtime metadata labels include Mode, Provider, Model, Effort, Subagents, Tokens, Context, Est. Cost, Worktree, Merge Status, and takeover_state.
-  - Activity cards or message blocks can represent Automation, Starting login flow verification, Agent took control, and user_paused -> resumed examples.
-  - Completion reports disclose checks, changed artifacts, blockers, skipped checks, degraded status, and evidence references where relevant.
-  - Chat presentation links to runtime evidence instead of duplicating raw uncapped logs.
+  - "Evidence and completion come from authentic owner refs and remain scoped to the real thread/Computer."
+  - "Retired child-goal counts and Goal-owned progress/status fields are not rendered."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Assistant Chat evidence display review
@@ -22915,11 +23066,14 @@ node_compile_hint:
   mode: assistant_chat_goal_evidence_display
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0028
-  - pldg-20260616-001-goal-runtime-system:atom-0029
-  - pldg-20260616-001-goal-runtime-system:atom-0077
-  - pldg-20260616-001-goal-runtime-system:atom-0078
-  - pldg-20260616-001-goal-runtime-system:atom-0088
+  - "pldg-20260616-001-goal-runtime-system:atom-0028"
+  - "pldg-20260616-001-goal-runtime-system:atom-0029"
+  - "pldg-20260616-001-goal-runtime-system:atom-0077"
+  - "pldg-20260616-001-goal-runtime-system:atom-0078"
+  - "pldg-20260616-001-goal-runtime-system:atom-0088"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Thread sidebar goal summaries"
   - "Running · 8/14 tasks · 3 subgoals active"
@@ -23022,7 +23176,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat owns visible Goal mode controls and completion presentation for user-directed goals, including pause, resume, stop, status, child-goal summaries, and completion reports. Chat may expose Orchestrator Goal handoff status, but PRD Builder conversational intake routes to Planning_Ledger_System, legacy invisible Requirements Doc Builder conversion remains a Goal Runtime compatibility flow only, and work-graph/compiler-boundary readiness routes to Plan_To_Node_Compilation/PNC-009 rather than ordinary chat-owned WorkNodes.
+  Assistant Chat projects user-requested Goals through the current text-only Goal/Activity contract,
+  including app Goals. Crew is an existing collaboration overlay, not child-goal orchestration. PRD
+  Builder, Planning Wizard and Orchestrator retain real Project admission and their own owner boundaries.
+  Conversion alone admits none of their compiler/WorkNode/certification engines.
 gui_related: true
 gui_classification_reason: Assistant Chat goal controls, status, and completion reports are user-visible chat UI.
 depends_on:
@@ -23052,11 +23209,14 @@ node_compile_hint:
   mode: assistant_chat_goal_boundary
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0003
-  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0005
-  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0008
-  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0079
-  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0103
+  - "pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0003"
+  - "pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0005"
+  - "pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0008"
+  - "pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0079"
+  - "pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0103"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Goal mode exposed to the user in chat assistant"
   - "pause"
@@ -25091,9 +25251,11 @@ canonical_text: >-
   a trivial chat uses neither and produces no notebook or helper overhead. Debug flows keep Investigation
   Context authority: debug notes reference investigation/target/instrumentation/cleanup records, and
   transition or recovery rechecks active/redacted/revoked/blocked/expired/omitted evidence and
-  target/worktree/session drift before reuse; raw logs and media remain artifacts. Thread restore and model
-  change never silently rebind a notebook to a different target; provider-hidden content is never shown as
-  PM-authored notes (WNC-N17).
+  target/worktree/session drift before reuse; raw logs and media remain artifacts. Thread restore and
+  model change never silently rebind a notebook to a different target; provider-hidden content is never
+  shown as PM-authored notes (WNC-N17). No-project notebook eligibility consumes B's app scratch scope and
+  actual thread/Computer. Model changes/recovery retain the same canonical roots and evidence; conversion
+  explicitly re-homes through PSB-007 without a fabricated Vault before cutover.
 gui_related: true
 gui_classification_reason: This unit specifies chat eligibility and debug-note surface behavior.
 depends_on:
@@ -25117,10 +25279,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- source_packet:PM-WNC-2026-09-05-v1:WNC-I01
-- source_packet:PM-WNC-2026-09-05-v1:WNC-I09
-- source_packet:PM-WNC-2026-09-05-v1:WNC-N17
-- source_packet:PM-WNC-2026-09-05-v1:WNC-A02
+  - "source_packet:PM-WNC-2026-09-05-v1:WNC-I01"
+  - "source_packet:PM-WNC-2026-09-05-v1:WNC-I09"
+  - "source_packet:PM-WNC-2026-09-05-v1:WNC-N17"
+  - "source_packet:PM-WNC-2026-09-05-v1:WNC-A02"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - Investigation Context
 - trivial chat
@@ -25703,7 +25868,7 @@ The following contract establishes the previously missing bindings under Jared's
 
 **Membership and producer.** `event-family-context-compaction-completed@1.0.0` has the sole exact event type `context.compaction.completed` and closed payload `pm.context_compaction_completed.schema.v1`, version `1.0.0`, in `Plans/event_payload_context_compaction_completed.schema.json`. Define producer binding ID `assistant_chat.compaction_commit.v1` for the existing bounded compaction transaction's commit step. Manual `cmd.chat.compact_context` reaches it through `handlers::chat::compact_context`; automatic and eligible micro-compaction reach the same commit step under PP-078. UI click, helper return, local progress and command-result rendering are not independent emitters.
 
-**Identity and scope.** This family is `project_only`, bound to the real owning Project of the existing `thr_{ulid}` Chat thread and the project-bound ThreadDetail schema. Worktree-unbound is not projectless. Resolve Project, Project Home Server, thread, execution environment and topology against their authorities before preparation/commit; application-scope generic operations do not authorize application-scoped Chat completion. Missing or ambiguous ownership, cross-Project thread, stale topology or deleted/hidden target fails closed. Payload `project_id` and `thread_id` equal the EventRecord envelope; the envelope remains exclusively Contracts-owned `pm.event.v0@2.0.0`. The existing operation carries `operation_id` and its current `operation_generation`; a lease retry keeps the logical operation ID. EventRecord `run_id`, `node_id`, `attempt_id`, account refs and causality refs are required-present null unless actually proven; never invent them from the focused UI. Actor and correlation identities come from that operation. `occurred_at_utc` equals payload `committed_at_utc`, frozen at the commit attempt, and no timestamp is an identity.
+**Identity and scope.** `context.compaction.completed` has explicit original Project and newly admitted application editions. A Project thread retains real Project/Home Server and the exact old ThreadDetail payload/codec. An app thread binds null `project_id`, real `thr_{ulid}`, Server/Computer/environment/topology and app storage writer; Worktree-unbound Project is a different case, not a prohibition of genuine app completion. Both outer/inner scope and thread agree; the EventRecord envelope remains Contracts-owned `pm.event.v0@2.0.0`. Resolve current owner, thread/deletion/head, roots, topology, writer/lease and complete currentness before commit; generic app work cannot emit Chat completion. `operation_id` and `operation_generation` stay exact across retry. Optional run/node/attempt/account/causality refs are required-present null unless genuinely proven. Actor/correlation come from the original operation and commit time is frozen, never identity. Unknown schema, cross-scope join, deleted/hidden target or missing evidence refuses; replay/checkpoint uses the explicitly adopted app sibling without changing original Project history.
 
 **Commit and state meaning.** A completion means a candidate passed every PP-078 fence and useful-gain predicate and the Storage commit marker durably committed. Input/output context revisions are monotonic integers; `output_context_revision > input_context_revision`, `input_tokens - output_tokens = reclaimed_tokens > 0`, and configured `min_reclaim_tokens` must also be met. The detailed CompactionReceipt records branch/head, retained obligations, redaction, hashes, artifacts, fences and policy proof; its opaque reference must resolve to this exact operation/thread/revision pair at commit. The permanent EventRecord is a bounded audit projection of that receipt, containing no transcript, summary, prompt, tool output, content-derived hash, title or arbitrary message. Required token/byte counts are measurements, not billed Usage. No-op, soft-defer, cancellation, stale/late result, policy denial, helper failure and precommit interruption emit no completion. `context.compaction.started` and `context.compaction.failed` remain unregistered, independently visible through existing result/receipt state.
 
@@ -25720,7 +25885,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Successful committed compaction produces one content-free context.compaction.completed EventRecord under the explicit owner contract above. The focused-thread detail consumer uses the existing replay path; retained transcript search and thread-deletion behavior remain unchanged.
+  Successful committed compaction produces one content-free context.compaction.completed EventRecord under
+  the explicit owner contract above. The focused-thread detail consumer uses the existing replay path;
+  retained transcript search and thread-deletion behavior remain unchanged. The app completion sibling
+  uses explicit application scope/null Project and the same content-free commit/result, original
+  operation, thread/deletion/head/generation fence, complete replay/checkpoint and unavailable-input
+  rules. The original Project Event/codec remains exact. Worktree-unbound Project completion and genuine
+  app completion are separately admitted forms; neither authorizes arbitrary generic app operations to
+  emit Chat completion.
 gui_related: true
 gui_classification_reason: This unit binds the visible focused-thread completion history to durable authority.
 depends_on: []
@@ -25742,8 +25914,11 @@ node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-039
-  - Plans/Decision_Log.md#DL-040
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-040"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
   - No runtime, buildability, independent-validator clearance, governance seal, WorkNodes, or NodeSeeds follows from this contract.
 owner_hints:
@@ -25767,15 +25942,17 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The existing cmd.chat.composer.destination.set and cmd.chat.thread.regenerate_title declarations
-  in UCC-156 are Assistant Chat-owned. Destination selection binds the exact thread and existing
-  workflow/participant/Plan-revision target (the destination kinds Collaborative_Workflows §4.5
-  closes) and names it visibly in composer chrome; it does not create or start that workflow or send
-  unrelated unsent input. The numbered component list that cmd.browser.component.add_to_composer
-  builds is message content attached to the composer, never a destination. Explicit title regeneration
-  consumes the existing title policy and title-model availability and clears the manual-rename lock
-  only through its owner operation. Neither command owns a second ComposerBuffer, collaborative
-  runtime, model service or artifact store.
+  The existing cmd.chat.composer.destination.set and cmd.chat.thread.regenerate_title declarations in
+  UCC-156 are Assistant Chat-owned. Destination selection binds the exact thread and existing
+  workflow/participant/Plan-revision target (the destination kinds Collaborative_Workflows §4.5 closes)
+  and names it visibly in composer chrome; it does not create or start that workflow or send unrelated
+  unsent input. The numbered component list that cmd.browser.component.add_to_composer builds is message
+  content attached to the composer, never a destination. Explicit title regeneration consumes the existing
+  title policy and title-model availability and clears the manual-rename lock only through its owner
+  operation. Neither command owns a second ComposerBuffer, collaborative runtime, model service or
+  artifact store. ACD-508 Where selects the draft's work place/Computer, not a message recipient. After
+  first message it offers conversion/continuation and cannot rewrite thread/workflow/participant/Plan
+  identity. Both controls bind real app or Project source context independently.
 gui_related: true
 gui_classification_reason: Composer destination chrome, title actions, disabled state and return focus are visible Chat behavior.
 depends_on: [UCC-156, UCC-158, DR-040, DR-041]
@@ -25793,7 +25970,13 @@ reasoning_tier: high
 context_scope: composer_and_title_owner_reference_repair
 implementation_surfaces: [Plans/assistant-chat-design.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
 node_compile_hint: {mode: owner_and_touch_accounting_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/UI_Command_Catalog.md#UCC-158, "Lead ruling 2026-09-27 (ledger pldg-20260927-005 q-019): the component list is message content, not a destination kind"]
+source_lineage:
+  - "USER-PACKET-GAP-CLOSURE-20260910"
+  - "Plans/UI_Command_Catalog.md#UCC-158"
+  - "Lead ruling 2026-09-27 (ledger pldg-20260927-005 q-019): the component list is message content, not a destination kind"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens: [cmd.browser.component.add_to_composer, destination_kind]
 negative_constraints: [No new command or handler., No second buffer or collaboration owner., No fabricated schema or native proof., No event or readiness admission.]
 ```
@@ -26936,41 +27119,43 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Teach capture and confirm (section 6). The wand's Teach…, /teach, natural-language intent and
-  Save as a rule… in a message's More row each dispatch cmd.chat.teach.capture with mode new,
-  prefilled with the proposed rule text and a reference to its source message; the user's message
-  stays in the chat as sent. Editing a taught rule dispatches cmd.chat.teach.capture with mode
-  correct. Capture only opens the capture step, and the capture step is the Teach sheet (FinalGUISpec
-  F3-579) for every entry point, /teach and natural-language intent included: there is no inline capture card in the chat (DL-127). The save action is cmd.chat.teach.confirm, and
-  Cancel, close and Escape are cmd.chat.teach.cancel, which persists nothing. Scope is exactly one
-  of thread, project and user, shown nested from narrowest to widest as This thread, This project
-  and Every project. The user scope needs public_safe: the user's explicit statement that the rule
-  holds no private names, links or code; without it confirm refuses user scope and says why. In
-  correct mode the scope may stay or narrow but never widen; a wider rule is a new rule. Before
-  confirm the capture step screens the text for passwords, keys and tokens; when one is found it
-  says so in words and confirm stays refused until it is removed. When a similar taught rule is in
-  reach, the capture step shows the old and the new wording side by side and confirm waits for the
-  user's choice: replace the old rule, which records supersedes_memory_id and keeps the old version
-  in history, or keep both. The user may also mark the rule locked at confirm (ACD-481). The confirm
-  request is TeachConfirmRequest {scope, public_safe, locked, conflict_resolution:
-  replace:<memory_id> | keep_both, supersedes_memory_id?}. Each confirmed change leaves one receipt
-  line in the chat (saved, or updated to a new version), and consecutive saves coalesce into one
-  line. The reply's note about taught rules follows DL-116 as the design lead's ruling of
-  2026-09-27 applied it and AMS-053 of assistant-memory-subsystem defines it. A rule counts as
-  followed only when it was given to the assistant for that reply and the finished reply passed
-  that rule's check; inclusion alone is never shown as following. The note counts only rules that
-  passed, for example "Followed 1 of your rules". When any included rule failed its check the
-  reply shows "Missed 1 of your rules" (the number is how many failed), with a way to see which
-  rule was missed and a way to ask for a fix; the fix starts only when the user asks, and a failed
-  check is never hidden behind a Followed count. A rule whose check could not run earns no tick,
-  and a reply with no passed or failed check shows no rule note. Used is never shown in place of
-  either note. Section 6's user-locked sentence is unchanged.
-  DL-138 confirms the final wording. Persisted AMS-053 check results drive the note on reopen: passed
-  counts as Followed, failed counts as Missed and could_not_run earns no tick. A mixed result is one
-  line, Missed first, for example "Missed 1 of your rules · followed 2". See which rule opens the
-  saved check evidence as view state. Ask for a fix reuses cmd.review.send_findings_to_agent with
-  the taught_rule_check source variant (UCC-172): it fills the source thread's empty composer, returns
-  ComposerBufferResult, refuses composer_not_empty, and never sends or executes a fix. The user sends it.
+  Teach capture and confirm (section 6). The wand's Teach…, /teach, natural-language intent and Save as a
+  rule… in a message's More row each dispatch cmd.chat.teach.capture with mode new, prefilled with the
+  proposed rule text and a reference to its source message; the user's message stays in the chat as sent.
+  Editing a taught rule dispatches cmd.chat.teach.capture with mode correct. Capture only opens the
+  capture step, and the capture step is the Teach sheet (FinalGUISpec F3-579) for every entry point,
+  /teach and natural-language intent included: there is no inline capture card in the chat (DL-127). The
+  save action is cmd.chat.teach.confirm, and Cancel, close and Escape are cmd.chat.teach.cancel, which
+  persists nothing. Scope is exactly one of thread, project and user, shown nested from narrowest to
+  widest as This thread, This project and Every project. The user scope needs public_safe: the user's
+  explicit statement that the rule holds no private names, links or code; without it confirm refuses user
+  scope and says why. In correct mode the scope may stay or narrow but never widen; a wider rule is a new
+  rule. Before confirm the capture step screens the text for passwords, keys and tokens; when one is found
+  it says so in words and confirm stays refused until it is removed. When a similar taught rule is in
+  reach, the capture step shows the old and the new wording side by side and confirm waits for the user's
+  choice: replace the old rule, which records supersedes_memory_id and keeps the old version in history,
+  or keep both. The user may also mark the rule locked at confirm (ACD-481). The confirm request is
+  TeachConfirmRequest {scope, public_safe, locked, conflict_resolution: replace:<memory_id> | keep_both,
+  supersedes_memory_id?}. Each confirmed change leaves one receipt line in the chat (saved, or updated to
+  a new version), and consecutive saves coalesce into one line. The reply's note about taught rules
+  follows DL-116 as the design lead's ruling of 2026-09-27 applied it and AMS-053 of
+  assistant-memory-subsystem defines it. A rule counts as followed only when it was given to the assistant
+  for that reply and the finished reply passed that rule's check; inclusion alone is never shown as
+  following. The note counts only rules that passed, for example "Followed 1 of your rules". When any
+  included rule failed its check the reply shows "Missed 1 of your rules" (the number is how many failed),
+  with a way to see which rule was missed and a way to ask for a fix; the fix starts only when the user
+  asks, and a failed check is never hidden behind a Followed count. A rule whose check could not run earns
+  no tick, and a reply with no passed or failed check shows no rule note. Used is never shown in place of
+  either note. Section 6's user-locked sentence is unchanged. DL-138 confirms the final wording. Persisted
+  AMS-053 check results drive the note on reopen: passed counts as Followed, failed counts as Missed and
+  could_not_run earns no tick. A mixed result is one line, Missed first, for example "Missed 1 of your
+  rules · followed 2". See which rule opens the saved check evidence as view state. Ask for a fix reuses
+  cmd.review.send_findings_to_agent with the taught_rule_check source variant (UCC-172): it fills the
+  source thread's empty composer, returns ComposerBufferResult, refuses composer_not_empty, and never
+  sends or executes a fix. The user sends it. In No project omit the project choice, retain thread and
+  user with the user label Everywhere, and preserve public_safe, screening, conflict, locked-rule and
+  no-widening checks. Settings' Computer layer changes behavior defaults, not a new Teach memory scope.
+  Conversion keeps thread rules thread-wide and does not widen them.
 gui_related: true
 gui_classification_reason: "Defines what the user sets and sees when teaching Puppet Master a rule."
 split_recommended: false
@@ -27007,6 +27192,9 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-130"
   - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
   - "Plans/assistant-memory-subsystem.md#AMS-053"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"
@@ -27194,18 +27382,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The Plan tab rules of v3 item 15 (APR-036, APR-037, APR-038) are one editor-document mechanism
-  that the collaboration run views reuse. Open Panel on a Crew, Chat Room, BrainStorm or Review card
-  or receipt opens that run's view as one document per run identity in the editor tab system, beside
-  the chat, focusing an already open tab instead of duplicating it. At narrow widths it follows the
-  same full-width presentation with a persistent Return to chat affordance, without mutating saved
-  preferences. The chat and the composer destination stay visible while the view is open, and a
-  control that changes the run is rendered in one place at a time (Collaborative_Workflows CWR-020
-  owns what the view contains). This unit does not change the minimum chat width.
-  Amended 2026-10-09 (DL-180): the editor tab system beside the chat is the home centre's panels. Open Panel opens or
-  reveals the run's run tab through ACD-500 and Plans/FinalGUISpec.md#F3-634, one tab per run identity, and it takes
-  focus because the user clicked it; in a narrow window it shows through F3-636's panel switcher beside the chat.
-  Return to chat retires for Home, because no tab covers the chat (ACD-500). The chat's width is F3-637's.
+  The Plan tab rules of v3 item 15 (APR-036, APR-037, APR-038) are one editor-document mechanism that the
+  collaboration run views reuse. Open Panel on a Crew, Chat Room, BrainStorm or Review card or receipt
+  opens that run's view as one document per run identity in the editor tab system, beside the chat,
+  focusing an already open tab instead of duplicating it. At narrow widths it follows the same full-width
+  presentation with a persistent Return to chat affordance, without mutating saved preferences. The chat
+  and the composer destination stay visible while the view is open, and a control that changes the run is
+  rendered in one place at a time (Collaborative_Workflows CWR-020 owns what the view contains). This unit
+  does not change the minimum chat width. Amended 2026-10-09 (DL-180): the editor tab system beside the
+  chat is the home centre's panels. Open Panel opens or reveals the run's run tab through ACD-500 and
+  Plans/FinalGUISpec.md#F3-634, one tab per run identity, and it takes focus because the user clicked it;
+  in a narrow window it shows through F3-636's panel switcher beside the chat. Return to chat retires for
+  Home, because no tab covers the chat (ACD-500). The chat's width is F3-637's. The same exact run/Plan
+  identity routes operate in app scope with No project/Computer context and owner currentness. No
+  Project-focused lookup or second tab runtime is added.
 gui_related: true
 gui_classification_reason: "Places collaboration run views in the editor tab system."
 split_recommended: false
@@ -27233,6 +27423,9 @@ source_lineage:
   - "IMPACT-REGISTER B-ACD-05 (item 15)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/assistant-chat-design.md#ACD-500"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Open Panel"
   - "Return to chat"
@@ -27455,37 +27648,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  ELI5 in a chat, as Jared confirmed it on 2026-09-27 (DL-126). A chat's ELI5 state is resolved in
-  this order: the chat override, otherwise the project default, otherwise the app default. The chat
-  override is the per-conversation setting `general.interaction.chat-eli5`, written only by
-  cmd.chat.eli5.set with on, off or inherit; inherit deletes the override, so the chat follows the
-  project default again. The app default is `general.interaction.eli5-default` (Explain Terms Everywhere), whose value Settings owns and registers as off. The project default is that same
-  setting at project scope and applies to every chat in the project that has no override of its
-  own. Settings owns and persists that project scope under DL-138 (SSYS-028). Each assistant reply resolves the style once, when it starts, and records the style it was written in, Standard or Simple; a retry the user
-  asks for resolves the style again when the retry starts. Switching ELI5 changes only the replies
-  that start after the switch. It never re-sends, regenerates or rewrites an earlier reply, and a
-  reply still streaming at the moment of the switch finishes in the style it started with, so a switch never produces a second response. Each finished assistant reply may offer
-  Explain this reply simply. It dispatches cmd.chat.eli5.explain_reply with that reply's message id
-  and writes one extra reply, a simpler explanation of that reply, only when the user asks; the
-  command is refused while that reply is still streaming. The extra reply is an ordinary assistant
-  reply at the end of the thread that names the reply it explains and is written in Simple; it
-  never rewrites or replaces the reply it explains and changes no ELI5 setting. ELI5 is its own
-  small popup, the ELI5 sheet, opened from the wand's ELI5 row, and the quick dot by the message
-  box is the one-click on and off for the chat; FinalGUISpec F3-581 is their GUI contract. ELI5
-  changes only how answers are worded: code, plans, files and generated documents never change,
-  and Crew, Review and BrainStorm results stay technical. Dual copy: the Expert and ELI5 pair exists only for tooltips and help (section 2.2, FinalGUISpec F3-572), and the plain helper lines
-  under controls are single copy. The app-level Interaction Mode of section 2.2 is a separate
-  setting with its own default and is not one of the three levels. Obligation on the guided tour
-  owner: the guided tour teaches the retired one-click toggle and applies ELI5 to the same answer.
-  It must be re-pointed to the ELI5 popup and the quick dot, and because a switch never rewrites a
-  reply, a tour step that shows an answer explained simply may do so only through Explain this
-  reply simply, which adds one reply. The obligation covers the Planning_Wizard guided tour
-  chapter, FinalGUISpec F3-521, the Wiring_Matrix tour consumer rows, the Automated_Testing_System
-  tour acceptance items and the guided tour contract schema and fixtures; this unit edits none of
-  them. They carry the re-point as of 2026-09-27: Planning_Wizard PWIZ-023 and its tour chapter,
-  FinalGUISpec F3-521, Automated_Testing_System ATS-020, Wiring_Matrix WM-041 and the guided tour
-  contract pair. What still teaches the old behaviour is the touch closure tour action pin and the
-  concept tour source, which the tour owner changes together.
+  ELI5 consumes the one Settings resolver: This chat override, then applicable Project, then Computer,
+  then Everywhere, then factory; app chat skips Project. general.interaction.chat-eli5 remains the
+  per-conversation on/off/inherit value written only by cmd.chat.eli5.set, while
+  general.interaction.eli5-default is the Settings-owned layered default. Inherit removes the chat
+  override and follows that resolver; Everywhere edits use the existing Settings transaction and q-035 is
+  resolved in current canon. Each reply freezes style at start, a retry resolves afresh and no switch
+  rewrites a streaming or old answer. Explain this reply simply adds one requested Simple reply only after
+  the source finished and changes no preference. ELI5 popup/quick dot, dual tooltip/help versus single
+  helper copy and technical Crew/Review/BrainStorm outputs remain unchanged. App Interaction Mode is a
+  separate setting. Guided Tour consumes these same owners and never rewrites an old reply.
 gui_related: true
 gui_classification_reason: "Defines what a person's ELI5 choice changes in a chat, and the per-reply simpler explanation they can ask for."
 split_recommended: false
@@ -27519,6 +27691,9 @@ source_lineage:
   - "IMPACT-REGISTER B-ACD-01 (card p08, E-11), C-21 (the guided tour), D-30 (retry re-resolves the style)"
   - "Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5) answer record p08"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "DL-138"
   - "the chat override, otherwise the project default, otherwise the app default"
@@ -28228,36 +28403,45 @@ plan_unit_id: ACD-504
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: 'The shared assistant is the Home column''s only conversation surface (DL-232), under F3-637 and bound
-  by ACD-500/501/502. One History list serves it; History pin is ui.chat_column.pin_history, and its header offers the
-  column''s Keep open choice. Activity Detail and bounded hover previews remain inside chat. Booting chat opens no plan
-  or other panel tab. Every opened body uses the exact domain identity and registered kind in ACD-500: plan revision
-  and discovery as plan, versioned artifact as artifact, file/diff as editor, child feed as transcript, collaboration/evidence
-  as run or owner document, thread detail as context, rules/memory/revert/debug/Lens/Wonderer as document, tool calls
-  as record, addresses as browser and command sessions as terminal. Goal stays in Activity Detail. Unknown IDs grant
-  no kind or route. The host owns body, strip, deduplication and focus, and reports close/activation to chat. A user
-  open takes focus; unsolicited agent opens stay in the background, and file modifiers obey F3-634. Wand setup/thread
-  dialogs are app modals; attachments use their exact artifact/file owner; More Info is a bounded popover; export/print
-  and Send to Planning Wizard keep their existing routes. A run card yields controls only while its run tab is active
-  in a visible panel; close, collapse, narrow hiding or leaving Home restores them and clears shared editor-revealed
-  state. Browser capture retains its original thread and composer destination through thread switches and every attachment/list/insertion
-  path. If the origin destination changed, restore the saved destination or refuse before mutating a draft. Context actions
-  use their own tab''s thread; attachment viewers preserve thread/message/attachment identity. Images have a preview;
-  other kinds state truthfully when no preview exists. The compact command card hands off to the exact terminal or retained
-  output, with Open in Terminal, View output and Rerun in Terminal, no embedded interactive shell, duplicate Show Terminal
-  control or Explain action. All five families'' Light/Dark variants, shared fonts, NieR parts and Reduced Motion reach
-  the column and hosted bodies. Container width governs those bodies; window size governs app modals. The shared hover
-  owner controls tags; a sheet traps keys only while open; unmodified chat shortcuts require chat focus, and Escape closes
-  only the innermost surface. Settings use SSYS-055 and their admitted application/Project/current-chat scopes. DL-218''s
-  Wonderer/Grill Me and DL-231''s automatic Chat Room rounds remain. The accepted Guided Tour keeps its teaching surface
-  while this chat is hidden, under PWIZ-036. These are product requirements; source prototypes and browser results do
-  not certify native completion. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout,
-  900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis
-  and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a
-  descendant visibility:visible must not expose a squeezed transcript, dock or composer. Open the chat/peek restores
-  the same subtree at usable width, rather than a new chat instance. No folded/peek state is persisted and the saved
-  message minimum, History and Activity Detail rules remain. Amended DL-260, Jared 2026-10-31: only real product behavior
-  remains an implementation requirement.'
+canonical_text: >-
+  The shared assistant is the Home column's only conversation surface (DL-232), under F3-637 and bound by
+  ACD-500/501/502. One History list serves it; History pin is ui.chat_column.pin_history, and its header
+  offers the column's Keep open choice. Activity Detail and bounded hover previews remain inside chat.
+  Booting chat opens no plan or other panel tab. Every opened body uses the exact domain identity and
+  registered kind in ACD-500: plan revision and discovery as plan, versioned artifact as artifact,
+  file/diff as editor, child feed as transcript, collaboration/evidence as run or owner document, thread
+  detail as context, rules/memory/revert/debug/Lens/Wonderer as document, tool calls as record, addresses
+  as browser and command sessions as terminal. Goal stays in Activity Detail. Unknown IDs grant no kind or
+  route. The host owns body, strip, deduplication and focus, and reports close/activation to chat. A user
+  open takes focus; unsolicited agent opens stay in the background, and file modifiers obey F3-634. Wand
+  setup/thread dialogs are app modals; attachments use their exact artifact/file owner; More Info is a
+  bounded popover; export/print and Send to Planning Wizard keep their existing routes. A run card yields
+  controls only while its run tab is active in a visible panel; close, collapse, narrow hiding or leaving
+  Home restores them and clears shared editor-revealed state. Browser capture retains its original thread
+  and composer destination through thread switches and every attachment/list/insertion path. If the origin
+  destination changed, restore the saved destination or refuse before mutating a draft. Context actions
+  use their own tab's thread; attachment viewers preserve thread/message/attachment identity. Images have
+  a preview; other kinds state truthfully when no preview exists. The compact command card hands off to
+  the exact terminal or retained output, with Open in Terminal, View output and Rerun in Terminal, no
+  embedded interactive shell, duplicate Show Terminal control or Explain action. All five families'
+  Light/Dark variants, shared fonts, NieR parts and Reduced Motion reach the column and hosted bodies.
+  Container width governs those bodies; window size governs app modals. The shared hover owner controls
+  tags; a sheet traps keys only while open; unmodified chat shortcuts require chat focus, and Escape
+  closes only the innermost surface. Settings use SSYS-055 and their admitted
+  application/Project/current-chat scopes. DL-218's Wonderer/Grill Me and DL-231's automatic Chat Room
+  rounds remain. The accepted Guided Tour keeps its teaching surface while this chat is hidden, under
+  PWIZ-036. These are product requirements; source prototypes and browser results do not certify native
+  completion. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout, 900
+  px and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its
+  hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout
+  interaction while folded; a descendant visibility:visible must not expose a squeezed transcript, dock or
+  composer. Open the chat/peek restores the same subtree at usable width, rather than a new chat instance.
+  No folded/peek state is persisted and the saved message minimum, History and Activity Detail rules
+  remain. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation
+  requirement. Current Settings admission includes the exact inventory-declared
+  Everywhere/Computer/Device/Project/current-chat levels through one resolver/transaction (omitting
+  Project for app work). This supersedes universal three-scope wording only; hosted bodies, capture
+  origin, focus and one-node rules remain unchanged.
 gui_related: true
 gui_classification_reason: Defines hosted conversation presentation, opened surface kinds, shared preferences and focus behavior.
 split_recommended: false
@@ -28296,6 +28480,9 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md, SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer destination gap; corrects the broad integrated capture claim)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/astra-r2-verified-capture-visibility.md, SHA-256 00e29db6dca53bbaeb5f3414acd13be6b36ab5c7af2f61a4ccfdf45e9158bcd7 (frozen partial independent review: shared editor visibility and composer destination gaps; separate run-card visibility passes)"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - Keep open
 negative_constraints:
@@ -28320,13 +28507,16 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   D1–D4/D7–D14, G4/G5/G7; F3-664. Processes is the tenth domain after Subagents; it covers this
   thread/subagents’ processes, scripts, servers, watchers, browser sessions and scheduled runs. Subagents
-  stay separate and appear only as linked owners here. Presence requires running/input work, retained while
-  card/detail open; scheduled/finished alone never keep icon. By state orders Needs input, Running,
+  stay separate and appear only as linked owners here. Presence requires running/input work, retained
+  while card/detail open; scheduled/finished alone never keep icon. By state orders Needs input, Running,
   Scheduled, Finished this session; many subagents can use By owner. Hover uses existing
-  dwell/compaction/tones; full detail has Stop and thread Stop all and bounded output. Footer says composer
-  Stop ends reply only. Prompt quick answers are safe-first yes/no; other input opens exact terminal.
-  Processes uses console glyph, agent category robot, individual rows Pip; glyph colour/backlight use
-  common domain tones. All consume SIR-054 and one needs-you set, no duplicate runtime.
+  dwell/compaction/tones; full detail has Stop and thread Stop all and bounded output. Footer says
+  composer Stop ends reply only. Prompt quick answers are safe-first yes/no; other input opens exact
+  terminal. Processes uses console glyph, agent category robot, individual rows Pip; glyph
+  colour/backlight use common domain tones. All consume SIR-054 and one needs-you set, no duplicate
+  runtime. App Goal/Crew/Plan/schedule rows join this same thread-owned projection with real Computer and
+  admitted scope; schedule review/cancel preserves exact schedule/version and its Scheduling authority. No
+  Project filter can silently hide app work as an empty global result.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -28359,9 +28549,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- reports/pm7-build-20261029/IDS.md
-- Concepts/background-activity/opus-5.5/README.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
+  - "reports/pm7-build-20261029/IDS.md"
+  - "Concepts/background-activity/opus-5.5/README.md"
+  - "Concepts/Icon-Concepts/Opus5.5icon/README.md"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -28549,3 +28742,331 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-239, ContractName:Plans/Final
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+### ACD-508 - No Project Place Computer And Lazy Chat Folder
+
+```yaml
+plan_unit_id: ACD-508
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: 'No project is a first-class chat place with project_id=null, scope_kind=application and scope_partition=app.
+  The connected, already claimed Server owns it. Default to this computer''s set-up service, otherwise the person''s
+  named main Computer; a dormant service is never silently claimed. Always name the work Computer on phone/web and
+  whenever it differs from the viewing device. Freeze it after the first user message; Continue on another computer
+  creates a new chat with a summary and links both ways. thr_{ulid} is minted only at the first user message, never
+  for an empty draft. Where selects place before that message and differs from composer message destination. After
+  it, Where offers the two conversions and continuation, never silently rebinds. New is a split button offering
+  this Project, No project or another Project; the title-bar switcher has a fixed No project row using the existing
+  switch/open-new-tab owners. Here and All chats list exact coverage; unreachable chats remain listed with last-loaded
+  read-only state and a not-answering reason. The first saved file, drop or command lazily allocates one unique
+  visible <home>/Puppet Master Chats/<unique title> folder on the work Computer, outside PM data; talk-only and
+  internal planning records create none. A pre-message saved attachment remains draft-owned until first-message
+  identity adoption, without minting a thread early. Commands start in this folder or an explicitly granted place.
+  Rename changes no folder path. Archive keeps the folder and is never automatic. Delete immediately hides thread
+  content, follows existing purge/tombstone/hold deadlines and offers a separate unticked folder-deletion choice
+  with a truthful file count. The full path is available wherever the folder is named. Eligible chat defaults follow
+  Everywhere → Computer → This chat with factory fallback and declared Device screen exceptions, never a Project
+  rung. Selected account_resolution uses MA-074 on the exact work Computer. No Basic Dark flash or no-project Settings
+  write ban. N15 Set up a project later still performs protected AI setup on that Computer in app scope, then lands
+  in No project chat; Guided Tour Finish/Skip returns to that exact app chat/layout without a practice Project or
+  claiming an unexecuted Project step completed. Computer use consumes T-186/D policy: named Computer, task-allowed
+  apps, separate provider screen disclosure and protected-auth exclusion, with a visible session-bound strip/Stop
+  and existing double-Esc stop; it is no root grant or hidden desktop access. Delivery stages are chat/Goals/Crew/Plan/Deep
+  Plan/schedules/conversion, then cross-project reads/requests, then computer use/continue elsewhere/cross-computer
+  conversion; unfinished routes disclose typed unavailability. The shared CV-365 execution envelope permits explicit
+  empty admitted roots and null working_directory for talk-only/internal planning. The actual granted or newly created
+  folder supplies process cwd; no HOME or viewing-device fallback is inferred.'
+gui_related: true
+gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
+depends_on:
+- AI-069
+- SIR-055
+unblocks: []
+acceptance_criteria:
+- Talk-only chat and internal Plan creation allocate no folder; concurrent first saves/commands allocate exactly
+  one folder.
+- Computer stays fixed after first message; unavailable Server yields last-loaded read-only state and unsent draft,
+  not a writable replica.
+- Empty/filtered Here lists state coverage and offer All chats; narrow labels remain text, with the shared container-width
+  rules.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#N1-N5-N7-N8-N12-N14-N15-N17-N23; Q3-Q5-Q6-Q8
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: I approve the outstanding questions with their recommended settings.'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#fc-c01
+preserved_exact_tokens:
+- No project
+- project_id=null
+- scope_kind=application
+- scope_partition=app
+- Where
+- thr_{ulid}
+- <home>/Puppet Master Chats/<unique title>
+- Here
+- All chats
+negative_constraints:
+- Do not create a hidden scratch Project, auto-archive, silently claim a service or move credentials.
+- Deleting a chat does not imply deleting its files; retaining bytes under a hold does not restore ordinary visibility.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-508, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365, ContractName:Plans/storage-plan.md#SP-349
+
+### ACD-509 - Explicit Cross Project Reads And Thread Requests
+
+```yaml
+plan_unit_id: ACD-509
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Every chat may explicitly read permitted Projects and request work from their chats through projects.list/status/search/read_file/read_chat/read_plans
+  and the existing thread.request, thread.spawn and thread.await owners. Automatic retrieval remains within the
+  owning Project or the app thread's own messages/files; no ambient merged index or other-thread memory. Metadata-only
+  list/status exposes only information the person may open and honors source-project Off; content reads use a named
+  set or all, source-Computer checks on every read and provider exposure/secret scrub. Regular offers This time
+  / For this chat / Always on this computer / No; a named reference grants only its explicit subject. YOLO uses
+  D's explicit task-scoped mode authority and invents no human consent or Always rule. Every read appears in Activity.
+  One coverage formatter records requested, looked_in, not_looked_in with reasons and partial with missing ranges;
+  empty/partial replies and empty/filtered UI always disclose coverage, with a quiet expandable line. Archived Projects
+  are skipped unless named. Notebooks, private memory, credentials, safe copies and denied files remain excluded.
+  An outgoing request shows exact target, task text and effect before Regular Send or D-admitted YOLO dispatch.
+  Sender authority never changes receiver mode; Off refuses, and unseen Regular Ask me requests remain read/answer-only
+  until accepted. A person-reviewed send may satisfy that message's receiving choice, but is never fabricated for
+  YOLO. Delivery is ordered at a safe turn boundary, distinct from the person's two-slot composer queue; request
+  results/replies are idempotent and route by stable thread after conversion. From another chat uses chat_message_in,
+  names sender and recipient, and never impersonates user input. At most three automatic round trips occur; extending
+  that budget requires the person. Offline delivery waits and expires after one day with a truthful result. The
+  has-read provenance mark survives; N19 outward actions use D's mode-aware disclosure/actual-effect rules, including
+  ordinary YOLO publication, and never hide coverage. CV-365 freezes preview as ui.thread.request.preview or ui.thread.spawn.preview,
+  a typed local redacted draft projection without persistence, outbox commit, EventRecord or authority. Send uses
+  the existing cmd.thread.request and cmd.thread.spawn sole handlers with the explicit ThreadRequestFacadeRequestV2/ResultV2
+  or ThreadSpawnFacadeRequestV2/ResultV2 at Plans/application_workflow_contracts.schema.json#/$defs/<name>; cmd.thread.await
+  is unchanged. Preview captures exact target/input/currentness/return commitments, and Send revalidates them immediately
+  before the one durable outbox commit. No separate .preview/.send domain primaries, aliases or operation=preview
+  branch are admitted.
+gui_related: true
+gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
+depends_on:
+- ACD-508
+- PS-145
+- T-185
+- OSI-439
+unblocks: []
+acceptance_criteria:
+- Empty/partial/all/named search shows exact coverage including denied, archived, offline and rebuilding sources.
+- Regular/YOLO sender-receiver pairs preserve Off, Ask me, read-only ceilings and a three-round-trip stop.
+- Reply after conversion follows thread identity with current destination checks; repeated delivery produces no
+  duplicate turn or billing.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#N3-N4-N18-N19; Q4-Q7-Q9-Q10
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: I approve the outstanding questions with their recommended settings.'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#fc-c01
+preserved_exact_tokens:
+- projects.list/status/search/read_file/read_chat/read_plans
+- thread.request
+- thread.spawn
+- thread.await
+- requested
+- looked_in
+- not_looked_in
+- partial
+- chat_message_in
+- From another chat
+negative_constraints:
+- No direct cross-Project mutation or service control follows from reading, messaging or shared settings.
+- No notebook/private-memory merge, hidden content injection, approval answer or unlimited send-to-all.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-509, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+### ACD-510 - Two Explicit Conversion Paths And Current Preview
+
+```yaml
+plan_unit_id: ACD-510
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Make a project from this chat and Move this chat into a project are equal first-class actions; neither
+  is preselected by a general chooser. Named entry goes directly to its path with the other visible. Entry points
+  are Where/place, New Project From a chat, History-row More, palette and each of the three Project-required workflow
+  notices. Merge means a chat joins a Project, never two chats; Project-to-Project chat moves remain deferred. New-project
+  conversion calls PJCT-009/PWIZ-037 and the exact PJCT-010 creation chain, then waits for real commit/listing/readback.
+  Partial or unknown setup reuses the retained Project operation/resume_creation; retry never starts a second creation
+  or remote side effect. Applicable file choices are move selected chat-folder files, use that folder, use a worked-in
+  folder or start empty; preserve found Git/Jujutsu history through inspection and use Your usual settings/copy
+  through Settings. Existing-project conversion selects the actual destination and files, defaults to a separate
+  Git branch/worktree or Jujutsu change/bookmark plus chosen folder, and exposes direct main landing only in Advanced.
+  Same content skips; Different defaults to Keep both where a direct collision applies; unsaved target buffers block.
+  Source history is not grafted onto an existing repository. Before any mutation show a plain statement and live
+  current preview naming exact destination/full paths/Computer, selected history and file counts, settings/account/permission
+  differences, what remains, active Goal/Plan/Crew and schedules, remote effects and Undo boundary. Only picked
+  content moves. Regular applies via Create project and move chat, Move chat and files or Move chat only. N27 permits
+  a registered guarded YOLO agent route for a clearly requested new destination or named existing Project; it consumes
+  the same visible current preview and fresh destination authority without clicking a human-only control. Ambiguous
+  convert this still asks for destination. Any destination/file/conflict/currentness/authority change invalidates
+  the preview. Existing approvals settle first; active work/timers are fenced by their owners. Conversion never
+  enters Planning Wizard, PRD Builder or Orchestrator automatically. CV-367 owns the exhaustive ChatMoveManifestV1
+  and every per-family disposition; CV-366 owns its conversion_manifest semantic hash, and SP-350 owns operation/cutover/lineage/Undo
+  custody. The live preview and apply use that one complete map; absent owner/source/policy materialization is a
+  typed blocker, never an implicit nothing-to-move result.
+gui_related: true
+gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
+depends_on:
+- ACD-508
+- PSB-007
+- GRS-087
+- APR-074
+unblocks: []
+acceptance_criteria:
+- Both paths and their alternate are visible, with no silent new-project default.
+- Stale preview, unsaved overwrite, active unfenced work, missing destination or retained approval refuses before
+  effect.
+- Regular person and YOLO guarded route share one owner transaction; YOLO never defaults to main or publication.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#N2-N9-N25-N27; Q1-Q2
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: I approve the outstanding questions with their recommended settings.'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#fc-c02
+preserved_exact_tokens:
+- Make a project from this chat
+- Move this chat into a project
+- Keep both
+- Your usual settings
+- Create project and move chat
+- Move chat and files
+- Move chat only
+- N27
+negative_constraints:
+- Do not use cmd.thread.branch, direct owner-record edits, simulated approval clicks or path-derived Project identity.
+- No automatic Project-to-Project chat movement, chat merge, history graft or permission carryover.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-510, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/Contracts_V0.md#CV-367, ContractName:Plans/storage-plan.md#SP-350
+
+### ACD-511 - Conversion Lineage Recovery Report And Undo
+
+```yaml
+plan_unit_id: ACD-511
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: A successful conversion retains thread_id, copies full conversation into new destination-owned scope
+  records, records source/destination lineage and a new detail generation, removes the live app index entry and
+  publishes the destination once. Original app event/result/Usage bytes and canonical sources remain immutable;
+  local payloads may be shared, cross-Computer payloads are verified copies. The ordinary source conversation is
+  sealed for Undo, then purged under chat deletion/holds with a content-free destination pointer. Independently
+  retained Goal objective/history/control, approved Plan revisions/sources, Crew/task audit, schedule occurrences,
+  permission receipts and shared artifacts outlive Undo as their owners require; source work is fenced/stopped/terminal,
+  never an orphan writable task. Re-root carried file chips, restore-point/revert baselines, handoff/Lens, To-Dos,
+  notebook, artifacts and indexes through the manifest; outside files/terminal processes/credentials/source grants
+  stay and are listed. This chat preferences travel as content choices, while destination effective settings/mode,
+  tools, Persona, account_resolution, routes and permission evidence resolve freshly. The manifest records exact
+  notebook entries/checkpoints/payload/restriction refs, selected gist/capsule, owner_thing_previews and reach/install/trust
+  re-resolution. Live terminal/browser/Eval/MCP/provider sessions stay on their original Computer; no profile or
+  provider-native history is mutated to pretend it moved. Disposable app indexes/cache entries are rebuilt/rejoined
+  only from selected authorized refs, never copied as another chat's content. Restore namespaces keep the counterpart
+  2,048 cap and app web cache keeps T-187's 500 MB per-Computer default/TTL/LRU; no conversion resets a bucket.
+  Every result, including partial failure, produces a system divider, operation report and PM Notify summary with
+  exact moved/stayed/held/failed effects and safe Undo. Undo requires its own current preview and ends at the first
+  new message/work/accepted resume/dispatch or changed moved file, or seven days, whichever comes first; an unreachable
+  Computer does not extend it. For a new Project use list-only remove, restore selected moved files, and remove
+  only unchanged PM-created history or empty folders; worked-in folders remain untouched. For an existing Project
+  remove only unchanged created draft/files and restore source content. Never remove modified work, remote repository/branch,
+  online copy or backup. Ineligible Undo states the exact reason. An old backup restore checks lineage/current owner
+  to avoid two live chats; Project Backup includes carried full history and destination custody, and Full Server
+  Backup retains required app custody. The exact manifest and inverse use CV-367/SP-350. SP-349 owns application
+  restore-point keys and the shared Server bucket; CV-329/SP-259 own compaction consumer/storage, while CV-334 remains
+  historical child-state exclusion and SP-319 remains terminal-move historical inspection. These historical resources
+  are not application Goal or compaction source hosts. Missing durable app family/root/retention-policy binding
+  remains unavailable rather than being reconstructed from a receipt or current Settings.
+gui_related: true
+gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
+depends_on:
+- ACD-510
+unblocks: []
+acceptance_criteria:
+- New/existing/local/cross-Server reports account for every manifest family and distinguish publication without
+  Undo.
+- Undo before and after each eligibility boundary preserves modified files and remote resources; no two live current
+  Plans or timer authorities emerge.
+- Expiry purges only eligible source-chat content, retaining separately required canonical task/audit bodies and
+  references.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#N11-N13-N20-N24-N25-N27; Q5
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: I approve the outstanding questions with their recommended settings.'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#fc-c02
+preserved_exact_tokens:
+- thread_id
+- Undo
+- seven days
+- PM Notify
+- Project Backup
+- Full Server Backup
+negative_constraints:
+- Never recategorize past Usage or rewrite original EventRecord scope, identity, idempotency or receipts.
+- No transferred source grant, approval, safe point, YOLO flag or credential serves as destination authority.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-511, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-367, ContractName:Plans/storage-plan.md#SP-349, ContractName:Plans/storage-plan.md#SP-350

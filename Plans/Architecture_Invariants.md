@@ -134,7 +134,7 @@ ContractRef: Primitive:Glossary
 <a id="INV-011"></a>
 ## INV-011 -- UI command dispatch only (Rule 1)
 
-Command ownership follows mutation domain, not menu location: `Add to Assistant Chat` dispatches `cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }` because it mutates chat `/context`; file-tree actions remain under `cmd.file` / `cmd.file.*`; `Open in Terminal` reveals through `cmd.terminal.open` and `Show Terminal` focuses through `cmd.terminal.show` rather than either action becoming a file command.
+Command ownership follows mutation domain, not menu location: `Add to Assistant Chat` dispatches `cmd.chat.add_file_reference` with explicit app/Project scope, nullable Project, actual thread/draft/Computer and path/line range because it mutates chat `/context`; file-tree actions remain under `cmd.file` / `cmd.file.*`; `Open in Terminal` reveals through `cmd.terminal.open` and `Show Terminal` focuses through `cmd.terminal.show` rather than either action becoming a file command.
 
 
 **Rule:** The UI layer MUST dispatch only typed `UICommand` envelopes to trigger non-trivial behavior. The UI MUST NOT call backend services, storage, domain logic, or provider integrations directly. All user-initiated interactions flow through the UI Command Dispatcher boundary.
@@ -324,10 +324,10 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Pro
 
 ## INV-020 -- Project-driven capability activation
 
-**Rule:** Puppet Master MUST remain one extensible platform with project-driven capability activation, not separate hard-forked products or rigid personalities.
+**Rule:** Puppet Master remains one extensible platform with a no-project baseline (AI-069) plus explicit resource/Project capability activation, never separate products or invented Project identity.
 
-- The `bench-03` deep-dive benchmark signal is canonical as an architecture constraint: Puppet Master is one extensible platform whose capabilities activate from the current project context.
-- Project-open detection/import MUST run explicitly before capability activation. It reads project signals such as language markers, framework files, build/run metadata, hosted-repository state, remote-host state, provider/runtime capability reports, and user overrides.
+- The retained bench-03 constraint means one extensible platform. Baseline chat/Goals/Crew/Plan/scheduling activates in real app scope; Project-specific packs activate only from their actual Project signals and permissions.
+- Project-open detection/import MUST run explicitly before Project-specific capability activation; app baseline and explicit permitted-file detection require no Project. It reads project signals such as language markers, framework files, build/run metadata, hosted-repository state, remote-host state, provider/runtime capability reports, and user overrides. Missing actual resources remain explicit, never guessed.
 - Project capability packs/modules for language, framework, build, review, remote, LSP/search, and source-control behavior activate from those project signals. Ambiguity MUST be visible and overridable: when multiple plausible interpretations exist, Puppet Master shows the alternatives, records the chosen/default interpretation, and allows the user to override it rather than hiding the choice as implicit automation.
 - Indexing and `external-model sync` are first-class background subsystems. While indexes warm up or external model/capability reports are still synchronizing, affected features MUST disclose reduced-capability/degraded-mode state instead of pretending full readiness. Indexes, sync snapshots, and remote caches MUST be bounded/reused so startup and large-workspace responsiveness are not dominated by repeated full rebuilds or full syncs.
 - diff/review/hosted-repository workflows MUST live in the same shell as local editing. Source Control, hosted review state, editor markers, Problems, and Search may each keep their own owner boundaries, but they must compose inside the shared IDE shell rather than becoming separate ad hoc tools.
@@ -4550,3 +4550,70 @@ This addendum repairs non-runtime architecture-invariant rows without creating W
 - Repairs `sfk-60e840c059b6db237485d48c`: raw reconciliation fragments preceding INV-001 are audit-lineage only. The canonical invariant is that correlation, usage, permission, route, and artifact identity must be represented by named owner fields and must not be reintroduced as anonymous prose aliases.
 - Repairs `sfk-ddd4dece078c664fd31f6de5`: INV-001 now requires `correlation_id` trace-through across provider/runtime dispatch, persisted EventRecord/domain events, artifacts, receipts, and route/open payloads; event-primary `usage_event_ref` normalizes to `object_kind = usage_event`, while PMConcept7 Ledger attempt-primary routing normalizes `attempt_id` to `object_kind = usage_attempt` and retains the event ref as correlation. Neither is a top-level route special case. Evidence: this section, `AI-004`, and `Plans/Contracts_V0.md` route/runtime identity contracts.
 - Repairs `sfk-937c36d705a22bf16645cca2`: `GATE-001`, `GATE-003`, and `GATE-010` are routed through `Plans/Progression_Gates.md`; this section now states that `GATE-003` owns invariant governance while current `run-gates` enforcement remains partial until a dedicated invariant verifier exists.
+
+### AI-069 - Genuine Application Workflows And Actual Target Gates
+
+```yaml
+plan_unit_id: AI-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: 'No project is genuine application scope: scope_kind=application, project_id=null, scope_partition=app,
+  with real Server, thread and execution Computer identity. Ask, Agent, Debug, Plan, Deep Plan, Goals, Crew, BrainStorm,
+  Review, Chat Room, scheduled messages and scheduled tasks use their existing owners in this scope. Only Planning
+  Wizard, PRD Builder and Orchestrator have a no-project workflow gate; Requires a project is retained only for
+  those three. Each other action still proves the actual file, directory, repository, connection, target Project
+  and capability it needs and passes policy.may_execute_tool() at every nesting depth. No browser, permission, scheduling,
+  Goal, Crew or storage engine is duplicated for app work. A settings default supplies a preference, never execution
+  authority. Application records have their own writer/lease and bounded counterpart custody, not a Project Home
+  Server or Vault. Unsupported native routes remain typed unavailable until admitted. CV-365 owns WorkflowScopeV2;
+  its Server-level scope is distinct from the execution context. Pure conversation and internal planning carry an
+  explicitly empty admitted-root set and null working_directory until a file/command creates the lazy folder or
+  a grant supplies a root; null cwd never launches a process or falls back to HOME, current focus or a Project.
+  CV-366 owns the sole selected application record/source/hash editions and Plans/application_workflow_source_graph.json;
+  an unbound source, writer, read, backup or retention edge remains specified_unimplemented/unavailable.'
+gui_related: false
+gui_classification_reason: Defines identity, custody, admission or compiler boundaries; visual placement is consumed
+  from GUI owners.
+depends_on:
+- CV-365
+unblocks: []
+acceptance_criteria:
+- Null Project succeeds for the approved workflow matrix with explicit app identity; missing actual targets still
+  refuse with their actual reason.
+- Unknown scope, fabricated Project, focus-derived identity and mismatched outer/inner scope refuse.
+- Planning Wizard/PRD Builder/Orchestrator remain Project-bound; no app build creates WorkNodes.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#N1-N24; Q11; N21-N22
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#fc-c01
+preserved_exact_tokens:
+- No project
+- scope_kind=application
+- project_id=null
+- scope_partition=app
+- Requires a project
+- policy.may_execute_tool()
+negative_constraints:
+- Do not infer access from a nullable field, global view, settings home, visible Project or a copied record.
+- Do not relax exact historical Project codecs or claim native certification.
+owner_hints:
+- Plans/Architecture_Invariants.md
+```
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md#AI-069, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365, ContractName:Plans/Contracts_V0.md#CV-366

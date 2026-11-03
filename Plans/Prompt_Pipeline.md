@@ -2964,7 +2964,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  Prompt Pipeline consumes the Executor-owned execution_unit_context contract and schema for prompt handoff, attempt snapshots, worker spawn inputs, recovery, remediation, and coordination; TierContext is compatibility/decomposition metadata, tier_id is retired, and canonical selection keys from schema-owned execution_unit_type plus execution_unit_id.
+  Prompt Pipeline consumes the Executor-owned execution_unit_context contract and schema for prompt
+  handoff, attempt snapshots, worker spawn inputs, recovery, remediation, and coordination; TierContext is
+  compatibility/decomposition metadata, tier_id is retired, and canonical selection keys from schema-owned
+  execution_unit_type plus execution_unit_id. App prompt handoff consumes EP-132/SIR-055 explicit
+  thread/Computer/roots and nullable-Project context; it includes no Project/NamedPlan/WorkNode context
+  unless actually bound and no hidden unrelated memory. Conversion assembles only fresh target-authorized
+  future context.
 gui_related: false
 gui_classification_reason: This unit defines runtime context identity rather than visual presentation.
 split_recommended: false
@@ -2989,6 +2995,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0035"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "execution_unit_context"
   - "TierContext"
@@ -3229,7 +3238,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  Every attempt snapshot preserves project, thread, wizard, resolution, execution_unit_context, requested/effective account identity, execution role, operational identity, blocked sequence, approval scope, and launched run request references as the canonical bridge from planning-time wizard state to the executing run.
+  Every attempt snapshot preserves project, thread, wizard, resolution, execution_unit_context,
+  requested/effective account identity, execution role, operational identity, blocked sequence, approval
+  scope, and launched run request references as the canonical bridge from planning-time wizard state to
+  the executing run. This planning/Project snapshot remains exact for its real source. Ordinary app
+  turns/Goals/Crew/Assistant Plan/scheduled tasks use the explicitly versioned EP-132 app snapshot with
+  null Project/wizard/NamedPlan where inapplicable, real thread/Computer/roots and frozen
+  owner/runtime/Stop evidence; scope is never focus-derived.
 gui_related: false
 gui_classification_reason: This unit defines attempt snapshot handoff fields rather than visual presentation.
 split_recommended: false
@@ -3255,6 +3270,9 @@ node_compile_hint:
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0039"
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0040"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Runtime Attempt Snapshot and Handoff Bundle"
   - "project_id"
