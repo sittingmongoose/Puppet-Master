@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en" data-theme="basic-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settings everywhere · Opus 5.5</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body { margin: 0; height: 100%; background: #101012; overflow: hidden; font: 500 12px/1.2 Inter, system-ui, sans-serif; color: #e6e6ea; }
+  :root { --dock-h: 124px; }
+  /* the review strip sits under PMConcept7, so the page being judged keeps the whole window above it */
+  .pc-dock { position: fixed; inset: auto 0 0 0; height: var(--dock-h); box-sizing: border-box; display: grid; grid-template-rows: 40px 38px 1fr;
+    background: #18181b; border-top: 1px solid #2a2a30; z-index: 3; }
+  .pc-bar { display: flex; align-items: center; gap: 8px; padding: 0 12px; white-space: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .pc-bar + .pc-bar { border-top: 1px solid #222228; }
+  .pc-bar b { font-weight: 650; }
+  .pc-lab { color: #9a9aa4; font-weight: 550; }
+  .pc-model { padding: 3px 6px; border-radius: 6px; background: rgba(255, 255, 255, .08); color: #b9b9c2; }
+  .pc-sep { width: 1px; align-self: stretch; margin: 9px 2px; background: #2e2e35; flex: none; }
+  .pc-seg { display: inline-flex; padding: 2px; gap: 2px; border-radius: 8px; background: #222226; border: 1px solid #2e2e35; }
+  .pc-seg button { font: inherit; color: #c9c9d1; background: transparent; border: 0; border-radius: 6px; padding: 5px 8px; cursor: pointer; }
+  .pc-seg button:hover { background: rgba(255, 255, 255, .07); color: #fff; }
+  .pc-seg button[aria-pressed="true"] { background: #e6e6ea; color: #111; }
+  .pc-seg button kbd { font: 600 10px/1 ui-monospace, monospace; opacity: .55; margin-left: 4px; }
+  .pc-bar select, .pc-bar .pc-btn { font: inherit; color: inherit; background: #222226; border: 1px solid #2e2e35; border-radius: 7px; padding: 5px 8px; cursor: pointer; }
+  .pc-bar select:hover, .pc-bar .pc-btn:hover { background: #2a2a2f; }
+  .pc-bar select:disabled { opacity: .6; cursor: progress; }
+  #moment { width: 188px; } #project { width: 168px; }
+  .pc-bar label.pc-check { display: inline-flex; align-items: center; gap: 5px; color: #c9c9d1; cursor: pointer; }
+  .pc-bar :focus-visible { outline: 2px solid #7aa7ff; outline-offset: 1px; }
+  .pc-note { padding: 6px 14px 0; color: #b4b4bd; line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; border-top: 1px solid #222228; }
+  .pc-note b { color: #fff; font-weight: 650; }
+  .pc-note em { font-style: normal; color: #ffd27a; }
+  .pc-stage { position: fixed; inset: 0 0 var(--dock-h) 0; display: flex; justify-content: center; background: #0b0b0d; }
+  #pm7 { display: block; height: 100%; width: 100%; border: 0; background: #1e1e1e; transition: width .2s ease; }
+  .pc-wait { position: fixed; inset: 0 0 var(--dock-h) 0; display: grid; place-items: center; color: #8d8d96; pointer-events: none; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) { #pm7 { transition: none; } }
+</style>
+</head>
+<body>
+<div class="pc-stage"><iframe id="pm7" title="PMConcept7 with the settings everywhere concept" src="../../PMConcept7.html?o55=off"></iframe></div>
+<div class="pc-wait" id="wait">Loading PMConcept7…</div>
+<div class="pc-dock">
+  <div class="pc-bar" role="toolbar" aria-label="How the rows show it">
+    <b>Settings everywhere</b><span class="pc-model" data-concept-model="Opus 5.5">Opus 5.5</span>
+    <span class="pc-sep" aria-hidden="true"></span>
+    <span class="pc-lab">End of the row</span>
+    <div class="pc-seg" id="end" role="group" aria-label="End of the row">
+      <button type="button" data-v="origin" aria-pressed="true">A · Origin word<kbd>1</kbd></button>
+      <button type="button" data-v="mark" aria-pressed="false">B · Second mark<kbd>2</kbd></button>
+      <button type="button" data-v="line" aria-pressed="false">C · Sentence line<kbd>3</kbd></button>
+      <button type="button" data-v="more" aria-pressed="false">D · More menu<kbd>4</kbd></button>
+      <button type="button" data-v="today" aria-pressed="false">Today<kbd>0</kbd></button>
+    </div>
+    <span class="pc-lab">Changed mark</span>
+    <div class="pc-seg" id="changed" role="group" aria-label="Changed mark">
+      <button type="button" data-v="outline" aria-pressed="true">A · Word and outline</button>
+      <button type="button" data-v="word" aria-pressed="false">B · Word only</button>
+      <button type="button" data-v="frame" aria-pressed="false">C · Framed row</button>
+      <button type="button" data-v="today" aria-pressed="false">Today</button>
+    </div>
+    <span class="pc-sep" aria-hidden="true"></span>
+    <button type="button" class="pc-btn" id="compare">Compare<kbd style="font:600 10px/1 ui-monospace,monospace;opacity:.55;margin-left:4px">C</kbd></button>
+    <select id="moment" aria-label="Moments">
+      <option value="">Moments…</option>
+      <option value="11.1">11.1 Home NAS isn’t answering</option>
+      <option value="11.2">11.2 A conflict</option>
+      <option value="11.3">11.3 Everywhere, then only for tastebook</option>
+      <option value="11.4">11.4 An everywhere change a project refuses</option>
+      <option value="11.5">11.5 Move where your settings are kept</option>
+      <option value="11.6">11.6 Two setups joining</option>
+      <option value="11.7">11.7 A new computer joins</option>
+      <option value="11.8">11.8 No project</option>
+      <option value="11.9">11.9 A project with its own look</option>
+      <option value="11.10">11.10 The assistant changes a setting</option>
+      <option value="11.11">11.11 A device with limited access</option>
+      <option value="11.12">11.12 An update changed defaults</option>
+      <option value="11.13">11.13 Rules a project brings</option>
+      <option value="11.14">11.14 Settings now apply everywhere</option>
+      <option value="11.15">11.15 First start</option>
+      <option value="11.16">11.16 Filters and the Differences view</option>
+      <option value="11.17">11.17 A batch that can’t finish</option>
+      <option value="copy">Copy settings, in Settings</option>
+      <option value="copy-new">Copy settings, in New Project</option>
+    </select>
+    <button type="button" class="pc-btn" id="reset">Reset demo</button>
+  </div>
+  <div class="pc-bar" role="toolbar" aria-label="Whose settings, and how the page looks">
+    <span class="pc-lab">Project</span>
+    <select id="project" aria-label="Project">
+      <option value="tastebook">tastebook</option><option value="harbor">harbor</option><option value="loom">loom</option>
+      <option value="docs-site">docs-site</option><option value="legacy-app">legacy-app</option><option value="experiment">experiment</option>
+      <option value="garden-notes">garden-notes (Home NAS)</option><option value="recipe-app">recipe-app (Home NAS)</option>
+      <option value="lighting-rig">lighting-rig (Studio Mac)</option><option value="none">No project</option>
+    </select>
+    <span class="pc-lab">Runs on</span>
+    <select id="on" aria-label="Runs on">
+      <option value="">Its own computer</option><option value="here">This computer</option><option value="homenas">Home NAS</option><option value="studio">Studio Mac</option>
+    </select>
+    <span class="pc-lab">You’re using</span>
+    <select id="device" aria-label="You’re using">
+      <option value="here">This computer</option><option value="studio">Studio Mac</option><option value="iphone">iPhone</option><option value="ipad">Sam’s iPad</option>
+    </select>
+    <span class="pc-lab">Home NAS</span>
+    <select id="homenas" aria-label="Home NAS">
+      <option value="up">Answering</option><option value="down">Not answering</option>
+    </select>
+    <span class="pc-sep" aria-hidden="true"></span>
+    <select id="look" aria-label="Look">
+      <option value="basic-dark">Basic Dark</option><option value="basic-light">Basic Light</option>
+      <option value="friendly-dark">Friendly Dark</option><option value="friendly-light">Friendly Light</option>
+      <option value="glass-dark">Glass Dark</option><option value="glass-light">Glass Light</option>
+      <option value="retro-dark">Retro Dark</option><option value="retro-light">Retro Light</option>
+      <option value="nier-dark">NieR Dark</option><option value="nier-light">NieR Light</option>
+    </select>
+    <select id="width" aria-label="Window width">
+      <option value="">Full width</option><option value="1920">1920 px</option><option value="1280">1280 px</option><option value="1024">1024 px</option><option value="860">860 px</option>
+    </select>
+    <label class="pc-check"><input type="checkbox" id="reduced"> Reduced motion</label>
+  </div>
+  <div class="pc-note" id="note" aria-live="polite"></div>
+</div>
+<script src="concept-hub-bridge.js"></script>
+<script>
+(function () {
+  'use strict';
+  /* This page and PMConcept7 talk only by message. Served (the Concept Hub, a local server), the two share an origin and
+     this page also adds the layer to PMConcept7. In the single file the layer is already inside, and a sandboxed preview
+     (T3's file preview) gives PMConcept7 an origin of its own, where reaching into it fails; messages cross that line. */
+  const frame = document.getElementById('pm7');
+  const base = new URL('./', location.href);
+  const STEPS = [
+    ['css', 'layer/core.css'], ['js', 'layer/world.js'], ['js', 'layer/resolve.js'], ['js', 'layer/feed.js'],
+    ['css', 'layer/rows.css'], ['js', 'layer/rows.js'],
+    ['css', 'layer/panel.css'], ['js', 'layer/panel.js'],
+    ['js', 'layer/managers.js'], ['js', 'layer/copy.js'], ['js', 'layer/moments.js'], ['js', 'layer/board.js'],
+    ['js', 'layer/boot.js']
+  ].map(([k, p]) => [k, new URL(p, base).href]);
+
+  /* the strip's notes: what each option and moment shows, which proposal section it is, and what is NEW CANON.
+     Every value in the demo is an example ([Demo only]); the notes say so, the design never does. */
+  const END = {
+    origin: '<b>End of the row · A, origin word (S5 A, recommended).</b> Where the “?” was, a quiet word names where the value comes from: <b>This project</b>, <b>Home NAS</b>, <b>Varies</b>, or <b>Details</b> when nothing differs. The setting’s name opens the panel too; right-click any row for the More menu. NEW CANON: the ladder and the end word (SETTINGS-PROPOSAL 2.3, 2.4).',
+    mark: '<b>End of the row · B, second mark.</b> “Details” at the end of every row; after the title, the info mark and “Set for this project” or “Varies”. Weak: two marks crowd a short title at narrow widths (SETTINGS-PROPOSAL 2.3).',
+    line: '<b>End of the row · C, sentence line.</b> “Details” at the end; under the description, a sentence such as “Different in docs-site”. Weak: one more line on every row that differs (SETTINGS-PROPOSAL 2.3).',
+    more: '<b>End of the row · D, More menu.</b> Jared’s “…” with its word visible, opening a labelled menu: Where it applies…, Set for this project, Set for This computer, Go back to the default, Copy setting name. Weak: it hides the state until opened (SETTINGS-PROPOSAL 2.4 C).',
+    today: '<b>Today.</b> PMConcept7’s round “?” untouched, for comparison: icon only, no word, nothing about where a value comes from.'
+  };
+  const CHANGED = {
+    outline: ' <b>Changed · A, word and outline (S6 A).</b> “Changed” at 11.5px and a 1px outline around the control itself, never a side bar.',
+    word: ' <b>Changed · B, word only.</b> Today’s mark made readable at 11.5px.',
+    frame: ' <b>Changed · C, framed row.</b> A hairline on all four sides of the row and a faint tint.',
+    today: ' <b>Changed · Today.</b> The 10.5px word, under the 11px floor.'
+  };
+  const MOMENT = {
+    '11.1': '<b>11.1 Home NAS isn’t answering.</b> The head line says what you are seeing and as of when; an everywhere change offers <b>Just this computer for now</b> and <b>Change it when Home NAS is back</b>; nothing is queued. Switch Home NAS back to Answering to be asked about the change made meanwhile. NEW CANON (SETTINGS-PROPOSAL 7.5). <em>Example</em> times.',
+    '11.2': '<b>11.2 A conflict.</b> Change Text size here while a change from Studio Mac lands first: the conflict card with the change-conflict mark, Keep or Use. NEW CANON wording over SSYS-009’s compare-and-set (7.6).',
+    '11.3': '<b>11.3 Change it everywhere, then only for tastebook.</b> Follow the steps: a row that comes from tastebook’s own writes tastebook; a row from everywhere writes everywhere and the note offers <b>Only for tastebook</b>. NEW CANON (3.2, decision S4).',
+    '11.4': '<b>11.4 An everywhere change a project refuses.</b> Switch when this much is left, set everywhere to 15%: harbor’s Codex account would switch at once, so it is refused before commit, with <b>Change it everywhere except harbor</b>. NEW CANON generalising MA-073’s crossing check (1.7). <em>Example</em>: harbor’s account has 12% left.',
+    '11.5': '<b>11.5 Move where your settings are kept.</b> cmd.server.settings_home.move: the preview, refused while a change is in flight, and the lost-for-good variant with its freshness line. NEW CANON (7.2, SRV-016).',
+    '11.6': '<b>11.6 Two setups joining.</b> Studio Mac was set up on its own: one sheet lists the 9 differences with a choice per line, applied as one batch with Undo. NEW CANON (7.8, decision S12). <em>Example</em> values.',
+    '11.7': '<b>11.7 A new computer joins.</b> The Add a server recap for “Office PC”: it follows your settings from now on; programs and folders are found on it (7.7).',
+    '11.8': '<b>11.8 No project.</b> Settings with no project open: your own look, writes go everywhere or to this computer, project-only rows read “Each project”, and a project’s own value is still changeable by name in a panel. NEW CANON (section 6). Concept mechanic: the engine needs a project to accept writes, so the layer uses a hidden stand-in; the product never uses a stand-in project id.',
+    '11.9': '<b>11.9 A project with its own look.</b> tastebook’s own Retro Dark and Studio Mac’s own Basic Light: switch Project between tastebook and harbor and You’re using between This computer and Studio Mac; the look follows the resolver (the pair as one, project beats device). NEW CANON (1.3). <em>Example</em> looks.',
+    '11.10': '<b>11.10 The assistant changes a setting.</b> In loom the assistant writes the narrowest place (loom); changing Everyday model everywhere needs your yes in a card that names how many projects it changes. NEW CANON (7.9, decision S13).',
+    '11.11': '<b>11.11 A device with limited access.</b> You’re using Sam’s iPad, a Member’s device: every everywhere, computer and project line is read-only; its own Text size still changes. NEW CANON access scope settings.everywhere.write (7.10).',
+    '11.12': '<b>11.12 An update changed defaults.</b> One note on Settings Home, with <b>Keep the old ones</b> (written as your everywhere values, source migrated). NEW CANON (7.11). <em>Example</em> defaults.',
+    '11.13': '<b>11.13 Rules a project brings.</b> A forked project brings its own rules; anything looser than yours is held until you accept it. NEW CANON PS-144 (4.4, decision S15). <em>Example</em> rules.',
+    '11.14': '<b>11.14 Settings now apply everywhere.</b> The fold as a concept moment: a value is promoted to everywhere only where every project already agrees; nothing you use changes (section 8).',
+    '11.15': '<b>11.15 First start.</b> Before any computer is set up there is nowhere to keep anything: the ephemeral Basic Dark Settings, every change refused with one sentence (SSYS-002’s ephemeral context, kept).',
+    '11.16': '<b>11.16 Filters and the Differences view.</b> Changed, Set here, Varies, Per computer and Per project with counts, and every difference grouped by project or by computer, with bulk actions. NEW CANON (3.6).',
+    '11.17': '<b>11.17 A batch that can’t finish.</b> Studio Mac is off; copying tastebook’s settings into five projects finishes four and says why the fifth wasn’t changed. Nothing is queued; History offers <b>Finish lighting-rig</b> when Studio Mac answers. NEW CANON (5.6).',
+    copy: '<b>Copy settings, in Settings.</b> Settings Transfer › Copy settings from another project: what makes it different, its own things and its AI accounts, with Advanced to pick one by one. NEW CANON (5.1 to 5.6, decisions S9 to S11). <em>Example</em> counts.',
+    'copy-new': '<b>Copy settings, in New Project.</b> The same sheet as Split v2’s “Start like another Project?” for a new project, recipe-box, that will work on Home NAS: the AI account rows say what each needs there. NEW CANON (5.2, 5.4).'
+  };
+  const UI = { end: 'origin', changed: 'outline', moment: '' };
+  const $ = (id) => document.getElementById(id);
+  let live = false;
+
+  const send = (msg) => { try { frame.contentWindow.postMessage(Object.assign({ source: 'psx-host' }, msg), '*'); } catch (e) { /* not there yet */ } };
+  function paintBar() {
+    document.querySelectorAll('#end button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === UI.end)));
+    document.querySelectorAll('#changed button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === UI.changed)));
+    $('note').innerHTML = UI.moment && MOMENT[UI.moment] ? MOMENT[UI.moment] : END[UI.end] + CHANGED[UI.changed] + ' <em>Every value shown is an example.</em>';
+  }
+
+  /* PMConcept7 keeps each project's Settings in localStorage; the concept feeds its own values and the engine saves
+     them as it works, so the values found on arrival are put back when this page closes. */
+  const PROJECTS = ['tastebook', 'harbor', 'loom', 'docs-site', 'legacy-app', 'experiment', 'garden-notes', 'recipe-app', 'lighting-rig', 'psx-none'];
+  const KEYS = PROJECTS.map((p) => 'pm7:settings:tome-tabs:v1:' + encodeURIComponent(p));
+  const OB = 'pm.o55.onboarding.v1';
+  const SNAP = {};
+  try { KEYS.concat(OB).forEach((k) => { SNAP[k] = localStorage.getItem(k); }); } catch (e) { /* storage may be off */ }
+  window.addEventListener('pagehide', () => {
+    try {
+      KEYS.forEach((k) => { if (SNAP[k] === null) localStorage.removeItem(k); else if (SNAP[k] !== undefined) localStorage.setItem(k, SNAP[k]); });
+      if (SNAP[OB] === null && /settings-scope/.test(localStorage.getItem(OB) || '')) localStorage.removeItem(OB);
+    } catch (e) { /* ignore */ }
+  });
+
+  // served: add the layer to PMConcept7 once its shell is there (skipped when the layer is inside already, or out of reach)
+  function inject() {
+    let d = null;
+    try { d = frame.contentDocument; } catch (e) { d = null; }
+    if (!d || !d.documentElement || d.documentElement.hasAttribute('data-psx-layer')) return;
+    const W = frame.contentWindow;
+    if (!(W.PMG && W.PM_PAGES && d.getElementById('panel-settings') && d.getElementById('themeSelect'))) { setTimeout(inject, 150); return; }
+    d.documentElement.setAttribute('data-psx-layer', 'loading');
+    let i = 0;
+    const next = () => {
+      if (i >= STEPS.length) return;
+      const [kind, url] = STEPS[i++];
+      const el = d.createElement(kind === 'css' ? 'link' : 'script');
+      if (kind === 'css') { el.rel = 'stylesheet'; el.href = url; } else el.src = url;
+      el.onload = next;
+      el.onerror = () => { console.error('Settings concept: could not load', url); next(); };
+      (kind === 'css' ? d.head : d.body).appendChild(el);
+    };
+    next();
+  }
+  frame.addEventListener('load', () => { live = false; inject(); });
+
+  // until the layer answers, ask every 300 ms whether it is there (it may have spoken before this page was listening)
+  setInterval(() => { if (!live) send({ cmd: 'hello' }); }, 300);
+
+  window.addEventListener('message', (ev) => {
+    const m = ev.data;
+    if (!m || typeof m !== 'object') return;
+    if (m.source === 'psx' && ev.source === frame.contentWindow) {
+      if (m.type === 'ready' && !live) {
+        live = true;
+        const w = $('wait'); if (w) w.remove();
+        send({ cmd: 'opt', end: UI.end, changed: UI.changed });
+        if ($('reduced').checked) send({ cmd: 'motion', reduced: true });
+        if ($('look').value !== 'basic-dark' && m.state && m.state.look !== $('look').value) send({ cmd: 'look', look: $('look').value });
+      }
+      const s = m.state;
+      if (s) {
+        if (s.look && m.type !== 'look-done' && !$('look').disabled) $('look').value = s.look;
+        if (s.opt) { UI.end = s.opt.end; UI.changed = s.opt.changed; }
+        if (s.ctx) {
+          $('project').value = s.ctx.project || 'tastebook';
+          $('device').value = s.ctx.device || 'here';
+          $('on').value = s.ctx.on || '';
+          $('homenas').value = s.ctx.homenas === false ? 'down' : 'up';
+        }
+        UI.moment = s.moment || '';
+        paintBar();
+        if (m.type === 'look-done') { $('look').disabled = false; if (s.look) $('look').value = s.look; }
+      }
+      return;
+    }
+    // the Concept Hub's look and reduced motion reach PMConcept7 inside
+    if (m.source === 'pm-concept-hub' && m.type === 'pm-concept-state' && m.state) {
+      $('reduced').checked = !!m.state.reducedMotion;
+      send({ cmd: 'motion', reduced: !!m.state.reducedMotion });
+      if (m.state.theme && m.state.theme !== $('look').value) { $('look').value = m.state.theme; send({ cmd: 'look', look: m.state.theme }); }
+    }
+  });
+
+  $('end').addEventListener('click', (e) => { const b = e.target.closest('button[data-v]'); if (!b) return; UI.end = b.dataset.v; UI.moment = ''; paintBar(); send({ cmd: 'opt', end: UI.end }); });
+  $('changed').addEventListener('click', (e) => { const b = e.target.closest('button[data-v]'); if (!b) return; UI.changed = b.dataset.v; UI.moment = ''; paintBar(); send({ cmd: 'opt', changed: UI.changed }); });
+  $('project').addEventListener('change', (e) => send({ cmd: 'ctx', project: e.target.value }));
+  $('on').addEventListener('change', (e) => send({ cmd: 'ctx', on: e.target.value }));
+  $('device').addEventListener('change', (e) => send({ cmd: 'ctx', device: e.target.value }));
+  $('homenas').addEventListener('change', (e) => send({ cmd: 'ctx', homenas: e.target.value }));
+  $('moment').addEventListener('change', (e) => { const v = e.target.value; if (!v) return; UI.moment = v; paintBar(); send({ cmd: 'moment', id: v }); setTimeout(() => { e.target.value = ''; }, 0); });
+  $('compare').addEventListener('click', () => send({ cmd: 'board' }));
+  $('reset').addEventListener('click', () => { UI.moment = ''; paintBar(); send({ cmd: 'reset' }); });
+  $('look').addEventListener('change', (e) => { e.target.disabled = true; send({ cmd: 'look', look: e.target.value }); setTimeout(() => { e.target.disabled = false; }, 5000); });
+  $('width').addEventListener('change', (e) => { frame.style.width = e.target.value ? e.target.value + 'px' : '100%'; });
+  $('reduced').addEventListener('change', (e) => send({ cmd: 'motion', reduced: e.target.checked }));
+  // 1 to 4 pick the end-of-row option and 0 shows today's, C opens Compare (outside text fields; inside PMConcept7 the
+  // layer listens for the same keys)
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey || /input|select|textarea/i.test((e.target && e.target.tagName) || '')) return;
+    const map = { 1: 'origin', 2: 'mark', 3: 'line', 4: 'more', 0: 'today' };
+    if (map[e.key]) { UI.end = map[e.key]; UI.moment = ''; paintBar(); send({ cmd: 'opt', end: UI.end }); }
+    if (e.key === 'c' || e.key === 'C') send({ cmd: 'board' });
+  });
+  paintBar();
+  window.PSX_HOST = { frame, UI, send, isLive: () => live };
+})();
+</script>
+</body>
+</html>
