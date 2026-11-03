@@ -72,6 +72,7 @@ canonical_text: >-
   transfer, Project Backup, and Full Server Backup remain four distinct products. Project Move and Duplicate With
   History also retain distinct semantics. Storage owns physical persistence and internal recovery; Settings owns
   transfer; Project Sync owns Move; credential/security owners retain secret portability and custody decisions.
+  BRS-032 owns the shared New Project/onboarding destination and first-policy setup; BRS-033 owns archive schedule pause and app-workflow backup/restore lineage. These consumers neither create another backup engine nor merge Project Backup with Full Server Backup.
 gui_related: true
 gui_classification_reason: The product split determines visible manager destinations, actions, labels, previews, and recovery choices.
 depends_on: [PDS-003, PDS-005, SRV-001, SSYS-007, PSB-001]
@@ -87,8 +88,11 @@ context_scope: backup_restore_owner_routing
 implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/backup_restore_system_contracts.schema.json]
 node_compile_hint: {mode: backup_restore_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:chat:server-remote-backup-owner-adjudication-2026-08-31
-  - source_ref:normalized-register:server-first-2026-08-31:B01-B03
+- source_ref:chat:server-remote-backup-owner-adjudication-2026-08-31
+- source_ref:normalized-register:server-first-2026-08-31:B01-B03
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [internal recovery snapshot, Settings transfer, Project backup, Full Server backup]
 negative_constraints: [Do not collapse the four products., Do not re-own physical storage or Project Move., Do not treat accepted scope as runtime readiness.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/storage-plan.md, Plans/Settings_System.md, Plans/Project_Sync_and_Backbone.md]
@@ -113,6 +117,8 @@ canonical_text: >-
   backup/update configuration, Integration Catalog and Installation manifests, auth/profile metadata, Runtime/Cluster/
   Registry connection definitions, and external-secret references. Exact included and excluded families are manifest
   data; one Project failure never mutates unrelated Projects.
+  Full Server Backup includes canonical application chats, scratch notebook, Goal/GoalRun, Crew/coordination, Assistant Plan/Deep Plan/PlanRun and scheduled-message/task/window/consent/occurrence/Stop custody admitted by their owners, with the same coherence, caps and holds as counterparts. Visible no-project chat folders are included by default but may be explicitly excluded with coverage disclosure. After conversion, Project Backup includes full destination-owned history and linked destination records; original records remain under their own retention.
+  Full Server Backup includes settings-home Everywhere values/history and admitted home metadata. Project restore changes only Project own values and cannot replace Everywhere or the Settings home. Canonical BuildGrant/CreatedResourceManifest/Stop/revocation and action/recovery evidence join the admitted coherent Project backup graph; restored evidence is historical and grants no current authority.
 gui_related: true
 gui_classification_reason: Backup type, selected Projects/data, source inclusion, exclusions, and Project isolation are visible preview and details behavior.
 depends_on: [BRS-001, SRV-002]
@@ -130,11 +136,14 @@ context_scope: project_and_full_server_backup_boundaries
 implementation_surfaces: [Plans/backup_restore_system_contracts.schema.json, future backup planner]
 node_compile_hint: {mode: backup_boundary_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:BKP-001
-  - source_ref:packet:2026-09-01:BKP-005-BKP-008
-  - source_ref:packet:2026-09-01:BKP-011-BKP-012
-  - source_ref:normalized-register:server-first-2026-08-31:B04-B07
-  - source_ref:packet:backbone_v5/09_UPDATES_BACKUP_RESTORE_CONTRACT.md
+- source_ref:packet:2026-09-01:BKP-001
+- source_ref:packet:2026-09-01:BKP-005-BKP-008
+- source_ref:packet:2026-09-01:BKP-011-BKP-012
+- source_ref:normalized-register:server-first-2026-08-31:B04-B07
+- source_ref:packet:backbone_v5/09_UPDATES_BACKUP_RESTORE_CONTRACT.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [Project Backup, Full Server Backup, Server Catalog, selected Projects, all Projects, PM data + files + Git/JJ history, Waiting for source]
 negative_constraints: [Do not include raw OS keychain bytes., Do not include live PTYs processes ports or browser processes., Do not let one Project backup mutate another Project., Do not silently expand an existing policy., Do not manufacture Git commits or JJ operations., Do not claim complete JJ recovery from a text log Git push mirror clone or Git bundle alone.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/Server_System.md, Plans/storage-plan.md]
@@ -156,6 +165,7 @@ canonical_text: >-
   Raw values never enter ordinary manifests, events, logs, command history, URLs, Chat, Usage, or projections. External
   secret references are preferred. CLI-owned, OS-keychain, workload, cookie, hardware- and machine-bound identities
   remain excluded unless their owner adapter proves portability and authorizes export and restore.
+  S11 admits no key, token, CLI-profile or pairing transfer in Settings copies, Saved setups or Starters. Any separately opted-in Full Server PortableSecretEnvelope remains its own human-only feature and is never implied by P1/N15 or account reuse.
 gui_related: true
 gui_classification_reason: Opt-in warnings, selection, recovery-key handling, excluded/placeholder state, and post-restore sign-in requirements are visible.
 depends_on: [BRS-002, SSYS-008]
@@ -171,8 +181,11 @@ context_scope: portable_secret_envelope
 implementation_surfaces: [Plans/backup_restore_system_contracts.schema.json, future security adapter registry]
 node_compile_hint: {mode: portable_secret_envelope_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:normalized-register:server-first-2026-08-31:B07-B09
-  - source_ref:packet:backbone_v5/09_UPDATES_BACKUP_RESTORE_CONTRACT.md
+- source_ref:normalized-register:server-first-2026-08-31:B07-B09
+- source_ref:packet:backbone_v5/09_UPDATES_BACKUP_RESTORE_CONTRACT.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [PortableSecretEnvelope, RecoveryKeyRecord, KDF, AEAD, Sign-in Required]
 negative_constraints: [Do not include secrets by default., Do not export unapproved CLI profiles or raw keychain bytes., Do not expose secret material in ordinary evidence surfaces.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/Permissions_System.md, Plans/FileSafe.md, Plans/Multi-Account.md]
@@ -197,6 +210,7 @@ canonical_text: >-
   protocol versions and compatibility range, consistency boundaries, included/excluded families, relative object paths,
   sizes and hashes, encryption/security metadata refs, source Host/Environment, source-code inclusion mode, verification,
   and parent/incremental relationship. Retention is a durable decision with protected/held generations never deleted.
+  BRS-032 extends only cmd.backup.policy.update with first-policy create-if-absent under absent-key CAS, exact Server/Project scope, destination/currentness and idempotency. Existing policy updates still compare the current revision; destination or policy acceptance alone is not a complete verified backup.
 gui_related: true
 gui_classification_reason: Destination, policy, schedule/retention, selected data, storage use, verification, protection, and history are visible manager behavior.
 depends_on: [BRS-002, BRS-003]
@@ -214,11 +228,14 @@ context_scope: backup_destination_policy_manifest
 implementation_surfaces: [Plans/backup_restore_system_contracts.schema.json, future destination adapter and retention service]
 node_compile_hint: {mode: backup_destination_manifest_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:BKP-003
-  - source_ref:packet:2026-09-01:BKP-009
-  - source_ref:packet:2026-09-01:CLOUD-001-CLOUD-008
-  - source_ref:normalized-register:server-first-2026-08-31:B09-B11
-  - source_ref:packet:backbone_v5/09_UPDATES_BACKUP_RESTORE_CONTRACT.md
+- source_ref:packet:2026-09-01:BKP-003
+- source_ref:packet:2026-09-01:BKP-009
+- source_ref:packet:2026-09-01:CLOUD-001-CLOUD-008
+- source_ref:normalized-register:server-first-2026-08-31:B09-B11
+- source_ref:packet:backbone_v5/09_UPDATES_BACKUP_RESTORE_CONTRACT.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [BackupDestination, BackupPolicy, BackupManifest, BackupRetentionDecision, incremental, parent]
 negative_constraints: [Do not use absolute source paths as portable object paths., Do not delete protected or held backups., Do not call an unverified partial write complete., Do not collapse repository authority or multi-destination attempts into one scalar state., Do not make a remote backup backend canonical PM state.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/storage-plan.md]
@@ -282,8 +299,7 @@ canonical_text: >-
   prerequisite or its narrowly validated emergency-consent alternative, stages into quarantine, verifies staged hashes
   and schema/storage compatibility, resolves identity, credentials, and source locations, quiesces the target, activates
   atomically where supported or through a journaled recoverable boundary otherwise, rebuilds derived state, performs
-  post-restore verification, invalidates stale Client caches, and exposes rollback only when a real recovery point exists. Restore as New creates a new
-  project_id and rewrites identity-bearing refs; selective restore accepts only independently valid families;
+  post-restore verification, invalidates stale Client caches, and exposes rollback only when a real recovery point exists. Restore as New creates a new project_id and rewrites PM-internal identity-bearing refs; external forge host/account/repository identity remains only non-authoritative lineage until fresh owner rebind and remote validation; selective restore accepts only independently valid families;
   Read-only browse/retrieve never activates content. Restart uses the phase journal to resume, rollback, quarantine, or recovery_required.
 gui_related: true
 gui_classification_reason: Restore preview, mode selection, conflicts, approval, quarantine, progress, readiness, rollback, and verify-only state are visible workflows.
@@ -293,7 +309,7 @@ acceptance_criteria:
   - Browse/retrieve operations perform no activation and emit bounded read/delivery evidence independently of RestoreRun.
   - Every mode requires the BRS-023 pre-staging recovery prerequisite; emergency consent never creates a recovery point or rollback capability, and activation truth follows BRS-019.
   - All nineteen phases persist without requiring evidence from a future phase; completed and mutation-applied states retain their actual prerequisites and verification evidence.
-  - as_new rewrites every identity-bearing reference and cannot collide with an existing project_id.
+  - as_new rewrites every PM-internal identity-bearing reference and cannot collide with an existing project_id.
   - Derived state is rebuilt from canonical restored bytes and is never trusted as portable authority.
 validation_surfaces: [Plans/backup_restore_system_contract_fixtures.json, tests/test_pm_restore_phase_contracts.py, future native restore-mode and per-phase crash tests]
 risk_class: destructive_restore_or_identity_collision
@@ -302,9 +318,12 @@ context_scope: restore_preview_modes_and_recovery
 implementation_surfaces: [Plans/backup_restore_system_contracts.schema.json, Plans/storage-plan.md, future restore coordinator]
 node_compile_hint: {mode: restore_safety_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:REST-001-REST-009
-  - source_ref:normalized-register:server-first-2026-08-31:B12-B16
-  - source_ref:packet:B5/09_UPDATES_BACKUP_RESTORE_CONTRACT.md
+- source_ref:packet:2026-09-01:REST-001-REST-009
+- source_ref:normalized-register:server-first-2026-08-31:B12-B16
+- source_ref:packet:B5/09_UPDATES_BACKUP_RESTORE_CONTRACT.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [as_new, in_place, selective, server_full, settings_strategy, Browse never activates]
 negative_constraints: [Do not model browse or retrieve as a mutating restore mode., Do not restore without the BRS-023 recovery prerequisite., Do not activate unverified staged data., Do not trust portable derived indexes., Do not restore tsnet identity by default.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/storage-plan.md, Plans/Server_System.md]
@@ -366,6 +385,7 @@ canonical_text: >-
   verification level/time, Recovery Kit status, Back Up Now, Restore, and Add Destination. Amended 2026-10-31 (DL-270): section 4.2 owns the exact overview list, which also shows the last verified backup and what a restore from it would lose (BRS-031); this unit's list is a summary and adds no fields. History/Browse, Destinations,
   Schedule/Retention/Holds, Recovery and Keys, and Advanced/Diagnostics own detailed work. Missing executable
   contracts disable the affected action without reverting accepted scope.
+  Projects/New Project and Onboarding render BRS-031 owner status and route through the existing 41 commands; destination selection uses BRS-032, archive effects BRS-033. Every verify/test-restore action retains explicit depth/plan, snapshot and independent owner admission. No listed button or packet receipt becomes native handler evidence.
 gui_related: true
 gui_classification_reason: This unit defines all visible backup/restore actions, compact cards, advanced manager fields, progress, receipts, and disabled states.
 depends_on: [BRS-004, BRS-005, BRS-006, BRS-007]
@@ -382,11 +402,14 @@ context_scope: backup_restore_commands_events_and_ui
 implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json]
 node_compile_hint: {mode: backup_restore_command_projection_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:BGUI-001-BGUI-005
-  - source_ref:packet:2026-09-01:ACT-088-ACT-128
-  - source_ref:packet:2026-09-01:CMDX-001-CMDX-004
-  - source_ref:normalized-register:server-first-2026-08-31:B17-B18
-  - source_ref:normalized-register:server-first-2026-08-31:G05-G08
+- source_ref:packet:2026-09-01:BGUI-001-BGUI-005
+- source_ref:packet:2026-09-01:ACT-088-ACT-128
+- source_ref:packet:2026-09-01:CMDX-001-CMDX-004
+- source_ref:normalized-register:server-first-2026-08-31:B17-B18
+- source_ref:normalized-register:server-first-2026-08-31:G05-G08
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [Data Backup and Retention, Automatic Backups On / Off, Last complete remote backup, Back Up Now, Restore, Add Destination, cmd.backup.server.create, cmd.restore.server_full]
 negative_constraints: [Do not enable unregistered commands., Do not create Settings Doctor Files Projects Source-Control or JJ-local backup handlers., Do not combine backup products into one ambiguous action., Do not expose recovery-key output to models agents NL automation headless API capture logs or ordinary projections.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md]
@@ -497,6 +520,7 @@ canonical_text: >-
   escrow. Rotation adds/verifies a new engine key slot before removing the old slot; suspected compromise requires a new
   encryption domain and evidenced repository re-encryption, with historical-exposure warning. PortableSecretEnvelope
   remains a separately authorized feature for portable non-backup secrets and never supplies ordinary repository crypto.
+  The New Project Recovery Kit actions Save/Copy/Print, acknowledge saved and Test Saved Kit use the existing human-only audience-bound no-store delivery with exact destination and return context. Later leaves Kit status incomplete and does not imply a recoverable backup. No fixed phrase format or credential transfer is introduced.
 gui_related: true
 gui_classification_reason: Recovery Kit handoff, masked human reveal, save/copy/print/test, confirmation, rotation, compromise warnings, and key status are visible protected workflows.
 depends_on: [BRS-003, BRS-004, SIR-007]
@@ -514,8 +538,11 @@ context_scope: recovery_set_repository_encryption_and_human_custody
 implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/backup_restore_system_contracts.schema.json, future RecoverySetKeyService]
 node_compile_hint: {mode: recovery_set_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:KEY-001-KEY-007
-  - source_ref:packet:2026-09-01:TSX-backup-identity-boundary
+- source_ref:packet:2026-09-01:KEY-001-KEY-007
+- source_ref:packet:2026-09-01:TSX-backup-identity-boundary
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [RecoverySetPublicRecord, Backup Recovery Key, Recovery Kit, Save Recovery Kit, Copy Recovery Key, Print Recovery Kit, Test Saved Kit, no escrow]
 negative_constraints: [Do not store or project raw recovery credentials., Do not reuse Storage boot recovery_set_id identity., Do not treat password rotation as compromise repair., Do not restore tsnet identity by default.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/Permissions_System.md, Plans/Remote_Access_System.md]
@@ -541,7 +568,8 @@ canonical_text: 'The closed MVP destination-family registry contains exactly aws
   offers NAS, Google Drive, OneDrive, Amazon S3, Backblaze B2, S3-compatible, SFTP and WebDAV backup choices, retaining
   their exact owner family/profile/locator identity. Azure Blob, Google Cloud Storage and REST-server destinations remain
   available in Settings > Backup & Restore, with a clear pointer. The Backup owner still supports all eleven registered
-  families.'
+  families.
+  BRS-032 reuses these eleven families with the same eight simple-flow choices and three Settings pointers. A NAS holding the Project files is not admitted as its loss-protection destination regardless of SSH/PM, SMB/NFS, connected-mount or same-device Server route; identity is owner-verified, not inferred from a display name or path string. Unknown backing-device identity stays an unresolved validation result.'
 gui_related: true
 gui_classification_reason: Destination chooser/cards, account and decrypt readiness, safe tests, Use existing, unsupported/cold-archive/cost notes, and auth return are visible.
 depends_on: [BRS-004, BRS-012, MACS-001]
@@ -566,8 +594,11 @@ context_scope: destination_family_registry_and_auth_consumption
 implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/backup_restore_system_contracts.schema.json, Plans/Multi-Account_Connection_Spec.md, Plans/Release_Supply_Chain.md]
 node_compile_hint: {mode: destination_profile_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:CLOUD-001-CLOUD-008
-  - source_ref:packet:2026-09-01:ACT-080-ACT-092
+- source_ref:packet:2026-09-01:CLOUD-001-CLOUD-008
+- source_ref:packet:2026-09-01:ACT-080-ACT-092
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [Amazon S3, S3-compatible storage, Backblaze B2, Azure Blob Storage, Google Cloud Storage, Google Drive, Microsoft OneDrive, Folder / NAS share, SFTP server, WebDAV / Nextcloud, Self-hosted backup server, Use existing]
 negative_constraints: [Do not create a duplicate auth owner., Do not expose OAuth protected content., Do not claim provider readiness from a registry row., Do not initialize over an existing repository.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/Multi-Account_Connection_Spec.md, Plans/Multi-Account.md, Plans/Release_Supply_Chain.md]
@@ -628,6 +659,7 @@ canonical_text: >-
   confirmation, and expiry. Prune uses engine reachability under a verified maintenance lease; ordinary writers do not
   gain destructive authority. Structural check, sampled/full data read, and isolated restore drill remain distinct
   evidence levels/timestamps/coverage and never inherit between snapshots.
+  The simple retention label is Standard; Advanced edits timezone, local time, manual/automatic policy and actual counts using this existing seed, never More/Fewer presets. Archive pauses future Project automatic occurrences via BRS-033 without pruning, deleting or losing last-known-good; unarchive restores eligibility only through current policy, Stop and Backup dispatch rules, never an immediate hidden run.
 gui_related: true
 gui_classification_reason: Automatic Backups, schedule/timezone, 7/4/6 recommendation, missed state, holds, prune preview, verification badges, and drill progress are visible.
 depends_on: [BRS-005, BRS-013, SIR-012]
@@ -644,7 +676,10 @@ context_scope: server_owned_backup_operations
 implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/Server_System.md, Plans/Shared_Integration_Runtime.md]
 node_compile_hint: {mode: backup_operations_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:AUTO-001-AUTO-006
+- source_ref:packet:2026-09-01:AUTO-001-AUTO-006
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [seven daily, four weekly, six monthly, timezone-aware, occurrence ID, coalesced catch-up, last known good]
 negative_constraints: [Do not overwrite existing policy., Do not create one schedule per Client., Do not prune by object age., Do not inherit verification or restore-drill badges., Do not remove locks merely because an owner is temporarily unreachable.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/Server_System.md, Plans/Shared_Integration_Runtime.md]
@@ -1024,9 +1059,7 @@ plan_unit_id: BRS-018
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Backup_Restore_System.md
-canonical_text: 'Destination setup is choose service, authenticate/select an existing profile, choose the exact bucket/container/drive/folder/prefix
-  and required region/endpoint, run an approved bounded safe test, review encryption/scope/schedule/cost, then save or
-  explicitly Use existing. Provider methods are capability- and engine-qualified: S3/B2/Azure/GCS use proven scoped credentials
+canonical_text: 'Destination setup records the service and non-secret exact bucket/container/drive/folder/prefix plus required region/endpoint before requesting sign-in, then authenticates/selects a profile, independently verifies the place, runs a bounded safe test, reviews encryption/scope/schedule/cost, and saves or explicitly chooses Use existing. Provider methods are capability- and engine-qualified: S3/B2/Azure/GCS use proven scoped credentials
   or workload attachments; Google Drive and OneDrive use PM-owned production OAuth registrations with PKCE/state and
   exact return; browser-only/container flows use a registered web callback or provider-supported device flow, never generic
   Google device/OOB or an end-user developer-console tutorial. SFTP/WebDAV/NAS/REST validate fingerprints, TLS, paths,
@@ -1037,7 +1070,8 @@ canonical_text: 'Destination setup is choose service, authenticate/select an exi
   capture, or generic configuration. DL-259, Jared 2026-10-31: D2 A: onboarding offers NAS, Google Drive, OneDrive, Amazon
   S3, Backblaze B2, S3-compatible, SFTP and WebDAV backup choices, retaining their exact owner family/profile/locator
   identity. Azure Blob, Google Cloud Storage and REST-server destinations remain available in Settings > Backup & Restore,
-  with a clear pointer. The Backup owner still supports all eleven registered families.'
+  with a clear pointer. The Backup owner still supports all eleven registered families.
+  BRS-032 binds the reviewed locator and policy choice before sign-in. Discovering an existing repository offers Use existing and never reinitializes it; post-auth capabilities and non-destructive canary receipts still validate the actual place. Password/key inputs never enter the reviewed setup draft.'
 gui_related: true
 gui_classification_reason: Destination cards, official sign-in return, safe-test receipts, account/decryption readiness, Recovery Kit handoff, reminders, quota/throttle/archive states, and reconnect actions are visible.
 depends_on: [BRS-012, BRS-013, SIR-032]
@@ -1076,12 +1110,15 @@ context_scope: backup_destination_auth_encryption_and_human_custody
 implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/backup_restore_system_contracts.schema.json, future destination adapters and RecoverySetKeyService]
 node_compile_hint: {mode: static_destination_and_recovery_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:CLOUD-002-CLOUD-004
-  - source_ref:packet:2026-09-01:CLOUD-006-CLOUD-008
-  - source_ref:packet:2026-09-01:KEY-001-KEY-004
-  - source_ref:packet:2026-09-01:KEY-006-KEY-007
-  - source_ref:packet:2026-09-01:BGUI-002
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_residue_2.md#2.2
+- source_ref:packet:2026-09-01:CLOUD-002-CLOUD-004
+- source_ref:packet:2026-09-01:CLOUD-006-CLOUD-008
+- source_ref:packet:2026-09-01:KEY-001-KEY-004
+- source_ref:packet:2026-09-01:KEY-006-KEY-007
+- source_ref:packet:2026-09-01:BGUI-002
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_residue_2.md#2.2
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [Use existing, Reconnect destination, Backup Recovery Key, RecoverySet, Save Recovery Kit, Copy Recovery Key, Print Recovery Kit, Test Saved Kit, PKCE, drive.file, Retry-After, Unlock required, no-store]
 negative_constraints:
   - Do not place secrets on command lines, in URLs/history/telemetry/world-readable rclone files, route context, ordinary receipts, agent context, screenshot automation, browser storage, service-worker caches, or server file pickers presented as Client paths.
@@ -1907,6 +1944,7 @@ canonical_text: >-
   plan binding, and performed verification_scope; a passed receipt requires performed scope to equal
   the requested depth mapping, downgrades stay failed with failure evidence, and
   isolated_restore_drill receipts come only from cmd.backup.test_restore.
+  New Project/Projects Try a restore uses cmd.backup.test_restore with its exact immutable snapshot and isolated-drill admission. Check backup uses cmd.backup.verify with an explicit depth or verified plan. Neither a destination test, a preview nor unverified upload is shown as either result.
 gui_related: true
 gui_classification_reason: Verify depth/plan choice, immutable snapshot binding, cost/read disclosure, stale-target failure, and requested-vs-performed receipt truth are visible verify workflows.
 depends_on: [BRS-004, BRS-005, BRS-007, BRS-008, BRS-015]
@@ -1926,9 +1964,12 @@ context_scope: backup_verify_depth_and_plan_resolution
 implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/backup_restore_system_contracts.schema.json, future verify dispatcher]
 node_compile_hint: {mode: backup_verify_depth_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:command_census:cmd.backup.verify
-  - source_report:packet-sweep-20260927/cross-contracts:CC-F01
-  - source_report:packet-sweep-20260927/forge-sep01:FS02
+- source_ref:packet:2026-09-01:command_census:cmd.backup.verify
+- source_report:packet-sweep-20260927/cross-contracts:CC-F01
+- source_report:packet-sweep-20260927/forge-sep01:FS02
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [cmd.backup.verify]
 negative_constraints: [Do not accept the packet level spelling as a verify input., Do not infer verify depth from policy required/best-effort handling., Do not silently retarget latest or substitute a plan revision., Do not record a passed receipt whose performed scope differs from the requested depth., Do not add or rename command IDs for depth selection.]
 owner_hints: [Plans/Backup_Restore_System.md]
@@ -1956,6 +1997,7 @@ canonical_text: >-
   newest backup at Structure verified or higher would lose, its time and its last event. A newer backup that has
   not verified is shown beside it, never instead of it. Where each surface shows it belongs to that surface's
   owner. A test proves the captured point is consistent across every store.
+  BRS-033 adds archive-pause status and restore lineage without making Projects a second status calculator. Keep last complete and last verified visible beside a newer failed/unverified attempt. New Project default inclusion and app canonical record coverage do not change the brief capture barrier or grant a long writer lock.
 gui_related: true
 gui_classification_reason: "Shows the last verified backup and what a restore would lose."
 split_recommended: false
@@ -1980,10 +2022,16 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
+- Plans/Decision_Log.md#DL-270
+- /mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4
+  (decision packet)
+- /mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c
+  (card text and options)
+- /mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637
+  (Jared's answers)
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
   - "BRS-005"
 negative_constraints:
@@ -1993,3 +2041,197 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/Backup_Restore_System.md#BRS-005, ContractName:Plans/storage-plan.md#SP-336
+
+
+## Projects refresh accepted owner addendum (2026-11-03)
+
+### BRS-032 - New Project backup choice and first policy
+
+```yaml
+plan_unit_id: BRS-032
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: |-
+  Onboarding and New Project use the same Backup owner flow. Before any sign-in, the reviewed setup records non-secret destination family/profile/locator, work Server/Project intent and actual bucket/container/drive/folder/prefix/endpoint/region where applicable, inclusion mode and policy choice. Unknown account/path information is labelled pending rather than invented; protected auth fields never enter the draft. The simple flow offers local_nas, google_drive, onedrive, aws_s3, backblaze_b2, s3_compatible, sftp and webdav. Azure Blob, GCS and rest_server remain in Settings with a pointer; all eleven existing owner families and exact transport distinctions survive.
+
+  After verified Project listing, optional Finish protecting your work resolves the real Project scope, selected destination/profile and current auth, independently verifies the actual place, offers Use existing without reinitializing repositories, runs the approved bounded non-destructive canary test with cleanup receipt, and exposes exact encryption/inclusion/schedule/retention/cost preview. A NAS holding source files is refused as that Project loss-protection destination over SSH/PM, SMB/NFS, connected drive or same-device Server routes; owner backing-device identity, never names alone, decides. A changed source/destination invalidates the old comparison and preview.
+
+  Normal new policy includes PM data, files and complete recoverable Git/JJ history under BRS-002, excluding secret bytes. Advanced PM-data-only and selected-source choices disclose omitted dependencies. Automatic daily Standard uses backup-policy-seed:2026-09-01-7-4-6 with seven daily, four weekly and six monthly points; Advanced exposes timezone, time, manual/automatic and actual editable counts. No More/Fewer presets are admitted and existing choices are never overwritten by the seed.
+
+  cmd.backup.policy.update remains the sole policy writer with handlers::backup_restore::backup_policy_update. Its versioned first-policy variant is create-if-absent under absent-key CAS for the exact Server/Project owner key, destination identities and preview hash, permission/currentness, exact return and idempotency. A simultaneous first creator conflicts/re-observes, never overwrites; an ordinary update requires the actual expected revision. Replaying a successful first create returns the same policy/result with no new schedule/occurrence or key. No policy.create command is introduced. Policy acceptance is not a completed backup; cmd.backup.project.create and explicit verify/test_restore retain their own authorities.
+
+  Save/Copy/Print, acknowledge_saved and test of the Recovery Kit use the existing human-only no-store audience/Client-bound Backup routes with exact return and expiry. The kit is locator hints and recovery material, not a cloud login, PM escrow or fixed-word-format promise. Later remains available: pending destination test, key or policy work is reported and never reverses committed Project listing. Projects consumes BRS-031 last complete/last verified plus newer failed or unverified attempts; it never calls preview, upload or a destination test a verified backup.
+gui_related: true
+gui_classification_reason: Defines visible setup, choice, status, recovery or exact return behavior.
+depends_on:
+- BRS-002
+- BRS-004
+- BRS-008
+- BRS-012
+- BRS-013
+- BRS-015
+- BRS-018
+- BRS-030
+- BRS-031
+unblocks: []
+acceptance_criteria:
+- Destination locator and inclusion/policy are previewed before sign-in; protected input and auth remain outside
+  draft storage.
+- First-policy create, replay, concurrent create, stale preview/destination, existing-policy update and partial
+  failure have exact typed outcomes.
+- All source routes detect same-device NAS refusal, with unknown identity handled honestly.
+- Standard uses 7/4/6; Advanced actual counts and existing choices remain; no preset or hidden schedule duplication.
+- Later and failed test/Kit/policy leave a listed Project intact and incomplete backup truth visible.
+validation_surfaces:
+- Plans/backup_restore_system_contracts.schema.json
+- F companion positive/negative semantic fixtures; not_run in phase 1
+risk_class: identity_authority_or_false_completion
+reasoning_tier: high
+context_scope: projects_refresh_brs_032
+implementation_surfaces:
+- Plans/Backup_Restore_System.md
+- Future existing owner handlers; handler_unavailable until native evidence
+node_compile_hint:
+  mode: static_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- '/mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#P8; BUILD-SPEC §18.1 #12/13/14/20; R3 §3'
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-e
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/BUILD-SPEC-split-v2.md#18-and-21
+preserved_exact_tokens:
+- Use existing
+- Standard
+- Advanced
+- backup-policy-seed:2026-09-01-7-4-6
+- cmd.backup.policy.update
+- handlers::backup_restore::backup_policy_update
+- absent-key CAS
+- Recovery Kit
+negative_constraints:
+- Do not introduce cmd.backup.policy.create, overwrite an existing repository or use an empty/zero revision as an
+  unfenced create.
+- Do not restore/copy credentials, bypass human-only Kit delivery or make a new backup/restore owner.
+- Do not mistake destination test, accepted policy, preview or upload for verified restore safety.
+owner_hints:
+- Plans/Backup_Restore_System.md
+compatibility_only_notes:
+- Existing exact historical Project requests/results/receipts remain readable under their original version; no in-place
+  reinterpretation.
+stale_retired_dispositions:
+- Earlier pending decision labels are superseded by the approved packet; native implementation and governance certification
+  remain unproved.
+```
+
+ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-032, ContractName:Plans/Plan_Document_System.md#PDS-003
+
+### BRS-033 - Archive pause, app custody and conversion-aware restore
+
+```yaml
+plan_unit_id: BRS-033
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: |-
+  P9 Project archive pauses that Project automatic backup schedule under the Backup owner and protects last-known-good, held and pinned recovery points. Project Registry owns archive; its acknowledged owner consequence consumes the shared project_archive_backup_child_result_v1 and carries exact Project/policy revision, archive transition/occurrence fence and idempotent pause result. Failure or unreachable scheduler is shown as an incomplete pause, never silently certified. Archive admits no prune/delete and does not stop an already captured run by UI inference. Unarchive rechecks current Backup policy, scheduler/Stop/eligibility and missed-run rules; it never silently starts a backup, clears a stop or bursts a backlog. Explicit Back Up Now remains separately available subject to normal owner admission.
+
+  Full Server Backup includes canonical app chats/history, scratch notebook, Goals/GoalRuns/control/history, Crew/coordination/boards, Assistant Plans/Deep Plan ledgers/bundles/PlanRuns/adherence, scheduled messages/tasks/windows/consents/occurrences and app Stop/pause custody admitted by their owners. Visible No project chat folders are included by default as optional source families; exclusion and unreachable content are recorded in the manifest and never called complete. Store capture keeps DL-270 brief barrier/coherence, one writer, source retention/holds and the same counterpart caps. Derived indexes/caches rebuild and never replace canonical bodies or accepted sources. Settings-level records follow their admitted server/home custody; backup does not transfer operational authority or credentials.
+
+  After chat conversion, Project Backup includes the full destination-owned copied conversation, destination notebook and linked new Goal/Plan/Crew records and explicitly re-admitted destination schedules. Optional association rebind remains unavailable until its separate complete owner protocol is admitted. Original app event/body/approval bytes remain at original scope and sealed source custody according to ACD-511/N25; an app copy expiring after Undo never purges independently retained canonical task/body/audit or shared payload anchors. Restoring old app chat/history compares the current conversion lineage/tombstone/cutover generation before activation, preventing two live copies or old schedules firing again. A restore may retain historical content without admitting a second writer or source continuation. Cross-Server transfer requires current owner evidence, not a string path.
+
+  Restore as New rewrites PM-internal identities/references only. External forge host/account/repository identity remains non-authoritative lineage until explicit Source Control/Forge rebind and current remote validation. Restored credential refs, approvals, execution leases, schedules, Stop state and provider routes do not auto-authorize or resume work; original owner recovery/activation rules govern. Project archive/rename/remove and conversion Undo never delete a remote repository, branch, external backup or modified work.
+
+  Full Server Backup includes the settings-home Everywhere values/history and their admitted home metadata. Project Backup/restore covers only Project own values and destination records and cannot replace Everywhere or elect a settings home; any home replacement is an explicit protected owner restore. BuildGrant, CreatedResourceManifest, grant/Stop/revocation and action/recovery evidence are retained canonical build history under their admitted Project scope and coherent backup graph, not disposable projections. A restored grant is historical evidence, never resurrected authority, and the existing original phase-custody rules including BRS-029 remain exact. Where no safe inverse exists, the owner action report says No safe Undo.
+
+  B-F07/08 owner requirements also enroll canonical application-thread notebook checkpoints and memory/gist/teaching records in coherent Full Server Backup where their owner retention policy requires them. Thread-only isolation, verification/source restrictions, independent holds and public_safe rule ownership remain intact; derived indexes/caches are not replacement custody and these bodies never enter Settings copy or a Starter.
+
+  C-E02 requires the coherent Full Server Backup manifest to retain the actual canonical app Goal body/history/origin/control/receipt/association sources; Crew definitions/runs/transcripts/board/coordination; Assistant Plan exact revisions/ledger/bundle/PlanRun/adherence and To-Dos; scheduled-message/window/consent/correlation/occurrence/pause/Stop sources and durable timer dedupe; and scratch notebook/checkpoint/payload/restriction custody. Include chat folders is optional and on by default. Project Backup includes the full converted conversation and destination-owned canonical records, while independently retained app task/audit sources and holds follow their actual owner lifetimes after Undo expires. The CV-366/367 and SP-349/350/351/352/353 source/retention graph, including required permission/build evidence, is mandatory; missing durable root, policy or authentic source is a typed unavailable/incomplete capture, never inferred completeness from a receipt or cache.
+
+  Before restored content becomes live or any timer is admitted, the owner checks current thread lineage, cutover generation, source and target writer, deletion/tombstone, holds, user_stop_epoch and app/Project/per-task pause/Stop. An old app backup cannot undo a current deletion, clear a newer Stop/pause, revive source continuation, produce a second live chat/run or dispatch an occurrence twice. Retaining historical evidence does not activate it. Protected restore, Recovery Kit and original BRS-029 source/cancellation custody remain exact; derived events/projections cannot reconstruct missing accepted source or authority.
+gui_related: true
+gui_classification_reason: Defines visible setup, choice, status, recovery or exact return behavior.
+depends_on:
+- BRS-002
+- BRS-006
+- BRS-015
+- BRS-020
+- BRS-031
+- PJCT-002
+unblocks: []
+acceptance_criteria:
+- Archive pauses future Project occurrences once, preserves existing copies and reports unreachable/partial pause
+  honestly.
+- Unarchive and restart re-evaluate eligibility without a hidden backup or backlog burst; explicit user backup remains
+  normal owner work.
+- Full Server capture and restore include app canonical Goal/Crew/Plan/schedule/notebook custody coherently, with
+  visible chat-folder inclusion default on and explicit exclusions.
+- Old app restore after conversion cannot activate duplicate chat/task/schedule writers; canonical source retention
+  survives chat Undo expiry.
+- Restore-as-new remaps PM identities while external repository identity remains inert lineage until revalidated.
+- >-
+  The Full Server manifest includes each app body/source/control/receipt/association, Crew transcript/board, Plan/To-Do and schedule/timer-dedupe dependency coherently; missing authentic source/root/policy or an excluded/unreachable family is reported.
+- >-
+  Restore of a stale pre-cutover or pre-deletion archive checks both writers and current tombstone/holds/Stop/pause before visibility or timer admission; no duplicate writer, resurrected deletion or second occurrence is admitted.
+- >-
+  Chat Undo expiry cannot purge independently retained canonical task/permission/audit/shared-payload sources; restored grants remain historical and rebind stays unavailable without its own admitted protocol.
+validation_surfaces:
+- Plans/backup_restore_system_contracts.schema.json
+- F companion positive/negative semantic fixtures; not_run in phase 1
+risk_class: identity_authority_or_false_completion
+reasoning_tier: high
+context_scope: projects_refresh_brs_033
+implementation_surfaces:
+- Plans/Backup_Restore_System.md
+- Future existing owner handlers; handler_unavailable until native evidence
+node_compile_hint:
+  mode: static_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#P9; N13/N20/N24/N25/N26; latest app Goal/Crew/Plan/schedule
+  rulings
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-e
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/BUILD-SPEC-split-v2.md#18-and-21
+- 'Jared, 2026-11-03 (verbatim): Those look good, except goals and crew should be allowed in no project.'
+- 'Jared, 2026-11-03 (verbatim): Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t.'
+- '/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-E02'
+- '/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-E01'
+- '/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/Fd-requests.md#Fd-E01'
+- '/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-E01'
+preserved_exact_tokens:
+- last-known-good
+- Full Server Backup
+- No project
+- N25
+- ACD-511
+- DL-270
+- Restore as New
+- PM-internal
+- BuildGrant
+- CreatedResourceManifest
+- No safe Undo
+- Everywhere
+- 'project_archive_backup_child_result_v1'
+- 'Include chat folders'
+- 'Project Backup'
+- 'thread lineage'
+- 'user_stop_epoch'
+negative_constraints:
+- Do not prune/delete on archive or clear operational Stop on unarchive.
+- Do not create a separate app backup engine, unlimited bucket, second live writer or synthetic Project.
+- Do not copy approval, credential, grant or execution authority through history/restore/conversion.
+owner_hints:
+- Plans/Backup_Restore_System.md
+compatibility_only_notes:
+- Existing exact historical Project requests/results/receipts remain readable under their original version; no in-place
+  reinterpretation.
+stale_retired_dispositions:
+- Earlier pending decision labels are superseded by the approved packet; native implementation and governance certification
+  remain unproved.
+```
+
+ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-033, ContractName:Plans/Plan_Document_System.md#PDS-003

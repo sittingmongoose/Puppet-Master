@@ -129,11 +129,9 @@ plan_unit_id: FGI-002
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Forge_Integrations.md
-canonical_text: A repository binding models storage, review, checks, issues, transport and mirror authority roles independently;
-  its legacy automation role is compatibility projection only and AutomationBinding is the sole hosted-automation selector.
-  MirrorTopology records source, destination, authoritative binding, requested/effective mode, exact revision fence,
-  dedupe key, lag, health and transition receipt. Detach, reconnect and authority transfer require human disclosure,
-  current revisions, Permissions/FileSafe, durable receipt, recovery and capability re-resolution.
+canonical_text: >-
+  A repository binding models storage, review, checks, issues, transport and mirror authority roles independently; its legacy automation role is compatibility projection only and AutomationBinding is the sole hosted-automation selector. MirrorTopology records source, destination, authoritative binding, requested/effective mode, exact revision fence, dedupe key, lag, health and transition receipt. Detach, reconnect and authority transfer require human disclosure, current revisions, Permissions/FileSafe, durable receipt, recovery and capability re-resolution.
+  Contribution records explicitly name fork/head and original/base repository bindings plus their authority roles; the strings origin and upstream never select them. FGI-023/024 and PJCT-010 use these roles through the existing Forge commands, leaving AutomationBinding independent.
 gui_related: true
 gui_classification_reason: Authority, source of truth, mirror health, lag, detach and reconnect are visible state and
   actions.
@@ -166,6 +164,9 @@ node_compile_hint:
 source_lineage:
 - source_ref:egolite-register:ORI-01
 - source_ref:egolite-register:SCM-05
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - storage
 - review
@@ -205,6 +206,7 @@ canonical_text: >-
   declaration is a static claim a provider makes about itself before any request. Unknown or failed compatibility
   disables mutation; a capability is available, degraded, unavailable or unsupported and mutation_safe is stated
   rather than assumed; validated reads may remain degraded and partial data is never complete.
+  Owner/public repository discovery uses the existing repository.list command with a new explicit account/instance/owner scope and truthful coverage; a pasted URL is a locator, never account or write authority. A read-only original may offer Contribute only where FGI-024 admits the fork capability; otherwise the team-project branch path or typed unsupported outcome is shown.
 gui_related: true
 gui_classification_reason: Capability state controls visible sections, disabled reasons, remediation, and requested/effective disclosure.
 depends_on: [FGI-001]
@@ -228,7 +230,12 @@ reasoning_tier: high
 context_scope: forge_capability_routing
 implementation_surfaces: [Plans/forge_integration_contracts.schema.json, future provider adapters]
 node_compile_hint: {mode: forge_capability_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-05, source_ref:egolite-register:ORI-03]
+source_lineage:
+- source_ref:egolite-register:SCM-05
+- source_ref:egolite-register:ORI-03
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [requested, effective, available, degraded, unavailable, unsupported, mutation_safe, partial data is never complete, provider_unsupported_reason_code, review scope]
 negative_constraints: [Do not hide unsupported capabilities., Do not downgrade a failed mutation into success., Do not scrape terminal prose as capability proof., Do not admit a profile reason code from outside the closed vocabulary., Do not let a review-scoped entry widen its binding-scoped entry.]
 owner_hints: [Plans/Forge_Integrations.md]
@@ -252,7 +259,7 @@ canonical_text: >-
   evidence and blocking status. A thread's position is a projection onto the revision window it was read through
   rather than a stored fact, so its anchor carries both sides of that window, the revision it was created against,
   and whether the provider supplied a durable tracking identity; a partial anchor tuple is never persisted.
-  Agent-authored reviews default Draft unless explicit Project policy permits otherwise; Mark Ready is distinct.
+  Agent-authored reviews default Draft unless the exact effective review policy permits otherwise through the Settings ladder, omitting Project for application context; Mark Ready remains distinct and normal target/permission gates remain.
 gui_related: true
 gui_classification_reason: Reviews, versions, threads, Draft/Ready, evidence staleness and actions are user-visible.
 depends_on: [FGI-003]
@@ -280,7 +287,11 @@ reasoning_tier: high
 context_scope: forge_reviews
 implementation_surfaces: [Plans/forge_integration_contracts.schema.json, future review adapters]
 node_compile_hint: {mode: immutable_forge_review_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:ORI-04]
+source_lineage:
+- source_ref:egolite-register:ORI-04
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [ForgeReviewRevision, ForgeReviewThread, Draft, Mark Ready, stale_head_changed, evidence_state_cause, contents_complete, revision_anchor]
 negative_constraints: [Do not reuse approvals across a changed head., Do not publish an agent review as Ready by default., Do not inject a whole review when a compact query suffices., Do not report a staleness with no head change as stale_head_changed., Do not present a truncated revision as complete., Do not persist a partial thread anchor tuple.]
 owner_hints: [Plans/Forge_Integrations.md]
@@ -661,7 +672,7 @@ These names remain semantic-owner candidates only. This command-contract pass do
 
 The primary command enum is exactly the 53 IDs in §3.1. Two (`cmd.forge.review.create` and `cmd.forge.review.merge`) retain their provider-owner routes, `cmd.forge.repository.create` retains the separate common route bound by FGI-009, and the remaining 50 use the common central Forge route set: the 43 bound by FGI-010 (the prior 34 plus nine 2026-09-01 admissions), the six 2026-09-26 admissions bound by FGI-021, and review edit bound by FGI-022. The nine 2026-09-01 commands, the six 2026-09-26 commands, and review edit start `handler_unavailable`, require `expected_event_types=[]`, and do not gain runtime credit from schema, fixture, catalog, handler-name, or static wiring presence. One provider-neutral request object carries exact provider and variant, normalized host, stable account, PM and provider repository binding, expected binding generation, optional independent automation binding and expected automation-binding generation where required, requested/effective authority, requested capability, catalog/API currentness, non-secret credential/grant ref, permission snapshot, target-bound preflight, optional confirmation, target identity, availability, FileSafe decision for local writes, and `ObservableWork` when admitted asynchronous work requires it.
 
-Family-level conditionals select repository, mirror, review, immutable review thread/version, pipeline/job, pipeline artifact, hosted secret/variable, webhook delivery, or connection targets without provider-specific peer request types. Mutations require current binding/catalog/API evidence, `mutation_safety=verified`, direct execution-time revalidation, effective authority, permission, and idempotency. Destructive or publication-sensitive actions require target-bound confirmation. Review/thread/version commands require immutable revision identities. Pipeline run/retry/cancel require current direct validation and `ObservableWork`; stale or partial projections cannot validate as dispatch-admitted mutations. Mirror mutation requires verified authority. Webhook redelivery requires signature-before-parse, fresh replay state, dedupe state, exact delivery identity, and redelivery idempotency. Repository delete additionally requires verified-create result/receipt refs and fresh human confirmation, and is never automatic cleanup. Pipeline artifact download requires exact run/artifact identity, expected digest, FileSafe destination or artifact-import handoff, and explicit download/import disposition; it never auto-executes. Secret set carries a one-use protected human-broker ref and never inline secret bytes; secret/variable mutations never return secret values. `cmd.forge.pipeline.open_in_browser` carries an exact official destination kind distinguishing the automation-run artifacts page, the hosted service settings page, and the automation service overview page.
+Family-level conditionals select repository, mirror, review, immutable review thread/version, pipeline/job, pipeline artifact, hosted secret/variable, webhook delivery, or connection targets without provider-specific peer request types. Mutations require current binding/catalog/API evidence, `mutation_safety=verified`, direct execution-time revalidation, effective authority, permission, and idempotency. Authority is target-bound and mode-aware under PS-146/147/148. Regular publication asks where required; requested YOLO create/push/publish and explicitly listed build-grant actions proceed without a duplicate human yes. Destructive actions retain confirmation unless an exact approved grant covers demonstrably grant-created resources; protected auth, secrets, trust and durable Always remain separate. Review/thread/version commands require immutable revision identities. Pipeline run/retry/cancel require current direct validation and `ObservableWork`; stale or partial projections cannot validate as dispatch-admitted mutations. Mirror mutation requires verified authority. Webhook redelivery requires signature-before-parse, fresh replay state, dedupe state, exact delivery identity, and redelivery idempotency. Repository delete additionally requires verified-create result/receipt refs and fresh human confirmation, and is never automatic cleanup. Pipeline artifact download requires exact run/artifact identity, expected digest, FileSafe destination or artifact-import handoff, and explicit download/import disposition; it never auto-executes. Secret set carries a one-use protected human-broker ref and never inline secret bytes; secret/variable mutations never return secret values. `cmd.forge.pipeline.open_in_browser` carries an exact official destination kind distinguishing the automation-run artifacts page, the hosted service settings page, and the automation service overview page.
 
 Results distinguish `accepted`, `succeeded`, `blocked`, `degraded`, `failed`, `cancelled`, `recovery_required`, and `effect_unknown`. Acceptance requires `ObservableWork`; success requires a separate terminal provider result and receipt; `effect_unknown` requires a typed error and reconciliation-only retry. Availability and error codes are closed owner vocabularies. No request may infer provider/repository identity from remote text. No schema defines a native/provider handler, provider-specific peer common command namespace, persisted event binding, central registration, or runtime proof.
 
@@ -918,7 +929,8 @@ canonical_text: 'An onboarding online copy is an optional hosted Git destination
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  mirror authority.
+  FGI-023 closes the per-service create-options contract and extends repository.list with explicit owner discovery. Project setup/New Project use the same provider-native fields and exact current service admission, most-private available visibility, current names/ref checks, Review invalidation and precommit read/auth limits. Initial intake remains null-Project; only PJCT-010 reviewed commit performs create, bind or content movement.'
 gui_related: true
 gui_classification_reason: Defines provider cards, required fields, visibility choices, account/repository verification,
   and exact disabled reasons in Product Onboarding.
@@ -1031,6 +1043,9 @@ source_lineage:
 - 'Jared 2026-11-01 via PM7 lead: hosted Forgejo is not offered; Forgejo repository-restricted tokens — we can leave
   it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
 - DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - github
 - gitlab
@@ -1155,6 +1170,7 @@ canonical_text: >-
   handlers::forge::* target, starts handler_unavailable, has expected_event_types=[], returns an owner-typed
   operation/read/destructive/mutation receipt, and preserves exact target, permission, currentness, confirmation,
   FileSafe, digest, idempotency and ObservableWork guards applicable to its effect.
+  FGI-024 admits contribution fork semantics only for GitHub and GHES subject to current host policy and capability. Other services return typed unsupported for that guided fork path while retaining the explicit team-project branch workflow. review.create binds exact head_repository and base_repository identities when different, with each account/instance/revision independently validated; single-repository historical requests remain exact.
 gui_related: true
 gui_classification_reason: The admitted commands back visible Source Control, Actions & Pipelines, Settings, palette, runner administration, release and download actions with exact disabled reasons.
 depends_on: [FGI-005, FGI-008, FGI-010, FGI-012]
@@ -1173,7 +1189,14 @@ reasoning_tier: high
 context_scope: nine_forge_command_admissions
 implementation_surfaces: [Plans/Forge_Integrations.md, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, future forge handlers]
 node_compile_hint: {mode: command_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md, packet_corrected_slice:machine__command_census.json__part-019__lines-003601-003820.txt, packet_corrected_slice:machine__command_census.json__part-021__lines-004001-004220.txt, packet_corrected_slice:machine__command_census.json__part-022__lines-004201-004420.txt]
+source_lineage:
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
+- packet_corrected_slice:machine__command_census.json__part-019__lines-003601-003820.txt
+- packet_corrected_slice:machine__command_census.json__part-021__lines-004001-004220.txt
+- packet_corrected_slice:machine__command_census.json__part-022__lines-004201-004420.txt
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [handler_unavailable, "expected_event_types=[]", ObservableWork, FileSafe, ReadProjectionReceipt, ExternalOperationReceipt, DestructiveOperationReceipt, MutationReceipt]
 negative_constraints:
   - Do not admit packet-proposed forge.* event names or treat an operation receipt as an EventRecord.
@@ -1209,7 +1232,8 @@ canonical_text: 'DL-273 retires the former source-control service operation prof
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  mirror authority.
+  New Project multi-remote setup lists fetch and push targets and fan-out effects explicitly per target, never makes every remote a push destination, and receives separate receipts. Contribution sync uses the exact FGI-024 original/fork bindings and SCM choreography rather than remote-name inference. Ordinary publication and build-grant admission come solely from Permissions.'
 gui_related: true
 gui_classification_reason: Provider-native labels, capability reasons, setup alternatives, review/checks, CI hierarchy,
   and external-only fallbacks are visible in Source Control and Actions & Pipelines.
@@ -1266,6 +1290,9 @@ source_lineage:
 - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:71-77
 - source_ref:corrected-slice:machine__requirements.json__part-004__lines-000601-000820.txt:11-151
 - DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - Pull request
 - Merge request
@@ -1356,7 +1383,8 @@ canonical_text: 'The required provider-profile set is exactly github_cloud, gith
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  mirror authority.
+  P1 admits creation requirements for the ten currently offered API profiles only through FGI-023 typed service options and capability gates. generic_git remains transport-only; GitLab Dedicated remains an unoffered variant in this setup, and hosted Forgejo, hosted Gitea, Codeberg and Cursor Origin remain retired/ineligible under DL-273. P1 supplies no answer to the deferred repository-restricted Forgejo token route. No profile or product approval is native support evidence.'
 gui_related: true
 gui_classification_reason: The matrix supplies setup cards, permission labels, precise disabled reasons, trust prompts,
   admin forms, and external-only navigation.
@@ -1442,6 +1470,9 @@ source_lineage:
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
 - DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - github_cloud
 - github_enterprise
@@ -1769,7 +1800,7 @@ Exact six-command 2026-09-26 set: `cmd.forge.repository.delete`, `cmd.forge.pipe
 
 Exact six-handler 2026-09-26 future set: `handlers::forge::repository_delete`, `handlers::forge::pipeline_artifact_download`, `handlers::forge::pipeline_secret_set`, `handlers::forge::pipeline_secret_remove`, `handlers::forge::pipeline_variable_set`, `handlers::forge::pipeline_variable_remove`.
 
-`cmd.forge.repository.delete` is the explicit destructive command behind the PJCT-007 Delete Repository recovery route. It requires exact provider, variant, normalized host, stable account, PM `repo_id`, provider repository ID, locator, binding generation, current direct revalidation with `mutation_safety=verified`, effective authority, `remote_side_effect` permission with a human actor, verified-create result and receipt refs, and fresh target-bound human confirmation. An `effect_unknown` outcome carries a typed error and admits only reconciliation-only retry through SCS-016 exact remote reconciliation before any repeat or any delete. Delete never runs as automatic rollback, as part of Continue Setup or any resume, speculatively while the remote effect is unknown, on provider-scope reuse, or authorized by selected-source authentication.
+`cmd.forge.repository.delete` is the explicit destructive command behind the PJCT-007 Delete Repository recovery route. It requires exact provider, variant, normalized host, stable account, PM `repo_id`, provider repository ID, locator, binding generation, current direct revalidation with `mutation_safety=verified`, effective authority and the target-bound Permissions decision; the PJCT-007 recovery route specifically requires a human remote_side_effect permission, verified-create result/receipt refs and fresh human confirmation. A separately admitted PS-147 build cleanup instead requires current grant-created-resource ownership and exact grant authority. An `effect_unknown` outcome carries a typed error and admits only reconciliation-only retry through SCS-016 exact remote reconciliation before any repeat or any delete. Delete never runs as automatic rollback, as part of Continue Setup or any resume, speculatively while the remote effect is unknown, on provider-scope reuse, or authorized by selected-source authentication.
 
 `cmd.forge.pipeline.artifact.download` is the provider-neutral hosted-CI artifact command. It is AutomationBinding-scoped with expected automation-binding generation. On this command `pipeline_id` names the provider pipeline/definition and `automation_run_id` names the explicit immutable AutomationRun execution (the SCS-016 `AutomationRun` for this run); the two are distinct fields and the run is never inferred from the definition. The request carries both identities plus exact job where the provider names jobs (job stays optional), provider artifact, SCS-016 `RemoteArtifact` record, and expected digest identity, and declares an explicit `download` or `import` disposition: download writes bytes to an exact FileSafe destination, import delivers them through an exact artifact-import handoff, and both never auto-execute. It requires `local_mutation` permission, target-bound confirmation, and `ObservableWork`. Provider CI artifacts stay distinct from Puppet Master runtime outputs and Backup exports per F3-529. `cmd.forge.release.asset.download` remains separate under the `release_assets` capability and `release_asset` target; a CI artifact target is never a release asset target and a release capability never authorizes a CI download.
 
@@ -1800,6 +1831,7 @@ canonical_text: >-
   carries an exact official destination kind for the automation-run artifacts page,
   the hosted service settings page, and the automation service overview page, with
   capability-absent official fallback already decided by FGI-015.
+  Repository deletion from failed setup remains a separate current target-confirmed recovery intent and never automatic rollback or resume. In another explicit build context, PS-147 may authorize cleanup only for a resource the exact grant demonstrably created, revalidated by stable provider ID and manifest; a selected pre-existing repository or name match is insufficient. Ordinary YOLO cannot turn either selection or a failed create into delete authority. Secret operations and protected auth remain human-owned.
 gui_related: true
 gui_classification_reason: The admitted commands back visible recovery delete, CI artifact download/import, hosted secret/variable administration, and official-service navigation with exact disabled reasons.
 depends_on: [FGI-003, FGI-005, FGI-006, FGI-008, FGI-010, FGI-012, FGI-015, SCS-016]
@@ -1807,7 +1839,7 @@ unblocks: []
 acceptance_criteria:
   - The primary Forge command census is exactly 52 and the common central future-route census is exactly 49 (43 bound by FGI-010 plus six bound here); this supersedes the FGI-008, FGI-010-batch, and FGI-013 census counts.
   - None of the six commands aliases an existing command, a packet candidate for review listing, definition/artifact enumeration, definition pinning, capability refresh, or publication preview, a provider peer, RepositoryForgeBinding, a release asset, connection removal, or generic settings mutation.
-  - repository.delete requires exact provider/binding/generation identity, current direct revalidation, effective authority, human remote_side_effect permission, verified-create result/receipt refs, and fresh target-bound human confirmation; effect_unknown admits only reconciliation-only retry; delete is never automatic rollback, part of resume, speculative while unknown, or authorized by source sign-in.
+  - repository.delete requires exact provider/binding/generation identity, current direct revalidation, effective authority and exact Permissions authority; setup recovery additionally requires human remote_side_effect permission, verified-create result/receipt refs and fresh human confirmation; PS-147 build cleanup instead requires verified grant-created ownership; effect_unknown admits only reconciliation-only retry; delete is never automatic rollback, part of resume, speculative while unknown, or authorized by source sign-in.
   - pipeline.artifact.download requires exact automation binding/generation, pipeline/definition identity plus the distinct immutable automation_run_id run identity, artifact/RemoteArtifact/digest identity with job only where applicable, local_mutation permission, confirmation, ObservableWork, and explicit download/import disposition with FileSafe destination or artifact-import handoff; downloads never auto-execute and release_assets capability or release_asset targets never authorize or substitute for it.
   - secret.set carries a one-use protected human-broker ref with no inline secret bytes; secret operations require a human actor; all four secret/variable mutations require exact name/scope, remote_side_effect permission, and confirmation, and no request, result, receipt, log, agent payload, or fixture carries secret values or returns them.
   - pipeline.open_in_browser requires an exact official destination kind; automation_run_artifacts binds the exact run, hosted_service_settings binds a non-null hosted_setting_scope_ref with no run identity, and automation_service_overview preserves the first-card Open in <provider> control with neither run nor scope identity; the handoff allowed_origin_ref and route equal the profile-approved official UI destination for the selected instance/tenant, never the normalized API/transport host by equation, and cross-instance/tenant/route substitution is rejected; absent native capability yields the corresponding explicit official-service fallback with no speculative route.
@@ -1822,7 +1854,19 @@ reasoning_tier: high
 context_scope: repository_delete_and_hosted_ci_closure
 implementation_surfaces: [Plans/Forge_Integrations.md, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, future forge handlers]
 node_compile_hint: {mode: command_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/14_COMMAND_CONTRACTS.md, reports/concept-packet-integration-20260926/server-backup.md, reports/concept-packet-integration-20260926/project-recovery-owner.md, reports/concept-packet-integration-20260926/README.md, Concepts/pm7-tools/forge_backup_post_integration_source.py, Plans/Project_System.md#PJCT-007, Plans/Source_Control_System.md#SCS-016, Plans/FinalGUISpec.md#F3-529, Plans/Forge_Integrations.md#FGI-015]
+source_lineage:
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/14_COMMAND_CONTRACTS.md
+- reports/concept-packet-integration-20260926/server-backup.md
+- reports/concept-packet-integration-20260926/project-recovery-owner.md
+- reports/concept-packet-integration-20260926/README.md
+- Concepts/pm7-tools/forge_backup_post_integration_source.py
+- Plans/Project_System.md#PJCT-007
+- Plans/Source_Control_System.md#SCS-016
+- Plans/FinalGUISpec.md#F3-529
+- Plans/Forge_Integrations.md#FGI-015
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [cmd.forge.repository.delete, cmd.forge.pipeline.artifact.download, cmd.forge.pipeline.secret.set, cmd.forge.pipeline.secret.remove, cmd.forge.pipeline.variable.set, cmd.forge.pipeline.variable.remove, handler_unavailable, "expected_event_types=[]", ObservableWork, FileSafe, DestructiveOperationReceipt, MutationReceipt, RemoteArtifact, one-use protected broker ref, official_destination_kind, automation_run_artifacts, hosted_service_settings, automation_service_overview, automation_run_id, hosted_setting_scope_ref, allowed_origin_ref, "Open artifacts in service", "Open service settings", "Open in <provider>", download, import]
 negative_constraints:
   - Do not admit packet-proposed forge.* event names or treat an operation receipt as an EventRecord.
@@ -1885,3 +1929,166 @@ preserved_exact_tokens: [cmd.forge.review.edit, cmd.forge.review.mark_ready, dra
 negative_constraints: [Do not synthesize a runner registration preview inside apply., Do not treat draft=true as Mark Ready., Do not infer selected review version from current display state., Do not claim native execution from static contracts.]
 compile_disposition: extend_existing_owner
 ```
+
+
+## Projects refresh accepted owner addendum (2026-11-03)
+
+### FGI-023 - Typed create options and explicit repository discovery
+
+```yaml
+plan_unit_id: FGI-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: |-
+  The shared Forge owner closes per-service create_options on cmd.forge.repository.create and its exact Project handoff in PJCT-010. Options bind provider/profile/variant, normalized instance, stable account and credential-authority refs, actual owner/container/team Project/workspace/project key, valid provider name/slug, description, default branch, visibility and requested initial-file choices. Provider/variant/address/owner changes invalidate incompatible account/container/privacy/auth and name/ref checks, including any earlier refusal. Review always shows current target/privacy and material effects; private-most available visibility is the starting value and an inherited public row cannot silently publish a new repository.
+
+  The offered API profiles are github_cloud, github_enterprise, gitlab_saas, gitlab_self_managed, azure_devops_services, azure_devops_server, bitbucket_cloud, bitbucket_data_center, forgejo and gitea. GitHub binds personal or eligible organization owner, with Internal only where the enterprise organization capability admits it; GHES additionally requires current github_host_policy, instance/host/certification and scope admission. GitLab binds the exact personal/group/subgroup namespace; self-managed Internal is capability-probed and namespace visibility caps remain. Azure Services binds organization and an existing provider_project_id; Server binds collection URI and an existing team Project with signed version support; privacy follows that Project and TFVC is refused. Bitbucket Cloud binds authorized workspace and explicit grouping Project, private/public compatible with that Project, with workspace/repository address; Data Center binds normalized host and actual project key/personal project plus slug and its server/license/privacy rules. Forgejo/Gitea remain distinct self-managed adapters with actual instance address, account/organization and Public/Private privacy. Names and Git refs use each current provider/backend validator, never one universal regex or display label.
+
+  Authentication methods remain provider/instance catalog data and protected owner handoffs. Git transport and API auth are independent; sign-in is neither account creation nor repository-write proof. Creation of a code repository does not publish a website, change branch policy, create topics not admitted by the schema, administer Azure team Projects or authorize paid signup. README/ignore/licence stay in online-copy Advanced and a source with existing history creates an empty remote. generic_git is transport-only with no create/review/check API; gitlab_dedicated is not offered in this setup. DL-273 retired hosted Forgejo/Gitea/Codeberg/Origin admission and the deferred repository-restricted Forgejo token route are unchanged.
+
+  cmd.forge.repository.list extends its existing verified account-container variant with a closed explicit account/instance/owner discovery scope, optionally a named public owner and query, actual access policy and bounded coverage/pagination. Before repository binding it carries no Project/repository identity and zero repository generation. Reads may discover only what that account or admitted public scope can inspect; no inaccessible result is reported as absence. Selection still independently resolves stable repository identity and capability before binding. The same sole handler and typed family serve all consumers; no new generic search/clone wrapper, standalone receipt family or EventRecord is introduced.
+gui_related: false
+gui_classification_reason: Defines owner identity, target and command/data boundaries without GUI implementation.
+depends_on:
+- FGI-003
+- FGI-011
+- FGI-015
+unblocks: []
+acceptance_criteria:
+- Each offered variant has required/forbidden fields, privacy/name/auth/instance checks and exact handoff receipts.
+- GHES policy-off, Azure TFVC/missing GUID, unsupported Dedicated, retired variant and deferred-token attempts refuse
+  without a generic transport bypass.
+- Owner discovery preserves explicit scope and coverage; an unverified URL never becomes access or binding.
+- Current provider naming/ref/privacy and secret-exclusion checks survive create/retry and Review invalidation.
+validation_surfaces:
+- Plans/forge_integration_contracts.schema.json
+- F companion positive/negative semantic fixtures; not_run in phase 1
+risk_class: identity_authority_or_false_completion
+reasoning_tier: high
+context_scope: projects_refresh_fgi_023
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Future existing owner handlers; handler_unavailable until native evidence
+node_compile_hint:
+  mode: static_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#P1; S1-S3; BUILD-SPEC §18/21; DL-273
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-e
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/BUILD-SPEC-split-v2.md#18-and-21
+preserved_exact_tokens:
+- create_options
+- cmd.forge.repository.create
+- cmd.forge.repository.list
+- PJCT-010
+- private-most
+- github_host_policy
+- provider_project_id
+- generic_git
+- gitlab_dedicated
+- DL-273
+- README
+- Advanced
+negative_constraints:
+- Do not use a universal all-forge field bag, GitHub-default target, API sign-in as Git transport or a URL as stable
+  identity.
+- Do not revive retired providers or admit deferred restricted Forgejo tokens under P1.
+- Do not claim native service support from profile/schema/fixture existence.
+owner_hints:
+- Plans/Forge_Integrations.md
+compatibility_only_notes:
+- Existing exact historical Project requests/results/receipts remain readable under their original version; no in-place
+  reinterpretation.
+stale_retired_dispositions:
+- Earlier pending decision labels are superseded by the approved packet; native implementation and governance certification
+  remain unproved.
+```
+
+ContractRef: ContractName:Plans/Forge_Integrations.md#FGI-023, ContractName:Plans/Plan_Document_System.md#PDS-003
+
+### FGI-024 - Contribution fork and team-project change workflow
+
+```yaml
+plan_unit_id: FGI-024
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: |-
+  The guided Contribute fork workflow is admitted for GitHub and GitHub Enterprise only, subject to actual host policy, account/instance and fork/review capability. It accepts an explicitly resolved original repository from URL or owner discovery, checks readable source/current access, and chooses the exact account/namespace that keeps the fork. Preview says what remote will be made, where the fork and files live, the original upstream, and the change branch/bookmark; Regular obtains the named commit, while requested YOLO uses PS-146 authority without an extra ordinary yes. Protected auth/trust and repository-origin loosening acceptance still apply.
+
+  At commit PJCT-010 calls cmd.forge.repository.fork once or explicitly reuses a current verified fork, clones that exact fork through the chosen Git/JJ owner, adds the original through cmd.source_control.remote.add under SCS-025, creates the separate feature branch or explicit JJ change/bookmark through backend owners, binds fork/head and original/base identities, and registers only after verified local results and required Settings. The retained contribution context includes provider/instance/account, original and fork repository IDs, head_repository and base_repository bindings/revisions, base/head branch or bookmark mapping, chosen original remote name, access/capability/inspection evidence and contribution policy/check/commit refs. cmd.forge.review.create uses that explicit pair; a single provider_repository_id or remote named origin cannot represent cross-repository review authority.
+
+  Keep a fork current is choreography under existing SCM owners, not an unowned sync operation. Preview the original immutable revision and fork/head, fetch only the chosen original with cmd.source_control.remote.fetch or cmd.jujutsu.git.fetch, reconcile locally through the admitted Git remote.sync policy/merge-rebase adapter or cmd.jujutsu.change.rebase at the selected change, pause on conflict for the owner resolution path, then publish only the chosen fork with remote.publish or cmd.jujutsu.git.push when explicitly requested. Fetch/reconcile never silently pushes original or every remote, never treats unknown ancestry as current, and never force-pushes a foreign/default/protected branch. Y1 lease and created-work-branch checks apply. Revalidate currentness, capability, Stop and permission before every next step; a failed fence blocks dispatch.
+
+  P2 does not admit equivalent fork automation on GitLab, Azure, Bitbucket, Forgejo or Gitea: guided fork returns typed unsupported for those services, preserving historical cross-forge fixtures as lineage rather than support. Within an authorized team Project P6 defaults to Make a change to offer on a branch; Work on it directly is one visible selection away and retains normal protected-branch policy. Just copy it remains an ordinary source acquisition without pretending to own a fork or permission to publish. New remote effects retain PJCT-007/010 recovery and no automatic repository deletion.
+
+  For the Git local reconciliation stage, the remote.sync successor explicitly carries the verified original repository/revision, fork destination repository/workspace and expected native revision, plus the existing resolved native merge/rebase policy. The stage is local_reconcile_only and cannot publish implicitly; the separately reviewed remote.publish stage names the fork target. The selected source_control_command_request_v2, source_control_command_result_v2, source_control_command_scope_v2, remote_operation_target_v2 and remote_sync_local_reconcile_target_v2 definitions under SCS-025 encode those joined facts. reconciliation_strategy binds the exact native policy ID/revision/hash, with push_targets=[] and publish_performed=false; preserve historical v1 request/result/replay bytes. The unchanged cmd.source_control.remote.sync handler returns the local before/after receipt and exact caller context, while cmd.source_control.remote.publish is the separate admitted fork publication. No identity is inferred from an origin string and no new sync engine is introduced.
+gui_related: true
+gui_classification_reason: Defines visible setup, choice, status, recovery or exact return behavior.
+depends_on:
+- FGI-003
+- FGI-013
+- FGI-014
+- SCS-025
+- PJCT-007
+unblocks: []
+acceptance_criteria:
+- Fork, clone, original remote, feature branch/bookmark, cross-repository review and register share exact joined
+  identities and typed receipts.
+- Unknown/failure after fork retains recovery without repeat fork/create or speculative delete.
+- Sync targets the explicit original and fork, pauses on conflict and never silently pushes original or fan-outs.
+- Non-GitHub guided fork refuses; team-project branch and direct-work choices remain distinct and capability-checked.
+validation_surfaces:
+- Plans/forge_integration_contracts.schema.json
+- F companion positive/negative semantic fixtures; not_run in phase 1
+risk_class: identity_authority_or_false_completion
+reasoning_tier: high
+context_scope: projects_refresh_fgi_024
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Future existing owner handlers; handler_unavailable until native evidence
+node_compile_hint:
+  mode: static_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- '/mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#P2/P6; Y1; BUILD-SPEC §18.1 #4/5/6'
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-e
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/BUILD-SPEC-split-v2.md#18-and-21
+- 'Jared, 2026-11-03 (verbatim): YOLO mode needs to absolutely be able to git push and publish.'
+- '/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-E01'
+- '/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-E01'
+preserved_exact_tokens:
+- Contribute
+- GitHub Enterprise
+- head_repository
+- base_repository
+- cmd.forge.repository.fork
+- cmd.forge.review.create
+- cmd.source_control.remote.add
+- Make a change to offer
+- Work on it directly
+- cmd.jujutsu.change.rebase
+- 'local_reconcile_only'
+- 'reconciliation_strategy'
+- 'push_targets=[]'
+- 'publish_performed=false'
+negative_constraints:
+- Do not infer base/head repositories from origin/upstream names, focus or one repository ID.
+- Do not invent another fork-sync engine or route JJ changes through direct Git fallback.
+- Do not claim non-GitHub fork support from historical cross-forge fixtures.
+owner_hints:
+- Plans/Forge_Integrations.md
+compatibility_only_notes:
+- Existing exact historical Project requests/results/receipts remain readable under their original version; no in-place
+  reinterpretation.
+stale_retired_dispositions:
+- Earlier pending decision labels are superseded by the approved packet; native implementation and governance certification
+  remain unproved.
+```
+
+ContractRef: ContractName:Plans/Forge_Integrations.md#FGI-024, ContractName:Plans/Plan_Document_System.md#PDS-003

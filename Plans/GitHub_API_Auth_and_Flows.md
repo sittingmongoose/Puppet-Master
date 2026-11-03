@@ -168,7 +168,9 @@ plan_unit_id: GAAAF-002
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_API_Auth_and_Flows.md
-canonical_text: GitHub platform operations use the github_api realm with the GitHub API provider, OAuth device-code default auth flow, no external auth-shell dependency, and secrets stored only in the OS credential store rather than seglog, redb, Tantivy, or logs.
+canonical_text: >-
+  GitHub platform operations use the github_api realm with the GitHub API provider, OAuth device-code default auth flow, no external auth-shell dependency, and secrets stored only in the OS credential store rather than seglog, redb, Tantivy, or logs.
+  New Project uses FGI-023/024 per-service fields, PJCT-010 receipt joins and the existing github_api owner; P1 does not change GHES github_host_policy or certification. A copied chosen account ID is re-resolved on the destination Computer through MA-074/MACS-006 and never transports credential bytes, CLI roots or a Git transport credential as API authority.
 gui_related: false
 gui_classification_reason: This unit defines provider/auth and credential-storage rules, not GUI presentation.
 split_recommended: true
@@ -193,6 +195,9 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0001
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0003
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - Puppet Master -- GitHub API Auth and Flows
 - github_api
@@ -222,7 +227,9 @@ plan_unit_id: GAAAF-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_API_Auth_and_Flows.md
-canonical_text: Local Git operations remain performed by the local git binary while GitHub hosting operations use the GitHub HTTPS API; GitHub Copilot auth does not authorize repository/platform mutations, github_api tokens never transfer to SSH remotes or local Git credential helpers, and GitHub_Integration remote surfaces consume FileSafe mutation-safety, write-scope, and durability contracts.
+canonical_text: >-
+  Local Git operations remain performed by the local git binary while GitHub hosting operations use the GitHub HTTPS API; GitHub Copilot auth does not authorize repository/platform mutations, github_api tokens never transfer to SSH remotes or local Git credential helpers, and GitHub_Integration remote surfaces consume FileSafe mutation-safety, write-scope, and durability contracts.
+  New Project uses FGI-023/024 per-service fields, PJCT-010 receipt joins and the existing github_api owner; P1 does not change GHES github_host_policy or certification. A copied chosen account ID is re-resolved on the destination Computer through MA-074/MACS-006 and never transports credential bytes, CLI roots or a Git transport credential as API authority.
 gui_related: true
 gui_classification_reason: This unit includes user-visible blocked/runtime and disabled-state behavior for GitHub surfaces as well as remote-surface consumer routing.
 split_recommended: true
@@ -246,6 +253,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0003
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - Local Git operations
 - GitHub HTTPS API
@@ -277,7 +287,9 @@ plan_unit_id: GAAAF-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_API_Auth_and_Flows.md
-canonical_text: GitHub command and routing dependencies stay owned by Permissions_System, UI_Command_Catalog, WorktreeGitImprovement, and Progression_Gates; wizard/thread resume URLs normalize through object and scope identity, and OAuth callback listeners are loopback-only for the active local, WSL, container, or remote-dev context.
+canonical_text: >-
+  GitHub command and routing dependencies stay owned by Permissions_System, UI_Command_Catalog, WorktreeGitImprovement, and Progression_Gates; wizard/thread resume URLs normalize through object and scope identity, and OAuth callback listeners are loopback-only for the active local, WSL, container, or remote-dev context.
+  New Project uses FGI-023/024 per-service fields, PJCT-010 receipt joins and the existing github_api owner; P1 does not change GHES github_host_policy or certification. A copied chosen account ID is re-resolved on the destination Computer through MA-074/MACS-006 and never transports credential bytes, CLI roots or a Git transport credential as API authority.
 gui_related: false
 gui_classification_reason: This unit defines command routing, owner-doc dependencies, and auth callback binding constraints, not GUI presentation.
 split_recommended: false
@@ -301,6 +313,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0004
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - Permissions_System.md
 - UI_Command_Catalog.md
@@ -1033,6 +1048,7 @@ canonical_text: >-
   Sign Out previews dependencies and detaches/revokes only the exact connection/profile; it never globally
   deletes CLI profiles. Copy Project settings reuses a binding rather than copying a token, and general
   build/test processes never inherit all credentials. Git transport and forge API credential roles remain separate.
+  The selected account readiness list is shared by New Project, onboarding and detached copy, resolved on the exact work Computer/Host/Environment. Same-Computer reuse requires that explicit account choice; cross-Computer selection creates only refs/intention until the destination owner verifies readiness or prompts protected sign-in. N15 Later uses explicit application-scope AI/auth binding, not a fake Project-bound Connection.
 gui_related: true
 gui_classification_reason: The contract defines first-time connection setup, readable scopes, protected browser handoff, cancellation/restart, activation, reconnect, sign-out, and return behavior.
 depends_on: [GAAAF-002, GAAAF-003, GAAAF-004, GAAAF-014, GAAAF-015, SIR-033]
@@ -1050,15 +1066,18 @@ context_scope: shared_auth_session_connection_draft_and_profile_lifecycle
 implementation_surfaces: [Plans/GitHub_API_Auth_and_Flows.md, Plans/protected_auth_browser_contracts.schema.json, Plans/protected_auth_browser_contract_fixtures.json, future auth broker and connection lifecycle coordinator]
 node_compile_hint: {mode: static_auth_lifecycle_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:7-13
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:15-21
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:23-29
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:31-37
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:39-45
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:23-29
-  - source_ref:corrected-slice:machine__requirements.json__part-005__lines-000801-001020.txt:197-220
-  - source_ref:corrected-slice:machine__requirements.json__part-006__lines-001001-001220.txt:13-29
-  - source_ref:corrected-slice:machine__requirements.json__part-011__lines-002001-002196.txt:125-141
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:7-13
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:15-21
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:23-29
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:31-37
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:39-45
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:23-29
+- source_ref:corrected-slice:machine__requirements.json__part-005__lines-000801-001020.txt:197-220
+- source_ref:corrected-slice:machine__requirements.json__part-006__lines-001001-001220.txt:13-29
+- source_ref:corrected-slice:machine__requirements.json__part-011__lines-002001-002196.txt:125-141
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [AuthSession, ConnectionDraft, authorization code with PKCE, device authorization, official CLI, guided scoped PAT, initiating Client, owning Server, return context, inactive, atomic activation, Sign Out]
 negative_constraints:
   - Do not store tokens, verifiers, authorization codes, PATs, passwords, cookies, or protected browser content in AuthSession, ConnectionDraft, events, Usage, Chat, or ordinary artifacts.
@@ -1085,6 +1104,7 @@ canonical_text: >-
   account, and initiating Client lineage travels when present but never becomes identity or authority. GUI,
   command palette, and automation use the same semantic handler; no panel-private implementation or silent
   cross-host/account fallback exists. Output and network errors are scrubbed before EventRecord, Usage, or Chat.
+  All Forge/SCM publication phases consume PS-146/147/148 authority. Requested YOLO create/push/publish and listed Plan-bound grant actions run without another ordinary yes; task policy, exact target, provider capability, FileSafe, secret handling and Stop/revocation still revalidate at dispatch. No Orchestrator grant authorizes Azure human team-project administration, paid signups or secret export.
 gui_related: true
 gui_classification_reason: GUI, palette, and automation share one visible progress/receipt/error path with exact return context.
 depends_on: [GAAAF-016, SCS-015, SCS-016, FGI-014]
@@ -1101,9 +1121,12 @@ context_scope: source_mutation_and_hosted_api_orchestration
 implementation_surfaces: [Plans/GitHub_API_Auth_and_Flows.md, Plans/protected_auth_browser_contracts.schema.json, Plans/protected_auth_browser_contract_fixtures.json, future semantic orchestration handler]
 node_compile_hint: {mode: static_orchestration_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:31-37
-  - source_ref:corrected-slice:machine__requirements.json__part-005__lines-000801-001020.txt:213-220
-  - source_ref:corrected-slice:machine__requirements.json__part-006__lines-001001-001220.txt:13-29
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:31-37
+- source_ref:corrected-slice:machine__requirements.json__part-005__lines-000801-001020.txt:213-220
+- source_ref:corrected-slice:machine__requirements.json__part-006__lines-001001-001220.txt:13-29
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [Git/JJ, Worktree Manager, ForgeAdapter, AutomationAdapter, ordered suboperations, shared governor leases, initiating Client]
 negative_constraints:
   - Do not chain untracked shell effects or put local edits, forge effects, and CI effects behind one ambient working-directory assumption.

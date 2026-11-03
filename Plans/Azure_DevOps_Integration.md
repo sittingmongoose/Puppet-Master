@@ -38,6 +38,7 @@ canonical_text: >-
   repository carries a slug and a provider repository ID; both come from a provider resource and neither is parsed
   from a URL. Project is mandatory and no path, remote URL, display name or focus may replace the hierarchy. A
   container that is TFVC rather than Git is a recognized, typed unsupported container.
+  P1 New Project consumes FGI-023 and PJCT-010 inside an existing authorized team Project with exact Services organization or Server collection, provider_project_id and repository. Visibility follows team-Project policy; TFVC is refused. P2 offers team-project branch contribution, not a newly implied Azure fork path. Provider capability, auth and signed Server version evidence remain required.
 gui_related: true
 gui_classification_reason: Provider variant and organization/collection/project/repository selection are visible setup behavior.
 depends_on: [FGI-001, PDS-003]
@@ -71,7 +72,11 @@ reasoning_tier: high
 context_scope: azure_devops_provider_identity
 implementation_surfaces: [Plans/Azure_DevOps_Integration.md, future Azure adapter]
 node_compile_hint: {mode: azure_devops_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-05]
+source_lineage:
+- source_ref:egolite-register:SCM-05
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [azure_devops, azure_devops_services, azure_devops_server, organization, collection, project, repository, provider_project_id, TFVC, tfvc_container_unsupported]
 negative_constraints: [Do not omit project identity., Do not infer hierarchy from a URL or focused view., Do not merge Services and Server support., Do not parse the project GUID from a remote or display URL., Do not present a TFVC container as a Git repository or infer TFVC from a CLI failure string or a 403 body.]
 owner_hints: [Plans/Azure_DevOps_Integration.md, Plans/Forge_Integrations.md]
@@ -90,6 +95,7 @@ canonical_text: >-
   readiness distinct. Secrets remain credential refs. Azure DevOps Server capabilities require a current signed support catalog
   entry naming host and version; missing access, scope, version, license or policy returns typed limits and
   remediation.
+  P1 New Project consumes FGI-023 and PJCT-010 inside an existing authorized team Project with exact Services organization or Server collection, provider_project_id and repository. Visibility follows team-Project policy; TFVC is refused. P2 offers team-project branch contribution, not a newly implied Azure fork path. Provider capability, auth and signed Server version evidence remain required.
 gui_related: true
 gui_classification_reason: Account, access, exact hierarchy, Server support and requested/effective capability are visible setup/health state.
 depends_on: [ADO-001, FGI-003]
@@ -118,7 +124,11 @@ reasoning_tier: high
 context_scope: azure_devops_auth_access_capabilities
 implementation_surfaces: [Plans/forge_integration_contracts.schema.json, future Azure auth/API adapter]
 node_compile_hint: {mode: azure_devops_capability_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-012..017]
+source_lineage:
+- source_ref:egolite-register:SCM-012..017
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [Entra, PAT, SSH, organization access, project access, branch policy, build access, signed support catalog, EditPolicies, PolicyExempt, PullRequestBypassPolicy, policy_scope_missing, review_versions, repository_policy, capability_unsupported]
 negative_constraints: [Do not persist raw credentials., Do not equate authentication with project/repository access., Do not mutate an unsupported Server version., Do not report a policy read failure as a policy scope failure., Do not infer policy status from merge status or show an empty check list when the evaluations endpoint is absent.]
 owner_hints: [Plans/Azure_DevOps_Integration.md, Plans/Forge_Integrations.md, Plans/Multi-Account.md]
@@ -417,6 +427,7 @@ canonical_text: >-
   onboarding and Auth owner routes. Default repository-in-existing-project behavior remains. PM performs no team-project
   creation or optimistic adoption; return requires explicit refresh and independently verified provider GUID, hierarchy,
   Git kind, access and currentness under the original draft/Client fences. Unsupported routes retain truthful fallback.
+  New Project reuses this exact human-only Advanced official-page handoff and explicit Refresh; neither YOLO publication nor PS-147 build grant may collect/submit team-project creation or turn acknowledgement into verified selection. The typed handoff consumer may be onboarding or New Project, with the same exact return and provider GUID/hierarchy checks.
 gui_related: true
 gui_classification_reason: Advanced external creation, return, refresh and unsupported-state behavior are visible setup controls.
 depends_on: [ADO-001, ADO-002, FGI-011, MACS-005, PWIZ-021]
@@ -432,6 +443,11 @@ reasoning_tier: high
 context_scope: azure_team_project_external_handoff
 implementation_surfaces: [Plans/Azure_DevOps_Integration.md, Plans/Planning_Wizard.md, future Azure route resolver]
 node_compile_hint: {mode: azure_external_setup_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:onboarding-sep03:04_ACCOUNT_SIGNIN_AND_PROJECT_CREATION_MATRIX.md, source_ref:packet-sweep-20260927:N03-F03]
+source_lineage:
+- source_ref:onboarding-sep03:04_ACCOUNT_SIGNIN_AND_PROJECT_CREATION_MATRIX.md
+- source_ref:packet-sweep-20260927:N03-F03
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 negative_constraints: [Do not treat a return as resource creation., Do not broaden native Azure commands., Do not collect provider administration forms., Do not guess a project GUID from a URL.]
 ```

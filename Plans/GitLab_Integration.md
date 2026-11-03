@@ -35,6 +35,7 @@ canonical_text: >-
   GitLab uses forge_provider=gitlab with explicit gitlab_com, gitlab_self_managed or gitlab_dedicated variant,
   normalized host, account, namespace/group, provider repository, tier/license, server version where applicable,
   adapter and signed support catalog. GitLab Environment Toolkit is not a forge adapter or capability proof.
+  P1 New Project offers gitlab_com and gitlab_self_managed through FGI-023 and PJCT-010 with exact personal/group/subgroup namespace, privacy and auth. gitlab_dedicated retains its owner variant identity and signed support requirements but is not offered in this setup until an explicit owner admission. P2 guided fork-to-original remains typed unsupported here; a team-project branch/Merge Request remains available under its ordinary capability.
 gui_related: true
 gui_classification_reason: Provider variant, host, account and support state appear in setup and health UI.
 depends_on: [FGI-001, PDS-003]
@@ -49,7 +50,11 @@ reasoning_tier: high
 context_scope: gitlab_provider_identity
 implementation_surfaces: [Plans/GitLab_Integration.md, future GitLab adapter]
 node_compile_hint: {mode: gitlab_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-05]
+source_lineage:
+- source_ref:egolite-register:SCM-05
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [gitlab, gitlab_com, gitlab_self_managed, gitlab_dedicated, GitLab Environment Toolkit]
 negative_constraints: [Do not infer variant from display name., Do not treat Environment Toolkit as a forge adapter., Do not claim unsupported self-managed hosts.]
 owner_hints: [Plans/GitLab_Integration.md, Plans/Forge_Integrations.md]
@@ -98,7 +103,8 @@ canonical_text: >-
   GitLab Merge Requests map to ForgeReview while preserving provider MR identity, exact immutable base/head/version,
   draft/ready state, merge status, approval requirements/results, discussions/threads, resolution actor, commit/status
   evidence and currentness. A new head creates a new ForgeReviewRevision and stales prior evidence. Agent-created MRs
-  default Draft absent explicit Project policy; Mark Ready is a separate command and receipt.
+  default Draft absent an explicit effective review policy from the Settings ladder; no-project context omits Project and never grants target authority. Mark Ready is a separate command and receipt.
+  P6 team-project work starts a separate branch under Make a change to offer; Work on it directly is one visible selection away with current policy/permission. FGI-024 does not imply new GitLab fork support.
 gui_related: true
 gui_classification_reason: Merge Requests, approvals, discussions, Draft/Ready, evidence and actions are visible.
 depends_on: [GLI-002, FGI-004]
@@ -113,7 +119,12 @@ reasoning_tier: high
 context_scope: gitlab_merge_requests
 implementation_surfaces: [future GitLab review adapter, future Source Control review UI]
 node_compile_hint: {mode: gitlab_merge_request_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:ORI-04, source_ref:egolite-register:SCM-05]
+source_lineage:
+- source_ref:egolite-register:ORI-04
+- source_ref:egolite-register:SCM-05
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [Merge Request, MR, ForgeReviewRevision, discussions, approvals, Draft, Mark Ready]
 negative_constraints: [Do not label GitLab reviews Pull Requests in ordinary UI., Do not reuse evidence after head change., Do not auto-ready an agent MR.]
 owner_hints: [Plans/GitLab_Integration.md, Plans/Forge_Integrations.md]

@@ -124,6 +124,7 @@ canonical_text: >-
   capability to be true under the current certified adapter gate. The Jujutsu owner schema supplies one closed,
   discriminated request/result/error/availability family for all 31 canonical commands while reusing the neutral
   Source Control revision and context contracts by reference.
+  JJI-023 supplies New Project source inspection and content-limit consumption without changing the existing 31 Jujutsu command IDs, native revision semantics or colocation writer fence. P4 keeps object-format selection and permanence acknowledgement solely in Settings; setup carries the verified profile/selection or discovered format. Unsupported import/export cannot become a direct Git fallback or inferred runtime support.
 gui_related: true
 gui_classification_reason: The commands map to user-visible actions, progress, disabled states, and receipts.
 depends_on: [JJI-002, SCS-003]
@@ -197,7 +198,20 @@ reasoning_tier: high
 context_scope: jujutsu_commands
 implementation_surfaces: [Plans/jujutsu_integration_contracts.schema.json, Plans/jujutsu_integration_contract_fixtures.json, Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.production.json, future JJ adapter]
 node_compile_hint: {mode: jujutsu_command_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:TS-03, source_ref:egolite-register:CT-01, source_ref:pldg-20260911-001-jujutsu-receipt-correction:atom-jj-terminal-receipt-001, source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-clone-preinit-native-identity-108, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-divergent-change-representable-c4-02, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-read-proven-non-mutating-c4-05, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-no-interactive-editor-session-c4-08, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-recovery-action-floor-c4-09, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-tracking-is-local-c4-10, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-disclosure-dl057]
+source_lineage:
+- source_ref:egolite-register:TS-03
+- source_ref:egolite-register:CT-01
+- source_ref:pldg-20260911-001-jujutsu-receipt-correction:atom-jj-terminal-receipt-001
+- source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-clone-preinit-native-identity-108
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-divergent-change-representable-c4-02
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-read-proven-non-mutating-c4-05
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-no-interactive-editor-session-c4-08
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-recovery-action-floor-c4-09
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-tracking-is-local-c4-10
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-disclosure-dl057
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [cmd.jujutsu.*, cmd.jj.*, ObservableWork, before operation ID, after operation ID, native_state_phase, destination_not_initialized, divergent, change_divergent_ambiguous_target, commit_id, interactive_editor_session_required, cmd.jujutsu.change.split, allowed_action_ids, repository_quarantined, cmd.jujutsu.operation.log, cmd.jujutsu.operation.show, cmd.jujutsu.bookmark.track, cmd.jujutsu.bookmark.untrack, local_mutation, credential_lease_ref, disclosed_remote_scope, disclosed_remote_identity_refs]
 negative_constraints: [Do not register cmd.jj.* as a primary command., Do not scrape terminal prose for state., Do not retry an unknown effect.]
 owner_hints: [Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Shared_Integration_Runtime.md]
@@ -218,6 +232,7 @@ canonical_text: >-
   Git expected revision, an explicit separately certified reconciliation path, exact post-mutation JJ operation ID
   and terminal receipt. `jj git import` or `jj git export` is never assumed as reconciliation. In a colocated 0.44.0
   workspace both are effective false by default; a late or unmatched Git mutation quarantines the workspace.
+  JJI-023 supplies New Project source inspection and content-limit consumption without changing the existing 31 Jujutsu command IDs, native revision semantics or colocation writer fence. P4 keeps object-format selection and permanence acknowledgement solely in Settings; setup carries the verified profile/selection or discovered format. Unsupported import/export cannot become a direct Git fallback or inferred runtime support.
 gui_related: true
 gui_classification_reason: Colocation authority and quarantine determine visible disabled reasons and recovery actions.
 depends_on: [JJI-002, JJI-003]
@@ -240,7 +255,12 @@ reasoning_tier: high
 context_scope: jujutsu_git_colocation
 implementation_surfaces: [future JJ and Git adapters, future LeaseCoordinator integration]
 node_compile_hint: {mode: colocated_single_mutation_authority, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-006..007, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-gc-fence-coverage-c4-07]
+source_lineage:
+- source_ref:egolite-register:SCM-006..007
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-gc-fence-coverage-c4-07
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [.jj, one mutation authority, JJ by default, read-only Git, pre/post JJ operation IDs, quarantine, gc_fence_covered_paths, colocated_git]
 negative_constraints: [Do not allow concurrent JJ and Git mutation., Do not treat Git import/export as implicit., Do not reassign a quarantined workspace.]
 owner_hints: [Plans/Jujutsu_Integration.md, Plans/WorktreeGitImprovement.md, Plans/Source_Control_System.md]
@@ -292,6 +312,7 @@ canonical_text: >-
   ambiguous or unsupported colocation remains blocked with a typed reason and recovery actions. Setup reports
   requested and effective import/export capabilities separately; Jujutsu 0.44.0 colocated import/export defaults
   effective false unless the exact adapter and live environment have current certification evidence.
+  JJI-023 supplies New Project source inspection and content-limit consumption without changing the existing 31 Jujutsu command IDs, native revision semantics or colocation writer fence. P4 keeps object-format selection and permanence acknowledgement solely in Settings; setup carries the verified profile/selection or discovered format. Unsupported import/export cannot become a direct Git fallback or inferred runtime support.
 gui_related: true
 gui_classification_reason: This unit controls JJ setup rows, visible sections, labels, compatibility limits, and migration status.
 depends_on: [JJI-004, JJI-005, SCS-004, SCS-005]
@@ -343,7 +364,14 @@ reasoning_tier: high
 context_scope: jujutsu_setup_gui_migration
 implementation_surfaces: [Plans/Settings_System.md, Plans/FinalGUISpec.md, future Source Control UI]
 node_compile_hint: {mode: jujutsu_setup_gui_migration_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-003, source_ref:egolite-register:UI-01, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-native-toolchain-identity-c4-03, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-recovery-action-floor-c4-09]
+source_lineage:
+- source_ref:egolite-register:SCM-003
+- source_ref:egolite-register:UI-01
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-native-toolchain-identity-c4-03
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-recovery-action-floor-c4-09
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [Install Jujutsu, Use Jujutsu here, Bookmarks, Operation Log, Ready with limits, Needs attention, native_toolchain_identity, certified_scenarios, allowed_action_ids, repository_quarantined, cmd.jujutsu.operation.log, cmd.jujutsu.operation.show]
 negative_constraints: [Do not install or mutate silently., Do not show Git-only staging or stash., Do not promote Preview certification without current evidence.]
 owner_hints: [Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Settings_System.md]
@@ -567,6 +595,7 @@ canonical_text: >-
   inactive; credentials and non-secret references require their owners to revalidate/reconnect. Rebind, remote checks,
   Project registration, forge binding, and repository_automation remain separate owner routes, and no restore drill
   pushes, executes hooks, resumes Goals, or mutates the original repository.
+  JJI-023 supplies New Project source inspection and content-limit consumption without changing the existing 31 Jujutsu command IDs, native revision semantics or colocation writer fence. P4 keeps object-format selection and permanence acknowledgement solely in Settings; setup carries the verified profile/selection or discovered format. Unsupported import/export cannot become a direct Git fallback or inferred runtime support.
 gui_related: true
 gui_classification_reason: Operation Log and Source Control expose Backup history pivots plus missing-closure, colocation, conflict, credential-reconnect, and activation blockers.
 depends_on: [JJI-002, JJI-004, JJI-005, JJI-006, SCS-014, BRS-002, BRS-003, BRS-006, BRS-014]
@@ -676,23 +705,26 @@ context_scope: backup_jj_closure_and_isolated_restore
 implementation_surfaces: [Plans/Jujutsu_Integration.md, Plans/jujutsu_integration_contracts.schema.json, Plans/jujutsu_integration_contract_fixtures.json, future JJ SourceSnapshotAdapter]
 node_compile_hint: {mode: jujutsu_backup_static_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - Plans/Decision_Log.md#DL-163 (2026-10-09; the view is labelled Operation Log)
-  - source_ref:packet:2026-09-01:SCM-004
-  - source_ref:packet:2026-09-01:BKP-005-BKP-008
-  - source_ref:packet:2026-09-01:BKP-011-BKP-012
-  - source_ref:packet:2026-09-01:REST-005-REST-008
-  - Plans/Backup_Restore_System.md#BRS-002
-  - Plans/Backup_Restore_System.md#BRS-006
-  - Plans/Backup_Restore_System.md#BRS-014
-  - Plans/Source_Control_System.md#SCS-014
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
-  - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-jj-restore-readiness-consistency-106
-  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-restore-object-verification-depth-c4-01
-  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-native-toolchain-identity-c4-03
-  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-pointer-resolution-c4-04
-  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-read-proven-non-mutating-c4-05
-  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-entry-disposition-c4-06
-  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-closure-decision-procedure-c4-11
+- Plans/Decision_Log.md#DL-163 (2026-10-09; the view is labelled Operation Log)
+- source_ref:packet:2026-09-01:SCM-004
+- source_ref:packet:2026-09-01:BKP-005-BKP-008
+- source_ref:packet:2026-09-01:BKP-011-BKP-012
+- source_ref:packet:2026-09-01:REST-005-REST-008
+- Plans/Backup_Restore_System.md#BRS-002
+- Plans/Backup_Restore_System.md#BRS-006
+- Plans/Backup_Restore_System.md#BRS-014
+- Plans/Source_Control_System.md#SCS-014
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
+- source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-jj-restore-readiness-consistency-106
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-restore-object-verification-depth-c4-01
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-native-toolchain-identity-c4-03
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-pointer-resolution-c4-04
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-read-proven-non-mutating-c4-05
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-entry-disposition-c4-06
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-closure-decision-procedure-c4-11
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [colocated, non-colocated, shared multi-workspace, operation heads, repository views, conflicts, abandoned, rebased, capture barrier, GC fence, ignore-working-copy, ignore_working_copy, object verification, object_verification_depth, integrity_verification_level, full_data_read_passed, native_toolchain_identity, toolchain_compatibility, blocked_version_incompatible, store_pointer_resolution, objects_info_alternates, git_commondir, resolved_inside_boundary, read_pinning, pinned_operation, verification_authored_operation, native_history, machine_local, ephemeral, unrecognized, restored_as_active_state, closure_expansion, materialization_order, missing_parent, malformed_id, self_parent, parent_cycle, "expected_event_types=[]"]
 negative_constraints:
   - Do not treat op-log text, a Git push, mirror clone, Git bundle, current bookmark, or reachable forge as complete JJ recovery.
@@ -1536,6 +1568,7 @@ canonical_text: >-
   from one that already exists. Confirming requires an acknowledged permanence statement, because the format cannot be
   changed afterwards; cancelling records no format. The extension is an owner contract only: it admits no new Jujutsu
   command, keeps the request enum at exactly 31 commands, and adds no handler, event or runtime capability.
+  JJI-023 supplies New Project source inspection and content-limit consumption without changing the existing 31 Jujutsu command IDs, native revision semantics or colocation writer fence. P4 keeps object-format selection and permanence acknowledgement solely in Settings; setup carries the verified profile/selection or discovered format. Unsupported import/export cannot become a direct Git fallback or inferred runtime support.
 gui_related: false
 gui_classification_reason: The unit defines the typed request extension and its identity and lifecycle rules; the visible control belongs to SCS-022.
 depends_on: [JJI-001, JJI-002, JJI-006, SCS-004, SCS-018, JJI-022, DL-051]
@@ -1565,9 +1598,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-051
-  - source_ref:pldg-20260916-002-jujutsu-object-format-picker:atom-object-format-typed-request-110
-  - reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json:c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b
+- Plans/Decision_Log.md#DL-051
+- source_ref:pldg-20260916-002-jujutsu-object-format-picker:atom-object-format-typed-request-110
+- reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json:c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [object format, sha1, sha256, use_jujutsu_here, new_repository, existing_repository, permanence_acknowledged]
 negative_constraints:
   - Do not infer the object format from a display string, label, caption, abbreviated identifier or engine default.
@@ -1597,6 +1633,7 @@ canonical_text: >-
   unsupported, a stale or unavailable catalog cannot certify anything, and every profile states that the format is
   permanent once the repository is created. The profile certifies no engine version and promises no universal SHA-256
   support; it reports what current evidence shows.
+  JJI-023 supplies New Project source inspection and content-limit consumption without changing the existing 31 Jujutsu command IDs, native revision semantics or colocation writer fence. P4 keeps object-format selection and permanence acknowledgement solely in Settings; setup carries the verified profile/selection or discovered format. Unsupported import/export cannot become a direct Git fallback or inferred runtime support.
 gui_related: false
 gui_classification_reason: The unit defines owner evidence and certification semantics; the disabled control and its reason text belong to SCS-022.
 depends_on: [JJI-006, SCS-004, SCS-015, SCS-018, DL-051]
@@ -1627,9 +1664,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-051
-  - source_ref:pldg-20260916-002-jujutsu-object-format-picker:atom-object-format-certified-profiles-110
-  - reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json:c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b
+- Plans/Decision_Log.md#DL-051
+- source_ref:pldg-20260916-002-jujutsu-object-format-picker:atom-object-format-certified-profiles-110
+- reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json:c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [object format, supported, unsupported, unknown, sha1, sha256, permanent_once_created]
 negative_constraints:
   - Do not treat unknown capability evidence as supported or as unsupported.
@@ -1642,3 +1682,89 @@ owner_hints:
   - Plans/Source_Control_System.md
   - Plans/Shared_Integration_Runtime.md
 ```
+
+
+## Projects refresh accepted owner addendum (2026-11-03)
+
+### JJI-023 - Inspected content limits and Settings-only object format
+
+```yaml
+plan_unit_id: JJI-023
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: |-
+  Jujutsu remains an equal first-class history backend and uses Git transport to offered services only where the exact adapter/environment capability is admitted. Product setup explicitly discloses that Jujutsu does not handle Git submodules or Git LFS and does not execute Git hooks. SCS-025 read-only inspection reports their presence on every route. For new/no-history content those findings may suggest Git, with the reason and a visible user choice; an existing verified .jj source remains JJ-authoritative and is never silently converted, copied as complete support or routed through direct Git mutations. Unsupported content/history operations stay unavailable with a typed reason and explicit supported alternative; preserving files or backup closure does not promise JJ feature support.
+
+  P4 makes Settings the only repository object-format selection and permanence-acknowledgement surface. New Project and Onboarding show the observed existing format or carry the exact owner-resolved new-repository selection/profile through pm.source_control.new_repository_object_format_selection.v1; they offer no second picker. Existing repositories show unknown if not discovered and are never initialized again. Per-Host/Environment format profiles, current capability evidence, four support axes and cancelled-choice rules remain JJI-021/022 and SCS-022.
+
+  The 31 cmd.jujutsu.* identities, distinct JJ clone, change/bookmark semantics, same writer lease and before/after operation IDs remain. SCS-025 remote.add delegates only to a specifically admitted JJ config adapter and creates no new Jujutsu command or network effect. In colocated 0.44.0 import/export remains effective false absent exact live certification; no service choice, copy, restore or fork can override that fence or claim native support from the product decision. Backup still captures actual retained closure and tests isolated recoverability, without executing hooks or activating restored credentials.
+
+  Ordinary Git/Jujutsu publication consumes PS-146/Y1 and the PS-147 BuildGrant through PS-148, with truthful authority_kind=mode or grant evidence rather than a fabricated human approval. Requested YOLO push/publish and needed repository creation add no generic confirmation; exact destination/heads/lease, capability, FileSafe, protected auth/trust and outcome_unknown reconciliation remain. Destructive/recovery actions keep their separate retained guards.
+
+  A Git-format remote does not select local Git authority by itself. Choosing the distinct Jujutsu clone remains valid for an admitted Git-transport source; existing local checkout authority and content limits are inspected separately from remote storage format.
+
+  Existing-Project chat conversion consumes ACD-510/511 and SCS-025 inspection, defaulting to a separate admitted Jujutsu change/bookmark plus the chosen folder. Direct main landing is Advanced only and retains actual backend/branch policy. The move neither grafts source history nor overwrites unsaved destination buffers, and missing native support remains typed unavailable. The same current destination/revision/permission/Stop preview governs dispatch; Git transport format does not change JJ authority.
+gui_related: true
+gui_classification_reason: Defines visible setup, choice, status, recovery or exact return behavior.
+depends_on:
+- JJI-003
+- JJI-004
+- JJI-006
+- JJI-008
+- JJI-021
+- JJI-022
+- SCS-025
+unblocks: []
+acceptance_criteria:
+- Inspection-led new-source Git suggestion is explained, but existing JJ history never changes authority silently.
+- New Project has no object-format picker; exact Settings selection/discovery and permanence evidence travel intact.
+- JJ reads do not make hidden snapshots; absent config/import-export capability refuses without Git fallback.
+- Backup closure retention never becomes a JJ submodule/LFS/hooks runtime claim.
+- >-
+  A conversion into existing JJ history selects the admitted change/bookmark and chosen folder, blocks unsaved/history-graft conflicts and never substitutes direct Git or main.
+validation_surfaces:
+- Plans/jujutsu_integration_contracts.schema.json
+- F companion positive/negative semantic fixtures; not_run in phase 1
+risk_class: identity_authority_or_false_completion
+reasoning_tier: high
+context_scope: projects_refresh_jji_023
+implementation_surfaces:
+- Plans/Jujutsu_Integration.md
+- Future existing owner handlers; handler_unavailable until native evidence
+node_compile_hint:
+  mode: static_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- '/mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#P4; R3 §5.3; BUILD-SPEC §18.1 #7'
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-e
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/BUILD-SPEC-split-v2.md#18-and-21
+- '/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-E01'
+preserved_exact_tokens:
+- Git submodules
+- Git LFS
+- Git hooks
+- .jj
+- Settings
+- P4
+- pm.source_control.new_repository_object_format_selection.v1
+- remote.add
+- 0.44.0
+- effective false
+negative_constraints:
+- Do not execute Git hooks, promise JJ LFS/submodule operation or silently replace existing JJ history.
+- Do not add setup format choice/acknowledgement or infer format from an engine default.
+- Do not convert a disabled JJ capability into direct Git mutation.
+owner_hints:
+- Plans/Jujutsu_Integration.md
+compatibility_only_notes:
+- Existing exact historical Project requests/results/receipts remain readable under their original version; no in-place
+  reinterpretation.
+stale_retired_dispositions:
+- Earlier pending decision labels are superseded by the approved packet; native implementation and governance certification
+  remain unproved.
+```
+
+ContractRef: ContractName:Plans/Jujutsu_Integration.md#JJI-023, ContractName:Plans/Plan_Document_System.md#PDS-003

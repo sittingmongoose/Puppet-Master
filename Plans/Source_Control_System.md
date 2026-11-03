@@ -8,7 +8,7 @@
 
 Puppet Master supports two independent local source-control backends, exactly `scm_backend=git|jujutsu`. Hosted service selection is a separate axis, exactly `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|none`. Forgejo and Gitea are distinct provider and adapter identities; a permanent `forgejo_or_gitea` identity is forbidden. The generic word `provider` is not a durable discriminator for either axis, and bare `origin` is only a Git remote name and never a provider identity.
 
-Every source-control operation resolves an exact Project, Plan/Goal/run/agent lineage when present, Project Home Server, Execution Host, Execution Environment, Source Location, `repo_id`, `scm_backend`, backend-native `workspace_id`, backend-native immutable revision, installation/adapter/credential binding, independent repository-forge binding, optional independent `automation_binding_ref`, expected revision, writer lease, topology generation, permission decision, FileSafe decision, and idempotency key. `RepositoryForgeBinding` remains repository-hosting authority; `AutomationBinding` remains Forge-owned automation authority and may name a different provider, instance, account, or service. Paths, current directories, selected tabs, focused workspaces, remote names, branch labels, and account display names are descriptive only.
+Every Project-scoped source-control operation resolves an exact Project, Plan/Goal/run/agent lineage when present, Project Home Server, Execution Host, Execution Environment, Source Location, `repo_id`, `scm_backend`, backend-native `workspace_id`, backend-native immutable revision, installation/adapter/credential binding, independent repository-forge binding, optional independent `automation_binding_ref`, expected revision, writer lease, topology generation, permission decision, FileSafe decision, and idempotency key. `RepositoryForgeBinding` remains repository-hosting authority; `AutomationBinding` remains Forge-owned automation authority and may name a different provider, instance, account, or service. Paths, current directories, selected tabs, focused workspaces, remote names, branch labels, and account display names are descriptive only. SCS-025 separately defines read-only pre-registration inspection with application scope, null Project and actual source-context identity; no Project/worktree mutation or provider binding follows from that read.
 
 Git identity is object format, full immutable commit OID, exact refs/branch when applicable, and index generation. Jujutsu identity is change ID, immutable commit ID, operation ID, workspace ID, and bookmarks. A Git branch and JJ bookmark are not aliases. Git worktrees and JJ workspaces share a backend-neutral projection only after their native identities remain intact.
 
@@ -171,6 +171,7 @@ canonical_text: >-
   owner-DRY discriminated scope plus generic request/result/error/availability/disabled-reason schemas; this
   static contract does not establish central catalog rows, native handlers, production wiring, admitted events,
   or runtime proof.
+  SCS-025 adds read-only source-context repository inspection, including unregistered drafts with application scope and null Project. Its typed source variant binds the actual Computer/Server, Host, Environment, transport, locator and trust/currentness evidence; it does not require a fake repository ID or mutation lease. The neutral command census grows only by repository.inspect and remote.add through F companion registration, preserving the existing nineteen historical IDs.
 gui_related: true
 gui_classification_reason: Commands expose visible actions, progress, disabled reasons, and recovery routes.
 depends_on: [SCS-002, SIR-008]
@@ -197,7 +198,13 @@ reasoning_tier: high
 context_scope: source_control_mutation_authority
 implementation_surfaces: [Plans/source_control_contracts.schema.json, future command handlers, future credential broker adapter]
 node_compile_hint: {mode: source_control_command_and_lease_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-008..009, source_ref:egolite-register:CT-01..02, source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-credential-lease-transport-evidence-109]
+source_lineage:
+- source_ref:egolite-register:SCM-008..009
+- source_ref:egolite-register:CT-01..02
+- source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-credential-lease-transport-evidence-109
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [writer lease, generation, epoch, git-credential-puppet-master, credential.useHttpPath=true, pm-ssh, pm-ssh-agent-bridge, ObservableWork, effect_unknown]
 negative_constraints: [Do not prompt for ambient credentials., Do not persist private keys or tokens., Do not treat expiry as cleanup proof., Do not retry an effect-unknown mutation automatically.]
 owner_hints: [Plans/Source_Control_System.md, Plans/Shared_Integration_Runtime.md, Plans/Permissions_System.md, Plans/FileSafe.md]
@@ -224,6 +231,7 @@ canonical_text: >-
   and Jujutsu 0.44.0 values are initial packet inputs, not timeless floors. Older user-owned installations may
   be admitted for bounded safe reads only. Installation, ownership, adapter compatibility, authentication,
   capability and forge readiness remain independent states.
+  The Computer label names the Server doing the work, while exact Host/Environment remains required for tool installation, native reads and credential readiness. Every inspected route reports actual backend and content limitations through SCS-025/JJI-023; a UI choice never certifies a backend or selects an installation on another Computer.
 gui_related: true
 gui_classification_reason: Exact-host setup state and the install/use/repair actions are user-visible Settings behavior.
 depends_on: [SCS-001, SIR-004]
@@ -238,7 +246,12 @@ reasoning_tier: high
 context_scope: source_control_setup
 implementation_surfaces: [Plans/Shared_Integration_Runtime.md, future signed compatibility catalog, future Source Control manager]
 node_compile_hint: {mode: exact_environment_setup_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-004..005, source_ref:egolite-register:SCM-010..011]
+source_lineage:
+- source_ref:egolite-register:SCM-004..005
+- source_ref:egolite-register:SCM-010..011
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [Git 2.55.0, Jujutsu 0.44.0, Install Git, Install Jujutsu, Use existing Git setup, Use Jujutsu here, Use Git here]
 negative_constraints: [Do not rewrite global PATH or user configuration., Do not promote packet version floors as permanently current., Do not equate installation with authentication or readiness.]
 owner_hints: [Plans/Source_Control_System.md, Plans/Shared_Integration_Runtime.md, Plans/BinaryLocator_Spec.md, Plans/Release_Supply_Chain.md]
@@ -364,9 +377,11 @@ cmd.source_control.remote.publish
 cmd.source_control.checkpoint.create
 cmd.source_control.checkpoint.inspect
 cmd.source_control.checkpoint.restore
+cmd.source_control.repository.inspect
+cmd.source_control.remote.add
 ```
 
-The generic command scope admits only those exact nineteen IDs. It preserves exact Project, Project Home Server, Execution Host, Execution Environment, Source Location, topology generation, repository context, `repo_id`, `scm_backend`, backend-native `workspace_id`, backend-native expected revision, currentness generation, writer lease, credential lease, transport, independent `forge_provider` binding, and checkpoint identity/generation fields as applicable. `backend.detect` and `backend.select` are exact-environment pre-repository branches; status/diff/history/workspace-list/open and checkpoint inspect are read/currentness branches without a fabricated writer lease; mutation, checkpoint create/restore, and remote branches add the exact writer or credential authority they require. Closed `additionalProperties` scopes structurally reject path/focus/newest-record/remote-text/generic-provider substitution.
+The historical v1 generic command scope retains those exact nineteen IDs. The scope-aware successor admits only those IDs plus cmd.source_control.repository.inspect and cmd.source_control.remote.add as defined by SCS-025. It preserves exact Project, Project Home Server, Execution Host, Execution Environment, Source Location, topology generation, repository context, `repo_id`, `scm_backend`, backend-native `workspace_id`, backend-native expected revision, currentness generation, writer lease, credential lease, transport, independent `forge_provider` binding, and checkpoint identity/generation fields as applicable. `backend.detect` and `backend.select` are exact-environment pre-repository branches; status/diff/history/workspace-list/open and checkpoint inspect are read/currentness branches without a fabricated writer lease; mutation, checkpoint create/restore, and remote branches add the exact writer or credential authority they require. Closed `additionalProperties` scopes structurally reject path/focus/newest-record/remote-text/generic-provider substitution.
 
 `cmd.source_control.repository.clone` is the sole backend-neutral ordinary Git clone command. Its scope is nevertheless exactly `scm_backend=git`; it requires a reserved Project/repository/workspace lineage, exact Host/Environment/Source Location and topology generation, current catalog generation/ref/hash, destination writer lease, one-operation credential lease, transport, independent forge binding including `none`, verified remote identity, FileSafe destination Source Location, permission decision, idempotency, and an exact caller return context. Success returns the repository/source identities, `ObservableWork`, and terminal operation receipt needed by Project System to register `registration_kind=git_clone`. Cancellation returns to the exact caller route/focus/continuation after cleanup and creates no Project row. Caller close or navigation does not itself cancel the clone.
 
@@ -723,7 +738,8 @@ canonical_text: 'Product Onboarding projects Source Control as an explicitly loc
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  mirror authority.
+  The same reviewed owner setup binding serves Onboarding and PWIZ-037 New Project, with equal Git/Jujutsu choices and existing verified history taking precedence. PJCT-010 defines the offered non-GitHub create and GitHub/GHES fork chains. The explicit N15 Later journey may set up AI in application scope on the named Computer; that does not waive real-Project requirements for Project-scoped SCM binding.'
 gui_related: true
 gui_classification_reason: Defines the beginner-facing Source Control setup choices, availability reasons, owner returns,
   and online-copy/account routes used by Product Onboarding and Settings.
@@ -780,6 +796,9 @@ source_lineage:
 - Plans/FinalGUISpec.md#F3-520
 - user-correction:2026-09-01-safe-history-source-control-accounts
 - DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 negative_constraints:
 - Do not conflate local Safe History with an online backup or forge repository.
 - Do not claim Git or Jujutsu has a service account.
@@ -797,12 +816,9 @@ plan_unit_id: SCS-012
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Source_Control_System.md
-canonical_text: Product Onboarding always treats local Git or Jujutsu Safe History, FileSafe recovery, optional
-  hosted forge binding, Project source acquisition, and backup restore as separate decisions. Git and Jujutsu require
-  no service account. FileSafe complements the selected local backend. A hosted copy is Ready only when an explicit
-  verified forge account and explicit repository binding both exist. Local, mounted, and SSH project-source transports
-  and the independently selected restore transport preserve exact Project, Host, Environment, Source Location, repository,
-  and backend identity.
+canonical_text: >-
+  Product Onboarding always treats local Git or Jujutsu Safe History, FileSafe recovery, optional hosted forge binding, Project source acquisition, and backup restore as separate decisions. Git and Jujutsu require no service account. FileSafe complements the selected local backend. A hosted copy is Ready only when an explicit verified forge account and explicit repository binding both exist. Local, mounted, and SSH project-source transports and the independently selected restore transport preserve exact Project, Host, Environment, Source Location, repository, and backend identity.
+  All local, Server, SSH/PM, SMB/NFS and mounted sources consume SCS-025 inspection before reviewed registration or acquisition. A found remote remains evidence until explicit account/repository verification and chosen bind. Acquisition provenance names online_import or fork_contribute independently of git_clone/jujutsu_clone registration and hosting. A duplicate registered-copy match offers Open on its named Computer without blocking this copy.
 gui_related: true
 gui_classification_reason: Defines the beginner-facing relationship among the four Project entry routes, Safe History,
   FileSafe, hosted copy, and Advanced SSH source transport.
@@ -856,6 +872,9 @@ source_lineage:
 - user-correction:2026-09-01-project-source-and-safe-history-semantics
 - Plans/product_onboarding_contracts.schema.json
 - Concepts/pm7-tools/onboarding_cinematic_source.py
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - Safe History
 - FileSafe
@@ -992,6 +1011,7 @@ canonical_text: >-
   credential, helper, hook, extraHeader, URL user-info, unsafe include, or secret byte; it creates sanitized inactive
   configuration plus reconnect/owner-validation state. RepositoryForgeBinding and Forge-owned AutomationBinding remain
   separate after restore.
+  The BRS-006 rewrite applies to PM-internal identities and references; external forge host/account/repository identifiers retain their external meaning only as non-authoritative lineage until fresh revalidation. N13 converted chat history and N25 destination records join Project Backup through their owners without moving source approval, credential or execution authority.
 gui_related: true
 gui_classification_reason: Source Control and JJ History expose Backup browse/compare pivots, rebind/merge blockers, remote-validation state, and exact collision/conflict recovery routes.
 depends_on: [SCS-002, SCS-003, SCS-006, SCS-013, BRS-002, BRS-003, BRS-006, BRS-007, BRS-014, BRS-016, JJI-005]
@@ -1046,19 +1066,22 @@ context_scope: backup_source_closure_and_restore_reconciliation
 implementation_surfaces: [Plans/Source_Control_System.md, Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future SourceSnapshotAdapter and GitJJClosureValidator]
 node_compile_hint: {mode: cross_owner_static_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:SCM-001-SCM-009
-  - source_ref:packet:2026-09-01:BKP-005-BKP-008
-  - source_ref:packet:2026-09-01:BKP-011-BKP-012
-  - source_ref:packet:2026-09-01:REST-005-REST-009
-  - Plans/Backup_Restore_System.md#BRS-002
-  - Plans/Backup_Restore_System.md#BRS-003
-  - Plans/Backup_Restore_System.md#BRS-006
-  - Plans/Backup_Restore_System.md#BRS-014
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
-  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-gc-fence-coverage-c4-07
-  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-pointer-resolution-c4-04
-  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-entry-disposition-c4-06
-  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-closure-decision-procedure-c4-11
+- source_ref:packet:2026-09-01:SCM-001-SCM-009
+- source_ref:packet:2026-09-01:BKP-005-BKP-008
+- source_ref:packet:2026-09-01:BKP-011-BKP-012
+- source_ref:packet:2026-09-01:REST-005-REST-009
+- Plans/Backup_Restore_System.md#BRS-002
+- Plans/Backup_Restore_System.md#BRS-003
+- Plans/Backup_Restore_System.md#BRS-006
+- Plans/Backup_Restore_System.md#BRS-014
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-gc-fence-coverage-c4-07
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-pointer-resolution-c4-04
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-entry-disposition-c4-06
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-closure-decision-procedure-c4-11
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [BackupManifest, BackupRepositoryBinding, capture barrier, GC fence, RestoreRun, Restore as New, Sign-in Required, External Reattachment Required, RepositoryForgeBinding, AutomationBinding, gc_fence_outcome, held_during_capture, gc_fence_covered_paths, native_jj_process, colocated_git, registered_external_automation, isolated_verification, store_pointer_resolution, resolved_inside_boundary, machine_local, ephemeral, unrecognized, closure_expansion, materialization_order, "expected_event_types=[]"]
 negative_constraints:
   - Do not move BackupManifest, RestoreRun, activation, rollback, credential custody, Forge adapters, or AutomationBinding into Source Control.
@@ -1097,7 +1120,8 @@ canonical_text: 'Each fetch, publish, review, merge, CI, or local mutation compu
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  mirror authority.
+  Publication consumes the single Permissions admission from PS-146/147/148. YOLO can create the needed repository and push/publish without repeated human yes; Y1 force-with-lease is restricted to a branch PM created for this work, never main/default/protected, and rejects a lost lease. Prune/delete/destructive discard retain ordinary asks unless an exact separately approved build grant covers a verified created resource. No mode changes product support, credentials, FileSafe, current target or backend mutation authority.'
 gui_related: true
 gui_classification_reason: Capability states, remediation, remote previews, and backend-native actions directly determine
   visible controls and labels.
@@ -1162,6 +1186,9 @@ source_lineage:
 - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-conflict-surface-scope-dl056
 - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-no-interactive-editor-session-c4-08
 - DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens:
 - ready
 - not_configured
@@ -1218,8 +1245,7 @@ canonical_text: >-
   FileSafe; hosting API/CLI work uses its exact egress Host, adapter/profile, credential, and explicit repository
   target and returns durable receipts to the Home Server without making a worker Project authority. Agents
   consume compact typed available-action summaries and blockers through the same commands, never raw registry/log
-  dumps or UI scraping, and automated publish/merge/CI requires exact task policy, approval, protected-branch
-  enforcement, and CI/cost disclosure. A forge runner is not a Puppet Master Execution Host unless separately configured.
+  dumps or UI scraping, and automated publish/merge/CI requires exact task policy, mode or grant authority resolved by PS-146/147/148, protected-branch enforcement, and CI/cost disclosure. Regular asks where required; requested YOLO publication and listed build-grant actions do not add a second human confirmation. A forge runner is not a Puppet Master Execution Host unless separately configured.
 gui_related: true
 gui_classification_reason: Normalized provider records, outcome-unknown state, freshness, compact agent blockers, and observation truth feed multiple visible surfaces.
 depends_on: [SCS-015, SIR-008, FGI-014]
@@ -1242,12 +1268,15 @@ context_scope: normalized_remote_effect_observation_routing_and_agents
 implementation_surfaces: [Plans/Source_Control_System.md, Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future record projector, future effect reconciler, future observer, future route coordinator]
 node_compile_hint: {mode: static_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:39-45
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:47-53
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:55-61
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:63-69
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:71-77
-  - source_ref:corrected-slice:machine__requirements.json__part-003__lines-000401-000620.txt:109-193
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:39-45
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:47-53
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:55-61
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:63-69
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:71-77
+- source_ref:corrected-slice:machine__requirements.json__part-003__lines-000401-000620.txt:109-193
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [ReviewRequest, ReviewThread, Check, AutomationDefinition, AutomationRun, JobOrStage, LogSegment, RemoteArtifact, raw_status, normalized_status, outcome_unknown, Home Server, Source Location, FileSafe, compact typed available-action summaries, canonical_url_origin, url_absent_reason, requirement_bypassed]
 negative_constraints:
   - Do not key remote objects without service instance, account, repository, immutable external ID, and revision identity.
@@ -1730,8 +1759,7 @@ plan_unit_id: SCS-022
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Source_Control_System.md
-canonical_text: 'The existing Source Control setup flow offers the object format when a repository is being created and
-  shows the discovered effective format when one already exists. It is one surface on the existing flow, not a separate
+canonical_text: 'Settings Source Control setup alone offers object format and permanence acknowledgement for a new repository. Other setup consumers show only the owner-resolved choice or discovered effective format. It is one surface on the existing flow, not a separate
   wizard, and it is bound to the exact Execution Host and Execution Environment the flow already binds. Every offered
   format comes from an owner-owned format profile, so a choice is enabled or disabled by current capability evidence
   and never by assumption; an uncertified or not-yet-known format is shown disabled with its reason rather than hidden
@@ -1740,7 +1768,8 @@ canonical_text: 'The existing Source Control setup flow offers the object format
   existing repository shows only what discovery found, and says the format is not yet known rather than showing the engine
   default as though it had been observed. DL-259, Jared 2026-10-31: D2 A: repository object-format selection and its
   permanence acknowledgement belong in Settings, not onboarding. Existing-repository format observation, unknown/capability
-  handling and the Source Control owner’s safeguards remain unchanged.'
+  handling and the Source Control owner’s safeguards remain unchanged.
+  P4 and DL-297 make Settings the sole object-format choice and permanence-acknowledgement surface, including New Project re-entry; all setup consumers carry only that owner-resolved selection/profile or discovered format. A repository already present is never re-created or converted by this choice.'
 gui_related: true
 gui_classification_reason: The unit is a visible setup-flow control, its disabled states and reasons, its discovered-format display and its permanence copy.
 depends_on: [SCS-004, SCS-005, SCS-015, SCS-018, JJI-006, JJI-021, JJI-022, DL-051]
@@ -1781,9 +1810,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-051
-  - source_ref:pldg-20260916-002-jujutsu-object-format-picker:atom-object-format-setup-surface-110
-  - reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json:c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b
+- Plans/Decision_Log.md#DL-051
+- source_ref:pldg-20260916-002-jujutsu-object-format-picker:atom-object-format-setup-surface-110
+- reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json:c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [object format, discovered effective format, permanent, sha1, sha256, use_jujutsu_here]
 negative_constraints:
   - Do not offer a format the current capability evidence does not certify, and do not disable one by assumption instead of by evidence.
@@ -1956,6 +1988,7 @@ canonical_text: >-
   FileSafe, and action-specific fields; accepted never means terminal success and
   effect_unknown never means safe retry. Candidate cmd.git.stash.* and
   cmd.git.branch.* spellings are not primaries.
+  The new neutral cmd.source_control.remote.add is separately defined in SCS-025. Existing cmd.source_control.remote.update remains edit-only and Git-scoped; neither verb fetches, pushes, initializes hosting or starts authentication. For a JJ-authoritative repository, only its admitted backend adapter may add a remote under the JJ writer fence, never a direct-Git fallback.
 gui_related: true
 gui_classification_reason: Staging, remote, stash, and branch actions with their availability, previews, confirmations, and disabled reasons are visible across Source Control, Settings, and palette consumers.
 depends_on: [SCS-002, SCS-003, SCS-015, SCS-016]
@@ -1978,7 +2011,17 @@ reasoning_tier: high
 context_scope: git_adapter_stage_remote_stash_branch_commands
 implementation_surfaces: [Plans/Source_Control_System.md, Plans/git_adapter_command_contracts.schema.json, Plans/git_adapter_command_contract_fixtures.json, future Git adapter handlers]
 node_compile_hint: {mode: static_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:packet-sweep-20260927-cross-contracts:ACT014, source_ref:packet-sweep-20260927-cross-contracts:ACT015, source_ref:packet-sweep-20260927-egolite:ACT-011, source_ref:packet-sweep-20260927-egolite:ACT-018, source_ref:packet-sweep-20260927-egolite:ACT-019, source_ref:packet-sweep-20260927-egolite:ACT-020, source_ref:packet-sweep-20260927-egolite:ACT-021]
+source_lineage:
+- source_ref:packet-sweep-20260927-cross-contracts:ACT014
+- source_ref:packet-sweep-20260927-cross-contracts:ACT015
+- source_ref:packet-sweep-20260927-egolite:ACT-011
+- source_ref:packet-sweep-20260927-egolite:ACT-018
+- source_ref:packet-sweep-20260927-egolite:ACT-019
+- source_ref:packet-sweep-20260927-egolite:ACT-020
+- source_ref:packet-sweep-20260927-egolite:ACT-021
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [cmd.git.stage, cmd.git.unstage, cmd.source_control.remote.update, cmd.source_control.stash.create, cmd.source_control.stash.apply, cmd.source_control.branch.create, cmd.source_control.branch.delete, paths, whole_file_only, include_untracked, local_config_only, expected_config_generation, preview_ref, pm.git_adapter.stash_apply_preview.v1, pm.git_adapter.branch_delete_preview.v1, dangerous_confirmation, accepted, effect_unknown, reconcile_effects]
 negative_constraints:
   - Do not credit hunk commands with whole-file untracked/binary stage semantics.
@@ -1990,3 +2033,107 @@ negative_constraints:
   - Do not claim native handler execution, event, runtime proof, or readiness from these static contracts and production-intent rows.
 owner_hints: [Plans/Source_Control_System.md]
 ```
+
+
+## Projects refresh accepted owner addendum (2026-11-03)
+
+### SCS-025 - Read-only source inspection and local remote addition
+
+```yaml
+plan_unit_id: SCS-025
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: |-
+  cmd.source_control.repository.inspect is a read-only Source Control primary with sole future handlers::source_control::repository_inspect. Its closed source-context variant supports unregistered drafts with project_id=null and actual Server/Computer, Execution Host/Environment, source transport/locator, topology/trust/profile refs and observation generation; a registered context binds the actual Project/repository/workspace. The result is a bounded redacted inspection receipt with observed time/hash/currentness/expiry, backend/native revision, branch or bookmark, dirty tracked/untracked state, remotes and detected service/locator evidence, upstream evidence, submodules, Git LFS and hooks, duplicate registered-copy match and completeness/omission reasons. Local folder, Server, SSH/PM, SMB, NFS, mounted source and online source preparation all use it. Native read modes must not create a JJ snapshot, execute hooks/filters/includes or mutate configuration. Listing a URL or origin is not verified identity, hosting binding, credentials or write permission.
+
+  A matching registered copy offers Open on its named Computer without blocking. Only explicitly selected account/repository verification can Link it; Leave it unlinked remains valid. Unknown/unavailable/partial inspection stays so, never empty/no-history/clean by default. Actual source changes stale Review and require a fresh receipt. A pre-copy online inspection may be partial and cannot replace post-acquisition native inspection.
+
+  cmd.source_control.remote.add is a distinct neutral primary with sole future handlers::source_control::remote_add. Its typed local-config mutation binds the actual backend, repository/workspace, expected config and native revision, currentness/writer lease, FileSafe and permission/idempotency, explicit remote name and scrubbed fetch/push locators. Names permit letters, numbers, hyphen, underscore and dot, reject empty/unsafe/taken names and preserve a separately chosen original upstream role; an upstream contribution name cannot collide with origin. Existing remotes require remote.update or a new explicit name, never implicit overwrite. Before/after config and terminal result are receipted with exact caller return. No remote.add/update performs network I/O, authentication, publish or hosting creation. Git uses the admitted Git config writer; JJ uses only an admitted JJ-authoritative adapter under its existing fence. A missing backend route remains handler_unavailable/unsupported, with no direct-Git fallback.
+
+  Both new primaries extend the neutral scope-aware command family deliberately; historical nineteen-ID v1 requests remain exact and the 31 Jujutsu command IDs do not grow. No new EventRecord follows from these receipts. Final dispatch uses the same Permissions admission as other source operations; inspection permission never authorizes add, fork, publish or destination writes.
+
+  B-E01/Fb-E01 close contribution synchronization through the existing cmd.source_control.remote.sync, sole handlers::source_control::remote_sync and unchanged catalog.source_control_remote_sync identity. Consume the five selected definitions in Plans/source_control_contracts.schema.json: source_control_command_request_v2, source_control_command_result_v2, source_control_command_scope_v2, remote_operation_target_v2 and remote_sync_local_reconcile_target_v2. The closed remote_effect branch retains the exact v1 target; the local_reconcile_only branch binds captured original repository/binding/remote/fetched revision and fetch receipt, fork repository/binding/native workspace and expected native revision, head/base and contribution/review refs, actual generations/lease/permission/FileSafe/Stop and the current preview/expiry/exact return. reconciliation_strategy is the existing resolved native merge/rebase policy ID/revision/hash, admitted by the actual backend capability. Require push_targets=[] and publish_performed=false. Changed original/fork/workspace/revision/strategy/lease or authority refuses rather than silently selecting a newer revision. Owner results retain exact before/after/local receipts and outcome_unknown reconciliation. Publication is a separately admitted cmd.source_control.remote.publish naming the fork; no new sync engine, remote-name role inference, network publication or direct-Git fallback is hidden in local reconciliation. Historical v1 bytes, semantic hashes, results and replay remain exact.
+
+  For existing-Project chat conversion, ACD-510/511 owns the current preview and destination authority. Git defaults to a separate work branch/worktree in the chosen folder; direct main is Advanced only. Inspect the actual destination/history and block unsaved target buffers or a source-history graft before writes. Missing Git name/email remains a named owner blocker. Jujutsu follows JJI-023 and its admitted native adapter; this inspection receipt never authorizes conversion or publication.
+
+  For SSH inspection, authenticated source access consumes only current SRV-018/RAS-017 host-trust and public-key-install results. The separately human-applied cmd.server.ssh.trust / cmd.server.ssh.public_key.install receipts bind actual host/port/key observation, remote account and public-key/currentness refs; a successful install is not itself a complete source inspection or repository binding. This read-only primary never writes known-host trust or authorized_keys, installs keys, accepts a changed fingerprint, unlocks another key, pairs a Client or authorizes mutation. After any prerequisite effect, refresh the actual bounded inspection and Review currentness through the same owner. Missing or uncertain Server-native evidence stays unavailable and cannot be filled by a path, mode/grant, connection.add or a fixture.
+gui_related: true
+gui_classification_reason: Defines visible setup, choice, status, recovery or exact return behavior.
+depends_on:
+- SCS-003
+- SCS-004
+- SCS-012
+- SCS-024
+unblocks: []
+acceptance_criteria:
+- Every source route has a typed read receipt and source currentness, including null-Project drafts; partial/denied
+  observations never become clean/none.
+- Detected remotes remain unlinked until explicit current account/repository verification.
+- remote.add rejects taken/unsafe names, stale config/lease, wrong backend/Host and credentials in URL; performs
+  zero transport or implicit publish.
+- JJ native read/remote paths preserve one authority and never invoke uncertified Git fallback.
+- >-
+  Local reconciliation checks both captured repositories/revisions, the fetch receipt and exact policy/lease/currentness/return; wrong original/fork/backend or changed strategy refuses with no implicit publish.
+- >-
+  Git conversion preserves destination history and unsaved buffers; direct main requires the explicit Advanced choice and normal branch policy.
+- >-
+  SSH inspection cannot perform trust/key installation or treat its result as repository identity; only current owner-validated prerequisites permit the actual fresh read.
+validation_surfaces:
+- Plans/source_control_contracts.schema.json
+- F companion positive/negative semantic fixtures; not_run in phase 1
+risk_class: identity_authority_or_false_completion
+reasoning_tier: high
+context_scope: projects_refresh_scs_025
+implementation_surfaces:
+- Plans/Source_Control_System.md
+- Future existing owner handlers; handler_unavailable until native evidence
+node_compile_hint:
+  mode: static_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- '/mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#P1/P2/P5; BUILD-SPEC §18.1 #2/3/19; R3'
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-e
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/BUILD-SPEC-split-v2.md#18-and-21
+- '/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-E01'
+- '/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-E01'
+- '/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-E01'
+- 'Plans/Server_System.md#SRV-018; Plans/Remote_Access_System.md#RAS-017; A interface freeze pm-mail 1103211659-9a77 (2026-11-03)'
+preserved_exact_tokens:
+- cmd.source_control.repository.inspect
+- handlers::source_control::repository_inspect
+- cmd.source_control.remote.add
+- handlers::source_control::remote_add
+- project_id=null
+- remote.update
+- upstream
+- origin
+- handler_unavailable
+- local_reconcile_only
+- reconciliation_strategy
+- push_targets=[]
+- publish_performed=false
+- remote_operation_target_v2
+- remote_sync_local_reconcile_target_v2
+- source_control_command_request_v2
+- source_control_command_result_v2
+- source_control_command_scope_v2
+- cmd.server.ssh.trust
+- cmd.server.ssh.public_key.install
+negative_constraints:
+- Do not make SIR/topology an SCM inspection engine or infer identity/trust from path/display text.
+- Do not fabricate a Project/repository/writer lease for pre-registration reads.
+- Do not turn remote.update into create-or-overwrite or promote receipt-only actions into EventRecords.
+owner_hints:
+- Plans/Source_Control_System.md
+compatibility_only_notes:
+- Existing exact historical Project requests/results/receipts remain readable under their original version; no in-place
+  reinterpretation.
+stale_retired_dispositions:
+- Earlier pending decision labels are superseded by the approved packet; native implementation and governance certification
+  remain unproved.
+```
+
+ContractRef: ContractName:Plans/Source_Control_System.md#SCS-025, ContractName:Plans/Plan_Document_System.md#PDS-003

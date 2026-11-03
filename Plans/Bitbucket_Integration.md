@@ -35,6 +35,7 @@ canonical_text: >-
   Bitbucket Cloud and Data Center are distinct forge_provider values, bitbucket_cloud and bitbucket_data_center.
   Cloud identity is account/workspace/repository; Data Center identity is host/account/project/repository plus
   signed server version/license support. Generic bitbucket is not a durable provider or automatic fallback.
+  P1 New Project consumes FGI-023 and PJCT-010 with Cloud workspace and explicit grouping Project or Data Center normalized host/project key and repository slug; the grouping Project is not inserted in a Cloud workspace/repository address. Private-most allowed visibility and version/license/auth capability are checked. No app passwords are admitted. P2 uses a team-project branch path, not new Bitbucket fork semantics.
 gui_related: true
 gui_classification_reason: Provider selection, host/container hierarchy and support state are visible setup behavior.
 depends_on: [FGI-001, PDS-003]
@@ -49,7 +50,11 @@ reasoning_tier: high
 context_scope: bitbucket_provider_identity
 implementation_surfaces: [Plans/Bitbucket_Integration.md, future Bitbucket adapters]
 node_compile_hint: {mode: bitbucket_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-05]
+source_lineage:
+- source_ref:egolite-register:SCM-05
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [bitbucket_cloud, bitbucket_data_center, workspace, project, repository, version, license]
 negative_constraints: [Do not use generic bitbucket as durable provider., Do not reuse Cloud capability for Data Center., Do not infer support from host name.]
 owner_hints: [Plans/Bitbucket_Integration.md, Plans/Forge_Integrations.md]
@@ -67,6 +72,7 @@ canonical_text: >-
   provider repository ID, PM repo_id, credential/grant ref, adapter/catalog and binding generation. Auth, account,
   container access, repository access, PR access, pipeline/check access, server version/license, rate and readiness
   remain separate. Missing or unsupported capability returns a typed reason and fallback.
+  P1 New Project consumes FGI-023 and PJCT-010 with Cloud workspace and explicit grouping Project or Data Center normalized host/project key and repository slug; the grouping Project is not inserted in a Cloud workspace/repository address. Private-most allowed visibility and version/license/auth capability are checked. No app passwords are admitted. P2 uses a team-project branch path, not new Bitbucket fork semantics.
 gui_related: true
 gui_classification_reason: Account, container/repository, auth, version/license and requested/effective capability are visible setup state.
 depends_on: [BBI-001, FGI-003]
@@ -81,7 +87,11 @@ reasoning_tier: high
 context_scope: bitbucket_auth_binding_capabilities
 implementation_surfaces: [Plans/forge_integration_contracts.schema.json, future Bitbucket auth/API adapters]
 node_compile_hint: {mode: bitbucket_binding_capability_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-012..017]
+source_lineage:
+- source_ref:egolite-register:SCM-012..017
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md (accepted cards P1-P12, S1-S16, N15/N25 and
+  Y1/O1-O3 as applicable)
+- 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 preserved_exact_tokens: [OAuth, PAT ref, SSH ref, workspace access, project access, pipeline enabled, build status, signed catalog]
 negative_constraints: [Do not persist raw credentials., Do not equate sign-in with repository readiness., Do not silently map Cloud capabilities to Data Center.]
 owner_hints: [Plans/Bitbucket_Integration.md, Plans/Forge_Integrations.md, Plans/Multi-Account.md]
