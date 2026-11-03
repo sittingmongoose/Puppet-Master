@@ -18,8 +18,20 @@
     {"command_id": "cmd.environment.disconnect", "handler": "handlers::environment::disconnect", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_result", "wiring_entry_id": "catalog.environment_disconnect"},
     {"command_id": "cmd.thread.outbox.retry", "handler": "handlers::thread_outbox::retry", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_outbox_retry_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_outbox_command_result", "wiring_entry_id": "catalog.thread_outbox_retry"},
     {"command_id": "cmd.thread.outbox.cancel", "handler": "handlers::thread_outbox::cancel", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_outbox_cancel_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_outbox_command_result", "wiring_entry_id": "catalog.thread_outbox_cancel"},
-    {"command_id": "cmd.thread.request", "handler": "handlers::thread::request", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_request_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_request_command_result", "wiring_entry_id": "catalog.thread_request"},
-    {"command_id": "cmd.thread.spawn", "handler": "handlers::thread::spawn", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_spawn_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_spawn_command_result", "wiring_entry_id": "catalog.thread_spawn"},
+    {
+      "command_id": "cmd.thread.request",
+      "handler": "handlers::thread::request",
+      "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ThreadRequestFacadeRequestV2",
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ThreadRequestFacadeResultV2",
+      "wiring_entry_id": "catalog.thread_request"
+    },
+    {
+      "command_id": "cmd.thread.spawn",
+      "handler": "handlers::thread::spawn",
+      "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ThreadSpawnFacadeRequestV2",
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ThreadSpawnFacadeResultV2",
+      "wiring_entry_id": "catalog.thread_spawn"
+    },
     {"command_id": "cmd.thread.await", "handler": "handlers::thread::await_condition", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_await_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_await_command_result", "wiring_entry_id": "catalog.thread_await"},
     {"command_id": "cmd.capability.ensure", "handler": "handlers::capability::ensure", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/capability_ensure_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/capability_ensure_result", "wiring_entry_id": "catalog.capability_ensure"},
     {"command_id": "cmd.tool.discover", "handler": "handlers::tool::discover", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/tool_discover_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/tool_discover_result", "wiring_entry_id": "catalog.tool_discover"},

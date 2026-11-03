@@ -255,7 +255,7 @@ Available across all projects. Overridden by a project-local command with the sa
 
 
 When resolving a command by name:
-1. Check `.puppet-master/commands/<name>.md` in the active project root.
+1. For a real captured Project context, check `.puppet-master/commands/<name>.md` in that Project root. No project skips this root and every Project-only whole version/switch; resolve only eligible library reach and actual Computer readiness.
 2. If not found, check `~/.config/puppet-master/commands/<name>.md`.
 3. If not found, the command is unresolved. The invocation surface MUST display an error: "Unknown command: \<name\>".
 
@@ -386,12 +386,13 @@ ContractRef: ContractName:Plans/Permissions_System.md#5-tool-permission-keys, Co
 
 The active working directory for command execution resolves as follows:
 
-1. If the active context has a bound worktree (`is_worktree` is true in execution context), use the **worktree root path**
-2. Otherwise, use the **active project root**
+1. For a captured real Project context with a bound worktree (`is_worktree=true`), use that **worktree root path**.
+2. For captured Project execution without a worktree, use that exact **Project root**.
+3. For application execution, use the thread’s captured **chat folder or granted Computer directory**. The folder is made lazily by ACD-508 before the first saved file or command. Missing actual root refuses; there is no HOME, CWD, main-Project or focused-tab fallback.
 
 This applies to all command execution contexts: Assistant Chat (all modes), Orchestrator DAE, terminal sessions, and file operations.
 
-When a thread with a bound worktree is active in Assistant Chat, all `cmd.chat.*` commands execute against the worktree root. When no worktree is bound, they execute against the project root.
+A Project-bound Assistant thread uses its captured worktree or Project root. A No project thread uses its actual Computer and captured chat/granted root. Navigation and record commands need their own owner target rather than an invented cwd; a Project-native operation still requires an explicitly bound real Project.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
 
@@ -1724,49 +1725,73 @@ plan_unit_id: CS-018
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Command execution resolves the active working directory to the bound worktree
-  root when execution context has is_worktree true and otherwise to the active
-  project root, applying consistently to Assistant Chat, Orchestrator DAE,
-  terminal sessions, and file operations.
+canonical_text: 'Command execution resolves the active working directory to the captured bound worktree root
+  when is_worktree is true, the captured Project root for Project execution otherwise, or the exact app chat/granted
+  Computer root for application execution, applying consistently to Assistant Chat, Orchestrator DAE, terminal
+  sessions, and file operations.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: false
 gui_classification_reason: Working directory resolution is command execution runtime behavior.
 split_recommended: true
-split_recommendation_reason: Source span S0026 also includes visible path-card and terminal cwd behavior covered by CS-019.
-depends_on: [CS-014]
-unblocks: [CS-019, CS-020]
+split_recommendation_reason: Source span S0026 also includes visible path-card and terminal cwd behavior covered
+  by CS-019.
+depends_on:
+- CS-014
+unblocks:
+- CS-019
+- CS-020
 acceptance_criteria:
-  - EXECUTION remains the anchor for command execution semantics.
-  - If active context has a bound worktree with is_worktree true, commands use the worktree root path.
-  - Otherwise commands use the active project root.
-  - Assistant Chat, Orchestrator DAE, terminal sessions, and file operations share this resolution rule.
-  - cmd.chat.* commands execute against the worktree root when a thread has a bound worktree, and against project root otherwise.
+- EXECUTION remains the anchor for command execution semantics.
+- If active context has a bound worktree with is_worktree true, commands use the worktree root path.
+- Otherwise Project commands use their captured Project root, while application commands require their captured
+  chat/granted Computer root.
+- Assistant Chat, Orchestrator DAE, terminal sessions, and file operations share this resolution rule.
+- cmd.chat.* commands execute against the worktree root when a thread has a bound worktree, and against the
+  captured Project root otherwise; app execution instead requires its captured chat/granted root.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: command_working_directory_drift
 reasoning_tier: high
 context_scope: command_execution_context
 implementation_surfaces:
-  - Plans/Commands_System.md
-  - Plans/Executor_Protocol.md
-  - Plans/assistant-chat-design.md
-  - Plans/Run_Modes.md
+- Plans/Commands_System.md
+- Plans/Executor_Protocol.md
+- Plans/assistant-chat-design.md
+- Plans/Run_Modes.md
 node_compile_hint:
   mode: command_working_directory_resolution
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0025
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0026
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0025
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0026
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "EXECUTION"
-  - "is_worktree"
-  - "worktree root path"
-  - "active project root"
-  - "cmd.chat.*"
-negative_constraints: []
+- EXECUTION
+- is_worktree
+- worktree root path
+- active project root
+- cmd.chat.*
+negative_constraints:
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 ```
 
 ### CS-019 - Assistant Worktree Naming Path Display and Terminal CWD
@@ -4082,8 +4107,8 @@ Until Event Authority individually admits a producer family, these commands have
 | `cmd.environment.disconnect` | `EnvironmentConnectionCommandRequest{action=disconnect, environment_id, expected_supervisor_generation, expected_connection_epoch, drain_policy}` -> `EnvironmentConnectionCommandResult` | not `closed`; `stale_projection`, `already_in_state`, `operation_in_progress`, `permission_required` | `handlers::environment::disconnect` | closing/closed projection and work result; no EventRecord pending authority |
 | `cmd.thread.outbox.retry` | `ThreadOutboxRetryRequest{outbox_entry_id, thread_id, expected_outbox_revision, expected_target_generation}` -> `ThreadOutboxCommandResult` | retryable unacknowledged entry; `outbox_state_mismatch`, `stale_projection`, `deadline_expired`, `topology_unavailable`, `permission_required` | `handlers::thread_outbox::retry` | same logical command/idempotency identity, new bounded attempt; no EventRecord pending authority |
 | `cmd.thread.outbox.cancel` | `ThreadOutboxCancelRequest{outbox_entry_id, thread_id, expected_outbox_revision, cancellation_reason}` -> `ThreadOutboxCommandResult` | cancellable uncommitted entry; `outbox_state_mismatch`, `stale_projection`, `already_in_state`, `permission_required` | `handlers::thread_outbox::cancel` | durable cancellation intent/result; no EventRecord pending authority |
-| `cmd.thread.request` | `ThreadRequestCommandRequest{request_id, parent_thread_id?, requested_thread_kind, bounded_request_ref, target_generation}` -> `ThreadRequestCommandResult` | target current and request admissible; `stale_projection`, `topology_unavailable`, `policy_denied`, `resource_blocked`, `permission_required` | `handlers::thread::request` | durable outbox entry and stable request/thread reconciliation refs; no EventRecord pending authority |
-| `cmd.thread.spawn` | `ThreadSpawnCommandRequest{spawn_request_id, parent_thread_id, requested_role, bounded_context_ref, target_generation}` -> `ThreadSpawnCommandResult` | parent current and spawn allowed; `stale_projection`, `policy_denied`, `resource_blocked`, `lease_conflict`, `permission_required` | `handlers::thread::spawn` | stable spawn request and resulting child ref when committed; no EventRecord pending authority |
+| `cmd.thread.request` | `Plans/application_workflow_contracts.schema.json#/$defs/ThreadRequestFacadeRequestV2` → `Plans/application_workflow_contracts.schema.json#/$defs/ThreadRequestFacadeResultV2`; original exact send codec remains a compatibility branch | target current and request admissible; `stale_projection`, `topology_unavailable`, `policy_denied`, `resource_blocked`, `permission_required` | `handlers::thread::request` | durable outbox entry and stable request/thread reconciliation refs; no EventRecord pending authority |
+| `cmd.thread.spawn` | `Plans/application_workflow_contracts.schema.json#/$defs/ThreadSpawnFacadeRequestV2` → `Plans/application_workflow_contracts.schema.json#/$defs/ThreadSpawnFacadeResultV2`; original exact send codec remains a compatibility branch | parent current and spawn allowed; `stale_projection`, `policy_denied`, `resource_blocked`, `lease_conflict`, `permission_required` | `handlers::thread::spawn` | stable spawn request and resulting child ref when committed; no EventRecord pending authority |
 | `cmd.thread.await` | `ThreadAwaitCommandRequest{await_request_id, thread_id, condition_ref, timeout_utc, target_generation}` -> `ThreadAwaitCommandResult` | current nonterminal target; `stale_projection`, `already_in_state`, `deadline_expired`, `target_missing`, `policy_denied` | `handlers::thread::await_condition` | asynchronous wait as `ObservableWork`, never a blocked UI thread; no EventRecord pending authority |
 | `cmd.capability.ensure` | `CapabilityEnsureRequest{capability_id, provisioning_mode=Off,Auto,On, requirement_ref, origin_operation_id}` -> `CapabilityEnsureResult` | exact target and current policy; `capability_unavailable`, `setup_required`, `approval_required`, `policy_denied`, `resource_blocked`, `permission_required` | `handlers::capability::ensure` | `CapabilityProvisioningOperation`/readiness projection; provider first acquisition still requires explicit setup |
 | `cmd.tool.discover` | `ToolDiscoverRequest{capability_query_ref, stage_limit, expected_registry_generation}` -> `ToolDiscoverResult` | registry query allowed; `stale_projection`, `topology_unavailable`, `policy_denied`, `resource_blocked` | `handlers::tool::discover` | bounded progressive capability-stage projection and artifact refs; no EventRecord pending authority |
@@ -4164,65 +4189,105 @@ plan_unit_id: CS-058
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Command-originated persisted domain evidence consumes EventRecord 2.0 scope, global
-  event identity, exact scope-partitioned index identity, scoped lifetime idempotency,
-  dedupe catch-up, complete-reader admission, no-secret custody, and synced-receipt truth.
-  Project restore, worktree, attempt, receipt, and restore-point events require project
-  scope; app-root storage diagnostics use application scope without a fake project;
-  StorageCompatibilityStatus is not appended into an incompatible target; and normal
+canonical_text: 'Command-originated persisted domain evidence consumes EventRecord 2.0 scope, global event
+  identity, exact scope-partitioned index identity, scoped lifetime idempotency, dedupe catch-up, complete-reader
+  admission, no-secret custody, and synced-receipt truth. Project restore, worktree, attempt, receipt, and
+  restore-point events require their actual admitted scope; app-root storage diagnostics use application scope
+  without a fake project; StorageCompatibilityStatus is not appended into an incompatible target; and normal
   command dispatch can neither request projector_replay_only nor fabricate local events.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: false
-gui_classification_reason: Defines backend event identity, dedupe, durability, and scope constraints for command handlers.
+gui_classification_reason: Defines backend event identity, dedupe, durability, and scope constraints for command
+  handlers.
 split_recommended: false
-depends_on: [CS-006, CS-007, CV-317, CV-318, CV-320, CV-321, SP-241]
+depends_on:
+- CS-006
+- CS-007
+- CV-317
+- CV-318
+- CV-320
+- CV-321
+- SP-241
 unblocks: []
 acceptance_criteria:
-  - Every command-originated persisted event uses schema_version 2.0.0, exact scope_kind/project_id pairing, and a registered payload/event owner.
-  - EventRecord 2.0 root inspection refuses open unless the reader validates 2.0.0; partial or best-effort projection is impossible.
-  - Event index access uses exact app/project scope_partition encoding, zero-padded sequence_id_20, and the canonical event_record_index.v2 key; key/value scope mismatch is corruption.
-  - A replayed command identity returns the original only for the same semantic digest; conflict or dedupe_unavailable appends nothing.
-  - No command success that requires durability is authorized by persisted_at_utc without the matching synced AppendReceipt or owner receipt.
-  - Normal dispatch cannot construct projector_replay_only, and compatibility replay produces zero command/tool/provider/network/notification/usage/safe-point/external side effects.
-  - Unsupported/newer-store compatibility status remains diagnostic-only; secrets and local root/worktree/credential paths remain absent or local/redacted.
+- Every command-originated persisted event uses schema_version 2.0.0, exact scope_kind/project_id pairing,
+  and a registered payload/event owner.
+- EventRecord 2.0 root inspection refuses open unless the reader validates 2.0.0; partial or best-effort projection
+  is impossible.
+- Event index access uses exact app/project scope_partition encoding, zero-padded sequence_id_20, and the canonical
+  event_record_index.v2 key; key/value scope mismatch is corruption.
+- A replayed command identity returns the original only for the same semantic digest; conflict or dedupe_unavailable
+  appends nothing.
+- No command success that requires durability is authorized by persisted_at_utc without the matching synced
+  AppendReceipt or owner receipt.
+- Normal dispatch cannot construct projector_replay_only, and compatibility replay produces zero command/tool/provider/network/notification/usage/safe-point/external
+  side effects.
+- Unsupported/newer-store compatibility status remains diagnostic-only; secrets and local root/worktree/credential
+  paths remain absent or local/redacted.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - future Case L EventRecord scope, dedupe, replay-only, and command-receipt fixtures
-  - python3 -m json.tool Plans/event_record.schema.json
-  - python3 scripts/pm-plan-index.py validate
+- future Case L EventRecord scope, dedupe, replay-only, and command-receipt fixtures
+- python3 -m json.tool Plans/event_record.schema.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: command_event_identity_or_durability_drift
 reasoning_tier: high
 context_scope: case_l_command_eventrecord_v2
-implementation_surfaces: [Plans/Commands_System.md, Plans/Contracts_V0.md, Plans/event_record.schema.json, Plans/storage-plan.md]
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/Contracts_V0.md
+- Plans/event_record.schema.json
+- Plans/storage-plan.md
 node_compile_hint:
   mode: case_l_command_eventrecord_consumer
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Case-L:L-007
-  - Case-L:L-008
-  - Case-L:L-009
-  - Case-L:L-023
-  - Case-L:EVT-01..EVT-07
+- Case-L:L-007
+- Case-L:L-008
+- Case-L:L-009
+- Case-L:L-023
+- Case-L:EVT-01..EVT-07
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - EventRecord
-  - 2.0.0
-  - scope_kind
-  - scope_partition
-  - application
-  - project
-  - "event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}"
-  - sequence_id_20
-  - projector_replay_only
-  - replay_only_not_appendable
-  - dedupe_unavailable
-  - AppendReceipt
-  - synced
+- EventRecord
+- 2.0.0
+- scope_kind
+- scope_partition
+- application
+- project
+- event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}
+- sequence_id_20
+- projector_replay_only
+- replay_only_not_appendable
+- dedupe_unavailable
+- AppendReceipt
+- synced
 negative_constraints:
-  - Do not fabricate a project for application scope or emit into an incompatible store.
-  - Do not let command handlers create a peer event envelope, dedupe rule, or durability meaning.
-  - Do not infer successful persistence from timestamps or projection/UI state.
-  - Do not open an EventRecord 2.0 root with a reader that cannot validate 2.0.0 or persist raw secret/credential material in command evidence.
-owner_hints: [Plans/Commands_System.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+- Do not fabricate a project for application scope or emit into an incompatible store.
+- Do not let command handlers create a peer event envelope, dedupe rule, or durability meaning.
+- Do not infer successful persistence from timestamps or projection/UI state.
+- Do not open an EventRecord 2.0 root with a reader that cannot validate 2.0.0 or persist raw secret/credential
+  material in command evidence.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/Commands_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
 ```
 
 ### CS-059 - Storage Compatibility Maintenance Retention And Availability Gate
@@ -5013,165 +5078,229 @@ plan_unit_id: CS-069
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: 'Exactly five canonical cmd.settings commands are centrally registered with the Settings-owned request/result,
-  availability, disabled-reason, idempotency/currentness, receipt, and no-unregistered-event boundaries. The six Onboarding,
-  Guided Tour, and Doctor UI actions remain route-only cmd.settings.open consumers. Declared handler destinations are
-  contract targets and do not prove that a dispatcher or runtime handler exists. QA round 2, Jared 2026-10-30; DL-258;
-  GUI 7d586bad18: Q6/Q7/H1/H5: backup location/Kit/unlock presentation and joined choices reuse the existing fourteen
-  onboarding local actions and selected owner routes. No new restore wrapper or onboarding command. DL-259, Jared 2026-10-31:
-  ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode through the Settings owner,
-  with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect the same effective
-  state. Every opened onboarding question tip and prose help section has useful Plain English and technical versions,
-  including FileSafe, service differences, storage, remote access and AI/auth choices, assuming no coding experience.
-  Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy is limited to tips/help
-  (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
-  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
-  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D3 A: generated proxy settings support
-  Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing
-  proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding
-  offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik configuration
-  for the person to add on their own system before the owner’s DNS, reachability and live-connection checks; Caddy is
-  the default. The second only checks the existing proxy route and live connection, with nothing generated. Set it up
-  for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
-  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
-  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
-  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
-  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
-  a family. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and
-  Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no
-  separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A
-  Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable client_id,
-  independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process,
-  IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native
-  Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public
-  listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
-  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
-  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
-  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
-  Tailscale stays external and unmanaged. DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore
-  result and its actual prerequisites. It does not run optional remote-access configuration. After that owner settlement,
-  a separate postcommit remote-setup view inside automatic_preparation runs any requested Remote Access continuation,
-  before the normal provider/Free Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization,
-  new Remote Link output, and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing
-  domain owners, approvals and truthful results. Later always finishes onboarding and leaves the committed Project intact:
-  it does not wait for optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred;
-  any already-started work obeys the owner’s existing cancel/background rules, and the app shows its actual result or
-  pending state. Existing whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.
-  DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and validation
-  result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
-  restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
-  and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
-  fences remain unchanged. DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered
-  pairing create no new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
-  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004);
-  Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.
-  DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s current accepted owner result.
-  Continue Setup retains the existing cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery
-  fence, never the original creation key. Check again consumes the applicable current owner observation/recovery result;
-  neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block
-  count and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
-  and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
+canonical_text: 'Exactly five canonical cmd.settings commands are centrally registered with the Settings-owned
+  request/result, availability, disabled-reason, idempotency/currentness, receipt, and no-unregistered-event
+  boundaries. The six Onboarding, Guided Tour, and Doctor UI actions remain route-only cmd.settings.open consumers.
+  Declared handler destinations are contract targets and do not prove that a dispatcher or runtime handler
+  exists. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: backup location/Kit/unlock presentation
+  and joined choices reuse the existing fourteen onboarding local actions and selected owner routes. No new
+  restore wrapper or onboarding command. DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar
+  expose the same global general.interaction.mode through the Settings owner, with values ELI5 and Expert,
+  labels Plain English and Expert, and default ELI5. Both bars reflect the same effective state. Every opened
+  onboarding question tip and prose help section has useful Plain English and technical versions, including
+  FileSafe, service differences, storage, remote access and AI/auth choices, assuming no coding experience.
+  Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy is limited
+  to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference,
+  not a tour-only setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D3 A: generated
+  proxy settings support Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only:
+  it can be selected as an existing proxy but never sent to a generation/install/export operation. DL-259 CERT-1
+  / srv C1, Jared 2026-10-31: onboarding offers Make the settings file or I have one already. The first generates/exports
+  Caddy, NGINX or Traefik configuration for the person to add on their own system before the owner’s DNS, reachability
+  and live-connection checks; Caddy is the default. The second only checks the existing proxy route and live
+  connection, with nothing generated. Set it up for me is removed: Puppet Master does not install or host the
+  proxy. The onboarding draft carries proxy_hosting=generate_only or existing_proxy for this new-Server proxy
+  branch and keeps proxy_tls null; it collects no certificate choice. Generating a file proves neither installation
+  nor consent, identity, secure reachability or a live route. For generation, onboarding proxy_kind is exactly
+  caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may
+  record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  a family. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows,
+  macOS and Linux have their own built-in Tailscale connection and sign in once through the shared protected
+  auth owner, with no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised
+  by its owning PM process. A Server keeps one active node per stable server_id; a native Client installation
+  keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and Server endpoint
+  selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references
+  prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access
+  only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the
+  automatic private listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale.
+  Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain
+  browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through
+  the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed
+  host Tailscale stays external and unmanaged. DL-259 srv final, 2026-10-31: Creating observes only the reviewed
+  Project creation/open/restore result and its actual prerequisites. It does not run optional remote-access
+  configuration. After that owner settlement, a separate postcommit remote-setup view inside automatic_preparation
+  runs any requested Remote Access continuation, before the normal provider/Free Models continuation; the eleven-stage
+  graph is unchanged. Tailscale/Headscale authorization, new Remote Link output, and configuration-file/export
+  or existing-proxy checks (CERT-1 / srv C1) use their existing domain owners, approvals and truthful results.
+  Later always finishes onboarding and leaves the committed Project intact: it does not wait for optional setup,
+  certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started work
+  obeys the owner’s existing cancel/background rules, and the app shows its actual result or pending state.
+  Existing whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.
+  DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and
+  validation result for the online-copy/import view, its Continue availability/reason and activation. Recheck
+  Protect Connect and restore Continue prerequisites through the same existing owners at activation. Invalid
+  or stale input advances nothing and dispatches no owner action. Existing local onboarding IDs, reviewed commit,
+  protected auth, permission and return fences remain unchanged. DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field
+  redraw, Copy acknowledgment and answered pairing create no new command, receipt or event. Existing local
+  actions retain their owner handoffs and exact operation/generation/return fences. Submit reads live protected
+  input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004); Creating checks/blocks consume
+  the current owner’s verified effects (PWIZ-021), including partial GitHub recovery. DL-259 FO-9 final, 2026-10-31:
+  Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s current accepted owner result. Continue Setup retains
+  the existing cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery fence, never
+  the original creation key. Check again consumes the applicable current owner observation/recovery result;
+  neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist,
+  block count and stage progress agree on verified settled effects. Existing fourteen local actions, exact
+  return, permission and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.
+
+
+  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single
+  resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere.
+  Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project
+  versions and sole owner. Computer installations, credentials and protected source trust never travel in copy.
+  Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.*
+  local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact
+  consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay
+  resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable
+  handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: The family governs Settings route, preview, apply, rollback, and export activation, disabled state, outcome, and exact return.
-depends_on: [CS-066, SSYS-018, SSYS-019]
-unblocks: [UIW-014]
+gui_classification_reason: The family governs Settings route, preview, apply, rollback, and export activation,
+  disabled state, outcome, and exact return.
+depends_on:
+- CS-066
+- SSYS-018
+- SSYS-019
+unblocks:
+- UIW-014
 acceptance_criteria:
 - The registered set is exactly cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply,
   cmd.settings.transaction.rollback, and cmd.settings.export.
 - Every command preserves the exact request_schema_ref and result_schema_ref owned by Plans/settings_system_contracts.schema.json;
   cmd.settings.open returns pm.settings_route_return.v1.
-- Preview and open write no setting value; apply and rollback settle only through pm.settings_transaction_result.v1 with
-  owner readback; export returns a non-secret pm.settings_export_manifest.v1.
-- The six route-only UI actions dispatch cmd.settings.open and authorize no Onboarding, Guided Tour, Doctor probe, or
-  remediation operation.
-- Registration, a declared handler location, static wiring, schema validation, or a concept simulation is not runtime-handler
-  evidence; handler_unavailable remains truthful until executable proof exists.
+- Preview and open write no setting value; apply and rollback settle only through pm.settings_transaction_result.v1
+  with owner readback; export returns a non-secret pm.settings_export_manifest.v1.
+- The six route-only UI actions dispatch cmd.settings.open and authorize no Onboarding, Guided Tour, Doctor
+  probe, or remediation operation.
+- Registration, a declared handler location, static wiring, schema validation, or a concept simulation is not
+  runtime-handler evidence; handler_unavailable remains truthful until executable proof exists.
 - No unregistered EventRecord is emitted or inferred.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: backup location/Kit/unlock presentation and joined
-  choices reuse the existing fourteen onboarding local actions and selected owner routes. No new restore wrapper or onboarding
-  command.'
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: backup location/Kit/unlock presentation
+  and joined choices reuse the existing fourteen onboarding local actions and selected owner routes. No new
+  restore wrapper or onboarding command.'
 - 'DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode
-  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars
-  reflect the same effective state. Every opened onboarding question tip and prose help section has useful Plain English
-  and technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming
-  no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy
-  is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
-  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
-  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D3 A: generated proxy settings support
-  Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing
-  proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding
-  offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik configuration
-  for the person to add on their own system before the owner’s DNS, reachability and live-connection checks; Caddy is
-  the default. The second only checks the existing proxy route and live connection, with nothing generated. Set it up
-  for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
-  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
-  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
-  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
-  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
-  a family. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and
-  Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no
-  separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A
-  Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable client_id,
-  independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process,
-  IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native
-  Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public
-  listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
-  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
-  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
-  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
-  Tailscale stays external and unmanaged.'
-- 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
-  prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
-  remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
-  Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
-  and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing domain owners, approvals
-  and truthful results. Later always finishes onboarding and leaves the committed Project intact: it does not wait for
-  optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started
-  work obeys the owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing
-  whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
-- 'DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and validation
-  result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
-  restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
-  and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
-  fences remain unchanged.'
-- 'DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered pairing create no
-  new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
-  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004);
-  Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.'
-- 'DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s current accepted owner result.
-  Continue Setup retains the existing cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery
-  fence, never the original creation key. Check again consumes the applicable current owner observation/recovery result;
-  neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block
-  count and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
-  and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
-validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings dispatcher, handler-absence, CAS, idempotency, restart, redaction, accessibility, and no-unregistered-event fixtures]
+  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5.
+  Both bars reflect the same effective state. Every opened onboarding question tip and prose help section has
+  useful Plain English and technical versions, including FileSafe, service differences, storage, remote access
+  and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints, paths
+  and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip
+  without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5
+  is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command.
+  The predecessor tour_narration_only tag is retired. D3 A: generated proxy settings support Caddy, NGINX and
+  Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing
+  proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31:
+  onboarding offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX
+  or Traefik configuration for the person to add on their own system before the owner’s DNS, reachability and
+  live-connection checks; Caddy is the default. The second only checks the existing proxy route and live connection,
+  with nothing generated. Set it up for me is removed: Puppet Master does not install or host the proxy. The
+  onboarding draft carries proxy_hosting=generate_only or existing_proxy for this new-Server proxy branch and
+  keeps proxy_tls null; it collects no certificate choice. Generating a file proves neither installation nor
+  consent, identity, secure reachability or a live route. For generation, onboarding proxy_kind is exactly
+  caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may
+  record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  a family. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows,
+  macOS and Linux have their own built-in Tailscale connection and sign in once through the shared protected
+  auth owner, with no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised
+  by its owning PM process. A Server keeps one active node per stable server_id; a native Client installation
+  keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and Server endpoint
+  selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references
+  prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access
+  only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the
+  automatic private listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale.
+  Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain
+  browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through
+  the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed
+  host Tailscale stays external and unmanaged.'
+- 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and
+  its actual prerequisites. It does not run optional remote-access configuration. After that owner settlement,
+  a separate postcommit remote-setup view inside automatic_preparation runs any requested Remote Access continuation,
+  before the normal provider/Free Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale
+  authorization, new Remote Link output, and configuration-file/export or existing-proxy checks (CERT-1 / srv
+  C1) use their existing domain owners, approvals and truthful results. Later always finishes onboarding and
+  leaves the committed Project intact: it does not wait for optional setup, certify it, undo owner effects
+  or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing cancel/background
+  rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
+  semantics supply this exit without a new mutation command.'
+- 'DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and
+  validation result for the online-copy/import view, its Continue availability/reason and activation. Recheck
+  Protect Connect and restore Continue prerequisites through the same existing owners at activation. Invalid
+  or stale input advances nothing and dispatches no owner action. Existing local onboarding IDs, reviewed commit,
+  protected auth, permission and return fences remain unchanged.'
+- 'DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered pairing
+  create no new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
+  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request
+  (SRV-004); Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial
+  GitHub recovery.'
+- 'DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s current accepted
+  owner result. Continue Setup retains the existing cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery
+  fence, never the original creation key. Check again consumes the applicable current owner observation/recovery
+  result; neither action nor refresh may mark unexecuted phases complete or manufacture Project publication.
+  Checklist, block count and stage progress agree on verified settled effects. Existing fourteen local actions,
+  exact return, permission and owner-result adoption rules remain; no new phase, recheck or recovery command
+  is admitted.'
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from
+  static closure.
+validation_surfaces:
+- Plans/settings_system_contract_fixtures.json
+- Plans/Wiring_Matrix.production.json
+- future Settings dispatcher
+- handler-absence
+- CAS
+- idempotency
+- restart
+- redaction
+- accessibility
+- and no-unregistered-event fixtures
 risk_class: settings_command_family_or_handler_claim_drift
 reasoning_tier: high
 context_scope: settings_command_family
-implementation_surfaces: [Plans/Commands_System.md, Plans/Settings_System.md, Plans/settings_system_contracts.schema.json, Plans/settings_system_contract_fixtures.json, Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
-node_compile_hint: {mode: settings_command_family_registration, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/Settings_System.md
+- Plans/settings_system_contracts.schema.json
+- Plans/settings_system_contract_fixtures.json
+- Plans/UI_Wiring_Rules.md
+- Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: settings_command_family_registration
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
 - Plans/Settings_System.md#SSYS-018
 - Plans/Settings_System.md#SSYS-019
 - source_ref:chat:settings-reference-review-canon-closure-2026-08-31
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
-  rules, no hints.
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
-  product behavior only.
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
-  sweep; source implementation serviceChoice and address map are lineage only.
-- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
-  visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31;
+  product-only rules, no hints.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at
+  7aafb35322; product behavior only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation
+  and same-kind sweep; source implementation serviceChoice and address map are lineage only.
+- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback
+  immediately visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
-  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
-  report FO-9 final.'
-preserved_exact_tokens: [cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, cmd.settings.export, pm.settings_route_return.v1, handler_unavailable]
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1;
+  fields report FO-9 final.'
+- source_ref:chat:2026-11-03-projects-pass2-approved
+preserved_exact_tokens:
+- cmd.settings.open
+- cmd.settings.transaction.preview
+- cmd.settings.transaction.apply
+- cmd.settings.transaction.rollback
+- cmd.settings.export
+- pm.settings_route_return.v1
+- handler_unavailable
 negative_constraints:
-  - Do not resurrect cmd.settings.bloom.open or mint route-only UI action commands.
-  - Do not treat registration, a handler-location string, static wiring, or concept behavior as an executable handler claim.
-  - Do not infer transaction completion from acceptance or acknowledgement.
-  - Do not invent an EventRecord family.
-owner_hints: [Plans/Commands_System.md, Plans/Settings_System.md, Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
+- Do not resurrect cmd.settings.bloom.open or mint route-only UI action commands.
+- Do not treat registration, a handler-location string, static wiring, or concept behavior as an executable
+  handler claim.
+- Do not infer transaction completion from acceptance or acknowledgement.
+- Do not invent an EventRecord family.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/Commands_System.md
+- Plans/Settings_System.md
+- Plans/UI_Wiring_Rules.md
+- Plans/Wiring_Matrix.production.json
 ```
 
 ## Project, clone, restore, Server, pairing, and protected-auth central registration addendum - 2026-09-01
@@ -5624,24 +5753,37 @@ plan_unit_id: CS-073
 unit_type: command_registration
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: 'The 171-row server command-gap adjudication and six retained Egolite gaps resolve to 103 unique exact
-  primary command registrations, 43 pre-policy aliases, 38 typed local UI actions, and three non-dispatchable rejections,
-  with one sole planned target per primary and no fabricated native or event proof; the September 11 user correction
-  admits cmd.project.unarchive through the existing Project action family.
+canonical_text: 'The 171-row server command-gap adjudication and six retained Egolite gaps resolve to 103 unique
+  exact primary command registrations, 43 pre-policy aliases, 38 typed local UI actions, and three non-dispatchable
+  rejections, with one sole planned target per primary and no fabricated native or event proof; the September
+  11 user correction admits cmd.project.unarchive through the existing Project action family.
 
 
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
-  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
-  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is
+  unchanged. generic_git and generic_host remain transport-only, never aliases that restore retired provider,
+  review, CI, auth or mirror authority.
 
-  DL-273, Jared 2026-11-01: Source Control provider-aware command and auth consumers recheck current
-  Forge-owner admission against the effective request selection before dispatch. Saved rendering, transient
-  control state or a different unpicked draft grants no provider authority and cannot start work for a
-  retired service or variant; existing command ids, sole handlers, typed results and exact returns remain.'
+  DL-273, Jared 2026-11-01: Source Control provider-aware command and auth consumers recheck current Forge-owner
+  admission against the effective request selection before dispatch. Saved rendering, transient control state
+  or a different unpicked draft grants no provider authority and cannot start work for a retired service or
+  variant; existing command ids, sole handlers, typed results and exact returns remain.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: The registrations supply Settings, Product Onboarding, Doctor, project, hosting, update, Browser,
-  Forge, Source Control, and palette consumers with exact availability and disabled reasons.
+gui_classification_reason: The registrations supply Settings, Product Onboarding, Doctor, project, hosting,
+  update, Browser, Forge, Source Control, and palette consumers with exact availability and disabled reasons.
 depends_on:
 - CS-070
 - CS-071
@@ -5651,27 +5793,30 @@ unblocks:
 - WM-050
 - UIW-016
 acceptance_criteria:
-- Exact current denominators are 171 = 87 + 43 + 38 + 3, packet primaries are 93 = 87 + 6, and 104 obligation references
-  collapse to 103 unique central rows through the one workspace-create overlap; only row 128 changes disposition under
-  USER-PROJECT-UNARCHIVE-REGISTRY-20260911.
+- Exact current denominators are 171 = 87 + 43 + 38 + 3, packet primaries are 93 = 87 + 6, and 104 obligation
+  references collapse to 103 unique central rows through the one workspace-create overlap; only row 128 changes
+  disposition under USER-PROJECT-UNARCHIVE-REGISTRY-20260911.
 - cmd.project.unarchive has one Project owner, existing Project request/result family and sole handlers::project::unarchive
-  target. The retained ui.project.restore_archived entry constructs the command before every gate and receives no independent
-  handler or production row; predecessor local requests cannot replay as mutation authority.
-- The 103 unique central obligations are covered by the 100 distinct primary definitions in this section and the three
-  existing authentication primaries in CS-066/UCC-145; authentication start/cancel/resume are not duplicated.
-- Every primary resolves one owner, exact request/result contracts, one planned target, handler_unavailable state, receipt/projection-only
-  effect, and complete reverse consumers.
-- Every alias normalizes before permission and dispatch with no source registration or peer route; every local predecessor
-  and rejection has no production row.
-- Static plans, schemas, fixtures, target strings, catalogs, wiring rows, and concepts confer no native, security, visual,
-  performance, or runtime proof.
+  target. The retained ui.project.restore_archived entry constructs the command before every gate and receives
+  no independent handler or production row; predecessor local requests cannot replay as mutation authority.
+- The 103 unique central obligations are covered by the 100 distinct primary definitions in this section and
+  the three existing authentication primaries in CS-066/UCC-145; authentication start/cancel/resume are not
+  duplicated.
+- Every primary resolves one owner, exact request/result contracts, one planned target, handler_unavailable
+  state, receipt/projection-only effect, and complete reverse consumers.
+- Every alias normalizes before permission and dispatch with no source registration or peer route; every local
+  predecessor and rejection has no production row.
+- Static plans, schemas, fixtures, target strings, catalogs, wiring rows, and concepts confer no native, security,
+  visual, performance, or runtime proof.
 - 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
-  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
-  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
-- 'DL-273: A request for a retired provider or variant fails before provider or auth work regardless of
-  selection provenance; the current admitted routes keep their existing commands and fences.'
-
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is
+  unchanged. generic_git and generic_host remain transport-only, never aliases that restore retired provider,
+  review, CI, auth or mirror authority.'
+- 'DL-273: A request for a retired provider or variant fails before provider or auth work regardless of selection
+  provenance; the current admitted routes keep their existing commands and fences.'
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - Plans/UI_Command_Catalog.md
 - Plans/Wiring_Matrix.production.json
@@ -5697,10 +5842,17 @@ source_lineage:
 - source_ref:server-command-gap-adjudication:rows-1-171
 - source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator
 - DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+- source_ref:chat:2026-11-03-projects-pass2-approved
 negative_constraints:
 - Do not register an alias, typed local predecessor, or rejected spelling as a primary command.
 - Do not treat a sole future handler path or production-intent row as native implementation proof.
 - Do not emit an unadmitted EventRecord family.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/Commands_System.md
+preserved_exact_tokens:
+- handler_unavailable
 ```
 ## Central Touch Production Closure Addendum - 2026-09-01
 
@@ -6154,30 +6306,84 @@ plan_unit_id: CS-077
 unit_type: command_registry
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Repository bind, status refresh, and workspace remove receive concrete central catalog records over their existing Source Control owner contracts, sole future handlers, Touch Closure rows, and production-intent wiring; compatibility inputs remain unregistered and native evidence remains absent.
+canonical_text: 'Repository bind, status refresh, and workspace remove receive concrete central catalog records
+  over their existing Source Control owner contracts, sole future handlers, Touch Closure rows, and production-intent
+  wiring; compatibility inputs remain unregistered and native evidence remains absent.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Source Control, Settings, Project setup, Doctor, and palette/API consumers require exact availability, disabled reason, and return behavior for these commands.
-depends_on: [CS-073, SCS-003]
-unblocks: [UCC-155]
+gui_classification_reason: Source Control, Settings, Project setup, Doctor, and palette/API consumers require
+  exact availability, disabled reason, and return behavior for these commands.
+depends_on:
+- CS-073
+- SCS-003
+unblocks:
+- UCC-155
 acceptance_criteria:
-  - Each exact command appears once in this concrete table with Source Control owner, typed request/result, and one sole future handler.
-  - Existing production-intent and Touch Closure rows remain the only wiring identities; no compatibility source receives a peer row or handler.
-  - Every route remains handler_unavailable and event-silent with "expected_event_types=[]" until executable proof and Event Authority admission exist.
-  - Repository binding, status observation, and workspace removal remain distinct actions with owner-defined currentness, permission, data-disposition, and exact-return semantics.
-validation_surfaces: [Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, Plans/touch_closure.json, Plans/Wiring_Matrix.production.json, python3 scripts/pm-touch-closure-verify.py --json, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
+- Each exact command appears once in this concrete table with Source Control owner, typed request/result, and
+  one sole future handler.
+- Existing production-intent and Touch Closure rows remain the only wiring identities; no compatibility source
+  receives a peer row or handler.
+- Every route remains handler_unavailable and event-silent with "expected_event_types=[]" until executable
+  proof and Event Authority admission exist.
+- Repository binding, status observation, and workspace removal remain distinct actions with owner-defined
+  currentness, permission, data-disposition, and exact-return semantics.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
+validation_surfaces:
+- Plans/source_control_contracts.schema.json
+- Plans/source_control_contract_fixtures.json
+- Plans/touch_closure.json
+- Plans/Wiring_Matrix.production.json
+- python3 scripts/pm-touch-closure-verify.py --json
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 risk_class: missing_central_source_control_primary_or_conflated_mutation
 reasoning_tier: high
 context_scope: neutral_source_control_primary_registration
-implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Source_Control_System.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
-node_compile_hint: {mode: static_existing_primary_registration_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Source_Control_System.md
+- Plans/Wiring_Matrix.production.json
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: static_existing_primary_registration_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - Plans/Source_Control_System.md#SCS-003
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json
-preserved_exact_tokens: [cmd.source_control.repository.bind, cmd.source_control.status.refresh, cmd.source_control.workspace.remove, handlers::source_control::repository_bind, handlers::source_control::status_refresh, handlers::source_control::workspace_remove, handler_unavailable, "expected_event_types=[]"]
+- Plans/Source_Control_System.md#SCS-003
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json
+- source_ref:chat:2026-11-03-projects-pass2-approved
+preserved_exact_tokens:
+- cmd.source_control.repository.bind
+- cmd.source_control.status.refresh
+- cmd.source_control.workspace.remove
+- handlers::source_control::repository_bind
+- handlers::source_control::status_refresh
+- handlers::source_control::workspace_remove
+- handler_unavailable
+- expected_event_types=[]
 negative_constraints:
-  - Do not invent peer compatibility handlers, generic source-control dispatch, automatic removal, or fabricated currentness.
-  - Do not claim native dispatcher, handler, persistence, filesystem, repository, or runtime evidence from static registration.
+- Do not invent peer compatibility handlers, generic source-control dispatch, automatic removal, or fabricated
+  currentness.
+- Do not claim native dispatcher, handler, persistence, filesystem, repository, or runtime evidence from static
+  registration.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/Commands_System.md
 ```
 
 ## Puppet Master Assistant Redesign Central Registration Addendum - 2026-09-03
@@ -6348,50 +6554,82 @@ plan_unit_id: CS-078
 unit_type: command_registry
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  The Puppet Master Assistant redesign registers eighty-four exact command contracts across eleven owner documents, each with one typed request, one typed result, and one sole future handler, plus a shared typed error vocabulary of invalid_request, owner_unavailable, command_not_registered, permission_denied, stale_revision, stale_currentness, target_not_found, precondition_failed, idempotency_conflict, quota_exhausted, manual_stop_latched, and cancelled. cmd.chat.goal.start, cmd.chat.goal.update, and cmd.bsd.set are pre-existing registrations whose contracts are revised in place with no peer row and no second handler. Sixty-seven semantic event names and thirty-nine runtime record families are proposed and remain requires_central_adjudication; no owner may emit an event or admit a storage writer until Event Authority and storage registration close for that name. Every route stays handler_unavailable, and a typed contract plus a catalog row plus a production-intent wiring row prove design closure and prove nothing about a native dispatcher, handler execution, rendered control, receipt, storage write, or runtime readiness.
+canonical_text: 'The Puppet Master Assistant redesign registers eighty-four exact command contracts across
+  eleven owner documents, each with one typed request, one typed result, and one sole future handler, plus
+  a shared typed error vocabulary of invalid_request, owner_unavailable, command_not_registered, permission_denied,
+  stale_revision, stale_currentness, target_not_found, precondition_failed, idempotency_conflict, quota_exhausted,
+  manual_stop_latched, and cancelled. cmd.chat.goal.start, cmd.chat.goal.update, and cmd.bsd.set are pre-existing
+  registrations whose contracts are revised in place with no peer row and no second handler. Sixty-seven semantic
+  event names and thirty-nine runtime record families are proposed and remain requires_central_adjudication;
+  no owner may emit an event or admit a storage writer until Event Authority and storage registration close
+  for that name. Every route stays handler_unavailable, and a typed contract plus a catalog row plus a production-intent
+  wiring row prove design closure and prove nothing about a native dispatcher, handler execution, rendered
+  control, receipt, storage write, or runtime readiness.
+
+
+  Current projects-refresh contract: All six Plan/Deep Plan strategies, exact approved versions, agent/goal_driven/Crew
+  Build, Build At and scheduled messages/tasks work in app scope through existing owners. Only Planning Wizard,
+  PRD Builder and Orchestrator retain no-project workflow gates; Project-native actions still require actual
+  targets. Build At atomically commits one frozen schedule/window, creates no run, and never dispatches execution_window.create
+  a second time. Server-owned timers preserve DST/grace/missed-policy/idempotency, frozen text/attachments/target
+  version and fresh authority/Stop checks. App operational pause has independent real Server custody and user-only
+  clear, never a Settings value or missing-as-off. N25 stops/fences source work and explicitly re-admits mapped
+  frozen targets with fresh consent/epochs; no automatic resume, latest-version substitution or duplicate occurrence.
+  The exact consumer contract is UCC-219/WM-105 and Plans/projects_refresh_command_bindings.json. Historical
+  schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified;
+  unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Every registered command has named GUI consumers whose availability and disabled reason depend on these contracts.
-depends_on: [CS-077, UCC-156]
+gui_classification_reason: Every registered command has named GUI consumers whose availability and disabled
+  reason depend on these contracts.
+depends_on:
+- CS-077
+- UCC-156
 unblocks: []
 acceptance_criteria:
-  - All eighty-four commands carry one owner, one typed request, one typed result, and one sole future handler.
-  - The three pre-existing IDs are revised in place with no duplicate registration or handler.
-  - A failure never advances a Goal, Plan, To-Do, workflow, BSD assignment, or schedule and never returns a success-shaped receipt.
-  - manual_stop_latched is terminal against every scheduled or quota-driven auto-resume path.
-  - All sixty-seven events and thirty-nine record families remain unregistered until central adjudication closes.
+- All eighty-four commands carry one owner, one typed request, one typed result, and one sole future handler.
+- The three pre-existing IDs are revised in place with no duplicate registration or handler.
+- A failure never advances a Goal, Plan, To-Do, workflow, BSD assignment, or schedule and never returns a success-shaped
+  receipt.
+- manual_stop_latched is terminal against every scheduled or quota-driven auto-resume path.
+- All sixty-seven events and thirty-nine record families remain unregistered until central adjudication closes.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-219; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-  - python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: unregistered_emission_or_simulated_command_success
 reasoning_tier: high
 context_scope: assistant_redesign_central_registration
 implementation_surfaces:
-  - Plans/Commands_System.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.production.json
-  - Plans/storage-plan.md
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
+- Plans/storage-plan.md
 node_compile_hint:
   mode: static_central_command_registration_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:machine/commands.json
-  - pm-assistant-implementation-2026-09-02-recovered:machine/events.json
-  - pm-assistant-implementation-2026-09-02-recovered:machine/runtime_records.json
-  - pm-assistant-implementation-2026-09-02-recovered:DRY-003
+- pm-assistant-implementation-2026-09-02-recovered:machine/commands.json
+- pm-assistant-implementation-2026-09-02-recovered:machine/events.json
+- pm-assistant-implementation-2026-09-02-recovered:machine/runtime_records.json
+- pm-assistant-implementation-2026-09-02-recovered:DRY-003
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "handler_unavailable"
-  - "command_not_registered"
-  - "requires_central_adjudication"
-  - "manual_stop_latched"
+- handler_unavailable
+- command_not_registered
+- requires_central_adjudication
+- manual_stop_latched
 negative_constraints:
-  - Do not emit a proposed event before Event Authority admits its name and payload schema.
-  - Do not admit a storage writer before the record family is registered.
-  - Do not return a success-shaped receipt for a failed command.
+- Do not emit a proposed event before Event Authority admits its name and payload schema.
+- Do not admit a storage writer before the record family is registered.
+- Do not return a success-shaped receipt for a failed command.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 ```
 
 ## Additive Correction v4 — Branch-Current Command Census And Dispositions (2026-09-03)
@@ -6544,46 +6782,66 @@ plan_unit_id: CS-079
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: 'Product operations enforce canonical command reuse: BSD mode uses cmd.bsd.set; BSD policy uses cmd.bsd.configure
-  / cmd.bsd.workflow.configure; collaboration uses cmd.collaboration.configure / cmd.collaboration.start; Crew Auto uses
-  cmd.chat.crew_auto.open_config / cmd.chat.crew_auto.set; Plan Build uses cmd.chat.plan.build with topology discriminator
-  (prohibiting build_as_goal); Plan schedule uses cmd.chat.plan.schedule_build; scheduled messages use cmd.chat.schedule_message[.update|.cancel];
-  execution windows use cmd.execution_window.create/update/cancel; quota consent uses cmd.runtime.quota_resume.set. View
-  toggles are classified as LOCAL_PRESENTATION view state. Amended DL-260, Jared 2026-10-31: only real product behavior
-  remains an implementation requirement.'
+canonical_text: 'Product operations enforce canonical command reuse: BSD mode uses cmd.bsd.set; BSD policy
+  uses cmd.bsd.configure / cmd.bsd.workflow.configure; collaboration uses cmd.collaboration.configure / cmd.collaboration.start;
+  Crew Auto uses cmd.chat.crew_auto.open_config / cmd.chat.crew_auto.set; Plan Build uses cmd.chat.plan.build
+  with topology discriminator (prohibiting build_as_goal); Plan schedule uses cmd.chat.plan.schedule_build;
+  scheduled messages use cmd.chat.schedule_message[.update|.cancel]; execution windows use cmd.execution_window.create/update/cancel;
+  quota consent uses cmd.runtime.quota_resume.set. View toggles are classified as LOCAL_PRESENTATION view state.
+  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.
+
+
+  Current projects-refresh contract: All six Plan/Deep Plan strategies, exact approved versions, agent/goal_driven/Crew
+  Build, Build At and scheduled messages/tasks work in app scope through existing owners. Only Planning Wizard,
+  PRD Builder and Orchestrator retain no-project workflow gates; Project-native actions still require actual
+  targets. Build At atomically commits one frozen schedule/window, creates no run, and never dispatches execution_window.create
+  a second time. Server-owned timers preserve DST/grace/missed-policy/idempotency, frozen text/attachments/target
+  version and fresh authority/Stop checks. App operational pause has independent real Server custody and user-only
+  clear, never a Settings value or missing-as-off. N25 stops/fences source work and explicitly re-admits mapped
+  frozen targets with fresh consent/epochs; no automatic resume, latest-version substitution or duplicate occurrence.
+  The exact consumer contract is UCC-219/WM-105 and Plans/projects_refresh_command_bindings.json. Historical
+  schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified;
+  unavailable handlers remain handler_unavailable.'
 gui_related: false
 gui_classification_reason: Governs command catalog dispositions, canonical ID reuse, and demo separation.
-depends_on: [CS-078]
+depends_on:
+- CS-078
 unblocks: []
 acceptance_criteria:
 - Specified operations reuse canonical command IDs without minting parallel commands.
 - Plan Build uses topology discriminator; build_as_goal is prohibited.
 - View toggles are classified as LOCAL_PRESENTATION without domain commands.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-219; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: command_duplication_or_demo_command_leak
 reasoning_tier: high
 context_scope: command_dispositions
 implementation_surfaces:
-  - Plans/Commands_System.md
-  - Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
 node_compile_hint:
   mode: command_disposition_specification
   create_worknodes: false
 source_lineage:
-  - APR-014
-  - APR-019
-  - APR-023
+- APR-014
+- APR-019
+- APR-023
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - cmd.chat.plan.build
 - cmd.bsd.configure
 - cmd.collaboration.start
 - LOCAL_PRESENTATION
 negative_constraints:
-  - Do not mint cmd.chat.plan.build_as_goal.
-  - Do not register demo fixtures in the product command catalog.
+- Do not mint cmd.chat.plan.build_as_goal.
+- Do not register demo fixtures in the product command catalog.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
@@ -6692,10 +6950,7 @@ Two scope systems coexist and MUST NOT be confused:
   plus the storage-owner `root_generation` and `logical_root_fingerprint` (§0.2). Project
   file identity is `(project_id, root generation/fingerprint, scope, name)`; a bare
   `(scope, name)` pair never identifies a project file.
-- Settings values are Project-only per SSYS-002, which supersedes the legacy `global` scope
-  vocabulary still printed on `extensions.commands.*` inventory rows. Every
-  settings-transaction binding in this census addresses a Project-scoped value and requires an
-  active project, including shortcut bindings, the hints toggle, and reset/backup rows.
+- Ordinary `extensions.commands.*` Settings rows use SSYS-059’s declared level/key ladder; legacy `global` means Everywhere only after compatibility normalization before policy. Device shortcuts and shared behavior keep their inventory-declared levels. A No project operation may use its offered level without a Project. Command-file roots remain separately `global|project`; global library mirroring/home/reach does not copy Computer paths or executable trust. Settings copy calls the exact eight-action Commands owner contribution rather than writing command files itself.
 
 ### Owned local file actions and their exact selected controls
 
@@ -6896,7 +7151,7 @@ save picker. F7 needs no idempotency key; it is a read.
 
 `commands.reset_all` restores factory state: it removes user command files (global always;
 project only with an active project) and restores shortcut/pref defaults through the S1–S7
-settings route. It requires project context (settings values are Project-bound), carries the
+settings route. It binds explicitly selected file roots and the exact offered Settings level/key; No project may reset the eligible global library and admitted values without inventing a Project. It carries the
 count confirmation above, and pre-reads all doomed file bytes within the bulk caps; any failure
 rolls back file removals from those bytes and rolls back the settings half through the
 transaction rollback token, so the error still attests `wrote: false` unless rollback itself
@@ -6969,103 +7224,153 @@ plan_unit_id: CS-081
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  The Settings Commands & Shortcuts manager routes eight Commands-owned typed local owner
-  actions over route:settings/commands-shortcuts: commands.create (Create command asserting
-  target absence), commands.update (immediate hero-sheet field mutation asserting exact current
-  content, with atomic cross-root Scope moves), commands.delete (Delete command with danger-modal
-  proof naming the target and §2.3 reveal), commands.preview (side-effect-free dry-run render:
-  sample-argument substitution only, inert file/shell placeholders, no bash/read ask-flow, no
-  read, no execution, no submit, identical in viewer and writer modes),
-  commands.import_preview/commands.import_commit (bound-plan import sharing the file-mutation
-  contract), commands.export (bounded nonsecret manifest collection), and commands.reset_all
-  (count-confirmed file + settings composite reset with rollback). Shortcut add/change/remove/
-  reset, shortcuts backup, the hints toggle, the clash-handling choice
-  (extensions.commands.conflict-handling), the keyboard layout select
-  (extensions.commands.keyboard-layout), and the palette toggle
-  (extensions.commands.command-palette-visibility) reuse the Settings-owned settings.transaction
-  route against registered Project-scoped inventory rows; remaining
-  selected controls are view-only. Every file mutation consumes actor plus permission snapshot,
-  binds project roots by id, generation, and fingerprint, resolves targets under FileSafe
-  containment with symlink guard, asserts expected content and list generation, fails closed on
-  stale or mismatched state with no automatic retry, replays only on idempotency-key plus
-  identical payload, validates the exact CS-033 set before any write, requires storage writer
-  mode, writes atomically with durable readback, and identifies files by root-bound non-secret
-  refs. The sole native owner handler is handlers::commands::apply_local_action; local actions
-  are not UICommand catalog entries.
+canonical_text: 'The Settings Commands & Shortcuts manager routes eight Commands-owned typed local owner actions
+  over route:settings/commands-shortcuts: commands.create (Create command asserting target absence), commands.update
+  (immediate hero-sheet field mutation asserting exact current content, with atomic cross-root Scope moves),
+  commands.delete (Delete command with danger-modal proof naming the target and §2.3 reveal), commands.preview
+  (side-effect-free dry-run render: sample-argument substitution only, inert file/shell placeholders, no bash/read
+  ask-flow, no read, no execution, no submit, identical in viewer and writer modes), commands.import_preview/commands.import_commit
+  (bound-plan import sharing the file-mutation contract), commands.export (bounded nonsecret manifest collection),
+  and commands.reset_all (count-confirmed file + settings composite reset with rollback). Shortcut add/change/remove/
+  reset, shortcuts backup, the hints toggle, the clash-handling choice (extensions.commands.conflict-handling),
+  the keyboard layout select (extensions.commands.keyboard-layout), and the palette toggle (extensions.commands.command-palette-visibility)
+  reuse the Settings-owned settings.transaction route against inventory-offered exact level/key rows through
+  SSYS-059; remaining selected controls are view-only. Every file mutation consumes actor plus permission snapshot,
+  binds applicable Project roots or the exact Computer/library root by id, generation, and fingerprint, resolves
+  targets under FileSafe containment with symlink guard, asserts expected content and list generation, fails
+  closed on stale or mismatched state with no automatic retry, replays only on idempotency-key plus identical
+  payload, validates the exact CS-033 set before any write, requires storage writer mode, writes atomically
+  with durable readback, and identifies files by root-bound non-secret refs. The sole native owner handler
+  is handlers::commands::apply_local_action; local actions are not UICommand catalog entries.
+
+
+  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single
+  resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere.
+  Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project
+  versions and sole owner. Computer installations, credentials and protected source trust never travel in copy.
+  Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.*
+  local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact
+  consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay
+  resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable
+  handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: The census routes every selected mutating control of the Commands & Shortcuts Settings manager, binds Settings-valued controls to their transaction route, and classifies presentation controls as view-only.
-depends_on: [CS-010, CS-011, CS-012, CS-013, CS-014, CS-026, CS-027, CS-028, CS-030, CS-031, CS-032, CS-033, CS-034, CS-035, CS-036, CS-041, CS-054, CS-079]
+gui_classification_reason: The census routes every selected mutating control of the Commands & Shortcuts Settings
+  manager, binds Settings-valued controls to their transaction route, and classifies presentation controls
+  as view-only.
+depends_on:
+- CS-010
+- CS-011
+- CS-012
+- CS-013
+- CS-014
+- CS-026
+- CS-027
+- CS-028
+- CS-030
+- CS-031
+- CS-032
+- CS-033
+- CS-034
+- CS-035
+- CS-036
+- CS-041
+- CS-054
+- CS-079
 unblocks: []
 acceptance_criteria:
-  - The census admits exactly commands.create, commands.update, commands.delete, commands.preview, commands.import_preview, commands.import_commit, commands.export, and commands.reset_all; no ninth action and no cmd.* route.
-  - Every F1-F3/F6/F8 request carries actor, permission snapshot, idempotency key, list generation, root binding for project scope, and its action-specific content assertion; stale_projection, stale_project_root, target_changed, target_exists, confirmation_mismatch, plan_mismatch, and idempotency_conflict fail closed with no write and no automatic retry.
-  - Every create, update, and import entry validates reserved name collision, invalid name format, missing description, invalid mode value, invalid model format, and override_builtin misuse, blocks on any failure, and writes nothing.
-  - Preview substitutes sample arguments only, renders @file and !shell as inert placeholders with no bash/read ask-flow, no file read, no execution, and no agent submission, and renders identically in viewer and writer modes.
-  - Mutations require storage writer mode, resolve targets under FileSafe containment with symlink guard, write atomically with durable readback and rollback, advance generation only after durable write plus re-list, and identify files by root-bound non-secret refs without raw paths.
-  - Shortcut, backup, hints, clash-handling, layout, and palette controls reuse the Settings-owned transaction route against Project-scoped values, with the layout select bound to extensions.commands.keyboard-layout and the palette toggle to extensions.commands.command-palette-visibility; per-binding-ID semantics stay with each action owner and conflicts pin the warn policy.
-  - Per-name cmd.user_command.* and per-binding cmd.keybinding.* aliases, the eight rejected packet tokens, the five retired draft spellings, and catalog lifecycle gain no route.
-  - The sole native owner handler for commands.* file actions is handlers::commands::apply_local_action; settings bindings execute only through the Settings-owned transaction handlers.
-  - Machine companions Plans/commands_shortcuts_contracts.schema.json and Plans/commands_shortcuts_contract_fixtures.json match this prose exactly, including cross-record semantic cases.
-  - No native runtime, EventRecord, storage-family, or readiness fact is claimed by this census or its fixtures.
+- The census admits exactly commands.create, commands.update, commands.delete, commands.preview, commands.import_preview,
+  commands.import_commit, commands.export, and commands.reset_all; no ninth action and no cmd.* route.
+- Every F1-F3/F6/F8 request carries actor, permission snapshot, idempotency key, list generation, root binding
+  for project scope, and its action-specific content assertion; stale_projection, stale_project_root, target_changed,
+  target_exists, confirmation_mismatch, plan_mismatch, and idempotency_conflict fail closed with no write and
+  no automatic retry.
+- Every create, update, and import entry validates reserved name collision, invalid name format, missing description,
+  invalid mode value, invalid model format, and override_builtin misuse, blocks on any failure, and writes
+  nothing.
+- Preview substitutes sample arguments only, renders @file and !shell as inert placeholders with no bash/read
+  ask-flow, no file read, no execution, and no agent submission, and renders identically in viewer and writer
+  modes.
+- Mutations require storage writer mode, resolve targets under FileSafe containment with symlink guard, write
+  atomically with durable readback and rollback, advance generation only after durable write plus re-list,
+  and identify files by root-bound non-secret refs without raw paths.
+- Shortcut, backup, hints, clash-handling, layout, and palette controls reuse the Settings-owned transaction
+  route against admitted level/key values, with the layout select bound to extensions.commands.keyboard-layout
+  and the palette toggle to extensions.commands.command-palette-visibility; per-binding-ID semantics stay with
+  each action owner and conflicts pin the warn policy.
+- Per-name cmd.user_command.* and per-binding cmd.keybinding.* aliases, the eight rejected packet tokens, the
+  five retired draft spellings, and catalog lifecycle gain no route.
+- The sole native owner handler for commands.* file actions is handlers::commands::apply_local_action; settings
+  bindings execute only through the Settings-owned transaction handlers.
+- Machine companions Plans/commands_shortcuts_contracts.schema.json and Plans/commands_shortcuts_contract_fixtures.json
+  match this prose exactly, including cross-record semantic cases.
+- No native runtime, EventRecord, storage-family, or readiness fact is claimed by this census or its fixtures.
+- No-project global-only create/import/export/reset uses the same eight local actions and actual library root;
+  only actual Project-root operations need Project identity. Copy/whole-version contribution reuses create/update/import
+  commit with exact immutable owner copy witness and eligible compensation, not a ninth action or cmd.* primary.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - Plans/commands_shortcuts_contracts.schema.json
-  - Plans/commands_shortcuts_contract_fixtures.json
+- Plans/commands_shortcuts_contracts.schema.json
+- Plans/commands_shortcuts_contract_fixtures.json
 risk_class: commands_shortcuts_routing_drift_or_alias_resurrection
 reasoning_tier: high
 context_scope: commands_shortcuts_mutation_routing
 implementation_surfaces:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 node_compile_hint:
   mode: commands_shortcuts_mutation_routing_contract_only
   create_worknodes: false
 source_lineage:
-  - Plans/Commands_System.md#GUI-COMMANDS
-  - Plans/Commands_System.md#DRY-RUN
-  - reports/concept-packet-integration-20260926/settings.md#G4
-  - Concepts/pm7-tools/settings_refresh/managers/24-commands.js (selected controls lead)
-  - Concepts/TestOpus5.5PmConcept.html (selected commands-shortcuts behavior leads)
+- Plans/Commands_System.md#GUI-COMMANDS
+- Plans/Commands_System.md#DRY-RUN
+- reports/concept-packet-integration-20260926/settings.md#G4
+- Concepts/pm7-tools/settings_refresh/managers/24-commands.js (selected controls lead)
+- Concepts/TestOpus5.5PmConcept.html (selected commands-shortcuts behavior leads)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - "commands.create"
-  - "commands.update"
-  - "commands.delete"
-  - "commands.preview"
-  - "commands.import_preview"
-  - "commands.import_commit"
-  - "commands.export"
-  - "commands.reset_all"
-  - "handlers::commands::apply_local_action"
-  - "route:settings/commands-shortcuts"
-  - "Create command"
-  - "Delete command"
-  - "Preview (dry run)"
-  - "Reset commands and shortcuts"
-  - "Use these keys"
-  - "stale_projection"
-  - "stale_project_root"
-  - "target_changed"
-  - "target_exists"
-  - "confirmation_mismatch"
-  - "plan_mismatch"
-  - "idempotency_conflict"
-  - "storage_read_only"
-  - "no_project_context"
-  - "filesafe_denied"
-  - "permission_snapshot_stale"
-  - "recovery_required"
-  - "command_file:project:"
-  - "command_file:global:"
-  - "permission_snapshot_id"
+- commands.create
+- commands.update
+- commands.delete
+- commands.preview
+- commands.import_preview
+- commands.import_commit
+- commands.export
+- commands.reset_all
+- handlers::commands::apply_local_action
+- route:settings/commands-shortcuts
+- Create command
+- Delete command
+- Preview (dry run)
+- Reset commands and shortcuts
+- Use these keys
+- stale_projection
+- stale_project_root
+- target_changed
+- target_exists
+- confirmation_mismatch
+- plan_mismatch
+- idempotency_conflict
+- storage_read_only
+- no_project_context
+- filesafe_denied
+- permission_snapshot_stale
+- recovery_required
+- 'command_file:project:'
+- 'command_file:global:'
+- permission_snapshot_id
 negative_constraints:
-  - "Do not mint cmd.* routes for command-file mutations from this census."
-  - "Do not admit per-name cmd.user_command.* or per-binding cmd.keybinding.* aliases."
-  - "Do not resurrect rejected packet tokens cmd.commands.custom.* or cmd.shortcuts.*."
-  - "Do not reuse the retired first-draft commands.save_* spellings."
-  - "Do not infer shortcut behavior from heading-only §6.3; it is owned by this census from selected controls."
-  - "Do not evaluate permissions, read files, or execute shell in preview."
-  - "Do not claim a native runtime, EventRecord, storage family, or readiness fact."
+- Do not mint cmd.* routes for command-file mutations from this census.
+- Do not admit per-name cmd.user_command.* or per-binding cmd.keybinding.* aliases.
+- Do not resurrect rejected packet tokens cmd.commands.custom.* or cmd.shortcuts.*.
+- Do not reuse the retired first-draft commands.save_* spellings.
+- Do not infer shortcut behavior from heading-only §6.3; it is owned by this census from selected controls.
+- Do not evaluate permissions, read files, or execute shell in preview.
+- Do not claim a native runtime, EventRecord, storage family, or readiness fact.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 ```
 
 ## Project recovery and Forge CI command consumers (2026-09-26)
@@ -7163,33 +7468,78 @@ plan_unit_id: CS-083
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Commands System consumes seven Git-only Source Control primaries through the SCS-024 typed adapter
-  request/result and one sole future handler each. Whole-file stage/unstage, local remote update,
-  stash create/apply and branch create/delete retain exact currentness, permission, FileSafe,
-  preview, confirmation, idempotency and target guards. Existing canonical stash and branch-create
-  identities remain. Each row stays handler_unavailable with expected_event_types=[] until native proof.
+canonical_text: 'Commands System consumes seven Git-only Source Control primaries through the SCS-024 typed
+  adapter request/result and one sole future handler each. Whole-file stage/unstage, local remote update, stash
+  create/apply and branch create/delete retain exact currentness, permission, FileSafe, preview, confirmation,
+  idempotency and target guards. Existing canonical stash and branch-create identities remain. Each row stays
+  handler_unavailable with expected_event_types=[] until native proof.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Commands back visible Source Control controls and their disabled, confirmation and return states.
-depends_on: [SCS-024, UCC-167]
-unblocks: [WM-060]
+gui_classification_reason: Commands back visible Source Control controls and their disabled, confirmation and
+  return states.
+depends_on:
+- SCS-024
+- UCC-167
+unblocks:
+- WM-060
 acceptance_criteria:
-  - Each table primary has exactly one matching UCC-167 catalog and production-intent wiring row.
-  - Every request validates the owner schema branch and returns an owner result, including typed stale or denied outcomes.
-  - No hunk, Jujutsu or hosted transport route substitutes for a whole-file or local-configuration mutation.
-  - Static registration does not claim a native handler, EventRecord or runtime effect.
-validation_surfaces: [Plans/git_adapter_command_contracts.schema.json, Plans/git_adapter_command_contract_fixtures.json, Plans/Wiring_Matrix.production.json, scripts/pm_git_adapter_commands.py]
+- Each table primary has exactly one matching UCC-167 catalog and production-intent wiring row.
+- Every request validates the owner schema branch and returns an owner result, including typed stale or denied
+  outcomes.
+- No hunk, Jujutsu or hosted transport route substitutes for a whole-file or local-configuration mutation.
+- Static registration does not claim a native handler, EventRecord or runtime effect.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
+validation_surfaces:
+- Plans/git_adapter_command_contracts.schema.json
+- Plans/git_adapter_command_contract_fixtures.json
+- Plans/Wiring_Matrix.production.json
+- scripts/pm_git_adapter_commands.py
 risk_class: cross_target_git_mutation_or_false_effect
 reasoning_tier: high
 context_scope: packet_git_adapter_central_commands
-implementation_surfaces: [Plans/Commands_System.md, future UICommand dispatcher]
-node_compile_hint: {mode: static_command_consumer_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_report:packet-sweep-20260927/cross-contracts/report.md, source_report:packet-sweep-20260927/egolite/command_followup.json]
-preserved_exact_tokens: [cmd.git.stage, cmd.git.unstage, cmd.source_control.remote.update, cmd.source_control.stash.create, cmd.source_control.stash.apply, cmd.source_control.branch.create, cmd.source_control.branch.delete, handler_unavailable, "expected_event_types=[]"]
+implementation_surfaces:
+- Plans/Commands_System.md
+- future UICommand dispatcher
+node_compile_hint:
+  mode: static_command_consumer_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_report:packet-sweep-20260927/cross-contracts/report.md
+- source_report:packet-sweep-20260927/egolite/command_followup.json
+- source_ref:chat:2026-11-03-projects-pass2-approved
+preserved_exact_tokens:
+- cmd.git.stage
+- cmd.git.unstage
+- cmd.source_control.remote.update
+- cmd.source_control.stash.create
+- cmd.source_control.stash.apply
+- cmd.source_control.branch.create
+- cmd.source_control.branch.delete
+- handler_unavailable
+- expected_event_types=[]
 negative_constraints:
-  - Do not register historical candidate Git-prefixed stash or branch aliases as peer primaries.
-  - Do not dispatch a mutation from stale projection, focus, inferred remote or raw path text.
-  - Do not treat an acceptance or command response as terminal Git effect truth.
+- Do not register historical candidate Git-prefixed stash or branch aliases as peer primaries.
+- Do not dispatch a mutation from stale projection, focus, inferred remote or raw path text.
+- Do not treat an acceptance or command response as terminal Git effect truth.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
+owner_hints:
+- Plans/Commands_System.md
 ```
 
 ContractRef: ContractName:Plans/Source_Control_System.md#SCS-024, ContractName:Plans/UI_Command_Catalog.md#UCC-167, ContractName:Plans/Wiring_Matrix.md#WM-060
@@ -7758,51 +8108,72 @@ plan_unit_id: CS-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: 'The 5.6 Pro chat round''s non-command controls are fixed. View state (LOCAL_PRESENTATION, no command,
-  no event, no catalog row): Edit objective, Cancel edit and Objective history inside Goal Activity Detail; a To-Do row''s
-  selection and expansion and Close details; Activity Detail''s domain tabs; a stretch row''s toggle, Expand or Collapse
-  and More details in a subagent''s live transcript; message More and its panel; a setup sheet''s dropdown trigger pressed
-  again; Technical details on a setup sheet''s Advanced page and Show raw data. Hover tags, press-to-close and the activity
-  preview dwell are presentation. The Schedule Message send-time track is draft state. Opening a subagent''s live transcript
-  reuses cmd.agents.open_thread from every ACD-485 opener, with no chat-local alias; the transcript''s Copy is cmd.chat.copy_message
-  and the Goal preview''s Edit objective is cmd.chat.goal.open_editor. A NieR family selection is an ordinary theme Settings
-  write through cmd.settings.transaction.preview then cmd.settings.transaction.apply (Q22); editor open/close/replay
-  remain local presentation actions. Amended Q22, Jared 2026-10-30 (DL-257): the fifth family uses the existing theme
-  owner; no separate override remains. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation
-  requirement.'
+canonical_text: 'The 5.6 Pro chat round''s non-command controls are fixed. View state (LOCAL_PRESENTATION,
+  no command, no event, no catalog row): Edit objective, Cancel edit and Objective history inside Goal Activity
+  Detail; a To-Do row''s selection and expansion and Close details; Activity Detail''s domain tabs; a stretch
+  row''s toggle, Expand or Collapse and More details in a subagent''s live transcript; message More and its
+  panel; a setup sheet''s dropdown trigger pressed again; Technical details on a setup sheet''s Advanced page
+  and Show raw data. Hover tags, press-to-close and the activity preview dwell are presentation. The Schedule
+  Message send-time track is draft state. Opening a subagent''s live transcript reuses cmd.agents.open_thread
+  from every ACD-485 opener, with no chat-local alias; the transcript''s Copy is cmd.chat.copy_message and
+  the Goal preview''s Edit objective is cmd.chat.goal.open_editor. A NieR family selection is an ordinary theme
+  Settings write through cmd.settings.transaction.preview then cmd.settings.transaction.apply (Q22); editor
+  open/close/replay remain local presentation actions. Amended Q22, Jared 2026-10-30 (DL-257): the fifth family
+  uses the existing theme owner; no separate override remains. Amended DL-260, Jared 2026-10-31: only real
+  product behavior remains an implementation requirement.
+
+
+  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single
+  resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere.
+  Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project
+  versions and sole owner. Computer installations, credentials and protected source trust never travel in copy.
+  Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.*
+  local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact
+  consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay
+  resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable
+  handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Keeps local presentation and draft controls separate from domain commands.
 split_recommended: false
-depends_on: [UCC-188, CDRY-021, CS-079]
+depends_on:
+- UCC-188
+- CDRY-021
+- CS-079
 unblocks: []
 acceptance_criteria:
-  - "No command, event or catalog row exists for a control this unit lists as view state, draft state or presentation."
-  - "No chat-local subagent open command or alias exists."
-  - "No concept action name of the round (nier-*, feed-stretch, goal-*) appears as a command identity."
+- No command, event or catalog row exists for a control this unit lists as view state, draft state or presentation.
+- No chat-local subagent open command or alias exists.
+- No concept action name of the round (nier-*, feed-stretch, goal-*) appears as a command identity.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: invented_command_identity
 reasoning_tier: medium
 context_scope: chat_tweaks_20261007
 implementation_surfaces:
-  - Plans/Commands_System.md
-  - Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
 node_compile_hint:
   mode: static_command_disposition_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/UI_Command_Catalog.md#UCC-188"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+- Plans/UI_Command_Catalog.md#UCC-188
+- Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - LOCAL_PRESENTATION
 - cmd.agents.open_thread
 negative_constraints:
-  - "Do not mint a command for a control listed here as view state, draft state or presentation."
-  - "Do not register a concept action name as a command identity."
+- Do not mint a command for a control listed here as view state, draft state or presentation.
+- Do not register a concept action name as a command identity.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-188, ContractName:Plans/UI_Command_Catalog.md#UCC-129, ContractName:Plans/Commands_System.md#CDRY-021, ContractName:Plans/assistant-chat-design.md#ACD-485
@@ -8414,17 +8785,29 @@ plan_unit_id: CS-105
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  B1/B2/B6. cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab are canonical owner
-  commands of the workspace/project router, not aliases of opening the menu. Stable project_id and current
-  workspace identity/generation are required; stale/not-found/not-permitted refuse without changing the
-  active tab. Ctrl+Shift+P binds typed local ui.project_switcher.open (registered ui.project_switcher.*
-  prefix); ui.project_switcher.close restores opener focus. Ctrl/Cmd+Enter on a row chooses the new-workspace-tab command;
-  keyboard/pointer send identical typed payloads. Opening/closing/filtering a picker does not dispatch a
-  domain command. Existing project open/switch receipts and events stay owner-authoritative, no new event
-  emission by these producers.
-  B2, PM7 companion review fix1, 2026-10-30: ui.project_switcher.all_projects is the no-write route to the
-  existing Projects primary view; it does not dispatch the side-panel switch command.
+canonical_text: 'B1/B2/B6. cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab are canonical
+  owner commands of the workspace/project router, not aliases of opening the menu. A discriminated Project
+  target with stable project_id or no_project target with actual app Server/Computer and null Project, plus
+  current workspace identity/generation, is required; stale/not-found/not-permitted refuse without changing
+  the active tab. Ctrl+Shift+P binds typed local ui.project_switcher.open (registered ui.project_switcher.*
+  prefix); ui.project_switcher.close restores opener focus. Ctrl/Cmd+Enter on a row chooses the new-workspace-tab
+  command; keyboard/pointer send identical typed payloads. Opening/closing/filtering a picker does not dispatch
+  a domain command. Existing project open/switch receipts and events stay owner-authoritative, no new event
+  emission by these producers. B2, PM7 companion review fix1, 2026-10-30: ui.project_switcher.all_projects
+  is the no-write route to the existing Projects primary view; it does not dispatch the side-panel switch command.
+
+
+  Current projects-refresh contract: One reviewed Project setup binding serves onboarding/New Project/conversion-to-new;
+  no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. The exact consumer contract is UCC-215/WM-101 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -8438,6 +8821,9 @@ acceptance_criteria:
 - Ctrl+Shift+P/open/close/All projects are typed local menu/page actions; Ctrl/Cmd+Enter dispatches the new-workspace
   command.
 - Keyboard/pointer requests match and menu visibility emits no runtime event or duplicate lifecycle.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -8455,6 +8841,7 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - ui.project_switcher.all_projects
 - cmd.project.switch_active_tab
@@ -8463,6 +8850,8 @@ preserved_exact_tokens:
 - ui.project_switcher.close
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
 - Plans/Commands_System.md
 ```
@@ -8479,85 +8868,106 @@ plan_unit_id: CS-106
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: 'D8–D13, G5–G7/G10. UCC-210 declares cmd.work.stop, cmd.work.restart, cmd.work.send_input, cmd.work.set_completion_delivery,
-  cmd.work.clear_finished, cmd.work.quit, cmd.chat.processes.open, cmd.agents_and_processes.show and cmd.agents_and_processes.pop_out.
-  Runtime commands bind project/server/environment, stable work/owner and process identity, expected projection/input
-  generation, actor/permission and idempotency key, return an owner receipt or typed rejection, and never optimistically
-  manufacture success. Unknown/stale/unavailable owner refuses. Navigation and view-local clear do not write runtime
-  state or emit events. Stop all is cmd.work.stop with scope thread/platform and the reviewed target list, never a second
-  handler; process-group semantics are EP-043/SIR-054. Input is current safe yes/no only; other input reveals terminal.
-  Restart is eligible owner-controlled new invocation, no PID-only replay. Completion policy writes one owner value;
-  delivery does not wake stopped threads. Quit defaults keep_running; stop_selected excludes services and binds the reviewed
-  current target set. Registered local prefixes: ui.work_panel.* (close/select_tab/filter/sort/expand/select), ui.work_quit.*
-  (select/cancel), ui.project_switcher.* (open/close), ui.settings.pip_editor.* (open/close/replay), plus ui.work_quit.open
-  to draft the quit dialog. They write no durable/runtime state, carry return focus/scope and release timers/subscriptions/copies.
-  cmd.work.clear_finished is a navigation_wrapper with view-local hiding, not record deletion. All settings hosts use
-  preview/apply. No Home panel-tab command or panel shortcut in this build. ProcessFacts and command request/result/error
-  fixtures are static contracts; new input/completion event candidates remain non-emitting until Event Authority. B2:
-  ui.project_switcher.all_projects is the typed local action that focuses the existing Projects page route tab_id projects.
-  It never misuses cmd.panel.switch, which is only a rail side-panel shell action. D10/D13/G4: Requests carry explicit
-  scope_kind under the existing application/project policy. Quit and platform Stop all are application-scoped with project_id
-  null; thread Processes is project-scoped with a real Project. A global panel or local editor/navigation action works
-  without an active Project. Every reviewed target still carries its actual Project/server/environment and current owner
-  permission. Dispatch verifies source/target scope rather than inferring a default Project; a mismatch refuses before
-  effects. This adds no Settings store or event family. G1 B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin
-  action (binding chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and reprojects
-  the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only: one full-size docked-or-full-height-cover
-  view, no small form. A switch cancels stale subscriptions and never leaves the previous thread’s rows/actions in the
-  new thread. A missing domain shows its truthful empty/unavailable state. Pin is session view state, not a Settings
-  row, durable layout field or runtime mutation. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay
-  popover, reached from the existing status-bar System status item and the Processes System services link. ui.system_status.open
-  and ui.system_status.close are typed local visibility actions, with statusbar.system_status, work.open_system_status
-  and system_status.close binding families. Service owner links use the existing ui.settings.route.open action and system_status.service.open_settings
-  binding, selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
-  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or controlling
-  a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass plate; unavailable
-  owner navigation says why. System status open/close and owner-Settings navigation carry the same explicit source scope,
-  view and return-focus identity as other no-write local actions. G6 Clear finished is a Processes-view action; it never
-  clears finished agents. Concept thread Stop all reviews processes/scheduled runs, while platform Stop all may include
-  agents after review; the canonical cmd.work.stop identity and per-owner permission/identity checks remain. D2/D7, PM7
-  Step4 final-source alignment, 2026-10-30: cmd.chat.processes.open accepts optional work_id for a dock Review/Show route
-  selecting one process or scheduled row. A bar open may omit it. Resolve that ID only within the signed Project/thread
-  scope and current expected generation; missing, stale or foreign selection cannot retarget to a title match or another
-  thread. This remains navigation with no process effect. Agent dock Review selects its existing Subagents detail locally
-  and never opens a child transcript by this route. D7/D8/D13, PM7 companion review fix1, 2026-10-30 (Astra A2/A3): work.open_owner
-  is ui.work_panel.select with an owner-row value, owner_id, destination agents|subagents, invoking view and focus; Subagents
-  also binds its exact thread_id. It never opens a transcript. Actual Open thread uses cmd.chat.open_thread for the item’s
-  bound Assistant thread; actual Open surface is ui.work_panel.open_surface, a local navigation request to the resolved
-  owner surface with work identity and focus, unavailable if that owner cannot be reached. Copy command is ui.work_panel.copy_command,
-  a local clipboard request over the selected current command; clipboard refusal cannot report success. Open port reuses
-  cmd.browser.open_workspace_preview with a server/environment-authoritative URL and CV-360 placement, never an assumed
-  client localhost. A scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the exact schedule identity/revision
-  and owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new invocation
-  through the terminal owner, with an explicit new-session request when needed; Restart keeps cmd.work.restart for restartable
-  live server/db/watcher work. Concept W.restart/W.stop adapters do not replace those native owner routes. G4/D7/D10,
-  PM7 companion review fix1, 2026-10-30 (Astra A4): local_action_request requires a closed action-specific value. select_tab
-  is agents|processes|resources. sort is {column: title|rank|time|cpu|mem|ports|where, direction: -1|1}. filter distinguishes
-  owner, agent_group and process_grouping; expand distinguishes item, subagents and group plus boolean expanded. select
-  distinguishes an item work_id from owner_id with destination agents|subagents; exact thread_id is required for Subagents.
-  Quit draft selection is one closed choice keep_running|stop_selected, one work_id/expected_generation/selected checkbox,
-  or the Stop-list scope procs|all. Missing values, unknown fields, arbitrary enums and cross-branch fields refuse before
-  view or owner effects. Pin and System status retain their separate restrictions. None of these draft/view changes creates
-  a runtime mutation or saved setting. D7/D8/D13, PM7 final-review direct correction, 2026-10-30 (Astra r2 N1): reused-owner
-  Touch routes retain separate contracts, never PM7 command_result. Browser open and Terminal rerun retain UCC-063/UCC-201
-  catalog payload contracts and the existing CV-333 UICommandResponse v2 projection/error/receipt; their per-command
-  identity fence checks common dispatch identity only, not an uncompiled owner request body or terminal effect. Scheduling
-  Cancel directly consumes ScheduledMessageCancelRequest and ScheduledMessageCancelResult plus the scheduling owner’s
-  closed error code. Its admitted source_surface vocabulary is unchanged; Work delegates to the scheduling-owned cancellation
-  context rather than inventing a source or PID target. Precise per-command profiles and fixtures bind these distinctions;
-  no owner adopts a new PM7 result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider
-  gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that
-  thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning
-  to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs
-  line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry
-  timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work.
-  Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through
-  Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services,
-  which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that
-  nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work
-  as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry;
-  the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure
-  remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority.'
+canonical_text: 'D8–D13, G5–G7/G10. UCC-210 declares cmd.work.stop, cmd.work.restart, cmd.work.send_input,
+  cmd.work.set_completion_delivery, cmd.work.clear_finished, cmd.work.quit, cmd.chat.processes.open, cmd.agents_and_processes.show
+  and cmd.agents_and_processes.pop_out. Runtime commands bind project/server/environment, stable work/owner
+  and process identity, expected projection/input generation, actor/permission and idempotency key, return
+  an owner receipt or typed rejection, and never optimistically manufacture success. Unknown/stale/unavailable
+  owner refuses. Navigation and view-local clear do not write runtime state or emit events. Stop all is cmd.work.stop
+  with scope thread/platform and the reviewed target list, never a second handler; process-group semantics
+  are EP-043/SIR-054. Input is current safe yes/no only; other input reveals terminal. Restart is eligible
+  owner-controlled new invocation, no PID-only replay. Completion policy writes one owner value; delivery does
+  not wake stopped threads. Quit defaults keep_running; stop_selected excludes services and binds the reviewed
+  current target set. Registered local prefixes: ui.work_panel.* (close/select_tab/filter/sort/expand/select),
+  ui.work_quit.* (select/cancel), ui.project_switcher.* (open/close), ui.settings.pip_editor.* (open/close/replay),
+  plus ui.work_quit.open to draft the quit dialog. They write no durable/runtime state, carry return focus/scope
+  and release timers/subscriptions/copies. cmd.work.clear_finished is a navigation_wrapper with view-local
+  hiding, not record deletion. All settings hosts use preview/apply. No Home panel-tab command or panel shortcut
+  in this build. ProcessFacts and command request/result/error fixtures are static contracts; new input/completion
+  event candidates remain non-emitting until Event Authority. B2: ui.project_switcher.all_projects is the typed
+  local action that focuses the existing Projects page route tab_id projects. It never misuses cmd.panel.switch,
+  which is only a rail side-panel shell action. D10/D13/G4: Requests carry explicit scope_kind under the existing
+  application/project policy. Quit and platform Stop all are application-scoped with project_id null; thread
+  Processes is project-scoped with a real Project. A global panel or local editor/navigation action works without
+  an active Project. Every reviewed target still carries its actual Project/server/environment and current
+  owner permission. Dispatch verifies source/target scope rather than inferring a default Project; a mismatch
+  refuses before effects. This adds no Settings store or event family. G1 B (Jared 2026-10-30): Pin/unpin is
+  the view-local ui.activity_detail.pin action (binding chat.activity.pin), default false. Pinned Activity
+  Detail stays open across thread switches and reprojects the selected thread’s data; unpinned detail closes
+  on a thread switch. Pin changes lifetime only: one full-size docked-or-full-height-cover view, no small form.
+  A switch cancels stale subscriptions and never leaves the previous thread’s rows/actions in the new thread.
+  A missing domain shows its truthful empty/unavailable state. Pin is session view state, not a Settings row,
+  durable layout field or runtime mutation. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only
+  overlay popover, reached from the existing status-bar System status item and the Processes System services
+  link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with statusbar.system_status,
+  work.open_system_status and system_status.close binding families. Service owner links use the existing ui.settings.route.open
+  action and system_status.service.open_settings binding, selecting code.editing.lsp-server-catalog for language
+  servers, system.mcp.server-list for MCP servers or web.index.enable for the search index. They open Settings
+  and reveal the owner row without writing a value or controlling a service. The popover has close/Escape/outside
+  closure, return focus and the common overlay/Glass plate; unavailable owner navigation says why. System status
+  open/close and owner-Settings navigation carry the same explicit source scope, view and return-focus identity
+  as other no-write local actions. G6 Clear finished is a Processes-view action; it never clears finished agents.
+  Concept thread Stop all reviews processes/scheduled runs, while platform Stop all may include agents after
+  review; the canonical cmd.work.stop identity and per-owner permission/identity checks remain. D2/D7, PM7
+  Step4 final-source alignment, 2026-10-30: cmd.chat.processes.open accepts optional work_id for a dock Review/Show
+  route selecting one process or scheduled row. A bar open may omit it. Resolve that ID only within the signed
+  Project/thread scope and current expected generation; missing, stale or foreign selection cannot retarget
+  to a title match or another thread. This remains navigation with no process effect. Agent dock Review selects
+  its existing Subagents detail locally and never opens a child transcript by this route. D7/D8/D13, PM7 companion
+  review fix1, 2026-10-30 (Astra A2/A3): work.open_owner is ui.work_panel.select with an owner-row value, owner_id,
+  destination agents|subagents, invoking view and focus; Subagents also binds its exact thread_id. It never
+  opens a transcript. Actual Open thread uses cmd.chat.open_thread for the item’s bound Assistant thread; actual
+  Open surface is ui.work_panel.open_surface, a local navigation request to the resolved owner surface with
+  work identity and focus, unavailable if that owner cannot be reached. Copy command is ui.work_panel.copy_command,
+  a local clipboard request over the selected current command; clipboard refusal cannot report success. Open
+  port reuses cmd.browser.open_workspace_preview with a server/environment-authoritative URL and CV-360 placement,
+  never an assumed client localhost. A scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the
+  exact schedule identity/revision and owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses
+  cmd.terminal.rerun for a new invocation through the terminal owner, with an explicit new-session request
+  when needed; Restart keeps cmd.work.restart for restartable live server/db/watcher work. Concept W.restart/W.stop
+  adapters do not replace those native owner routes. G4/D7/D10, PM7 companion review fix1, 2026-10-30 (Astra
+  A4): local_action_request requires a closed action-specific value. select_tab is agents|processes|resources.
+  sort is {column: title|rank|time|cpu|mem|ports|where, direction: -1|1}. filter distinguishes owner, agent_group
+  and process_grouping; expand distinguishes item, subagents and group plus boolean expanded. select distinguishes
+  an item work_id from owner_id with destination agents|subagents; exact thread_id is required for Subagents.
+  Quit draft selection is one closed choice keep_running|stop_selected, one work_id/expected_generation/selected
+  checkbox, or the Stop-list scope procs|all. Missing values, unknown fields, arbitrary enums and cross-branch
+  fields refuse before view or owner effects. Pin and System status retain their separate restrictions. None
+  of these draft/view changes creates a runtime mutation or saved setting. D7/D8/D13, PM7 final-review direct
+  correction, 2026-10-30 (Astra r2 N1): reused-owner Touch routes retain separate contracts, never PM7 command_result.
+  Browser open and Terminal rerun retain UCC-063/UCC-201 catalog payload contracts and the existing CV-333
+  UICommandResponse v2 projection/error/receipt; their per-command identity fence checks common dispatch identity
+  only, not an uncompiled owner request body or terminal effect. Scheduling Cancel directly consumes ScheduledMessageCancelRequest
+  and ScheduledMessageCancelResult plus the scheduling owner’s closed error code. Its admitted source_surface
+  vocabulary is unchanged; Work delegates to the scheduling-owned cancellation context rather than inventing
+  a source or PID target. Precise per-command profiles and fixtures bind these distinctions; no owner adopts
+  a new PM7 result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider
+  gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure
+  in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint
+  or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At
+  elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input
+  is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry
+  never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility
+  gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s
+  Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual
+  Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running,
+  above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines
+  show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only
+  2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative;
+  shared read scope creates no Stop/Restart/Stop all or service-control authority.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -8570,22 +8980,26 @@ acceptance_criteria:
 - Every command has one sole handler and closed typed request/result; explicit source scope, target owner/permission/storage/currentness
   reject before effects, including application controls with no active Project.
 - Stop all reuses cmd.work.stop; pid/start/group/descendant targeting and 3 s grace are enforced by the owner.
-- Prompt input is current safe yes/no only, quit defaults keep-running, clear is view-local and candidate events remain
-  non-emitting.
+- Prompt input is current safe yes/no only, quit defaults keep-running, clear is view-local and candidate events
+  remain non-emitting.
 - All declared local prefixes write no runtime state and release focus/subscriptions/copies on close.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and
-  the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection.
-  Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not
-  restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you
-  lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw;
-  it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three
-  budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends
-  G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong
-  to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project
-  is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines
-  show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2
-  s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared
-  read scope creates no Stop/Restart/Stop all or service-control authority.'
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process
+  and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s
+  dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning
+  to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000
+  the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered.
+  One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes
+  work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains
+  reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer
+  and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s
+  own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does
+  not look empty or report another Project’s work as its own. Shared machines show only environments with running
+  work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains.
+  Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope
+  creates no Stop/Restart/Stop all or service-control authority.'
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -8603,10 +9017,13 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
-- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
 - Plans/Commands_System.md
 ```
@@ -8635,57 +9052,81 @@ plan_unit_id: CS-107
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  DL-270 commands part. pm db dump, pm inspect, pm tail and pm export are command-line reads, not User
-  Commands or UICommands, and mint no cmd.* id, catalog row or wiring row; SP-339 owns their read semantics.
-  The record inspector is a read-only record tab opened through the existing cmd.storage.open_value. The SP-340
-  verified reclaim is the existing cmd.storage.compaction.request, one owner-routed maintenance request for the
-  whole storage instance under writer posture, permission and the maintenance lease, with results shown per
-  storage group; there is no cmd.storage.reclaim. cmd.chat.load_older is registered in UCC-212 as a shell_view
-  command with the sole handler handlers::chat::load_older that reads one older sealed 50-item page of a thread
-  from the render-page store with no write; scrolling near the top dispatches it and a Load 50 older row
-  stays as the fallback. Detail usage.event records are governed by ai.usage.usage-retention and daily usage
-  totals are kept whatever it says (UF-108).
+canonical_text: 'DL-270 commands part. pm db dump, pm inspect, pm tail and pm export are command-line reads,
+  not User Commands or UICommands, and mint no cmd.* id, catalog row or wiring row; SP-339 owns their read
+  semantics. The record inspector is a read-only record tab opened through the existing cmd.storage.open_value.
+  The SP-340 verified reclaim is the existing cmd.storage.compaction.request, one owner-routed maintenance
+  request for the whole storage instance under writer posture, permission and the maintenance lease, with results
+  shown per storage group; there is no cmd.storage.reclaim. cmd.chat.load_older is registered in UCC-212 as
+  a shell_view command with the sole handler handlers::chat::load_older that reads one older sealed 50-item
+  page of a thread from the render-page store with no write; scrolling near the top dispatches it and a Load
+  50 older row stays as the fallback. Detail usage.event records are governed by ai.usage.usage-retention and
+  daily usage totals are kept whatever it says (UF-108).
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
-gui_classification_reason: Rules the reclaim action in storage health, the chat's load-older control and the record inspector's command route.
+gui_classification_reason: Rules the reclaim action in storage health, the chat's load-older control and the
+  record inspector's command route.
 split_recommended: false
-depends_on: [CS-059, SP-338, SP-339, SP-340, SP-341]
+depends_on:
+- CS-059
+- SP-338
+- SP-339
+- SP-340
+- SP-341
 unblocks: []
 acceptance_criteria:
-  - No catalog row, wiring row or cmd.* id exists for pm db dump, pm inspect, pm tail or pm export.
-  - Reclaim dispatches cmd.storage.compaction.request and never compacts inline; no cmd.storage.reclaim exists.
-  - cmd.chat.load_older has one handler, writes nothing and never replays events.
-  - No command prunes usage.event beyond ai.usage.usage-retention.
+- No catalog row, wiring row or cmd.* id exists for pm db dump, pm inspect, pm tail or pm export.
+- Reclaim dispatches cmd.storage.compaction.request and never compacts inline; no cmd.storage.reclaim exists.
+- cmd.chat.load_older has one handler, writes nothing and never replays events.
+- No command prunes usage.event beyond ai.usage.usage-retention.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: storage_command_boundary_drift
 reasoning_tier: high
 context_scope: dl270_storage_profile_commands
 implementation_surfaces:
-  - Plans/Commands_System.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.production.json
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
 node_compile_hint:
   mode: owner_contract_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-270
-  - Plans/storage-plan.md#SP-338
-  - Plans/storage-plan.md#SP-339
-  - Plans/storage-plan.md#SP-340
+- Plans/Decision_Log.md#DL-270
+- Plans/storage-plan.md#SP-338
+- Plans/storage-plan.md#SP-339
+- Plans/storage-plan.md#SP-340
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
-  - cmd.chat.load_older
-  - cmd.storage.compaction.request
-  - cmd.storage.open_value
-  - usage.event
+- cmd.chat.load_older
+- cmd.storage.compaction.request
+- cmd.storage.open_value
+- usage.event
 negative_constraints:
-  - Do not mint a cmd.* id for a command-line verb.
-  - Do not add a cmd.storage.reclaim command or a ui.chat_thread.* prefix.
-  - Do not add a standalone verify, repair or salvage command.
+- Do not mint a cmd.* id for a command-line verb.
+- Do not add a cmd.storage.reclaim command or a ui.chat_thread.* prefix.
+- Do not add a standalone verify, repair or salvage command.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
-  - Plans/Commands_System.md
+- Plans/Commands_System.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-339, ContractName:Plans/storage-plan.md#SP-340, ContractName:Plans/UI_Command_Catalog.md#UCC-212
@@ -8698,17 +9139,30 @@ plan_unit_id: CS-108
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: CS-108. DL-272 Free Models Turn off is cmd.free_models.route.disable, a canonical domain_action with
-  sole future handler handlers::models::disable_free_route. It resolves route_id, underlying_provider_id and policy_scope_ref
-  against the current Models catalog and policy, preserving actor_id, origin, idempotency_key, catalog_generation and
-  expected_generation. Display labels or a caller success flag are not owner identity. Availability requires a known
-  eligible target and owner/permission/writer/currentness proof; missing handler stays handler_unavailable. The owner
-  changes only that route’s future eligibility, preserving credentials, account identities, other routes, top-10 order
-  and in-flight snapshots (EP-107). A replay is idempotent. A successful/already-disabled result names the same route/provider/scope,
-  resulting generation and receipt; refusal carries its closed reason and no accepted change. No new EventRecord family,
-  secret field or credential-revoke command is admitted. Request/result/fixtures live in Plans/free_models_route_contracts.schema.json
-  and Plans/free_models_route_contract_fixtures.json. Only the actual Models owner effect and receipt prove an accepted
-  policy change.
+canonical_text: 'CS-108. DL-272 Free Models Turn off is cmd.free_models.route.disable, a canonical domain_action
+  with sole future handler handlers::models::disable_free_route. It resolves route_id, underlying_provider_id
+  and policy_scope_ref against the current Models catalog and policy, preserving actor_id, origin, idempotency_key,
+  catalog_generation and expected_generation. Display labels or a caller success flag are not owner identity.
+  Availability requires a known eligible target and owner/permission/writer/currentness proof; missing handler
+  stays handler_unavailable. The owner changes only that route’s future eligibility, preserving credentials,
+  account identities, other routes, top-10 order and in-flight snapshots (EP-107). A replay is idempotent.
+  A successful/already-disabled result names the same route/provider/scope, resulting generation and receipt;
+  refusal carries its closed reason and no accepted change. No new EventRecord family, secret field or credential-revoke
+  command is admitted. Request/result/fixtures live in Plans/free_models_route_contracts.schema.json and Plans/free_models_route_contract_fixtures.json.
+  Only the actual Models owner effect and receipt prove an accepted policy change.
+
+
+  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
+  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
+  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
+  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
+  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
+  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
+  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
+  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
+  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
+  remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Defines user-visible setup/feedback or its exact owner-routed control.
 split_recommended: false
@@ -8718,16 +9172,20 @@ depends_on:
 - MA-045
 unblocks: []
 acceptance_criteria:
-- DL-272 Free Models Turn off is cmd.free_models.route.disable, a canonical domain_action with sole future handler handlers::models::disable_free_route.
-  It resolves route_id, underlying_provider_id and policy_scope_ref against the current Models catalog and policy, preserving
-  actor_id, origin, idempotency_key, catalog_generation and expected_generation. Display labels or a caller success flag
-  are not owner identity. Availability requires a known eligible target and owner/permission/writer/currentness proof;
-  missing handler stays handler_unavailable. The owner changes only that route’s future eligibility, preserving credentials,
-  account identities, other routes, top-10 order and in-flight snapshots (EP-107). A replay is idempotent. A successful/already-disabled
-  result names the same route/provider/scope, resulting generation and receipt; refusal carries its closed reason and
-  no accepted change. No new EventRecord family, secret field or credential-revoke command is admitted. Request/result/fixtures
-  live in Plans/free_models_route_contracts.schema.json and Plans/free_models_route_contract_fixtures.json. Only the
-  actual Models owner effect and receipt prove an accepted policy change.
+- DL-272 Free Models Turn off is cmd.free_models.route.disable, a canonical domain_action with sole future
+  handler handlers::models::disable_free_route. It resolves route_id, underlying_provider_id and policy_scope_ref
+  against the current Models catalog and policy, preserving actor_id, origin, idempotency_key, catalog_generation
+  and expected_generation. Display labels or a caller success flag are not owner identity. Availability requires
+  a known eligible target and owner/permission/writer/currentness proof; missing handler stays handler_unavailable.
+  The owner changes only that route’s future eligibility, preserving credentials, account identities, other
+  routes, top-10 order and in-flight snapshots (EP-107). A replay is idempotent. A successful/already-disabled
+  result names the same route/provider/scope, resulting generation and receipt; refusal carries its closed
+  reason and no accepted change. No new EventRecord family, secret field or credential-revoke command is admitted.
+  Request/result/fixtures live in Plans/free_models_route_contracts.schema.json and Plans/free_models_route_contract_fixtures.json.
+  Only the actual Models owner effect and receipt prove an accepted policy change.
+- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
+  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
+  static closure.
 validation_surfaces:
 - python3 scripts/pm7-canon-check.py
 - python3 scripts/pm-plan-index.py validate
@@ -8744,12 +9202,1517 @@ node_compile_hint:
 source_lineage:
 - Lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01
 - Concepts/onboarding/opus-5.5 at7d2dd568be76874ff8b4d3e82bad3701226d248c (source lineage only)
+- source_ref:chat:2026-11-03-projects-pass2-approved
 preserved_exact_tokens:
 - CS-108
 - cmd.free_models.route.disable
 negative_constraints:
-- Do not infer native handlers, trust, success, credential authority or governance readiness from a concept or static
-  fixture.
+- Do not infer native handlers, trust, success, credential authority or governance readiness from a concept
+  or static fixture.
+- Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
+  authority.
 owner_hints:
 - Plans/Commands_System.md
 ```
+
+## Projects refresh exact primary registration roster
+
+All 28 identities below are planned canonical primaries; all native handlers remain `handler_unavailable`. Persona save_as_override was declared by its owner but is newly added to the central primary roster. The new binding companion contains full per-route permission/currentness/return, state selectors and error/refusal contracts. No sixth Settings primary, fake import, command-file primary, cmd.projects read family or thread facade primary is admitted.
+
+| Command | Label / description | Preconditions | command_kind | Normalization | Owner | Sole planned handler | Request | Result | Confirmation / effect |
+|---|---|---|---|---|---|---|---|---|---|
+| `cmd.chat.place.set` | draft Where chooser | Draft-only selected authorized Computer; fixed after first message | domain_action | canonical; alias_of_command_id=null | Plans/assistant-chat-design.md#ACD-508 | `handlers::assistant_chat::place_set` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatPlaceSetRequest` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatPlaceSetResult` | Regular person; explicit task/destination YOLO only for admitted conversion; protected guards remain; draft place only, no thread creation, folder creation or EventRecord |
+| `cmd.chat.move.preview` | both conversion choices and live preview | Exact source thread and explicit new/existing destination; neither conversion is preselected | domain_action | canonical; alias_of_command_id=null | Plans/assistant-chat-design.md#ACD-510 | `handlers::assistant_chat::move_preview` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewRequest` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewResult` | read_only; read-only plain statement/current manifest preview; no owner effect |
+| `cmd.chat.move.apply` | named conversion commit and guarded agent route | Current unambiguous destination/preview; source approvals settled, active work/timers safely fenced | domain_action | canonical; alias_of_command_id=null | Plans/assistant-chat-design.md#ACD-510 | `handlers::assistant_chat::move_apply` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveApplyRequest` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult` | Regular person; explicit task/destination YOLO only for admitted conversion; protected guards remain; one owner-composed copy/check/Project listing/cutover/report; source history sealed, one live writer |
+| `cmd.chat.move.resume` | paused conversion Resume | Existing paused operation, current source and destination Servers and cutover claim | domain_action | canonical; alias_of_command_id=null | Plans/assistant-chat-design.md#ACD-510 | `handlers::assistant_chat::move_resume` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResumeRequest` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult` | Regular person; explicit task/destination YOLO only for admitted conversion; protected guards remain; resume only remaining owner effects under retained operation; no replay of settled steps |
+| `cmd.chat.move.cancel` | paused or active conversion Cancel | Current retained operation, safe-boundary rollback and exact eligible file manifest | domain_action | canonical; alias_of_command_id=null | Plans/assistant-chat-design.md#ACD-510 | `handlers::assistant_chat::move_cancel` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveCancelRequest` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult` | Regular person; explicit task/destination YOLO only for admitted conversion; protected guards remain; owner safe cancellation/rollback; truthful partial recovery, never delete a remote repository |
+| `cmd.chat.move.undo.preview` | report/divider/notification Undo preview | No new work and at most seven days; held files/Servers and revisions resolvable | domain_action | canonical; alias_of_command_id=null | Plans/assistant-chat-design.md#ACD-510 | `handlers::assistant_chat::move_undo_preview` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveUndoPreviewRequest` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveUndoPreviewResult` | read_only; read-only exact inverse and eligibility, no effect |
+| `cmd.chat.move.undo.apply` | named Undo commit | Fresh inverse preview; both Servers for cross-Computer Undo; no Stop clearing or automatic resume | domain_action | canonical; alias_of_command_id=null | Plans/assistant-chat-design.md#ACD-510 | `handlers::assistant_chat::move_undo_apply` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveUndoApplyRequest` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult` | Regular person; explicit task/destination YOLO only for admitted conversion; protected guards remain; inverse only eligible unchanged writes; list-only remove for a new Project; preserve remote repos/branches/backups and independent canonical custody |
+| `cmd.chat.continue_elsewhere` | Where/Chat details Continue elsewhere | Actual authorized chosen Computer available; original remains at its fixed Computer | domain_action | canonical; alias_of_command_id=null | Plans/assistant-chat-design.md#ACD-508 | `handlers::assistant_chat::continue_elsewhere` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatContinueElsewhereRequest` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatContinueElsewhereResult` | Regular person; explicit task/destination YOLO only for admitted conversion; protected guards remain; new linked chat on chosen Computer, never a live host retarget |
+| `cmd.chat.incoming.accept` | From another chat Accept | Current incoming request and receiver actor/Off/mode/permission ceiling | domain_action | canonical; alias_of_command_id=null | Plans/assistant-chat-design.md#ACD-509 | `handlers::assistant_chat::incoming_accept` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatIncomingDecisionRequest` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatIncomingDecisionResult` | Regular person; explicit task/destination YOLO only for admitted conversion; protected guards remain; receiver-owned acceptance of exact request; normal turn only under receiver authority |
+| `cmd.chat.incoming.decline` | From another chat Decline | Current receiver-owned request; return to its receiving chat | domain_action | canonical; alias_of_command_id=null | Plans/assistant-chat-design.md#ACD-509 | `handlers::assistant_chat::incoming_decline` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatIncomingDecisionRequest` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatIncomingDecisionResult` | Regular person; explicit task/destination YOLO only for admitted conversion; protected guards remain; receiver-owned decline, no requested work |
+| `cmd.chat.chat_folder.open` | chat folder Open in Files | Real existing app folder and current read access; missing folder is a refusal | navigation_wrapper | canonical; alias_of_command_id=null | Plans/assistant-chat-design.md#ACD-508 | `handlers::assistant_chat::chat_folder_open` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatFolderRoute` | `Plans/assistant_chat_contracts.schema.json#/$defs/RouteResult` | read_only; exact folder navigation; no mkdir, mutation or EventRecord |
+| `cmd.chat.chat_folder.delete` | explicit unchecked-by-default folder deletion choice | Explicit selected content/root; current deletion preview, authority and retention holds | domain_action | canonical; alias_of_command_id=null | Plans/assistant-chat-design.md#ACD-508 | `handlers::assistant_chat::chat_folder_delete` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatFolderDeleteRequest` | `Plans/assistant_chat_contracts.schema.json#/$defs/ChatFolderDeleteResult` | Regular person; explicit task/destination YOLO only for admitted conversion; protected guards remain; exact selected folder/content deletion under holds/FileSafe/destructive admission, distinct from chat tombstone |
+| `cmd.persona.save_as_override` | Owner manager copy/Save Project version; Settings Transfer/New Project/onboarding/Saved setups whole-thing contribution | Actual chosen destination Project is required for a whole eligible Project override; exact source ID/revision/hash, target CAS and protected-ID policy. No Projectless override target, built-in shadow or duplicate alias. | domain_action | canonical; alias_of_command_id=null | Plans/Personas.md#P-060 | `handlers::persona::save_as_override` | `Plans/shared_integration_runtime.schema.json#/$defs/persona_save_as_override_request` | `Plans/shared_integration_runtime.schema.json#/$defs/persona_save_as_override_result` | owner_policy; Exact whole owner record/reach/switch copy with source hash and destination CAS; typed readback and compensation. No per-field merge, install, executable trust, credentials, private plugin data or live workflow content. |
+| `cmd.mcp.server.copy` | Owner manager copy/Save Project version; Settings Transfer/New Project/onboarding/Saved setups whole-thing contribution | Exact owned source, declared destination home/reach/Project version; protected IDs and externally managed records refuse | domain_action | canonical; alias_of_command_id=null | Plans/MCP_Integration.md#MI-044 | `handlers::mcp::copy_server` | `Plans/shared_integration_runtime.schema.json#/$defs/mcp_server_copy_request` | `Plans/shared_integration_runtime.schema.json#/$defs/mcp_server_copy_result` | owner_policy; Exact whole owner record/reach/switch copy with source hash and destination CAS; typed readback and compensation. No per-field merge, install, executable trust, credentials, private plugin data or live workflow content. |
+| `cmd.skill.copy` | Owner manager copy/Save Project version; Settings Transfer/New Project/onboarding/Saved setups whole-thing contribution | Exact owned source, declared destination home/reach/Project version; protected IDs and externally managed records refuse | domain_action | canonical; alias_of_command_id=null | Plans/Skills_System.md#SS-039 | `handlers::skills::copy` | `Plans/shared_integration_runtime.schema.json#/$defs/skill_copy_request` | `Plans/shared_integration_runtime.schema.json#/$defs/skill_copy_result` | owner_policy; Exact whole owner record/reach/switch copy with source hash and destination CAS; typed readback and compensation. No per-field merge, install, executable trust, credentials, private plugin data or live workflow content. |
+| `cmd.plugin.copy_configuration` | Owner manager copy/Save Project version; Settings Transfer/New Project/onboarding/Saved setups whole-thing contribution | Exact owned source, declared destination home/reach/Project version; protected IDs and externally managed records refuse | domain_action | canonical; alias_of_command_id=null | Plans/Plugins_System.md#PLUG-071 | `handlers::plugins::copy_configuration` | `Plans/plugin_contracts.schema.json#/$defs/PluginCopyConfigurationRequest` | `Plans/plugin_contracts.schema.json#/$defs/PluginCopyConfigurationResult` | owner_policy; Exact whole owner record/reach/switch copy with source hash and destination CAS; typed readback and compensation. No per-field merge, install, executable trust, credentials, private plugin data or live workflow content. |
+| `cmd.server.settings_home.move` | Servers Keeps your settings; Settings home recovery; Clients/Doctor | Same-owner explicit target, current local claim/session/trust/role/protocol; no automatic election or stale-copy promotion | domain_action | canonical; alias_of_command_id=null | Plans/Server_System.md#SRV-016 | `handlers::server::settings_home_move` | `Plans/server_system_contracts.schema.json#/$defs/settings_home_move_request` | `Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result` | owner_policy; Move preview/apply uses one writer-role generation switch after verified copy and old-writer fencing; peer trust only start/approve/reject/cancel/revoke for settings.follow, never Project/content authority. Join data choices use Settings transactions. |
+| `cmd.server.settings_peer_trust` | Servers Keeps your settings; Settings home recovery; Clients/Doctor | Same-owner explicit target, current local claim/session/trust/role/protocol; no automatic election or stale-copy promotion | domain_action | canonical; alias_of_command_id=null | Plans/Server_System.md#SRV-016 | `handlers::server::settings_peer_trust` | `Plans/server_system_contracts.schema.json#/$defs/settings_peer_trust_command_request` | `Plans/server_system_contracts.schema.json#/$defs/settings_peer_trust_command_result` | owner_policy; Move preview/apply uses one writer-role generation switch after verified copy and old-writer fencing; peer trust only start/approve/reject/cancel/revoke for settings.follow, never Project/content authority. Join data choices use Settings transactions. |
+| `cmd.project.rename` | Projects/New Project/onboarding/conversion-to-new; source Details/Contribute/Doctor | Real target/current listing for rename/add; inspection permits explicit unregistered source_context with actual Computer/Host/Environment/transport/locator and no fake Project or writer lease | domain_action | canonical; alias_of_command_id=null | Plans/Project_System.md#PJCT-012 | `handlers::project::rename` | `Plans/project_system_contracts.schema.json#/$defs/project_action_request_v2` | `Plans/project_system_contracts.schema.json#/$defs/project_action_result_v2` | owner_policy; Metadata display_name/revision/timestamp only, preserving folder/repository/Vault/ID and interior spaces |
+| `cmd.source_control.repository.inspect` | Projects/New Project/onboarding/conversion-to-new; source Details/Contribute/Doctor | Real target/current listing for rename/add; inspection permits explicit unregistered source_context with actual Computer/Host/Environment/transport/locator and no fake Project or writer lease | domain_action | canonical; alias_of_command_id=null | Plans/Source_Control_System.md#SCS-025 | `handlers::source_control::repository_inspect` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2` | owner_policy; Read-only bounded source inspection, no snapshot/hooks/filters/helpers, linking, origin trust or network mutation; explicit partial/omitted evidence |
+| `cmd.source_control.remote.add` | Projects/New Project/onboarding/conversion-to-new; source Details/Contribute/Doctor | Real target/current listing for rename/add; inspection permits explicit unregistered source_context with actual Computer/Host/Environment/transport/locator and no fake Project or writer lease | domain_action | canonical; alias_of_command_id=null | Plans/Source_Control_System.md#SCS-025 | `handlers::source_control::remote_add` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2` | owner_policy; Actual backend local remote configuration add, no overwrite of taken names, network/auth/publish or Git fallback for JJ |
+| `cmd.permissions.create_computer_rule` | Permissions manager; explicit Always scope; FileSafe approved list; copy preview | Actual owner Computer and human durable-choice authority; current rule/source acceptance refs | domain_action | canonical; alias_of_command_id=null | Plans/Permissions_System.md#PS-144 | `handlers::permissions::create_computer_rule` | `Plans/automation_authority_contracts.schema.json#/$defs/computer_rule_create_request` | `Plans/automation_authority_contracts.schema.json#/$defs/computer_rule_create_result` | owner_policy; Human durable rule at exact tagged Computer, normalized pattern/action/revision with owner readback; no preselected scope or Everywhere path rule |
+| `cmd.build_grant.preview` | Exact Plan approval; Orchestrator grant Details/What the build did; Permissions revocation/History | Real Project/exact Plan/build/target/permission/Stop epoch; current preview for approve and current grant for revoke | domain_action | canonical; alias_of_command_id=null | Plans/Permissions_System.md#PS-147 | `handlers::permissions::build_grant_preview` | `Plans/automation_authority_contracts.schema.json#/$defs/build_grant_preview_request` | `Plans/automation_authority_contracts.schema.json#/$defs/build_grant_preview_result` | read_only; Read-only exact operations/resource/target manifest and blockers; no grant or run |
+| `cmd.build_grant.approve` | Exact Plan approval; Orchestrator grant Details/What the build did; Permissions revocation/History | Real Project/exact Plan/build/target/permission/Stop epoch; current preview for approve and current grant for revoke | domain_action | canonical; alias_of_command_id=null | Plans/Permissions_System.md#PS-147 | `handlers::permissions::build_grant_approve` | `Plans/automation_authority_contracts.schema.json#/$defs/build_grant_approve_request` | `Plans/automation_authority_contracts.schema.json#/$defs/build_grant_approve_result` | authenticated human exact authority; One canonical human-approved Plan/revision/hash/build/resource grant, absent/revision CAS and issuer evidence |
+| `cmd.build_grant.revoke` | Exact Plan approval; Orchestrator grant Details/What the build did; Permissions revocation/History | Real Project/exact Plan/build/target/permission/Stop epoch; current preview for approve and current grant for revoke | domain_action | canonical; alias_of_command_id=null | Plans/Permissions_System.md#PS-147 | `handlers::permissions::build_grant_revoke` | `Plans/automation_authority_contracts.schema.json#/$defs/build_grant_revoke_request` | `Plans/automation_authority_contracts.schema.json#/$defs/build_grant_revoke_result` | authenticated human exact authority; Canonical grant revision/revocation epoch fences future dispatch; no automatic rollback |
+| `cmd.computer_use.stop` | Visible computer-use strip Stop; double-Esc; session action list | Exact current session and controller generation; supported admitted runtime. Never target another session or a global mouse owner. | domain_action | canonical; alias_of_command_id=null | Plans/Tools.md#T-186 | `handlers::computer_use::stop` | `Plans/computer_use_contracts.schema.json#/$defs/ComputerUseStopRequest` | `Plans/computer_use_contracts.schema.json#/$defs/ComputerUseStopResult` | owner_policy; Stop/fence only this actual chat/Computer/desktop/controller session and release only its controller; repeated Stop returns original/settled state |
+| `cmd.server.ssh.trust` | Servers/SSH computer setup host fingerprint review; New Project/Onboarding/Settings/Doctor SSH consumers | Protected human preview/apply on the initiating active Client; exact captured Server/SSH target and current preview; handler_unavailable until native proof | domain_action | canonical; alias_of_command_id=null | Plans/Server_System.md#SRV-018 | `handlers::server::ssh_host_trust` | `Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1` | `Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandResultV1` | owner_policy; Preview is bounded read-only and does not trust a host. Apply pins only the exact observed host/port/key in the existing Server SSH host-trust owner; a changed key blocks the old preview and requires a fresh explicit replacement preview/human decision showing both fingerprints; no silent replacement or unrelated trust widening. |
+| `cmd.server.ssh.public_key.install` | Shared SSH key-list public-key installation; Servers/SSH computer setup; New Project/Onboarding/Settings/Doctor | Protected human preview/apply on the initiating active Client; exact captured Server/SSH target and current preview; handler_unavailable until native proof | domain_action | canonical; alias_of_command_id=null | Plans/Server_System.md#SRV-018 | `handlers::server::ssh_public_key_install` | `Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1` | `Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandResultV1` | owner_policy; Preview reads only the admitted exact account/key/authorized_keys state. Apply installs only the selected shared-list public-key reference into that remote account under captured authorized_keys CAS, preserves all unrelated entries, rejects weak keys before reuse, and requires exact durable readback. Symlink/unsafe permissions or unsupported remote atomicity refuses before write; no shell fallback, permission loosening, private-key transfer, credential copy or speculative remote repair. |
+
+
+### CS-109 - Projects Refresh Settings
+
+```yaml
+plan_unit_id: CS-109
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: 'Exactly five Settings primaries consume offered level/key, the single resolver, per-setting
+  CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere. Human rows
+  edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project versions
+  and sole owner. Computer installations, credentials and protected source trust never travel in copy.
+  Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.*
+  local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. Exact
+  command identities: cmd.persona.save_as_override, cmd.mcp.server.copy, cmd.skill.copy, cmd.plugin.copy_configuration,
+  cmd.server.settings_home.move, cmd.server.settings_peer_trust, cmd.settings.open, cmd.persona.create,
+  cmd.persona.delete, cmd.persona.duplicate, cmd.persona.export, cmd.persona.import, cmd.persona.select,
+  cmd.persona.update, cmd.settings.export, cmd.settings.transaction.apply, cmd.settings.transaction.preview,
+  cmd.settings.transaction.rollback, cmd.editor.appearance.set. Native availability remains handler_unavailable.
+  Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app
+  and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned
+  pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and
+  metadata reads require only their declared owner targets. Project operations use actual immutable Project
+  identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority. Permissions PS-144–148
+  alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities,
+  root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant
+  authority. Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution
+  rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately
+  before effect. Read/navigation/local paths validate their declared read target/source/view generation;
+  they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation
+  never claims fresh authority or enables effects. Same idempotency key/digest returns the original result;
+  conflict or dedupe unavailable performs no effect. Preserve initiating Client, captured source scope/object,
+  invocation/correlation token, route, focus, context revision and continuation generation/expiry; return
+  the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late
+  capture, attachment or draft insertion preserves both the originating thread AND composer destination,
+  or refuses before draft mutation. Every selected request/result/source and active writer/read/backup/retention
+  graph is adopted together or remains unavailable. Plans/projects_refresh_command_bindings.json enumerates
+  exact commands, local actions, schema pointers, handlers, selectors and producer contracts; expected_event_types=[]
+  for each new primary grants no event admission. Native handlers, runtime receipts, visual/accessibility
+  evidence and governance certification remain unproved. Protected SSH is owned by SRV-018/RAS-017: cmd.server.ssh.trust
+  -> handlers::server::ssh_host_trust and cmd.server.ssh.public_key.install -> handlers::server::ssh_public_key_install
+  use the selected Server SshHostTrustCommandRequestV1/ResultV1 and SshPublicKeyInstallCommandRequestV1/ResultV1.
+  Both have preview|apply phases on the initiating active Client; preview is bounded read-only and apply
+  requires a protected human decision even in YOLO. Host trust pins the exact host/port/key observation;
+  a changed key blocks the old preview until a fresh explicit replacement preview and protected human
+  decision show both old and new fingerprints. Installation uses only the shared-list public-key ref,
+  exact remote account and observed authorized_keys CAS, preserves entries, rejects weak keys before reuse
+  and authenticates readback; unknown effect reconciles before retry. No private key/password, Client
+  pairing, PM claim, provisioning or remote-ingress authority travels. Native absence remains handler_unavailable;
+  neither command admits an EventRecord. SSH executes in actual Server application scope; any initiating
+  Project/draft is descriptive, and the unmanaged remote host has no fabricated PM Server identity. Actor
+  is human_gui or human_palette. Missing caller after settlement is caller_unavailable with original result/work
+  still discoverable, never an assertion that the completed effect vanished.'
+gui_related: true
+gui_classification_reason: Defines visible control dispatch, availability, disabled feedback, accessibility
+  and exact caller return.
+depends_on:
+- SSYS-059
+- SSYS-060
+- SSYS-061
+- SSYS-062
+- SSYS-063
+- SSYS-065
+- SRV-016
+- SRV-018
+- RAS-017
+unblocks: []
+acceptance_criteria:
+- Exactly five Settings primaries consume offered level/key, the single resolver, per-setting CAS, exact
+  owner readback and return. All chats/All editors/All terminals uses Everywhere. Human rows edit their
+  origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project versions and
+  sole owner. Computer installations, credentials and protected source trust never travel in copy. Origin-word/Details/Changed/Varies
+  menus are local. Commands & Shortcuts retains exactly eight commands.* local owner actions through handlers::commands::apply_local_action,
+  not cmd.commands.custom.*.
+- Pointer/keyboard/agent origins resolve one canonical owner and sole handler with exact selected request/result,
+  per-action state selector and closed disabled reason; new primary identity occurs exactly once in production
+  intent.
+- Stale scope/root/target/revision/source/preview/permission/Stop/return mismatch refuses with zero unadmitted
+  effects; matching replay returns authentic original custody and no duplicate effect.
+- Return preserves original Client/scope/object/route/focus/continuation; unavailable owner or missing
+  adopted source graph is reported rather than replaced by focus/current/latest context.
+- Local draft/disclosure/navigation has no fictitious domain handler or EventRecord; candidates, forbidden
+  aliases and protected auth remain non-dispatchable.
+- All relevant original exact Project schema/hash/replay resources remain valid; schema/catalog/concept
+  evidence proves no native dispatch, storage, visual, event or readiness fact.
+- Protected SSH preview applies no trust/key effect; wrong active Client, changed host key, weak key or
+  stale authorized_keys refuses.
+- Each protected SSH primary has one Server handler, selected request/result, production/PM7 producer
+  and independently discovered Touch action; replay cannot repeat remote installation.
+validation_surfaces:
+- Plans/projects_refresh_command_bindings.json
+- Plans/Wiring_Matrix.production.json
+- Plans/pm7_control_bindings.json
+- Plans/touch_closure.json
+- Plans/touch_closure_action_sources.json
+- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+risk_class: scope_target_authority_or_command_binding_drift
+reasoning_tier: high
+context_scope: projects_refresh_settings
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/projects_refresh_command_bindings.json
+- Plans/Wiring_Matrix.production.json
+- Plans/pm7_control_bindings.json
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: static_command_wiring_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:chat:2026-11-03-projects-pass2-approved
+- PLANS-EDIT-PLAN.md#3
+- F-LANE-BRIEF.md
+- A-F01
+- A-F05
+- A-F03
+- A-F04
+- A-F08
+- A-F10
+- B-F01
+- B-F02
+- B-F03
+- E-F05
+- E-F09
+- C-F01
+- projects-refresh-20261030/pass2/plans-edit-requests/PHASE2-BRIEF.md#known-corrections
+- Plans/Server_System.md#SRV-018; Plans/Remote_Access_System.md#RAS-017; Fb-ACE01/Fc-ACE01
+preserved_exact_tokens:
+- handler_unavailable
+- project_id=null
+- cmd.persona.save_as_override
+- cmd.mcp.server.copy
+- cmd.skill.copy
+- cmd.plugin.copy_configuration
+- cmd.server.settings_home.move
+- cmd.server.settings_peer_trust
+- cmd.settings.open
+- cmd.persona.create
+- cmd.persona.delete
+- cmd.persona.duplicate
+- cmd.persona.export
+- cmd.persona.import
+- cmd.persona.select
+- cmd.persona.update
+- cmd.settings.export
+- cmd.settings.transaction.apply
+- cmd.settings.transaction.preview
+- cmd.settings.transaction.rollback
+- cmd.editor.appearance.set
+- cmd.server.ssh.trust
+- cmd.server.ssh.public_key.install
+- handlers::server::ssh_host_trust
+- handlers::server::ssh_public_key_install
+negative_constraints:
+- Do not create duplicate primaries, aliases or independent domain writers.
+- Do not infer authority from scope nullability, a preview, a visible control, source reach or copied
+  content.
+- Do not reinterpret old exact Project contracts, codecs, hashes or authentic source/receipt bytes.
+- Do not claim native availability, Event Authority, buildability, WorkNodes, runtime or governance certification.
+owner_hints:
+- Plans/Commands_System.md
+- Plans/Personas.md
+- Plans/MCP_Integration.md
+- Plans/Skills_System.md
+- Plans/Plugins_System.md
+- Plans/Server_System.md
+- Plans/Server_System.md
+- Plans/Settings_System.md
+- Plans/Personas.md
+- Plans/Personas.md
+- Plans/Personas.md
+- Plans/Personas.md
+- Plans/Personas.md
+- Plans/Personas.md
+- Plans/Personas.md
+- Plans/Settings_System.md
+- Plans/Settings_System.md
+- Plans/Settings_System.md
+```
+
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-109, ContractName:Plans/projects_refresh_command_bindings.json, ContractName:Plans/UI_Command_Catalog.md#UCC-214
+
+### CS-110 - Projects Refresh Projects
+
+```yaml
+plan_unit_id: CS-110
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: 'One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic
+  create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing,
+  and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name
+  only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong
+  Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical
+  move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account
+  choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork
+  recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive
+  pause and last-good protection. Exact command identities: cmd.project.rename, cmd.source_control.repository.inspect,
+  cmd.source_control.remote.add, cmd.source_control.remote.sync, cmd.backup.archive.retrieve, cmd.backup.browse,
+  cmd.backup.cancel, cmd.backup.delete, cmd.backup.destination.add, cmd.backup.destination.discover, cmd.backup.destination.remove,
+  cmd.backup.destination.test, cmd.backup.destination.update, cmd.backup.export, cmd.backup.extract, cmd.backup.file.compare,
+  cmd.backup.file.download, cmd.backup.open_details, cmd.backup.open_history, cmd.backup.policy.update, cmd.backup.project.create,
+  cmd.backup.protect, cmd.backup.prune, cmd.backup.recovery_key.acknowledge_saved, cmd.backup.recovery_key.copy,
+  cmd.backup.recovery_key.export, cmd.backup.recovery_key.print, cmd.backup.recovery_key.reencrypt, cmd.backup.recovery_key.rotate,
+  cmd.backup.recovery_key.test, cmd.backup.retention.preview, cmd.backup.retry, cmd.backup.server.create, cmd.backup.test_restore,
+  cmd.backup.unlock, cmd.backup.verify, cmd.forge.connection.reauthorize, cmd.forge.mirror.connect, cmd.forge.mirror.detach,
+  cmd.forge.mirror.inspect, cmd.forge.mirror.sync, cmd.forge.pipeline.approve, cmd.forge.pipeline.cancel, cmd.forge.pipeline.list,
+  cmd.forge.pipeline.open_in_browser, cmd.forge.pipeline.artifact.download, cmd.forge.pipeline.secret.set,
+  cmd.forge.pipeline.secret.remove, cmd.forge.pipeline.variable.set, cmd.forge.pipeline.variable.remove, cmd.forge.pipeline.open_job,
+  cmd.forge.pipeline.open_logs, cmd.forge.pipeline.refresh, cmd.forge.pipeline.retry, cmd.forge.pipeline.run,
+  cmd.forge.release.asset.download, cmd.forge.release.list, cmd.forge.repository.create, cmd.forge.repository.fork,
+  cmd.forge.repository.list, cmd.forge.repository.open_in_browser, cmd.forge.repository.delete, cmd.forge.repository.policy.apply,
+  cmd.forge.repository.policy.preview, cmd.forge.repository.refresh, cmd.forge.review.approve, cmd.forge.review.checkout,
+  cmd.forge.review.checks, cmd.forge.review.close, cmd.forge.review.comment, cmd.forge.review.create, cmd.forge.review.mark_ready,
+  cmd.forge.review.merge, cmd.forge.review.open, cmd.forge.review.open_in_browser, cmd.forge.review.refresh,
+  cmd.forge.review.reopen, cmd.forge.review.request_changes, cmd.forge.review.thread.list, cmd.forge.review.thread.reopen,
+  cmd.forge.review.thread.reply, cmd.forge.review.thread.resolve, cmd.forge.review.version.compare, cmd.forge.review.version.open,
+  cmd.forge.runner.registration.apply, cmd.forge.runner.remove, cmd.forge.webhook.delivery.list, cmd.forge.webhook.redeliver,
+  cmd.git.push, cmd.jujutsu.git.clone, cmd.jujutsu.git.push, cmd.project.add_existing, cmd.project.archive,
+  cmd.project.chain_wizard_open_deferred, cmd.project.unarchive, cmd.project.duplicate_configuration, cmd.project.duplicate_with_history,
+  cmd.project.execution_host.select, cmd.project.execution_policy.set, cmd.project.home_server.set, cmd.project.move.cancel,
+  cmd.project.move.pause, cmd.project.move.preflight, cmd.project.move.resume, cmd.project.move.retry, cmd.project.move.rollback,
+  cmd.project.move.start, cmd.project.new_github_repo, cmd.project.new_local, cmd.project.open, cmd.project.resume_creation,
+  cmd.project.open_settings, cmd.project.refresh, cmd.project.remove, cmd.project.source_location.add, cmd.project.source_location.remove,
+  cmd.project.source_location.set_primary, cmd.project.source_location.test, cmd.project.source_location.update,
+  cmd.project_template.create_project, cmd.project_template.delete, cmd.project_template.rename, cmd.project_template.save,
+  cmd.restore.cancel, cmd.restore.open_details, cmd.restore.preview, cmd.restore.project_as_new, cmd.restore.project_in_place,
+  cmd.restore.retry, cmd.restore.rollback, cmd.restore.selective, cmd.restore.server_full, cmd.source_control.accept_commit_group,
+  cmd.source_control.backend.detect, cmd.source_control.backend.select, cmd.source_control.branch.create, cmd.source_control.branch.switch,
+  cmd.source_control.checkpoint.create, cmd.source_control.checkpoint.inspect, cmd.source_control.checkpoint.restore,
+  cmd.source_control.diff.open, cmd.source_control.generate_commit_message, cmd.source_control.graph_filter,
+  cmd.source_control.graph.filter, cmd.source_control.graph_focus, cmd.source_control.graph.focus, cmd.source_control.graph.layout,
+  cmd.source_control.history.open, cmd.source_control.history_open_commit, cmd.source_control.mark_conflict_resolved,
+  cmd.source_control.open_conflict, cmd.source_control.open_merge_editor, cmd.source_control.open_review, cmd.source_control.remote.fetch,
+  cmd.source_control.remote.publish, cmd.source_control.repository.bind, cmd.source_control.repository.clone,
+  cmd.source_control.repository.unbind, cmd.source_control.resolve_conflict_side, cmd.source_control.review.filter,
+  cmd.source_control.review.open, cmd.source_control.review.swap, cmd.source_control.select_tab, cmd.source_control.set_compare_target,
+  cmd.source_control.stash, cmd.source_control.stash.apply, cmd.source_control.stash.create, cmd.source_control.stash.drop,
+  cmd.source_control.stash.list, cmd.source_control.stash.pop, cmd.source_control.status.refresh, cmd.source_control.suggest_commit_batches,
+  cmd.source_control.suggest_commit_groups, cmd.source_control.toggle_generated_filter, cmd.source_control.workspace.create,
+  cmd.source_control.workspace.list, cmd.source_control.workspace.open, cmd.source_control.workspace.remove,
+  cmd.source_control.workspace.switch, cmd.project.delete_data, cmd.source_control.remote.update, cmd.source_control.branch.delete,
+  cmd.forge.review.edit, cmd.project.switch_active_tab, cmd.project.open_in_new_workspace_tab. Native availability
+  remains handler_unavailable. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer,
+  scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity.
+  Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only
+  and metadata reads require only their declared owner targets. Project operations use actual immutable Project
+  identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority. Permissions PS-144–148
+  alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities,
+  root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant
+  authority. Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution
+  rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately
+  before effect. Read/navigation/local paths validate their declared read target/source/view generation; they
+  do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims
+  fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or
+  dedupe unavailable performs no effect. Preserve initiating Client, captured source scope/object, invocation/correlation
+  token, route, focus, context revision and continuation generation/expiry; return the exact owner result,
+  refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft
+  insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.
+  Every selected request/result/source and active writer/read/backup/retention graph is adopted together or
+  remains unavailable. Plans/projects_refresh_command_bindings.json enumerates exact commands, local actions,
+  schema pointers, handlers, selectors and producer contracts; expected_event_types=[] for each new primary
+  grants no event admission. Native handlers, runtime receipts, visual/accessibility evidence and governance
+  certification remain unproved.'
+gui_related: true
+gui_classification_reason: Defines visible control dispatch, availability, disabled feedback, accessibility
+  and exact caller return.
+depends_on:
+- PJCT-009
+- PJCT-010
+- PJCT-011
+- PJCT-012
+- SCS-025
+- FGI-023
+- FGI-024
+- BRS-032
+- BRS-033
+unblocks: []
+acceptance_criteria:
+- One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or
+  clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and
+  native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only;
+  refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage
+  purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain
+  distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices.
+  Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery
+  and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and
+  last-good protection.
+- Pointer/keyboard/agent origins resolve one canonical owner and sole handler with exact selected request/result,
+  per-action state selector and closed disabled reason; new primary identity occurs exactly once in production
+  intent.
+- Stale scope/root/target/revision/source/preview/permission/Stop/return mismatch refuses with zero unadmitted
+  effects; matching replay returns authentic original custody and no duplicate effect.
+- Return preserves original Client/scope/object/route/focus/continuation; unavailable owner or missing adopted
+  source graph is reported rather than replaced by focus/current/latest context.
+- Local draft/disclosure/navigation has no fictitious domain handler or EventRecord; candidates, forbidden
+  aliases and protected auth remain non-dispatchable.
+- All relevant original exact Project schema/hash/replay resources remain valid; schema/catalog/concept evidence
+  proves no native dispatch, storage, visual, event or readiness fact.
+validation_surfaces:
+- Plans/projects_refresh_command_bindings.json
+- Plans/Wiring_Matrix.production.json
+- Plans/pm7_control_bindings.json
+- Plans/touch_closure.json
+- Plans/touch_closure_action_sources.json
+- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+risk_class: scope_target_authority_or_command_binding_drift
+reasoning_tier: high
+context_scope: projects_refresh_projects
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/projects_refresh_command_bindings.json
+- Plans/Wiring_Matrix.production.json
+- Plans/pm7_control_bindings.json
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: static_command_wiring_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:chat:2026-11-03-projects-pass2-approved
+- PLANS-EDIT-PLAN.md#3
+- F-LANE-BRIEF.md
+- E-F01
+- E-F02
+- E-F03
+- E-F04
+- E-F05
+- E-F06
+- E-F07
+- E-F08
+- E-F09
+- B-F15
+- D-F04
+- C-F01
+preserved_exact_tokens:
+- handler_unavailable
+- project_id=null
+- cmd.project.rename
+- cmd.source_control.repository.inspect
+- cmd.source_control.remote.add
+- cmd.source_control.remote.sync
+- cmd.backup.archive.retrieve
+- cmd.backup.browse
+- cmd.backup.cancel
+- cmd.backup.delete
+- cmd.backup.destination.add
+- cmd.backup.destination.discover
+- cmd.backup.destination.remove
+- cmd.backup.destination.test
+- cmd.backup.destination.update
+- cmd.backup.export
+- cmd.backup.extract
+- cmd.backup.file.compare
+- cmd.backup.file.download
+- cmd.backup.open_details
+- cmd.backup.open_history
+- cmd.backup.policy.update
+- cmd.backup.project.create
+- cmd.backup.protect
+- cmd.backup.prune
+- cmd.backup.recovery_key.acknowledge_saved
+- cmd.backup.recovery_key.copy
+- cmd.backup.recovery_key.export
+- cmd.backup.recovery_key.print
+- cmd.backup.recovery_key.reencrypt
+- cmd.backup.recovery_key.rotate
+- cmd.backup.recovery_key.test
+- cmd.backup.retention.preview
+- cmd.backup.retry
+- cmd.backup.server.create
+- cmd.backup.test_restore
+- cmd.backup.unlock
+- cmd.backup.verify
+- cmd.forge.connection.reauthorize
+- cmd.forge.mirror.connect
+- cmd.forge.mirror.detach
+- cmd.forge.mirror.inspect
+- cmd.forge.mirror.sync
+- cmd.forge.pipeline.approve
+- cmd.forge.pipeline.cancel
+- cmd.forge.pipeline.list
+- cmd.forge.pipeline.open_in_browser
+- cmd.forge.pipeline.artifact.download
+- cmd.forge.pipeline.secret.set
+- cmd.forge.pipeline.secret.remove
+- cmd.forge.pipeline.variable.set
+- cmd.forge.pipeline.variable.remove
+- cmd.forge.pipeline.open_job
+- cmd.forge.pipeline.open_logs
+- cmd.forge.pipeline.refresh
+- cmd.forge.pipeline.retry
+- cmd.forge.pipeline.run
+- cmd.forge.release.asset.download
+- cmd.forge.release.list
+- cmd.forge.repository.create
+- cmd.forge.repository.fork
+- cmd.forge.repository.list
+- cmd.forge.repository.open_in_browser
+- cmd.forge.repository.delete
+- cmd.forge.repository.policy.apply
+- cmd.forge.repository.policy.preview
+- cmd.forge.repository.refresh
+- cmd.forge.review.approve
+- cmd.forge.review.checkout
+- cmd.forge.review.checks
+- cmd.forge.review.close
+- cmd.forge.review.comment
+- cmd.forge.review.create
+- cmd.forge.review.mark_ready
+- cmd.forge.review.merge
+- cmd.forge.review.open
+- cmd.forge.review.open_in_browser
+- cmd.forge.review.refresh
+- cmd.forge.review.reopen
+- cmd.forge.review.request_changes
+- cmd.forge.review.thread.list
+- cmd.forge.review.thread.reopen
+- cmd.forge.review.thread.reply
+- cmd.forge.review.thread.resolve
+- cmd.forge.review.version.compare
+- cmd.forge.review.version.open
+- cmd.forge.runner.registration.apply
+- cmd.forge.runner.remove
+- cmd.forge.webhook.delivery.list
+- cmd.forge.webhook.redeliver
+- cmd.git.push
+- cmd.jujutsu.git.clone
+- cmd.jujutsu.git.push
+- cmd.project.add_existing
+- cmd.project.archive
+- cmd.project.chain_wizard_open_deferred
+- cmd.project.unarchive
+- cmd.project.duplicate_configuration
+- cmd.project.duplicate_with_history
+- cmd.project.execution_host.select
+- cmd.project.execution_policy.set
+- cmd.project.home_server.set
+- cmd.project.move.cancel
+- cmd.project.move.pause
+- cmd.project.move.preflight
+- cmd.project.move.resume
+- cmd.project.move.retry
+- cmd.project.move.rollback
+- cmd.project.move.start
+- cmd.project.new_github_repo
+- cmd.project.new_local
+- cmd.project.open
+- cmd.project.resume_creation
+- cmd.project.open_settings
+- cmd.project.refresh
+- cmd.project.remove
+- cmd.project.source_location.add
+- cmd.project.source_location.remove
+- cmd.project.source_location.set_primary
+- cmd.project.source_location.test
+- cmd.project.source_location.update
+- cmd.project_template.create_project
+- cmd.project_template.delete
+- cmd.project_template.rename
+- cmd.project_template.save
+- cmd.restore.cancel
+- cmd.restore.open_details
+- cmd.restore.preview
+- cmd.restore.project_as_new
+- cmd.restore.project_in_place
+- cmd.restore.retry
+- cmd.restore.rollback
+- cmd.restore.selective
+- cmd.restore.server_full
+- cmd.source_control.accept_commit_group
+- cmd.source_control.backend.detect
+- cmd.source_control.backend.select
+- cmd.source_control.branch.create
+- cmd.source_control.branch.switch
+- cmd.source_control.checkpoint.create
+- cmd.source_control.checkpoint.inspect
+- cmd.source_control.checkpoint.restore
+- cmd.source_control.diff.open
+- cmd.source_control.generate_commit_message
+- cmd.source_control.graph_filter
+- cmd.source_control.graph.filter
+- cmd.source_control.graph_focus
+- cmd.source_control.graph.focus
+- cmd.source_control.graph.layout
+- cmd.source_control.history.open
+- cmd.source_control.history_open_commit
+- cmd.source_control.mark_conflict_resolved
+- cmd.source_control.open_conflict
+- cmd.source_control.open_merge_editor
+- cmd.source_control.open_review
+- cmd.source_control.remote.fetch
+- cmd.source_control.remote.publish
+- cmd.source_control.repository.bind
+- cmd.source_control.repository.clone
+- cmd.source_control.repository.unbind
+- cmd.source_control.resolve_conflict_side
+- cmd.source_control.review.filter
+- cmd.source_control.review.open
+- cmd.source_control.review.swap
+- cmd.source_control.select_tab
+- cmd.source_control.set_compare_target
+- cmd.source_control.stash
+- cmd.source_control.stash.apply
+- cmd.source_control.stash.create
+- cmd.source_control.stash.drop
+- cmd.source_control.stash.list
+- cmd.source_control.stash.pop
+- cmd.source_control.status.refresh
+- cmd.source_control.suggest_commit_batches
+- cmd.source_control.suggest_commit_groups
+- cmd.source_control.toggle_generated_filter
+- cmd.source_control.workspace.create
+- cmd.source_control.workspace.list
+- cmd.source_control.workspace.open
+- cmd.source_control.workspace.remove
+- cmd.source_control.workspace.switch
+- cmd.project.delete_data
+- cmd.source_control.remote.update
+- cmd.source_control.branch.delete
+- cmd.forge.review.edit
+- cmd.project.switch_active_tab
+- cmd.project.open_in_new_workspace_tab
+negative_constraints:
+- Do not create duplicate primaries, aliases or independent domain writers.
+- Do not infer authority from scope nullability, a preview, a visible control, source reach or copied content.
+- Do not reinterpret old exact Project contracts, codecs, hashes or authentic source/receipt bytes.
+- Do not claim native availability, Event Authority, buildability, WorkNodes, runtime or governance certification.
+owner_hints:
+- Plans/Commands_System.md
+- Plans/Project_System.md
+- Plans/Source_Control_System.md
+- Plans/Source_Control_System.md
+- Plans/Source_Control_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Backup_Restore_System.md
+- Plans/Backup_Restore_System.md
+```
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-110, ContractName:Plans/projects_refresh_command_bindings.json, ContractName:Plans/UI_Command_Catalog.md#UCC-215
+
+### CS-111 - Projects Refresh No Project
+
+```yaml
+plan_unit_id: CS-111
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: 'No project is genuine application scope, with a named fixed Computer after first message,
+  lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart
+  limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage;
+  source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local
+  previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share
+  one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked
+  destination records by default. No new work plus seven days bounds chat Undo, not independent canonical
+  custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop.
+  Exact command identities: cmd.chat.place.set, cmd.chat.move.preview, cmd.chat.move.apply, cmd.chat.move.resume,
+  cmd.chat.move.cancel, cmd.chat.move.undo.preview, cmd.chat.move.undo.apply, cmd.chat.continue_elsewhere,
+  cmd.chat.incoming.accept, cmd.chat.incoming.decline, cmd.chat.chat_folder.open, cmd.chat.chat_folder.delete,
+  cmd.computer_use.stop, cmd.thread.request, cmd.thread.spawn, cmd.chat.load_older, cmd.chat.create_restore_point,
+  cmd.chat.delete_restore_point, cmd.browser.component.insert_at_cursor, cmd.browser.component.mode.set_default,
+  cmd.browser.open_devtools, cmd.chat.attachment.details, cmd.chat.attachment.freeze_reference, cmd.chat.attachment.open,
+  cmd.chat.attachment.remove, cmd.chat.attachment.retry, cmd.chat.attachment.save_to_project, cmd.chat.composer.destination.clear,
+  cmd.chat.teach.cancel, cmd.chat.teach.confirm, cmd.chat.teach.open_memory, cmd.chat.todos.open, cmd.chat.todos.open_work,
+  cmd.chat.todos.toggle_parent, cmd.chat.attachment.add, cmd.chat.attachment.download, cmd.chat.composer.destination.set,
+  cmd.browser.capture.full_to_chat, cmd.browser.capture.region_to_chat, cmd.browser.component.pick, cmd.browser.component.send_now,
+  cmd.browser.component.add_to_composer, cmd.chat.teach.capture, cmd.chat.eli5.set, cmd.chat.revert, cmd.chat.thread.regenerate_title,
+  cmd.auth_profile.cancel, cmd.auth_profile.open_official_page, cmd.auth_profile.rename, cmd.auth_profile.retry,
+  cmd.auth_profile.revoke, cmd.auth_profile.select, cmd.auth_profile.sign_in, cmd.auth_profile.sign_out,
+  cmd.auth_profile.submit_code, cmd.auth_profile.transfer.apply, cmd.auth_profile.transfer.preview, cmd.auth_profile.verify,
+  cmd.browser.add_full_screenshot_to_chat, cmd.browser.add_screenshot_to_chat, cmd.browser.add_selection_full_screenshot_to_chat,
+  cmd.browser.add_selection_screenshot_to_chat, cmd.browser.add_selection_to_chat, cmd.browser.detach_browser_tab,
+  cmd.browser.focus_browser_tab, cmd.browser.keep_closed, cmd.browser.let_agent_continue, cmd.browser.navigate,
+  cmd.browser.open_detached_preview, cmd.browser.open_workspace_preview, cmd.browser.page.activate, cmd.browser.page.close,
+  cmd.browser.page.create, cmd.browser.page.evaluate, cmd.browser.page.representation.capture, cmd.browser.page.representation.delta,
+  cmd.browser.page.representation.query, cmd.browser.pause_agent, cmd.browser.pick_element_for_chat, cmd.browser.program.cancel,
+  cmd.browser.program.inspect, cmd.browser.program.pause, cmd.browser.program.resume, cmd.browser.program.run,
+  cmd.browser.promote_to_normal_browsing, cmd.browser.reload, cmd.browser.reopen, cmd.browser.retry, cmd.browser.revoke_share_with_agent,
+  cmd.browser.share_with_agent, cmd.browser.stop_agent_keep_browser, cmd.browser.take_over, cmd.browser.toggle_devtools_dock,
+  cmd.browser.workspace.close, cmd.browser.workspace.create, cmd.browser.workspace.reset, cmd.chat.apply_code_block,
+  cmd.chat.archive, cmd.chat.branch_from_restore, cmd.chat.close_thread_context_details, cmd.chat.compact_context,
+  cmd.chat.context_lens.apply_subcompact, cmd.chat.context_lens.clear_selection, cmd.chat.context_lens.revert_subcompact,
+  cmd.chat.context_lens.set_mode, cmd.chat.context_lens.toggle, cmd.chat.context_lens.toggle_message_selection,
+  cmd.chat.context_lens.turn_off, cmd.chat.copy_code_block, cmd.chat.copy_message, cmd.chat.debug_investigation.dismiss,
+  cmd.chat.debug_investigation.promote, cmd.chat.delete, cmd.chat.edit_last_user_message, cmd.chat.effort,
+  cmd.chat.export, cmd.chat.export_investigation_bundle, cmd.chat.focus_thread_context_details, cmd.chat.insert_code_block,
+  cmd.chat.memory.dedup_sweep, cmd.chat.memory.discard, cmd.chat.memory.edit, cmd.chat.memory.pin, cmd.chat.memory.preview_capsule,
+  cmd.chat.memory.prune_archive, cmd.chat.memory.rebuild_lexical_index, cmd.chat.memory.rebuild_semantic_index,
+  cmd.chat.memory.summarize_monthly, cmd.chat.memory.toggle_auto_save_unverified, cmd.chat.memory.verification_sweep,
+  cmd.chat.memory.verify, cmd.chat.mode, cmd.chat.model, cmd.chat.new, cmd.chat.open_debug_target_picker,
+  cmd.chat.open_thread, cmd.chat.open_thread_context_details, cmd.chat.pin, cmd.chat.plan_thoroughness,
+  cmd.chat.platform, cmd.chat.queue.remove, cmd.chat.rename, cmd.chat.resend_last_user_message, cmd.chat.retry_message,
+  cmd.chat.revoke_investigation_item, cmd.chat.rewind, cmd.chat.run_user_command, cmd.chat.search, cmd.chat.send,
+  cmd.chat.settings, cmd.chat.stop, cmd.chat.switch_thread, cmd.chat.toggle_message_details, cmd.chat.web.cancel,
+  cmd.chat.web.crawl, cmd.chat.web.extract, cmd.chat.web.fetch, cmd.chat.web.help, cmd.chat.web.map, cmd.chat.web.request_again,
+  cmd.chat.web.research, cmd.chat.web.search, cmd.chat.worktree, cmd.chat.worktree.bind_existing, cmd.chat.worktree.create,
+  cmd.chat.worktree.info, cmd.chat.worktree.merge, cmd.chat.worktree.pr, cmd.chat.worktree.remove, cmd.chat.worktree.unbind,
+  cmd.file.copy_full_path, cmd.file.copy_nodes, cmd.file.copy_path, cmd.file.copy_relative_path, cmd.file.cut_nodes,
+  cmd.file.delete, cmd.file.expand_capped, cmd.file.new_file, cmd.file.new_folder, cmd.file.open, cmd.file.open_in_system_default,
+  cmd.file.open_with, cmd.file.paste_nodes, cmd.file.refresh, cmd.file.rename, cmd.file.reveal, cmd.file.save_local_copy,
+  cmd.integration.connection.activate, cmd.integration.connection.add, cmd.integration.connection.open_details,
+  cmd.integration.connection.remove, cmd.integration.connection.test, cmd.integration.connection.update,
+  cmd.terminal.clear_scrollback, cmd.terminal.focus, cmd.terminal.kill_session, cmd.terminal.open, cmd.terminal.rerun,
+  cmd.terminal.restart_replace, cmd.terminal.reveal, cmd.terminal.show, cmd.terminal.terminate_session,
+  cmd.terminal.allow_agent_input, cmd.terminal.deny_agent_input, cmd.terminal.hand_back, cmd.terminal.interrupt,
+  cmd.terminal.stop_agent, cmd.terminal.take_over, cmd.terminal.appearance.set, cmd.terminal.appearance.import_scheme,
+  cmd.terminal.clear, cmd.terminal.revoke_agent_input, cmd.terminal.send_signal, cmd.chat.queue.send_now,
+  cmd.chat.processes.open. Native availability remains handler_unavailable. Resolve the selected WorkflowScopeV2:
+  application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required
+  thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their
+  actual Server scope without fabricating a thread; view-only and metadata reads require only their declared
+  owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID,
+  a sentinel Project, HOME or CWD as authority. Permissions PS-144–148 alone composes actual human|mode|build_grant
+  evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An
+  app chat or copied receipt conveys no Project mutation/build-grant authority. Validate the exact operation-declared
+  source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission
+  and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local
+  paths validate their declared read target/source/view generation; they do not demand a write lease merely
+  to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables
+  effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs
+  no effect. Preserve initiating Client, captured source scope/object, invocation/correlation token, route,
+  focus, context revision and continuation generation/expiry; return the exact owner result, refusal or
+  paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion
+  preserves both the originating thread AND composer destination, or refuses before draft mutation. Every
+  selected request/result/source and active writer/read/backup/retention graph is adopted together or
+  remains unavailable. Plans/projects_refresh_command_bindings.json enumerates exact commands, local actions,
+  schema pointers, handlers, selectors and producer contracts; expected_event_types=[] for each new primary
+  grants no event admission. Native handlers, runtime receipts, visual/accessibility evidence and governance
+  certification remain unproved. The T-186 executable screen census is exactly computer.screen -> tools::computer::screen,
+  computer.pointer -> tools::computer::pointer and computer.keys -> tools::computer::keys. Plans/computer_use_contracts.schema.json
+  selects ComputerScreenRequestV1/ResultV1, ComputerPointerRequestV1/ResultV1 and ComputerKeysRequestV1/ResultV1.
+  These three plus the six projects.* read tools make nine Tools dispatch identities; computer.* is a
+  family selector, and cmd.computer_use.stop remains the sole separate Stop control, never a fourth tool.
+  Per-action schema/native mapping/ActiveToolNamespaceReceipt and session/controller/app/observation/geometry/permission/disclosure/Stop
+  joins precede capture/input. Protected surfaces cannot be captured or controlled; images remain scrubbed
+  transient provider inputs, and exact effect policy gates sends/purchases/installs/deletion/publication.
+  Matching replay never repeats input, unknown effect reconciles, and late results retain the initiating
+  target/return. Missing schema/source/native capability remains unavailable and admits no event.'
+gui_related: true
+gui_classification_reason: Defines visible control dispatch, availability, disabled feedback, accessibility
+  and exact caller return.
+depends_on:
+- ACD-508
+- ACD-509
+- ACD-510
+- ACD-511
+- OSI-439
+- T-186
+unblocks: []
+acceptance_criteria:
+- No project is genuine application scope, with a named fixed Computer after first message, lazy visible
+  chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
+  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart
+  limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage;
+  source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local
+  previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share
+  one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked
+  destination records by default. No new work plus seven days bounds chat Undo, not independent canonical
+  custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop.
+- Pointer/keyboard/agent origins resolve one canonical owner and sole handler with exact selected request/result,
+  per-action state selector and closed disabled reason; new primary identity occurs exactly once in production
+  intent.
+- Stale scope/root/target/revision/source/preview/permission/Stop/return mismatch refuses with zero unadmitted
+  effects; matching replay returns authentic original custody and no duplicate effect.
+- Return preserves original Client/scope/object/route/focus/continuation; unavailable owner or missing
+  adopted source graph is reported rather than replaced by focus/current/latest context.
+- Local draft/disclosure/navigation has no fictitious domain handler or EventRecord; candidates, forbidden
+  aliases and protected auth remain non-dispatchable.
+- All relevant original exact Project schema/hash/replay resources remain valid; schema/catalog/concept
+  evidence proves no native dispatch, storage, visual, event or readiness fact.
+- 'Exactly nine agent tool identities are bound: six projects.* reads and three computer.* screen tools;
+  no extra command, local action or Stop tool.'
+- Stale controller/window/geometry or missing disclosure/native mapping refuses before capture/input;
+  protected surfaces never reach provider, unknown effects reconcile and exact replay never repeats input.
+validation_surfaces:
+- Plans/projects_refresh_command_bindings.json
+- Plans/Wiring_Matrix.production.json
+- Plans/pm7_control_bindings.json
+- Plans/touch_closure.json
+- Plans/touch_closure_action_sources.json
+- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+risk_class: scope_target_authority_or_command_binding_drift
+reasoning_tier: high
+context_scope: projects_refresh_no_project
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/projects_refresh_command_bindings.json
+- Plans/Wiring_Matrix.production.json
+- Plans/pm7_control_bindings.json
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: static_command_wiring_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:chat:2026-11-03-projects-pass2-approved
+- PLANS-EDIT-PLAN.md#3
+- F-LANE-BRIEF.md
+- A-F06
+- A-F07
+- C-F01
+- B-F04
+- B-F05
+- B-F06
+- B-F07
+- B-F08
+- B-F09
+- B-F10
+- B-F11
+- B-F12
+- C-F02
+- C-F03
+- C-F04
+- C-F05
+- C-F10
+- C-F11
+- D-F05
+- projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#phase-2-owner-corrections
+- Plans/Tools.md#T-186 executable tool census, version 1.0.0
+preserved_exact_tokens:
+- handler_unavailable
+- project_id=null
+- cmd.chat.place.set
+- cmd.chat.move.preview
+- cmd.chat.move.apply
+- cmd.chat.move.resume
+- cmd.chat.move.cancel
+- cmd.chat.move.undo.preview
+- cmd.chat.move.undo.apply
+- cmd.chat.continue_elsewhere
+- cmd.chat.incoming.accept
+- cmd.chat.incoming.decline
+- cmd.chat.chat_folder.open
+- cmd.chat.chat_folder.delete
+- cmd.computer_use.stop
+- cmd.thread.request
+- cmd.thread.spawn
+- cmd.chat.load_older
+- cmd.chat.create_restore_point
+- cmd.chat.delete_restore_point
+- cmd.browser.component.insert_at_cursor
+- cmd.browser.component.mode.set_default
+- cmd.browser.open_devtools
+- cmd.chat.attachment.details
+- cmd.chat.attachment.freeze_reference
+- cmd.chat.attachment.open
+- cmd.chat.attachment.remove
+- cmd.chat.attachment.retry
+- cmd.chat.attachment.save_to_project
+- cmd.chat.composer.destination.clear
+- cmd.chat.teach.cancel
+- cmd.chat.teach.confirm
+- cmd.chat.teach.open_memory
+- cmd.chat.todos.open
+- cmd.chat.todos.open_work
+- cmd.chat.todos.toggle_parent
+- cmd.chat.attachment.add
+- cmd.chat.attachment.download
+- cmd.chat.composer.destination.set
+- cmd.browser.capture.full_to_chat
+- cmd.browser.capture.region_to_chat
+- cmd.browser.component.pick
+- cmd.browser.component.send_now
+- cmd.browser.component.add_to_composer
+- cmd.chat.teach.capture
+- cmd.chat.eli5.set
+- cmd.chat.revert
+- cmd.chat.thread.regenerate_title
+- cmd.auth_profile.cancel
+- cmd.auth_profile.open_official_page
+- cmd.auth_profile.rename
+- cmd.auth_profile.retry
+- cmd.auth_profile.revoke
+- cmd.auth_profile.select
+- cmd.auth_profile.sign_in
+- cmd.auth_profile.sign_out
+- cmd.auth_profile.submit_code
+- cmd.auth_profile.transfer.apply
+- cmd.auth_profile.transfer.preview
+- cmd.auth_profile.verify
+- cmd.browser.add_full_screenshot_to_chat
+- cmd.browser.add_screenshot_to_chat
+- cmd.browser.add_selection_full_screenshot_to_chat
+- cmd.browser.add_selection_screenshot_to_chat
+- cmd.browser.add_selection_to_chat
+- cmd.browser.detach_browser_tab
+- cmd.browser.focus_browser_tab
+- cmd.browser.keep_closed
+- cmd.browser.let_agent_continue
+- cmd.browser.navigate
+- cmd.browser.open_detached_preview
+- cmd.browser.open_workspace_preview
+- cmd.browser.page.activate
+- cmd.browser.page.close
+- cmd.browser.page.create
+- cmd.browser.page.evaluate
+- cmd.browser.page.representation.capture
+- cmd.browser.page.representation.delta
+- cmd.browser.page.representation.query
+- cmd.browser.pause_agent
+- cmd.browser.pick_element_for_chat
+- cmd.browser.program.cancel
+- cmd.browser.program.inspect
+- cmd.browser.program.pause
+- cmd.browser.program.resume
+- cmd.browser.program.run
+- cmd.browser.promote_to_normal_browsing
+- cmd.browser.reload
+- cmd.browser.reopen
+- cmd.browser.retry
+- cmd.browser.revoke_share_with_agent
+- cmd.browser.share_with_agent
+- cmd.browser.stop_agent_keep_browser
+- cmd.browser.take_over
+- cmd.browser.toggle_devtools_dock
+- cmd.browser.workspace.close
+- cmd.browser.workspace.create
+- cmd.browser.workspace.reset
+- cmd.chat.apply_code_block
+- cmd.chat.archive
+- cmd.chat.branch_from_restore
+- cmd.chat.close_thread_context_details
+- cmd.chat.compact_context
+- cmd.chat.context_lens.apply_subcompact
+- cmd.chat.context_lens.clear_selection
+- cmd.chat.context_lens.revert_subcompact
+- cmd.chat.context_lens.set_mode
+- cmd.chat.context_lens.toggle
+- cmd.chat.context_lens.toggle_message_selection
+- cmd.chat.context_lens.turn_off
+- cmd.chat.copy_code_block
+- cmd.chat.copy_message
+- cmd.chat.debug_investigation.dismiss
+- cmd.chat.debug_investigation.promote
+- cmd.chat.delete
+- cmd.chat.edit_last_user_message
+- cmd.chat.effort
+- cmd.chat.export
+- cmd.chat.export_investigation_bundle
+- cmd.chat.focus_thread_context_details
+- cmd.chat.insert_code_block
+- cmd.chat.memory.dedup_sweep
+- cmd.chat.memory.discard
+- cmd.chat.memory.edit
+- cmd.chat.memory.pin
+- cmd.chat.memory.preview_capsule
+- cmd.chat.memory.prune_archive
+- cmd.chat.memory.rebuild_lexical_index
+- cmd.chat.memory.rebuild_semantic_index
+- cmd.chat.memory.summarize_monthly
+- cmd.chat.memory.toggle_auto_save_unverified
+- cmd.chat.memory.verification_sweep
+- cmd.chat.memory.verify
+- cmd.chat.mode
+- cmd.chat.model
+- cmd.chat.new
+- cmd.chat.open_debug_target_picker
+- cmd.chat.open_thread
+- cmd.chat.open_thread_context_details
+- cmd.chat.pin
+- cmd.chat.plan_thoroughness
+- cmd.chat.platform
+- cmd.chat.queue.remove
+- cmd.chat.rename
+- cmd.chat.resend_last_user_message
+- cmd.chat.retry_message
+- cmd.chat.revoke_investigation_item
+- cmd.chat.rewind
+- cmd.chat.run_user_command
+- cmd.chat.search
+- cmd.chat.send
+- cmd.chat.settings
+- cmd.chat.stop
+- cmd.chat.switch_thread
+- cmd.chat.toggle_message_details
+- cmd.chat.web.cancel
+- cmd.chat.web.crawl
+- cmd.chat.web.extract
+- cmd.chat.web.fetch
+- cmd.chat.web.help
+- cmd.chat.web.map
+- cmd.chat.web.request_again
+- cmd.chat.web.research
+- cmd.chat.web.search
+- cmd.chat.worktree
+- cmd.chat.worktree.bind_existing
+- cmd.chat.worktree.create
+- cmd.chat.worktree.info
+- cmd.chat.worktree.merge
+- cmd.chat.worktree.pr
+- cmd.chat.worktree.remove
+- cmd.chat.worktree.unbind
+- cmd.file.copy_full_path
+- cmd.file.copy_nodes
+- cmd.file.copy_path
+- cmd.file.copy_relative_path
+- cmd.file.cut_nodes
+- cmd.file.delete
+- cmd.file.expand_capped
+- cmd.file.new_file
+- cmd.file.new_folder
+- cmd.file.open
+- cmd.file.open_in_system_default
+- cmd.file.open_with
+- cmd.file.paste_nodes
+- cmd.file.refresh
+- cmd.file.rename
+- cmd.file.reveal
+- cmd.file.save_local_copy
+- cmd.integration.connection.activate
+- cmd.integration.connection.add
+- cmd.integration.connection.open_details
+- cmd.integration.connection.remove
+- cmd.integration.connection.test
+- cmd.integration.connection.update
+- cmd.terminal.clear_scrollback
+- cmd.terminal.focus
+- cmd.terminal.kill_session
+- cmd.terminal.open
+- cmd.terminal.rerun
+- cmd.terminal.restart_replace
+- cmd.terminal.reveal
+- cmd.terminal.show
+- cmd.terminal.terminate_session
+- cmd.terminal.allow_agent_input
+- cmd.terminal.deny_agent_input
+- cmd.terminal.hand_back
+- cmd.terminal.interrupt
+- cmd.terminal.stop_agent
+- cmd.terminal.take_over
+- cmd.terminal.appearance.set
+- cmd.terminal.appearance.import_scheme
+- cmd.terminal.clear
+- cmd.terminal.revoke_agent_input
+- cmd.terminal.send_signal
+- cmd.chat.queue.send_now
+- cmd.chat.processes.open
+- computer.screen
+- computer.pointer
+- computer.keys
+- tools::computer::screen
+- tools::computer::pointer
+- tools::computer::keys
+negative_constraints:
+- Do not create duplicate primaries, aliases or independent domain writers.
+- Do not infer authority from scope nullability, a preview, a visible control, source reach or copied
+  content.
+- Do not reinterpret old exact Project contracts, codecs, hashes or authentic source/receipt bytes.
+- Do not claim native availability, Event Authority, buildability, WorkNodes, runtime or governance certification.
+owner_hints:
+- Plans/Commands_System.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+- Plans/Tools.md
+- Plans/orchestrator-subagent-integration.md
+- Plans/orchestrator-subagent-integration.md
+- Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+```
+ContractRef: ContractName:Plans/Commands_System.md#CS-111, ContractName:Plans/projects_refresh_command_bindings.json, ContractName:Plans/UI_Command_Catalog.md#UCC-216
+
+### CS-112 - Projects Refresh Automation
+
+```yaml
+plan_unit_id: CS-112
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: 'One Permissions admission distinguishes actual human, task mode and human-approved build_grant.
+  YOLO permits ordinary push/publish and needed create without another ordinary yes; force-with-lease only
+  on a PM-created-for-this-work branch, never main/default/protected. Retain risky asks outside an exact grant-created-resource
+  exception and retain FileSafe/trust/secrets/DAE/capabilities/explicit Always. Approve/expand/renew a Project
+  build grant remains human-only and binds exact Plan/hash/build/resources/permission/Stop; cleanup requires
+  verified created UID/generation. What the build did is the existing ObservableWork/History projection; Start/Stop
+  stay with the run owner, no new build event/log engine. Preview, target/receipt links and truthful Undo/No
+  safe Undo remain visible. Exact command identities: cmd.permissions.create_computer_rule, cmd.build_grant.preview,
+  cmd.build_grant.approve, cmd.build_grant.revoke, cmd.docker.create_repository, cmd.docker.create_repository.cancel,
+  cmd.docker.create_repository.confirm, cmd.docker.image.push, cmd.docker.registry.tag_push, cmd.docker.template.push,
+  cmd.orchestrator.build_run, cmd.orchestrator.push_image, cmd.permissions.create_global_rule, cmd.permissions.create_project_rule,
+  cmd.permissions.delete_rule, cmd.permissions.open, cmd.permissions.pick_external_directory, cmd.permissions.reorder_rule,
+  cmd.permissions.review_request, cmd.permissions.revoke, cmd.permissions.update_rule, cmd.permissions.validate_rule,
+  cmd.runtime.approve, cmd.runtime.decline. Native availability remains handler_unavailable. Resolve the selected
+  WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with
+  owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations
+  use their actual Server scope without fabricating a thread; view-only and metadata reads require only their
+  declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty
+  ID, a sentinel Project, HOME or CWD as authority. Permissions PS-144–148 alone composes actual human|mode|build_grant
+  evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app
+  chat or copied receipt conveys no Project mutation/build-grant authority. Validate the exact operation-declared
+  source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and
+  Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate
+  their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted
+  stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest
+  returns the original result; conflict or dedupe unavailable performs no effect. Preserve initiating Client,
+  captured source scope/object, invocation/correlation token, route, focus, context revision and continuation
+  generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly
+  focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer
+  destination, or refuses before draft mutation. Every selected request/result/source and active writer/read/backup/retention
+  graph is adopted together or remains unavailable. Plans/projects_refresh_command_bindings.json enumerates
+  exact commands, local actions, schema pointers, handlers, selectors and producer contracts; expected_event_types=[]
+  for each new primary grants no event admission. Native handlers, runtime receipts, visual/accessibility evidence
+  and governance certification remain unproved.'
+gui_related: true
+gui_classification_reason: Defines visible control dispatch, availability, disabled feedback, accessibility
+  and exact caller return.
+depends_on:
+- PS-144
+- PS-145
+- PS-146
+- PS-147
+- PS-148
+unblocks: []
+acceptance_criteria:
+- One Permissions admission distinguishes actual human, task mode and human-approved build_grant. YOLO permits
+  ordinary push/publish and needed create without another ordinary yes; force-with-lease only on a PM-created-for-this-work
+  branch, never main/default/protected. Retain risky asks outside an exact grant-created-resource exception
+  and retain FileSafe/trust/secrets/DAE/capabilities/explicit Always. Approve/expand/renew a Project build
+  grant remains human-only and binds exact Plan/hash/build/resources/permission/Stop; cleanup requires verified
+  created UID/generation. What the build did is the existing ObservableWork/History projection; Start/Stop
+  stay with the run owner, no new build event/log engine. Preview, target/receipt links and truthful Undo/No
+  safe Undo remain visible.
+- Pointer/keyboard/agent origins resolve one canonical owner and sole handler with exact selected request/result,
+  per-action state selector and closed disabled reason; new primary identity occurs exactly once in production
+  intent.
+- Stale scope/root/target/revision/source/preview/permission/Stop/return mismatch refuses with zero unadmitted
+  effects; matching replay returns authentic original custody and no duplicate effect.
+- Return preserves original Client/scope/object/route/focus/continuation; unavailable owner or missing adopted
+  source graph is reported rather than replaced by focus/current/latest context.
+- Local draft/disclosure/navigation has no fictitious domain handler or EventRecord; candidates, forbidden
+  aliases and protected auth remain non-dispatchable.
+- All relevant original exact Project schema/hash/replay resources remain valid; schema/catalog/concept evidence
+  proves no native dispatch, storage, visual, event or readiness fact.
+validation_surfaces:
+- Plans/projects_refresh_command_bindings.json
+- Plans/Wiring_Matrix.production.json
+- Plans/pm7_control_bindings.json
+- Plans/touch_closure.json
+- Plans/touch_closure_action_sources.json
+- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+risk_class: scope_target_authority_or_command_binding_drift
+reasoning_tier: high
+context_scope: projects_refresh_automation
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/projects_refresh_command_bindings.json
+- Plans/Wiring_Matrix.production.json
+- Plans/pm7_control_bindings.json
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: static_command_wiring_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:chat:2026-11-03-projects-pass2-approved
+- PLANS-EDIT-PLAN.md#3
+- F-LANE-BRIEF.md
+- D-F01
+- D-F06
+- D-F02
+- D-F03
+- D-F04
+- D-F05
+- D-F07
+- C-F01
+preserved_exact_tokens:
+- handler_unavailable
+- project_id=null
+- cmd.permissions.create_computer_rule
+- cmd.build_grant.preview
+- cmd.build_grant.approve
+- cmd.build_grant.revoke
+- cmd.docker.create_repository
+- cmd.docker.create_repository.cancel
+- cmd.docker.create_repository.confirm
+- cmd.docker.image.push
+- cmd.docker.registry.tag_push
+- cmd.docker.template.push
+- cmd.orchestrator.build_run
+- cmd.orchestrator.push_image
+- cmd.permissions.create_global_rule
+- cmd.permissions.create_project_rule
+- cmd.permissions.delete_rule
+- cmd.permissions.open
+- cmd.permissions.pick_external_directory
+- cmd.permissions.reorder_rule
+- cmd.permissions.review_request
+- cmd.permissions.revoke
+- cmd.permissions.update_rule
+- cmd.permissions.validate_rule
+- cmd.runtime.approve
+- cmd.runtime.decline
+negative_constraints:
+- Do not create duplicate primaries, aliases or independent domain writers.
+- Do not infer authority from scope nullability, a preview, a visible control, source reach or copied content.
+- Do not reinterpret old exact Project contracts, codecs, hashes or authentic source/receipt bytes.
+- Do not claim native availability, Event Authority, buildability, WorkNodes, runtime or governance certification.
+owner_hints:
+- Plans/Commands_System.md
+- Plans/Permissions_System.md
+- Plans/Permissions_System.md
+- Plans/Permissions_System.md
+- Plans/Permissions_System.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/Orchestrator_Page.md
+- Plans/Orchestrator_Page.md
+- Plans/Permissions_System.md
+- Plans/Permissions_System.md
+- Plans/Permissions_System.md
+- Plans/Permissions_System.md
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-112, ContractName:Plans/projects_refresh_command_bindings.json, ContractName:Plans/UI_Command_Catalog.md#UCC-217
+
+### CS-113 - Projects Refresh Goal Crew
+
+```yaml
+plan_unit_id: CS-113
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: 'The six existing cmd.chat.goal.* mutations, Goal editor, four collaboration kinds, participant/message
+  actions and Crew Auto admit explicit app siblings and original exact Project contracts. Scope, original accepted
+  source/hash, body/control/Stop, parent/receiver authority, roots, roster/config revisions and canonical backup
+  join at final dispatch. Ordinary updates never retarget immutable Goal/Plan/Crew bindings. No retired goal.scheduled/degraded/child-state
+  producer or Project Workflow/WorkNode certification is revived. App Crew Auto uses an app-thread configuration
+  revision, distinct from a thread override and Project configuration; the same evaluator/coordination board
+  remains sole owner. Conversion defaults to linked new destination records after safe stop/fence. Exact command
+  identities: cmd.brainstorm.next_round, cmd.chat.crew_auto.open_config, cmd.chat.goal.open_editor, cmd.chat_room.next_round,
+  cmd.chat_room.summarize, cmd.collaboration.cancel, cmd.collaboration.configure, cmd.collaboration.export,
+  cmd.collaboration.open, cmd.collaboration.participant.open, cmd.collaboration.pause, cmd.collaboration.reconfigure,
+  cmd.collaboration.resume, cmd.review.create_todos, cmd.review.run_again, cmd.review.send_findings_to_agent,
+  cmd.collaboration.message, cmd.chat.goal.start, cmd.chat.goal.pause, cmd.chat.goal.resume, cmd.chat.goal.cancel,
+  cmd.chat.goal.update, cmd.chat.goal.propose_update, cmd.collaboration.start, cmd.chat.crew_auto.set, cmd.brainstorm.synthesize_plan,
+  cmd.chat_room.promote_to_goal, cmd.chat_room.promote_to_plan, cmd.chat_room.promote_to_todo. Native availability
+  remains handler_unavailable. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer,
+  scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity.
+  Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only
+  and metadata reads require only their declared owner targets. Project operations use actual immutable Project
+  identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority. Permissions PS-144–148
+  alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities,
+  root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant
+  authority. Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution
+  rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately
+  before effect. Read/navigation/local paths validate their declared read target/source/view generation; they
+  do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims
+  fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or
+  dedupe unavailable performs no effect. Preserve initiating Client, captured source scope/object, invocation/correlation
+  token, route, focus, context revision and continuation generation/expiry; return the exact owner result,
+  refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft
+  insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.
+  Every selected request/result/source and active writer/read/backup/retention graph is adopted together or
+  remains unavailable. Plans/projects_refresh_command_bindings.json enumerates exact commands, local actions,
+  schema pointers, handlers, selectors and producer contracts; expected_event_types=[] for each new primary
+  grants no event admission. Native handlers, runtime receipts, visual/accessibility evidence and governance
+  certification remain unproved.'
+gui_related: true
+gui_classification_reason: Defines visible control dispatch, availability, disabled feedback, accessibility
+  and exact caller return.
+depends_on:
+- GRS-086
+- GRS-087
+- CWR-045
+- OSI-440
+unblocks: []
+acceptance_criteria:
+- The six existing cmd.chat.goal.* mutations, Goal editor, four collaboration kinds, participant/message actions
+  and Crew Auto admit explicit app siblings and original exact Project contracts. Scope, original accepted
+  source/hash, body/control/Stop, parent/receiver authority, roots, roster/config revisions and canonical backup
+  join at final dispatch. Ordinary updates never retarget immutable Goal/Plan/Crew bindings. No retired goal.scheduled/degraded/child-state
+  producer or Project Workflow/WorkNode certification is revived. App Crew Auto uses an app-thread configuration
+  revision, distinct from a thread override and Project configuration; the same evaluator/coordination board
+  remains sole owner. Conversion defaults to linked new destination records after safe stop/fence.
+- Pointer/keyboard/agent origins resolve one canonical owner and sole handler with exact selected request/result,
+  per-action state selector and closed disabled reason; new primary identity occurs exactly once in production
+  intent.
+- Stale scope/root/target/revision/source/preview/permission/Stop/return mismatch refuses with zero unadmitted
+  effects; matching replay returns authentic original custody and no duplicate effect.
+- Return preserves original Client/scope/object/route/focus/continuation; unavailable owner or missing adopted
+  source graph is reported rather than replaced by focus/current/latest context.
+- Local draft/disclosure/navigation has no fictitious domain handler or EventRecord; candidates, forbidden
+  aliases and protected auth remain non-dispatchable.
+- All relevant original exact Project schema/hash/replay resources remain valid; schema/catalog/concept evidence
+  proves no native dispatch, storage, visual, event or readiness fact.
+validation_surfaces:
+- Plans/projects_refresh_command_bindings.json
+- Plans/Wiring_Matrix.production.json
+- Plans/pm7_control_bindings.json
+- Plans/touch_closure.json
+- Plans/touch_closure_action_sources.json
+- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+risk_class: scope_target_authority_or_command_binding_drift
+reasoning_tier: high
+context_scope: projects_refresh_goal_crew
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/projects_refresh_command_bindings.json
+- Plans/Wiring_Matrix.production.json
+- Plans/pm7_control_bindings.json
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: static_command_wiring_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:chat:2026-11-03-projects-pass2-approved
+- PLANS-EDIT-PLAN.md#3
+- F-LANE-BRIEF.md
+- C-F06
+- C-F07
+- C-F11
+- D-F05
+- C-F01
+preserved_exact_tokens:
+- handler_unavailable
+- project_id=null
+- cmd.brainstorm.next_round
+- cmd.chat.crew_auto.open_config
+- cmd.chat.goal.open_editor
+- cmd.chat_room.next_round
+- cmd.chat_room.summarize
+- cmd.collaboration.cancel
+- cmd.collaboration.configure
+- cmd.collaboration.export
+- cmd.collaboration.open
+- cmd.collaboration.participant.open
+- cmd.collaboration.pause
+- cmd.collaboration.reconfigure
+- cmd.collaboration.resume
+- cmd.review.create_todos
+- cmd.review.run_again
+- cmd.review.send_findings_to_agent
+- cmd.collaboration.message
+- cmd.chat.goal.start
+- cmd.chat.goal.pause
+- cmd.chat.goal.resume
+- cmd.chat.goal.cancel
+- cmd.chat.goal.update
+- cmd.chat.goal.propose_update
+- cmd.collaboration.start
+- cmd.chat.crew_auto.set
+- cmd.brainstorm.synthesize_plan
+- cmd.chat_room.promote_to_goal
+- cmd.chat_room.promote_to_plan
+- cmd.chat_room.promote_to_todo
+negative_constraints:
+- Do not create duplicate primaries, aliases or independent domain writers.
+- Do not infer authority from scope nullability, a preview, a visible control, source reach or copied content.
+- Do not reinterpret old exact Project contracts, codecs, hashes or authentic source/receipt bytes.
+- Do not claim native availability, Event Authority, buildability, WorkNodes, runtime or governance certification.
+owner_hints:
+- Plans/Commands_System.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/assistant-chat-design.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+- Plans/Collaborative_Workflows.md
+```
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-113, ContractName:Plans/projects_refresh_command_bindings.json, ContractName:Plans/UI_Command_Catalog.md#UCC-218
+
+### CS-114 - Projects Refresh Plan Schedule
+
+```yaml
+plan_unit_id: CS-114
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: 'All six Plan/Deep Plan strategies, exact approved versions, agent/goal_driven/Crew Build,
+  Build At and scheduled messages/tasks work in app scope through existing owners. Only Planning Wizard, PRD
+  Builder and Orchestrator retain no-project workflow gates; Project-native actions still require actual targets.
+  Build At atomically commits one frozen schedule/window, creates no run, and never dispatches execution_window.create
+  a second time. Server-owned timers preserve DST/grace/missed-policy/idempotency, frozen text/attachments/target
+  version and fresh authority/Stop checks. App operational pause has independent real Server custody and user-only
+  clear, never a Settings value or missing-as-off. N25 stops/fences source work and explicitly re-admits mapped
+  frozen targets with fresh consent/epochs; no automatic resume, latest-version substitution or duplicate occurrence.
+  Exact command identities: cmd.chat.plan.cancel, cmd.chat.plan.open_details, cmd.chat.plan.open_version, cmd.chat.plan.view.set,
+  cmd.chat.schedule_message.cancel, cmd.chat.schedule_message.update, cmd.execution_window.cancel, cmd.execution_window.create,
+  cmd.execution_window.update, cmd.chat.plan.strategy.set, cmd.chat.plan.create, cmd.chat.plan.request_revision,
+  cmd.chat.plan.build, cmd.chat.plan.build_with_crew, cmd.chat.plan.schedule_build, cmd.chat.plan.send_to_planning_wizard,
+  cmd.chat.plan.export, cmd.chat.schedule_message, cmd.runtime.quota_resume.set, cmd.runtime.automation_pause.set.
+  Native availability remains handler_unavailable. Resolve the selected WorkflowScopeV2: application has an
+  actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message
+  draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without
+  fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations
+  use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.
+  Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust,
+  secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project
+  mutation/build-grant authority. Validate the exact operation-declared source/target refs and revisions/hashes.
+  Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry
+  and immediately before effect. Read/navigation/local paths validate their declared read target/source/view
+  generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation
+  never claims fresh authority or enables effects. Same idempotency key/digest returns the original result;
+  conflict or dedupe unavailable performs no effect. Preserve initiating Client, captured source scope/object,
+  invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the
+  exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture,
+  attachment or draft insertion preserves both the originating thread AND composer destination, or refuses
+  before draft mutation. Every selected request/result/source and active writer/read/backup/retention graph
+  is adopted together or remains unavailable. Plans/projects_refresh_command_bindings.json enumerates exact
+  commands, local actions, schema pointers, handlers, selectors and producer contracts; expected_event_types=[]
+  for each new primary grants no event admission. Native handlers, runtime receipts, visual/accessibility evidence
+  and governance certification remain unproved.'
+gui_related: true
+gui_classification_reason: Defines visible control dispatch, availability, disabled feedback, accessibility
+  and exact caller return.
+depends_on:
+- APR-073
+- APR-074
+- SQR-019
+- SQR-020
+- CV-368
+unblocks: []
+acceptance_criteria:
+- All six Plan/Deep Plan strategies, exact approved versions, agent/goal_driven/Crew Build, Build At and scheduled
+  messages/tasks work in app scope through existing owners. Only Planning Wizard, PRD Builder and Orchestrator
+  retain no-project workflow gates; Project-native actions still require actual targets. Build At atomically
+  commits one frozen schedule/window, creates no run, and never dispatches execution_window.create a second
+  time. Server-owned timers preserve DST/grace/missed-policy/idempotency, frozen text/attachments/target version
+  and fresh authority/Stop checks. App operational pause has independent real Server custody and user-only
+  clear, never a Settings value or missing-as-off. N25 stops/fences source work and explicitly re-admits mapped
+  frozen targets with fresh consent/epochs; no automatic resume, latest-version substitution or duplicate occurrence.
+- Pointer/keyboard/agent origins resolve one canonical owner and sole handler with exact selected request/result,
+  per-action state selector and closed disabled reason; new primary identity occurs exactly once in production
+  intent.
+- Stale scope/root/target/revision/source/preview/permission/Stop/return mismatch refuses with zero unadmitted
+  effects; matching replay returns authentic original custody and no duplicate effect.
+- Return preserves original Client/scope/object/route/focus/continuation; unavailable owner or missing adopted
+  source graph is reported rather than replaced by focus/current/latest context.
+- Local draft/disclosure/navigation has no fictitious domain handler or EventRecord; candidates, forbidden
+  aliases and protected auth remain non-dispatchable.
+- All relevant original exact Project schema/hash/replay resources remain valid; schema/catalog/concept evidence
+  proves no native dispatch, storage, visual, event or readiness fact.
+validation_surfaces:
+- Plans/projects_refresh_command_bindings.json
+- Plans/Wiring_Matrix.production.json
+- Plans/pm7_control_bindings.json
+- Plans/touch_closure.json
+- Plans/touch_closure_action_sources.json
+- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+risk_class: scope_target_authority_or_command_binding_drift
+reasoning_tier: high
+context_scope: projects_refresh_plan_schedule
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/projects_refresh_command_bindings.json
+- Plans/Wiring_Matrix.production.json
+- Plans/pm7_control_bindings.json
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: static_command_wiring_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:chat:2026-11-03-projects-pass2-approved
+- PLANS-EDIT-PLAN.md#3
+- F-LANE-BRIEF.md
+- C-F08
+- C-F09
+- C-F10
+- C-F11
+- D-F05
+- C-F01
+preserved_exact_tokens:
+- handler_unavailable
+- project_id=null
+- cmd.chat.plan.cancel
+- cmd.chat.plan.open_details
+- cmd.chat.plan.open_version
+- cmd.chat.plan.view.set
+- cmd.chat.schedule_message.cancel
+- cmd.chat.schedule_message.update
+- cmd.execution_window.cancel
+- cmd.execution_window.create
+- cmd.execution_window.update
+- cmd.chat.plan.strategy.set
+- cmd.chat.plan.create
+- cmd.chat.plan.request_revision
+- cmd.chat.plan.build
+- cmd.chat.plan.build_with_crew
+- cmd.chat.plan.schedule_build
+- cmd.chat.plan.send_to_planning_wizard
+- cmd.chat.plan.export
+- cmd.chat.schedule_message
+- cmd.runtime.quota_resume.set
+- cmd.runtime.automation_pause.set
+negative_constraints:
+- Do not create duplicate primaries, aliases or independent domain writers.
+- Do not infer authority from scope nullability, a preview, a visible control, source reach or copied content.
+- Do not reinterpret old exact Project contracts, codecs, hashes or authentic source/receipt bytes.
+- Do not claim native availability, Event Authority, buildability, WorkNodes, runtime or governance certification.
+owner_hints:
+- Plans/Commands_System.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/Planning_Wizard.md
+- Plans/Assistant_Plan_Runtime.md
+```
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-114, ContractName:Plans/projects_refresh_command_bindings.json, ContractName:Plans/UI_Command_Catalog.md#UCC-219
+
+## Existing catalog primaries mirrored and completed
+
+These are already registered UCC identities, not additional new primary IDs. Refresh keeps its existing matrix row; automation pause fills one missing production/Touch row.
+
+| Command | Owner | Sole handler | Request | Result | Effect |
+|---|---|---|---|---|---|
+| `cmd.project.refresh` | Plans/Project_System.md#PJCT-012 | handlers::project::refresh | Plans/project_system_contracts.schema.json#/$defs/project_action_request_v2 | Plans/project_system_contracts.schema.json#/$defs/project_action_result_v2 | Registry/list read with nullable selected Project; no registration or persistence and no fabricated empty success. |
+| `cmd.runtime.automation_pause.set` | Plans/Scheduling_and_Quota_Resume.md#SQR-020 | handlers::scheduling::automation_pause_set | Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AutomationPauseSetRequestScopeV2 | Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AutomationPauseSetResultScopeV2 | Canonical exact app Server or Project operational record/receipt; app unavailable result has null pause/projection and zero effect. No new EventRecord; runtime.automation_pause_changed remains non-emitting until admitted. |
