@@ -899,8 +899,10 @@
        input (its own discard); the pairing is a fact. c-ready: the Project picked to open is an input.
      - nas-pmpair: the pairing way and the code typed are inputs; the pairing is a fact. r-unlock: the phrase typed is
        an input (the field keeps no value; its typed flag is restored); the unlock is a fact.
-     - s-ready, review, creating, protect, away-setup, ai, ai-all, ai-none, free, ready: Review's Create and the steps
-       after it act only on committed answers, and once the plan is created Back is off (canBack) */
+     - s-ready: a waiting guest's words ticked are an input (its own discard unticks them and gives up an approval still
+       running); an approval that completed is a fact.
+     - review, creating, protect, away-setup, ai, ai-all, ai-none, free, ready: Review's Create and the steps after it act
+       only on committed answers, and once the plan is created Back is off (canBack) */
   const NO_TXN = new Set(['welcome', 'look', 'nas-identity', 'nas-install', 'nas-pmpair', 'r-unlock', 'r-preview',
     's-confirm', 's-ready', 'c-review', 'c-pair', 'c-ready', 'review', 'creating', 'protect', 'away-setup', 'ai', 'ai-all', 'ai-none', 'free', 'ready']);
   const INPUTS = { 's-confirm': [['server', 'name'], ['server', 'selfConfirmed'], ['server', 'codeEdited']], 'c-ready': [['connect', 'openProject']],
@@ -914,21 +916,24 @@
     S.sess.txn = { screen: id, snap };
   }
   function txnDiscard() {
-    const t = S.sess && S.sess.txn;
-    if (!t || t.screen !== S.sess.screen) return false;
-    const def = SCREENS.defs[t.screen];
-    if (def && def.discard) { try { def.discard(S); } catch (_) {} } /* (a value typed and held outside the session) */
-    if (t.inputs) {
+    if (!S.sess) return false;
+    const t = S.sess.txn, def = SCREENS.defs[S.sess.screen];
+    let done = false;
+    if (t && t.screen === S.sess.screen && t.inputs) {
       t.inputs.forEach(([path, v]) => { const o = path.slice(0, -1).reduce((x, k) => (x == null ? undefined : x[k]), S.sess), k = path[path.length - 1]; if (o && typeof o === 'object') { if (v === undefined) delete o[k]; else o[k] = copyOf(v); } });
-      S.sess.txn = null; return true;
+      S.sess.txn = null; done = true;
+    } else if (t && t.screen === S.sess.screen && t.snap) {
+      /* (the look is the window's own: a look switch made while the screen was open stays, Sol R4 minor) */
+      const look = S.sess.drafts && S.sess.drafts.main ? [S.sess.drafts.main.theme_family, S.sess.drafts.main.theme_mode] : null;
+      TXN_KEYS.forEach((k) => { if (t.snap[k] === undefined) delete S.sess[k]; else S.sess[k] = copyOf(t.snap[k]); });
+      if (look && S.sess.drafts) Object.values(S.sess.drafts).forEach((d) => { if (d && typeof d === 'object') { d.theme_family = look[0]; d.theme_mode = look[1]; } });
+      S.sess.txn = null; done = true;
     }
-    if (!t.snap) return false;
-    /* (the look is the window's own: a look switch made while the screen was open stays, Sol R4 minor) */
-    const look = S.sess.drafts && S.sess.drafts.main ? [S.sess.drafts.main.theme_family, S.sess.drafts.main.theme_mode] : null;
-    TXN_KEYS.forEach((k) => { if (t.snap[k] === undefined) delete S.sess[k]; else S.sess[k] = copyOf(t.snap[k]); });
-    if (look && S.sess.drafts) Object.values(S.sess.drafts).forEach((d) => { if (d && typeof d === 'object') { d.theme_family = look[0]; d.theme_mode = look[1]; } });
-    S.sess.txn = null;
-    return true;
+    /* what the step started and did not finish (a pairing request, a sign-in wait, a claim), and a value it holds
+       outside the session (a typed code), go with the pick: after the answers are restored, and on a step that keeps
+       none as well (Sol R5: the code way rolled back left its request live; Muse: c-pair's hook was never reached) */
+    if (def && def.discard) { try { def.discard(S); } catch (_) {} }
+    return done;
   }
 
   /* the history keeps only the active branch, as a simple path: a step reached again cuts the path back to it, so a run of
@@ -944,10 +949,26 @@
       else if (inside(out.slice(at + 1), id)) { out.splice(at, 1); out.push(id); }
       else out.length = at + 1;
     });
+    /* the steps a hub owns (Safe's online copy, Name's files place on a NAS) are rebuilt from the current answers each time,
+       not taken from what the last walk left: a forward walk with nothing changed goes from the hub straight on, and its
+       steps must still be on the Back path (Sol R5's walker: the second Back run lost nas-find and nas-mounted). While
+       the person is inside the chain, its own walk decides */
+    Object.keys(HUB_CHAINS).forEach((owner) => {
+      const chain = HUB_CHAINS[owner];
+      /* (only from a step after the hub: on the hub itself, reached forward or by Back out of its chain, Back goes to the
+         step before it, as walked; inside the chain, the chain's own walk decides) */
+      if (chain.includes(S.sess.screen) || S.sess.screen === owner || !O55.branch || !O55.branch.within) return;
+      const at0 = out.indexOf(owner); if (at0 < 0) return;
+      const mine = chain.filter((x) => O55.branch.within(x, S) === owner && onBranch(x));
+      for (let i = out.length - 1; i >= 0; i--) if (chain.includes(out[i]) && O55.branch.within(out[i], S) === owner) out.splice(i, 1);
+      if (!mine.length) return;
+      out.splice(out.indexOf(owner), 0, ...mine);
+    });
     const here = out.indexOf(S.sess.screen);
     if (here >= 0) { if (inside(out.slice(here + 1), S.sess.screen)) out.splice(here, 1); else out.length = here; }
     S.sess.history = out;
   }
+  const HUB_CHAINS = { safe: ['online-service', 'online-signin', 'online-details'], name: ['nas-find', 'nas-identity', 'nas-pmpair', 'nas-key', 'nas-signin', 'nas-install', 'nas-folder', 'nas-smb', 'nas-nfs', 'nas-mounted'] };
   /* Review reached again from a step its Edit opened (from), by going on toward a later step (then, where Review's Edit
      comes straight back): the walk since the Edit replaces the old path's part from that step up to then, keeping in their
      places the old part's steps it passed over (a completed Server's setup, Safe's online copy), and the old path goes on

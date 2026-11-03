@@ -249,7 +249,7 @@
   const portOk = (v) => /^\d{1,5}$/.test(String(v)) && +v >= 1 && +v <= 65535;
   /* a shared folder's check belongs to the share, account and domain it checked: one of them changed or taken back, the
      check no longer counts (Muse delta3: Back took the typed account back and Use stayed on) */
-  const smbKey = (n, sh) => 'smb:' + (n.share === 'manual' ? sh.path : n.share) + '|' + String(n.user || '').trim().toLowerCase() + '|' + String(n.domain || '').trim().toLowerCase();
+  const smbKey = (n, sh) => 'smb:' + (n.share === 'manual' ? sh.path : n.share) + '|' + String(n.user || '').trim().toLowerCase() + '|' + String(n.domain || '').trim().toLowerCase() + '|' + (n.pwGen || 0);
   /* a host as typed and as known, compared by meaning: trimmed and in any case */
   const sameHost = (a, b) => !!String(b || '').trim() && String(a || '').trim().toLowerCase() === String(b || '').trim().toLowerCase();
   const sshPort = (S) => { const n = N(S), d = dev(S); return n.manual && portOk(n.port) ? +n.port : (d && d.port) || 22; };
@@ -619,7 +619,8 @@
   def('nas-pmpair', {
     seed: (S) => seedNas(S, 'nas-pmpair'),
     /* (a code typed and not checked goes with Back) */
-    discard(S) { if (!N(S).paired) pairCodes.delete(tryId(S)); },
+    /* (Back before the pairing is done ends its live request too: the way picked and the request go together, Sol R5) */
+    discard(S) { const n = N(S); if (n.paired) return; pairCodes.delete(tryId(S)); if (n.pairAsked) { endPair(S, 'cancelled'); n.pairAsked = false; } },
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => { const n = N(S), st = F.state(S, pairKey(S)); return { id: 'nas', beat: n.paired ? 'paired' : 'pair', params: sceneParams(S, { seed: (pmOf(S) || {}).seed, words: words((pmOf(S) || {}).seed || ''), method: n.pairing || 'approval', waiting: !!(st && st.state === 'running') }) }; },
     eyebrow: () => T('nas.pmpair.eyebrow'),
@@ -740,6 +741,8 @@
       adding(S) { N(S).adding = true; S.save(); O55.ui.refresh(); },
       addFolder(S) { const n = N(S), at = n.at || dev(S).roots[0]; n.newFolders = (n.newFolders || []).concat([{ parent: at, name: n.newName.trim() }]); n.adding = false; n.at = at + '/' + n.newName.trim(); n.newName = ''; S.save(); O55.ui.refresh(); },
       use(S) {
+        /* (a folder is used only over an access verified for this device, port, account and key, or a pairing: Sol R5) */
+        if (!(N(S).paired || N(S).viaPm || keyOk(S))) return false;
         /* (an SSH folder is named by its connection profile, so two accounts or ports on one device never collide: SCR-10) */
         const n = N(S), d = dev(S), at = n.at, tr = transport(S), ref = (tr === 'puppet_master' ? 'pm:' + U.slug(String((pmOf(S) || {}).id || d.id).replace(/^pm:/, '')) : 'ssh:' + (n.profile || profileId(S))) + at, dd = md(S);
         n.folderLabel = d.name + ' › ' + at.split('/').filter(Boolean).join(' › ');
@@ -793,12 +796,14 @@
         F.reset(S, key);
         F.op(S, key, 'cmd.project.source_location.test', [{ key: 'mount', ms: 900, fail: wrong ? () => 'wrong_password' : undefined }, { key: 'read', ms: 600 }], { payload: { share: sh.path, proto: 'smb', from: onServer(S) ? md(S).server_ref : S.env.here.id, user: String(n.user || '').trim(), domain: n.domain || null, readOnly: true } });
       },
-      use(S) { const n = N(S), sh = shareOf(S), prof = shareProfile(S, sh, String(n.user || '').trim(), n.domain); finishMounted(S, sh.path + '/' + (md(S).project_name || 'Project'), 'smb:' + prof + ':' + sh.path.replace(/^\/\//, ''), 'smb'); }
+      use(S) { const n = N(S), sh = shareOf(S); if (!sh) return false; const st = F.state(S, smbKey(n, sh)); if (!st || st.state !== 'done') return false; const prof = shareProfile(S, sh, String(n.user || '').trim(), n.domain); finishMounted(S, sh.path + '/' + (md(S).project_name || 'Project'), 'smb:' + prof + ':' + sh.path.replace(/^\/\//, ''), 'smb'); }
     },
     bind: {
       user(S, v) { N(S).user = v; S.save(); O55.ui.refresh(); },
-      domain(S, v) { N(S).domain = String(v || '').trim(); S.save(); },
-      pw(S, v) { const had = !!N(S).pwTyped; N(S).pwTyped = v.length > 0; if (had !== N(S).pwTyped) { S.save(); O55.ui.refresh(); } }
+      /* (a check counts only for the share, account, password and domain it checked: editing any of them takes the pass
+         away at once, Sol R5) */
+      domain(S, v) { const n = N(S), was = n.domain || ''; n.domain = String(v || '').trim(); S.save(); if (n.domain !== was) O55.ui.refresh(); },
+      pw(S, v) { const n = N(S), had = !!n.pwTyped; n.pwTyped = v.length > 0; if (n.pwTyped && !had) n.pwGen = (n.pwGen || 0) + 1; if (had !== n.pwTyped) { S.save(); O55.ui.refresh(); } }
     }
   });
   /* NFS has no password: the share lets in the computers it lists, so the check says which computer is asking */
@@ -811,7 +816,7 @@
     body(S) { const sh = shareOf(S) || {}; return `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>` + C.note(T('nas.nfs.noPassword', { where: machine(S) }), 'info', 'lock') + F.phases(S, nfsKey(S), ['mount', 'read'], { mount: T('nas.nfs.phases.mount'), read: T('nas.nfs.phases.read') }); },
     mounted(S) { const sh = shareOf(S); if (!sh) return; F.op(S, nfsKey(S), 'cmd.project.source_location.test', [{ key: 'mount', ms: 900 }, { key: 'read', ms: 600 }], { payload: { share: sh.path, proto: 'nfs', from: onServer(S) ? md(S).server_ref : S.env.here.id, readOnly: true } }); },
     foot(S) { const sh = shareOf(S), st = sh && F.state(S, nfsKey(S)); return { primary: { label: T('chrome.continue'), do: 'use', disabled: !(st && st.state === 'done'), reason: sh ? T('chrome.working') : T('missing.storage') } }; },
-    do: { use(S) { const sh = shareOf(S); if (!sh) return; finishMounted(S, sh.path, 'nfs:' + shareProfile(S, sh) + ':' + sh.path, 'nfs'); } }
+    do: { use(S) { const sh = shareOf(S); if (!sh) return; const st = F.state(S, nfsKey(S)); if (!st || st.state !== 'done') return false; finishMounted(S, sh.path, 'nfs:' + shareProfile(S, sh) + ':' + sh.path, 'nfs'); } }
   });
   /* The drive chosen on Where are the files is not asked for again (FF-23): this step names it, says which computer has
      it, and checks that computer can read it. */
@@ -823,7 +828,7 @@
     body(S) { const v = N(S).volume || ''; return `<p class="o55-path" data-key="vol">${C.small('folder', 14)} ${U.esc(v)}</p>` + F.phases(S, 'mounted:' + v, ['read'], { read: T('nas.mounted.read', { where: machine(S) }) }) + `<div class="o55-sublinks" data-key="other">${C.link(T('nas.mounted.other'), 'other')}</div>`; },
     mounted(S) { const v = N(S).volume; if (v) F.op(S, 'mounted:' + v, 'cmd.project.source_location.test', [{ key: 'read', ms: 600 }], { payload: { path: v, from: onServer(S) ? md(S).server_ref : S.env.here.id, readOnly: true } }); },
     foot(S) { const v = N(S).volume, st = v && F.state(S, 'mounted:' + v); return { primary: { label: T('chrome.continue'), do: 'use', disabled: !(st && st.state === 'done'), reason: v ? T('chrome.working') : T('missing.storage') } }; },
-    do: { other(S) { O55.ui.back(); }, use(S) { const v = N(S).volume; finishMounted(S, v, 'mounted:' + v, 'mounted'); } }
+    do: { other(S) { O55.ui.back(); }, use(S) { const v = N(S).volume, st = v && F.state(S, 'mounted:' + v); if (!st || st.state !== 'done') return false; finishMounted(S, v, 'mounted:' + v, 'mounted'); } }
   });
 
   /* Settled facts outside the plan, kept per device apart from the picker's choice (Astra AST-D2): a host the person
@@ -873,8 +878,12 @@
        device that inherited them, is judged unstamped below) */
     if ((n.trusted && n.trustedFor === undefined) || (n.installed && !n.viaPm && n.installedFor === undefined)) {
       const pid = profileId(S), d0 = md(S), refs = (d0.source_access_authorization_refs || []).concat(d0.preflight_result_refs || [], [d0.project_source_ref || '', d0.storage_location || '']);
-      const agrees = n.profile ? n.profile === pid : !refs.some((r) => /sshp:/.test(r) && r.indexOf(pid) < 0);
-      if (agrees) { if (n.trusted && n.trustedFor === undefined) n.trustedFor = hostId(S); if (n.installed && !n.viaPm && n.installedFor === undefined && n.key) n.installedFor = keyFor(S); }
+      /* (every bound field must agree: the account, host and port the profile names, and the key the plan's access names;
+         one disagreement binds nothing, and the person verifies again, Astra delta4) */
+      const sshRefs = refs.filter((r) => /sshp:/.test(r)), keyRefs = (d0.source_access_authorization_refs || []).filter((r) => r.indexOf('ssh-key:' + pid + ':') === 0);
+      const endpoint = (n.profile ? n.profile === pid : true) && !sshRefs.some((r) => r.indexOf(pid) < 0);
+      const keyAgrees = !n.installed || n.viaPm || (!!n.key && keyRefs.every((r) => r === 'ssh-key:' + pid + ':' + n.key));
+      if (endpoint && keyAgrees) { if (n.trusted && n.trustedFor === undefined) n.trustedFor = hostId(S); if (n.installed && !n.viaPm && n.installedFor === undefined && n.key) n.installedFor = keyFor(S); }
     }
     /* (a trust or an install that does not describe this device, port and account is not this device's: it is dropped,
        never applied to it) */

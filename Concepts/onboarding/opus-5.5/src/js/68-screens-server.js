@@ -247,7 +247,9 @@
   /* ------------------------------------------------------------------ S2: name it and confirm (the Server preflow's commit) */
   def('s-confirm', {
     /* (a code typed and not used goes with Back: it is held outside the session, 60-ui-core's INPUTS) */
-    discard(S) { const u = unclaimed(S); if (u && !S.sess.server.claimed) setupCodes.delete(u.id); },
+    discard(S) { const u = unclaimed(S); if (!u || S.sess.server.claimed) return; setupCodes.delete(u.id);
+      /* (a claim started and not finished goes with Back: Sol R5's started-operation rule) */
+      ['claim:', 'bootstrap:', 'selfpair:', 'selfapprove:'].forEach((k) => { O55.owners.cancelOp(k + u.id); F.reset(S, k + u.id); }); },
     chapter: 'computer', stage: 'server_storage_client',
     scene: (S) => ({ id: 'where', beat: 'server' }),
     eyebrow: () => T('server.confirm.eyebrow'),
@@ -438,6 +440,10 @@
     if (showing('s-ready')) O55.sound.play('success', SND.approved); /* the device moves into the paired list */
   }
   def('s-ready', {
+    /* (a guest's words ticked and not approved go with Back, and an approval still running is given up: the tick is an
+       input, the approval a fact once it completes, Sol R5) */
+    discard(S) { const sv = S.sess.server || {}; (sv.candidates || []).forEach((c) => { if (c.state !== 'waiting') return; c.confirmed = false;
+      const st = F.state(S, 'approve:' + c.id); if (st && st.state === 'running') { O55.owners.cancelOp('approve:' + c.id); F.reset(S, 'approve:' + c.id); if (sv.approveReqs) delete sv.approveReqs[c.id]; } }); },
     /* opened straight (Demo Studio): a new Server set up and this computer trusted, as Set up the Server leaves it */
     seed: (S) => { if (O55.away) O55.away.seedServer(S); const sv = S.sess.server; if (!sv.pairUntil || Date.now() > sv.pairUntil) newInvite(S); },
     chapter: 'computer', stage: 'server_storage_client',

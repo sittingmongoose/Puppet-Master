@@ -164,6 +164,9 @@
   }
   def('online-signin', {
     seed: (S) => seedOnline(S, false),
+    /* (a sign-in still waiting when the person goes Back is given up: a later Sign in starts a new attempt the old wait can
+       never complete; a finished one stays, Sol R5's started-operation rule) */
+    discard(S) { const si = S.sess.signin; if (si && si.state !== 'done') si.attempt = (si.attempt || 0) + 1; },
     chapter: 'project', stage: 'source_control_setup',
     scene: (S) => ({ id: 'online', beat: SI(S).state === 'done' ? 'signed' : 'signin' }),
     eyebrow: (S) => (SI(S).kind !== 'forge' ? T('safe.eyebrow') : OL(S).purpose === 'source' ? T('begin.eyebrow') : T('online.signin.eyebrow')),
@@ -280,6 +283,8 @@
         const si = SI(S);
         if (si.state !== 'done' && si.kind === 'forge') { const k = accountFor(S, si.service); if (!completeSignIn(S, k, 'already_connected', true)) return; }
         if (si.state !== 'done') return;
+        /* (a sign-in counts only for the service, kind and address it was made for, Sol R5's pass-belongs-to-its-inputs) */
+        if (si.kind === 'forge' && si.instance_key && si.instance_key !== instanceKey(md(S))) return;
         O55.ui.go(si.then || 'safe');
       }
     },
@@ -867,7 +872,11 @@
       backend(S, v) { O55.draft.set(md(S), { history_backend: v }); S.save(); O55.ui.refresh(); },
       filesafe(S) { const on = !md(S).filesafe; O55.draft.set(md(S), { filesafe: on }); S.save(); O55.ui.refresh(); O55.sound.play(on ? 'toggleOn' : 'toggleOff'); },
       /* (Safe wants an online copy: the answer that keeps its picker and steps on the person's path, 76-branch.js) */
-      online(S) { const ol = OL(S); ol.purpose = 'copy'; ol.wanted = true; S.save(); O55.ui.go('online-service'); },
+      /* (a copy started while the plan has none takes its name from the Project as it is now, never from an abandoned
+         beginning's: a name typed for a copy stays only while that copy is the plan's, Sol R4/R5's garden-planner) */
+      online(S) { const ol = OL(S), d = md(S); ol.purpose = 'copy'; ol.wanted = true;
+        if (d.online_mode !== 'new' && d.project_name) { O55.draft.set(d, { repository_name: U.slug(d.project_name) }); S.sess.ui.repoTyped = null; }
+        S.save(); O55.ui.go('online-service'); },
       backup(S) { S.sess.ui.sheet = 'backup'; S.save(); O55.ui.refresh(); seeSheet(S); },
       /* another place, or another service for it, drops the access details typed for the old one */
       bdest(S, v, el) { const b = S.sess.backup, to = v === 'none' ? null : v; if (b.dest !== to) { b.sub = null; b.access = {}; } b.dest = to; S.save(); O55.ui.refresh(); if (v !== 'none') O55.ui.charm(el, SUBS[v] ? T('safe.backup.' + v) : backupLabel(S, v), 'vault'); },

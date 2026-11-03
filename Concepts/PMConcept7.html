@@ -176644,8 +176644,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        input (its own discard); the pairing is a fact. c-ready: the Project picked to open is an input.
      - nas-pmpair: the pairing way and the code typed are inputs; the pairing is a fact. r-unlock: the phrase typed is
        an input (the field keeps no value; its typed flag is restored); the unlock is a fact.
-     - s-ready, review, creating, protect, away-setup, ai, ai-all, ai-none, free, ready: Review's Create and the steps
-       after it act only on committed answers, and once the plan is created Back is off (canBack) */
+     - s-ready: a waiting guest's words ticked are an input (its own discard unticks them and gives up an approval still
+       running); an approval that completed is a fact.
+     - review, creating, protect, away-setup, ai, ai-all, ai-none, free, ready: Review's Create and the steps after it act
+       only on committed answers, and once the plan is created Back is off (canBack) */
   const NO_TXN = new Set(['welcome', 'look', 'nas-identity', 'nas-install', 'nas-pmpair', 'r-unlock', 'r-preview',
     's-confirm', 's-ready', 'c-review', 'c-pair', 'c-ready', 'review', 'creating', 'protect', 'away-setup', 'ai', 'ai-all', 'ai-none', 'free', 'ready']);
   const INPUTS = { 's-confirm': [['server', 'name'], ['server', 'selfConfirmed'], ['server', 'codeEdited']], 'c-ready': [['connect', 'openProject']],
@@ -176659,21 +176661,24 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     S.sess.txn = { screen: id, snap };
   }
   function txnDiscard() {
-    const t = S.sess && S.sess.txn;
-    if (!t || t.screen !== S.sess.screen) return false;
-    const def = SCREENS.defs[t.screen];
-    if (def && def.discard) { try { def.discard(S); } catch (_) {} } /* (a value typed and held outside the session) */
-    if (t.inputs) {
+    if (!S.sess) return false;
+    const t = S.sess.txn, def = SCREENS.defs[S.sess.screen];
+    let done = false;
+    if (t && t.screen === S.sess.screen && t.inputs) {
       t.inputs.forEach(([path, v]) => { const o = path.slice(0, -1).reduce((x, k) => (x == null ? undefined : x[k]), S.sess), k = path[path.length - 1]; if (o && typeof o === 'object') { if (v === undefined) delete o[k]; else o[k] = copyOf(v); } });
-      S.sess.txn = null; return true;
+      S.sess.txn = null; done = true;
+    } else if (t && t.screen === S.sess.screen && t.snap) {
+      /* (the look is the window's own: a look switch made while the screen was open stays, Sol R4 minor) */
+      const look = S.sess.drafts && S.sess.drafts.main ? [S.sess.drafts.main.theme_family, S.sess.drafts.main.theme_mode] : null;
+      TXN_KEYS.forEach((k) => { if (t.snap[k] === undefined) delete S.sess[k]; else S.sess[k] = copyOf(t.snap[k]); });
+      if (look && S.sess.drafts) Object.values(S.sess.drafts).forEach((d) => { if (d && typeof d === 'object') { d.theme_family = look[0]; d.theme_mode = look[1]; } });
+      S.sess.txn = null; done = true;
     }
-    if (!t.snap) return false;
-    /* (the look is the window's own: a look switch made while the screen was open stays, Sol R4 minor) */
-    const look = S.sess.drafts && S.sess.drafts.main ? [S.sess.drafts.main.theme_family, S.sess.drafts.main.theme_mode] : null;
-    TXN_KEYS.forEach((k) => { if (t.snap[k] === undefined) delete S.sess[k]; else S.sess[k] = copyOf(t.snap[k]); });
-    if (look && S.sess.drafts) Object.values(S.sess.drafts).forEach((d) => { if (d && typeof d === 'object') { d.theme_family = look[0]; d.theme_mode = look[1]; } });
-    S.sess.txn = null;
-    return true;
+    /* what the step started and did not finish (a pairing request, a sign-in wait, a claim), and a value it holds
+       outside the session (a typed code), go with the pick: after the answers are restored, and on a step that keeps
+       none as well (Sol R5: the code way rolled back left its request live; Muse: c-pair's hook was never reached) */
+    if (def && def.discard) { try { def.discard(S); } catch (_) {} }
+    return done;
   }
 
   /* the history keeps only the active branch, as a simple path: a step reached again cuts the path back to it, so a run of
@@ -176689,10 +176694,26 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       else if (inside(out.slice(at + 1), id)) { out.splice(at, 1); out.push(id); }
       else out.length = at + 1;
     });
+    /* the steps a hub owns (Safe's online copy, Name's files place on a NAS) are rebuilt from the current answers each time,
+       not taken from what the last walk left: a forward walk with nothing changed goes from the hub straight on, and its
+       steps must still be on the Back path (Sol R5's walker: the second Back run lost nas-find and nas-mounted). While
+       the person is inside the chain, its own walk decides */
+    Object.keys(HUB_CHAINS).forEach((owner) => {
+      const chain = HUB_CHAINS[owner];
+      /* (only from a step after the hub: on the hub itself, reached forward or by Back out of its chain, Back goes to the
+         step before it, as walked; inside the chain, the chain's own walk decides) */
+      if (chain.includes(S.sess.screen) || S.sess.screen === owner || !O55.branch || !O55.branch.within) return;
+      const at0 = out.indexOf(owner); if (at0 < 0) return;
+      const mine = chain.filter((x) => O55.branch.within(x, S) === owner && onBranch(x));
+      for (let i = out.length - 1; i >= 0; i--) if (chain.includes(out[i]) && O55.branch.within(out[i], S) === owner) out.splice(i, 1);
+      if (!mine.length) return;
+      out.splice(out.indexOf(owner), 0, ...mine);
+    });
     const here = out.indexOf(S.sess.screen);
     if (here >= 0) { if (inside(out.slice(here + 1), S.sess.screen)) out.splice(here, 1); else out.length = here; }
     S.sess.history = out;
   }
+  const HUB_CHAINS = { safe: ['online-service', 'online-signin', 'online-details'], name: ['nas-find', 'nas-identity', 'nas-pmpair', 'nas-key', 'nas-signin', 'nas-install', 'nas-folder', 'nas-smb', 'nas-nfs', 'nas-mounted'] };
   /* Review reached again from a step its Edit opened (from), by going on toward a later step (then, where Review's Edit
      comes straight back): the walk since the Edit replaces the old path's part from that step up to then, keeping in their
      places the old part's steps it passed over (a completed Server's setup, Safe's online copy), and the old path goes on
@@ -180095,7 +180116,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* ------------------------------------------------------------------ S2: name it and confirm (the Server preflow's commit) */
   def('s-confirm', {
     /* (a code typed and not used goes with Back: it is held outside the session, 60-ui-core's INPUTS) */
-    discard(S) { const u = unclaimed(S); if (u && !S.sess.server.claimed) setupCodes.delete(u.id); },
+    discard(S) { const u = unclaimed(S); if (!u || S.sess.server.claimed) return; setupCodes.delete(u.id);
+      /* (a claim started and not finished goes with Back: Sol R5's started-operation rule) */
+      ['claim:', 'bootstrap:', 'selfpair:', 'selfapprove:'].forEach((k) => { O55.owners.cancelOp(k + u.id); F.reset(S, k + u.id); }); },
     chapter: 'computer', stage: 'server_storage_client',
     scene: (S) => ({ id: 'where', beat: 'server' }),
     eyebrow: () => T('server.confirm.eyebrow'),
@@ -180286,6 +180309,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (showing('s-ready')) O55.sound.play('success', SND.approved); /* the device moves into the paired list */
   }
   def('s-ready', {
+    /* (a guest's words ticked and not approved go with Back, and an approval still running is given up: the tick is an
+       input, the approval a fact once it completes, Sol R5) */
+    discard(S) { const sv = S.sess.server || {}; (sv.candidates || []).forEach((c) => { if (c.state !== 'waiting') return; c.confirmed = false;
+      const st = F.state(S, 'approve:' + c.id); if (st && st.state === 'running') { O55.owners.cancelOp('approve:' + c.id); F.reset(S, 'approve:' + c.id); if (sv.approveReqs) delete sv.approveReqs[c.id]; } }); },
     /* opened straight (Demo Studio): a new Server set up and this computer trusted, as Set up the Server leaves it */
     seed: (S) => { if (O55.away) O55.away.seedServer(S); const sv = S.sess.server; if (!sv.pairUntil || Date.now() > sv.pairUntil) newInvite(S); },
     chapter: 'computer', stage: 'server_storage_client',
@@ -181375,7 +181402,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const portOk = (v) => /^\d{1,5}$/.test(String(v)) && +v >= 1 && +v <= 65535;
   /* a shared folder's check belongs to the share, account and domain it checked: one of them changed or taken back, the
      check no longer counts (Muse delta3: Back took the typed account back and Use stayed on) */
-  const smbKey = (n, sh) => 'smb:' + (n.share === 'manual' ? sh.path : n.share) + '|' + String(n.user || '').trim().toLowerCase() + '|' + String(n.domain || '').trim().toLowerCase();
+  const smbKey = (n, sh) => 'smb:' + (n.share === 'manual' ? sh.path : n.share) + '|' + String(n.user || '').trim().toLowerCase() + '|' + String(n.domain || '').trim().toLowerCase() + '|' + (n.pwGen || 0);
   /* a host as typed and as known, compared by meaning: trimmed and in any case */
   const sameHost = (a, b) => !!String(b || '').trim() && String(a || '').trim().toLowerCase() === String(b || '').trim().toLowerCase();
   const sshPort = (S) => { const n = N(S), d = dev(S); return n.manual && portOk(n.port) ? +n.port : (d && d.port) || 22; };
@@ -181745,7 +181772,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   def('nas-pmpair', {
     seed: (S) => seedNas(S, 'nas-pmpair'),
     /* (a code typed and not checked goes with Back) */
-    discard(S) { if (!N(S).paired) pairCodes.delete(tryId(S)); },
+    /* (Back before the pairing is done ends its live request too: the way picked and the request go together, Sol R5) */
+    discard(S) { const n = N(S); if (n.paired) return; pairCodes.delete(tryId(S)); if (n.pairAsked) { endPair(S, 'cancelled'); n.pairAsked = false; } },
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => { const n = N(S), st = F.state(S, pairKey(S)); return { id: 'nas', beat: n.paired ? 'paired' : 'pair', params: sceneParams(S, { seed: (pmOf(S) || {}).seed, words: words((pmOf(S) || {}).seed || ''), method: n.pairing || 'approval', waiting: !!(st && st.state === 'running') }) }; },
     eyebrow: () => T('nas.pmpair.eyebrow'),
@@ -181866,6 +181894,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       adding(S) { N(S).adding = true; S.save(); O55.ui.refresh(); },
       addFolder(S) { const n = N(S), at = n.at || dev(S).roots[0]; n.newFolders = (n.newFolders || []).concat([{ parent: at, name: n.newName.trim() }]); n.adding = false; n.at = at + '/' + n.newName.trim(); n.newName = ''; S.save(); O55.ui.refresh(); },
       use(S) {
+        /* (a folder is used only over an access verified for this device, port, account and key, or a pairing: Sol R5) */
+        if (!(N(S).paired || N(S).viaPm || keyOk(S))) return false;
         /* (an SSH folder is named by its connection profile, so two accounts or ports on one device never collide: SCR-10) */
         const n = N(S), d = dev(S), at = n.at, tr = transport(S), ref = (tr === 'puppet_master' ? 'pm:' + U.slug(String((pmOf(S) || {}).id || d.id).replace(/^pm:/, '')) : 'ssh:' + (n.profile || profileId(S))) + at, dd = md(S);
         n.folderLabel = d.name + ' › ' + at.split('/').filter(Boolean).join(' › ');
@@ -181919,12 +181949,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         F.reset(S, key);
         F.op(S, key, 'cmd.project.source_location.test', [{ key: 'mount', ms: 900, fail: wrong ? () => 'wrong_password' : undefined }, { key: 'read', ms: 600 }], { payload: { share: sh.path, proto: 'smb', from: onServer(S) ? md(S).server_ref : S.env.here.id, user: String(n.user || '').trim(), domain: n.domain || null, readOnly: true } });
       },
-      use(S) { const n = N(S), sh = shareOf(S), prof = shareProfile(S, sh, String(n.user || '').trim(), n.domain); finishMounted(S, sh.path + '/' + (md(S).project_name || 'Project'), 'smb:' + prof + ':' + sh.path.replace(/^\/\//, ''), 'smb'); }
+      use(S) { const n = N(S), sh = shareOf(S); if (!sh) return false; const st = F.state(S, smbKey(n, sh)); if (!st || st.state !== 'done') return false; const prof = shareProfile(S, sh, String(n.user || '').trim(), n.domain); finishMounted(S, sh.path + '/' + (md(S).project_name || 'Project'), 'smb:' + prof + ':' + sh.path.replace(/^\/\//, ''), 'smb'); }
     },
     bind: {
       user(S, v) { N(S).user = v; S.save(); O55.ui.refresh(); },
-      domain(S, v) { N(S).domain = String(v || '').trim(); S.save(); },
-      pw(S, v) { const had = !!N(S).pwTyped; N(S).pwTyped = v.length > 0; if (had !== N(S).pwTyped) { S.save(); O55.ui.refresh(); } }
+      /* (a check counts only for the share, account, password and domain it checked: editing any of them takes the pass
+         away at once, Sol R5) */
+      domain(S, v) { const n = N(S), was = n.domain || ''; n.domain = String(v || '').trim(); S.save(); if (n.domain !== was) O55.ui.refresh(); },
+      pw(S, v) { const n = N(S), had = !!n.pwTyped; n.pwTyped = v.length > 0; if (n.pwTyped && !had) n.pwGen = (n.pwGen || 0) + 1; if (had !== n.pwTyped) { S.save(); O55.ui.refresh(); } }
     }
   });
   /* NFS has no password: the share lets in the computers it lists, so the check says which computer is asking */
@@ -181937,7 +181969,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     body(S) { const sh = shareOf(S) || {}; return `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>` + C.note(T('nas.nfs.noPassword', { where: machine(S) }), 'info', 'lock') + F.phases(S, nfsKey(S), ['mount', 'read'], { mount: T('nas.nfs.phases.mount'), read: T('nas.nfs.phases.read') }); },
     mounted(S) { const sh = shareOf(S); if (!sh) return; F.op(S, nfsKey(S), 'cmd.project.source_location.test', [{ key: 'mount', ms: 900 }, { key: 'read', ms: 600 }], { payload: { share: sh.path, proto: 'nfs', from: onServer(S) ? md(S).server_ref : S.env.here.id, readOnly: true } }); },
     foot(S) { const sh = shareOf(S), st = sh && F.state(S, nfsKey(S)); return { primary: { label: T('chrome.continue'), do: 'use', disabled: !(st && st.state === 'done'), reason: sh ? T('chrome.working') : T('missing.storage') } }; },
-    do: { use(S) { const sh = shareOf(S); if (!sh) return; finishMounted(S, sh.path, 'nfs:' + shareProfile(S, sh) + ':' + sh.path, 'nfs'); } }
+    do: { use(S) { const sh = shareOf(S); if (!sh) return; const st = F.state(S, nfsKey(S)); if (!st || st.state !== 'done') return false; finishMounted(S, sh.path, 'nfs:' + shareProfile(S, sh) + ':' + sh.path, 'nfs'); } }
   });
   /* The drive chosen on Where are the files is not asked for again (FF-23): this step names it, says which computer has
      it, and checks that computer can read it. */
@@ -181949,7 +181981,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     body(S) { const v = N(S).volume || ''; return `<p class="o55-path" data-key="vol">${C.small('folder', 14)} ${U.esc(v)}</p>` + F.phases(S, 'mounted:' + v, ['read'], { read: T('nas.mounted.read', { where: machine(S) }) }) + `<div class="o55-sublinks" data-key="other">${C.link(T('nas.mounted.other'), 'other')}</div>`; },
     mounted(S) { const v = N(S).volume; if (v) F.op(S, 'mounted:' + v, 'cmd.project.source_location.test', [{ key: 'read', ms: 600 }], { payload: { path: v, from: onServer(S) ? md(S).server_ref : S.env.here.id, readOnly: true } }); },
     foot(S) { const v = N(S).volume, st = v && F.state(S, 'mounted:' + v); return { primary: { label: T('chrome.continue'), do: 'use', disabled: !(st && st.state === 'done'), reason: v ? T('chrome.working') : T('missing.storage') } }; },
-    do: { other(S) { O55.ui.back(); }, use(S) { const v = N(S).volume; finishMounted(S, v, 'mounted:' + v, 'mounted'); } }
+    do: { other(S) { O55.ui.back(); }, use(S) { const v = N(S).volume, st = v && F.state(S, 'mounted:' + v); if (!st || st.state !== 'done') return false; finishMounted(S, v, 'mounted:' + v, 'mounted'); } }
   });
 
   /* Settled facts outside the plan, kept per device apart from the picker's choice (Astra AST-D2): a host the person
@@ -181999,8 +182031,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        device that inherited them, is judged unstamped below) */
     if ((n.trusted && n.trustedFor === undefined) || (n.installed && !n.viaPm && n.installedFor === undefined)) {
       const pid = profileId(S), d0 = md(S), refs = (d0.source_access_authorization_refs || []).concat(d0.preflight_result_refs || [], [d0.project_source_ref || '', d0.storage_location || '']);
-      const agrees = n.profile ? n.profile === pid : !refs.some((r) => /sshp:/.test(r) && r.indexOf(pid) < 0);
-      if (agrees) { if (n.trusted && n.trustedFor === undefined) n.trustedFor = hostId(S); if (n.installed && !n.viaPm && n.installedFor === undefined && n.key) n.installedFor = keyFor(S); }
+      /* (every bound field must agree: the account, host and port the profile names, and the key the plan's access names;
+         one disagreement binds nothing, and the person verifies again, Astra delta4) */
+      const sshRefs = refs.filter((r) => /sshp:/.test(r)), keyRefs = (d0.source_access_authorization_refs || []).filter((r) => r.indexOf('ssh-key:' + pid + ':') === 0);
+      const endpoint = (n.profile ? n.profile === pid : true) && !sshRefs.some((r) => r.indexOf(pid) < 0);
+      const keyAgrees = !n.installed || n.viaPm || (!!n.key && keyRefs.every((r) => r === 'ssh-key:' + pid + ':' + n.key));
+      if (endpoint && keyAgrees) { if (n.trusted && n.trustedFor === undefined) n.trustedFor = hostId(S); if (n.installed && !n.viaPm && n.installedFor === undefined && n.key) n.installedFor = keyFor(S); }
     }
     /* (a trust or an install that does not describe this device, port and account is not this device's: it is dropped,
        never applied to it) */
@@ -182181,6 +182217,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   }
   def('online-signin', {
     seed: (S) => seedOnline(S, false),
+    /* (a sign-in still waiting when the person goes Back is given up: a later Sign in starts a new attempt the old wait can
+       never complete; a finished one stays, Sol R5's started-operation rule) */
+    discard(S) { const si = S.sess.signin; if (si && si.state !== 'done') si.attempt = (si.attempt || 0) + 1; },
     chapter: 'project', stage: 'source_control_setup',
     scene: (S) => ({ id: 'online', beat: SI(S).state === 'done' ? 'signed' : 'signin' }),
     eyebrow: (S) => (SI(S).kind !== 'forge' ? T('safe.eyebrow') : OL(S).purpose === 'source' ? T('begin.eyebrow') : T('online.signin.eyebrow')),
@@ -182297,6 +182336,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         const si = SI(S);
         if (si.state !== 'done' && si.kind === 'forge') { const k = accountFor(S, si.service); if (!completeSignIn(S, k, 'already_connected', true)) return; }
         if (si.state !== 'done') return;
+        /* (a sign-in counts only for the service, kind and address it was made for, Sol R5's pass-belongs-to-its-inputs) */
+        if (si.kind === 'forge' && si.instance_key && si.instance_key !== instanceKey(md(S))) return;
         O55.ui.go(si.then || 'safe');
       }
     },
@@ -182884,7 +182925,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       backend(S, v) { O55.draft.set(md(S), { history_backend: v }); S.save(); O55.ui.refresh(); },
       filesafe(S) { const on = !md(S).filesafe; O55.draft.set(md(S), { filesafe: on }); S.save(); O55.ui.refresh(); O55.sound.play(on ? 'toggleOn' : 'toggleOff'); },
       /* (Safe wants an online copy: the answer that keeps its picker and steps on the person's path, 76-branch.js) */
-      online(S) { const ol = OL(S); ol.purpose = 'copy'; ol.wanted = true; S.save(); O55.ui.go('online-service'); },
+      /* (a copy started while the plan has none takes its name from the Project as it is now, never from an abandoned
+         beginning's: a name typed for a copy stays only while that copy is the plan's, Sol R4/R5's garden-planner) */
+      online(S) { const ol = OL(S), d = md(S); ol.purpose = 'copy'; ol.wanted = true;
+        if (d.online_mode !== 'new' && d.project_name) { O55.draft.set(d, { repository_name: U.slug(d.project_name) }); S.sess.ui.repoTyped = null; }
+        S.save(); O55.ui.go('online-service'); },
       backup(S) { S.sess.ui.sheet = 'backup'; S.save(); O55.ui.refresh(); seeSheet(S); },
       /* another place, or another service for it, drops the access details typed for the old one */
       bdest(S, v, el) { const b = S.sess.backup, to = v === 'none' ? null : v; if (b.dest !== to) { b.sub = null; b.access = {}; } b.dest = to; S.save(); O55.ui.refresh(); if (v !== 'none') O55.ui.charm(el, SUBS[v] ? T('safe.backup.' + v) : backupLabel(S, v), 'vault'); },

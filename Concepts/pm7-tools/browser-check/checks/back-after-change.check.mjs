@@ -249,7 +249,7 @@ async function toNewServer(A, end = 'begin') {
     else if (st.runOk && !st.self && await A.has('selfMatch')) { await A.click('selfMatch'); await A.sleep(300); await pressOn(A); }
     await A.sleep(700);
   }
-  await A.screen('s-ready'); await pressOn(A); if (end) await A.screen(end);
+  await A.screen('s-ready'); if (end === 's-ready') return; await pressOn(A); if (end) await A.screen(end);
 }
 const SERVER_STEPS = ['s-kind', 's-wait', 's-confirm', 's-ready'];
 const toNameNas = async (A) => { await A.click('pick', 'this'); await A.click('next', undefined, 'begin'); await A.click('pick', 'new'); await A.click('next', undefined, 'name'); await A.fill('o55f-name', 'Book club site');
@@ -372,6 +372,11 @@ const INVAR = () => { const S = O55.S, d = S.sess.drafts.main, n = S.sess.nas ||
   if (!nasFiles && d.storage_location) out.push('files place ' + d.storage_location + ' with files on ' + d.storage_mode);
   /* (a files place on the NAS over SSH names the current NAS profile, its device, account and endpoint: Astra delta3) */
   if (nasFiles && /^ssh:/.test(d.storage_location || '') && (n.purpose === 'storage') && (!n.profile || d.storage_location.indexOf('ssh:' + n.profile) !== 0)) out.push('files place ' + d.storage_location + ' not on the current NAS profile ' + (n.profile || '(none)'));
+  /* (a mounted, SMB or NFS files place names the current volume or share: Astra delta4) */
+  if (nasFiles && n.purpose === 'storage' && /^(mounted|smb|nfs):/.test(d.storage_location || '')) {
+    const m = d.storage_location.split(':')[0], sh = n.share === 'manual' ? n.manualShare : (S.env.shares || []).find((x) => x.id === n.share), shp = sh ? String(sh.path || '').replace(/^\/\//, '') : '';
+    if (m === 'mounted' ? d.storage_location !== 'mounted:' + n.volume : (n.method !== m || !shp || d.storage_location.indexOf(shp) < 0)) out.push('files place ' + d.storage_location + ' not on the current ' + (m === 'mounted' ? 'volume ' + n.volume : m + ' share ' + shp));
+  }
   if (d.server_mode === 'this_device' && (d.server_ref || d.server_trust_confirmed)) out.push('a Server ' + (d.server_ref || '(trusted)') + ' on This computer');
   if (!/^existing_/.test(d.project_mode) && d.project_source_ref) out.push('source ' + d.project_source_ref + ' for a ' + d.project_mode + ' Project');
   if (d.project_mode !== 'restore' && d.backup_source_ref) out.push('backup ' + d.backup_source_ref + ' for a ' + d.project_mode + ' Project');
@@ -799,6 +804,30 @@ export const tests = {
         if (d1.src !== d0.project_source_ref || JSON.stringify(d1.auth) !== JSON.stringify((d0.source_access_authorization_refs || []).slice().sort())) bad.push(`16 ${k} NAS: resumed, the source or access changed: ${JSON.stringify({ was: [d0.project_source_ref, d0.source_access_authorization_refs], now: d1 })}`);
         const seq = await walkBack(A, [], bad, `16 ${k} NAS`), miss = ['nas-key', 'nas-folder'].filter((x) => !seq.includes(x));
         if (miss.length) bad.push(`16 ${k} NAS: Back skipped ${miss.join(', ')} (${seq.join(' > ')})`); });
+    /* Astra delta4 with the real writer: on the e9b page, the Home NAS kept, then k-ed picked on nas-key and the window
+       closed: e9b saves installed with key k-ed while the plan's access still names k-pm. Resumed here, nothing is bound
+       and no authorization for k-ed is invented */
+    await flow(t, '16 e9b record with k-ed picked and not continued binds nothing (Astra delta4, real writer)', async (A, bad) => {
+      const saved = JSON.parse(await onOld(A, pages.e9b, async (A) => { await toNasProject(A); await editBeginTo(A); await A.click('next', undefined, 'nas-find'); await A.sleep(600);
+        await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900);
+        for (let i = 0; i < 4 && (await A.snap()).screen !== 'nas-key'; i++) { if (await A.has('trust')) await A.click('trust'); else { await A.waitEnabled('next').catch(() => {}); await pressOn(A); } await A.sleep(900); }
+        if ((await A.snap()).screen === 'nas-key' && await A.has('pick', 'k-ed')) await A.click('pick', 'k-ed'); await A.sleep(400); }));
+      if (!saved.nas || saved.nas.key !== 'k-ed') t.log('16 e9b k-ed: the e9b record kept key ' + JSON.stringify(saved.nas && saved.nas.key) + ' (installed ' + JSON.stringify(saved.nas && saved.nas.installed) + ')');
+      await resumeHere(A, JSON.stringify(saved));
+      const st = await A.frame().evaluate(() => { const S = O55.S, n = S.sess.nas || {}, d = S.env.devices.find((x) => x.id === n.device) || {}; return { key: n.key || null, installedFor: n.installedFor || null, auth: (d.authorized || []).slice() }; });
+      if ((st.installedFor && /\|k-ed$/.test(st.installedFor)) || st.auth.some((k) => /:k-ed$/.test(k))) bad.push('the un-continued k-ed was bound or authorized on resume: ' + JSON.stringify(st)); });
+    /* Astra delta4: an actual e9b Home NAS record with one bound field changed binds nothing on resume: the key, the
+       account, the port or the host disagreeing with the record's own access means the person verifies again, and no
+       authorization or known host is invented for it */
+    for (const [what, change] of [['the key', (r) => { r.nas.key = 'k-ed'; }], ['the account', (r) => { r.nas.user = 'someone-else'; }],
+      ['the port', (r) => { r.nas.manual = true; r.nas.port = '2222'; r.nas.addr = '192.168.1.20'; }], ['the host', (r) => { r.nas.device = 'nas-media'; }]])
+      await flow(t, `16 e9b Home NAS record with ${what} changed binds nothing (Astra delta4)`, async (A, bad) => { const saved = JSON.parse(await onOld(A, pages.e9b, toNasProject));
+        if (!saved.nas) { bad.push('the e9b page wrote no NAS'); return; } change(saved); const user = saved.nas.user || 'jared';
+        await resumeHere(A, JSON.stringify(saved));
+        const st = await A.frame().evaluate((user) => { const S = O55.S, n = S.sess.nas || {}, d = S.env.devices.find((x) => x.id === n.device) || {}; return { trusted: !!n.trusted, installed: !!n.installed, trustedFor: n.trustedFor || null, installedFor: n.installedFor || null, auth: (d.authorized || []).slice(), hosts: Object.keys(S.env.here.knownHosts || {}) }; }, user);
+        if (st.trustedFor || st.installedFor || st.installed) bad.push(`${what} changed: the record's facts were bound anyway: ${JSON.stringify(st)}`);
+        if (what === 'the key' && st.auth.some((k) => /:k-ed$/.test(k))) bad.push(`the key changed: an authorization for k-ed was invented: ${st.auth.join(', ')}`);
+        if (what === 'the port' && st.hosts.some((h) => /:2222$/.test(h))) bad.push(`the port changed: a known host on 2222 was invented: ${st.hosts.join(', ')}`); });
     await flow(t, '16 07db hosted Gitea pick resumed (AST-1)', async (A, bad) => { const saved = await onOld(A, pages['07db'], async (A) => { await A.toSafe('Notes'); await A.click('online', undefined, 'online-service'); await pickSvc(A, 'gitea'); await A.sleep(300);
         if (await A.has('variant', 'gitea_cloud')) await A.click('variant', 'gitea_cloud'); else bad.push('16: the 07db page offered no hosted Gitea kind'); });
       await resumeHere(A, saved); await A.screen('online-service'); await emptyPicker(A, bad, '16 07db hosted Gitea'); });
@@ -898,6 +927,17 @@ export const tests = {
       const f1 = await A.frame().evaluate(FACTS);
       const made = [...f1.host.filter((h) => !f0.host.includes(h)).map((h) => 'known host ' + h), ...f1.auth.filter((k) => !f0.auth.includes(k)).map((k) => 'authorization ' + k)];
       if (made.length) bad.push('AST-D5: resume invented settled facts for a device never trusted or installed: ' + made.join(', ')); });
+    /* Sol R5's walker: a Back run from Review, then on again with nothing changed, then a second Back run: the second shows
+       the same steps as the first, for every chain a step owns (Name's files place on a NAS, Begins as's source, the
+       Computer's Server setup, Safe's online copy) */
+    for (const kind of ['Home NAS files mounted', 'Home NAS files over SSH', 'Home NAS source over SSH', 'a completed new Server', 'online new copy']) {
+      const est = (RICH.find(([k]) => k === kind) || [])[1];
+      await flow(t, `20 ${kind}: Back, on again unchanged, Back again`, async (A, bad) => { await est(A); await A.screen('review');
+        const first = await walkBack(A, [], bad, `20 ${kind} first`); const w = await keepOn(A); if (w[w.length - 1] !== 'review') { bad.push('never back to Review: ' + w.join(' > ')); return; }
+        const second = await walkBack(A, [], bad, `20 ${kind} second`);
+        if (JSON.stringify(first) !== JSON.stringify(second)) bad.push(`the second Back run differs: ${first.join(' > ')} then ${second.join(' > ')}`);
+        const miss = (BACK_HAS[kind] || []).filter((x) => !second.includes(x)); if (miss.length) bad.push(`the second Back run leaves out ${miss.join(', ')}`); });
+    }
     /* Sol R4 on bd646e7e6d: the same host and the default port typed at the NAS step, then Continue: nothing changed, so
        nothing of the Home NAS is cleared */
     await flow(t, '20 the same NAS host and port typed, then Continue', async (A, bad) => { await toNasProject(A); await A.screen('review'); const start = await A.frame().evaluate(SNAP20);
@@ -1049,10 +1089,84 @@ export const tests = {
       await A.waitEnabled((await A.snap()).primary ? (await A.snap()).primary.action : 'check').catch(() => {}); await pressOn(A);
       await A.waitFor(() => O55.S.sess.screen !== 'nas-smb' || Object.entries(O55.S.sess.ops || {}).some(([k, v]) => /^smb:/.test(k) && v.state === 'done'), null, 8000).catch(() => {}); await A.sleep(500);
       if ((await A.snap()).screen !== 'nas-smb') { bad.push('the check moved on from nas-smb by itself'); return; }
+      /* (the check really ran and passed for exactly the share, account and password typed: Astra delta4, a no-op check
+         must fail this case) */
+      const ran = await A.frame().evaluate(() => Object.entries(O55.S.sess.ops || {}).filter(([k, v]) => /^smb:/.test(k) && v.state === 'done' && k.split('|')[1] === 'jared').map(([k]) => k));
+      if (!ran.length) { bad.push('no completed check for the account typed (ops ' + JSON.stringify(Object.keys(await A.frame().evaluate(() => O55.S.sess.ops || {}))) + ')'); return; }
       await pressBack(A); await A.sleep(800); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900); await A.screen('nas-smb');
       const st = await A.snap(), user = (st.fields.find((x) => x.id === 'o55f-user') || {}).value || '';
       if (user === '' && st.primary && st.primary.action === 'use' && st.primary.on !== false) bad.push('after Back the account is empty, yet Use is still on: the check counts for an account taken back');
       t.log('21 SMB check, Back: user=' + JSON.stringify(user) + ', primary ' + JSON.stringify(st.primary)); });
+    /* Sol R5: a shared folder checked for one domain (or password), then another typed: the check no longer counts, so
+       neither Continue nor Use accepts the source */
+    for (const [what, edit] of [['another domain', async (A) => { if (!(await A.frame().locator('#o55f-domain').count())) await A.click('details', 'smbdomain').catch(() => {}); await A.sleep(300); await A.fill('o55f-domain', 'OTHER'); }],
+      ['a new password', async (A) => { await A.fill('o55f-pw', 'another password'); }]])
+      await flow(t, `21 a shared folder checked, then ${what}`, async (A, bad) => { await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.click('method', 'smb'); await A.sleep(400);
+        const sh = (await A.snap()).buttons.find((b) => b.action === 'share'); await A.click('share', sh.arg); await A.sleep(300); await pressOn(A); await A.sleep(900); await A.screen('nas-smb');
+        await A.fill('o55f-user', 'jared'); await A.fill('o55f-pw', 'correct horse'); await A.sleep(300); await A.waitEnabled((await A.snap()).primary.action).catch(() => {}); await pressOn(A);
+        await A.waitFor(() => Object.entries(O55.S.sess.ops || {}).some(([k, v]) => /^smb:/.test(k) && v.state === 'done'), null, 8000).catch(() => {}); await A.sleep(500);
+        const before = (await A.snap()).primary; if (!before || before.action !== 'use') { bad.push('the check did not pass first: ' + JSON.stringify(before)); return; }
+        const ran = await A.frame().evaluate(() => Object.entries(O55.S.sess.ops || {}).filter(([k, v]) => /^smb:/.test(k) && v.state === 'done' && k.split('|')[1] === 'jared').length);
+        if (!ran) { bad.push('Use is on with no completed check for the account typed'); return; }
+        await edit(A); await A.sleep(500);
+        const after = (await A.snap()).primary; if (after && after.action === 'use' && !after.disabled) bad.push(`after ${what}, Use is still on: ${JSON.stringify(after)}`);
+        await A.frame().evaluate(() => O55.ui.act('use')); await A.sleep(900);
+        const r = await A.frame().evaluate(() => ({ screen: O55.S.sess.screen, src: O55.S.sess.drafts.main.project_source_ref }));
+        if (r.screen !== 'nas-smb' || r.src) bad.push(`after ${what}, Use (sent directly) still accepted the source: ${JSON.stringify(r)}`); });
+    /* Sol R5: on a Puppet Master NAS, the code way picked, Pair pressed, a code typed and not checked, then Back: the live
+       request ends with the pick, so going on again starts the pairing afresh and never pairs by itself */
+    await flow(t, '21 a NAS pairing by code, not checked, then Back', async (A, bad) => { await A.boot({ scenario: 'fresh+homeNasPm' });
+      await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+      await A.click('device', 'nas-home'); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900);
+      if ((await A.snap()).screen !== 'nas-pmpair') { bad.push('a Puppet Master NAS did not open pairing: on ' + (await A.snap()).screen); return; }
+      await A.click('pairing', 'code'); await A.sleep(300); if (await A.has('pair')) { await A.click('pair'); await A.sleep(600); }
+      const f = (await A.snap()).fields.find((x) => /code/i.test(x.id)); if (f) await A.fill(f.id, 'AAAA-BBBB'); await A.sleep(300);
+      await pressBack(A); await A.sleep(900);
+      const mid = await A.frame().evaluate(() => { const n = O55.S.sess.nas || {}; return { paired: !!n.paired, asked: !!n.pairAsked, pairing: n.pairing || null }; });
+      if (mid.paired || mid.asked) bad.push('Back left the pairing request live: ' + JSON.stringify(mid));
+      await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(4000);
+      const end = await A.frame().evaluate(() => { const n = O55.S.sess.nas || {}; return { screen: O55.S.sess.screen, paired: !!n.paired, asked: !!n.pairAsked }; });
+      if (end.paired) bad.push('going on again paired by itself, with no approval or code given: ' + JSON.stringify(end)); });
+    /* Sol R5's started-operation rule: a sign-in started and left by Back before it finished never completes later */
+    await flow(t, '21 a sign-in started, then Back before it finished', async (A, bad) => { await A.toSafe('Notes'); await A.click('online', undefined, 'online-service'); await pickSvc(A, 'github'); await A.sleep(300);
+      await A.click('next', undefined, 'online-signin'); if (!(await A.has('signIn'))) { bad.push('no Sign in on online-signin'); return; }
+      await A.click('signIn'); await A.sleep(300); await pressBack(A); await A.sleep(5000);
+      const st = await A.frame().evaluate(() => ({ screen: O55.S.sess.screen, si: (O55.S.sess.signin || {}).state || null, ref: O55.S.sess.drafts.main.forge_account_ref || '' }));
+      if (st.si === 'done' || st.ref) bad.push('the sign-in left by Back completed later anyway: ' + JSON.stringify(st)); });
+    /* ... and a Server's claim started on s-confirm and left by Back before it finished claims nothing */
+    await flow(t, '21 a Server claim started, then Back before it finished', async (A, bad) => { await A.click('pick', 'server'); await A.click('next', undefined, 's-kind'); await pressOn(A); await A.sleep(600);
+      await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="pm:new"]'), null, 8000); await A.click('pick', 'pm:new'); await pressOn(A); await A.sleep(600);
+      if ((await A.snap()).screen !== 's-confirm') { bad.push('not on s-confirm: ' + (await A.snap()).screen); return; }
+      await A.fill('o55f-code', '482 913'); await pressOn(A); await A.sleep(200);
+      if (!(await look(A)).back) { t.log('21 claim: Back is off while the claim runs, so it cannot be left by Back'); return; }
+      await pressBack(A); await A.sleep(6000);
+      const st = await A.frame().evaluate(() => ({ claimed: !!(O55.S.sess.server || {}).claimed, ref: O55.S.sess.drafts.main.server_ref || '', trust: !!O55.S.sess.drafts.main.server_trust_confirmed }));
+      if (st.claimed || st.ref || st.trust) bad.push('the claim left by Back completed later anyway: ' + JSON.stringify(st)); });
+    /* Sol R5: on s-ready, a waiting guest's words ticked and not approved, then Back: s-ready reached again shows the tick
+       off and Approve off */
+    await flow(t, '21 a guest\'s words ticked on s-ready, then Back', async (A, bad) => { await toNewServer(A, 's-ready'); await A.sleep(600);
+      if ((await A.snap()).screen !== 's-ready') { bad.push('not on s-ready: ' + (await A.snap()).screen); return; }
+      const has = await A.frame().waitForFunction(() => !!document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]'), null, { timeout: 12000 }).then(() => true).catch(() => false);
+      if (!has) { t.log('21 s-ready: no waiting guest appeared in this fixture within 12 s; the tick case could not run'); return; }
+      const id = await A.frame().evaluate(() => document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]').getAttribute('data-arg'));
+      await A.click('match', id); await A.sleep(400);
+      const on = await A.frame().evaluate((id) => !!((O55.S.sess.server.candidates || []).find((c) => c.id === id) || {}).confirmed, id); if (!on) { bad.push('the tick did not take'); return; }
+      await pressBack(A); await A.sleep(900); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(1200);
+      if ((await A.snap()).screen !== 's-ready') { bad.push('Continue after Back did not reach s-ready again: on ' + (await A.snap()).screen); return; }
+      const st = await A.frame().evaluate((id) => { const c = (O55.S.sess.server.candidates || []).find((x) => x.id === id) || {}, b = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="approve"][data-arg="' + id + '"]'); return { confirmed: !!c.confirmed, approveOn: !!b && !b.disabled && b.getAttribute('aria-disabled') !== 'true' }; }, id);
+      if (st.confirmed || st.approveOn) bad.push('s-ready reached again keeps the tick taken back by Back: ' + JSON.stringify(st)); });
+    /* Sol R4/R5: a restore from a cloud drive, then from Review a Recovery Kit's restore instead (Review's Edit skips the
+       Name step), then a copy added on Safe: its proposed name is the current Project's, not the abandoned restore's */
+    await flow(t, '21 a copy added after the Project changed by Review Edit proposes the current name', async (A, bad) => { await toCloudRestore(A); await A.screen('review');
+      const first = await A.frame().evaluate(() => O55.S.sess.drafts.main.project_name);
+      await editBeginTo(A); await A.click('next', undefined, 'r-source'); await A.click('source', 'kit'); await A.sleep(300); const kit = (await A.snap()).buttons.find((b) => b.action === 'kit'); await A.click('kit', kit.arg);
+      await pressOn(A); await A.sleep(900); if ((await A.snap()).screen === 'r-pick') { const p = (await A.snap()).buttons.find((b) => b.action === 'pick'); await A.click('pick', p.arg); await pressOn(A); await A.sleep(900); }
+      const w = await keepOn(A); if (w[w.length - 1] !== 'review') { bad.push('never back to Review: ' + w.join(' > ')); return; }
+      const now = await A.frame().evaluate(() => O55.S.sess.drafts.main.project_name);
+      await A.click('edit', 'safe', 'safe'); await A.click('online', undefined, 'online-service'); await A.service('github', 'hosted'); await A.signIn(); await A.click('next', undefined, 'online-details');
+      const field = (await A.snap()).fields.find((x) => x.id === 'o55f-repo'), want = await A.frame().evaluate((n) => O55.util.slug(n), now);
+      if (!field || field.value !== want) bad.push(`the copy proposes ${JSON.stringify(field && field.value)} for the Project ${JSON.stringify(now)} (the first restore was ${JSON.stringify(first)})`);
+      t.log(`21 copy name: first ${first}, now ${now}, proposed ${field && field.value}`); });
     /* a record whose stored Begins-as pick disagrees with its plan (constructed or older): Begins as shows the plan's
        beginning, and Continue there keeps it (lead 1103074359; Sol reader-b's K9a case 6) */
     await flow(t, '21 a record whose Begins-as pick disagrees with its plan', async (A, bad) => { await toRepoProject(A); await A.screen('review');
