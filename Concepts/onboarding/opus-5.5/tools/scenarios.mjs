@@ -923,10 +923,12 @@ def('pr35', 'fresh+smbWrong', 'Situation smbWrong: the shared folder refuses the
   await d.act('method', 'smb'); await d.act('share', 'smb-home'); await d.primary();
   A.eq(await d.screen(), 'nas-smb', 'Sign in to the shared folder');
   await d.type('user', 'jared'); await d.type('pw', 'not-right'); await d.primary();
-  await until(d, "(window.O55.S.sess.ops['smb:smb-home']||{}).state === 'failed'", 'refused', 6000);
+  /* the check's key carries its exact inputs (share|user|domain|password generation, 70-screens-nas smbKey), so match the share's prefix */
+  const smbOp = (state) => `Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('smb:smb-home|') && v.state === '${state}')`;
+  await until(d, smbOp('failed'), 'refused', 6000);
   A.ok(await d.state(() => /didn't accept that username and password/.test(document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)').textContent)), 'it says so under the password');
   await d.type('pw', 'right-this-time'); await d.primary();
-  await until(d, "(window.O55.S.sess.ops['smb:smb-home']||{}).state === 'done'", 'opened', 6000);
+  await until(d, smbOp('done'), 'opened', 6000);
   await d.primary(); A.eq(await d.screen(), 'name', 'then Name your Project');
 });
 def('pr36', 'fresh+restoreFails', 'Situation restoreFails: the first restore stops part-way, Try again finishes it', async (d, A) => {
