@@ -187,6 +187,10 @@ export default async function (t) {
 		if (why) { ghostBad.push(`${look}: ${why}`); continue; }
 		await go(['nas-find']);
 		await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-seg button.o55-on'), null, { timeout: 15000 });
+		// a look change undoes a pick not yet continued (the lead's rule 3), so the NAS is chosen again for each look: the
+		// identity screen the case jumps to needs a chosen NAS
+		await f.waitForFunction(() => document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-card[data-o55-do="device"]').length >= 2, null, { timeout: 15000 });
+		await f.evaluate(card('Home NAS'));
 		// a look change finishes with a reveal of its own that draws the screen again; the case starts once it is over
 		await f.waitForFunction(() => !window.O55.S.vt && !document.querySelector('#pm-o55-onboarding .o55-layer.o55-out'), null, { timeout: 15000 });
 		await f.waitForTimeout(1500);
@@ -201,11 +205,15 @@ export default async function (t) {
 			const before = ghosts(), frames = [];
 			requestAnimationFrame(() => {
 				const lens = !document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-seg .lg-lenses-under .lg-lens');
-				window.O55.ui.go('nas-identity');
+				// the next screen comes in as a person brings it in: Continue on the chosen NAS (a pick is only an answer once
+				// continued, the lead's rule 3, so a bare jump would reach the identity screen with no NAS); a click that throws
+				// ends the case with the error, rather than leaving this promise unanswered
+				try { document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary').click(); } catch (e) { res({ before, frames, lens, screen: window.O55.S.sess.screen, error: String(e && e.message || e) }); return; }
 				const tick = () => { frames.push(ghosts()); if (frames.length < n) requestAnimationFrame(tick); else res({ before, frames, lens, screen: window.O55.S.sess.screen }); };
 				requestAnimationFrame(tick);
 			});
 		}), FRAMES);
+		if (r.error) { ghostBad.push(`${look}: the jump to nas-identity threw: ${r.error}`); continue; }
 		const late = r.frames.filter((g) => g > 0).length;
 		// and back: the tabs' screen comes in, and its chip, where one is shown, sits on the chosen tab as painted (with the
 		// entrance's movement) in every frame
