@@ -1,0 +1,91 @@
+/* Settings that apply everywhere (Opus 5.5): rows (BUILD-SPEC section 7).
+
+   Settings tokens only (--k3-*), so all ten looks follow; every rule is scoped under #panel-settings. No pills (text
+   buttons have a 6px corner and no fill at rest), no side stripes, text at least 11.5px, container queries only.
+   html[data-psx-end] picks the end-of-row option, html[data-psx-changed] the Changed mark option. */
+
+/* ---- the grid: the end word takes the room it needs (the "?" column was 30px) ---------------------------------- */
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row { grid-template-columns: minmax(0, 1fr) auto auto; }
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row.is-wide { grid-template-columns: minmax(0, 1fr) auto; }
+
+/* ---- the end word (7.1): a quiet text button where the "?" was ------------------------------------------------ */
+html[data-psx-end] #panel-settings .o55-about.icon-btn.psx-end {
+  width: auto; min-width: 0; max-width: 168px; height: auto; min-height: 28px; padding: 3px 6px 3px 8px; display: inline-flex; align-items: center; gap: 4px;
+  border: 1px solid transparent; border-radius: 6px; background: none; box-shadow: none; opacity: 1;
+  font: inherit; font-size: 12px; font-weight: 600; line-height: 16px; color: var(--k3-text-3); white-space: nowrap; letter-spacing: 0; justify-self: end;
+  transition: background-color var(--k3-dur-fast, 140ms) var(--k3-ease-out, ease), border-color var(--k3-dur-fast, 140ms), color var(--k3-dur-fast, 140ms);
+}
+html[data-psx-end] #panel-settings .o55-about.psx-end .psx-end-word { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+html[data-psx-end] #panel-settings .o55-about.psx-end .psx-chev { width: 12px; height: 12px; flex: none; opacity: .75; }
+html[data-psx-end] #panel-settings .o55-about.psx-end .psx-end-more { font-size: 14px; line-height: 1; letter-spacing: 0; }
+html[data-psx-end] #panel-settings .o55-about.icon-btn.psx-end.is-here { color: var(--k3-text-1); }
+html[data-psx-end] #panel-settings .o55-about.icon-btn.psx-end:hover,
+html[data-psx-end] #panel-settings .setting-row.o55-row:hover > .o55-about.icon-btn.psx-end { background: color-mix(in srgb, var(--k3-accent) 8%, transparent); color: var(--k3-text-1); border-color: transparent; }
+html[data-psx-end] #panel-settings .o55-about.icon-btn.psx-end[aria-expanded="true"] { background: var(--k3-accent-soft); color: var(--k3-accent-ink); border-color: color-mix(in srgb, var(--k3-accent) 45%, transparent); }
+html[data-psx-end] #panel-settings .o55-about.icon-btn.psx-end:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 2px; }
+/* compact fields: the same word, smaller, in the head */
+html[data-psx-end] #panel-settings .o55-field .o55-about.icon-btn.psx-end { min-height: 24px; height: auto; width: auto; font-size: 11.5px; padding: 2px 4px 2px 6px; }
+/* the setting's name opens the panel too */
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-copy > .setting-label { cursor: pointer; }
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-copy > .setting-label :is(.o55-changed, .psx-mark2, .o55-risk) { cursor: default; }
+/* Retro and NieR draw square corners */
+html[data-theme^="retro"][data-psx-end] #panel-settings .o55-about.psx-end,
+html[data-o55-nier="on"][data-psx-end] #panel-settings .o55-about.psx-end { border-radius: 0; }
+html[data-o55-nier="on"][data-psx-end] #panel-settings .o55-about.psx-end .psx-end-word { text-transform: none; }
+
+/* ---- B: a second mark after the title ------------------------------------------------------------------------- */
+#panel-settings .psx-mark2 { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; letter-spacing: .01em; color: var(--k3-text-2); }
+
+/* ---- lines under a row (7.4) and option C's sentence ---------------------------------------------------------- */
+#panel-settings .psx-line { display: flex; align-items: flex-start; gap: 6px; margin-top: 5px; font-size: 11.5px; line-height: 16px; font-weight: 550; color: var(--k3-text-2); max-width: 68ch; }
+#panel-settings .psx-line > .pm-status-mark { margin-top: 2px; }
+#panel-settings .psx-line.psx-src { color: var(--k3-text-2); }
+
+/* ---- the Changed mark (7.3) ------------------------------------------------------------------------------------ */
+/* every option but Today raises the word and the risk word to 11.5px */
+html[data-psx-changed]:not([data-psx-changed="today"]) #panel-settings :is(.o55-changed, .o55-risk) { font-size: 11.5px; }
+#panel-settings .psx-board :is(.o55-changed, .o55-risk) { font-size: 11.5px; }
+/* the inline manager rows' 6 percent wash gives way to the chosen mark */
+html[data-psx-changed]:not([data-psx-changed="today"]) #panel-settings .pm51-mgr .pm51-settings-inline .setting-row.is-changed { background: transparent; }
+/* A · word and outline: a 1px outline on all four sides of the control itself */
+html[data-psx-changed="outline"] #panel-settings .setting-row.is-changed:not([data-o55-kind="specimen"]) > .setting-control :is(.pm51-dd-trigger, .o55-num, .text-control, .segmented, .o55-seg, select.select-control:not(.pm51-dd-native)) {
+  border-color: color-mix(in srgb, var(--k3-accent) 55%, var(--k3-line));
+}
+html[data-psx-changed="outline"] #panel-settings .setting-row.is-changed:not([data-o55-kind="specimen"]) > .setting-control :is(.toggle, .pm51-toggle) { outline: 1px solid color-mix(in srgb, var(--k3-accent) 55%, transparent); outline-offset: 2px; }
+html[data-psx-changed="outline"] #panel-settings .setting-row.is-changed > .setting-control .o55-chips button[aria-pressed="true"] { border-color: color-mix(in srgb, var(--k3-accent) 55%, var(--k3-line)); }
+/* C · framed row: a hairline on all four sides of the row and a faint tint (never one side) */
+html[data-psx-changed="frame"] #panel-settings .setting-row.o55-row.is-changed:not([data-o55-kind="specimen"]) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-accent) 45%, transparent);
+  background: color-mix(in srgb, var(--k3-accent) 4%, transparent); border-radius: 8px; border-top-color: transparent; padding-left: 10px; padding-right: 8px;
+}
+html[data-psx-changed="frame"] #panel-settings .setting-row.o55-row.is-changed:not([data-o55-kind="specimen"]) + .setting-row.o55-row { border-top-color: transparent; }
+html[data-theme^="retro"][data-psx-changed="frame"] #panel-settings .setting-row.o55-row.is-changed,
+html[data-o55-nier="on"][data-psx-changed="frame"] #panel-settings .setting-row.o55-row.is-changed { border-radius: 0; }
+
+/* ---- the Settings head line (7.7) ------------------------------------------------------------------------------ */
+#panel-settings .document-toolbar > .psx-head { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding: 2px 180px 2px 0; box-sizing: border-box; }
+#panel-settings .psx-head-main { display: flex; align-items: center; flex-wrap: wrap; gap: 2px 10px; min-width: 0; }
+#panel-settings .psx-head-ctx { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 2px 6px; min-width: 0; font-size: 12px; line-height: 18px; color: var(--k3-text-2); }
+#panel-settings .psx-head-ctx b { font-weight: 680; color: var(--k3-text-1); }
+#panel-settings .psx-head-line { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; font-size: 12px; line-height: 17px; color: var(--k3-text-2); }
+#panel-settings .psx-head-line > .pm-status-mark { flex: none; }
+#panel-settings .psx-head-btn .psx-chev { transform: rotate(90deg); }
+html:not([data-psx-end]) #panel-settings .psx-head { display: none; }
+
+/* ---- the demo Projects folder row ------------------------------------------------------------------------------ */
+#panel-settings .psx-folder-sec { margin-bottom: 14px; }
+
+/* ---- narrow Settings: the end word gets its own line under the control (7.6) ---------------------------------- */
+@container settings-host (max-width: 760px) {
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row { grid-template-columns: minmax(0, 1fr) auto; }
+}
+@container settings-host (max-width: 560px) {
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row { grid-template-columns: minmax(0, 1fr); }
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .o55-about.psx-end { grid-column: 1; grid-row: 3; justify-self: start; margin-left: -8px; }
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-control { grid-column: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-psx-end] #panel-settings .o55-about.psx-end { transition: none; }
+}
+html[data-motion="reduced"][data-psx-end] #panel-settings .o55-about.psx-end { transition: none; }
