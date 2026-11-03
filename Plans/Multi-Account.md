@@ -28,7 +28,7 @@ These requirements are canonical live specification text for this owner document
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 
 - **Default behavior:** Multi-account auto-switching is ON by default for provider-using roles unless policy disables it.
-- **Policy ownership:** Multi-account policy is primarily project-owned. Runs snapshot the effective policy space at run start, and each attempt/message records the effective account actually used.
+- **Policy ownership:** Multi-account policy resolves through SSYS-002/059 and MA-073: Everywhere, Computer, optional Project, provider and account. Runs snapshot the effective policy space at run start, and each attempt/message records the effective account actually used.
 - **Requested/effective identity:** Requested provider/model/effort/persona/auth mode/account policy and effective provider/model/effort/persona/auth mode/account MUST remain visible and queryable.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Contracts_V0.md#42-authpolicy, ContractName:Plans/storage-plan.md
@@ -1004,12 +1004,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  Multi-account auto-switching is on by default for provider-using roles unless policy disables it. Policy is
-  primarily project-owned, runs snapshot the effective policy space at run start, and each attempt or message records
-  the effective account actually used. Requested provider/model/effort/persona/auth mode/account policy and effective
-  provider/model/effort/persona/auth mode/account remain visible and queryable. Account selection and env/config
-  wiring belong to the Provider contract, state lives in seglog and redb, secrets stay outside canonical storage, GUI
-  requirements remain UX-only, and same-provider accounts are not interchangeable buckets.
+  Multi-account auto-switching is on by default for provider-using roles unless policy disables it. Ordinary policy
+  resolves Default → Everywhere → Computer → optional Project → provider → account under SSYS-002/059 and MA-073;
+  account-local rungs retain their existing owner semantics, runs snapshot the effective policy space at run start,
+  and each attempt or message records the effective account actually used. Requested provider/model/effort/persona/auth
+  mode/account policy and effective provider/model/effort/persona/auth mode/account remain visible and queryable.
+  Account selection and env/config wiring belong to the Provider contract, state lives in seglog and redb, secrets
+  stay outside canonical storage, GUI requirements remain UX-only, and same-provider accounts are not interchangeable
+  buckets.
 gui_related: true
 gui_classification_reason: The unit includes GUI requirements and user-visible requested/effective disclosure.
 split_recommended: true
@@ -1036,6 +1038,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0005
+- 'source_ref:projects-pass2-20261103:S2/S3/N12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - Default behavior
 - Policy ownership
@@ -1680,16 +1684,21 @@ plan_unit_id: MA-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: 'credential_ref is a non-secret pointer to credential storage, formatted as credential_store:key_path,
-  with supported stores os_keychain, env, file, and cli. auth_surface describes credential consumption through header_bearer,
-  header_api_key, deprecated query_param, cli_managed, or oauth_token. Each provider definition specifies supported auth_surface
-  values so the HTTP client can attach credentials correctly and account validation rejects incompatible pairings early.
-  DL-259, Jared 2026-10-31: D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected
-  execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys
-  are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share
-  stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns
-  are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or
-  route invalidates stale validation; another account of the same provider has a distinct identity.'
+canonical_text: >-
+  credential_ref is a non-secret pointer to credential storage, formatted as credential_store:key_path, with supported
+  stores os_keychain, env, file, and cli. auth_surface describes credential consumption through header_bearer,
+  header_api_key, deprecated query_param, cli_managed, or oauth_token. Each provider definition specifies supported
+  auth_surface values so the HTTP client can attach credentials correctly and account validation rejects incompatible
+  pairings early. DL-259, Jared 2026-10-31: D6 A: the human signs in on the initiating active device while the
+  AI/tool runs on the selected execution host. Official tool sign-ins and private account roots stay with that
+  tool on that host; direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding,
+  Settings, model selection and Usage share stable account/profile/host/environment references, never provider-name
+  booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation
+  and execution host. Changing account, host or route invalidates stale validation; another account of the same
+  provider has a distinct identity. SSYS-008/MA-070 remain authoritative: live PM credential_ref uses the OS store
+  and legacy env/file/cli spellings above are compatibility only. MA-074 resolves chosen account IDs on the actual
+  destination Computer/Host/Environment through its own connection. Approved app authentication uses explicit
+  application scope with null Project under MACS-006, never an inferred Project or copied credential.
 gui_related: false
 gui_classification_reason: The unit defines credential indirection and validation semantics rather than GUI presentation.
 split_recommended: true
@@ -1722,6 +1731,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0017
+- 'source_ref:projects-pass2-20261103:S10/S11/N15; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - credential_ref
 - credential_store
@@ -5425,9 +5436,13 @@ status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
   ProviderInstallation is an exact-Host/Environment resource separate from account/profile/connection/product/model
-  identity. Provider CLI acquisition is explicit and official-source-only; post-consent lifecycle work targets the proven
-  installation and revalidates dependents. Live credential_ref values point only to OS credential-store items, while
-  CLI-owned auth uses non-secret profile refs and installation, authentication, and readiness remain separate.
+  identity. Provider CLI acquisition is explicit and official-source-only; post-consent lifecycle work targets
+  the proven installation and revalidates dependents. Live credential_ref values point only to OS credential-store
+  items, while CLI-owned auth uses non-secret profile refs and installation, authentication, and readiness remain
+  separate. Copy carries intended account choices only. Same-Computer reuse needs that explicit account choice,
+  the destination's own scope-bound connection and current verification on the exact Host/Environment. A matching
+  profile label or same provider never proves readiness. MA-074 supplies the single account_resolution vocabulary
+  for copy, Set up AI here like and onboarding, including No project.
 gui_related: true
 gui_classification_reason: Account/profile setup, installation binding, authentication ownership, readiness, and recovery states are visible in provider settings and setup flows.
 depends_on: [SIR-002, SIR-003, SIR-009, SIR-011, MA-013, MA-014, MA-015, MA-040, MA-045, MA-046, MA-047, MA-054, MA-067, MA-068, CBP-028, BS-028]
@@ -5457,14 +5472,16 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/06_INSTALLATION_AUTH_UPDATE_AND_CAPABILITY_PROVISIONING.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-001
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-013
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-014
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-016
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/06_INSTALLATION_AUTH_UPDATE_AND_CAPABILITY_PROVISIONING.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-001
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-013
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-014
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-016
+- 'source_ref:projects-pass2-20261103:S10/S11/N15/N17; Jared: "I approve the outstanding questions with their
+  recommended settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
   - "ProviderInstallation"
   - "installation and authentication remain separate"
@@ -5533,7 +5550,14 @@ plan_unit_id: MA-072
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: On account or model change, PM note identities are retained while notebook scope, authorization, and route are revalidated against the effective account identity with requested/effective carry-through. Old dispatch receipts never authorize reconstructed bytes under a changed account; no credentials are inferred from note or checkpoint payloads; usage lineage remains attributed to the incurring accounts.
+canonical_text: >-
+  On account or model change, PM note identities are retained while notebook scope, authorization, and route are
+  revalidated against the effective account identity with requested/effective carry-through. Old dispatch receipts
+  never authorize reconstructed bytes under a changed account; no credentials are inferred from note or checkpoint
+  payloads; usage lineage remains attributed to the incurring accounts. Application notebook/chat/Goal/Plan/Crew
+  scope and conversion re-resolve against the destination account/Computer without recategorizing historical usage
+  or copying the source authority. A selected account change invalidates old readiness and active run snapshots
+  remain frozen.
 gui_related: false
 gui_classification_reason: Account boundary behavior is runtime behavior, not GUI work.
 depends_on: [MA-071, SIR-037]
@@ -5549,8 +5573,10 @@ context_scope: multi_account
 implementation_surfaces: [Plans/Multi-Account.md, Plans/Shared_Integration_Runtime.md, Plans/Permissions_System.md]
 node_compile_hint: {mode: account_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-I11
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-P04
+- source_packet:PM-WNC-2026-09-05-v1:WNC-I11
+- source_packet:PM-WNC-2026-09-05-v1:WNC-P04
+- 'source_ref:projects-pass2-20261103:S10/N25; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens: ["effective_account_id", "revalidated", "usage lineage"]
 negative_constraints:
   - Do not infer credentials from notes or checkpoints.
@@ -5562,7 +5588,7 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Shared_Inte
 
 ## Per-Provider Auto-Switch Addendum (2026-10-09)
 
-Auto-switch between accounts is set per AI provider (`Plans/Decision_Log.md#DL-174`). Before this, one global on/off and one switch point applied to every provider, and section 5's "unless provider/account overrides say otherwise" named a provider layer that no unit or setting gave. Four Settings rows now carry a provider scope beside their existing scopes: `ai.accounts.multi-account-switching` (auto-switch on or off), `ai.accounts.hard-switch-level` (the switch point, in percent left), `ai.accounts.soft-warning-level` (the warning level, in percent left) and `ai.accounts.cooldown-policy` (how long an account rests). `ai.accounts.cooldown-policy`, which was set per account only, also gains the global and project scopes, so each of the four rows has a global value and resolves through the same order, one ladder of global, project, provider and account for every threshold (an account's own switch level is `ai.accounts.hard-switch-level` at scope account, and `ai.accounts.account-threshold-override` is retired: owner decision 2026-10-10), and a provider that has no value of its own follows the shared value, the project value where one is set and otherwise the global value; the rest period's global value starts at its inventory default, the provider's own defaults. The provider value is one Settings value, edited in Settings > Providers & Accounts, where all four rows appear in the provider's own section, and on the Usage page's Accounts room, which hosts the auto-switch toggle and the switch point for each provider, through the same Settings transaction (`Plans/Settings_System.md#SSYS-044`), so the two always show the same value. The switching rules below follow the AI Account Center's per-provider policy (Codex and Antigravity), adapted to Puppet Master's attempt-boundary, reason-code and manual-override rules in section 5.
+Auto-switch between accounts is set per AI provider (`Plans/Decision_Log.md#DL-174`). Before this, one global on/off and one switch point applied to every provider, and section 5's "unless provider/account overrides say otherwise" named a provider layer that no unit or setting gave. Four Settings rows now carry a provider scope beside their existing scopes: `ai.accounts.multi-account-switching` (auto-switch on or off), `ai.accounts.hard-switch-level` (the switch point, in percent left), `ai.accounts.soft-warning-level` (the warning level, in percent left) and `ai.accounts.cooldown-policy` (how long an account rests). `ai.accounts.cooldown-policy`, which was set per account only, also gains the Everywhere, Computer and Project levels, so each of the four rows has an Everywhere value and resolves through the same order, one ladder of Everywhere, Computer, optional Project, provider and account for every threshold (an account's own switch level is `ai.accounts.hard-switch-level` at scope account, and `ai.accounts.account-threshold-override` is retired: owner decision 2026-10-10), and a provider that has no value of its own follows the shared value, the project value where one is set and otherwise the Computer value, Everywhere value, then Default; the rest period's global value starts at its inventory default, the provider's own defaults. The provider value is one Settings value, edited in Settings > Providers & Accounts, where all four rows appear in the provider's own section, and on the Usage page's Accounts room, which hosts the auto-switch toggle and the switch point for each provider, through the same Settings transaction (`Plans/Settings_System.md#SSYS-044`), so the two always show the same value. The switching rules below follow the AI Account Center's per-provider policy (Codex and Antigravity), adapted to Puppet Master's attempt-boundary, reason-code and manual-override rules in section 5.
 
 ### MA-073 - Per-Provider Auto-Switch
 
@@ -5572,75 +5598,95 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  Auto-switch between accounts is set per provider. ai.accounts.multi-account-switching,
-  ai.accounts.hard-switch-level, ai.accounts.soft-warning-level and ai.accounts.cooldown-policy each carry a provider
-  scope in addition to their existing scopes, ai.accounts.cooldown-policy also carries the global and project
-  scopes, and every threshold resolves through one scope ladder, global, then project, then provider, then account,
+  Auto-switch between accounts is set per provider. ai.accounts.multi-account-switching, ai.accounts.hard-switch-level,
+  ai.accounts.soft-warning-level and ai.accounts.cooldown-policy each carry a provider scope in addition to their
+  existing scopes, ai.accounts.cooldown-policy also carries the Everywhere, Computer and Project levels, and every
+  threshold resolves through one scope ladder, Default, Everywhere, Computer, optional Project, provider, account,
   over the scopes its row has, the most specific scope with a set value winning; a provider without its own value
-  follows the resolved shared value (the project value where one is set, otherwise the global value), never the
-  inventory default, and an account without its own value follows its provider's resolved value. An account's own
-  switch level is ai.accounts.hard-switch-level at scope account (owner decision 2026-10-10, DL-174);
-  ai.accounts.account-threshold-override is retired, and a value stored under it is read once and carried to
-  ai.accounts.hard-switch-level at scope account, after which nothing reads or writes the retired id. Levels are
-  stored as percent left and shown as percent used. A provider's or an account's resolved switch level always stays
-  below the warning level that applies to it:
-  neither surface offers a level that would cross them (on Usage the stepper stops and the menu disables levels at or
-  past the warning level; Settings disables a crossing choice with the reason, Settings_System section 8). From
-  2026-10-15 the Settings owner holds every write to that order as well: the level being written moves to the nearest
-  choice on its own list that keeps every switch level it reaches below the warning level that applies, the other
-  level never moves, and a write with no such choice is refused; a provider's or the shared warning level is held
-  against the own switch level of every account whose warning level follows it, whose own value never moves, and the
-  crossing choice names that account. Restoring a level to its default is the one write that is not moved: a default
-  that would cross is refused, with the reason naming whose level blocks it, because a default is not a level the
-  user chose. A
-  provider's value is one Settings value: Settings > Providers & Accounts edits all four rows in the provider's own
-  section, and the Usage Accounts room hosts the provider's auto-switch toggle and switch point; both edit it through
-  the Settings owner with cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope provider
-  for that provider id (Plans/Settings_System.md#SSYS-044), and neither surface keeps a copy. An account's own
-  switch level is one Settings value the same way: Settings edits it in the account's own rows, and from the owner
-  decision of 2026-10-10 (D43) the Usage Accounts room hosts it on that account's card and in its Details; both
-  edit it through the same pair at scope account for that account id (SSYS-044). For each
-  provider: auto-switch acts only while the provider has two or more signed-in accounts, and with one account it
-  reads off until a second account is signed in while its stored value is kept, its notch drawn dim on every meter,
-  and Usage shows auto-switch controls only where Settings does, for a provider of a kind with accounts that has two
-  or more; every meter of that provider, and only of that provider, carries a notch at the provider's switch point; only a fresh, identity-bound reading reported
-  by the provider for the active account may trigger a threshold switch, and a missing reading, a local estimate, a
-  reading older than the provider's freshness limit, an account that must sign in again, or a window whose reset has
-  passed without a new reading blocks it with that reason shown in plain words; the target is the eligible account of
-  the same provider with the most remaining, with the account priority order of MA-036 and then the stable account id
-  breaking ties, and an account is not eligible while it needs signing in, failed its sign-in renewal, has a
-  mismatched identity, has an incomplete or stale reading, is cooling down, or is hard blocked; the switch waits for
-  the attempt or message boundary of section 5, and meanwhile Usage and Settings say which account it will switch to
-  once the provider is idle; after a switch the provider's cooldown-policy keeps it from switching straight back; when
-  the active account has no plan quota left, no eligible account remains and the provider would draw paid credit or
-  extra usage, Usage and Settings say so plainly; and a manual Use this account (cmd.account.select_profile) on an
-  account already past its provider's switch point asks first, naming its reading and the switch point, at that
-  account's Use control or, when no row of it is shown, centred over the page, and that confirmation covers that one
-  manual choice only and is never read by automatic switching as consent for anything. An account exactly at its
-  switch point is said to be at it, one beyond it past it, and one at 100% used has run out; the line for an
-  exhausted account promises another account only when one qualifies under this rule. Each provider's auto-switch
-  status is one of a closed set of states, one account, no windows, off, unread, watching, waiting for idle, due and
-  no candidate, each shown in plain words as a projection of the scheduler's normalized reason codes of section 5,
-  never a second stored status vocabulary: the MA-073 state table under this unit defines each state by the set of
-  section 5 reason codes that holds for the provider, read in the table's order, and the state is derived from those
-  codes each time and never stored.
+  follows the resolved shared value (the Project own value where set, otherwise Computer, Everywhere, then Default),
+  never the inventory default, and an account without its own value follows its provider's resolved value. An
+  account's own switch level is ai.accounts.hard-switch-level at scope account (owner decision 2026-10-10, DL-174);
+  ai.accounts.account-threshold-override is retired, and a value stored under it is read once and carried to ai.accounts.hard-switch-level
+  at scope account, after which nothing reads or writes the retired id. Levels are stored as percent left and
+  shown as percent used. A provider's or an account's resolved switch level always stays below the warning level
+  that applies to it: neither surface offers a level that would cross them (on Usage the stepper stops and the
+  menu disables levels at or past the warning level; Settings disables a crossing choice with the reason, Settings_System
+  section 8). From 2026-10-15 the Settings owner holds every write to that order as well: the level being written
+  moves to the nearest choice on its own list that keeps every switch level it reaches below the warning level
+  that applies, the other level never moves, and a write with no such choice is refused; a provider's or the shared
+  warning level is held against the own switch level of every account whose warning level follows it, whose own
+  value never moves, and the crossing choice names that account. Restoring a level to its default is the one write
+  that is not moved: a default that would cross is refused, with the reason naming whose level blocks it, because
+  a default is not a level the user chose. A provider's value is one Settings value: Settings > Providers & Accounts
+  edits all four rows in the provider's own section, and the Usage Accounts room hosts the provider's auto-switch
+  toggle and switch point; both edit it through the Settings owner with cmd.settings.transaction.preview and then
+  cmd.settings.transaction.apply at scope provider for that provider id (Plans/Settings_System.md#SSYS-044), and
+  neither surface keeps a copy. An account's own switch level is one Settings value the same way: Settings edits
+  it in the account's own rows, and from the owner decision of 2026-10-10 (D43) the Usage Accounts room hosts
+  it on that account's card and in its Details; both edit it through the same pair at scope account for that account
+  id (SSYS-044). For each provider: auto-switch acts only while the provider has two or more signed-in accounts,
+  and with one account it reads off until a second account is signed in while its stored value is kept, its notch
+  drawn dim on every meter, and Usage shows auto-switch controls only where Settings does, for a provider of a
+  kind with accounts that has two or more; every meter of that provider, and only of that provider, carries a
+  notch at the provider's switch point; only a fresh, identity-bound reading reported by the provider for the
+  active account may trigger a threshold switch, and a missing reading, a local estimate, a reading older than
+  the provider's freshness limit, an account that must sign in again, or a window whose reset has passed without
+  a new reading blocks it with that reason shown in plain words; the target is the eligible account of the same
+  provider with the most remaining, with the account priority order of MA-036 and then the stable account id breaking
+  ties, and an account is not eligible while it needs signing in, failed its sign-in renewal, has a mismatched
+  identity, has an incomplete or stale reading, is cooling down, or is hard blocked; the switch waits for the
+  attempt or message boundary of section 5, and meanwhile Usage and Settings say which account it will switch
+  to once the provider is idle; after a switch the provider's cooldown-policy keeps it from switching straight
+  back; when the active account has no plan quota left, no eligible account remains and the provider would draw
+  paid credit or extra usage, Usage and Settings say so plainly; and a manual Use this account (cmd.account.select_profile)
+  on an account already past its provider's switch point asks first, naming its reading and the switch point,
+  at that account's Use control or, when no row of it is shown, centred over the page, and that confirmation covers
+  that one manual choice only and is never read by automatic switching as consent for anything. An account exactly
+  at its switch point is said to be at it, one beyond it past it, and one at 100% used has run out; the line for
+  an exhausted account promises another account only when one qualifies under this rule. Each provider's auto-switch
+  status is one of a closed set of states, one account, no windows, off, unread, watching, waiting for idle, due
+  and no candidate, each shown in plain words as a projection of the scheduler's normalized reason codes of section
+  5, never a second stored status vocabulary: the MA-073 state table under this unit defines each state by the
+  set of section 5 reason codes that holds for the provider, read in the table's order, and the state is derived
+  from those codes each time and never stored. No project skips the Project rung. Legacy global normalizes to
+  Everywhere before policy and never denotes a Project-local copy. Every threshold edit, clear, restore, copy
+  and Everywhere update validates all effective account combinations in every following context; stale readings
+  and crossing switch/warn pairs refuse before commit with named blockers. Computer ceiling applies only to inventory-declared
+  numeric capacity rows, never as a new threshold-merge algorithm.
 gui_related: true
 gui_classification_reason: Settings shows and edits each provider's auto-switch, switch point, warning level and rest period; the Usage Accounts room edits the auto-switch, the provider's switch point and each account's own switch level, and shows the warning level and rest period read-only, with the notches, status and confirmations.
 depends_on: [MA-036, MA-049, MA-069, SSYS-009, SSYS-018, SSYS-044]
 unblocks: []
 acceptance_criteria:
-  - "The four rows resolve, for every provider and account, through one ladder, global, project, provider, account, the most specific set value winning wherever the row has that scope; every one of the four has global, project and provider scopes, and a provider with no value of its own shows and uses the resolved shared value, labelled as the shared value."
-  - "An account's own switch level is read and written only as ai.accounts.hard-switch-level at scope account; a stored ai.accounts.account-threshold-override value is carried there once, and no surface reads or writes the retired id afterwards."
-  - "Each status state shown equals the state the MA-073 state table derives from the provider's section 5 reason codes, and no status value is stored."
-  - "Changing a provider's auto-switch, switch point, warning level or rest period in Settings, or its auto-switch or switch point on the Usage Accounts room, commits one Settings transaction at scope provider for that provider id, and changing an account's own switch level in Settings, or on its Usage card or in its Details (D43, 2026-10-10), commits one at scope account for that account id; the other surface shows the new value without a reload, before its next paint; neither surface holds its own copy."
-  - "Neither surface offers a switch level at or past the warning level that applies at its scope (provider or account), or a warning level at or below its switch level."
-  - "A provider with one account shows a dim notch on every meter and no auto-switch controls on Usage or in Settings."
-  - "A provider with one signed-in account reads off until a second account is signed in, without changing its stored value; with two or more it acts on its own values only."
-  - "Every meter of a provider carries a notch at that provider's switch point and no other provider's notch."
-  - "A missing, locally estimated, stale, sign-in-required or reset-passed-without-reading active account never triggers a threshold switch, and the block reason is shown in plain words."
-  - "The threshold switch picks the eligible account of the same provider with the most remaining, ties broken by account priority and then account id, never switches mid-attempt, shows the waiting target until the boundary, and does not switch back while the rest period runs."
-  - "With no plan quota left and no eligible account, a provider that would draw paid credit or extra usage says so on Usage and in Settings."
-  - "Use this account on an account past its provider's switch point asks first; declining changes nothing, and accepting dispatches one cmd.account.select_profile that section 5 treats as the manual override."
+- The four rows resolve, for every provider and account, through one ladder, Everywhere, Computer, optional Project,
+  provider, account, the most specific set value winning wherever the row has that scope; every one of the four
+  has Everywhere, Computer, Project and provider levels, and a provider with no value of its own shows and uses
+  the resolved shared value, labelled as the shared value.
+- An account's own switch level is read and written only as ai.accounts.hard-switch-level at scope account; a
+  stored ai.accounts.account-threshold-override value is carried there once, and no surface reads or writes the
+  retired id afterwards.
+- Each status state shown equals the state the MA-073 state table derives from the provider's section 5 reason
+  codes, and no status value is stored.
+- Changing a provider's auto-switch, switch point, warning level or rest period in Settings, or its auto-switch
+  or switch point on the Usage Accounts room, commits one Settings transaction at scope provider for that provider
+  id, and changing an account's own switch level in Settings, or on its Usage card or in its Details (D43, 2026-10-10),
+  commits one at scope account for that account id; the other surface shows the new value without a reload, before
+  its next paint; neither surface holds its own copy.
+- Neither surface offers a switch level at or past the warning level that applies at its scope (provider or account),
+  or a warning level at or below its switch level.
+- A provider with one account shows a dim notch on every meter and no auto-switch controls on Usage or in Settings.
+- A provider with one signed-in account reads off until a second account is signed in, without changing its stored
+  value; with two or more it acts on its own values only.
+- Every meter of a provider carries a notch at that provider's switch point and no other provider's notch.
+- A missing, locally estimated, stale, sign-in-required or reset-passed-without-reading active account never triggers
+  a threshold switch, and the block reason is shown in plain words.
+- The threshold switch picks the eligible account of the same provider with the most remaining, ties broken by
+  account priority and then account id, never switches mid-attempt, shows the waiting target until the boundary,
+  and does not switch back while the rest period runs.
+- With no plan quota left and no eligible account, a provider that would draw paid credit or extra usage says
+  so on Usage and in Settings.
+- Use this account on an account past its provider's switch point asks first; declining changes nothing, and accepting
+  dispatches one cmd.account.select_profile that section 5 treats as the manual override.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/settings_inventory.json (provider scope on the four ai.accounts rows, and global and project scopes on ai.accounts.cooldown-policy)
@@ -5659,11 +5705,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-174
-  - "AIAccountCenter main 04c252fb: src/web-server/services/codex-auto-switch-service.ts and src/antigravity/auto-switch/policy.ts (per-provider auto-switch reference; external, read-only)"
-  - "AIAccountCenter main 04c252fb: web-dashboard/public/accounts-view.mjs and view-model.mjs (per-provider policy rows, meter notches, past-switch-point confirmation; external, read-only)"
-  - "Concepts/usage-redesign/src/js/54-w-accounts.js (Usage redesign Accounts room; source-lineage-only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/d-switch-REPORT.md, SHA-256 30eab667e56fdaf329c6bfa1a137f3ff2947cea903b811eae7b5208379a1291a (per-provider auto-switch as built; approval of the scope changes: Jared 2026-10-09 item 2)"
+- Plans/Decision_Log.md#DL-174
+- 'AIAccountCenter main 04c252fb: src/web-server/services/codex-auto-switch-service.ts and src/antigravity/auto-switch/policy.ts
+  (per-provider auto-switch reference; external, read-only)'
+- 'AIAccountCenter main 04c252fb: web-dashboard/public/accounts-view.mjs and view-model.mjs (per-provider policy
+  rows, meter notches, past-switch-point confirmation; external, read-only)'
+- Concepts/usage-redesign/src/js/54-w-accounts.js (Usage redesign Accounts room; source-lineage-only)
+- '/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/d-switch-REPORT.md,
+  SHA-256 30eab667e56fdaf329c6bfa1a137f3ff2947cea903b811eae7b5208379a1291a (per-provider auto-switch as built;
+  approval of the scope changes: Jared 2026-10-09 item 2)'
+- 'source_ref:projects-pass2-20261103:S2/S3/S7/N12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
   - ai.accounts.multi-account-switching
   - ai.accounts.hard-switch-level
@@ -5700,3 +5752,102 @@ Each auto-switch status state of MA-073 is defined by the set of section 5 reaso
 | 8 | due | the same code as row 7 with the boundary reached: the next resolution records `threshold_preemptive_switch` (or `hard_exhaustion_failover`) for the chosen target |
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-044, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/FinalGUISpec.md#F3-441, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Decision_Log.md#DL-174, ContractName:Plans/Decision_Policy.md
+
+### MA-074 - Chosen Accounts Resolve On The Destination Computer
+
+```yaml
+plan_unit_id: MA-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  account_resolution is the one refs-only list used by Settings copy, onboarding AI and Set up AI here like. Each
+  item binds provider_id, account_id, destination_server_id, exact execution_host_id/execution_environment_id
+  and destination scope/connection, current availability/proof generation and outcome. Outcomes are ready_here,
+  check_there, sign_in_there, key_needed, not_installed, expired and cannot_move. ready_here means the chosen
+  account is already authorized on that exact Computer and has current local validation; check_there says a destination
+  sign-in exists but must be verified there before first use. Missing protected login/key, absent tool, expiry
+  or device/hardware binding retains the intended choice with a truthful action, never a replacement account or
+  automatic installation. Installed, authenticated and ready remain separate facts.
+
+  A Project whose choice names an account already signed in on its work Computer binds that Computer's existing
+  credential_ref or profile_ref through its own Project-bound connection; no secret is read, copied or re-entered,
+  and readiness is checked there before first use. A ready but unchosen account conveys no authority. The same
+  rule applies to an approved application scope connection with project_id=null, actual Computer identity and
+  real thread identity only when the use is thread-bound
+  under MACS-006; it is not permission to reuse a Project-owned connection. On a different Computer copy only
+  intended IDs/order and portable defaults; resolve that destination's own sign-in or protected setup through
+  the existing broker. A matching provider label, profile path string or native identity does not establish Host/Environment
+  readiness or account equality.
+
+  No key, token, CLI profile directory, cookie, pairing, SSH identity or CredentialAttachment authority travels
+  in a level/mirror/index/preview/export/copy. A Backup Portable Secret Envelope remains its separate owner feature,
+  never an implicit copy option. Protected sign-in occurs on the initiating active Client while the credential/profile
+  stays on the actual work Computer; returns bind operation, Client/session/generations and Host/Environment.
+  Account/Computer/route changes invalidate readiness; current run snapshots and old usage keep their original
+  attribution. MACS-006 defines copy/resolve as contributed owner subcontracts, not a second authentication engine
+  or automatic promotion of deferred cmd.provider_binding candidates. Full/YOLO policy does not finish protected
+  sign-in or pick an unchosen account.
+
+  Scheduled runtime/model/account choices are frozen by the scheduling owner and revalidated against the
+  same destination Computer, account, connection and proof generations before dispatch; current focus or
+  newer defaults cannot replace them. Copy or conversion never moves credential/profile material or treats
+  an existing Project connection as app authority. Pre-message Later setup uses its real app/setup binding
+  and no fabricated durable thread.
+gui_related: false
+gui_classification_reason: Defines data, custody or resolver contracts consumed by existing GUI owners.
+depends_on:
+- MA-014
+- MA-070
+- MA-073
+unblocks: []
+acceptance_criteria:
+- Explicitly chosen same-Computer account binds its local refs through the destination-owned connection and verifies
+  readiness without re-entry.
+- An unchosen ready account, matching label, different Host/Environment or stale proof cannot authorize reuse.
+- Other-Computer missing login/key/tool and device-bound identities produce the exact seven readiness outcomes
+  without replacement or auto-install.
+- App setup has null Project and real scope/Computer; protected content remains unavailable to agents and Settings
+  artifacts.
+validation_surfaces:
+- Plans/multi_account_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
+- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
+- Future native owner/command/writer/readback/security evidence; not_run
+risk_class: owner_scope_or_credential_authority_leak
+reasoning_tier: high
+context_scope: projects_refresh_20261103_ma_074
+implementation_surfaces:
+- Plans/Multi-Account.md
+- Plans/storage-plan.md
+- Future shared Rust interface model and sole owner services; no implementation claimed
+node_compile_hint:
+  mode: accepted_product_contract_pending_companion_and_native_evidence
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/SETTINGS-PROPOSAL.md; cards S10/S11/N5/N15/N17
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md §3 A; pinned integration
+  41d8119aec71789de7422018ea9c167e6c60a156
+- 'source_ref:chat:20261103: Jared: "I approve the outstanding questions with their recommended settings."'
+preserved_exact_tokens:
+- account_resolution
+- ready_here
+- check_there
+- sign_in_there
+- key_needed
+- not_installed
+- expired
+- cannot_move
+- credential_ref
+- profile_ref
+- project_id=null
+negative_constraints:
+- Do not copy credentials, CLI profiles, pairings or authentication authority.
+- Do not infer Ready from installed/authenticated alone or treat same-provider accounts as interchangeable.
+- Do not silently create a Project or grant a Project access because the Computer holds a sign-in.
+owner_hints:
+- Plans/Multi-Account.md
+- Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Plan_Document_System.md

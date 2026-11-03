@@ -57,9 +57,11 @@ The canonical precedence chain is:
 2. scoped owner policy for the active execution unit (`run`, `seam`, `package`, `node`, `overseer`, or delegated subagent)
 3. Persona preference
 4. surface or stage default
-5. project or global config default
-6. last-used state where the surface explicitly permits it
-7. provider default
+5. Project own configuration default
+6. work Computer own configuration default
+7. Everywhere, then factory configuration default
+8. last-used state where explicitly permitted
+9. provider default
 
 Rules:
 - the same inputs and availability set MUST produce the same effective result
@@ -180,7 +182,7 @@ Model selection can be lane-aware when lane policy requires it. lane-level, secu
 
 Worktree visibility records may expose `/worktree/branch/tier` and `/lane`, but package/lane ownership, contamination, restore eligibility, and promotion posture must not stop at legacy tier status.
 
-Scope labels must distinguish app, project, surface, role, seam, package, node, manual, turn, session, run, task, and subagent sources. `/session/run/task/subagent` and `/package/node` are explicit override scopes.
+Scope labels must distinguish Everywhere, Computer, optional Project, application work, surface, role, seam, package, node, manual, turn, session, run, task, and subagent sources. `/session/run/task/subagent` and `/package/node` are explicit override scopes.
 
 Provider/model settings are never single-project by assumption: runtime-affecting overrides may be app, project, `/per-package`, seam, `/package/seam/node`, overseer, or delegated-subagent scoped, and the resolver must preserve the scope that selected or constrained the value.
 
@@ -249,11 +251,14 @@ Model and runtime selection remains deterministic and follows the same requested
 | Priority | Source | Description |
 |---|---|---|
 | 1 | explicit override | run envelope, manual picker, tier override, or surface-level override |
-| 2 | Persona runtime preferences | per-Persona defaults for provider entry, model, variant, and supported controls |
-| 3 | surface defaults | Chat, Interview, Builder, Orchestrator, or profile defaults |
-| 4 | project/global defaults | configuration defaults including preferred runtime family or model |
-| 5 | last used | previous user choice when still valid |
-| 6 | internal/provider fallback | provider/runtime default chosen after capability filtering |
+| 2 | scoped owner policy | execution-unit owner policy and parent/managed ceilings |
+| 3 | Persona runtime preferences | supported provider/model/variant preferences |
+| 4 | surface or stage default | canonical stage/surface source after Persona |
+| 5 | Project own default | actual Project configuration, omitted in app scope |
+| 6 | Computer own default | actual work Server/Host context |
+| 7 | Everywhere/factory configuration | one Settings resolver, unset falls through |
+| 8 | last used | only where the surface permits it |
+| 9 | provider fallback | after capability/account filtering |
 
 ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 
@@ -990,13 +995,19 @@ The effective model/runtime selection chain is:
 
 1. **Explicit run-envelope override**
    Manual surface selection or structured run override for platform/model/variant/runtime controls.
-2. **Persona preference**
+2. **Scoped owner policy**
+   Exact execution-unit policy, preserving parent/managed ceilings.
+3. **Persona preference**
    Persona `default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`.
-3. **Surface/tier/phase defaults**
+4. **Surface/tier/phase defaults**
    Chat/Interview/Builder/Orchestrator/Multi-Pass defaults.
-4. **Global/project config defaults**
-5. **Last-used state** where supported
-6. **Internal/provider defaults**
+5. **Project own default**: omit for No project.
+6. **Computer own default**: actual work Computer.
+7. **Everywhere/factory configuration default**: one Settings resolver.
+8. **Last-used state**: only where permitted.
+9. **Internal/provider defaults**: after capability/account filtering.
+
+This is the same source order as MS-005/099; no second numbering scheme applies.
 
 Rule: Given the same inputs and provider availability set, effective selection MUST be deterministic.
 
@@ -1353,7 +1364,7 @@ This addendum elaborates how the canonical provider/model precedence owner secti
 
 1. **Persona axis**: Users select a Persona (e.g., "Code Analyzer", "Documentation Writer") which carries default preferences for model, provider, and mutation_policy.
 2. **Execution Unit Type axis**: Different execution unit types (run, node, delegated_subagent) can have scoped policies (e.g., "use GPT-4 for run-level analysis, but Claude for node-level code generation").
-3. **Scope axis**: Settings can be scoped to worktree, project, or global level; settings at a tighter scope override broader scopes.
+3. **Scope axis**: Ordinary defaults consume Everywhere → Computer → optional Project through SSYS-002/059; worktree/run/owner policies remain their existing narrower inputs and ceilings, not another ordinary store.
 
 ### Precedence chain for provider/model selection
 
@@ -1363,16 +1374,18 @@ When a unit needs to select a provider and model, resolve in this order:
 2. **Scoped owner policy**: If the active execution_unit_type has a policy (e.g., "node-type uses Copilot"), apply it.
 3. **Persona preference**: Use the active Persona's default model and provider.
 4. **Surface or stage default**: If the UI surface or execution stage has a default (e.g., "code review prefers GPT-4"), use it.
-5. **Project or global config default**: Fallback to project-wide or global settings.
-6. **Last-used state**: If permitted by settings, use the model/provider from the previous run of the same type.
-7. **Provider default**: Use the provider's canonical default model.
+5. **Project own default**: omit for No project.
+6. **Computer own default**: actual work Computer.
+7. **Everywhere/factory configuration default**: consume the one Settings resolver.
+8. **Last-used state**: only where permitted.
+9. **Provider default**: after capability/account filtering.
 
 ### Settings resolution and override semantics
 
 
-- **Conservative policy**: Use only settings tier 1 (explicit override) or tier 3+ (canonical defaults); do not apply stage defaults or persona preferences.
-- **Standard policy** (default): Use tiers 1-5 (explicit override through project defaults); respect all configuration.
-- **Aggressive policy**: Use all tiers 1-7; auto-select the cheapest or fastest model if multiple are available and equally suitable.
+- **Conservative policy**: tiers 1, 2, 5, 6, 7, 9 under MS-100; exclude Persona/stage defaults and preserve scoped/parent ceilings. The old numeric shorthand is superseded.
+- **Standard policy** (default): Use tiers 1–7 (explicit override through Everywhere/factory defaults); respect all configuration.
+- **Aggressive policy**: Use all tiers 1–9; auto-select the cheapest or fastest model if multiple are available and equally suitable.
 
 ### Provider capability and cost gating
 
@@ -1410,7 +1423,7 @@ When a provider and model are selected, emit a `selection_reason` object:
 selection_reason {
   selected_provider: string,           // e.g., 'openai', 'anthropic', 'github'
   selected_model: string,              // e.g., 'gpt-4', 'claude-3-opus'
-  precedence_tier: number,             // 1-7 indicating which tier was applied
+  precedence_tier: number,             // 1–9, using the versioned MS-005/099 source order
   fallback_reason?: string,            // If a fallback was triggered (capability, cost, unavailability)
   alternatives: Array,                 // Other models that were considered and why they were skipped
   selection_time_utc: string,          // When the decision was made
@@ -1603,9 +1616,14 @@ plan_unit_id: MS-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Settings resolve on source, request, and execution axes. Deterministic precedence is explicit override, scoped
-  policy, Persona preference, surface or stage default, project or global default, last-used when permitted, and provider
-  default.
+canonical_text: >-
+  Settings retain source, request and execution axes. Model selection consumes SSYS-002/059 for ordinary defaults.
+  The canonical source order is 1 explicit run-envelope override, 2 scoped owner policy, 3 Persona preference,
+  4 surface/stage default, 5 Project own default, 6 work Computer own default, 7 Everywhere (then factory configuration
+  default), 8 permitted last-used state, 9 provider fallback. Skip missing/inapplicable rungs, including Project
+  for app work; preserve every applicable parent/managed ceiling, supported capability, account/route/currentness
+  and requested/effective reason. The one Settings resolver supplies default values; the existing Models owner
+  applies its selection policy. No model option/variant field merge is invented.
 gui_related: false
 gui_classification_reason: The unit covers resolver policy and precedence rather than direct GUI presentation.
 split_recommended: false
@@ -1631,6 +1649,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0008
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0009
+- 'source_ref:projects-pass2-20261103:S2/S3/N12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - manual_override
 - persona_preference
@@ -5507,9 +5527,15 @@ plan_unit_id: MS-075
 unit_type: selection_policy
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Effective model/runtime selection resolves deterministically through explicit run-envelope override, Persona
-  preference, surface/tier/phase defaults, global/project config defaults, supported last-used state, and internal/provider
-  defaults.
+canonical_text: >-
+  Model selection consumes SSYS-002/059 for ordinary defaults. The canonical source order is 1 explicit run-envelope
+  override, 2 scoped owner policy, 3 Persona preference, 4 surface/stage default, 5 Project own default, 6 work
+  Computer own default, 7 Everywhere (then factory configuration default), 8 permitted last-used state, 9 provider
+  fallback. Skip missing/inapplicable rungs, including Project for app work; preserve every applicable parent/managed
+  ceiling, supported capability, account/route/currentness and requested/effective reason. The one Settings resolver
+  supplies default values; the existing Models owner applies its selection policy. No model option/variant field
+  merge is invented. Former six-tier summaries and 1-7 indexes are historical shorthand for this canonical order,
+  never competing ladders.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -5535,6 +5561,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0052
+- 'source_ref:projects-pass2-20261103:S2/S3/N12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - Explicit run-envelope override
 - Persona preference
@@ -6883,9 +6911,11 @@ plan_unit_id: MS-098
 unit_type: audit_policy
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: The provider/model selection policy and audit addendum surfaces canonical provider/model precedence through
-  user-facing policy, capability gating, audit trail details, Persona axis, execution-unit type axis, and worktree/project/global
-  scope axis.
+canonical_text: >-
+  The provider/model policy and audit surfaces preserve Persona and execution-unit axes and distinguish Everywhere,
+  work Computer, optional Project and narrower worktree/run scopes. Device is relevant only to screen rows, never
+  model execution. In No project, omit Project/worktree when absent; record the actual Server/Host/Environment.
+  Local-model capacity rows consume the declared Computer ceiling after requested defaults resolve.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -6912,6 +6942,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0072
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0073
+- 'source_ref:projects-pass2-20261103:S1–S3/N12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - Provider/model selection policy and audit addendum
 - user-facing policy
@@ -6946,8 +6978,15 @@ plan_unit_id: MS-099
 unit_type: selection_policy
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Provider/model selection resolves through the ordered 1-7 precedence chain from explicit run-envelope override
-  through provider default, preserving scoped owner policy, Persona, surface/stage, project/global, and last-used semantics.
+canonical_text: >-
+  Model selection consumes SSYS-002/059 for ordinary defaults. The canonical source order is 1 explicit run-envelope
+  override, 2 scoped owner policy, 3 Persona preference, 4 surface/stage default, 5 Project own default, 6 work
+  Computer own default, 7 Everywhere (then factory configuration default), 8 permitted last-used state, 9 provider
+  fallback. Skip missing/inapplicable rungs, including Project for app work; preserve every applicable parent/managed
+  ceiling, supported capability, account/route/currentness and requested/effective reason. The one Settings resolver
+  supplies default values; the existing Models owner applies its selection policy. No model option/variant field
+  merge is invented. The former 1-7 tier numbering is superseded by this explicit 1-9 order; no owner scope loses
+  its permission ceiling.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model/runtime selection, UI surface defaults, or inspector/audit presentation
   behavior.
@@ -6974,6 +7013,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0074
+- 'source_ref:projects-pass2-20261103:S2/S3; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - --provider=X --model=Y
 - Scoped owner policy
@@ -7005,8 +7046,13 @@ plan_unit_id: MS-100
 unit_type: settings_policy
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Settings resolution supports Conservative, Standard, and Aggressive policies with explicit tier inclusion
-  rules and default Standard behavior.
+canonical_text: >-
+  The expanded 1-9 order in MS-005/099 keeps Standard as default: Standard uses tiers 1–7. Aggressive admits 1–9
+  and retains its existing capability/cost tie handling. Conservative obeys the explicit existing exclusion of
+  Persona and surface/stage defaults: tiers 1, 2, 5, 6, 7 and 9, while never bypassing scoped/parent/managed ceilings.
+  The older numeric shorthand tier 1 or tier 3+ conflicts with that explicit exclusion and is superseded; it does
+  not authorize Persona or stage values. No new recommendation, quality-ranking or variant-merge algorithm is
+  added.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
   rather than direct GUI presentation.
@@ -7032,6 +7078,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0075
+- 'source_ref:projects-pass2-20261103:S2/S3; model-tier reconciliation; Jared: "I approve the outstanding questions
+  with their recommended settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - Conservative policy
 - Standard policy
@@ -7295,8 +7343,13 @@ plan_unit_id: MS-105
 unit_type: data_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Provider/model selection emits a selection_reason object carrying selected provider/model, precedence tier,
-  optional fallback reason, alternatives considered, selection timestamp, and execution unit identity.
+canonical_text: >-
+  Provider/model selection emits a selection_reason object carrying selected provider/model, precedence tier,
+  optional fallback reason, alternatives considered, selection timestamp, and execution unit identity. precedence_tier
+  uses the MS-005/099 1–9 order and names the source level/key; include actual work Server/Host/Environment and
+  null Project in app scope. Original historical audit records retain their original tier version/bytes; a number
+  from an older recipe is never silently reinterpreted. Computer capacity limits retain requested/effective and
+  clamp reasons.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
   rather than direct GUI presentation.
@@ -7322,6 +7375,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0077
+- 'source_ref:projects-pass2-20261103:S2/S3/N12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
 - selection_reason
 - selected_provider
@@ -8376,24 +8431,30 @@ plan_unit_id: MS-122
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: 'After an actual Project owner commit, first-run onboarding initializes provider/model setup with a paid-provider-first
-  posture. Detected usable accounts and copied routes are verified and become Ready automatically without a Connect or
-  Use This Provider gate. Authentication alone does not prove entitlement, billing, trust, capability, route, quota or
-  readiness. Free Models and the retained exact token Fee models appear after that paid-provider prompt, including after
-  explicit Skip, as an optional Set Up Free Models continuation inside Onboarding. MS-118..121 retain canonical provider/model/account
-  identity, exact underlying setup returns, paid-first default ordering, explicit user overrides, truthful eligibility
-  and no recommendation/quality-ranking scope.
+canonical_text: >-
+  After an actual Project owner commit, or after explicit Set up a project later commits an authorized application/Computer
+  setup under N15/MACS-006, first-run onboarding initializes provider/model setup with a paid-provider-first posture.
+  Detected usable accounts and copied routes are verified and become Ready automatically without a Connect or
+  Use This Provider gate. Authentication alone does not prove entitlement, billing, trust, capability, route,
+  quota or readiness. Free Models and the retained exact token Fee models appear after that paid-provider prompt,
+  including after explicit Skip, as an optional Set Up Free Models continuation inside Onboarding. MS-118..121
+  retain canonical provider/model/account identity, exact underlying setup returns, paid-first default ordering,
+  explicit user overrides, truthful eligibility and no recommendation/quality-ranking scope.
 
 
-  DL-272 READY-NO-AI, 2026-11-01: With neither a usable AI account nor a usable Free Models route, Ready is titled Almost
-  ready and offers the existing later setup path; it does not imply that planning is available. A usable free route counts
-  as AI.
+  DL-272 READY-NO-AI, 2026-11-01: With neither a usable AI account nor a usable Free Models route, Ready is titled
+  Almost ready and offers the existing later setup path; it does not imply that planning is available. A usable
+  free route counts as AI.
 
 
-  DL-272 FO-18, 2026-11-01: When neither an AI account nor a Free Models route is usable, the Almost ready
-  state has no celebration in any family or Light/Dark variant: no confetti, crew cheer, wink, bow or
-  celebratory sound. Apply this eligibility check before any family-specific Ready moment. Skipping both AI
-  routes is not success and does not make planning available; a usable free route still counts as AI.'
+  DL-272 FO-18, 2026-11-01: When neither an AI account nor a Free Models route is usable, the Almost ready state
+  has no celebration in any family or Light/Dark variant: no confetti, crew cheer, wink, bow or celebratory sound.
+  Apply this eligibility check before any family-specific Ready moment. Skipping both AI routes is not success
+  and does not make planning available; a usable free route still counts as AI. The Later path performs paid-first
+  AI setup then lands in a real No project chat on its named Computer; no fake Project, unbound Planning Wizard
+  landing or silent local claim. Protected sign-in stays human-only, installation explicit and every copied/detected
+  account is rechecked on the actual work Computer. Almost ready/no-celebration and Free Models ordering remain
+  unchanged.
 gui_related: true
 gui_classification_reason: Governs user-visible first-run provider/model sequencing, Free Models placement, top-10
   copy, and readiness labels.
@@ -8459,6 +8520,8 @@ source_lineage:
 - PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
   Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
   are source lineage only.
+- 'source_ref:projects-pass2-20261103:N5/N15/N17; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 source_atom_ids:
 - atom-0016
 - atom-0033
@@ -8492,8 +8555,8 @@ negative_constraints:
 - Do not include recommended models, `Recommended for this section`, recommendation sorting/highlighting, recommendation
   confidence labels, local recommendation learning, online review lookup, or benchmark/probe calibration.
 - Do not silently insert or reorder Free Models in the saved top-10 list.
-- Do not prompt broad AI-provider setup before the Project commit or undo the Project when provider setup closes
-  or fails.
+- Do not prompt broad AI-provider setup before its actual owner commit, except the approved explicit Later application
+  route; do not undo a committed Project when provider setup closes or fails.
 owner_hints:
 - Plans/Models_System.md
 - Plans/Multi-Account.md

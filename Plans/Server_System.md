@@ -2,9 +2,11 @@
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md`, uses the PlanUnit contract in `Plans/Plan_Document_System.md`, consumes retained owner contracts by reference, and names Puppet Master only.
 > **PlanProfile:** New Plan Authoring Profile
-> **Authority:** Sole canonical owner for the Puppet Master Server Catalog, stable Server and Client identity, endpoint association and deduplication, discovery, Client trust/pairing/session/revocation policy, the permanent Server and Client product boundary, and Server-owned continuity projections. Shared Integration Runtime retains execution-topology and runtime-lifecycle primitives; Project Sync and Backbone retains Project Move and content movement; Remote Access retains transport routes and WAN policy; Backup and Restore retains portable backup products.
+> **Authority:** Sole canonical owner for protected SSH host trust/public-key installation, the Puppet Master Server Catalog, stable Server and Client identity, endpoint association and deduplication, discovery, Client trust/pairing/session/revocation policy, the permanent Server and Client product boundary, and Server-owned continuity projections. Shared Integration Runtime retains execution-topology and runtime-lifecycle primitives; Project Sync and Backbone retains Project Move and content movement; Remote Access retains transport routes and WAN policy; Backup and Restore retains portable backup products.
 
 ## 0. Scope
+
+SRV-016 owns the explicit settings-home role and settings.follow trust; SRV-017 owns application chat/Goal/Crew/Assistant Plan/scheduled-task custody before a Project exists. Product copy calls the work place Computer. Neither role grants Project access or changes Home Server identity.
 
 Puppet Master is Server-first. Every Project has exactly one Project Home Server, one canonical writer, and one physical Project Vault. Native and web Clients render read-only projections and issue canonical commands; they do not become writable Project databases, execution owners, or backup authorities.
 
@@ -61,7 +63,13 @@ canonical_text: >-
   endpoint association and deduplication, discovery, Client trust/pairing/session/revocation policy, the permanent
   Server and Client product boundary, and Server-owned continuity projections. Shared Integration Runtime retains
   execution lifecycle and topology primitives; Project Sync and Backbone retains Project Move and content movement;
-  Remote Access retains WAN transport routes; Backup and Restore retains portable backup products.
+  Remote Access retains WAN transport routes; Backup and Restore retains portable backup products. SRV-016 adds
+  same-owner Server-peer settings trust and the explicit settings-home role without Project access. SRV-017 defines
+  Server custody of application work before any Project Vault exists; this is not a Project Home Server assignment.
+
+  SRV-018 owns protected SSH host-fingerprint trust and public-key installation through the same shared key
+  list and protected-auth broker. Remote Access, Settings, onboarding and New Project consume that contract
+  without adding another trust store, installer or generic connection writer.
 gui_related: true
 gui_classification_reason: The owner boundary includes permanent native/web Client behavior and visible Server manager projections.
 depends_on: [PDS-003, PDS-005, SIR-002, SIR-013]
@@ -77,8 +85,10 @@ context_scope: server_owner_routing
 implementation_surfaces: [Plans/Server_System.md, Plans/server_system_contracts.schema.json]
 node_compile_hint: {mode: server_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:chat:server-remote-backup-owner-adjudication-2026-08-31
-  - source_ref:normalized-register:server-first-2026-08-31:A01-A05
+- source_ref:chat:server-remote-backup-owner-adjudication-2026-08-31
+- source_ref:normalized-register:server-first-2026-08-31:A01-A05
+- 'source_ref:projects-pass2-20261103:S1/S7/S12/N5/N17; Jared: "I approve the outstanding questions with their
+  recommended settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens: [Server First, Server Catalog, Project Home Server, permanent web UI, Client]
 negative_constraints: [Do not create writable Client replicas., Do not duplicate retained owners., Do not treat this Plans compile as runtime proof.]
 owner_hints: [Plans/Server_System.md]
@@ -130,9 +140,11 @@ owner_doc: Plans/Server_System.md
 canonical_text: >-
   LAN DNS-SD and mDNS discovery advertises only stable identity fingerprint, human name, TLS port, protocol range,
   claim or pairing summary, and minimal availability/capability. It never advertises Projects, paths, repositories,
-  Goals, users, providers, storage, secrets, or remote configuration. Nearby, Known, QR, manual, private DNS, and
-  Tailscale inventory may supply observations, but no broad subnet scan is allowed and no observation grants trust.
-  Observations expire and remain separately attributable to their discovery source.
+  Goals, users, providers, storage, secrets, or remote configuration. Nearby, Known, QR, manual, private DNS,
+  and Tailscale inventory may supply observations, but no broad subnet scan is allowed and no observation grants
+  trust. Observations expire and remain separately attributable to their discovery source. No-project chat names,
+  Goal/Plan/Crew/schedule metadata and settings contents are private owner projections, never discovery advertisements.
+  Discovery does not claim a sleeping local Server or authorize settings.follow or Project reads.
 gui_related: true
 gui_classification_reason: Nearby/Known Server lists, expiry, refresh, and pairing-required state are user-visible projections.
 depends_on: [SRV-002]
@@ -148,8 +160,10 @@ context_scope: server_discovery
 implementation_surfaces: [Plans/server_system_contracts.schema.json, future discovery service and Server manager]
 node_compile_hint: {mode: minimal_discovery_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:normalized-register:server-first-2026-08-31:R02
-  - source_ref:packet:pm.remote_access_requirements.v1
+- source_ref:normalized-register:server-first-2026-08-31:R02
+- source_ref:packet:pm.remote_access_requirements.v1
+- 'source_ref:projects-pass2-20261103:S7/N5/N17; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens: [DNS-SD, mDNS, Nearby, Known, discovery is not trust]
 negative_constraints: [Do not advertise Project metadata., Do not perform broad subnet scans., Do not infer authorization from reachability.]
 owner_hints: [Plans/Server_System.md, Plans/Remote_Access_System.md]
@@ -162,44 +176,51 @@ plan_unit_id: SRV-004
 unit_type: security_requirement
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: 'Pairing uses an explicit pairing_session_id, explicit pairing_candidate_id, and verified Server identity
-  through LAN discovery, QR, short code, fingerprint/certificate confirmation, manual URL, or approval by an already
-  trusted Server-side Client. cmd.client.pair.start starts the selected method without granting trust; approve, reject,
-  and cancel are distinct expected-generation-fenced transitions. QR and code material is consumed through an ephemeral
-  handle, only its digest may be durable, and raw pairing secrets are never persisted. Reachability, localhost, LAN,
-  tailnet, Funnel, proxy, Remote Link, or VPN never implies authorization. ClientTrustRecord and ClientAccessPolicy grant
-  least-privilege scopes and bind protocol range, trust generation, expiry, and revocation. cmd.client.revoke increments
-  authority generation, terminates all current sessions, rejects future sessions and stale commands, and remains restart-decidable
-  from durable receipts. DL-259 FO-7, 2026-10-31: accepting an owner’s approval or rejection finishes that exact pairing
-  request/generation in the view. Clear its obsolete warning and render the answered result; later refreshes must not
-  re-adopt the consumed result as a new request or show a false used-answer warning. The answered view offers a fresh
-  code/request rather than Check again for the completed one. A fresh invitation starts a new generation; exact Server/Client/session/generation,
-  matching-identity confirmation, permission, expiry and genuine replay rejection remain. Rejecting a later request cannot
-  remove a Client already approved by an earlier request. A view marker never grants trust or bypasses the Server owner.
+canonical_text: >-
+  Pairing uses an explicit pairing_session_id, explicit pairing_candidate_id, and verified Server identity through
+  LAN discovery, QR, short code, fingerprint/certificate confirmation, manual URL, or approval by an already trusted
+  Server-side Client. cmd.client.pair.start starts the selected method without granting trust; approve, reject,
+  and cancel are distinct expected-generation-fenced transitions. QR and code material is consumed through an
+  ephemeral handle, only its digest may be durable, and raw pairing secrets are never persisted. Reachability,
+  localhost, LAN, tailnet, Funnel, proxy, Remote Link, or VPN never implies authorization. ClientTrustRecord and
+  ClientAccessPolicy grant least-privilege scopes and bind protocol range, trust generation, expiry, and revocation.
+  cmd.client.revoke increments authority generation, terminates all current sessions, rejects future sessions
+  and stale commands, and remains restart-decidable from durable receipts. DL-259 FO-7, 2026-10-31: accepting
+  an owner’s approval or rejection finishes that exact pairing request/generation in the view. Clear its obsolete
+  warning and render the answered result; later refreshes must not re-adopt the consumed result as a new request
+  or show a false used-answer warning. The answered view offers a fresh code/request rather than Check again for
+  the completed one. A fresh invitation starts a new generation; exact Server/Client/session/generation, matching-identity
+  confirmation, permission, expiry and genuine replay rejection remain. Rejecting a later request cannot remove
+  a Client already approved by an earlier request. A view marker never grants trust or bypasses the Server owner.
   DL-271 initial request waiting, 2026-10-31: while the current invitation is live and no device request has arrived,
-  Your Server is ready shows No requests yet with Check again. Checking re-reads the current owner run; a real arriving
-  request also updates that view. This neutral state is not an error and invents no candidate, approval or trust. Continue
-  retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed
-  request stays answered, and a fresh request requires the existing new-code/new-generation route.
+  Your Server is ready shows No requests yet with Check again. Checking re-reads the current owner run; a real
+  arriving request also updates that view. This neutral state is not an error and invents no candidate, approval
+  or trust. Continue retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection:
+  a completed request stays answered, and a fresh request requires the existing new-code/new-generation route.
 
 
-  DL-272 RV-2, 2026-11-01: Self-approval compares the initiating device’s own identity words with those the Server derived
-  from the received candidate; both are labelled, and approval requires explicit matching confirmation. Missing or different
-  words cannot grant trust.
+  DL-272 RV-2, 2026-11-01: Self-approval compares the initiating device’s own identity words with those the Server
+  derived from the received candidate; both are labelled, and approval requires explicit matching confirmation.
+  Missing or different words cannot grant trust.
 
 
-  DL-272 RV-18, 2026-11-01: Pairing codes are obtained from Settings > Server & Project Location > Pair a device, or
-  the Server’s reachable pairing page, and use the same XXXX-XXXX display form across those surfaces. Desktop Server
-  installation gives the address to open and tells the person to keep its one-time setup code shown. Pairing and setup
-  codes remain distinct protected owner material.
+  DL-272 RV-18, 2026-11-01: Pairing codes are obtained from Settings > Server & Project Location > Pair a device,
+  or the Server’s reachable pairing page, and use the same XXXX-XXXX display form across those surfaces. Desktop
+  Server installation gives the address to open and tells the person to keep its one-time setup code shown. Pairing
+  and setup codes remain distinct protected owner material.
 
 
-  DL-272 PAIR-DENIED-NAME, 2026-11-01: A Server card names the device whose request was turned down, preserves the answered
-  generation, and offers a new request without changing earlier granted trust.
+  DL-272 PAIR-DENIED-NAME, 2026-11-01: A Server card names the device whose request was turned down, preserves
+  the answered generation, and offers a new request without changing earlier granted trust.
 
 
-  DL-272 PAIR-CLIENT-WORDS, 2026-11-01: A Client waiting for approval shows its own identity words to compare on the
-  approving device; Server identity words are not substituted for the Client’s.'
+  DL-272 PAIR-CLIENT-WORDS, 2026-11-01: A Client waiting for approval shows its own identity words to compare
+  on the approving device; Server identity words are not substituted for the Client’s. ClientAccessPolicy separately
+  admits settings.everywhere.write only for current owner-authorized devices; limited/Member devices cannot write
+  Everywhere or Computer values through a follower. ServerPeerTrustRecord under SRV-016 is distinct from ClientTrustRecord;
+  settings.follow grants no Project/content/work authority. A native Client local_server_id is populated only
+  by verified protected local handoff, not address equality. Revocation fences settings delivery and commands
+  as well as existing sessions.
 gui_related: true
 gui_classification_reason: Pairing prompts, fingerprint confirmation, Client lists, access scopes, expiry, and revocation are user-visible workflows.
 depends_on: [SRV-002, SRV-003]
@@ -241,12 +262,14 @@ source_lineage:
 - source_ref:normalized-register:server-first-2026-08-31:R03
 - source_ref:packet:10_SERVER_REMOTE_ACCESS_DEPLOYMENT_CONTRACT.md
 - 'PM7 srv FO-7 40899806fb: endGuestRun/runDone/pollGuestRun source-only terminal-view guard.'
-- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
-  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
-  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
-  refusal.'
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock
+  4c6305553d; weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no
+  concept host, seeded situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e
+  confirms unconditional weak-key refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- 'source_ref:projects-pass2-20261103:S7/S12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens: [ClientTrustRecord, PairingRun, pairing_candidate_id, ClientAccessPolicy, ServerTrustRecord, RevocationRecord, SessionRecord, cmd.client.pair.start, cmd.client.pair.approve, cmd.client.pair.reject, cmd.client.pair.cancel, cmd.client.revoke]
 negative_constraints: [Do not treat route possession as trust., Do not leave revoked sessions active., Do not persist raw pairing or session secrets in ordinary events.]
 owner_hints: [Plans/Server_System.md, Plans/Permissions_System.md, Plans/FileSafe.md]
@@ -259,34 +282,40 @@ plan_unit_id: SRV-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: 'Every standalone Windows, macOS, and Linux Server provides authenticated typed API and projection streams,
-  the complete permanent responsive web UI, and normal work execution. Desktop packages include the native Slint Client,
+canonical_text: >-
+  Every standalone Windows, macOS, and Linux Server provides authenticated typed API and projection streams, the
+  complete permanent responsive web UI, and normal work execution. Desktop packages include the native Slint Client,
   dormant loopback/private local Server capability, and Execution Host capability. After owner claim, cmd.server.bootstrap.start
-  separately bootstraps requested execution_form standalone or container, verifies durable roots or mounts and the immutable
-  execution baseline, and never creates a reduced control-plane-only Server. Closing, refreshing, sleeping, or powering
-  off a Client never cancels Server-owned Goal, turn, login, update, backup, Move, browser, build, or test. Reconnect
-  and resume are exact cmd.server.connect modes using prior session and durable cursor/snapshot catch-up without duplicate
-  or omitted entries; they do not mint separate commands or new work. Stop Server, restart, and move are explicit service/tray/menu
-  operations; GUI close is not an implicit stop. DL-259 CLOUD-1 A, Jared 2026-10-31: the person uses an explicit cloud-provider
-  console or local-bootstrap handoff and its one-time Server setup code to claim a new cloud computer. The Server owner
-  checks and consumes the code through the protected local/private bootstrap handoff. Its initial owner-claim authorization
-  is bound to the existing discovery_observation_id, pairing_session_id and identity_fingerprint handed to cmd.server.claim,
-  with the command’s current permission and generation fences. The tuple references owner-verified authority; guessed
-  IDs, an address or a caller-provided success flag are not proof. Raw setup code never enters the ordinary command payload,
-  stored setup plan, logs or receipts. No public unclaimed setup, automated provider-console/SSH provisioning or implicit
-  tailnet enrollment is admitted. cmd.server.bootstrap.start remains separate after successful claim. DL-259 DESKTOP-RESTORE-1
-  A, Jared 2026-10-31: the native desktop performs the first owner claim of its dormant local Server through a protected
+  separately bootstraps requested execution_form standalone or container, verifies durable roots or mounts and
+  the immutable execution baseline, and never creates a reduced control-plane-only Server. Closing, refreshing,
+  sleeping, or powering off a Client never cancels Server-owned Goal, turn, login, update, backup, Move, browser,
+  build, or test. Reconnect and resume are exact cmd.server.connect modes using prior session and durable cursor/snapshot
+  catch-up without duplicate or omitted entries; they do not mint separate commands or new work. Stop Server,
+  restart, and move are explicit service/tray/menu operations; GUI close is not an implicit stop. DL-259 CLOUD-1
+  A, Jared 2026-10-31: the person uses an explicit cloud-provider console or local-bootstrap handoff and its one-time
+  Server setup code to claim a new cloud computer. The Server owner checks and consumes the code through the protected
+  local/private bootstrap handoff. Its initial owner-claim authorization is bound to the existing discovery_observation_id,
+  pairing_session_id and identity_fingerprint handed to cmd.server.claim, with the command’s current permission
+  and generation fences. The tuple references owner-verified authority; guessed IDs, an address or a caller-provided
+  success flag are not proof. Raw setup code never enters the ordinary command payload, stored setup plan, logs
+  or receipts. No public unclaimed setup, automated provider-console/SSH provisioning or implicit tailnet enrollment
+  is admitted. cmd.server.bootstrap.start remains separate after successful claim. DL-259 DESKTOP-RESTORE-1 A,
+  Jared 2026-10-31: the native desktop performs the first owner claim of its dormant local Server through a protected
   direct local handoff, with no code for the person to type. The Server owner binds that initial owner-claim authorization
-  to its discovery_observation_id, pairing_session_id and identity_fingerprint for the existing cmd.server.claim request
-  and exact current permission/generations. Ordinary Clients, browser state and loopback reachability cannot manufacture
-  this protected native authority. Claim then separate cmd.server.bootstrap.start must complete for the actual local
-  Server, its durable roots/mounts and immutable execution baseline before cmd.restore.server_full. Backup maintenance/recovery
-  authority, exact-target verification, paused restore and separate pairing/remote activation remain required. Reuse
-  current verified prerequisites when already satisfied; dormant capability alone is never a claim or bootstrap receipt.
-  DL-259 CLOUD-1 / srv C2 A, Jared 2026-10-31: onboarding claims a new cloud computer through the provider-console/local-bootstrap
-  one-time setup-code handoff. That initial claim route asks for the code, not a Server address, and does not discover
-  unclaimed cloud computers over the network. The Server owner’s protected authorization and existing exact proof tuple
-  still gate claim; no public unclaimed setup is exposed.'
+  to its discovery_observation_id, pairing_session_id and identity_fingerprint for the existing cmd.server.claim
+  request and exact current permission/generations. Ordinary Clients, browser state and loopback reachability
+  cannot manufacture this protected native authority. Claim then separate cmd.server.bootstrap.start must complete
+  for the actual local Server, its durable roots/mounts and immutable execution baseline before cmd.restore.server_full.
+  Backup maintenance/recovery authority, exact-target verification, paused restore and separate pairing/remote
+  activation remain required. Reuse current verified prerequisites when already satisfied; dormant capability
+  alone is never a claim or bootstrap receipt. DL-259 CLOUD-1 / srv C2 A, Jared 2026-10-31: onboarding claims
+  a new cloud computer through the provider-console/local-bootstrap one-time setup-code handoff. That initial
+  claim route asks for the code, not a Server address, and does not discover unclaimed cloud computers over the
+  network. The Server owner’s protected authorization and existing exact proof tuple still gate claim; no public
+  unclaimed setup is exposed. Application chats, Goals, Crew, Assistant Plan/Deep Plan and scheduled messages/tasks
+  are Server-owned under SRV-017. Client close, sleep or refresh does not stop them; no-project availability does
+  not claim/bootstrap a dormant local service. Explicit service quit/stop enumerates both app and Project live
+  work/timers and preserves their safe-stop/restart and missed-time rules.
 gui_related: true
 gui_classification_reason: Native/web parity, disconnected/currentness state, explicit lifecycle controls, and responsive Client behavior are visible product behavior.
 depends_on: [SRV-004, SIR-004, SIR-005]
@@ -328,7 +357,10 @@ node_compile_hint: {mode: permanent_server_product_contract, create_worknodes: f
 source_lineage:
 - source_ref:normalized-register:server-first-2026-08-31:C01-C06
 - source_ref:packet:backbone_v5/10_SERVER_REMOTE_ACCESS_DEPLOYMENT_CONTRACT.md
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31;
+  DL-259)
+- 'source_ref:projects-pass2-20261103:N5/N15/N17/latest-Plan-schedule-ruling; Jared: "I approve the outstanding
+  questions with their recommended settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens: [permanent web UI, Stop Server, restart, dormant, loopback, cmd.server.bootstrap.start, execution_form]
 negative_constraints: [Do not use a frontend dev server as product architecture., Do not cancel work on Client close., Do not fabricate local filesystem or device capability in a web Client.]
 owner_hints: [Plans/Server_System.md, Plans/Shared_Integration_Runtime.md, Plans/FinalGUISpec.md]
@@ -342,12 +374,16 @@ unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Server_System.md
 canonical_text: >-
-  Project Home Server, Connected Server, Execution Host, Execution Environment, Source Location, Client, endpoint, and
-  remote route are distinct identities. The Home Server is the default Execution Host when compatible; Shared
-  Integration Runtime owns execution assignment, leases, environment supervision, and handoff primitives. Changing a
-  Client, endpoint, route, Host, Environment, or Source Location is not Project Move. Project Sync and Backbone alone
-  owns verified Vault transfer and one-writer authority cutover. No automatic multi-Server failover or writable offline
-  Client replica is permitted.
+  Project Home Server, Connected Server, Execution Host, Execution Environment, Source Location, Client, endpoint,
+  and remote route are distinct identities. The Home Server is the default Execution Host when compatible; Shared
+  Integration Runtime owns execution assignment, leases, environment supervision, and handoff primitives. Changing
+  a Client, endpoint, route, Host, Environment, or Source Location is not Project Move. Project Sync and Backbone
+  alone owns verified Vault transfer and one-writer authority cutover. No automatic multi-Server failover or writable
+  offline Client replica is permitted. Settings home is a separate explicit role, not every Project Home Server.
+  The Computer display name groups a native Client and its actual local Server via ClientRecord.local_server_id;
+  their identity and authorization domains remain distinct. Settings levels are values, never new topology or
+  connector identities. An app thread fixes its actual work Server/Host after first message; only its admitted
+  conversion/Continue elsewhere route changes future scope.
 gui_related: true
 gui_classification_reason: Connected Server, Hosted On, Run On, route, Move Project, and execution status must be visibly distinguished.
 depends_on: [SRV-002, SIR-002, PSB-001]
@@ -363,8 +399,10 @@ context_scope: server_execution_movement_boundary
 implementation_surfaces: [Plans/Server_System.md, Plans/Shared_Integration_Runtime.md, Plans/Project_Sync_and_Backbone.md]
 node_compile_hint: {mode: execution_movement_boundary, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:normalized-register:server-first-2026-08-31:C05-C09
-  - source_ref:packet:01_FULL_THREAD_DECISION_REGISTER.md
+- source_ref:normalized-register:server-first-2026-08-31:C05-C09
+- source_ref:packet:01_FULL_THREAD_DECISION_REGISTER.md
+- 'source_ref:projects-pass2-20261103:S1/S7/N5/N17; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens: [Project Home Server, Connected Server, Execution Host, Execution Environment, Source Location, Move Project]
 negative_constraints: [Do not normalize distinct topology identities into one host string., Do not call a route change Project Move., Do not create automatic writable failover.]
 owner_hints: [Plans/Server_System.md, Plans/Shared_Integration_Runtime.md, Plans/Project_Sync_and_Backbone.md]
@@ -377,19 +415,24 @@ plan_unit_id: SRV-007
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: 'One Client command targets one Server and executes once through a typed idempotent envelope with expected
-  Catalog, trust, topology, and session generations. cmd.server.connect carries exact connect, reconnect, and resume
-  modes; reconnect requires the prior session and resume additionally requires the durable cursor, while neither creates
-  a second semantic handler. Server projections distinguish loading, cached, current, stale, offline, unauthorized, protocol_mismatch,
-  identity_mismatch, degraded, blocked, and recovery_required without converting a transport observation into durable
-  success. Client caches are bounded and read-only. Slow or malicious Clients use bounded queues and cannot backpressure
-  Goals, duplicate work, or force eager hydration of every Project or manager. DL-259 CLOUD-1 / DESKTOP-RESTORE-1, Jared
-  2026-10-31: initial owner-claim authorization comes from the Server owner’s one-time console/bootstrap-code handoff
-  for a new cloud computer, or the native desktop’s protected direct local handoff for its dormant Server with no human
-  code. cmd.server.claim keeps its existing closed arguments discovery_observation_id, pairing_session_id and identity_fingerprint.
-  Their owner-verified binding plus current permission/generations carries the authorization; no raw code, certificate
-  material, new claim command or caller assertion of trust is added. Bootstrap and restore remain separate commands and
-  receipts. Initial owner claim does not grant pairing/trust to other Clients.'
+canonical_text: >-
+  One Client command targets one Server and executes once through a typed idempotent envelope with expected Catalog,
+  trust, topology, and session generations. cmd.server.connect carries exact connect, reconnect, and resume modes;
+  reconnect requires the prior session and resume additionally requires the durable cursor, while neither creates
+  a second semantic handler. Server projections distinguish loading, cached, current, stale, offline, unauthorized,
+  protocol_mismatch, identity_mismatch, degraded, blocked, and recovery_required without converting a transport
+  observation into durable success. Client caches are bounded and read-only. Slow or malicious Clients use bounded
+  queues and cannot backpressure Goals, duplicate work, or force eager hydration of every Project or manager.
+  DL-259 CLOUD-1 / DESKTOP-RESTORE-1, Jared 2026-10-31: initial owner-claim authorization comes from the Server
+  owner’s one-time console/bootstrap-code handoff for a new cloud computer, or the native desktop’s protected
+  direct local handoff for its dormant Server with no human code. cmd.server.claim keeps its existing closed arguments
+  discovery_observation_id, pairing_session_id and identity_fingerprint. Their owner-verified binding plus current
+  permission/generations carries the authorization; no raw code, certificate material, new claim command or caller
+  assertion of trust is added. Bootstrap and restore remain separate commands and receipts. Initial owner claim
+  does not grant pairing/trust to other Clients. Typed application/level commands may carry null project_id with
+  an explicit scope and actual writer Server/Host/Client; a missing Project is still refused where the target
+  operation needs one. A settings follower or cache cannot accept a write for its unreachable home and cannot
+  relay another Client's session authority.
 gui_related: true
 gui_classification_reason: Currentness, disabled reasons, connection health, progress, retry, and recovery states are visible on every Client.
 depends_on: [SRV-004, SRV-005, SIR-004, SIR-005, SIR-006]
@@ -415,7 +458,10 @@ node_compile_hint: {mode: server_continuity_contract, create_worknodes: false, c
 source_lineage:
 - source_ref:normalized-register:server-first-2026-08-31:C01-C06
 - source_ref:packet:B5/22_SECURITY_AND_FAILURE_TEST_MATRIX.md
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31;
+  DL-259)
+- 'source_ref:projects-pass2-20261103:S7/N12; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens: [cached, current, stale, offline, protocol_mismatch, identity_mismatch, recovery_required, connect, reconnect, resume]
 negative_constraints: [Do not label cached state current., Do not let Client queues backpressure Goals., Do not execute a replayed command twice.]
 owner_hints: [Plans/Server_System.md, Plans/Shared_Integration_Runtime.md]
@@ -542,6 +588,383 @@ preserved_exact_tokens: [not_run, residual risk, no readiness claim, no certific
 negative_constraints: [Do not promote schema validation to runtime proof., Do not hide failed or missing evidence., Do not claim Server readiness from a UI fixture.]
 owner_hints: [Plans/Server_System.md, Plans/Automated_Testing_System.md]
 ```
+
+
+
+### SRV-016 - Settings Home And Least-Privilege Same-Owner Following
+
+```yaml
+plan_unit_id: SRV-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: >-
+  One ServerRecord has the explicit settings-home role and is sole writer of Everywhere/history; its card says
+  Keeps your settings. Computer and Device writers remain SSYS-060's. Independently configured Servers start separately;
+  they follow one home only after an owner-chosen S12 join and protected same-owner pairing. ServerPeerTrustRecord
+  is distinct from ClientTrustRecord: bind both verified stable Server identities/owner, pairing session, allowed
+  settings.follow scope, trust generation, expiry/revocation, protocol and digest-only proof. settings.follow
+  lets a follower read Everywhere/deltas and send its own Computer mirror only; no write to Everywhere, arbitrary
+  Server command, Project metadata/content, cross-Project read/send or work authority follows. Member/unowned
+  Servers cannot lead/follow the owner's settings. Revocation ends both-direction delivery and fences stale sessions/commands;
+  at next authorized startup the follower discards its former Everywhere copy, retaining its own Computer level.
+  Devices pair directly with the home for settings.everywhere.write; a follower cannot relay their commands.
+
+  ClientRecord.local_server_id is written only by the verified protected native local handoff. It makes the app
+  and its own Server one Computer name while preserving Client/Server identity, trust and D7 B connector owners.
+  Server discovery exposes no settings/Project/app-work data and cannot grant following.
+
+  cmd.server.settings_home.move is one Server-owner operation with preview/apply modes, one sole planned handler
+  and exact source/destination Server IDs, owner/trust/catalog/role generations, current snapshot/history hashes/revisions,
+  preview expiry, idempotency and return context. The person chooses the destination; refuse changes-in-flight
+  and stale/unverified targets. Copy Everywhere/history, verify readback, fence the old writer, switch the role
+  generation once, then let the former home follow. No two role generations can write; old sessions/deltas fail
+  the new fence. Lost-home recovery is a distinct explicit promotion of a named last-known copy, with as-of/loss
+  warning and a role fence that rejects the old home if it returns; never automatic election. A freshness/loss
+  acknowledgement alone is not a writer fence: promotion must establish the admitted role-generation/lease revocation
+  that prevents the old home serving another write; if that cannot be proved, return recovery_required with no
+  writable promotion. F/A freeze that exact recovery proof before a native handler is enabled. Full Server Backup
+  holds the role's Everywhere/history; Project Backup holds only Project own values and cannot overwrite Everywhere.
+  Restore replacement remains protected and target-bound. The frozen peer operation is cmd.server.settings_peer_trust
+  with handlers::server::settings_peer_trust and settings_peer_trust_command_request/settings_peer_trust_command_result
+  in Plans/server_system_contracts.schema.json. It admits only start, approve, reject, cancel and revoke for
+  settings.follow; join data choices use Settings transactions. The move handler is handlers::server::settings_home_move
+  with settings_home_move_request/settings_home_move_result in that same schema. Both preserve exact initiating
+  Client, invocation, context revision, route, focus and continuation generation. No command becomes available
+  without central contract, handler, wiring, secure storage and native evidence.
+
+  Home move preview/apply binds verified source/destination Server IDs, same-owner trust and protocol,
+  catalog and role generations, snapshot/history revisions and hashes, preview expiry, idempotency and exact
+  return. Apply rechecks every captured generation, copies and verifies readback before the single
+  role-generation switch, and obtains original old-writer fencing proof under the admitted writer lease.
+  Lost-home promotion cannot turn a stale snapshot, user acknowledgement, elapsed time or an all-true client
+  assertion into that proof; without verifiable old-writer revocation/lease fencing it remains
+  recovery_required. A returned former home cannot accept writes under its old role. SP-348 supplies the
+  tagged Server/Execution Host/Client keys, not raw-ID aliases. SRV-018's SSH trust is separate from
+  Server-peer settings trust and Client pairing.
+gui_related: true
+gui_classification_reason: Defines user-visible Settings, Computer, panel or work-state behavior.
+depends_on:
+- SRV-001
+- SRV-004
+- SRV-006
+- SRV-007
+unblocks: []
+acceptance_criteria:
+- Only a same-owner explicit pairing creates settings.follow; Member, discovery-only and revoked/stale peers fail
+  closed.
+- A follower can read Everywhere and publish its own mirror, but cannot write home values or read any Project
+  via that scope.
+- Home move verifies copied values/history before one fenced writer switch; in-flight/stale or unknown effects
+  do not create a second writer.
+- Loss requires a human-chosen fresh/stale copy with disclosed loss window and old-home return fencing.
+validation_surfaces:
+- Plans/server_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
+- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
+- Future native owner/command/writer/readback/security evidence; not_run
+risk_class: owner_scope_or_credential_authority_leak
+reasoning_tier: high
+context_scope: projects_refresh_20261103_srv_016
+implementation_surfaces:
+- Plans/Server_System.md
+- Plans/storage-plan.md
+- Future shared Rust interface model and sole owner services; no implementation claimed
+node_compile_hint:
+  mode: accepted_product_contract_pending_companion_and_native_evidence
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/SETTINGS-PROPOSAL.md; cards S1/S7/S12
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md §3 A; pinned integration
+  41d8119aec71789de7422018ea9c167e6c60a156
+- 'source_ref:chat:20261103: Jared: "I approve the outstanding questions with their recommended settings."'
+- 'source_ref:chat:20261103: Jared: "when I say separate settings for different environments, that is what T3
+  calls the different computers, but it is where Puppet Master runs its work."'
+preserved_exact_tokens:
+- ServerPeerTrustRecord
+- settings.follow
+- settings.everywhere.write
+- ClientRecord.local_server_id
+- cmd.server.settings_home.move
+- Keeps your settings
+- cmd.server.settings_peer_trust
+- settings_peer_trust_command_request
+- settings_peer_trust_command_result
+- settings_home_move_request
+- settings_home_move_result
+negative_constraints:
+- Do not alias Server-peer trust to Client pairing or introduce relay command authority.
+- Do not elect a home automatically or admit writable follower caches.
+- Do not share connector keys, credentials or protected pairing material.
+owner_hints:
+- Plans/Server_System.md
+- Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/Server_System.md, ContractName:Plans/Plan_Document_System.md
+
+### SRV-017 - Application Work Custody And Named Computer
+
+```yaml
+plan_unit_id: SRV-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: >-
+  No project is a genuine app-scope chat with project_id=null, explicit application scope and its actual work
+  server_id, execution_host_id, execution_environment_id where relevant, thread_id, current storage writer/lease
+  and permission/Stop context. Before any Project Vault exists, that Server owns application chat history, app
+  scratch notebook/checkpoints, Goals/control/history/continuations, Crew definitions/runs/board/coordination,
+  Assistant Plan/Deep Plan/revisions/PlanRuns/bundles and scheduled messages/tasks/windows/occurrences/quota consent
+  under their existing owners and scope-aware versions. The app store is not a Project Vault and has no fabricated
+  Project Home Server lease. Ordinary owner limits, holds, retention, source-custody and mandatory Full Server
+  Backup apply; chat Undo expiry alone cannot purge independent canonical work or referenced payloads.
+
+  Choose the native device's already claimed/bootstrapped local Server when usable, otherwise the person's named
+  main Computer; phone/web always names where work runs. A native Client without a ready local service says which
+  Computer will work and offers Set up Puppet Master here via protected claim/bootstrap. Dormant local capability
+  is never silently claimed. The place may change before first message; after that work Computer is fixed. Continue
+  on another computer makes a new linked chat, and chat conversion uses C/PSB's preview/copy/check/fence/cutover
+  with fresh destination authority. Existing running processes, provider profiles, credentials and timers do not
+  move by changing focus or copying a transcript.
+
+  The actual Server owns timers and occurrence-idempotency; closing/sleeping a Client or switching Projects does
+  not fire, cancel or relocate them. An offline Computer remains listed by name/status; loaded cached history
+  is readable but cannot continue. Missed work follows SQR's saved policy on that Server's return, never fallback
+  to another Computer or a burst of backlog. App and Project pause/Stop epochs are independent operational records,
+  not Everywhere settings; clear remains a user action. Explicit Server quit/stop includes app live work/timers
+  in the same safe-stop/restart rules and truthful ObservableWork/History/attention projections.
+
+  Cross-Server reads use the existing Remote Access route/verified source identity and separately admitted narrow
+  Project read authority on every access. settings.follow and discovery carry no content scope; no parallel route
+  registry, synthetic Project, unbounded cache or second message board is created. Goals, Crew, Plan/Deep Plan
+  and scheduled tasks/messages are available in app scope; only Planning Wizard, PRD Builder and Orchestrator
+  retain no-project workflow gates. Availability still requires each actual target, capability, permission, writer
+  and admitted schema/event graph, and acceptance of this prose is no native implementation evidence.
+
+  Before any Vault exists the same app writer also owns Deep Plan ledger sessions, schedule bindings, pause
+  records and their canonical consent/occurrence/source audit under CV-365–368 and SP-349/351/352/353.
+  Server-only pause and Settings operations carry actual Server scope without a fabricated thread; real
+  execution records carry their actual thread/Host/Environment and admitted roots. Internal talk/planning
+  alone does not create a chat folder. Client close, app shutdown and explicit Server stop are distinct
+  lifecycle actions.
+gui_related: true
+gui_classification_reason: Defines user-visible Settings, Computer, panel or work-state behavior.
+depends_on:
+- SRV-005
+- SRV-006
+- SRV-007
+- SRV-014
+unblocks: []
+acceptance_criteria:
+- A zero-Project chat/work item has real app/Server/thread/Host custody, never Project sentinel/Vault identity.
+- Local absence names main Computer and offers protected setup; first message fixes place and offline hosts never
+  silently fallback.
+- App Goal/Crew/Plan/schedule commands, history/timers/pause/backup use the existing owners and counterpart limits.
+- Client close keeps Server work live; explicit service stop accounts for app tasks and preserves restart/missed-time
+  policy.
+validation_surfaces:
+- Plans/server_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
+- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
+- Future native owner/command/writer/readback/security evidence; not_run
+risk_class: owner_scope_or_credential_authority_leak
+reasoning_tier: high
+context_scope: projects_refresh_20261103_srv_017
+implementation_surfaces:
+- Plans/Server_System.md
+- Plans/storage-plan.md
+- Future shared Rust interface model and sole owner services; no implementation claimed
+node_compile_hint:
+  mode: accepted_product_contract_pending_companion_and_native_evidence
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/SETTINGS-PROPOSAL.md; cards N5/N12/N15/N17/N24/N25/latest-app-rulings
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md §3 A; pinned integration
+  41d8119aec71789de7422018ea9c167e6c60a156
+- 'source_ref:chat:20261103: Jared: "I approve the outstanding questions with their recommended settings."'
+- 'source_ref:chat:20261103: Jared: "Those look good, except goals and crew should be allowed in no project."'
+- 'source_ref:chat:20261103: Jared: "Plan mode and scheduled tasks are also available in no project. It''s only
+  planning wizard/prd builder/orchestrator that isn''t."'
+preserved_exact_tokens:
+- project_id=null
+- server_id
+- thread_id
+- Set up Puppet Master here
+- No project
+- settings.follow
+- Full Server Backup
+negative_constraints:
+- Do not claim a sleeping local service or turn a frontend into an execution owner.
+- Do not continue on an offline Computer or move live profiles/processes/timers implicitly.
+- Do not use settings.follow, a read grant or source scope as destination work authority.
+owner_hints:
+- Plans/Server_System.md
+- Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/Server_System.md, ContractName:Plans/Plan_Document_System.md
+
+### SRV-018 - Protected SSH Host Trust And Public-Key Installation
+
+```yaml
+plan_unit_id: SRV-018
+unit_type: security_contract
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: >-
+  Server System is the sole protected SSH host-trust and public-key-install owner. Settings SSH
+  computers/keys, New Project, onboarding, source inspection and Doctor consume the same operations.
+  cmd.server.ssh.trust routes only to handlers::server::ssh_host_trust; cmd.server.ssh.public_key.install
+  routes only to handlers::server::ssh_public_key_install. Each has preview|apply phases and the exact
+  closed request/result roster and source joins below. SshHostTrustCommandRequestV1 and
+  SshHostTrustCommandResultV1 bind host trust; SshPublicKeyInstallCommandRequestV1 and
+  SshPublicKeyInstallCommandResultV1 bind installation in Plans/server_system_contracts.schema.json. Both
+  are accepted design contracts with handler_unavailable until central registration, companions, secure
+  custody and native evidence exist. expected_event_types=[]; typed owner receipts/ObservableWork do not
+  admit an EventRecord family.
+
+  An SSH target is a Server-owned connection or pre-identity connection draft, binding the executing claimed
+  Server/Host/Environment, exact remote host/port/account, transport and target generation. It does not
+  fabricate a PM server_id for an unmanaged SSH host or a Project before reservation. An owner-observed
+  current host-key challenge binds that target and actual public host key/fingerprint, observation expiry
+  and existing trust revision or explicit absence. Display the full fingerprint and, for replacement, both
+  old and new fingerprints. Preview is read-only; discovering or reaching the host grants no trust. Apply
+  requires an authentic human_gui or human_palette decision on the exact initiating active Client, current
+  permission/session/topology and challenge, followed by host-key revalidation. Add/replace the exact
+  host/port trust entry under CAS only after that protected decision. A changed key fails
+  ssh_host_key_changed until a fresh explicit replacement preview and human decision; it never uses
+  accept-any, a global insecure flag or a cached yes. Concurrent change or expired/revoked proof refuses
+  before effect. SSH host trust is independent of PM Client pairing, Server peer settings.follow, TLS/PM
+  identity, executable source trust and Project/content authority.
+
+  Public-key installation selects an existing shared SSH-key-list public_key_id and immutable public-key
+  fingerprint/revision. Validate the supported algorithm and strength before even the already-authorized
+  path as required by DL-271; a stale, missing or weak key is not reused. The private half remains on its
+  original Host/secure owner. Preview uses a verified current SSH host-trust session and existing chosen
+  credential ref or the broker's exact-Client one-use protected input to read the selected remote account
+  and its own authorized_keys target. Bind remote account identity, home and file identity, exact public-key
+  entry, existing bytes hash/revision or explicit absent-file proof, safe permissions and preview expiry. No
+  arbitrary caller-supplied path or shell command is accepted. Human-only apply revalidates all of these
+  facts, appends the exact public entry only if absent under the remote capability's admitted atomic
+  compare/write, preserves other entries/restrictions, refuses symlink/identity/permission drift and
+  verifies readback. Existing unsafe permissions or unsupported remote atomicity fail closed with recovery
+  guidance; there is no blind overwrite, automatic permission loosening or generic shell fallback. An
+  existing entry is unchanged only after the same strength/identity checks.
+
+  The SSH effect journal binds operation/idempotency identity, exact target, preview commitment, public key
+  and observed trust/file revision. Same key and same committed intent replay the original result; changed
+  intent conflicts. A disconnect after possible write returns effect_unknown with settled/remaining facts,
+  then reconciles by reading that same trusted account/file before retry; it never blindly appends twice.
+  Unreconciled work cannot complete setup or imply a usable login. Cancel/Close cannot claim an already
+  applied entry was removed. Trust or public-entry cleanup requires a separate fresh protected owner action
+  against current identity; Project failure, Settings rollback or conversion Undo never deletes it
+  speculatively. An install receipt proves only the verified authorized entry; any subsequent
+  connection/readiness test remains the existing connection owner's independent current check.
+
+  Requests/results/history/export contain no password, passphrase, private key, cookie, CLI profile or raw
+  protected input. The existing broker alone consumes a bounded one-use protected_input_ref for the exact
+  operation/Client/session, zeroizes it and keeps it out of durable requests, receipts and logs; public key
+  and fingerprint refs are not credential-copy authority. YOLO, build grants, agents, screen-use and
+  adapters cannot accept host trust, install a key or answer protected authentication. Exact return
+  preserves initiating Client, invocation token, caller scope/context revision, route/focus and continuation
+  generation, or reports caller_unavailable; no current-tab/another-Client fallback. Before native dispatch
+  the complete original target/challenge/human-decision/trust/key/file/receipt source and secure-custody
+  graph must be bound; booleans or structural fixtures cannot substitute for it. This grants no automated
+  SSH provisioning, PM bootstrap/claim, Server listener, VPN enrollment or remote-access ingress.
+gui_related: true
+gui_classification_reason: Defines visible protected SSH confirmation, key-install outcomes and exact setup return.
+depends_on:
+- SRV-001
+- SRV-004
+- MACS-002
+unblocks: []
+acceptance_criteria:
+- Settings, onboarding, New Project and Doctor use the two exact Server operations and handlers with one shared
+  SSH-key list.
+- Changed/expired/revoked host proof or wrong Client/target/permission refuses before trust or installation; explicit
+  replacement compares both fingerprints.
+- Weak key refusal runs before already-authorized reuse; private keys and raw protected input never enter request/result/history/export.
+- Remote account/file CAS, preserved entries and verified readback distinguish applied, unchanged, failed and
+  effect_unknown; replay never repeats unknown effects.
+- YOLO/agents cannot self-approve; PM identity, settings.follow, source trust and Project authority are not inferred
+  from SSH trust.
+- Return binds the exact initiating continuation, and missing schema/handler/source/custody evidence leaves the
+  operation unavailable.
+validation_surfaces:
+- Plans/server_system_contracts.schema.json and Plans/server_system_contract_fixtures.json; F-d adoption required
+- Plans/projects_refresh_command_bindings.json and central wiring/Touch contracts; F-b adoption required
+- Future native protected-input, SSH currentness, remote-write/readback and restart evidence; not_run
+risk_class: ssh_host_impersonation_or_protected_key_install_authority_escape
+reasoning_tier: high
+context_scope: projects_refresh_20261103_srv_018
+implementation_surfaces:
+- Plans/Server_System.md
+- Plans/server_system_contracts.schema.json
+- Future sole Server SSH owner and shared protected-auth broker; no implementation claimed
+node_compile_hint:
+  mode: accepted_product_contract_pending_companion_and_native_evidence
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:projects-pass2-20261103:PHASE2-BRIEF known correction assigns protected SSH trust/key-install to
+  lane A
+- source_ref:projects-pass2-20261103:Fb-ACE01; Fc-ACE01; Fd-E01; PLANS-EDIT-PLAN section 7 owner-operation freeze
+- 'source_ref:chat:20261103: Jared: "I approve the outstanding questions with their recommended settings."'
+preserved_exact_tokens:
+- cmd.server.ssh.trust
+- cmd.server.ssh.public_key.install
+- handlers::server::ssh_host_trust
+- handlers::server::ssh_public_key_install
+- SshHostTrustCommandRequestV1
+- SshHostTrustCommandResultV1
+- SshPublicKeyInstallCommandRequestV1
+- SshPublicKeyInstallCommandResultV1
+- preview|apply
+- protected_input_ref
+- authorized_keys
+- effect_unknown
+- ssh_host_key_changed
+- expected_event_types=[]
+negative_constraints:
+- Do not copy private keys, persist protected input, use accept-any host checking or install through an untyped
+  connection action.
+- Do not let agents, YOLO or a build grant approve SSH trust, key installation or protected sign-in.
+- Do not overwrite foreign entries, follow symlink targets, weaken permissions, retry unknown writes blindly or
+  invent a remote rollback.
+- Do not claim PM pairing, settings following, source trust, provisioning, public ingress or native readiness
+  from these operations.
+owner_hints:
+- Plans/Server_System.md#SRV-018
+- Plans/Multi-Account_Connection_Spec.md#MACS-002
+- Plans/Remote_Access_System.md#RAS-017
+```
+
+ContractRef: ContractName:Plans/Server_System.md#SRV-018, ContractName:Plans/Multi-Account_Connection_Spec.md#MACS-002, ContractName:Plans/Remote_Access_System.md#RAS-017
+
+#### SRV-018 exact command and data contract
+
+All four definitions below are new version 1.0.0 resources in `Plans/server_system_contracts.schema.json`; they preserve every existing definition and close `additionalProperties`. Logical IDs are respectively `pm.server.ssh_host_trust.request.v1`, `pm.server.ssh_host_trust.result.v1`, `pm.server.ssh_public_key_install.request.v1` and `pm.server.ssh_public_key_install.result.v1`. F-d materializes the exact owner data/source contracts; F-b registers both primaries with their sole planned handlers, producer/return/disabled profiles and Touch rows. No alias is admitted.
+
+| Primary and sole handler | Request | Result |
+|---|---|---|
+| `cmd.server.ssh.trust` → `handlers::server::ssh_host_trust` | `Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1` | `Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandResultV1` |
+| `cmd.server.ssh.public_key.install` → `handlers::server::ssh_public_key_install` | `Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1` | `Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandResultV1` |
+
+| Closed component | Required fields and joins |
+|---|---|
+| Shared request envelope | `schema_id`, `schema_version`, exact `command_id`, `phase=preview\|apply`, `operation_id`, `command_instance_id`, `idempotency_key`, `actor=human_gui\|human_palette`, actual `scope`, `target_ref`, `expected`, `permission_snapshot_ref`, `preview_ref`, `human_decision_ref`, `protected_input_ref`, `return_context`. Scope is the actual executing Server application scope under CV-365; optional initiating Project/draft context is descriptive and cannot replace the SSH target. Absent phase-inapplicable refs are present-null. Protected input is an ephemeral transport-only ref and is removed before durable intent recording. |
+| Target source | `target_ref` selects exactly one owner-issued existing connection revision or pre-identity connection-draft revision/hash. It resolves executing `server_id`, `execution_host_id`, actual `execution_environment_id`, target host/port/remote account and transport/target generation. No invented remote PM Server or Project. Display the resolved destination before apply. |
+| Trust payload | `trust_action=add\|replace`, `host_key_observation_ref`, `expected_trust_revision` or explicit absent-key proof. Observation source binds full public host-key fingerprint/algorithm, host/port, target generation, observed time/expiry and prior trust ref. Replace requires the exact prior and newly observed keys plus a fresh human decision; add cannot overwrite a prior key. Apply's preview/decision are required and must match the owner-issued complete commitment. |
+| Install payload | `public_key_ref` binds shared `public_key_id`, revision, fingerprint and key-policy proof; `authorized_keys_observation_ref` binds the verified remote account/home/file identity, existing content digest/revision or explicit absence, permissions, matching host trust/session and expiry. No raw private key, password, arbitrary destination path or executable command. |
+| Currentness and authority | `expected` captures target/connection or draft, topology, trust, auth/session, permission/Stop and public-key/file generations as applicable. Owner-issued preview includes these original sources, exact requested effect and expiry; apply re-reads and validates them immediately before effect. `human_decision_ref` is authentic protected owner evidence for that exact Client/operation/preview, never a caller-supplied confirmation boolean. |
+| Result union | `schema_id`, `schema_version`, exact `command_id`, `phase`, `operation_id`, `status`, `target_ref`, `preview`, `receipt`, `error`, `work_ref`, `return_context`, `expected_event_types=[]`. `preview_ready` carries an owner preview and no mutation receipt; `applied\|unchanged` requires a verified owner receipt; `rejected\|failed` names the exact reason and any earlier settled facts; `effect_unknown` carries an owner reconciliation/work ref and never a fabricated success receipt. Nullability is branch-specific. |
+| Receipt/source | Exact operation/idempotency/target/preview commitment; actual actor/authority source; observed host trust and public-key refs; before/after trust or authorized-file identity/digest/revision; settled/remaining effects, readback proof, UTC outcome and original-result replay ref. Source objects come from the owner, not client assertions. Canonical redacted intent/result and trust/connection/key references use existing secure/storage owners; no ordinary Settings value, live JSON mirror or reconstructable-from-events authority. |
+| Return | Captured initiating `client_id`, invocation token, caller scope and context revision, caller route/focus, continuation generation. Echo exact values; a missing initiating caller is `caller_unavailable`, with the completed operation still discoverable by its original work/result identity. Back/Close never silently retargets or undoes a dispatched effect. |
+
+Closed refusal reasons include `handler_unavailable`, `human_action_required`, `initiating_client_unavailable`, `caller_unavailable`, `permission_denied`, `stale_target`, `stale_preview`, `preview_expired`, `ssh_host_key_changed`, `host_trust_required`, `stale_trust`, `authentication_required`, `protected_input_expired`, `unsupported_ssh_target`, `unsupported_key`, `weak_key`, `key_unavailable`, `remote_account_changed`, `authorized_keys_changed`, `unsafe_remote_target`, `unsupported_remote_atomicity`, `remote_effect_unknown`, `idempotency_conflict` and `recovery_required`. Each is used only for its actual failed predicate; unknown remote effect cannot be relabelled permission refusal or safe retry.
+
+Positive fixtures cover add trust, explicit changed-key replacement, same-key unchanged replay, first safe public-entry append, already-authorized strong key, absent-file CAS, exact continuation and separate connection verification. Negative/source fixtures cover forged or stale human decision, target/host-key/account substitution, old trust generation, revoked session, weak-before-reuse, wrong/private key, raw protected input, unauthorized caller, symlink/unsafe permissions, concurrent file edit, lost reply after possible write, wrong-body idempotency reuse, unsupported atomicity, another-Client return and speculative cleanup. Native security/durability evidence remains not_run.
 
 ## 3. Contracts, Schemas, Events, Or Data Shapes
 
@@ -953,14 +1376,24 @@ plan_unit_id: SRV-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: Notebook and checkpoint records have exactly one canonical writer, the Project Home Server. Clients render read-only projections and issue idempotent canonical commands; a previous Server cannot keep writing after Project Move cutover, and no automatic failover or offline replica creates a second notebook writer.
+canonical_text: >-
+  Notebook and checkpoint records have exactly one canonical writer. Project records use the actual Project Home
+  Server and Vault lease; an app thread's scratch notebook/checkpoints use its actual work Server's application
+  store writer/lease before a Vault exists. Clients render read-only projections and issue exact idempotent owner
+  commands. At admitted chat conversion, the Notebook/PSB owners copy/check/fence and cut over to the real destination
+  Vault with new authority; the old app writer and any previous Project Server are fenced. No automatic failover
+  or offline replica creates a second writer. Canonical Goal/Plan/Crew/schedule records retain their independent
+  owner retention/holds beyond chat Undo expiry.
 gui_related: false
 gui_classification_reason: Writer authority is server behavior, not GUI work.
 depends_on: [SRV-013, PSB-006]
 unblocks: []
 acceptance_criteria:
-  - Stale Server writes after cutover are rejected.
-  - No Client becomes a writable notebook database.
+- Project notebook writes require actual Project/Vault writer authority; app scratch writes require actual thread/Server/application
+  lease and null Project.
+- Conversion permits exactly one live writer and issues fresh destination authority; stale source writes cannot
+  succeed.
+- Client closure never cancels Server-owned work and no cache becomes writable.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: dual_writer
@@ -969,7 +1402,9 @@ context_scope: server_system
 implementation_surfaces: [Plans/Server_System.md, Plans/Project_Sync_and_Backbone.md]
 node_compile_hint: {mode: server_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-I11
+- source_packet:PM-WNC-2026-09-05-v1:WNC-I11
+- 'source_ref:projects-pass2-20261103:N5/N17/N25/latest-Plan-schedule-ruling; Jared: "I approve the outstanding
+  questions with their recommended settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens: ["one canonical writer", "Project Home Server"]
 negative_constraints:
   - Do not create a second notebook writer through failover or Client replicas.
@@ -1052,6 +1487,8 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-035, ContractName:Plans/Secti
 
 
 ## PM7 client quit and live work (2026-10-29; D8–D12, G4)
+
+App chats, Goals, Crew, PlanRuns and timers participate in these same work/quit rules under SRV-017. Client close remains separate from explicit Server service stop.
 
 The server remains the owner of live work when a window quits. F3-665/DL-249 require a choice: keep server work (default), or stop reviewed selected work by current identities, never system services. SIR-054 owns ProcessFacts and server/environment resource observations; Resources samples only while open. Stop is whole-group SIGTERM then SIGKILL after 3 s, never a client-local kill. Restart reconciliation marks missing work Lost and tells its owner once.
 

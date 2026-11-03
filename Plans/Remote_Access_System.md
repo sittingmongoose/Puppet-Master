@@ -6,6 +6,8 @@
 
 ## 0. Scope
 
+Settings uses Computer for the work Server/Execution Host. Ordinary Computer values do not create routes, nodes or another registry. Approved app work uses the same verified routes and separate scope authority under SRV-017; settings.follow carries no Project data.
+
 Remote access adds authenticated routes to one existing cryptographic `server_id`; it never creates a peer Server identity, changes the Project Home Server, moves a Project, restarts a Goal, or grants trust by reachability. `localhost`, LAN, private PM-connector hosted-Tailscale or Headscale routes, hosted-Tailscale Funnel, custom domain/proxy, Puppet Master Remote Link, existing VPN/private DNS, external user-managed host-Tailscale, and manual HTTPS/WSS endpoints are route records beneath one Server. The built-in private route is an automatic `tsnet` listener/reverse proxy independent from Funnel and has no normal-user Serve toggle. Headscale is a separate private control-plane profile and never receives a Funnel promise.
 
 MVP setup presents co-equal `Tailscale` and `Custom Domain / Caddy / NGINX / Traefik` choices, an accountless/domainless `Puppet Master Remote Link` fallback, an existing VPN/private endpoint path, and a clear visible `Skip` affordance. `Skip` starts no Remote Access work, leaves existing route policy and exposure unchanged, and returns through the exact initiating continuation; it is not hidden, renamed to defer copy, or treated as successful setup. Runtime selection prefers private and local routes while respecting explicit user policy, verified identity, trust, health, latency, privacy, network constraints, and route availability.
@@ -92,15 +94,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Remote_Access_System.md
 canonical_text: >-
-  Every remote route has one stable remote_route_id beneath an existing server_id and server_endpoint_id. URL, address,
-  DNS name, network, relay, certificate presentation, and transport generation are mutable attributes. Runtime preference
-  is loopback, LAN, private Tailscale or Headscale, existing VPN/private endpoint, custom domain/proxy, Funnel, Remote
-  Link direct, then Remote Link relay, adapted by explicit policy, verified identity, health, latency, privacy, and network.
-  Route migration stages and verifies the replacement, preserves command idempotency and projection cursors, atomically
-  changes preference, drains the old route, and rolls back on verification failure without moving Projects or restarting
-  Goals. A migration is not complete until the source/target `server_endpoint_id` values, expected and observed Server
-  fingerprint, Server/endpoint/route generations, and source/target currentness refs are durably fenced as the same
-  existing Server and the expected current generations.
+  Every remote route has one stable remote_route_id beneath an existing server_id and server_endpoint_id. URL,
+  address, DNS name, network, relay, certificate presentation, and transport generation are mutable attributes.
+  Runtime preference is loopback, LAN, private Tailscale or Headscale, existing VPN/private endpoint, custom domain/proxy,
+  Funnel, Remote Link direct, then Remote Link relay, adapted by explicit policy, verified identity, health, latency,
+  privacy, and network. Route migration stages and verifies the replacement, preserves command idempotency and
+  projection cursors, atomically changes preference, drains the old route, and rolls back on verification failure
+  without moving Projects or restarting Goals. A migration is not complete until the source/target `server_endpoint_id`
+  values, expected and observed Server fingerprint, Server/endpoint/route generations, and source/target currentness
+  refs are durably fenced as the same existing Server and the expected current generations. App work and cross-Server
+  Project reads reuse this route/identity/cursor custody for the actual source Server. A separately admitted narrow
+  read scope must authorize every requested Project; settings.follow, discovery, reachability or possession of
+  a route is never content authority. No second route registry or writable remote replica is introduced.
 gui_related: true
 gui_classification_reason: Preferred route, migration progress, actual connection route, failures, and rollback are visible status and details behavior.
 depends_on: [RAS-001, SRV-002, SRV-007]
@@ -117,8 +122,10 @@ context_scope: remote_route_identity_and_migration
 implementation_surfaces: [Plans/remote_access_system_contracts.schema.json, future Remote Access route service]
 node_compile_hint: {mode: remote_route_identity_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:normalized-register:server-first-2026-08-31:R01-R04
-  - source_ref:packet:18_FINAL_WAN_REMOTE_ACCESS_AUTHORITY.md
+- source_ref:normalized-register:server-first-2026-08-31:R01-R04
+- source_ref:packet:18_FINAL_WAN_REMOTE_ACCESS_AUTHORITY.md
+- 'source_ref:projects-pass2-20261103:S7/N3/N5/N17; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens: [remote_route_id, loopback, LAN, private Tailscale, Funnel, Remote Link direct, Remote Link relay]
 negative_constraints: [Do not change Home Server during route migration., Do not restart a Goal for route change., Do not call an unverified route active.]
 owner_hints: [Plans/Remote_Access_System.md, Plans/Server_System.md, Plans/Shared_Integration_Runtime.md]
@@ -528,6 +535,88 @@ negative_constraints: [Do not promote schema checks to WAN proof., Do not hide f
 owner_hints: [Plans/Remote_Access_System.md, Plans/Automated_Testing_System.md]
 ```
 
+### RAS-017 - SSH Setup Consumers Preserve The Protected Server Owner
+
+```yaml
+plan_unit_id: RAS-017
+unit_type: security_contract
+status: accepted
+owner_doc: Plans/Remote_Access_System.md
+canonical_text: >-
+  Remote Access consumes Server System SRV-018 for protected SSH host-fingerprint trust and public-key
+  installation. cmd.server.ssh.trust and cmd.server.ssh.public_key.install, their sole handlers and four
+  versioned Server schema definitions are the only admitted design routes for those effects. Settings SSH
+  computers/keys, New Project NAS/SSH inspection, onboarding and Doctor return through the same captured
+  Client/operation/continuation. An unregistered source may use the owner-issued connection draft; it does
+  not require a fake Project or claim that an unmanaged SSH host is a PM Server.
+
+  An SSH host/port/account and public-key entry are not a Puppet Master remote_route_id or server_id. SSH
+  trust does not approve PM Server identity, Client pairing, settings.follow, Project access, VPN
+  enrollment, proxy TLS or public ingress. Existing PM routes retain RAS-002/014/015 identity and policy;
+  public PM endpoints still never expose PTY/SSH. Existing integration.connection.* and auth commands retain
+  their own effects and may not silently acquire an SSH key writer. No concept cmd.ssh_connection.*,
+  cmd.project.ssh.* or Client-pair alias is created.
+
+  Read-only source inspection starts only after the required current host trust/account access is verified.
+  Changed fingerprint, expired proof, protected sign-in, unsupported remote capability, unresolved write
+  effect or missing source/handler evidence returns the Server owner's exact refusal/pending result and
+  preserves the initiating form; no convenient transport/Computer fallback or fabricated Ready. YOLO and
+  agents cannot answer protected trust or install-key prompts. Both operations retain
+  expected_event_types=[] and handler_unavailable until their actual owner/companion/secure-custody/native
+  chains close.
+gui_related: true
+gui_classification_reason: Defines visible protected SSH confirmation, key-install outcomes and exact setup return.
+depends_on:
+- RAS-001
+- RAS-002
+- SRV-018
+unblocks: []
+acceptance_criteria:
+- Every SSH trust/install consumer resolves the exact Server owner command, typed request/result and initiating
+  continuation.
+- SSH identity never substitutes for PM Server/route/Client trust, source trust, settings following or Project
+  authority.
+- A changed key or unknown key-write effect blocks readiness and safely returns to the exact setup without fallback.
+- Public PM ingress keeps SSH/PTY excluded, and protected human actions remain unavailable to agents and YOLO.
+validation_surfaces:
+- Plans/server_system_contracts.schema.json and Plans/server_system_contract_fixtures.json; F-d adoption required
+- Plans/projects_refresh_command_bindings.json and central wiring/Touch contracts; F-b adoption required
+- Future native protected-input, SSH currentness, remote-write/readback and restart evidence; not_run
+risk_class: ssh_host_impersonation_or_protected_key_install_authority_escape
+reasoning_tier: high
+context_scope: projects_refresh_20261103_ras_017
+implementation_surfaces:
+- Plans/Remote_Access_System.md
+- Plans/server_system_contracts.schema.json
+- Future sole Server SSH owner and shared protected-auth broker; no implementation claimed
+node_compile_hint:
+  mode: accepted_product_contract_pending_companion_and_native_evidence
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:projects-pass2-20261103:PHASE2-BRIEF known correction assigns protected SSH trust/key-install to
+  lane A
+- source_ref:projects-pass2-20261103:Fb-ACE01; Fc-ACE01; Fd-E01; PLANS-EDIT-PLAN section 7 owner-operation freeze
+- 'source_ref:chat:20261103: Jared: "I approve the outstanding questions with their recommended settings."'
+preserved_exact_tokens:
+- SRV-018
+- cmd.server.ssh.trust
+- cmd.server.ssh.public_key.install
+- settings.follow
+- expected_event_types=[]
+- handler_unavailable
+negative_constraints:
+- Do not add a parallel route/trust registry, key list or untyped remote writer.
+- Do not expose SSH through public PM routes, auto-provision a Server or infer PM trust from SSH access.
+- Do not enable a producer from structural fixtures or weaken protected input, identity or currentness guards.
+owner_hints:
+- Plans/Server_System.md#SRV-018
+- Plans/Remote_Access_System.md
+- Plans/Multi-Account_Connection_Spec.md#MACS-002
+```
+
+ContractRef: ContractName:Plans/Server_System.md#SRV-018, ContractName:Plans/Remote_Access_System.md, ContractName:Plans/Multi-Account_Connection_Spec.md#MACS-002
+
 ## 3. Contracts, Schemas, Events, Or Data Shapes
 
 ### 3.1 Machine contracts
@@ -887,53 +976,61 @@ plan_unit_id: RAS-014
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Remote_Access_System.md
-canonical_text: 'Connecting this Client to an existing Puppet Master selects the route before discovery, Server identification,
-  and pairing. Before Review, Local or VPN may perform owner-bounded read-only discovery across LAN interfaces and any
-  VPN this device is already connected to, with no VPN switch, because the person turns a VPN on or off on their own
-  device; hosted Tailscale may reuse current component/session/tailnet and peer projections without signing in; every
-  route may consume cached known-endpoint data. Headscale control URL, reverse-proxy HTTPS URL, Remote Link/QR/short
-  code, and manual identity/address entry remain local draft inputs in this phase. Review/Apply confirms route mutation,
-  endpoint add/test, Server identity acceptance, PM pairing/trust and Remote Link open. Separately, an explicit Sign
-  in action may authorize this native Client’s selected built-in Tailscale/Headscale connection before its Server list,
-  through the protected auth and connector owners; cached discovery itself never starts sign-in. No other pre-Review
-  mutation is admitted. Manual identity/address entry appears only when safe discovery cannot return the intended Server.
-  DL-259, Jared 2026-10-31: D2 A: explicit always-on Server setup on this computer, manual private HTTPS, a self-hosted
-  Remote Link gateway, rarer SSH key types, China-region AI variants and local AI servers live in Settings, with a clear
-  context-correct pointer from onboarding. The ordinary This computer choice remains the easy local-work default. The
-  wizard says AI accounts available in this setup, not every AI. Existing Settings routes and owners retain the advanced
-  capabilities. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS
-  and Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with
-  no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process.
-  A Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable
-  client_id, independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration,
-  process, IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes.
-  Native Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server
-  public listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
-  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
-  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
-  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
-  Tailscale stays external and unmanaged. DL-259 REMOTE-CODE-1 A, Jared 2026-10-31: the Remote Link owner issues and
-  checks its protected HTTPS link or opaque short code. Decide the actual code grammar, normalization/case behavior,
-  expiry/abuse policy and raw-code resolution protocol immediately before building PM, alongside D4’s pre-build checks;
-  no grammar or sample code is pinned in canon. Preserve the owner-defined representation, reject empty input, and treat
-  nonblank text as unverified draft rather than identity, pairing or Ready proof. After Review, the trusted owner validates/resolves
-  it before the existing open and Server identity/pairing continuation. Unknown, expired or unresolvable input fails
-  closed without another-Server fallback. This accepted pre-build verification point is not an unanswered product choice
-  or a wizard caveat.
+canonical_text: >-
+  Connecting this Client to an existing Puppet Master selects the route before discovery, Server identification,
+  and pairing. Before Review, Local or VPN may perform owner-bounded read-only discovery across LAN interfaces
+  and any VPN this device is already connected to, with no VPN switch, because the person turns a VPN on or off
+  on their own device; hosted Tailscale may reuse current component/session/tailnet and peer projections without
+  signing in; every route may consume cached known-endpoint data. Headscale control URL, reverse-proxy HTTPS URL,
+  Remote Link/QR/short code, and manual identity/address entry remain local draft inputs in this phase. Review/Apply
+  confirms route mutation, endpoint add/test, Server identity acceptance, PM pairing/trust and Remote Link open.
+  Separately, an explicit Sign in action may authorize this native Client’s selected built-in Tailscale/Headscale
+  connection before its Server list, through the protected auth and connector owners; cached discovery itself
+  never starts sign-in. No other pre-Review mutation is admitted. Manual identity/address entry appears only when
+  safe discovery cannot return the intended Server. DL-259, Jared 2026-10-31: D2 A: explicit always-on Server
+  setup on this computer, manual private HTTPS, a self-hosted Remote Link gateway, rarer SSH key types, China-region
+  AI variants and local AI servers live in Settings, with a clear context-correct pointer from onboarding. The
+  ordinary This computer choice remains the easy local-work default. The wizard says AI accounts available in
+  this setup, not every AI. Existing Settings routes and owners retain the advanced capabilities. D7 B supersedes
+  the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their
+  own built-in Tailscale connection and sign in once through the shared protected auth owner, with no separate
+  Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server
+  keeps one active node per stable server_id; a native Client installation keeps one active node per stable client_id,
+  independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration,
+  process, IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active
+  nodes. Native Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying
+  or a Server public listener. Server nodes retain the automatic private listener; Funnel remains Server-only,
+  explicit, off by default and unavailable on Headscale. Human approval and reusable connection identity do not
+  grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale connection: it needs
+  Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It cannot be enrolled
+  by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. DL-259 REMOTE-CODE-1
+  A, Jared 2026-10-31: the Remote Link owner issues and checks its protected HTTPS link or opaque short code.
+  Decide the actual code grammar, normalization/case behavior, expiry/abuse policy and raw-code resolution protocol
+  immediately before building PM, alongside D4’s pre-build checks; no grammar or sample code is pinned in canon.
+  Preserve the owner-defined representation, reject empty input, and treat nonblank text as unverified draft rather
+  than identity, pairing or Ready proof. After Review, the trusted owner validates/resolves it before the existing
+  open and Server identity/pairing continuation. Unknown, expired or unresolvable input fails closed without another-Server
+  fallback. This accepted pre-build verification point is not an unanswered product choice or a wizard caveat.
 
 
-  DL-272 RV-3, 2026-11-01: A native Client explicitly signs in once to its selected Tailscale or Headscale through the
-  protected auth owner before Connect lists Servers on that network; reuse a current owner-verified sign-in. Network
-  choice, Client identity and generation fence the return. This grants neither PM pairing nor a Server listener.
+  DL-272 RV-3, 2026-11-01: A native Client explicitly signs in once to its selected Tailscale or Headscale through
+  the protected auth owner before Connect lists Servers on that network; reuse a current owner-verified sign-in.
+  Network choice, Client identity and generation fence the return. This grants neither PM pairing nor a Server
+  listener.
 
 
-  DL-272 M10-REMOTE-LINK, 2026-11-01: A newly issued Remote Link is shown with its owner-issued short code and QR, with
-  copy actions for its output. This adds no code alphabet, length, normalization or expiry rule; REMOTE-CODE-1 remains
-  the pre-build authority.
+  DL-272 M10-REMOTE-LINK, 2026-11-01: A newly issued Remote Link is shown with its owner-issued short code and
+  QR, with copy actions for its output. This adds no code alphabet, length, normalization or expiry rule; REMOTE-CODE-1
+  remains the pre-build authority.
 
 
-  DL-272 REMOTE-LINK-ERROR, 2026-11-01: Remote Link input guidance and refusal refer to a link or code, not a generic
-  web address. Nonblank draft text is still unverified until the Remote Link owner resolves it.'
+  DL-272 REMOTE-LINK-ERROR, 2026-11-01: Remote Link input guidance and refusal refer to a link or code, not a
+  generic web address. Nonblank draft text is still unverified until the Remote Link owner resolves it. For No
+  project, the work Computer is the native device's already claimed/bootstrapped local Server when available;
+  otherwise the person's main Computer. Always name that actual work Computer on phone/web. A device without a
+  claimed local Server offers Set up Puppet Master here through protected claim/bootstrap rather than silently
+  using dormant capability. Work Computer can change before first message only; afterwards use the chat owner's
+  linked Continue elsewhere or conversion.
 gui_related: true
 gui_classification_reason: Defines the route chooser, discovery order, conditional fields, pairing handoff, manual fallback, and setup-later state consumed by Product Onboarding.
 depends_on: [RAS-001, RAS-003, RAS-005, RAS-006, SRV-004]
@@ -1006,9 +1103,12 @@ source_lineage:
 - user-instruction:2026-09-25-no-vpn-switch
 - Plans/product_onboarding_contracts.schema.json
 - Concepts/pm7-tools/onboarding_cinematic_source.py
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31;
+  DL-259)
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- 'source_ref:projects-pass2-20261103:N5/N15/N17; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens: [Local or VPN, You can connect through a VPN too, Tailscale, Headscale, Reverse proxy, Puppet Master Remote Link, approval, code, QR]
 negative_constraints:
 - Do not mutate a route or PM trust before Review; only the named explicit preflight/auth exceptions are admitted.
@@ -1035,43 +1135,50 @@ plan_unit_id: RAS-015
 unit_type: supersession_amendment
 status: accepted
 owner_doc: Plans/Remote_Access_System.md
-canonical_text: 'Puppet Master''s sole bundled MVP Tailscale implementation is one signed PM-owned Go `pm-tailnet-connector`
-  helper embedding `tailscale.com/tsnet`, supervised as a crash-isolated sibling of its owning Rust Server or native
+canonical_text: >-
+  Puppet Master's sole bundled MVP Tailscale implementation is one signed PM-owned Go `pm-tailnet-connector` helper
+  embedding `tailscale.com/tsnet`, supervised as a crash-isolated sibling of its owning Rust Server or native
   Client through authenticated, versioned, peer-validated local IPC. Exactly one active persistent connector identity
-  belongs to each Server or native Client installation, scoped by its owner role and stable server_id or client_id; none
-  belongs to an individual Project, Goal, WSL distribution, environment, runner, browser tab, Pod replica or session.
-  Hosted Tailscale and user-supplied Headscale remain supported. Each Server’s private PM endpoint is a connector listener/reverse
-  proxy that starts automatically after approved enrollment and PM ingress validation, independent from Funnel and without
-  a normal Serve control. Hosted Funnel alone is explicit public ingress, off by default, consent- and preflight-gated,
-  implemented through the pinned connector listener adapter, and unavailable on Headscale. A user-managed host Tailscale
-  installation may coexist only as an external verified private endpoint; PM never adopts, inspects, changes, signs out,
-  stops, or updates it. Ordinary copy is exactly `Tailscale` and `Built into Puppet Master`; connector and tsnet details
-  are Advanced-only. The owning Server or native Client durably owns its authorization work and redacted URL-ready/handoff
-  state across refresh, initiating-Client disconnect, and Client change. Protected URL contents, cookies, and browser
-  state may be opened only on a current authorized Client with operation, generation, session, and return-context fences;
-  another Client must establish a new authorized handoff and inherits no protected content. Native PM may use a bounded
-  connector Dial/stream path only to approved PM endpoints; it is never an open SOCKS proxy or LAN pivot, and a plain
-  browser needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. Static Plans/schema/fixtures
-  remain runtime-unproven and admit no EventRecord family. DL-259, Jared 2026-10-31: D7 B supersedes the former no-per-Client-node
-  restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale connection and
-  sign in once through the shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned
-  Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native
-  Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and
-  Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references
-  prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only
-  to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private
-  listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable
-  connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale
-  connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It
-  cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. DL-259
-  D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating
-  native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner,
+  belongs to each Server or native Client installation, scoped by its owner role and stable server_id or client_id;
+  none belongs to an individual Project, Goal, WSL distribution, environment, runner, browser tab, Pod replica
+  or session. Hosted Tailscale and user-supplied Headscale remain supported. Each Server’s private PM endpoint
+  is a connector listener/reverse proxy that starts automatically after approved enrollment and PM ingress validation,
+  independent from Funnel and without a normal Serve control. Hosted Funnel alone is explicit public ingress,
+  off by default, consent- and preflight-gated, implemented through the pinned connector listener adapter, and
+  unavailable on Headscale. A user-managed host Tailscale installation may coexist only as an external verified
+  private endpoint; PM never adopts, inspects, changes, signs out, stops, or updates it. Ordinary copy is exactly
+  `Tailscale` and `Built into Puppet Master`; connector and tsnet details are Advanced-only. The owning Server
+  or native Client durably owns its authorization work and redacted URL-ready/handoff state across refresh, initiating-Client
+  disconnect, and Client change. Protected URL contents, cookies, and browser state may be opened only on a current
+  authorized Client with operation, generation, session, and return-context fences; another Client must establish
+  a new authorized handoff and inherits no protected content. Native PM may use a bounded connector Dial/stream
+  path only to approved PM endpoints; it is never an open SOCKS proxy or LAN pivot, and a plain browser needs
+  Remote Link or a private endpoint reachable through the device’s own Tailscale connection. Static Plans/schema/fixtures
+  remain runtime-unproven and admit no EventRecord family. DL-259, Jared 2026-10-31: D7 B supersedes the former
+  no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in
+  Tailscale connection and sign in once through the shared protected auth owner, with no separate Tailscale app
+  install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps one
+  active node per stable server_id; a native Client installation keeps one active node per stable client_id, independent
+  of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process,
+  IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes.
+  Native Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying
+  or a Server public listener. Server nodes retain the automatic private listener; Funnel remains Server-only,
+  explicit, off by default and unavailable on Headscale. Human approval and reusable connection identity do not
+  grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale connection: it needs
+  Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It cannot be enrolled
+  by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. DL-259 D7 B, Jared
+  2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating native
+  Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner,
   owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session
-  generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the
-  initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior
-  fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel
-  nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable
-  until executable evidence exists.'
+  generations replace Server/endpoint/route/trust generations for that local operation. The native owner must
+  equal the initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases
+  retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they
+  grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select native ownership.
+  All routes remain handler_unavailable until executable evidence exists. Computer-level Settings values are attributes
+  of an actual Server/Execution Host, not connector ownership or per-Project/per-Environment nodes. The native
+  Client and its own local Server can share one Computer display name via ClientRecord.local_server_id while retaining
+  their distinct D7 B connector owners. settings.follow authorizes only settings replication and never expands
+  the bounded Dial/stream path or grants cross-Project reads.
 gui_related: true
 gui_classification_reason: Exact normal copy, setup/auth phases, automatic private readiness, separate Browser Access/Funnel, Headscale behavior, Advanced diagnostics, disabled reasons, and destructive reset are user-visible.
 split_recommended: false
@@ -1186,20 +1293,22 @@ implementation_surfaces:
   - future RemoteAccessManager and pm-tailnet-connector implementation
 node_compile_hint: {mode: connector_contract_static_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md
-  - source_ref:packet:tsnet/01_AUTHORITY_AND_SUPERSESSION.md
-  - source_ref:packet:tsnet/02_GO_TSNET_CONNECTOR_ARCHITECTURE.md
-  - source_ref:packet:tsnet/03_PLATFORM_PACKAGING_AND_LIFECYCLE.md
-  - source_ref:packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
-  - source_ref:packet:tsnet/05_COMMAND_EVENT_RECEIPT_WIRING_DRY_DELTAS.md
-  - source_ref:packet:tsnet/06_PLANS_SCHEMA_MIGRATION_UPDATE_MATRIX.md
-  - source_ref:packet:tsnet/07_SECURITY_BACKUP_UPDATE_BOUNDARIES.md
-  - source_ref:packet:tsnet/08_ACCEPTANCE_FAILURE_PERFORMANCE_TEST_MATRIX.md
-  - source_ref:packet:tsnet/09_NEGATIVE_REQUIREMENTS_AND_RETIREMENTS.md
-  - source_ref:packet:scratch_slices_v2/machine__requirements.json__part-001__lines-000001-000220.txt:TSN-001..014
-  - source_ref:packet:scratch_slices_v2/machine__requirements.json__part-002__lines-000201-000420.txt:TSN-015..020
-  - source_ref:packet:scratch_slices_v2/machine__requirements.json__part-009__lines-001601-001820.txt:TSX-001..002
-  - source_ref:packet:scratch_slices_v2/machine__requirements.json__part-010__lines-001801-002020.txt:TSX-003..005
+- source_ref:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md
+- source_ref:packet:tsnet/01_AUTHORITY_AND_SUPERSESSION.md
+- source_ref:packet:tsnet/02_GO_TSNET_CONNECTOR_ARCHITECTURE.md
+- source_ref:packet:tsnet/03_PLATFORM_PACKAGING_AND_LIFECYCLE.md
+- source_ref:packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
+- source_ref:packet:tsnet/05_COMMAND_EVENT_RECEIPT_WIRING_DRY_DELTAS.md
+- source_ref:packet:tsnet/06_PLANS_SCHEMA_MIGRATION_UPDATE_MATRIX.md
+- source_ref:packet:tsnet/07_SECURITY_BACKUP_UPDATE_BOUNDARIES.md
+- source_ref:packet:tsnet/08_ACCEPTANCE_FAILURE_PERFORMANCE_TEST_MATRIX.md
+- source_ref:packet:tsnet/09_NEGATIVE_REQUIREMENTS_AND_RETIREMENTS.md
+- source_ref:packet:scratch_slices_v2/machine__requirements.json__part-001__lines-000001-000220.txt:TSN-001..014
+- source_ref:packet:scratch_slices_v2/machine__requirements.json__part-002__lines-000201-000420.txt:TSN-015..020
+- source_ref:packet:scratch_slices_v2/machine__requirements.json__part-009__lines-001601-001820.txt:TSX-001..002
+- source_ref:packet:scratch_slices_v2/machine__requirements.json__part-010__lines-001801-002020.txt:TSX-003..005
+- 'source_ref:projects-pass2-20261103:S1/S7/N17; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:
   - Tailscale
   - Built into Puppet Master

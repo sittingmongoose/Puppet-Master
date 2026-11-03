@@ -109,10 +109,12 @@ unit_type: security_contract
 status: accepted
 owner_doc: Plans/Multi-Account_Connection_Spec.md
 canonical_text: >-
-  AuthBrowserSession and protected device-code/page handoff remain human-only, ephemeral, non-recordable,
-  non-inspectable, non-exportable, exact-Client-bound, and unavailable to agents, adapters, tools, automation,
-  Browser Programs, capture, ordinary navigation, and persistence; commands exchange only one-use protected-input
-  and redacted lifecycle/proof references.
+  AuthBrowserSession and protected device-code/page handoff remain human-only, ephemeral, non-recordable, non-inspectable,
+  non-exportable, exact-Client-bound, and unavailable to agents, adapters, tools, automation, Browser Programs,
+  capture, ordinary navigation, and persistence; commands exchange only one-use protected-input and redacted lifecycle/proof
+  references. These protected boundaries also apply to app-scope AI setup and destination account resolution under
+  MACS-006. Copy/resolve contributes IDs and non-secret readiness/attachment refs only; it cannot sign in, select
+  a profile for the person or expose protected material.
 gui_related: true
 gui_classification_reason: The contract governs the user-visible protected authentication handoff and its safe lifecycle status.
 depends_on: [MACS-001, SMPFS-143]
@@ -127,7 +129,14 @@ reasoning_tier: high
 context_scope: auth_profile_protected_human_handoff
 implementation_surfaces: [Plans/Multi-Account_Connection_Spec.md, Plans/multi_account_contracts.schema.json, Plans/protected_auth_browser_contracts.schema.json]
 node_compile_hint: {mode: auth_profile_protected_human_handoff, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-requirement:BRW-013, source_ref:egolite-requirement:SEC-002, source_ref:egolite-requirement:SEC-003, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:110, source_ref:packet:PKT-04/08_AUTHORITY_AND_SUPERSESSION.md:24-48]
+source_lineage:
+- source_ref:egolite-requirement:BRW-013
+- source_ref:egolite-requirement:SEC-002
+- source_ref:egolite-requirement:SEC-003
+- source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:110
+- source_ref:packet:PKT-04/08_AUTHORITY_AND_SUPERSESSION.md:24-48
+- 'source_ref:projects-pass2-20261103:S10/S11/N15; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 negative_constraints:
   - Do not sanitize protected content into ordinary Browser, storage, artifact, log, prompt, recording, inspection, export, or adapter state; reject the subject.
   - Do not claim protected Browser execution or security certification from static contract evidence.
@@ -148,7 +157,7 @@ Adjacent packet command candidates are retained without becoming aliases, primar
 | `cmd.auth_session.copy_device_code` | `deferred_noncanonical_candidate_blocked_protected_boundary` | Clipboard/content projection conflicts with the protected non-observation boundary; it cannot dispatch without a later owner decision that preserves that boundary. |
 | `cmd.credential_attachment.open_consumers`, `cmd.credential_attachment.open_details`, `cmd.credential_attachment.revoke`, `cmd.credential_attachment.revoke_active`, `cmd.credential_attachment.test`, `cmd.credential_attachment.transfer.preview`, `cmd.credential_attachment.transfer.apply` | `deferred_noncanonical_candidate` | Credential Broker ownership, redaction, active-use/revocation, transfer, permission, and native contracts are absent. |
 | `cmd.credential_source.add`, `cmd.credential_source.open_details`, `cmd.credential_source.remove`, `cmd.credential_source.test` | `deferred_noncanonical_candidate` | Credential source ownership, secret custody, provider, and native contracts are absent. |
-| `cmd.provider_binding.copy`, `cmd.provider_binding.resolve_on_destination` | `deferred_noncanonical_candidate` | Destination identity, authority, credential-copy prohibition, and resolution contracts are absent. |
+| `cmd.provider_binding.copy`, `cmd.provider_binding.resolve_on_destination` | `deferred_noncanonical_candidate` | MA-074/MACS-006 now define refs-only destination semantics as contributed Settings transaction subcontracts. These candidate spellings stay deferred/non-dispatchable until F freezes their exact existing-owner binding; they are not automatically new primaries. |
 
 The eight closed auth-profile commands now require a non-secret return context and a result-side settlement. Sign-in binds exact profile, account, and verified installation selectors. Completed verification requires a current proof ref plus issued/expiry timestamps; blocked or failed verification requires a remediation ref. `submit_code` requires an exact-operation-bound protected-input contract with current/fresh status, one-use consume-and-zeroize policy, replay rejection, expiry timestamp, and no persistence; completion requires a consumed-and-zeroized disposition. Official-page handoff requires a current official-source proof. Profile selection requires both profile and installation eligibility proofs. None of these fields make AuthBrowserSession observable, recordable, inspectable, persistent, or available to agents/adapters/tools.
 
@@ -278,13 +287,17 @@ plan_unit_id: MACS-005
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Multi-Account_Connection_Spec.md
-canonical_text: The existing AuthProfileCommandRequest sign_in operation supports an owner-issued FirstTimeSourceAuthBinding
-  only for explicit human_gui selected-source access. The binding names the actual source, Onboarding session and
-  draft/revision, source-authorization ref, route capability and owner issuance. The owner verifies that this exact
-  source_control_host route needs no external CLI. Project, profile, account and installation IDs remain null and
-  initial auth/profile generations are zero; no identity is invented to satisfy the ordinary existing-profile request.
-  The existing AuthenticationBroker performs protected sign-in and allocates real profile/account identities only
-  after verified provider identity. Existing-profile sign-in and other commands keep their original fences.
+canonical_text: >-
+  The existing AuthProfileCommandRequest sign_in operation supports an owner-issued FirstTimeSourceAuthBinding
+  only for explicit human_gui selected-source access. The binding names the actual source, Onboarding session
+  and draft/revision, source-authorization ref, route capability and owner issuance. The owner verifies that this
+  exact source_control_host route needs no external CLI. Project, profile, account and installation IDs remain
+  null and initial auth/profile generations are zero; no identity is invented to satisfy the ordinary existing-profile
+  request. The existing AuthenticationBroker performs protected sign-in and allocates real profile/account identities
+  only after verified provider identity. Existing-profile sign-in and other commands keep their original fences.
+  MACS-006 separately admits the approved app-scope AI setup route with actual Server/Host/Environment/Client
+  and null Project. It does not reinterpret FirstTimeSourceAuthBinding, loosen existing-profile fences, or make
+  protected authentication available to agents.
 gui_related: true
 gui_classification_reason: Defines the just-in-time sign-in control and protected return needed to browse a chosen
   online Project source before commit.
@@ -296,19 +309,24 @@ unblocks: []
 acceptance_criteria:
 - FirstTimeSourceAuthBinding is closed and legal only on cmd.auth_profile.sign_in with human_gui, current selected-source
   authorization, explicit consent and exact Server/Host/Environment/Client context.
-- No prior Project/profile/account/installation is claimed; zero initial generations and a current owner proof that
-  no external CLI is required are mandatory.
+- No prior Project/profile/account/installation is claimed; zero initial generations and a current owner proof
+  that no external CLI is required are mandatory.
 - Ordinary existing-profile sign-in retains actual profile/account/installation requirements; the exception cannot
   enable an uninstalled CLI route or unrelated provider setup.
 - Source/draft/session/route/capability/permission/consent/request-hash changes, expiry or Client mismatch fail
   before protected handoff.
 - Verified official signup pages use cmd.auth_profile.open_official_page with current official-source proof; page
   navigation does not create a provider account or count as successful authentication.
-- The same official-page command permits ADO-008 human-only team-project administration after exact source-account verification. Its official_route_ref resolves the Azure owner handoff and current draft/Client/domain policy; project_id stays null before commit, existing verified account/profile identity is retained, and FirstTimeSourceAuthBinding remains sign_in-only. Navigation or return cannot create or adopt a team project; explicit fresh provider discovery is required.
+- The same official-page command permits ADO-008 human-only team-project administration after exact source-account
+  verification. Its official_route_ref resolves the Azure owner handoff and current draft/Client/domain policy;
+  project_id stays null before commit, existing verified account/profile identity is retained, and FirstTimeSourceAuthBinding
+  remains sign_in-only. Navigation or return cannot create or adopt a team project; explicit fresh provider discovery
+  is required.
 - Success returns actual owner-verified identities; failure/cancel returns exact source focus without a Project,
   repository, destination filesystem or broad provider mutation.
-- The same canonical command/handler/result family is reused; no generic no-Project authentication command, credential
-  store, physical receipt family, event or native runtime proof is created.
+- The same canonical command/handler/result family is reused; the separate MACS-006 app route reuses the same
+  protected owner commands, not a generic new authentication engine, credential store, physical receipt family
+  or event; no native runtime proof is created.
 validation_surfaces:
 - Plans/multi_account_contract_fixtures.json
 - tests/test_pm_onboarding_phases.py
@@ -326,9 +344,107 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/02_PROJECT_DRAFT_COPY_AND_COMMIT.md
+- 'source_ref:projects-pass2-20261103:N15/N17; Jared: "I approve the outstanding questions with their recommended
+  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 negative_constraints:
 - Do not fabricate existing account/profile/installation or Project identity.
 - Do not bypass required CLI acquisition or infer route capability from a flag without current owner evidence.
 - Do not expose protected browser or credential contents, grant broad provider authority, or treat schema success
   as native security proof.
 ```
+
+### MACS-006 - Refs-Only Copy Subcontracts And App-Scope Authentication
+
+```yaml
+plan_unit_id: MACS-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account_Connection_Spec.md
+canonical_text: >-
+  Provider account choice copy and resolve-on-destination are contributed owner subcontracts inside the existing
+  Settings transaction preview/apply/rollback. Bind exact source account choices, destination Project or application
+  scope, Server/Host/Environment, owner connection/profile/account IDs where they actually exist, proof/currentness
+  generations, preview hash/expiry and idempotency. Preview returns MA-074 account_resolution plus exact owner
+  part/rollback refs and no secret bytes. Apply may bind only the previewed chosen IDs to destination-local refs
+  under the existing connection/auth owners; it does not sign in, install or create another credential/profile
+  database. Rollback removes only unchanged destination bindings made by this part, never signs out or deletes
+  a pre-existing shared credential/profile.
+
+  Approved No project AI setup and N15 Set up a project later use an explicit application auth/connection wrapper
+  with project_id=null, actual work server_id/execution_host_id/execution_environment_id and initiating Client/session/operation/return
+  context. Existing accounts/profiles use their real identity/current generations; first-time app setup uses an
+  owner-issued pre-identity binding with typed nulls until verified provider identity allocates real IDs, following
+  MACS-005's broker discipline without reusing its source-auth binding for an unrelated purpose. Claim/bootstrap
+  and current protected input/official-source proofs remain prerequisites. A Project-targeted connection still
+  requires the actual Project after reservation; application authority cannot be focus-derived or reused as Project
+  authority.
+
+  Use the existing cmd.auth_profile and connection owners with explicit versioned request/result/permission/currentness
+  and closed return contracts; do not invent a generic no-Project auth command or shadow broker. Every protected
+  action remains human_gui/human_palette-only with exact active-Client one-use input, zeroize, no recording/inspection/capture/persistence,
+  and receipt-only redacted lifecycle. YOLO/agents may use an already admitted chosen account but cannot call
+  protected sign-in/profile selection or observe its content. cmd.provider_binding.copy and cmd.provider_binding.resolve_on_destination
+  remain deferred_noncanonical_candidate spellings until F freezes any missing exact owner suboperation/handler/schema
+  joins; their product semantics are decided here, not independent primary registrations. All new app variants
+  remain unavailable until the owner/central/handler/security evidence chain closes. MACS-002 and MACS-005 retain
+  their original protected and selected-source contracts; only the blanket no-approved-app-route limitation is
+  superseded.
+
+  The app/setup binding conforms to CV-365's actual scope contract. A Server/setup-only request has no
+  fabricated thread; a thread-bound operation carries the real thread. Scheduled auth/connection use
+  revalidates frozen destination account/runtime choices and does not select from current focus. SRV-018
+  owns protected SSH host-fingerprint trust and public-key installation; this facade neither promotes
+  integration.connection.* into a remote key writer nor copies SSH private identity or protected input.
+gui_related: false
+gui_classification_reason: Defines data, custody or resolver contracts consumed by existing GUI owners.
+depends_on:
+- MACS-001
+- MACS-002
+- MACS-005
+- MA-074
+unblocks: []
+acceptance_criteria:
+- Copy/resolve only rebinds chosen IDs to destination-local attachments and contributes to the same Settings rollback.
+- App setup with null Project uses actual Computer/Host/Environment/Client and an owner-issued pre-identity binding
+  when needed.
+- Existing Project/profile requests retain original strict fences and return settlement; app and Project authority
+  cannot be interchanged.
+- Agents/raw code injection/wrong Client/replayed input/stale proofs fail the protected boundary even in YOLO.
+validation_surfaces:
+- Plans/multi_account_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
+- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
+- Future native owner/command/writer/readback/security evidence; not_run
+risk_class: owner_scope_or_credential_authority_leak
+reasoning_tier: high
+context_scope: projects_refresh_20261103_macs_006
+implementation_surfaces:
+- Plans/Multi-Account_Connection_Spec.md
+- Plans/storage-plan.md
+- Future shared Rust interface model and sole owner services; no implementation claimed
+node_compile_hint:
+  mode: accepted_product_contract_pending_companion_and_native_evidence
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/SETTINGS-PROPOSAL.md; cards S10/S11/N15/N17
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md §3 A; pinned integration
+  41d8119aec71789de7422018ea9c167e6c60a156
+- 'source_ref:chat:20261103: Jared: "I approve the outstanding questions with their recommended settings."'
+preserved_exact_tokens:
+- account_resolution
+- project_id=null
+- human_gui/human_palette
+- cmd.provider_binding.copy
+- cmd.provider_binding.resolve_on_destination
+- deferred_noncanonical_candidate
+- receipt-only
+negative_constraints:
+- Do not create an auth engine, generic no-Project primary or new credential store.
+- Do not turn provider-binding candidate spellings into dispatchable commands without F/owner contract freeze.
+- Do not remove pre-existing shared credentials/profile data on rollback or infer identity from labels/focus.
+owner_hints:
+- Plans/Multi-Account_Connection_Spec.md
+- Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/Multi-Account_Connection_Spec.md, ContractName:Plans/Plan_Document_System.md
