@@ -31,8 +31,20 @@ plan_unit_id: PRDB-001
 unit_type: requirement
 status: accepted
 owner_doc: Plans/PRD_Builder.md
-canonical_text: 'The finished-product feature formerly called Requirements Doc Builder is named PRD Builder everywhere in user-facing UI and canonical product documentation. Requirements documents means arbitrary user-provided source documents; it is not the feature name and may include PRDs, notes, specifications, tickets, diagrams, and poorly formatted source material. PRD Builder captures and normalizes planning-intake product intent; Planning Wizard consumes an approved PRD Pack or normalized requirements input and resolves implementation-ready planning. Plans/bootstrap and Codex ledger-transfer workflows are development tooling for building Puppet Master and must remain distinct from the finished PRD Builder, Planning Wizard, Plan Compile, WorkNode, and Orchestrator runtime. Superseded legacy planning-pipeline experiments are not an authority, dependency, implementation pattern, or product reference for this redesign; use Goal Runtime,
-  the current v2 ledger, standardized Plan docs, current Auditor loop, and current Plan Compile contracts.'
+canonical_text: >-
+  The finished-product feature formerly called Requirements Doc Builder is named PRD Builder everywhere in
+  user-facing UI and canonical product documentation. Requirements documents means arbitrary user-provided
+  source documents; it is not the feature name and may include PRDs, notes, specifications, tickets,
+  diagrams, and poorly formatted source material. PRD Builder captures and normalizes planning-intake
+  product intent; Planning Wizard consumes an approved PRD Pack or normalized requirements input and
+  resolves implementation-ready planning. Plans/bootstrap and Codex ledger-transfer workflows are
+  development tooling for building Puppet Master and must remain distinct from the finished PRD Builder,
+  Planning Wizard, Plan Compile, WorkNode, and Orchestrator runtime. Superseded legacy planning-pipeline
+  experiments are not an authority, dependency, implementation pattern, or product reference for this
+  redesign; use Goal Runtime, the current v2 ledger, standardized Plan docs, current Auditor loop, and
+  current Plan Compile contracts. PRD Builder remains Project-required, alongside Planning Wizard and
+  Orchestrator; app Plan/Deep Plan is a different approved chat workflow and cannot create a PRD Builder
+  run.
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []
@@ -60,12 +72,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- pldg-20260618-001-prd-planning-wizard:atom-0001
-- pldg-20260618-001-prd-planning-wizard:atom-0003
-- pldg-20260618-001-prd-planning-wizard:atom-0004
-- pldg-20260618-001-prd-planning-wizard:atom-0005
-- pldg-20260618-001-prd-planning-wizard:atom-0006
-- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/01-naming-and-boundaries.md#SRC-NAMING
+  - "pldg-20260618-001-prd-planning-wizard:atom-0001"
+  - "pldg-20260618-001-prd-planning-wizard:atom-0003"
+  - "pldg-20260618-001-prd-planning-wizard:atom-0004"
+  - "pldg-20260618-001-prd-planning-wizard:atom-0005"
+  - "pldg-20260618-001-prd-planning-wizard:atom-0006"
+  - "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/01-naming-and-boundaries.md#SRC-NAMING"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids:
 - atom-0001
 - atom-0003
@@ -173,7 +188,15 @@ plan_unit_id: PRDB-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/PRD_Builder.md
-canonical_text: 'PRD Builder proactively asks enough targeted discovery questions to make product intent complete and testable, including problem, users, goals, scope, non-goals, constraints, success, source authority, risks, assumptions, and uncertainty. Ask questions in digestible batches, use existing ledger answers before asking, avoid repetition, and prefer questions whose answers materially change the PRD. PRD Builder captures what, why, who, scope, constraints, acceptance expectations, risks, assumptions, dependencies, and open questions without pretending to produce implementation-ready plans.'
+canonical_text: >-
+  PRD Builder proactively asks enough targeted discovery questions to make product intent complete and
+  testable, including problem, users, goals, scope, non-goals, constraints, success, source authority,
+  risks, assumptions, and uncertainty. Ask questions in digestible batches, use existing ledger answers
+  before asking, avoid repetition, and prefer questions whose answers materially change the PRD. PRD
+  Builder captures what, why, who, scope, constraints, acceptance expectations, risks, assumptions,
+  dependencies, and open questions without pretending to produce implementation-ready plans. With No
+  project selected, preserve intent as a chat draft and offer the two explicit conversion/Project choices
+  before PRD intake; declining leaves the chat intact and starts no PRD run.
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []
@@ -197,10 +220,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- pldg-20260618-001-prd-planning-wizard:atom-0020
-- pldg-20260618-001-prd-planning-wizard:atom-0021
-- pldg-20260618-001-prd-planning-wizard:atom-0022
-- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+  - "pldg-20260618-001-prd-planning-wizard:atom-0020"
+  - "pldg-20260618-001-prd-planning-wizard:atom-0021"
+  - "pldg-20260618-001-prd-planning-wizard:atom-0022"
+  - "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids:
 - atom-0020
 - atom-0021
@@ -301,8 +327,20 @@ plan_unit_id: PRDB-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/PRD_Builder.md
-canonical_text: 'The default workspace emphasizes one primary PRD while exposing supporting assumptions and constraints, open questions, source traceability, and quality/readiness views without making users manage many equal documents. Approval creates an immutable, versioned Approved PRD Pack containing the primary PRD, accepted PRD-ledger snapshot, source manifest, traceability, assumptions and constraints, open questions, quality report, approval receipt, hashes, and version identity. The PRD Builder final action is labeled Approve PRD for Planning Wizard and creates the immutable handoff snapshot; the Planning Wizard consumes a specific approved version rather than mutable editor state. Edits after approval create a new draft based on the approved version and require a new approval event; previous Approved PRD Packs remain immutable and addressable. PRD Builder exposes Ready, Ready with Warnings, and Blocked based on source extraction,
-  required sections, blocking conflicts, annotations, quality findings, and approval-snapshot ability; accepted warnings carry into Planning Wizard.'
+canonical_text: >-
+  The default workspace emphasizes one primary PRD while exposing supporting assumptions and constraints,
+  open questions, source traceability, and quality/readiness views without making users manage many equal
+  documents. Approval creates an immutable, versioned Approved PRD Pack containing the primary PRD,
+  accepted PRD-ledger snapshot, source manifest, traceability, assumptions and constraints, open
+  questions, quality report, approval receipt, hashes, and version identity. The PRD Builder final action
+  is labeled Approve PRD for Planning Wizard and creates the immutable handoff snapshot; the Planning
+  Wizard consumes a specific approved version rather than mutable editor state. Edits after approval
+  create a new draft based on the approved version and require a new approval event; previous Approved PRD
+  Packs remain immutable and addressable. PRD Builder exposes Ready, Ready with Warnings, and Blocked
+  based on source extraction, required sections, blocking conflicts, annotations, quality findings, and
+  approval-snapshot ability; accepted warnings carry into Planning Wizard. Its approval pack and handoff
+  require real Project/Named Plan owner identity; conversion and an app Plan approval are not an Approved
+  PRD Pack or authority to start this workflow.
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []
@@ -328,12 +366,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- pldg-20260618-001-prd-planning-wizard:atom-0026
-- pldg-20260618-001-prd-planning-wizard:atom-0027
-- pldg-20260618-001-prd-planning-wizard:atom-0028
-- pldg-20260618-001-prd-planning-wizard:atom-0029
-- pldg-20260618-001-prd-planning-wizard:atom-0038
-- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+  - "pldg-20260618-001-prd-planning-wizard:atom-0026"
+  - "pldg-20260618-001-prd-planning-wizard:atom-0027"
+  - "pldg-20260618-001-prd-planning-wizard:atom-0028"
+  - "pldg-20260618-001-prd-planning-wizard:atom-0029"
+  - "pldg-20260618-001-prd-planning-wizard:atom-0038"
+  - "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids:
 - atom-0026
 - atom-0027
@@ -1011,12 +1052,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/PRD_Builder.md
 canonical_text: >-
-  PRD Builder exposes a PRD switcher plus New Plan entry scoped by explicit immutable
-  project_id plus named_plan_id, with one current primary PRD per selected Named Plan,
-  independent background work across switches, and per-Plan restore of route, tab, filters,
-  inspector, scroll, and focus. Plan lifecycle actions reuse the existing six cmd.named_plan
-  commands with no new lifecycle, and every PRD parent edge resolves through the single
-  NPLAN-006 owner-join contract while PRD content, approval, and readiness stay owned here.
+  PRD Builder exposes a PRD switcher plus New Plan entry scoped by explicit immutable project_id plus
+  named_plan_id, with one current primary PRD per selected Named Plan, independent background work across
+  switches, and per-Plan restore of route, tab, filters, inspector, scroll, and focus. Plan lifecycle
+  actions reuse the existing six cmd.named_plan commands with no new lifecycle, and every PRD parent edge
+  resolves through the single NPLAN-006 owner-join contract while PRD content, approval, and readiness
+  stay owned here. No-project PRD navigation is typed Project-required with the two ACD-510 choices; no
+  null Project/named_plan_id or fake aggregate is admitted. A successful conversion is followed by
+  separate current intake, not implicit PRD creation.
 gui_related: true
 gui_classification_reason: The PRD switcher, New Plan entry, per-Plan restore, and scoped workspace are user-visible.
 depends_on: [PRDB-005, NPLAN-006]
@@ -1042,6 +1085,9 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08#PERF-001"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "primary PRD"
   - "New Plan"

@@ -76,9 +76,9 @@ Configured `concurrency`, `time_limit_seconds`, `token_limit`, and `cost_limit` 
 
 ### 2.5 Permission ceiling
 
-Every collaborative run inherits the parent thread, mode, and Plan permission ceiling. A participant cannot self-approve, cannot request its own escalation directly to the user outside the approval owner, and cannot acquire authority its parent does not hold. Permission requests raised inside a run route to `Plans/Permissions_System.md` with the run, participant slot, and requested capability attached, and the decision is recorded on the run. A coordinator has no additional authority over the permission layer; coordinating work is not authorizing work.
+Every collaborative run inherits the parent thread/Computer, effective mode, actual working roots and any bound Plan permission ceiling. A participant cannot self-approve, cannot request its own escalation directly to the user outside the approval owner, and cannot acquire authority its parent does not hold. Permission requests raised inside a run route to `Plans/Permissions_System.md` with the run, participant slot, and requested capability attached, and the decision is recorded on the run. A coordinator has no additional authority over the permission layer; coordinating work is not authorizing work. CWR-045 supplies explicit app scope when no Project or Plan exists; coordinating creates no authority.
 
-Mutation authority is inherited, never configured upward. Crew inherits the parent mode's mutation authority. BrainStorm and Review are read-only against the target project regardless of parent authority. Chat Room has no project mutation authority; it may only produce transcript, artifacts, and explicitly promoted records.
+Mutation authority is inherited, never configured upward. Crew inherits the parent mode's mutation authority. BrainStorm and Review are read-only against the actual selected task files/documents/roots regardless of parent authority. Chat Room has no project mutation authority; it may only produce transcript, artifacts, and explicitly promoted records. These limits apply in app and Project scope; a conversation does not require a fabricated target Project.
 
 ### 2.6 Pause, resume, cancel, and recovery
 
@@ -157,7 +157,7 @@ Crew Auto settings…
 Manage Defaults…
 ```
 
-Crew Auto is the assistant's permission to start a Crew by itself when it needs one (DL-120, 2026-09-27). It is on by default for a new project. The project value is held by the Settings owner under `assistant.multi_agent.crew.auto_enabled` (section 14); the project's untouched default Crew Auto configuration is created with revision 1. The `Crew Auto` check in a chat shows the value in force for that chat: the chat thread's `crew_auto_override` when true or false, otherwise the project value when it is null or absent. Checking or unchecking it sets that chat's override only; it is committed before the check changes, and it never changes the project value or another chat. The rules and team Crew Auto uses are the project's stored Crew Auto configuration, which starts from the Settings defaults of section 14 and changes only when the Crew Auto sheet commits; a sheet draft that was never committed is never used. No first-run confirmation sheet appears before Crew Auto first starts a Crew; the resulting run's one-line note links to `Crew Auto settings…`. Unchecking Crew Auto stops the assistant starting Crews by itself in that chat and retains the stored configuration. `Crew Auto settings…` opens the Crew Auto sheet through `cmd.chat.crew_auto.open_config`, and `Manage Defaults…` keeps its route to the Settings manager (CWR-038, DL-119, 2026-09-27). `Crew Auto is on for this project` appears only in the chat where the user turned it on; a change from project Settings and a chat whose own override is off add no such line (CWR-038, DL-135, DL-138).
+Crew Auto permits automatic Crew only through the saved configuration and pure evaluator (CWR-021/045). A Project uses its existing saved Project configuration and nullable chat override. A no-project chat gets a thread-bound revision-1 configuration initialized from Everywhere/Computer defaults, with the same criteria/team/currentness and nullable override; future default edits do not rewrite it. The check writes only that chat override; configure-and-enable is one typed owner transaction for the actual app-thread configuration or real Project. No uncommitted draft, source YOLO flag or roster length widens authority/caps. First automatic run uses that saved revision without a confirmation sheet and leaves the one settings link. App activation says Crew Auto is on for this chat; Project wording remains Project-specific. Settings remains the default-value writer and CWR the saved definition/run owner.
 
 Crew Auto criteria may include independent subsystems, specialization fit, useful parallelism, a Plan recommendation, and a configurable complexity threshold. Crew Auto cannot widen authority beyond the parent ceiling, cannot raise the configured member cap, and cannot override an explicitly selected single-agent route. When criteria are not met, no Crew is created, no card appears, and no Usage is attributed; an unmet-criteria evaluation is not a failed run. Admission and the Crew Auto sheet's preview use one pure deterministic evaluator that makes no provider call, and every run records its `admission_source` and, when Crew Auto admitted it, its `crew_auto_revision` (CWR-021, 2026-09-27). The assistant decides when it wants a Crew; the evaluator decides whether it may start one. The assistant starts a Crew by itself only when Crew Auto is on for the chat and the evaluator admits that request, and a declined request stays with one assistant with nothing created (CWR-021, DL-120, 2026-09-27). Build With Crew on a Plan stays the user's choice: Crew Auto never starts it and is not required for it.
 
@@ -386,7 +386,7 @@ The exact collaborative command IDs owned by this document are listed below. The
 | `cmd.chat_room.promote_to_todo` | domain_action | `ChatRoomPromoteTodoRequest` / `ChatRoomPromoteTodoResult` | Explicit promotion only. Routes to the To-Do owner with source lineage. Never mutates the thread To-Do list directly. |
 | `cmd.chat_room.promote_to_goal` | domain_action | `ChatRoomPromoteGoalRequest` / `ChatRoomPromoteGoalResult` | Explicit promotion only. Routes to the Goal owner with source lineage and its approval rules. Never edits Goal text directly. |
 | `cmd.chat_room.end` | domain_action | `ChatRoomEndRequest` / `ChatRoomEndResult` | Ends a running, waiting, or paused room: no further rounds or messages, and the run settles `completed`, never `cancelled`. Promotion of existing messages stays allowed. Distinct from `cmd.collaboration.cancel`. |
-| `cmd.chat.crew_auto.set` | domain_action | `CrewAutoSetRequest` / `CrewAutoSetResult` | Sets Crew Auto at the scope its request names (CWR-038): `thread`, from a chat's check, sets only that chat's override of the project value; `project`, from the Crew Auto sheet, commits the rules and the team in one `CrewAutoSetRequest` and turns Crew Auto on for the project. An enable that finds no stored Crew Auto configuration returns `configuration_required` and changes no check. Commits before any check changes. Cannot widen authority. |
+| `cmd.chat.crew_auto.set` | domain_action | `CrewAutoSetRequest` / `CrewAutoSetResult` app sibling | Exact variant distinguishes a Project configuration commit, an app-thread configuration commit, and a nullable thread-override check. Configuration commits rules/team/activation in one owner transaction; a check changes only override. No Project guess, partial save, uncommitted configuration or authority widening; missing saved configuration returns configuration_required. |
 | `cmd.chat.crew_auto.open_config` | shell_view | `CrewAutoConfigRoute` / `RouteResult` | Opens the Crew Auto configuration modal. Route success is not enablement; the check state changes only through `cmd.chat.crew_auto.set`. |
 
 Source surfaces for the ten original `cmd.collaboration.*` rows are `workflow_modal`, `workflow_card`, `workflow_panel`, `activity`, and `composer`; `cmd.collaboration.reconfigure` additionally has `brainstorm_panel` for turning Grill Me on mid-run (DL-218), and `chat_room_card` and `chat_room_panel` for switching a Chat Room's `Pause between rounds` while it runs (CWR-044, DL-231); `cmd.collaboration.research_lead` is raised from `workflow_card`, `workflow_panel` and `wonderer_workspace` (DL-218). `cmd.brainstorm.*` surfaces are `brainstorm_card` and `brainstorm_panel`, and `cmd.brainstorm.research_lead` also `wonderer_workspace`, the Wonderer workspace surface the central catalog registers (CWR-031; Plans/UI_Command_Catalog.md UCC-169, UCC-171); `cmd.review.*` surfaces are `review_card` and `review_panel`, with the catalog-owned `message_chrome` origin additionally allowed only for the `taught_rule_check` variant of `cmd.review.send_findings_to_agent` (UCC-172); its `review_findings` variant keeps the Review-only origins; `cmd.chat_room.*` surfaces are `chat_room_card` and `chat_room_panel`; `cmd.chat.crew_auto.set` surfaces are `multi_agent_menu` and `crew_auto_modal`; `cmd.chat.crew_auto.open_config` surfaces are `multi_agent_menu`, `workflow_modal` and `crew_auto_receipt` (CWR-038).
@@ -395,7 +395,7 @@ Source surfaces for the ten original `cmd.collaboration.*` rows are `workflow_mo
 
 ## 11. Typed requests, results, errors, and availability
 
-Every collaborative mutation request reuses the central command and runtime envelopes and carries, as applicable, `schema_id`, `schema_version`, `command_id`, `command_instance_id`, `project_id`, `thread_id`, `object_id`, `expected_revision`, `expected_currentness_hash`, `actor_identity`, `permission_snapshot_id`, `idempotency_key`, `source_surface`, `correlation_id`, `causation_id`, and `created_at`.
+Every collaborative mutation request reuses the central command and runtime envelopes and carries, as applicable, `schema_id`, `schema_version`, `command_id`, `command_instance_id`, explicit scope, `project_id` (present null for app), actual Server/Computer, `thread_id`, `object_id`, `expected_revision`, `expected_currentness_hash`, `actor_identity`, `permission_snapshot_id`, `idempotency_key`, `source_surface`, `correlation_id`, `causation_id`, and `created_at`. App/Project record editions are deliberately versioned; a null app Project is not project_not_found, while a dangling real Project still refuses.
 
 Every collaborative mutation result carries `status`, `committed`, the revision and currentness after the mutation, receipt refs, an `observable_work` ref when the work is asynchronous, an error or reason enum when not committed, and `replay_of` when the result is an idempotent replay. A UI acknowledgement is never domain success, and a rendered card is never proof that a run was admitted.
 
@@ -457,7 +457,7 @@ The participant activity projection (CWR-030) is derived on read from these even
 
 ## 14. Settings boundary
 
-Settings stores ordinary project-bound defaults and renders the manager. This document stores the actual run and the frozen effective roster. Settings never stores a run, a transcript, a participant assignment, a finding, a vote, or a question bank; this document never becomes a second settings store.
+Settings stores ordinary defaults at their exact inventory-admitted Everywhere/Computer/Project levels and renders the manager; app reads omit Project. This owner stores committed definitions/runs/frozen rosters. Settings never stores transcripts, assignments, findings, votes or question banks; this owner is never a second default-value writer.
 
 Settings provides a **Multi-Agent Workflows** manager with `Crew`, `BrainStorm`, `Review`, and `Chat Room` tabs. The default keys it owns are `assistant.multi_agent.crew.participant_count` (3), `assistant.multi_agent.crew.coordinator` (`parent_assistant`), `assistant.multi_agent.crew.assignment_strategy` (`manager_directed`), `assistant.multi_agent.crew.parallelism` (3), `assistant.multi_agent.crew.auto_enabled` (true), `assistant.multi_agent.crew.auto_complexity` (`high`), `assistant.multi_agent.crew.auto_max_members` (4), `assistant.multi_agent.brainstorm.core_participants` (4), `assistant.multi_agent.brainstorm.question_limit` (20), `assistant.multi_agent.grill_me.question_extension` (25), `assistant.multi_agent.brainstorm.external_research` (`maximum`), `assistant.multi_agent.brainstorm.independent_proposals` (true), `assistant.multi_agent.brainstorm.debate_rounds` (2), `assistant.multi_agent.brainstorm.voting` (`evidence_weighted`), `assistant.multi_agent.brainstorm.preserve_dissent` (true), `assistant.multi_agent.review.strategy` (`multi_pass`), `assistant.multi_agent.review.reviewer_count` (3), `assistant.multi_agent.review.blind_initial_pass` (true), `assistant.multi_agent.review.peer_corroboration` (true), `assistant.multi_agent.review.preserve_dissent` (true), `assistant.multi_agent.review.auto_repair` (false, locked off for this feature), `assistant.multi_agent.chat_room.participant_count` (4), `assistant.multi_agent.chat_room.turn_policy` (`moderated`), `assistant.multi_agent.chat_room.max_rounds` (5), and `assistant.multi_agent.chat_room.pause_between_rounds` (false). The Chat Room sheet's `Pause between rounds` check opens from that last default, and `Save as default` keeps it beside the room's turn policy and rounds (CWR-044, DL-231). The Deep Plan Grill Me toggle uses `assistant.chat.deep_plan.grill_me_default` (false). The Grill Me extension is also the whole question maximum of a Crew or a Chat Room with Grill Me on (section 9.3, DL-218). A chat's `crew_auto_override` belongs to chat thread metadata, not the project Settings value (DL-138).
 
@@ -533,7 +533,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Puppet Master has exactly four user-invocable collaborative workflow kinds, closed as crew, brainstorm, review, and chat_room. They are one runtime with four protocols, not four products. Every kind reuses the same participant assignment, transcript, artifact, card, panel, Activity, Usage, recovery, and composer-target infrastructure. A kind-specific protocol may add fields and actions but may not fork core storage, core lifecycle, or core identity, and four independent agent or session stores are forbidden. Collaboration is the durable configuration identity, CollaborativeRun is one execution of it, Participant is one configured slot, and CollaborationMessage is one durable transcript entry.
+  Puppet Master has exactly four user-invocable collaborative workflow kinds, closed as crew, brainstorm,
+  review, and chat_room. They are one runtime with four protocols, not four products. Every kind reuses
+  the same participant assignment, transcript, artifact, card, panel, Activity, Usage, recovery, and
+  composer-target infrastructure. A kind-specific protocol may add fields and actions but may not fork
+  core storage, core lifecycle, or core identity, and four independent agent or session stores are
+  forbidden. Collaboration is the durable configuration identity, CollaborativeRun is one execution of it,
+  Participant is one configured slot, and CollaborationMessage is one durable transcript entry. All four
+  existing kinds admit real app thread/Computer scope under CWR-045 while preserving their protocols and
+  actual source/target requirements; no new kind or separate app runtime is added.
 gui_related: true
 gui_classification_reason: The shared card, panel, participant row, and Activity domain are rendered identically for all four kinds.
 depends_on: []
@@ -555,8 +563,11 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js (5.6 Pro prototype; behaviour reference only)"
-  - pm-assistant-implementation-2026-09-02-recovered:COLLAB-001
-  - pm-assistant-implementation-2026-09-02-recovered:07_DRY_OWNERSHIP_MAP.md#5
+  - "pm-assistant-implementation-2026-09-02-recovered:COLLAB-001"
+  - "pm-assistant-implementation-2026-09-02-recovered:07_DRY_OWNERSHIP_MAP.md#5"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "crew | brainstorm | review | chat_room"
   - "CollaborativeRun"
@@ -575,7 +586,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Every invocation opens its kind-specific configuration modal populated from Settings defaults, and each participant slot supports selectable model and Persona with repeated choices allowed. The default read at modal-open time is a snapshot: changing a Settings default afterwards never retroactively alters a committed definition or a running run. Starting a run freezes the effective roster, which becomes the run's truth and remains visible in the panel even after Settings change. Requested and effective model, account, and Persona are both recorded and the difference is disclosed on the participant row; there is no silent substitution, and where no acceptable substitute exists the participant is disabled with its reason.
+  Every invocation opens its kind-specific configuration modal populated from Settings defaults, and each
+  participant slot supports selectable model and Persona with repeated choices allowed. The default read
+  at modal-open time is a snapshot: changing a Settings default afterwards never retroactively alters a
+  committed definition or a running run. Starting a run freezes the effective roster, which becomes the
+  run's truth and remains visible in the panel even after Settings change. Requested and effective model,
+  account, and Persona are both recorded and the difference is disclosed on the participant row; there is
+  no silent substitution, and where no acceptable substitute exists the participant is disabled with its
+  reason. No-project defaults use the one Everywhere/Computer resolver and retain frozen
+  participant/account/Persona snapshots; a library choice is not destination-host installation or
+  authentication.
 gui_related: true
 gui_classification_reason: This unit defines the modal, its participant rows, and the requested-versus-effective disclosure.
 depends_on: [CWR-001]
@@ -600,8 +620,11 @@ node_compile_hint:
   mode: collaborative_configuration_contract
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:COLLAB-002
-  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#11
+  - "pm-assistant-implementation-2026-09-02-recovered:COLLAB-002"
+  - "pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#11"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "requested"
   - "effective"
@@ -621,7 +644,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Each run renders one transcript card that expands inline for recent transcript and details and pops out to a full panel showing the same run. Every participant is clickable and opens that participant's own transcript. Activity gains per-thread BrainStorm, Review, and Chat Room domains alongside Goal, Todo, Subagents, Crew, Changes, and Artifacts, preserving compact-before-clip behavior. Message targets the ordinary composer rather than a separate input: composer chrome visibly changes and names the destination, and a destination pointing at a cancelled run or removed participant is cleared with a visible reason and returns the composer to the ordinary thread destination. The target ribbon and participant transcripts survive a restart.
+  Each run renders one transcript card that expands inline for recent transcript and details and pops out
+  to a full panel showing the same run. Every participant is clickable and opens that participant's own
+  transcript. Activity gains per-thread BrainStorm, Review, and Chat Room domains alongside Goal, Todo,
+  Subagents, Crew, Changes, and Artifacts, preserving compact-before-clip behavior. Message targets the
+  ordinary composer rather than a separate input: composer chrome visibly changes and names the
+  destination, and a destination pointing at a cancelled run or removed participant is cleared with a
+  visible reason and returns the composer to the ordinary thread destination. The target ribbon and
+  participant transcripts survive a restart. App run/participant/composer routes bind the actual thread
+  and scope independently from selected Project focus and retain the same tab, Activity and
+  no-duplicate-control rules.
 gui_related: true
 gui_classification_reason: This is the complete rendering and targeting contract for collaborative surfaces.
 depends_on: [CWR-001]
@@ -647,8 +679,11 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js (5.6 Pro prototype; behaviour reference only)"
-  - pm-assistant-implementation-2026-09-02-recovered:COLLAB-003
-  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#12
+  - "pm-assistant-implementation-2026-09-02-recovered:COLLAB-003"
+  - "pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#12"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Message"
   - "Open Activity"
@@ -667,17 +702,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Crew is a configurable workflow, not an On/Off switch. Its configuration covers coordinator, roles, per-participant models and Personas, tools, and context; each assignment's expected outputs and dependencies are authored by the coordinator when it splits the job rather than configured (CWR-037, DL-128, 2026-09-27); and Crew remains distinct from Subagents. Crew Auto is the assistant's permission to start a Crew by itself when it needs one, on by default for a project; the checkable Crew Auto item of a chat's Multi-Agent submenu overrides the project value for that chat only, and there is no separate per-chat switch that allows Crews (DL-120, 2026-09-27). Crew Auto starts a run only from the project's stored Crew Auto configuration of section 5.3, created at project creation with revision 1 from the Settings defaults and changed only when the Crew Auto sheet commits; its first automatic run needs no confirmation sheet and leaves a one-line settings link; it never starts one from a sheet draft that was never committed, and it cannot widen the permission ceiling or the authority any participant already has. Build With Crew runs an exact Assistant Plan revision through a configured Crew rather than the single-agent build path, and the crew configuration is part of the build target rather than part of any schedule. Crew is not Orchestrator and must not be modelled as child-goal orchestration.
+  Crew stays a configurable collaboration kind, distinct from Subagents, child Goals and Orchestrator.
+  Coordinator-authored assignments use expected outputs/dependencies and frozen model/Persona/tool/context
+  ceilings. Project Crew Auto retains its saved Project configuration and thread override; app Crew Auto
+  uses CWR-045's saved thread-bound revision-1 configuration initialized once from Everywhere/Computer
+  defaults. The existing pure evaluator and nullable override gate admission in both contexts, never
+  uncommitted draft or YOLO alone. First automatic run needs no configuration confirmation sheet and
+  leaves its one owner note/link. Build With Crew binds an exact Assistant Plan revision and configured
+  roster in app or Project scope; schedules freeze this target rather than creating a second Crew
+  configuration engine.
 gui_related: true
 gui_classification_reason: This defines the Crew modal, the checkable Crew Auto menu item, and the Build With Crew action.
 depends_on: [CWR-002]
 unblocks: []
 acceptance_criteria:
-  - A new project stores its untouched Crew Auto defaults as revision 1 and does not require a first-run confirmation sheet.
-  - Crew Auto starts only from the project's stored Crew Auto configuration, never from an uncommitted sheet draft.
-  - Crew Auto cannot widen authority or the permission ceiling.
-  - Crew remains distinct from Subagents and from Orchestrator.
-  - Crew Auto is on by default for a project, and a chat's Crew Auto check changes only that chat.
+  - "Project and app Crew Auto use one committed revision-1 configuration and the same deterministic evaluator."
+  - "Project config stays Project-bound; app config stays thread/Computer-bound and initializes from Everywhere/Computer defaults."
+  - "No uncommitted draft, roster-length cap change, implicit authority widening or first-run confirmation sheet."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - node tests/collaboration-verify.mjs
@@ -693,11 +734,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138)"
-  - pm-assistant-implementation-2026-09-02-recovered:CREW-001
-  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#8
+  - "pm-assistant-implementation-2026-09-02-recovered:CREW-001"
+  - "pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#8"
   - "Plans/Decision_Log.md DL-128 (card p10, E-14; 2026-09-27 amendment)"
   - "Plans/Decision_Log.md DL-120 (card p02, E-02; 2026-09-27 amendment, per the design lead's ruling)"
   - "Design lead ruling of 2026-09-27 on the owner's behalf, relayed in the G1 follow-up task (not verifiable from inside this repository)"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "revision 1"
   - "Crew Auto"
@@ -809,7 +853,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  BrainStorm is the third Deep Plan choice and a strict superset of Exhaustive. It is no longer a hidden routed overlay: it has a coherent configuration modal, transcript card, and full panel. Its base maximum user question count is 20, raised by the configurable Grill Me extension whose default is plus twenty-five, for an effective maximum of 45. It applies the strongest external research together with adversarial alternatives, cross-system effects, migrations, compatibility, security, performance, operations, rollback, and uncertainty closure. It is read-only against the target project but may use research tools and permission-gated temporary isolated MCP, tool, and package provisioning scoped to the run and torn down at its end. The protocol runs independent proposals first, then evidence-driven debate, targeted research, voting, dissent preservation, and synthesis, and its final output is exactly one Deep Plan document whose identity is owned by the Assistant Plan Runtime.
+  BrainStorm is the third Deep Plan choice and a strict superset of Exhaustive. It is no longer a hidden
+  routed overlay: it has a coherent configuration modal, transcript card, and full panel. Its base maximum
+  user question count is 20, raised by the configurable Grill Me extension whose default is plus
+  twenty-five, for an effective maximum of 45. It applies the strongest external research together with
+  adversarial alternatives, cross-system effects, migrations, compatibility, security, performance,
+  operations, rollback, and uncertainty closure. It is read-only against the target project but may use
+  research tools and permission-gated temporary isolated MCP, tool, and package provisioning scoped to the
+  run and torn down at its end. The protocol runs independent proposals first, then evidence-driven
+  debate, targeted research, voting, dissent preservation, and synthesis, and its final output is exactly
+  one Deep Plan document whose identity is owned by the Assistant Plan Runtime. For app Deep Plan the
+  read-only target is the actual admitted task/source set and Computer roots, not a fictional target
+  Project. BrainStorm uses the same app Assistant Plan and scoped ledger/bundle under APR-073/074.
 gui_related: true
 gui_classification_reason: This defines the BrainStorm modal, the effective question maximum display, the card, and the panel.
 depends_on: [CWR-002]
@@ -834,8 +889,11 @@ node_compile_hint:
   mode: brainstorm_protocol_contract
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:BS-001
-  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#10
+  - "pm-assistant-implementation-2026-09-02-recovered:BS-001"
+  - "pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#10"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "BrainStorm"
   - "Exhaustive"
@@ -907,7 +965,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  A collaborative run is durable: closing the client, switching threads or projects, reloading, or crashing neither cancels the run nor loses participant transcripts nor silently restarts a protocol round. On restart the runtime rehydrates the run, its frozen roster, every message, and produced artifacts from durable records rather than conversation context, records exactly one terminal result for an in-flight attempt, and treats replay as idempotent on attempt identity. A failed participant is recorded, never silently dropped and never given fabricated output; where a protocol requires that participant the run reports a degraded result naming what is missing rather than presenting a complete-looking consensus. A denied permission stops only the affected participant, which can never self-approve or escalate its own ceiling. A quota-exhausted run enters the shared quota wait with transcripts and roster preserved and is not restarted from the beginning.
+  A collaborative run is durable: closing the client, switching threads or projects, reloading, or
+  crashing neither cancels the run nor loses participant transcripts nor silently restarts a protocol
+  round. On restart the runtime rehydrates the run, its frozen roster, every message, and produced
+  artifacts from durable records rather than conversation context, records exactly one terminal result for
+  an in-flight attempt, and treats replay as idempotent on attempt identity. A failed participant is
+  recorded, never silently dropped and never given fabricated output; where a protocol requires that
+  participant the run reports a degraded result naming what is missing rather than presenting a
+  complete-looking consensus. A denied permission stops only the affected participant, which can never
+  self-approve or escalate its own ceiling. A quota-exhausted run enters the shared quota wait with
+  transcripts and roster preserved and is not restarted from the beginning. The app Server owns
+  persistence and recovery; owner outage is not migration or completion. Scope/permission/root/Stop
+  revalidation precedes any restarted participant, and conversion uses CWR-045 safe fencing.
 gui_related: true
 gui_classification_reason: Degraded results and failed participants must be visible in the card, panel, and Activity rather than hidden.
 depends_on: [CWR-001]
@@ -931,8 +1000,11 @@ node_compile_hint:
   mode: collaborative_recovery_contract
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:COLLAB-004
-  - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#13
+  - "pm-assistant-implementation-2026-09-02-recovered:COLLAB-004"
+  - "pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#13"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "degraded"
   - "frozen effective roster"
@@ -951,7 +1023,18 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Puppet Master owns canonical collaborative state across direct, SDK, CLI, and server providers. An adapter may translate a participant request into a provider request and a provider event into a normalized Puppet Master event; translation never transfers authority. Provider-native multi-agent, sub-session, or team constructs are not the canonical run: they are disabled, redirected into the canonical run, or marked noncanonical, and their state is never read back as Puppet Master truth. Where an adapter genuinely cannot express a required capability the constraint is disclosed on the participant row and in the configuration modal and is never described as full control; a kind that cannot run faithfully on an adapter is unavailable there with its reason rather than silently degraded. Temporary research capability provisioning is requested through MCP Integration and Tools, is permission-gated, is scoped to the run, and is torn down at its end; there is no workflow-local MCP or tool registry.
+  Puppet Master owns canonical collaborative state across direct, SDK, CLI, and server providers. An
+  adapter may translate a participant request into a provider request and a provider event into a
+  normalized Puppet Master event; translation never transfers authority. Provider-native multi-agent,
+  sub-session, or team constructs are not the canonical run: they are disabled, redirected into the
+  canonical run, or marked noncanonical, and their state is never read back as Puppet Master truth. Where
+  an adapter genuinely cannot express a required capability the constraint is disclosed on the participant
+  row and in the configuration modal and is never described as full control; a kind that cannot run
+  faithfully on an adapter is unavailable there with its reason rather than silently degraded. Temporary
+  research capability provisioning is requested through MCP Integration and Tools, is permission-gated, is
+  scoped to the run, and is torn down at its end; there is no workflow-local MCP or tool registry. App
+  participants bind their actual Computer and nullable Project context; capability refusal stays truthful,
+  with no provider-native state move or hidden substitute runtime.
 gui_related: true
 gui_classification_reason: Adapter constraints must be visible in the modal and on participant rows.
 depends_on: [CWR-002]
@@ -975,8 +1058,11 @@ node_compile_hint:
   mode: collaborative_provider_boundary
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:PROV-001
-  - pm-assistant-implementation-2026-09-02-recovered:09_PROVIDER_CONTROL_AND_CAPABILITY_MATRIX.md
+  - "pm-assistant-implementation-2026-09-02-recovered:PROV-001"
+  - "pm-assistant-implementation-2026-09-02-recovered:09_PROVIDER_CONTROL_AND_CAPABILITY_MATRIX.md"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "noncanonical"
   - "disclosed"
@@ -996,7 +1082,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Three prior models are superseded. BrainStorm as a hidden routed overlay migrates into a brainstorm CollaborativeRun with a synthesized definition and recoverable participants, marking the remainder unrecoverable in the receipt and fabricating no proposal, vote, or dissent. The retirement of Multi-Pass Review is reversed: legacy fixed Pass 1/2/3 structures migrate to a review run with three reviewer participants and a recorded note that the pass identities were positional rather than configured, and the old fixed three-pass system is not preserved as an alternate code path. Crew as an On/Off switch is retired: a legacy boolean migrates to a crew definition with Settings-derived defaults and auto_enabled set to the boolean's value, and enabling Crew Auto still requires a committed configuration. Receipts record converted runs, unrecoverable state, synthesized defaults, and residual risk, and a run whose thread or Project edge cannot validate quarantines rather than being attached to a guess.
+  Three prior models are superseded. BrainStorm as a hidden routed overlay migrates into a brainstorm
+  CollaborativeRun with a synthesized definition and recoverable participants, marking the remainder
+  unrecoverable in the receipt and fabricating no proposal, vote, or dissent. The retirement of Multi-Pass
+  Review is reversed: legacy fixed Pass 1/2/3 structures migrate to a review run with three reviewer
+  participants and a recorded note that the pass identities were positional rather than configured, and
+  the old fixed three-pass system is not preserved as an alternate code path. Crew as an On/Off switch is
+  retired: a legacy boolean migrates to a crew definition with Settings-derived defaults and auto_enabled
+  set to the boolean's value, and enabling Crew Auto still requires a committed configuration. Receipts
+  record converted runs, unrecoverable state, synthesized defaults, and residual risk, and a run whose
+  thread or Project edge cannot validate quarantines rather than being attached to a guess. App-scope
+  migration/creation validates a genuine app thread/Computer edge instead of demanding a Project, and
+  invalid edges quarantine. N25 creates explicit linked destination definitions/runs or a complete new
+  owner rebind; no frozen run scope/roster is edited in place.
 gui_related: false
 gui_classification_reason: Migration is a storage and custody operation with no surface of its own.
 depends_on: [CWR-001]
@@ -1018,8 +1116,11 @@ node_compile_hint:
   mode: collaborative_migration
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:COLLAB-005
-  - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#12.4
+  - "pm-assistant-implementation-2026-09-02-recovered:COLLAB-005"
+  - "pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#12.4"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Multi-Pass Review"
   - "auto_enabled"
@@ -1351,7 +1452,7 @@ APR-021, APR-022, APR-029, APR-030, APR-051, APR-052, APR-053, APR-054, and APR-
   primitives are prohibited.
 - **Explicit Destination Isolation:** Every model or persona picker activation explicitly binds to
   a precise target destination: the primary Assistant session, a specific draft participant slot
-  within a collaborative roster, or a project-level default template row.
+  within a collaborative roster, or an exact Settings-owned default template row at an admitted Everywhere/Computer/Project level. The picker binds that level/context explicitly and app work skips Project; a saved run roster is not a live default link.
 - **Cancellation Isolation:** Closing or canceling a picker leaves all other configuration fields,
   unrelated participant assignments, and draft states completely untouched. A cancelled picker
   never triggers global state resets or silent fallback rebindings.
@@ -1801,31 +1902,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Crew Auto admission is decided by one pure deterministic evaluator,
-  evaluate(criteria, request_features), which for admission reads only the criteria of the project's
-  stored Crew Auto configuration (section 5.3; never an uncommitted sheet draft) and the features of
-  the submitted request and makes no provider call. The same evaluator produces the
-  Crew Auto sheet's preview of sample requests and the live admission decision, so the preview can
-  never disagree with admission, and opening or previewing the sheet creates no run, card or Usage
-  (MODAL-001..002). Its criteria include the complexity threshold and the minimum number of parts
-  that can run at the same time (2 or 3), beside the criteria of section 5.3. A declined evaluation
-  creates nothing: no Crew, no card, no Usage and no failed run. An admitted evaluation starts an
-  ordinary Crew run. Every CollaborativeRun records admission_source, closed as
-  `user | crew_auto | build_with_crew | scheduled_build`, and a run admitted by Crew Auto also records
-  crew_auto_revision, the revision of the stored Crew Auto configuration that admitted it
-  (revision 1 for untouched defaults created with the project), so the card can say which rules
-  started it. Crew Auto uses the general Crew parallelism, clamped by app execution limits, and
-  has no separate at-once setting (DL-138). The Crew Auto team never raises the configured member cap: a
-  team larger than the cap is refused as invalid_request naming the cap, and the cap is never
-  overwritten from the roster length.
-  Crew Auto is the assistant's permission to start a Crew by itself when it needs one (DL-120,
-  2026-09-27), and this evaluator remains its gate. The assistant decides when it wants a Crew; a
-  Crew starts only when Crew Auto is on for the chat (the chat's override, otherwise the project
-  value) and evaluate(criteria, request_features) admits that request. The assistant wanting a Crew
-  is never an admission by itself: a request the evaluator declines stays with one assistant and
-  creates nothing, and the evaluator never starts a Crew the assistant did not ask for. The sheet's
-  preview therefore shows which requests the assistant would be allowed to hand to a Crew. Build
-  With Crew on a Plan stays the user's choice and is not admitted through this evaluator.
+  One pure evaluate(criteria, request_features) produces Crew Auto preview and live admission, with no
+  provider call. It reads the committed saved configuration/revision: Project-owned for Project work,
+  thread-bound initialized from Everywhere/Computer defaults for app work (CWR-045). The assistant must
+  request Crew, Crew Auto must be effective on for that chat, and the evaluator must admit; a declined
+  request creates no run/card/Usage. admission_source stays
+  user|crew_auto|build_with_crew|scheduled_build, with crew_auto_revision for automatic runs. Frozen
+  roster/concurrency/permission and hard budget ceilings still cap the run; oversized teams refuse, never
+  overwrite the cap. No uncommitted draft/default change or YOLO bypasses admission. Build With Crew
+  remains the user's exact-Plan choice, outside this evaluator.
 gui_related: true
 gui_classification_reason: The sheet's sample-request preview and the admitted card's origin line read this evaluator and these run fields.
 depends_on: [CWR-004]
@@ -1855,6 +1940,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-08 (NOW part)"
   - "Plans/Decision_Log.md DL-120 (card p02, E-02), per the design lead's ruling"
   - "Design lead ruling of 2026-09-27 on the owner's behalf, relayed in the G1 follow-up task (not verifiable from inside this repository)"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "general Crew parallelism"
   - "evaluate(criteria, request_features)"
@@ -1878,16 +1966,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Build With Crew on a Plan card opens the Crew configuration sheet in Build With Crew mode. The
-  sheet's visible title is "Build this plan with a Crew"; the canon name Build With Crew stays on the
-  Plan card action and in the sheet head's hover card. The job field is prefilled from the Plan's
-  objective and is read-only, the sheet names the exact Plan title and version, and the Plan
-  identity, version and hash appear in its technical details. The primary keeps the Start Crew
-  prefix and dispatches cmd.chat.plan.build_with_crew, never cmd.collaboration.start. If the Plan
-  gained a new version while the sheet was open, Start is refused in place with the Plan owner's
-  stale_plan_version reason, stating that the plan changed while the sheet was open and offering to
-  reopen it against the current version; the sheet keeps the user's configuration and nothing is
-  created.
+  Build With Crew on a Plan card opens the Crew configuration sheet in Build With Crew mode. The sheet's
+  visible title is "Build this plan with a Crew"; the canon name Build With Crew stays on the Plan card
+  action and in the sheet head's hover card. The job field is prefilled from the Plan's objective and is
+  read-only, the sheet names the exact Plan title and version, and the Plan identity, version and hash
+  appear in its technical details. The primary keeps the Start Crew prefix and dispatches
+  cmd.chat.plan.build_with_crew, never cmd.collaboration.start. If the Plan gained a new version while the
+  sheet was open, Start is refused in place with the Plan owner's stale_plan_version reason, stating that
+  the plan changed while the sheet was open and offering to reopen it against the current version; the
+  sheet keeps the user's configuration and nothing is created. The same exact-version transaction admits
+  app Plans with null Project and real Computer/roots/permission state. A scheduled configuration starts
+  no run; dispatch uses its frozen team, and ordinary conversion cannot transfer an approved execution as
+  authority.
 gui_related: true
 gui_classification_reason: This unit fixes the Build With Crew sheet's title, read-only job and in-place refusal.
 depends_on: [CWR-004, CWR-018]
@@ -1910,6 +2000,9 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 8.1 (G-28), 8.15"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-09"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Build this plan with a Crew"
   - "Build With Crew"
@@ -1932,13 +2025,15 @@ status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
   Start in Build With Crew mode is one transaction: the CollaborativeRun, the PlanRun with
-  execution_topology crew and the Plan's To-Do set are committed together or none of them is. A
-  partial creation is rolled back and reported as a typed failure, never shown as a card. The
-  transaction binds assistant_plan_id, plan_version and plan_hash, and the run records
-  admission_source build_with_crew. A Plan version that changed between opening the sheet and Start
-  refuses the whole transaction (CWR-022). This restates the atomicity that the Plan owner already
-  requires under Build With Crew and Build At in Plans/Assistant_Plan_Runtime.md and adds no new
-  contract.
+  execution_topology crew and the Plan's To-Do set are committed together or none of them is. A partial
+  creation is rolled back and reported as a typed failure, never shown as a card. The transaction binds
+  assistant_plan_id, plan_version and plan_hash, and the run records admission_source build_with_crew. A
+  Plan version that changed between opening the sheet and Start refuses the whole transaction (CWR-022).
+  This restates the atomicity that the Plan owner already requires under Build With Crew and Build At in
+  Plans/Assistant_Plan_Runtime.md and adds no new contract. The same exact-version transaction admits app
+  Plans with null Project and real Computer/roots/permission state. A scheduled configuration starts no
+  run; dispatch uses its frozen team, and ordinary conversion cannot transfer an approved execution as
+  authority.
 gui_related: false
 gui_classification_reason: Transaction atomicity is runtime behavior; the sheet's refusal is carried by CWR-022.
 depends_on: [CWR-022]
@@ -1961,6 +2056,9 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de section 8.15 (IMPACT A3-08)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-28"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "CollaborativeRun"
   - "PlanRun"
@@ -2601,30 +2699,30 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  CollaborativeDefinition carries every policy the sheets expose, so a committed sheet is fully
-  described by its definition revision: context_policy_ref (what participants can see: the request
-  and the files it mentions, and prior chat history only when chosen), tool_policy_ref (tools, MCP
-  and Skills, never beyond the parent), stuck_policy (what happens when a participant is stuck;
-  default ask_user, and under every value no participant is swapped, skipped or waived without an
-  explicit user action), transcript_policy (retention and detail of the full record), output_policy
-  (how the run finishes), and, for Crew, shared_notes_policy, closed as
-  `shared_space | private_per_participant` and realized through the notebook shared_slice and
-  participant scopes (CWR-012). Review adds evidence_citation_rule (CWR-025). Chat Room adds
-  moderator_style, mention_policy, stop_condition and summary_style (CWR-024), and
-  pause_between_rounds, a boolean that is false by default (CWR-044). BrainStorm adds
-  hard_constraints[] and provisioning_posture (CWR-027), and its synthesis model is the definition's
-  coordinator or synthesis model of section 3. The permission ceiling is shown and never configured
-  upward. These fields are written into the definition at commit, and a later Settings change never
-  alters them.
-  The time and cost limits a definition sets (time_limit_seconds and cost_limit) are that run's own
-  limits and override the general run limit for it, whether wider or narrower (DL-131): the
-  run-envelope wall-clock default of Plans/Run_Modes.md does not end such a run early. A hard
-  budget or ceiling, including a Plan budget, always caps the effective run limit: a request for
-  $6 with $3 left on the Plan stops at $3, and the sheet states "you asked for $6, this Plan allows $3"
-  (DL-138). token_limit, concurrency, the executionLimits ceilings and the permission ceiling keep
-  the narrowing rule of section 2.4, and the card's meta line shows the effective cap beside the
-  requested run limit. The definition stores no
-  substitution policy that could let a stand-in start (CWR-034).
+  CollaborativeDefinition carries every policy the sheets expose, so a committed sheet is fully described
+  by its definition revision: context_policy_ref (what participants can see: the request and the files it
+  mentions, and prior chat history only when chosen), tool_policy_ref (tools, MCP and Skills, never beyond
+  the parent), stuck_policy (what happens when a participant is stuck; default ask_user, and under every
+  value no participant is swapped, skipped or waived without an explicit user action), transcript_policy
+  (retention and detail of the full record), output_policy (how the run finishes), and, for Crew,
+  shared_notes_policy, closed as `shared_space | private_per_participant` and realized through the
+  notebook shared_slice and participant scopes (CWR-012). Review adds evidence_citation_rule (CWR-025).
+  Chat Room adds moderator_style, mention_policy, stop_condition and summary_style (CWR-024), and
+  pause_between_rounds, a boolean that is false by default (CWR-044). BrainStorm adds hard_constraints[]
+  and provisioning_posture (CWR-027), and its synthesis model is the definition's coordinator or synthesis
+  model of section 3. The permission ceiling is shown and never configured upward. These fields are
+  written into the definition at commit, and a later Settings change never alters them. The time and cost
+  limits a definition sets (time_limit_seconds and cost_limit) are that run's own limits and override the
+  general run limit for it, whether wider or narrower (DL-131): the run-envelope wall-clock default of
+  Plans/Run_Modes.md does not end such a run early. A hard budget or ceiling, including a Plan budget,
+  always caps the effective run limit: a request for $6 with $3 left on the Plan stops at $3, and the
+  sheet states "you asked for $6, this Plan allows $3" (DL-138). token_limit, concurrency, the
+  executionLimits ceilings and the permission ceiling keep the narrowing rule of section 2.4, and the
+  card's meta line shows the effective cap beside the requested run limit. The definition stores no
+  substitution policy that could let a stand-in start (CWR-034). Defaults and configured preferences use
+  Settings' admitted level/thing resolver; app definitions have no Project rung. Effective runtime
+  safety/permission and physical Computer ceilings remain narrowing constraints even where a run's
+  requested time/cost limit differs. No setting default creates execution authority.
 gui_related: true
 gui_classification_reason: The committed record drives the sheet's requested and effective limit disclosure, as well as the underlying run limits.
 depends_on: [CWR-018]
@@ -2653,6 +2751,9 @@ source_lineage:
   - "Plans/Decision_Log.md DL-131 (card p16, E-33), DL-121 (card p03, E-03)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json sha256:4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f p16, p03"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-15 (WAIT part)"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "you asked for $6, this Plan allows $3"
   - "stuck_policy"
@@ -2677,39 +2778,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  These collaboration interactions are view state or draft state and mint no command (MODAL-015..018,
-  CDRY-006): the card's expand state, with three values auto, open, closed, where the first
-  activation on any card opens it; the in-card More row of real buttons and its in-place cancel
-  confirmation, whose keep-going choice is view state; the run view's active tab and selected
-  participant; revealing a card from the dock; opening and closing a sheet's Advanced page; the
-  stashed Crew draft kept while the user detours to the Crew Auto sheet, restored on returning,
-  cancelling or turning Crew Auto on, and dropped when both sheets close; restoring the last removed
-  roster row for a few seconds; and the Revert document's view switch, revert-view, whose owner is
-  Plans/assistant-chat-design.md. Only the command a surface finally dispatches is a command.
-  The ELI5 disclosure is view state too (DL-126, 2026-09-27). The ELI5 sheet, owned by
-  Plans/assistant-chat-design.md, has one disclosure that shows how the chat's explanation style is
-  decided, and opening or closing it mints no command. It traces the resolution order and marks the
-  level that decides, in the order ACD-484 owns: the chat's own override (general.interaction.chat-eli5,
-  the existing per-conversation setting of Plans/Settings_System.md) if it has one,
-  otherwise the project default, otherwise the app default (general.interaction.eli5-default). The
-  project default uses the project scope on general.interaction.eli5-default registered by
-  Plans/Settings_System.md SSYS-028 (DL-138). Choosing a value in the disclosure is not view state: for this
-  chat it dispatches cmd.chat.eli5.set with on, off or inherit, where inherit follows the project
-  default (the command and its values are the catalog's, UCC-175), and changing the project default
-  is an ordinary Project Settings transaction. The retained All chats edit requires a Settings-owned
-  app-default transaction, whose persistence route is unresolved against SSYS-002 (SSYS-028,
-  pldg-20260927-001-wand-collab-workflows q-035). Until the owner resolves that conflict, the All chats
-  edit stays disabled with the Settings owner's reason and dispatches no app-wide write; the app fallback
-  remains the bundled off value. No command or global Settings writer is minted here.
+  Existing modal/card/participant/Advanced/ELI5 disclosures remain typed local view or draft state,
+  minting no domain command. ACD-484 ELI5 reads one Settings resolution: chat override, applicable
+  Project, Computer, Everywhere, factory; app chat omits Project. Opening the trace writes nothing.
+  Changing This chat uses cmd.chat.eli5.set; changing the applicable broader value uses the existing
+  Settings transaction at that explicit level. q-035's app-default writer question is resolved by
+  SSYS-002/059; the old disabled All chats/no-app-write/bundled-only fallback is superseded, not a second
+  writer. Frozen run snapshots remain unchanged by new defaults.
 gui_related: true
 gui_classification_reason: This unit classifies card, sheet and run view interactions as view or draft state for the command census.
 depends_on: [CWR-020]
 unblocks: []
 acceptance_criteria:
-  - None of the listed interactions has a command ID.
-  - The stashed Crew draft is restored on return, cancel or enable and dropped when both sheets close.
-  - Opening or closing the ELI5 disclosure dispatches nothing; choosing this chat's value dispatches cmd.chat.eli5.set and changing the project default uses its Settings transaction; the retained All chats edit stays disabled while its Settings contract is unresolved in ledger001 q-035.
-  - The project ELI5 default uses the existing general.interaction.eli5-default setting at project scope (SSYS-028).
+  - "Local modal/disclosure/card state emits no domain command."
+  - "ELI5 reads the one Settings resolver, skips Project in app scope and uses the existing command/transaction for actual writes."
+  - "q-035 is resolved in current canon; no old All-chats disabled/no-write rule remains active."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: command_minted_for_view_toggle
@@ -2733,6 +2816,9 @@ source_lineage:
   - "Plans/Settings_System.md general.interaction.chat-eli5 (the existing per-conversation ELI5 override) and general.interaction.eli5-default"
   - "Plans/assistant-chat-design.md ACD-484 (the ELI5 resolution order and the ELI5 popup)"
   - "Plans/UI_Command_Catalog.md UCC-175 (cmd.chat.eli5.set with on, off or inherit, and the eli5_sheet surface)"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "view state"
   - "auto, open, closed"
@@ -2997,43 +3083,46 @@ owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
   The Multi-Agent submenu of section 5.3 gains a Crew Auto settings… row directly under the Crew Auto
   check, and Manage Defaults… keeps its name and its route to the Settings manager (DL-119). Crew Auto
-  settings… dispatches cmd.chat.crew_auto.open_config, whose surfaces are the multi-agent menu and
-  the Crew sheet's own link to the Crew Auto sheet (workflow_modal); route success is still not
-  enablement. The Crew Auto sheet's primary is one click and one command: it dispatches
-  cmd.chat.crew_auto.set once, and CrewAutoSetRequest carries the Crew Auto rules (the criteria of
-  section 5.3 and CWR-021) together with the Crew Auto team, which the command commits through the
-  project Settings transaction that MODAL-006..008 requires. No second dispatch commits part of them,
-  and where the values are stored stays the Settings owner's. Review and BrainStorm keep their entry
-  points, Review through the primary mode menu and its sidecars and BrainStorm through Deep Plan
-  (CWR-017): canon adds no wand row for either.
-  CrewAutoSetRequest names its scope, closed as `project | thread` (DL-120, 2026-09-27): the Crew
-  Auto sheet's primary sends project, which commits the rules and the team and turns Crew Auto on
-  for the project; a chat's Crew Auto check sends thread, which writes only that chat thread's
-  crew_auto_override, true or false, while null or absence inherits the project value. Turning Crew
-  Auto on for the project leaves one line only in the chat where the user turned it on, worded for
-  the project (DL-135, DL-138): Crew Auto is on for this project. A change in project Settings adds
-  no line to a chat, and a chat whose override is off adds no line. The
-  note is owned by this document. It records the setting change and is not a run, a card, an
-  Activity entry or Usage; its Change control opens the Crew Auto sheet through
-  cmd.chat.crew_auto.open_config from the crew_auto_receipt surface. Saving rules while Crew Auto
-  is already on for the project, and changing one chat's check, add no note.
-  When untouched on-by-default Crew Auto first starts a Crew for the project, that run leaves one
-  line with a link to Crew Auto settings…; it does not require a confirmation sheet before Start
-  (DL-138). This first-run line reports the automatic run and is distinct from the line that reports
-  the user turning the project setting on in a chat.
+  settings… dispatches cmd.chat.crew_auto.open_config, whose surfaces are the multi-agent menu and the
+  Crew sheet's own link to the Crew Auto sheet (workflow_modal); route success is still not enablement.
+  The Crew Auto sheet's primary is one click and one command: it dispatches cmd.chat.crew_auto.set once,
+  and CrewAutoSetRequest carries the Crew Auto rules (the criteria of section 5.3 and CWR-021) together
+  with the Crew Auto team, which the command commits through the project Settings transaction that
+  MODAL-006..008 requires. No second dispatch commits part of them, and where the values are stored stays
+  the Settings owner's. Review and BrainStorm keep their entry points, Review through the primary mode
+  menu and its sidecars and BrainStorm through Deep Plan (CWR-017): canon adds no wand row for either.
+  CrewAutoSetRequest names its scope, closed as `project | thread` (DL-120, 2026-09-27): the Crew Auto
+  sheet's primary sends project, which commits the rules and the team and turns Crew Auto on for the
+  project; a chat's Crew Auto check sends thread, which writes only that chat thread's crew_auto_override,
+  true or false, while null or absence inherits the project value. Turning Crew Auto on for the project
+  leaves one line only in the chat where the user turned it on, worded for the project (DL-135, DL-138):
+  Crew Auto is on for this project. A change in project Settings adds no line to a chat, and a chat whose
+  override is off adds no line. The note is owned by this document. It records the setting change and is
+  not a run, a card, an Activity entry or Usage; its Change control opens the Crew Auto sheet through
+  cmd.chat.crew_auto.open_config from the crew_auto_receipt surface. Saving rules while Crew Auto is
+  already on for the project, and changing one chat's check, add no note. When untouched on-by-default
+  Crew Auto first starts a Crew for the project, that run leaves one line with a link to Crew Auto
+  settings…; it does not require a confirmation sheet before Start (DL-138). This first-run line reports
+  the automatic run and is distinct from the line that reports the user turning the project setting on in
+  a chat. CWR-045 adds the explicit app-thread configuration commit variant to the same command family,
+  carrying rules/team plus activation for that real thread and one saved revision. Existing thread check
+  still changes only the nullable override; a Project-scoped save remains a Project transaction. App
+  configure/enable note says Crew Auto is on for this chat. No client picks Project scope by default when
+  project_id is null or adds a second command dispatch.
 gui_related: true
 gui_classification_reason: This unit fixes the Multi-Agent menu rows, the Crew Auto commit and the entry points of Review and BrainStorm.
 depends_on: [CWR-004, CWR-021]
 unblocks: []
 acceptance_criteria:
-  - A Settings change and an overridden-off chat add no Crew Auto is on for this project line.
-  - The Multi-Agent submenu shows Crew Auto settings… under the Crew Auto check and keeps Manage Defaults….
-  - Crew Auto settings… dispatches cmd.chat.crew_auto.open_config and never changes the check state.
-  - One activation of the Crew Auto primary dispatches exactly one cmd.chat.crew_auto.set carrying the rules and the team.
-  - Review and BrainStorm have no wand rows in canon.
-  - Turning Crew Auto on for the project leaves exactly one Crew Auto is on for this project line in that chat and creates no run or card.
-  - A chat's check sends scope thread and never changes the project value.
-  - The first automatic Crew under the factory-on default leaves one settings link after Start and requires no confirmation sheet.
+  - "A Settings change and an overridden-off chat add no Crew Auto is on for this project line."
+  - "The Multi-Agent submenu shows Crew Auto settings… under the Crew Auto check and keeps Manage Defaults…."
+  - "Crew Auto settings… dispatches cmd.chat.crew_auto.open_config and never changes the check state."
+  - "One activation of the Crew Auto primary dispatches exactly one cmd.chat.crew_auto.set carrying the rules and the team."
+  - "Review and BrainStorm have no wand rows in canon."
+  - "Turning Crew Auto on for the project leaves exactly one Crew Auto is on for this project line in that chat and creates no run or card."
+  - "A chat's check sends scope thread and never changes the project value."
+  - "The first automatic Crew under the factory-on default leaves one settings link after Start and requires no confirmation sheet."
+  - "App-thread configure-and-enable is one discriminated same-owner transaction distinct from the override-only check; one app note uses Crew Auto is on for this chat."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: crew_auto_split_commit
@@ -3055,6 +3144,9 @@ source_lineage:
   - "Plans/Decision_Log.md DL-135 (card p11, E-15), option A, Keep the note, worded for the project"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json sha256:33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5 p11 (answered 2026-09-27T21:37:48Z)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-08 (E-15 part), B-CW-18, B-CW-24 (REV-10 crew_auto_receipt)"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "crew_auto_override"
   - "Crew Auto settings…"
@@ -3580,3 +3672,79 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-231, ContractName:Plans/assistant-chat-design.md#ACD-476, ContractName:Plans/Settings_System.md
+
+### CWR-045 - Application Collaboration And Immutable Crew Conversion
+
+```yaml
+plan_unit_id: CWR-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Collaborative_Workflows.md
+canonical_text: The existing four collaboration kinds crew, brainstorm, review and chat_room accept application
+  scope with project_id=null, real parent thread/Computer/run and permitted task/source/target roots. Definitions,
+  immutable admitted runs, participant snapshots, transcripts, messages, artifacts, question banks and recovery
+  use the one collaboration runtime. App Crew requires no Plan or Project; Deep Plan BrainStorm and Plan-bound Build
+  With Crew/Build At use APR-073/074. Read-only review/blind proposals/quorum and each protocol's actual target
+  checks remain. Model/account/Persona/tools and concurrency/budget limits resolve through current parent ceilings,
+  freeze at admission and disclose unavailable participants rather than substituting them silently. Crew Auto for
+  an app chat uses a saved thread-bound configuration initialized once from Everywhere/Computer defaults with revision
+  1, the existing nullable chat override and the same pure evaluator; an uncommitted sheet or YOLO mode cannot replace
+  that admission. Configure-and-enable commits rules/team/activation atomically and says Crew Auto is on for this
+  chat. Changes to shared defaults do not mutate admitted rosters. Shared notebook space is this Crew's scoped scratch
+  and grants no other-thread notebook access. Internal board messages keep crew/run lineage, never become a cross-project
+  request bus. N25 previews finish/pause/Stop/fence of participants and creates a linked destination definition/run
+  or an explicitly owner-versioned rebind with fresh authority; it never edits an admitted frozen run's scope or
+  team in place. Terminal source Crew runs remain historical and are never restarted by conversion. Existing participant/Stop/restart/result
+  and N24 custody/caps/retention/backup rules apply without a second board or database. CV-366/SP-351 select app
+  Crew/configuration/run/AgentMessage sources and physical keys; app coordination uses app.coordination_append.v1
+  and storage.coordination_append.application@1.0.0 through the same coordinator. Original Project definitions,
+  keys, accepted sources and checkpoint/hash domains remain exact. Optional association rebind remains unavailable
+  until its complete separate owner protocol is admitted; linked destination records are the available conversion
+  design.
+gui_related: true
+gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
+depends_on:
+- ACD-508
+- SIR-055
+- PS-145
+unblocks: []
+acceptance_criteria:
+- All four existing kinds operate in explicit app context with real targets and their unchanged protocols.
+- Crew Auto reads one committed revision and parent ceiling; app Build With Crew publishes PlanRun/Crew/To-Dos together.
+- Conversion fences participants and board claims; invalid links quarantine and old teams/transcripts remain immutable.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/Collaborative_Workflows.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#Q11-Goals-Crew; N21-N22; N24-N25
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#fc-c01
+preserved_exact_tokens:
+- crew
+- brainstorm
+- review
+- chat_room
+- project_id=null
+- Crew Auto is on for this chat
+- N25
+negative_constraints:
+- Do not add collaboration kinds, child Goals, app-specific runtime stores, private-memory sharing or direct cross-Project
+  write authority.
+- No automatically widened participant ceiling, invented model substitution or changed frozen team.
+owner_hints:
+- Plans/Collaborative_Workflows.md
+```
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-045, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/Contracts_V0.md#CV-367, ContractName:Plans/storage-plan.md#SP-351

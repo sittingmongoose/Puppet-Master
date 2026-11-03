@@ -12,7 +12,7 @@ An Assistant Plan is the human-readable deliverable a Puppet Master chat thread 
 
 All six strategy choices produce the same user-facing artifact family. The difference between choices is depth of inspection, research, and multi-agent protocol, plus which backend materializes the Plan. The difference is never a second document model, a second card, a second Build control, or a second status vocabulary.
 
-Every Assistant Plan is scoped to exactly one `project_id` and one `thread_id`. Focus, the visible tab, the selected Activity domain, and the currently rendered card never decide Plan identity; every mutation carries explicit `project_id`, `thread_id`, `assistant_plan_id`, expected version, and expected currentness hash.
+Every Assistant Plan belongs to one real thread and an explicit immutable creation scope: actual Project, or application with `project_id=null` and the owning Server/Computer. APR-073 selects separate app editions while exact Project v1 records remain readable. Focus/tab/card never supplies identity; mutations carry explicit scope/thread/Plan and expected version/currentness. One current unfinished Plan is enforced for the retained thread across scopes, not once per partition.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Planning_Wizard.md, ContractName:Plans/Named_Plan_System.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/storage-plan.md
 
@@ -88,7 +88,17 @@ unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  Assistant Plan Runtime is the sole owner of the thread-scoped AssistantPlan identity, the six strategy choices, the direct and ledger_bound backends, structured document revisions with version and hash lineage, Rich Text and Markdown projection semantics, Revise-only mutation, the one-current-Plan-per-thread invariant, the single Build control state machine, Build admission, PlanRun lifecycle, Plan adherence classification, Build With Crew and Build At exact-version binding, the run-scoped Deep Plan ledger and Plan-scoped PlanUnit bundle boundary, and the direct Planning Wizard handoff boundary. It explicitly does not own the global Plan Document or PlanUnit standard, the canonical PlanUnit index, Plan Compile, NodeSeeds, WorkNodes, Orchestrator, the NamedPlan aggregate, artifact rendering or retention, or physical storage.
+  Assistant Plan Runtime is the sole owner of the thread-scoped AssistantPlan identity, the six strategy
+  choices, the direct and ledger_bound backends, structured document revisions with version and hash
+  lineage, Rich Text and Markdown projection semantics, Revise-only mutation, the
+  one-current-Plan-per-thread invariant, the single Build control state machine, Build admission, PlanRun
+  lifecycle, Plan adherence classification, Build With Crew and Build At exact-version binding, the
+  run-scoped Deep Plan ledger and Plan-scoped PlanUnit bundle boundary, and the direct Planning Wizard
+  handoff boundary. It explicitly does not own the global Plan Document or PlanUnit standard, the
+  canonical PlanUnit index, Plan Compile, NodeSeeds, WorkNodes, Orchestrator, the NamedPlan aggregate,
+  artifact rendering or retention, or physical storage. APR-073/074 extend this same owner to application
+  threads without a Project. Only a later explicit real-Project Wizard handoff may enter product
+  planning/compile/Orchestrator; no scope extension changes the excluded owners.
 gui_related: true
 gui_classification_reason: The Plan card, mode submenu, view toggle, Build control, and revision composer chrome are user-visible surfaces this owner defines.
 depends_on: []
@@ -112,9 +122,12 @@ node_compile_hint:
   mode: owner_boundary_declaration
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:PLAN-008
-  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-006
-  - pm-assistant-implementation-2026-09-02-recovered:DPLAN-007
+  - "pm-assistant-implementation-2026-09-02-recovered:PLAN-008"
+  - "pm-assistant-implementation-2026-09-02-recovered:DPLAN-006"
+  - "pm-assistant-implementation-2026-09-02-recovered:DPLAN-007"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "AssistantPlan"
   - "NamedPlan"
@@ -290,7 +303,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  At most one Assistant Plan per thread holds control_state build or building. Completed and canceled Plans are historical and immutable except retention metadata, and their cards remain in chronological transcript order with a compact default presentation. An explicit new-Plan request while an unfinished Plan exists cancels the old Plan and creates the new one; when the old Plan is building, cancellation is requested immediately and creation waits for a safe stop boundary reported as waiting_for_safe_stop. Simultaneous Plan execution in one thread is never admissible. The status superseded is retired from the thread-card model and is not a control_state, relationship, badge, or user-visible word.
+  At most one Assistant Plan per thread holds control_state build or building. Completed and canceled
+  Plans are historical and immutable except retention metadata, and their cards remain in chronological
+  transcript order with a compact default presentation. An explicit new-Plan request while an unfinished
+  Plan exists cancels the old Plan and creates the new one; when the old Plan is building, cancellation is
+  requested immediately and creation waits for a safe stop boundary reported as waiting_for_safe_stop.
+  Simultaneous Plan execution in one thread is never admissible. The status superseded is retired from the
+  thread-card model and is not a control_state, relationship, badge, or user-visible word. The one-current
+  slot is global for the retained thread across app and Project scope. N25 conversion releases/cancels the
+  source slot after safe stop before admitting a linked destination Plan; no per-partition duplicate
+  current Plan is allowed.
 gui_related: true
 gui_classification_reason: Card ordering, compact history presentation, and the absence of a Superseded label are user-visible.
 depends_on:
@@ -314,8 +336,11 @@ node_compile_hint:
   mode: aggregate_invariant
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:PLAN-004
-  - pm-assistant-implementation-2026-09-02-recovered:PLAN-015
+  - "pm-assistant-implementation-2026-09-02-recovered:PLAN-004"
+  - "pm-assistant-implementation-2026-09-02-recovered:PLAN-015"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Canceled"
   - "waiting_for_safe_stop"
@@ -336,7 +361,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  A revision keeps one Plan identity. PlanDocumentRevision carries version, parent_version, content_hash, structured and Markdown refs, step index, embedded artifact refs, research refs, source message refs, and a change summary. current_version advances by exactly one per accepted revision and the card shows a Vn badge that is independent of the Build control and never encodes status. Old versions remain immutable and reachable through Details and version lineage, and an approved revision bound by approved_version and approved_hash can never be rewritten, re-serialized differently, or annotated in place.
+  A revision keeps one Plan identity. PlanDocumentRevision carries version, parent_version, content_hash,
+  structured and Markdown refs, step index, embedded artifact refs, research refs, source message refs,
+  and a change summary. current_version advances by exactly one per accepted revision and the card shows a
+  Vn badge that is independent of the Build control and never encodes status. Old versions remain
+  immutable and reachable through Details and version lineage, and an approved revision bound by
+  approved_version and approved_hash can never be rewritten, re-serialized differently, or annotated in
+  place. APR-073 makes null Project legal only at app birth; ordinary revisions never change immutable
+  assistant_plan_id/thread_id/project_id, creation identity or approved bytes. N25 uses explicit exact
+  source/revision/hash lineage and linked destination identity or a separate owner-admitted immutable
+  rebind.
 gui_related: true
 gui_classification_reason: The Vn version badge and version lineage in Details are user-visible.
 depends_on:
@@ -360,7 +394,10 @@ node_compile_hint:
   mode: revision_lineage_contract
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:PLAN-005
+  - "pm-assistant-implementation-2026-09-02-recovered:PLAN-005"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Plan · V5"
   - "approved_revision_immutable"
@@ -380,7 +417,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  A Plan card exposes exactly one Build control, and that control renders exactly one of Build, Building…, Completed, or Canceled. There is no second build affordance, no separate progress control, and no fifth label. Building… persists across a quota wait, an execution-window pause, a restart, and a model or provider switch, because the label reflects the durable PlanRun state rather than a live connection. Completed and Canceled are terminal for that build; a subsequent build of a later revision is a new PlanRun with its own control state. The control is disabled with its exact owner reason when the Plan is not admissible, and it never optimistically shows Completed before a terminal PlanRun result is recorded.
+  A Plan card exposes exactly one Build control, and that control renders exactly one of Build, Building…,
+  Completed, or Canceled. There is no second build affordance, no separate progress control, and no fifth
+  label. Building… persists across a quota wait, an execution-window pause, a restart, and a model or
+  provider switch, because the label reflects the durable PlanRun state rather than a live connection.
+  Completed and Canceled are terminal for that build; a subsequent build of a later revision is a new
+  PlanRun with its own control state. The control is disabled with its exact owner reason when the Plan is
+  not admissible, and it never optimistically shows Completed before a terminal PlanRun result is
+  recorded. App Plan controls use the same labels and state projection with actual Computer/roots. Absence
+  of Project alone is not a disabled reason; real missing target/permission/provider or scope custody
+  remains an exact owner refusal.
 gui_related: true
 gui_classification_reason: This unit is the exact rendering contract for the Plan card's Build control.
 depends_on: [APR-005, APR-006]
@@ -404,8 +450,11 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Concepts/chat-assistant-concepts/5.6 Pro/plans.js (5.6 Pro prototype; behaviour reference only)"
-  - pm-assistant-implementation-2026-09-02-recovered:PLAN-007
-  - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#7.3
+  - "pm-assistant-implementation-2026-09-02-recovered:PLAN-007"
+  - "pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#7.3"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Build"
   - "Building…"
@@ -426,7 +475,14 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  Plan Quick, Plan Standard, and Plan Thorough use the direct backend. Each creates exactly two things: one read-only Plan document and a mapped set of To-Dos under ToDo Runtime. A regular Plan creates no Planning Ledger session, no PlanUnits of any scope, no WorkNodes, no Plan Compile run, and no Orchestrator effect, and building one produces none of those either. The three depths differ in research and analysis effort, not in backend, and there is no fourth regular depth and no legacy Light, Balanced, or Comprehensive labelling.
+  Plan Quick, Plan Standard, and Plan Thorough use the direct backend. Each creates exactly two things:
+  one read-only Plan document and a mapped set of To-Dos under ToDo Runtime. A regular Plan creates no
+  Planning Ledger session, no PlanUnits of any scope, no WorkNodes, no Plan Compile run, and no
+  Orchestrator effect, and building one produces none of those either. The three depths differ in research
+  and analysis effort, not in backend, and there is no fourth regular depth and no legacy Light, Balanced,
+  or Comprehensive labelling. This direct backend works in app scope under APR-073 with canonical app
+  Plan/To-Do custody and no user-folder requirement until a file save or command. No product compilation
+  effects are added.
 gui_related: true
 gui_classification_reason: This closes the Plan submenu at three depths and forbids surfaces that would imply ledger or Orchestrator work.
 depends_on: [APR-002, APR-007]
@@ -449,8 +505,11 @@ node_compile_hint:
   mode: assistant_plan_regular_backend
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:PLAN-008
-  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#5.3
+  - "pm-assistant-implementation-2026-09-02-recovered:PLAN-008"
+  - "pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#5.3"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Quick"
   - "Standard"
@@ -470,7 +529,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  Deep Plan Thorough, Deep Plan Exhaustive, and Deep Plan BrainStorm use the ledger backend. A Deep Plan opens a run-scoped Planning Ledger session under the Deep Plan profile owned by Planning Ledger System, and on Build approval -- not before -- it creates standard-schema, Plan-scoped PlanUnits under the scoped profile owned by Plan Document System, mapped to To-Dos. Those scoped units are not admitted into the global product PlanUnit index. A Deep Plan still creates no WorkNodes, no Plan Compile run, and no Orchestrator effect. The scoped ledger and scoped units are hidden behind Plan details rather than presented as the primary Plan surface.
+  Deep Plan Thorough, Deep Plan Exhaustive, and Deep Plan BrainStorm use the ledger backend. A Deep Plan
+  opens a run-scoped Planning Ledger session under the Deep Plan profile owned by Planning Ledger System,
+  and on Build approval -- not before -- it creates standard-schema, Plan-scoped PlanUnits under the
+  scoped profile owned by Plan Document System, mapped to To-Dos. Those scoped units are not admitted into
+  the global product PlanUnit index. A Deep Plan still creates no WorkNodes, no Plan Compile run, and no
+  Orchestrator effect. The scoped ledger and scoped units are hidden behind Plan details rather than
+  presented as the primary Plan surface. The same three Deep Plan strategies work in app scope with
+  PLS-024/PDS-023 ledger/bundle identities and no product owner-doc/index/WorkNode effect. Artifact
+  profile scope_kind=assistant_deep_plan is distinct from EventRecord application scope.
 gui_related: true
 gui_classification_reason: The scoped ledger and units appear only behind Plan details, never as the primary Plan document view.
 depends_on: [APR-008]
@@ -494,8 +561,11 @@ node_compile_hint:
   mode: assistant_plan_deep_backend
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:DEEP-001
-  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#5.4
+  - "pm-assistant-implementation-2026-09-02-recovered:DEEP-001"
+  - "pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#5.4"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "run-scoped ledger"
   - "Plan-scoped PlanUnits"
@@ -515,7 +585,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  Neither a regular Plan nor a Deep Plan enters the Orchestrator except through an explicit user-initiated Send To Planning Wizard action, which hands the exact Plan revision to Planning Wizard direct intake and bypasses PRD Builder entirely. PRD Builder is not a precondition on this route. After the handoff, Planning Wizard owns the full planning, Plan Compile, and Orchestrator flow, and the Assistant Plan becomes a linked source reference rather than a parallel authority. There is no implicit build detour, no automatic promotion on Build, and no silent creation of a NamedPlan; a NamedPlan child or source reference is created only on explicit save, explicit promotion, or this Wizard handoff.
+  Neither a regular Plan nor a Deep Plan enters the Orchestrator except through an explicit user-initiated
+  Send To Planning Wizard action, which hands the exact Plan revision to Planning Wizard direct intake and
+  bypasses PRD Builder entirely. PRD Builder is not a precondition on this route. After the handoff,
+  Planning Wizard owns the full planning, Plan Compile, and Orchestrator flow, and the Assistant Plan
+  becomes a linked source reference rather than a parallel authority. There is no implicit build detour,
+  no automatic promotion on Build, and no silent creation of a NamedPlan; a NamedPlan child or source
+  reference is created only on explicit save, explicit promotion, or this Wizard handoff. For an app Plan
+  this explicit person-started action first offers ACD-510's new/existing conversion/Project choice;
+  cancellation starts no Wizard. After successful conversion use N25's exact carried revision map and
+  fresh intake with source/attachment/research/ledger lineage; source approval is not Wizard build
+  authority.
 gui_related: true
 gui_classification_reason: This defines a Plan card action, its confirmation, and the receipt shown after handoff.
 depends_on: [APR-009]
@@ -540,8 +620,11 @@ node_compile_hint:
   mode: assistant_plan_wizard_handoff
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:PLAN-009
-  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#5.13
+  - "pm-assistant-implementation-2026-09-02-recovered:PLAN-009"
+  - "pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#5.13"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Send To Planning Wizard"
   - "bypasses PRD Builder"
@@ -561,8 +644,27 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  Build With Crew admits the exact current Plan revision for execution through a configured Crew run owned by Collaborative Workflows instead of the single-agent build path; the crew configuration belongs to the build target and the Build control still shows exactly one of the four labels. Build At binds an execution schedule to the exact plan_id, plan_version, and content hash through Scheduling and Quota Resume, and a Plan revision invalidates that pending schedule with a named reason rather than silently rebinding to the newer version. Repeated occurrences of a recurring window resume one PlanRun rather than producing duplicate builds, and a manual Stop, Pause, or Cancel outranks every scheduled or quota-driven resume.
-  DL-138 confirms that, when execution_started is true, ExecutionOccurrenceSummary joins saved schedule/dispatch records to the exact plan_run_id and approved Plan version/hash and the durable work, To-Do mappings and adherence facts used by AssistantPlanProgressProjector. Real execution bounds and the close reason come from dispatch and safe-pause or terminal-run facts; steps_built counts distinct approved plan_step_id values completed during that occurrence, not skipped steps or raw To-Do counts, and steps_total is the bound Plan total. A closed occurrence held before any build work starts instead uses retained Scheduling eligibility/hold and closure facts for that exact occurrence and the bound approved Plan: execution_started false, end_reason held, steps_built 0, and null actual_start and actual_end. plan_run_id is null if no run was admitted, or names the existing run for a held continuation window. This creates no run. Missing historical facts remain unavailable, distinct from a recorded not-started outcome. Replay reconstructs the same summary without a new authoritative run record or event family.
+  Build With Crew admits the exact current Plan revision for execution through a configured Crew run owned
+  by Collaborative Workflows instead of the single-agent build path; the crew configuration belongs to the
+  build target and the Build control still shows exactly one of the four labels. Build At binds an
+  execution schedule to the exact plan_id, plan_version, and content hash through Scheduling and Quota
+  Resume, and a Plan revision invalidates that pending schedule with a named reason rather than silently
+  rebinding to the newer version. Repeated occurrences of a recurring window resume one PlanRun rather
+  than producing duplicate builds, and a manual Stop, Pause, or Cancel outranks every scheduled or
+  quota-driven resume. DL-138 confirms that, when execution_started is true, ExecutionOccurrenceSummary
+  joins saved schedule/dispatch records to the exact plan_run_id and approved Plan version/hash and the
+  durable work, To-Do mappings and adherence facts used by AssistantPlanProgressProjector. Real execution
+  bounds and the close reason come from dispatch and safe-pause or terminal-run facts; steps_built counts
+  distinct approved plan_step_id values completed during that occurrence, not skipped steps or raw To-Do
+  counts, and steps_total is the bound Plan total. A closed occurrence held before any build work starts
+  instead uses retained Scheduling eligibility/hold and closure facts for that exact occurrence and the
+  bound approved Plan: execution_started false, end_reason held, steps_built 0, and null actual_start and
+  actual_end. plan_run_id is null if no run was admitted, or names the existing run for a held
+  continuation window. This creates no run. Missing historical facts remain unavailable, distinct from a
+  recorded not-started outcome. Replay reconstructs the same summary without a new authoritative run
+  record or event family. App Build With Crew/Build At use the same atomic exact-version target and frozen
+  team under APR-074/SQR-019. Each timer/dispatch checks real app Computer/roots plus task/app Stop epochs
+  and scope pause. Old source schedules cannot silently adopt a mapped/latest revision after conversion.
 gui_related: true
 gui_classification_reason: These are Plan card actions with their own modals and an invalidated-schedule state on the card.
 depends_on: [APR-007]
@@ -588,10 +690,13 @@ node_compile_hint:
   mode: assistant_plan_build_routes
   create_worknodes: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-138
-  - pm-assistant-implementation-2026-09-02-recovered:PLAN-010
-  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#5.11
-  - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#5.12
+  - "Plans/Decision_Log.md#DL-138"
+  - "pm-assistant-implementation-2026-09-02-recovered:PLAN-010"
+  - "pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#5.11"
+  - "pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#5.12"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "ExecutionOccurrenceSummary"
   - "AssistantPlanProgressProjector"
@@ -615,7 +720,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  A built Plan is authoritative over the work admitted for it. PlanAdherenceRecord tracks which Plan steps were executed, which were skipped with a reason, and which produced work outside the Plan, and a divergence is surfaced rather than absorbed silently. Plan steps map to To-Dos under ToDo Runtime: one step may map to several To-Dos and one To-Do may aggregate several tightly related tool operations, but every executable leaf keeps stable work bindings. Raw scoped PlanUnits and WorkNodes are never rendered as To-Dos. Completing the To-Dos does not by itself complete the Plan; the PlanRun terminal result does, and it requires the recorded outcome evidence its own owner defines.
+  A built Plan is authoritative over the work admitted for it. PlanAdherenceRecord tracks which Plan steps
+  were executed, which were skipped with a reason, and which produced work outside the Plan, and a
+  divergence is surfaced rather than absorbed silently. Plan steps map to To-Dos under ToDo Runtime: one
+  step may map to several To-Dos and one To-Do may aggregate several tightly related tool operations, but
+  every executable leaf keeps stable work bindings. Raw scoped PlanUnits and WorkNodes are never rendered
+  as To-Dos. Completing the To-Dos does not by itself complete the Plan; the PlanRun terminal result does,
+  and it requires the recorded outcome evidence its own owner defines. The same adherence, stable work and
+  To-Do outcome rules apply in app scope. N25 source-to-target step/unit/To-Do maps preserve approved
+  version/hash; copied completion or a transcript move is not accepted destination work evidence.
 gui_related: true
 gui_classification_reason: Divergence must be visible on the Plan card and the To-Do mapping drives the Activity list.
 depends_on: [APR-008, APR-009]
@@ -639,8 +752,11 @@ node_compile_hint:
   mode: assistant_plan_adherence
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:PLAN-011
-  - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#5.7
+  - "pm-assistant-implementation-2026-09-02-recovered:PLAN-011"
+  - "pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#5.7"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "PlanAdherenceRecord"
 negative_constraints:
@@ -680,7 +796,7 @@ Default strategy per workflow comes from Settings (`assistant.chat.plan.default_
 
 ### Plan identity, the one-current invariant, and version lineage
 
-`AssistantPlanRecord` (`pm.assistant_plan.record.v1`) is the aggregate. `assistant_plan_id` is immutable. `thread_id` and `project_id` are immutable. `strategy` and `backend` are frozen at creation; changing depth means creating a new Plan, never mutating an existing one.
+The exact original Project aggregate is `assistant_plan_id` is immutable. `thread_id` and `project_id` are immutable. `strategy` and `backend` are frozen at creation; changing depth means creating a new Plan, never mutating an existing one. APR-073 adds an app aggregate with `project_id=null` at birth; the same assistant_plan_id/thread_id/project_id/creation binding stays immutable. N25 uses linked new destination birth or an explicit owner-versioned association transaction, never revise/update.
 
 At most one Assistant Plan in a thread may hold `control_state` of `build` or `building`. That is the one-current invariant and it is enforced by the owner, not by the card. `completed` and `canceled` Plans are historical and immutable except for retention metadata.
 
@@ -768,17 +884,17 @@ The eligible card actions, shown as applicable to state and capability, are `Rev
 
 ### 7.2 Build admission
 
-Build freezes the exact `assistant_plan_id`, `version`, `content_hash`, the full `plan_step_id` set, the selected runtime, the permission snapshot, the tool set, and the project/repository/worktree identity. `approved_version` and `approved_hash` are written on the aggregate at that moment and are immutable afterwards.
+Build freezes the exact `assistant_plan_id`, `version`, `content_hash`, the full `plan_step_id` set, the selected runtime, the permission snapshot, the tool set, and the explicit app or Project scope, actual Computer/working roots and any genuinely relevant repository/worktree identity. `approved_version` and `approved_hash` are written on the aggregate at that moment and are immutable afterwards. App permission/writer/Stop/pause joins are APR-074/EP-132; no Project is fabricated.
 
 Regular Plan then creates a To-Do hierarchy directly through the To-Do owner. Deep Plan first materializes and validates the scoped PlanUnit bundle and only then maps units and steps to To-Dos. Neither route launches Orchestrator, and neither route may fabricate To-Do completion.
 
 Build is idempotent. The request carries an idempotency key; a replayed key returns the original `plan_run_id`, the original To-Do list revision, and the original receipt, and creates no second run and no duplicate To-Dos. A double-click, a restart-and-retry, and a network replay are all the same admitted operation. A same-key/different-binding request is rejected as `idempotency_conflict`.
 
-Build fails closed. A stale expected version, a stale currentness hash, a missing permission snapshot, an unresolvable project/worktree, a failed PlanUnit bundle validation, or a To-Do materialization rejection leaves the control at `Build`, creates no `PlanRun`, creates no To-Dos, and returns an exact typed reason.
+Build fails closed. A stale expected version, a stale currentness hash, a missing permission snapshot, an unresolved actual required scope/Computer/root/repository/Project target, a failed PlanUnit bundle validation, or a To-Do materialization rejection leaves the control at `Build`, creates no `PlanRun`, creates no To-Dos, and returns an exact typed reason. A legitimate app null Project is not project_not_found.
 
 ### 7.3 PlanRun
 
-`PlanRun` (`pm.assistant_plan.run.v1`) carries `plan_run_id`, the plan identity and frozen `plan_version`/`plan_hash`, `execution_topology` of `agent`, `crew`, or `goal_driven`, `todo_list_revision`, a runtime snapshot ref, a permission snapshot ID, a project context ref, an optional schedule ref, and `state` of `running`, `paused`, `waiting_quota`, `waiting_window`, `blocked`, `completed`, `cancelled`, or `failed`.
+The exact original Project edition `PlanRun` (`pm.assistant_plan.run.v1`) carries `plan_run_id`, the plan identity and frozen `plan_version`/`plan_hash`, `execution_topology` of `agent`, `crew`, or `goal_driven`, `todo_list_revision`, a runtime snapshot ref, a permission snapshot ID, a project context ref, an optional schedule ref, and `state` of `running`, `paused`, `waiting_quota`, `waiting_window`, `blocked`, `completed`, `cancelled`, or `failed`. The versioned app PlanRun sibling uses real app thread/Computer/roots and null Project under APR-073/074, with the same frozen Plan/run/evidence/Stop/state fields and no invented Project context.
 
 `AssistantPlanRecord.control_state` remains `building` while the run is `paused`, `waiting_quota`, `waiting_window`, or `blocked`. The run state is the explanatory truth and is shown separately. `control_state` becomes `completed` only when the run reaches `completed`, and `canceled` when the run reaches `cancelled` or when an unstarted Plan is cancelled. A `failed` run does not silently become `Completed`; it presents the failure and leaves the Plan cancellable or revisable per owner policy.
 
@@ -846,7 +962,7 @@ These exact IDs are canonical owner requests. They are not registered until the 
 
 ### Typed request, result, and error enumerations
 
-Every request reuses the central command/runtime envelope and carries, as applicable, `schema_id`, `schema_version`, `command_id`, `command_instance_id`, `project_id`, `thread_id`, `assistant_plan_id`, `expected_version`, `expected_currentness_hash`, `actor_identity`, `permission_snapshot_id`, `idempotency_key`, `source_surface`, `correlation_id`, `causation_id`, and `created_at`.
+Every request reuses the central command/runtime envelope and carries, as applicable, `schema_id`, `schema_version`, `command_id`, `command_instance_id`, explicit scope, `project_id` (present null for app), actual Server/Computer, `thread_id`, `assistant_plan_id`, `expected_version`, `expected_currentness_hash`, `actor_identity`, `permission_snapshot_id`, `idempotency_key`, `source_surface`, `correlation_id`, `causation_id`, and `created_at`. App variants reference APR-073/074 and preserve original Project codec/result identity.
 
 Command-specific request payloads:
 
@@ -1420,7 +1536,14 @@ plan_unit_id: APR-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
-canonical_text: A fresh context window rebinds the exact approved plan_id, plan_version, and content hash from owner state; notes and capsules cannot select a different approved Plan revision. Notebook content never substitutes for accepted planning atoms, required ledger turn commits, or Build approval, and a regular Plan never implicitly gains a Deep Plan ledger session through a notebook reference.
+canonical_text: >-
+  A fresh context window rebinds the exact approved plan_id, plan_version, and content hash from owner
+  state; notes and capsules cannot select a different approved Plan revision. Notebook content never
+  substitutes for accepted planning atoms, required ledger turn commits, or Build approval, and a regular
+  Plan never implicitly gains a Deep Plan ledger session through a notebook reference. Application
+  Plan/thread/Computer context uses the same exact-version, notebook/artifact/To-Do/question/progress
+  owners and typed refusals under APR-073/074; no focused Project fallback or new UI/control/store is
+  permitted.
 gui_related: false
 gui_classification_reason: Plan identity binding is runtime behavior, not GUI work.
 depends_on: [APR-012, PP-087]
@@ -1436,8 +1559,11 @@ context_scope: plan_runtime
 implementation_surfaces: [Plans/Assistant_Plan_Runtime.md, Plans/Prompt_Pipeline.md, Plans/Planning_Ledger_System.md]
 node_compile_hint: {mode: runtime_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-I04
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A42
+  - "source_packet:PM-WNC-2026-09-05-v1:WNC-I04"
+  - "source_packet:PM-WNC-2026-09-05-v1:WNC-A42"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens: ["approved_version", "approved_hash", "exact current Plan revision"]
 negative_constraints:
   - Do not rebind Plan identity from notebook or capsule content.
@@ -1494,17 +1620,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  Clicking a plan title, Details, Expand, or Open plan in the transcript opens or focuses the plan in
-  the left editor tab bar with tab deduplication; an Open plan button is cmd.chat.plan.open_version with the
+  Clicking a plan title, Details, Expand, or Open plan in the transcript opens or focuses the plan in the
+  left editor tab bar with tab deduplication; an Open plan button is cmd.chat.plan.open_version with the
   version its surface names, which opens that version's retained read-only document instead once a later
-  version exists (DL-157). The left plan tab exposes complete owner-backed control
-  parity with the transcript Plan card (Rich/Markdown toggle, Build, Build With Crew, Build At, Revise,
-  Send To Planning Wizard, Export, Cancel, Open To-Dos). Opening a plan expands collapsed splits to readable
-  width, and split resizing preserves a minimum 360 px chat canvas width (DL-138), superseding the older
-  320 px chat minimum. Amended 2026-10-22 (DL-232): for Home the plan tab is the universal panel
-  chosen by F3-634 and ACD-500, keyed by exact revision, revealing its existing tab and expanding its host
-  panel if collapsed. The old 480 px editor split and 360 px chat minimum are superseded for Home by
-  F3-635, F3-636 and F3-637; no plan action resizes the chat or creates a private editor pane.
+  version exists (DL-157). The left plan tab exposes complete owner-backed control parity with the
+  transcript Plan card (Rich/Markdown toggle, Build, Build With Crew, Build At, Revise, Send To Planning
+  Wizard, Export, Cancel, Open To-Dos). Opening a plan expands collapsed splits to readable width, and
+  split resizing preserves a minimum 360 px chat canvas width (DL-138), superseding the older 320 px chat
+  minimum. Amended 2026-10-22 (DL-232): for Home the plan tab is the universal panel chosen by F3-634 and
+  ACD-500, keyed by exact revision, revealing its existing tab and expanding its host panel if collapsed.
+  The old 480 px editor split and 360 px chat minimum are superseded for Home by F3-635, F3-636 and
+  F3-637; no plan action resizes the chat or creates a private editor pane. Application
+  Plan/thread/Computer context uses the same exact-version, notebook/artifact/To-Do/question/progress
+  owners and typed refusals under APR-073/074; no focused Project fallback or new UI/control/store is
+  permitted.
 gui_related: true
 gui_classification_reason: Governs left editor plan tab navigation, control parity, and responsive editor/chat split geometry.
 depends_on: [APR-013]
@@ -1525,11 +1654,14 @@ node_compile_hint:
   mode: plan_tab_specification
   create_worknodes: false
 source_lineage:
-  - APR-036
-  - APR-037
-  - APR-038
-  - APR-066
-  - Plans/Decision_Log.md#DL-138
+  - "APR-036"
+  - "APR-037"
+  - "APR-038"
+  - "APR-066"
+  - "Plans/Decision_Log.md#DL-138"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "plan tab"
   - "deduplication"
@@ -1554,6 +1686,9 @@ canonical_text: >-
   Canceling a scheduled plan build invalidates the scheduled action and prevents dispatch. Triggering an
   immediate Build on a scheduled plan automatically invalidates its pending schedule without affecting
   unrelated schedules. Plan revisions invalidate schedules bound to earlier plan version hashes.
+  Application Plan/thread/Computer context uses the same exact-version,
+  notebook/artifact/To-Do/question/progress owners and typed refusals under APR-073/074; no focused
+  Project fallback or new UI/control/store is permitted.
 gui_related: false
 gui_classification_reason: Governs schedule invalidation, execution precedence, and version binding in plan runtime.
 depends_on: [APR-014]
@@ -1574,7 +1709,10 @@ node_compile_hint:
   mode: plan_schedule_specification
   create_worknodes: false
 source_lineage:
-  - APR-019
+  - "APR-019"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "immediate Build"
   - "schedule invalidation"
@@ -1596,11 +1734,15 @@ plan_unit_id: APR-016
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
-canonical_text: The original build-as-Goal transaction jointly publishes the exact seven-field GoalPlanBinding,
+canonical_text: >-
+  The original build-as-Goal transaction jointly publishes the exact seven-field GoalPlanBinding,
   Goal/PlanRun association and GRS-074 binding origin/revision/control through its actual owners. All Plan
   binding changes participate in the exhaustive writer domain. Current association truth and original Plan
-  cancellation effects remain separately owned; a no-Plan association never waives independently required Workflow
-  safe-stop work.
+  cancellation effects remain separately owned; a no-Plan association never waives independently required
+  Workflow safe-stop work. Application build-as-Goal selects a complete scope-aware sibling of the joint
+  Goal/PlanRun/association publication, with real thread/Computer and null Project. Original Project
+  GoalPlanBinding/source/writer domains remain exact. N25 linked destination birth cannot transplant
+  existing Goal/Plan association or completion authority.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -1636,9 +1778,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-039
-- Plans/Decision_Log.md#DL-045
-- Plans/Decision_Log.md#DL-047
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
 - No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
 - No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
@@ -1735,9 +1880,13 @@ plan_unit_id: APR-017
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
-canonical_text: Original bound Plan cancellation effects and retained reads. The original owners preserve
-  all 61 logical native fields and their existing types except the explicitly authorized cancellation
-  deltas.
+canonical_text: >-
+  Original bound Plan cancellation effects and retained reads. The original owners preserve all 61 logical
+  native fields and their existing types except the explicitly authorized cancellation deltas. App
+  Plan/PlanRun/schedule/consent/cancel-source custody requires separate exact scope-aware sibling graphs
+  under APR-073/SQR-019, preserving all original native fields/partial effects and retained-read
+  semantics. Original Project codecs/61-field custody and source commitments remain readable unchanged;
+  neither historical events nor copied snapshots reconstruct accepted source.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -1771,9 +1920,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-039
-- Plans/Decision_Log.md#DL-045
-- Plans/Decision_Log.md#DL-047
+  - "Plans/Decision_Log.md#DL-039"
+  - "Plans/Decision_Log.md#DL-045"
+  - "Plans/Decision_Log.md#DL-047"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
 - No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
 - No native field redaction, numeric coercion, new retention policy, full runtime archive or automatic
@@ -1793,7 +1945,27 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  The Plan card's schedule line is secondary truth beside the Build control and never replaces its label: while the Plan is unfinished the control still reads Building…, and every nonterminal run state the line shows leads with its PFAIL-002 token, so a build stopped for the night reads "Outside execution window · …", a build waiting on a quota reset reads "Waiting for Usage · …" (with no countdown when the reset time is unknown), a build the user paused reads "Paused · …"; a schedule invalidated by a revision is not a PFAIL-002 state and leads instead with the Schedule needs update notice that this runtime's Build With Crew and Build At rule places on the Plan card (PSCHED-005..006), reading "Schedule needs update · …". The Crew sheet has two Plan-bound modes, and both bind the exact Plan version and hash. Build With Crew mode builds the current version now: it dispatches cmd.chat.plan.build_with_crew, never cmd.collaboration.start, so the PlanRun and the CrewRun commit together or neither commits (MODAL-013); the Plan identity, version and fingerprint are shown, the request comes from the Plan and is read-only, and a Plan that changed while the sheet was open refuses Start in place with stale_plan_version and sends the user back to reopen against the new version (MODAL-014). Scheduled mode, opened from Build At with the Crew topology, starts nothing: its confirmed configuration becomes the collaboration definition frozen by cmd.chat.plan.schedule_build at schedule commit (PSCHED-001..003), and because that build runs unattended, anything that would need the user at dispatch (specialists, a separate Coordinator model, a model that is not ready) is disabled with the reason "Scheduled builds can't use this: they run while you're away."
+  The Plan card's schedule line is secondary truth beside the Build control and never replaces its label:
+  while the Plan is unfinished the control still reads Building…, and every nonterminal run state the line
+  shows leads with its PFAIL-002 token, so a build stopped for the night reads "Outside execution window ·
+  …", a build waiting on a quota reset reads "Waiting for Usage · …" (with no countdown when the reset
+  time is unknown), a build the user paused reads "Paused · …"; a schedule invalidated by a revision is
+  not a PFAIL-002 state and leads instead with the Schedule needs update notice that this runtime's Build
+  With Crew and Build At rule places on the Plan card (PSCHED-005..006), reading "Schedule needs update ·
+  …". The Crew sheet has two Plan-bound modes, and both bind the exact Plan version and hash. Build With
+  Crew mode builds the current version now: it dispatches cmd.chat.plan.build_with_crew, never
+  cmd.collaboration.start, so the PlanRun and the CrewRun commit together or neither commits (MODAL-013);
+  the Plan identity, version and fingerprint are shown, the request comes from the Plan and is read-only,
+  and a Plan that changed while the sheet was open refuses Start in place with stale_plan_version and
+  sends the user back to reopen against the new version (MODAL-014). Scheduled mode, opened from Build At
+  with the Crew topology, starts nothing: its confirmed configuration becomes the collaboration definition
+  frozen by cmd.chat.plan.schedule_build at schedule commit (PSCHED-001..003), and because that build runs
+  unattended, anything that would need the user at dispatch (specialists, a separate Coordinator model, a
+  model that is not ready) is disabled with the reason "Scheduled builds can't use this: they run while
+  you're away." App Plan/Crew scheduled modes disclose No project/Computer and bind the same exact
+  Plan/version/hash and frozen configuration through SQR-019. The same unattended capability restrictions
+  and no-run-at-schedule-commit rules remain; conversion uses the explicit target map and both pause/Stop
+  scopes.
 gui_related: true
 gui_classification_reason: The schedule line and the two Crew sheet modes are user-visible Plan card and modal behaviour.
 depends_on: [APR-007, APR-011]
@@ -1811,9 +1983,12 @@ context_scope: assistant_plan_build_routes
 implementation_surfaces: [Plans/Assistant_Plan_Runtime.md, Plans/Collaborative_Workflows.md, Plans/Scheduling_and_Quota_Resume.md]
 node_compile_hint: {mode: assistant_plan_build_routes, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 IMPACT A1-30, #8.1 G-28 and scheduled mode, #8.15 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-APR-01 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
-  - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 IMPACT A1-30,"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-APR-01 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
+  - "Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens: ["Building…", "Outside execution window", "Waiting for Usage", "Paused", "Schedule needs update", "Build With Crew", "Build At", "cmd.chat.plan.build_with_crew", "cmd.collaboration.start", "stale_plan_version", "cmd.chat.plan.schedule_build", "Scheduled builds can't use this: they run while you're away."]
 negative_constraints:
   - Do not let the schedule line replace or relabel the Build control.
@@ -1836,25 +2011,27 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  With Grill Me on in a Plan or Deep Plan run, the assistant asks its questions as the grilling
-  Skill (SS-038, DL-218). It works the frontier in rounds through the existing questionnaire host:
-  each round asks every decision whose prerequisites are settled, each question numbered and
-  carrying a recommended answer that yes accepts, and a question that depends on one still open
-  waits for a later round. A fact goes to research and is never asked, and research holds only the
-  questions that depend on it. I don't know removes that decision from the frontier and lists it as
-  open in What we agreed unless the user reopens it. The session ends by itself only when no
-  decision is ready, no fact research is pending and no branch is unsettled. A decision left open,
-  and every decision that depends on it, is listed as open in What we agreed and does not count as
-  an unsettled branch. If every remaining question waits on research, the interview waits, says it
-  is looking things up and recomputes when research returns. The user may also end it with Wrap up;
-  the effective limit of QMAX-001..004 is a safety net, and reaching it ends the session with the
-  typed question_budget_exhausted result of QMAX-014..015. When the session ends the user sees What
-  we agreed, every decision with its answer and every decision left open, with Confirm and Keep
-  going, and the Plan document is not written or revised from those answers until the user confirms;
-  Keep going returns to the interview within the limit. Every later decision session ends in its own
-  What we agreed and requires a fresh Confirm of that agreement before the Plan step using its new
-  answers proceeds; already running work continues. Every question still counts once against the
-  run's one counter (QMAX-005..007), and Grill Me adds no participant and no second counter.
+  With Grill Me on in a Plan or Deep Plan run, the assistant asks its questions as the grilling Skill
+  (SS-038, DL-218). It works the frontier in rounds through the existing questionnaire host: each round
+  asks every decision whose prerequisites are settled, each question numbered and carrying a recommended
+  answer that yes accepts, and a question that depends on one still open waits for a later round. A fact
+  goes to research and is never asked, and research holds only the questions that depend on it. I don't
+  know removes that decision from the frontier and lists it as open in What we agreed unless the user
+  reopens it. The session ends by itself only when no decision is ready, no fact research is pending and
+  no branch is unsettled. A decision left open, and every decision that depends on it, is listed as open
+  in What we agreed and does not count as an unsettled branch. If every remaining question waits on
+  research, the interview waits, says it is looking things up and recomputes when research returns. The
+  user may also end it with Wrap up; the effective limit of QMAX-001..004 is a safety net, and reaching it
+  ends the session with the typed question_budget_exhausted result of QMAX-014..015. When the session ends
+  the user sees What we agreed, every decision with its answer and every decision left open, with Confirm
+  and Keep going, and the Plan document is not written or revised from those answers until the user
+  confirms; Keep going returns to the interview within the limit. Every later decision session ends in its
+  own What we agreed and requires a fresh Confirm of that agreement before the Plan step using its new
+  answers proceeds; already running work continues. Every question still counts once against the run's one
+  counter (QMAX-005..007), and Grill Me adds no participant and no second counter. The same
+  frontier/session/Confirm and single question counter apply to app Plan/Deep Plan; N24 adds no fresh
+  budget per chat or conversion. Grill Me remains read-only and may not act for the user or authorize
+  execution.
 gui_related: true
 gui_classification_reason: The rounds, Wrap up and the What we agreed step are visible in the chat's questionnaire.
 depends_on: [APR-002, APR-009]
@@ -1883,6 +2060,9 @@ source_lineage:
   - "Plans/Decision_Log.md DL-218"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DEFAULTS-APPROVED.md sha256:f199f188e3e4b1ecd5474a1bc2f87c2d5156863909eb9de9cc3ee9fcb7bfd5be"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "Wrap up"
   - "What we agreed"
@@ -1895,3 +2075,153 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Decision_Log.md#DL-218
+
+### APR-073 - Application Assistant Plan Identity And Deep Planning
+
+```yaml
+plan_unit_id: APR-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: Plan and Deep Plan work in an app thread with project_id=null and real Server/thread/Computer context,
+  using the same six strategies, AssistantPlan identity, linear revisions and exact approved version/hash as Project
+  Plans. Plan Quick/Standard/Thorough use the direct document-and-To-Do backend; Deep Plan Thorough/Exhaustive/BrainStorm
+  use the scoped ledger and Build-time scoped bundle. Internal records need no visible folder. Planning may read
+  only admitted sources and write its own planning records; it remains read-only toward task files/system settings
+  in every execution posture. New application record/document/run/adherence/cancel-source editions preserve original
+  Project v1 resources and hash domains. assistant_plan_id, thread_id, project_id and creation identity remain immutable,
+  including null; scope metadata lives in the proper wrapper, not focus. Revise never mutates approved bytes. One
+  current unfinished Plan is enforced for the retained thread across both scopes, not once per partition. UI uses
+  the ordinary Plan card/tabs, Revise/export/To-Do/progress and exact-version open owners with No project and named
+  Computer; unavailable actual targets say why. This is no product Plans/** ledger/index/owner-doc or WorkNode/NamedPlan/Orchestrator
+  path. A genuine null Project is not project_not_found; an invalid supplied real Project still is. CV-366/368 select
+  the app record/run/adherence/cancel/ledger/bundle definitions and original-source graphs, with SP-352 physical
+  custody. Original Project resources and full source manifests stay unchanged. Missing app root/source/retention
+  materialization keeps the affected route unavailable; a valid schema or current Plan projection proves no original
+  source, native execution or canonical completion.
+gui_related: true
+gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
+depends_on:
+- ACD-508
+- SIR-055
+- PLS-024
+- PDS-023
+unblocks: []
+acceptance_criteria:
+- All six strategies and exact-version revise/export/open work in app scope with unchanged Plan/To-Do semantics.
+- Ordinary revise rejects Project/thread changes and approved-byte mutation; no two current Plans across conversion.
+- No-project Wizard/PRD/Orchestrator remains unavailable while Plan/Deep Plan and scheduling are positive cases.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#N21-N22; Plan-modes
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#fc-c01
+preserved_exact_tokens:
+- project_id=null
+- assistant_plan_id
+- thread_id
+- project_id
+- No project
+- Plans/**
+- project_not_found
+negative_constraints:
+- Do not create a fake Project, global PlanUnit index, WorkNodes, alternate Plan UI/store or editable approved revision.
+- No global nullable edit of historical exact Project/cancel codecs or native readiness claim.
+owner_hints:
+- Plans/Assistant_Plan_Runtime.md
+```
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md#APR-073, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/Contracts_V0.md#CV-368, ContractName:Plans/storage-plan.md#SP-352
+
+### APR-074 - Application Build Exact Scheduling And Immutable Conversion
+
+```yaml
+plan_unit_id: APR-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: App Build freezes exact Plan/version/hash/steps, app Computer/roots/runtime/tools/permission evidence,
+  admitted agent/crew/goal_driven topology and current Stop/pause state. Repository/worktree are included only when
+  actually relevant; missing required inputs block without a fabricated Project. The one control retains Build,
+  Building…, Completed and Canceled; Plan adherence and To-Do evidence remain separate from completion. Build With
+  Crew atomically admits PlanRun/Crew/To-Dos, Build as Goal uses genuine Goal association custody, and Build At
+  atomically stores one exact schedule/window without launching work or a second execution_window.create. Revision
+  invalidates pending exact-version schedules with Schedule needs update; no latest substitution. N25 preview settles
+  current source PlanRun at a safe stop and defaults to a linked new destination Plan with exact revision/hash map,
+  fresh authority and no repeated effects. Release/cancel the unfinished source's current slot through the existing
+  owner transition before destination current admission; source approved history remains immutable and shows Canceled
+  with a secondary moved explanation where appropriate, never a fifth control state. Ordinary project_id/thread_id
+  mutation remains forbidden. An explicit rebind requires its own admitted immutable association transaction/version,
+  not revise/update. Pending schedules are held/invalidated then explicitly recreated/rebound by Scheduling against
+  the exact mapped target and fresh consent, roots, timer and both scopes' Stop/pause checks. Conversion never resumes
+  stopped work. Send To Planning Wizard remains person-started on an exact revision and requires explicit new/existing
+  Project conversion/selection and fresh intake; cancel leaves the app Plan intact. It bypasses PRD Builder and
+  starts no Orchestrator until Wizard approval/compilation. CV-367/SP-350 own exact source safe-stop, current-slot
+  release, destination mapping and independent retention. Optional association rebind remains unavailable until
+  its complete separate owner transaction/source/cancel/replay/backup protocol is admitted; linked destination birth
+  is the available design. CV-368/SP-352 govern exact replacement schedules and the independent source-app and destination-Project
+  pause/Stop checks.
+gui_related: true
+gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
+depends_on:
+- APR-073
+- SQR-019
+- CWR-045
+- GRS-087
+unblocks: []
+acceptance_criteria:
+- App immediate/Goal/Crew/Build At paths preserve exact revision and atomic once-only results.
+- Move/timer/build/cancel races cannot create duplicate runs, effects, current Plans or scheduled occurrences.
+- Wizard handoff before Project choice refuses cleanly; successful conversion uses exact carried revision and new
+  intake.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#N21-N22; N25; Plan-build-schedules
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#fc-c02
+preserved_exact_tokens:
+- Build
+- Building…
+- Completed
+- Canceled
+- N25
+- Schedule needs update
+- Send To Planning Wizard
+- project_id/thread_id
+negative_constraints:
+- Never rewrite source project_id/thread_id/approved history, carry stale approval, synthesize completion or clear
+  Stop/pause.
+- No implicit Wizard, PRD, WorkNode, NamedPlan or Orchestrator effect from Build or conversion.
+owner_hints:
+- Plans/Assistant_Plan_Runtime.md
+```
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md#APR-074, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-367, ContractName:Plans/Contracts_V0.md#CV-368, ContractName:Plans/storage-plan.md#SP-350, ContractName:Plans/storage-plan.md#SP-352

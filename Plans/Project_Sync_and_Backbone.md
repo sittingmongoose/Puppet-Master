@@ -4,7 +4,7 @@
 
 ## 1. Ownership boundary
 
-Project Sync and Backbone owns the semantic operation that makes an accepted Project, its one physical Project Vault, and its app-owned Project content converge across an explicitly selected source and destination. It owns:
+Project Sync and Backbone owns the semantic operation that makes an accepted Project, its one physical Project Vault, and its app-owned Project content converge across an explicitly selected source and destination. It owns: Repointing a Project after its folder was moved outside Puppet Master uses cmd.project.source_location.test then cmd.project.source_location.update with verified stable identity; it moves no content. Moving the content uses PSB-005 cmd.project.move.preflight/start and its verified copy/cutover/rollback lifecycle. Source Location testing is topology evidence, not Git/JJ/remote inspection; SCS-025 owns that inspection.
 
 - Project/Vault content discovery and comparison;
 - typed sync, copy, move, source-relocation, and app-content-update plans;
@@ -19,7 +19,7 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plan
 
 ## 2. Project content identity and topology consumption
 
-Every operation binds `project_id`, `project_vault_id`, `project_home_server_id`, source and destination `ExecutionHostId`, `ExecutionEnvironmentId`, `SourceLocationId`, `TopologyGeneration`, and an immutable content-selection digest. Project Sync consumes those runtime identities; it does not issue or replace them.
+Every Project-content operation binds `project_id`, `project_vault_id`, `project_home_server_id`, source and destination `ExecutionHostId`, `ExecutionEnvironmentId`, `SourceLocationId`, `TopologyGeneration`, and an immutable content-selection digest. Project Sync consumes those runtime identities; it does not issue or replace them. The PSB-007 chat-sized app-source variant binds source Server/thread/app writer plus a real destination Project/Vault and the same exact topology/selection/currentness discipline; no Project is invented for the source.
 
 One Project has one physical Project Vault. A cache, worktree, checkout, mount, WSL path, container volume, Kubernetes volume, or remote mirror is a location or projection, not a second Vault. Equal paths on different Hosts or Environments are not interchangeable.
 
@@ -39,7 +39,7 @@ Resume and recovery compare journal state, bundle/source digests, destination re
 
 ## 5. Onboarding, Doctor, and platform consumers
 
-- Product Onboarding may request a Project import or Project move but does not implement content transfer.
+- Product Onboarding/New Project and app-chat conversion may request import/move, but only PSB-005/007 transfers content. source_location.update repoints an outside move and Source Control owns repository inspection; neither is a content-transfer alias.
 - Server Claim/Bootstrap may request initial Project/Vault binding and an initial sync, but the sync remains owned here.
 - Doctor consumes bounded currentness, conflict, capability, and recovery summaries and routes remediation to this owner.
 - Containers, WSL, Kubernetes, SSH, and native-host owners expose capability and exact topology; they do not sync Project/app content.
@@ -194,10 +194,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Sync_and_Backbone.md
 canonical_text: >-
-  Project Sync and Backbone owns seven exact Project Move commands and four exact PM content-update commands through
-  two closed DRY request/result/error/availability/disabled/permission families, plus two typed presentation-only
-  detail actions. Every command remains handler_unavailable until its named sole native handler and complete central
-  integration exist; local actions create neither a semantic-domain handler nor a domain EventRecord.
+  Project Sync and Backbone owns seven exact Project Move commands and four exact PM content-update
+  commands through two closed DRY request/result/error/availability/disabled/permission families, plus two
+  typed presentation-only detail actions. Every command remains handler_unavailable until its named sole
+  native handler and complete central integration exist; local actions create neither a semantic-domain
+  handler nor a domain EventRecord. Repointing a Project after its folder was moved outside Puppet Master
+  uses cmd.project.source_location.test then cmd.project.source_location.update with verified stable
+  identity; it moves no content. Moving the content uses PSB-005 cmd.project.move.preflight/start and its
+  verified copy/cutover/rollback lifecycle. Source Location testing is topology evidence, not
+  Git/JJ/remote inspection; SCS-025 owns that inspection.
 gui_related: true
 gui_classification_reason: Move/update availability, progress, blockers, recovery, details, and exact return are visible across the named GUI consumers.
 depends_on: [PSB-001, PSB-002, PSB-003]
@@ -214,7 +219,12 @@ reasoning_tier: high
 context_scope: server_command_gap_project_sync_backbone
 implementation_surfaces: [Plans/Project_Sync_and_Backbone.md, Plans/project_sync_backbone_contracts.schema.json, future Project Move and Content Update native handlers]
 node_compile_hint: {mode: project_sync_backbone_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:server-command-gap-adjudication:rows-109-116, source_ref:server-command-gap-adjudication:rows-167-171]
+source_lineage:
+  - "source_ref:server-command-gap-adjudication:rows-109-116"
+  - "source_ref:server-command-gap-adjudication:rows-167-171"
+  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints:
   - Do not claim live-process serialization, early content activation, or success without verified readback.
   - Do not create a domain handler or EventRecord for either typed local details action.
@@ -255,3 +265,71 @@ owner_hints: [Plans/Project_Sync_and_Backbone.md]
 ```
 
 ContractRef: ContractName:Plans/Project_Sync_and_Backbone.md, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/Server_System.md
+
+### PSB-007 - Fenced Chat Sized Transfer Between Servers
+
+```yaml
+plan_unit_id: PSB-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Sync_and_Backbone.md
+canonical_text: Chat-sized application-to-Project transfer reuses this owner's preflight, fencing, staging, verification,
+  cutover and rollback discipline. Its immutable manifest names the actual source Server/thread/app writer, destination
+  Project/Vault/Home Server/Host/source generation, content selection and per-owner association decisions. It enumerates
+  exact notebook entries/checkpoints/payload/restriction refs, selected memory carry-over, owner_thing_previews
+  and app search/cache/To-Do/absolute restore dispositions. It covers history, payloads, notebook, Goal/Crew/Plan
+  successor or explicit rebind custody, pending schedules and their held dispositions. Every participating Computer
+  must answer at start. Suspend timer/continuation admission, settle active operations/helpers to their owner safe
+  boundary and fence source claims before staging. Keep source read-only and destination unlisted until verified
+  copy/read-back, current permissions and the one-writer cutover claim commit. The new Project must be committed/listed
+  before chat cutover. A cutover generation rejects late source writes, helper replies and due timers; replies can
+  follow stable thread routes only after current target validation. On one Computer a failure rolls back unchanged
+  created content and keeps the original live; across Servers interruption is visible paused work with Resume/Cancel,
+  never two live copies or an offline speculative queue. Copy payload bytes across separate stores; same-store shared
+  content retains references and holds. Source deletion follows successful verification and the explicit move policy
+  only. Undo fences the destination and needs every participating Server; it restores only eligible unchanged content.
+  Topology source_location.update repoints an outside move; it does not transfer content or replace Source Control
+  inspection.
+gui_related: false
+gui_classification_reason: Defines identity, custody, admission or compiler boundaries; visual placement is consumed
+  from GUI owners.
+depends_on:
+- SIR-055
+- PSB-005
+- PSB-006
+unblocks: []
+acceptance_criteria:
+- Fail at each copy/check/cutover phase; source is recoverable and only one writer can resume.
+- A timer fire/participant write racing cutover either settles once before the fence or refuses afterwards.
+- Cross-Server Resume/Cancel/Undo requires reachable identities and fresh generations, not an earlier preview.
+validation_surfaces:
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
+- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody
+reasoning_tier: high
+context_scope: application_and_project_workflows
+implementation_surfaces:
+- Plans/Project_Sync_and_Backbone.md
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#N13-N20-N25; Goals-Crew-Plan-schedules
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
+preserved_exact_tokens:
+- Resume/Cancel
+- source_location.update
+- one-writer
+- Goal/Crew/Plan
+negative_constraints:
+- No second Project registry, Vault, sync engine, offline queue or credential transfer.
+- Do not rewrite an immutable Goal/Plan/Crew association or delete remote repositories/branches/backups.
+owner_hints:
+- Plans/Project_Sync_and_Backbone.md
+```
+
+ContractRef: ContractName:Plans/Project_Sync_and_Backbone.md#PSB-007, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
