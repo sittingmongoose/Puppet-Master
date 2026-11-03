@@ -27,6 +27,10 @@
   .pc-bar :focus-visible { outline: 2px solid #7aa7ff; outline-offset: 1px; }
   .pc-note { padding: 0 14px 0; color: #b4b4bd; line-height: 1.35; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
   .pc-note b { color: #fff; font-weight: 650; }
+  /* A and B are pass 1, frozen: they sit behind More concepts until asked for */
+  .pc-seg .pc-frozen { display: none; }
+  .pc-seg[data-more="on"] .pc-frozen, .pc-seg .pc-frozen[aria-pressed="true"] { display: inline-block; }
+  .pc-bar select[data-c-only]:disabled { opacity: .45; cursor: default; }
   .pc-stage { position: fixed; inset: 0 0 var(--dock-h) 0; display: flex; justify-content: center; background: #0b0b0d; }
   #pm7 { display: block; height: 100%; width: 100%; border: 0; background: #1e1e1e; transition: width .2s ease; }
   .pc-wait { position: fixed; inset: 0 0 var(--dock-h) 0; display: grid; place-items: center; color: #8d8d96; pointer-events: none; z-index: 2; }
@@ -41,11 +45,12 @@
     <b>Projects</b><span class="pc-model" data-concept-model="Opus 5.5">Opus 5.5</span>
     <span class="pc-sep" aria-hidden="true"></span>
     <div class="pc-seg" id="opt" role="group" aria-label="Concept">
-      <button type="button" data-opt="a" aria-pressed="true">A · Polish<kbd>1</kbd></button>
-      <button type="button" data-opt="b" aria-pressed="false">B · Ledger<kbd>2</kbd></button>
-      <button type="button" data-opt="c" aria-pressed="false">C · Split<kbd>3</kbd></button>
+      <button type="button" data-opt="c" aria-pressed="true">C · Split v2<kbd>3</kbd></button>
       <button type="button" data-opt="before" aria-pressed="false">Today<kbd>0</kbd></button>
+      <button type="button" data-opt="a" aria-pressed="false" class="pc-frozen">A · Polish<kbd>1</kbd></button>
+      <button type="button" data-opt="b" aria-pressed="false" class="pc-frozen">B · Ledger<kbd>2</kbd></button>
     </div>
+    <button type="button" class="pc-btn" id="moreAB" aria-expanded="false" aria-controls="opt" title="A and B are pass 1, frozen">More concepts</button>
     <select id="look" aria-label="Look">
       <option value="basic-dark">Basic Dark</option><option value="basic-light">Basic Light</option>
       <option value="friendly-dark">Friendly Dark</option><option value="friendly-light">Friendly Light</option>
@@ -65,6 +70,20 @@
     <button type="button" class="pc-btn" data-act="new">New Project</button>
     <button type="button" class="pc-btn" data-act="missing">Folder missing</button>
     <button type="button" class="pc-btn" data-act="unfinished">Setup didn't finish</button>
+    <select id="moment" aria-label="More moments, shown in C (Split)" data-c-only title="Shown in C, Split">
+      <option value="">More moments (C)…</option>
+      <option value="fromchat">From a chat: Make this a project…</option>
+      <option value="contribute">Contribute: github.com/maplecraft/plant-journal</option>
+      <option value="foundonline">Found online copy: ~/Code/budget-tracker</option>
+      <option value="gamejam">Submodules and Git LFS: ~/Code/game-jam</option>
+      <option value="jjlimits">Jujutsu limits: godot-community/demo-games</option>
+      <option value="samecopy">Same online copy as loom: Studio Mac</option>
+      <option value="newdevice">Connect a new device: Office PC</option>
+      <option value="backupsetup">Backup setup: docs-site</option>
+      <option value="photosorter">A fork: photo-sorter (original newer)</option>
+      <option value="legacy">Found, not linked: legacy-app</option>
+      <option value="gardennotes">Waiting for Media NAS: garden-notes</option>
+    </select>
     <button type="button" class="pc-btn" data-act="reset">Reset demo</button>
     <label class="pc-check"><input type="checkbox" id="reduced"> Reduced motion</label>
   </div>
@@ -80,7 +99,8 @@
   const frame = document.getElementById('pm7');
   const base = new URL('./', location.href);
   const STEPS = [
-    ['css', 'layer/core.css'], ['js', 'layer/core.js'], ['js', 'layer/flow.js'], ['js', 'layer/parts.js'],
+    ['css', 'layer/core.css'], ['css', 'layer/np.css'], ['js', 'layer/core.js'], ['js', 'layer/words.js'], ['js', 'layer/rules.js'],
+    ['js', 'layer/flow.js'], ['js', 'layer/np.js'], ['js', 'layer/parts.js'], ['js', 'layer/np-ui.js'],
     ['css', 'concepts/a.css'], ['js', 'concepts/a.js'],
     ['css', 'concepts/b.css'], ['js', 'concepts/b.js'],
     ['css', 'concepts/c.css'], ['js', 'concepts/c.js'],
@@ -89,10 +109,10 @@
   const NOTES = {
     a: '<b>A · Polish.</b> Today’s page, kept and brought up to Home and Usage: the same cards, now with a status mark and word, a Safe line (history, online copy, backup), labelled actions and a More menu. One New Project button opens a stepped window that asks what onboarding asks, without the stage.',
     b: '<b>B · Ledger.</b> Usage’s layout: a side list of views with counts, a header row of filters, and one ledger row per project with its status, place, history, online copy and backup. A row opens an inspector beside it. New Project is a sheet from the right on one scrolling page.',
-    c: '<b>C · Split.</b> A project list on the left and the chosen project’s own page on the right: what it is doing, where it lives, how it is kept safe, and what needs you. New Project is a launcher: paste a link or a folder, or pick a way, then one short page and Create.',
+    c: '<b>C · Split (v2).</b> The chosen concept. A project list grouped by machine, and the chosen Project’s own page. New Project: paste or pick a way, then one guided page beside a live Review: where it lives, a look inside before adding, online copy for every service, contribute, backups and copying settings with AI accounts. A and B are kept as they were (More concepts).',
     before: '<b>Today.</b> PMConcept7’s current Projects page, unchanged: New Project and Open Folder open the same sheet, the card icons have no labels, and the folder-missing project points to a Settings page that cannot fix it.'
   };
-  const UI = { opt: 'a', scenario: 'demo' };
+  const UI = { opt: 'c', scenario: 'demo' };
   const $ = (id) => document.getElementById(id);
   let live = false;
 
@@ -103,6 +123,8 @@
     $('note').innerHTML = NOTES[UI.opt];
     $('scenario').value = UI.scenario;
     document.querySelectorAll('[data-act]').forEach((b) => { b.disabled = UI.opt === 'before'; });
+    // the v2 moments need C's sections: disabled for A, B and Today
+    document.querySelectorAll('[data-c-only]').forEach((b) => { b.disabled = UI.opt !== 'c'; });
   }
 
   /* PMConcept7 keeps each project's look in that project's Settings, so switching looks here writes them; the values found
@@ -174,6 +196,8 @@
   $('width').addEventListener('change', (e) => { frame.style.width = e.target.value ? e.target.value + 'px' : '100%'; });
   $('reduced').addEventListener('change', (e) => send({ cmd: 'motion', reduced: e.target.checked }));
   document.querySelectorAll('[data-act]').forEach((b) => b.addEventListener('click', () => send({ cmd: 'act', act: b.dataset.act })));
+  $('moment').addEventListener('change', (e) => { const v = e.target.value; e.target.value = ''; if (v) send({ cmd: 'act', act: v }); });
+  $('moreAB').addEventListener('click', () => { const on = $('opt').getAttribute('data-more') !== 'on'; $('opt').setAttribute('data-more', on ? 'on' : 'off'); $('moreAB').setAttribute('aria-expanded', String(on)); });
   // 1-3 pick a concept and 0 shows today's page (outside text fields; inside PMConcept7 the layer listens for the same keys)
   document.addEventListener('keydown', (e) => {
     if (e.ctrlKey || e.metaKey || e.altKey || /input|select|textarea/i.test((e.target && e.target.tagName) || '')) return;
