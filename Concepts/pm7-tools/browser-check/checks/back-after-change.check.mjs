@@ -953,7 +953,9 @@ export const tests = {
       if (await A.has('pair')) await A.click('pair');
       const paired = await A.frame().waitForFunction(() => !!(O55.S.sess.nas || {}).paired, null, { timeout: 20000 }).then(() => true).catch(() => false);
       if (!paired) { t.log('20 PM NAS: pairing by approval did not complete in this fixture within 20 s; the case could not run'); return; }
-      const w0 = await keepOn(A); if (w0[w0.length - 1] !== 'review') { const w1 = await onToReview(A, nameOn).then(() => ['review']).catch(() => w0); if (w1[w1.length - 1] !== 'review') { bad.push('never reached Review: ' + w0.join(' > ')); return; } }
+      /* (on to the folder step, where a folder is picked, then on to Review) */
+      await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900); await throughNas(A); await onToReview(A, nameOn);
+      if ((await A.snap()).screen !== 'review') { bad.push('never reached Review: on ' + (await A.snap()).screen); return; }
       const first = await walkBack(A, [], bad, '20 PM NAS first'); const w = await keepOn(A); if (w[w.length - 1] !== 'review') { bad.push('never back to Review: ' + w.join(' > ')); return; }
       const second = await walkBack(A, [], bad, '20 PM NAS second');
       for (const [n, seq] of [['first', first], ['second', second]]) { if (!seq.includes('nas-pmpair')) bad.push(`the ${n} Back run leaves out pairing (${seq.join(' > ')})`); const ssh = seq.filter((x) => ['nas-identity', 'nas-key', 'nas-signin', 'nas-install'].includes(x)); if (ssh.length) bad.push(`the ${n} Back run shows SSH steps ${ssh.join(', ')} for a paired NAS`); } });
