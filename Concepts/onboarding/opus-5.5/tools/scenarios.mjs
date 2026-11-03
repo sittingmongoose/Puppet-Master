@@ -634,13 +634,18 @@ def('pr16', 'fresh', 'Audit W3-55: every block sounds as it lands', async (d, A)
   await d.openOnboarding(); await toName(d); await d.type('name', 'Stack');
   for (let i = 0; i < 6 && (await d.screen()) !== 'review'; i++) await d.primary();
   await readyPrimary(d); await spySound(d);
-  await d.page.evaluate(() => { const st = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')), w = window.__land = []; st.onLanded = ((f) => function (pr) { w.push({ t: performance.now(), stack: pr.spec.stack }); return f && f.call(this, pr); })(st.onLanded); });
+  await d.page.evaluate(() => { const st = window.O55.pipStage.of(document.querySelector('#pm-o55-onboarding .o55-stage')), w = window.__land = []; st.onLanded = ((f) => function (pr) { w.push({ t: performance.now(), stack: pr.spec.stack, prior: !!pr.__priorSnd }); return f && f.call(this, pr); })(st.onLanded);
+    /* FO-2 (58-rig.js blockSfx): a touchdown within 70 ms of a sound the core played sounds just after it (up to 85 ms
+       later), so note, at the touchdown and before its own sound, whether such a sound was there */
+    st.touchdown = ((f) => function (pr) { const t = performance.now(); pr.__priorSnd = ((window.O55.sound || {}).log || []).some((e) => e.played && t - e.t >= 0 && t - e.t < 70); return f.call(this, pr); })(st.touchdown); });
   await d.primary();
   await until(d, "window.O55.S.sess.commit.state === 'done'", 'made', 25000); await sleep(2200);
   const r = await d.state(() => ({ blocks: window.__snd.pip.filter((x) => x.a === 'block'), landed: window.__land, want: window.O55.review.phasesFor(window.O55.S).length }));
   A.eq(r.landed.length, r.want, 'every block landed (' + r.landed.length + ' of ' + r.want + ')');
   A.eq(r.blocks.length, r.want, 'one block sound per block (' + r.blocks.length + ')');
-  A.ok(r.blocks.every((b, i) => r.landed[i] && Math.abs(b.t - r.landed[i].t) < 60), 'each at its touchdown (' + r.blocks.map((b, i) => r.landed[i] ? Math.round(b.t - r.landed[i].t) : 'x').join(', ') + ' ms)');
+  /* at its touchdown (within 60 ms), or, when a sound had just played, just after that sound as FO-2 intends: no more
+     than 100 ms after the touchdown (85 ms of deferral and timer slack); * marks a touchdown that followed a sound */
+  A.ok(r.blocks.every((b, i) => { const l = r.landed[i]; if (!l) return false; const dt = b.t - l.t; return Math.abs(dt) < 60 || (l.prior && dt >= 0 && dt < 100); }), 'each at its touchdown (' + r.blocks.map((b, i) => r.landed[i] ? Math.round(b.t - r.landed[i].t) + (r.landed[i].prior ? '*' : '') : 'x').join(', ') + ' ms)');
 });
 def('pr17', 'fresh', 'Audit W3-66: a finished chapter bead holds its check mark in every look', async (d, A) => {
   await d.openOnboarding(); await toName(d);
