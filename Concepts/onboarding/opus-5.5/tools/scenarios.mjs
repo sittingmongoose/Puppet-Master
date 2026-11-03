@@ -1351,6 +1351,9 @@ def('srv8', 'fresh', 'A new Server set up, then back to the step that found it: 
   await d.back(); A.eq(await d.screen(), 's-wait', 'back to where it was found');
   const st = await d.state(() => ({ card: (document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-card[data-arg="pm:new"]') || {}).textContent || '', primary: (document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary') || {}).textContent || '' }));
   A.ok(/Already set up as/.test(st.card) && !/Not set up yet/.test(st.card) && /Continue/.test(st.primary), 'the card says it is already set up: ' + JSON.stringify(st));
+  /* (and the screen around it: no waiting, no install steps, Pip not asking to set it up) */
+  const sc = await d.state(() => { const L = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'); return { title: (L.querySelector('h1, .o55-title') || {}).textContent || '', install: !!L.querySelector('.o55-install'), pip: [...document.querySelectorAll('#pm-o55-onboarding .pst-bubble')].map((b) => b.textContent).join(' ') }; });
+  A.ok(/is set up/.test(sc.title) && !sc.install && !/Shall we set it up/.test(sc.pip), 'the step reads as set up: ' + JSON.stringify(sc));
 });
 def('srv2', 'fresh+guestLater', "Situation guestLater: a new Server's Your Server is ready shows No requests yet and Check again; the device's request arrives about 15 s later", async (d, A) => {
   await toServerCode(d);

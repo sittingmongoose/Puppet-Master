@@ -126,9 +126,10 @@
     chapter: 'computer', stage: 'simple_path',
     scene: (S) => ({ id: 'where', beat: 'server' }),
     eyebrow: () => T('server.wait.eyebrow'),
-    title: (S) => T(cloud(S) ? 'server.wait.titleCloud' : 'server.wait.title'),
+    /* (FO-31: a Server already set up is not waited for or installed again) */
+    title: (S) => (mine(S, unclaimed(S)) ? T('server.wait.titleDone', { name: S.sess.server.displayName || unclaimed(S).name }) : T(cloud(S) ? 'server.wait.titleCloud' : 'server.wait.title')),
     /* (a rented computer never shows up by itself: its console gives the setup code) */
-    lead: (S) => T(cloud(S) ? 'server.wait.leadCloud' : 'server.wait.lead'),
+    lead: (S) => (mine(S, unclaimed(S)) ? T('server.wait.leadDone') : T(cloud(S) ? 'server.wait.leadCloud' : 'server.wait.lead')),
     body(S) {
       const u = unclaimed(S), sv = S.sess.server, kind = sv.kind || 'nas';
       /* install steps sit beside the discovery: do them on the other computer, and it shows up here by itself */
@@ -140,7 +141,7 @@
       inner += `<div class="o55-sublinks" data-key="guide">${C.link(T('server.install.guide'), 'guide', plat, { tip: 'group:guide' })}</div>`;
       /* what keeps a Server's work, before anyone installs it (SCR-12): behind a disclosure, so the steps stay short */
       if (kind === 'nas') inner += C.details(S, 'nasbefore', T('server.wait.before.title'), `<ul class="o55-will">${(['synology', 'qnap'].includes(plat) ? ['models'] : []).concat(['data', 'address']).map((k) => `<li>${C.small(k === 'models' ? 'server' : k === 'data' ? 'vault' : 'globe', 14)}<span>${U.esc(T('server.wait.before.' + k, { brand: PLATFORM_NAMES[plat] || '' }))}</span></li>`).join('')}</ul>`);
-      let out = C.group(T('server.kind.installTitle'), inner, { cls: 'o55-install' });
+      let out = mine(S, u) ? '' : C.group(T('server.kind.installTitle'), inner, { cls: 'o55-install' });
       /* a rented computer: its setup code comes from the provider's console, typed on the next screen (C2 A) */
       if (kind === 'cloud') out += C.note(T('server.wait.cloudCode'), 'info', 'lock');
       else if (sv.manual) {
