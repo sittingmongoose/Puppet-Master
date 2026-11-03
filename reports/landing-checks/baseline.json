@@ -230,12 +230,14 @@
   },
   {
    "check": "audit-governance",
-   "count": 63,
+   "count": 69,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
     "022973cb2e3a",
+    "0262cebb1230",
     "02dd85b72540",
+    "04502fbfcb1b",
     "11307f8ee89e",
     "184f8c4ea961",
     "1e89965ec8c7",
@@ -262,6 +264,7 @@
     "6e7f4d13a6a9",
     "77dc3650ecd5",
     "7f14d225e554",
+    "7fea903aea1a",
     "8129d8127476",
     "820ce1064826",
     "85b744d73149",
@@ -279,6 +282,7 @@
     "a56f058b4b3a",
     "b7cfd83316e1",
     "b942b4494dd6",
+    "bd812e84f90f",
     "c1f07edcbfa8",
     "c7712279bfb6",
     "d1cb22ec6bb2",
@@ -288,12 +292,14 @@
     "dab56c47233c",
     "daefa58a63a3",
     "db77fa2a20b3",
+    "ddb0f2cbd915",
     "df3850d1ccf2",
     "e5b743d2bdde",
     "e62a59ff2641",
     "eb336c21b3dd",
     "ebc2af553cac",
     "f560bd396037",
+    "f93a5bf1ceac",
     "fe9b3049d0f1",
     "ff5d538eeee6"
    ],
@@ -1136,6 +1142,7 @@
    "count": 33,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
+    "0262cebb1230",
     "11307f8ee89e",
     "2a9afa12ee0a",
     "2f5d55a27d5f",
@@ -1157,7 +1164,6 @@
     "97e212c23116",
     "9ab756ff1c91",
     "9b48715f1909",
-    "a30d32e5cc7b",
     "a56f058b4b3a",
     "c7712279bfb6",
     "d1cb22ec6bb2",
@@ -1165,8 +1171,8 @@
     "d5be4dc5e9b9",
     "e5b743d2bdde",
     "e62a59ff2641",
-    "ebc2af553cac",
     "f560bd396037",
+    "f93a5bf1ceac",
     "fe9b3049d0f1",
     "ff5d538eeee6"
    ],
@@ -1666,7 +1672,7 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 5578,
+   "failure_total": 5584,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
@@ -1679,8 +1685,8 @@
      "sampled": 100
     },
     "implementation_readiness": {
-     "reported": 88,
-     "sampled": 88
+     "reported": 94,
+     "sampled": 94
     },
     "plan_graph": {
      "exported": 1964,
@@ -1717,7 +1723,7 @@
    }
   },
   "run-gates": {
-   "failure_total": 5578,
+   "failure_total": 5584,
    "status": "fail",
    "subchecks": {
     "validate_audit_closure": {
@@ -1730,8 +1736,8 @@
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "exported": 88,
-     "reported": 88,
+     "exported": 94,
+     "reported": 94,
      "sampled": 50
     },
     "validate_plan_graph": {
@@ -1760,7 +1766,7 @@
    }
   }
  },
- "commit": "93bd26fa26ec5d230f87bfdb09cb591c1b98e156",
+ "commit": "d45dfcdba55a19f9465c84a7186639cbedb67794",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -2309,12 +2315,14 @@
   },
   {
    "check": "run-gates",
-   "count": 63,
+   "count": 69,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
     "022973cb2e3a",
+    "0262cebb1230",
     "02dd85b72540",
+    "04502fbfcb1b",
     "11307f8ee89e",
     "184f8c4ea961",
     "1e89965ec8c7",
@@ -2341,6 +2349,7 @@
     "6e7f4d13a6a9",
     "77dc3650ecd5",
     "7f14d225e554",
+    "7fea903aea1a",
     "8129d8127476",
     "820ce1064826",
     "85b744d73149",
@@ -2358,6 +2367,7 @@
     "a56f058b4b3a",
     "b7cfd83316e1",
     "b942b4494dd6",
+    "bd812e84f90f",
     "c1f07edcbfa8",
     "c7712279bfb6",
     "d1cb22ec6bb2",
@@ -2367,12 +2377,14 @@
     "dab56c47233c",
     "daefa58a63a3",
     "db77fa2a20b3",
+    "ddb0f2cbd915",
     "df3850d1ccf2",
     "e5b743d2bdde",
     "e62a59ff2641",
     "eb336c21b3dd",
     "ebc2af553cac",
     "f560bd396037",
+    "f93a5bf1ceac",
     "fe9b3049d0f1",
     "ff5d538eeee6"
    ],
@@ -3100,8 +3112,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-01T17:34:49Z",
- "run_dir": "Plans/.plan_migration/pds-20261101-003-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-03T19:47:09Z",
+ "run_dir": "Plans/.plan_migration/pds-20261103-001-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
