@@ -251,17 +251,17 @@
         /* (work on a shared folder, an NFS share or a mounted drive is where it was found, as on another device: it
            read only "Kept in" with no path, QA2 hunter H8) */
         const away = d.project_transport === 'ssh' || d.project_transport === 'puppet_master' || d.project_transport === 'mounted';
-        const path = away ? (S.sess.nas && S.sess.nas.folderLabel) || String(d.project_source_ref || '').replace(/^[a-z]+:/, '') : d.local_location;
+        const path = away ? (O55.nas && O55.nas.placeLabel ? O55.nas.placeLabel(S, d.project_source_ref) : String(d.project_source_ref || '').replace(/^[a-z]+:/, '')) : d.local_location;
         out += `<p class="o55-locline" data-key="loc">${C.small('folder', 16)}<span>${U.esc(onServer(S) && d.project_transport === 'local' ? T('name.keptOn', { path, name: serverName(S) }) : T('name.kept', { path }))}</span></p>`;
       } else if (onServer(S)) {
         const nm = serverName(S);
         out += C.group(T('name.serverTitle'), C.cards('storage', [
           { v: 'with_server', glyph: 'server', title: T('name.withServer', { name: nm }), sub: T('name.withServerSub'), tag: T('chrome.recommended') },
           { v: 'this_device', glyph: 'computer', title: T('name.onDevice'), sub: T('name.onDeviceSub', { name: nm }) },
-          { v: 'network_location', glyph: 'folder', title: T('name.networkDrive'), sub: d.storage_location ? d.storage_location.replace(/^[a-z]+:/, '') : T('name.networkDriveSub') }
+          { v: 'network_location', glyph: 'folder', title: T('name.networkDrive'), sub: d.storage_location ? (O55.nas && O55.nas.placeLabel ? O55.nas.placeLabel(S, d.storage_location) : d.storage_location.replace(/^[a-z]+:/, '')) : T('name.networkDriveSub') }
         ], d.storage_mode, { label: T('name.serverTitle') }));
       } else {
-        const path = d.local_location_mode === 'custom' && d.local_location ? d.local_location : d.storage_mode === 'network_location' ? d.storage_location.replace(/^[a-z]+:/, '') : docsPath(S, d.project_name);
+        const path = d.local_location_mode === 'custom' && d.local_location ? d.local_location : d.storage_mode === 'network_location' ? (O55.nas && O55.nas.placeLabel ? O55.nas.placeLabel(S, d.storage_location) : d.storage_location.replace(/^[a-z]+:/, '')) : docsPath(S, d.project_name);
         const auto = !(d.local_location_mode === 'custom' && d.local_location) && d.storage_mode !== 'network_location';
         out += `<p class="o55-locline" data-key="loc">${C.small('folder', 16)}<span>${U.esc(T(auto && !named(d.project_name) ? 'name.keptUnnamed' : 'name.kept', { path }))}</span>${C.link(T('name.change'), 'change')}</p>`;
         if (S.sess.ui.sheet === 'loc') {

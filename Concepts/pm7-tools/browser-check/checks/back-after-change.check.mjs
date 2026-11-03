@@ -899,7 +899,9 @@ export const tests = {
           t.log(`20 ${kind} Edit ${tg}: ${walked.join(' > ')}`);
         }
         const inv = await A.frame().evaluate(INVAR); if (inv.length) bad.push(`20 ${kind}: the plan holds references no answer gives: ${inv.join('; ')}`);
-        const seq = await walkBack(A, [], bad, `20 ${kind}`), missed = (BACK_HAS[kind] || []).filter((x) => !seq.includes(x));
+        /* (FO-45: Review and Name read a NAS place by its own name and path, never a connection profile's locator) */
+        const rows = (await A.frame().evaluate(SNAP20)).rows.filter((r) => /\b(sshp|shp|ssh):/.test(r)); if (rows.length) bad.push(`20 ${kind}: Review shows a connection profile's locator: ${rows.join(' | ')}`);
+        const seq = await walkBack(A, [{ x: 'sshp:' }, { x: 'shp:server' }, { x: 'ssh:' }], bad, `20 ${kind}`), missed = (BACK_HAS[kind] || []).filter((x) => !seq.includes(x));
         if (missed.length) bad.push(`20 ${kind}: the Back run from Review leaves out still-current steps ${missed.join(', ')} (${seq.join(' > ')})`);
         const foreign = (BACK_NOT[kind] || []).filter((x) => seq.includes(x)); if (foreign.length) bad.push(`20 ${kind}: the Back run shows another way in's steps ${foreign.join(', ')} (${seq.join(' > ')})`);
         if (seq[seq.length - 1] !== 'welcome') bad.push(`20 ${kind}: the Back run from Review stopped on ${seq[seq.length - 1]} (${seq.join(' > ')})`); });

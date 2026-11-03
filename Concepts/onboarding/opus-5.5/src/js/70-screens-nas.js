@@ -894,5 +894,20 @@
     if (n.key === 'k-pm' && !keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
     if (S.sess.ops && S.sess.ops['sshcheck:' + d.id] && S.sess.ops['sshcheck:' + d.id].state === 'done') d.ssh = true;
   }]);
-  O55.nas = { dev, N, pubLine, entry, transport, endPair, remember };
+  /* a files place or source on a NAS as a person reads it: the folder as it was picked (the NAS's own name and the folders
+     in it), or else the NAS's name and the path for SSH and pairing, the share and path for SMB and NFS, the volume for a
+     mounted one; never a connection profile's locator (FO-45: Name and Review read 'sshp:server-this:<hash>/volume1/
+     projects') */
+  function placeLabel(S, ref) {
+    const r = String(ref || ''), n = S.sess.nas || {}, d0 = md(S);
+    if (n.folderLabel && ((n.purpose === 'storage' && d0.storage_location === r) || ((n.purpose || 'source') === 'source' && d0.project_source_ref === r))) return n.folderLabel;
+    const m = /^(ssh|pm|mounted|smb|nfs):(.*)$/.exec(r); if (!m) return r;
+    if (m[1] === 'mounted') return m[2];
+    const rest = m[2].replace(/^(sshp|shp):[^:/]*:[0-9a-f]+:?/, '');
+    if (m[1] === 'smb' || m[1] === 'nfs') return rest;
+    const at = rest.indexOf('/'), path = at >= 0 ? rest.slice(at) : '', slug = m[1] === 'pm' ? rest.slice(0, at >= 0 ? at : rest.length) : '';
+    const dv = (S.env.devices || []).find((x) => x.id === n.device) || (slug ? (S.env.devices || []).find((x) => U.slug(x.name) === slug || U.slug(x.id) === slug) : null);
+    return (dv ? dv.name + ' · ' : '') + path;
+  }
+  O55.nas = { dev, N, pubLine, entry, transport, endPair, remember, placeLabel };
 })();

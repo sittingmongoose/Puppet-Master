@@ -79,17 +79,17 @@
   }
   function beginsAs(S) {
     const d = md(S);
-    if (newNasFolder(S)) return T('review.begins.deviceNew', { device: (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref });
-    if (d.project_mode === 'existing_local') return d.project_transport !== 'local' ? T(d.project_transport === 'puppet_master' ? 'review.begins.devicePaired' : 'review.begins.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref }) : T('review.begins.existing_local', { path: d.local_location });
+    if (newNasFolder(S)) return T('review.begins.deviceNew', { device: O55.nas.placeLabel(S, d.project_source_ref) });
+    if (d.project_mode === 'existing_local') return d.project_transport !== 'local' ? T(d.project_transport === 'puppet_master' ? 'review.begins.devicePaired' : 'review.begins.device', { device: O55.nas.placeLabel(S, d.project_source_ref) }) : T('review.begins.existing_local', { path: d.local_location });
     if (d.project_mode === 'existing_online') return unchosen(d) || !d.repository_ref ? T('review.begins.onlineAgain') : T('review.begins.existing_online', { repo: d.repository_ref.replace(/^[a-z_]+:/, ''), service: forgeName(d) });
     if (d.project_mode === 'restore') return T('review.begins.restore', { project: d.project_name });
     return T('review.begins.new');
   }
   function filesAt(S) {
     const d = md(S);
-    if (d.project_mode === 'existing_local') return d.project_transport === 'local' ? d.local_location : (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref;
+    if (d.project_mode === 'existing_local') return d.project_transport === 'local' ? d.local_location : O55.nas.placeLabel(S, d.project_source_ref);
     if (d.storage_mode === 'with_server') return P().serverName(S); /* (p14: "Files kept in · Garage Pi") */
-    if (d.storage_mode === 'network_location') return d.storage_location.replace(/^[a-z]+:/, '');
+    if (d.storage_mode === 'network_location') return O55.nas.placeLabel(S, d.storage_location); /* (FO-45: never the profile's locator) */
     if (d.local_location_mode === 'custom' && d.local_location) return d.local_location;
     return P().docsPath(S, d.project_name);
   }

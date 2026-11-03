@@ -180982,17 +180982,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         /* (work on a shared folder, an NFS share or a mounted drive is where it was found, as on another device: it
            read only "Kept in" with no path, QA2 hunter H8) */
         const away = d.project_transport === 'ssh' || d.project_transport === 'puppet_master' || d.project_transport === 'mounted';
-        const path = away ? (S.sess.nas && S.sess.nas.folderLabel) || String(d.project_source_ref || '').replace(/^[a-z]+:/, '') : d.local_location;
+        const path = away ? (O55.nas && O55.nas.placeLabel ? O55.nas.placeLabel(S, d.project_source_ref) : String(d.project_source_ref || '').replace(/^[a-z]+:/, '')) : d.local_location;
         out += `<p class="o55-locline" data-key="loc">${C.small('folder', 16)}<span>${U.esc(onServer(S) && d.project_transport === 'local' ? T('name.keptOn', { path, name: serverName(S) }) : T('name.kept', { path }))}</span></p>`;
       } else if (onServer(S)) {
         const nm = serverName(S);
         out += C.group(T('name.serverTitle'), C.cards('storage', [
           { v: 'with_server', glyph: 'server', title: T('name.withServer', { name: nm }), sub: T('name.withServerSub'), tag: T('chrome.recommended') },
           { v: 'this_device', glyph: 'computer', title: T('name.onDevice'), sub: T('name.onDeviceSub', { name: nm }) },
-          { v: 'network_location', glyph: 'folder', title: T('name.networkDrive'), sub: d.storage_location ? d.storage_location.replace(/^[a-z]+:/, '') : T('name.networkDriveSub') }
+          { v: 'network_location', glyph: 'folder', title: T('name.networkDrive'), sub: d.storage_location ? (O55.nas && O55.nas.placeLabel ? O55.nas.placeLabel(S, d.storage_location) : d.storage_location.replace(/^[a-z]+:/, '')) : T('name.networkDriveSub') }
         ], d.storage_mode, { label: T('name.serverTitle') }));
       } else {
-        const path = d.local_location_mode === 'custom' && d.local_location ? d.local_location : d.storage_mode === 'network_location' ? d.storage_location.replace(/^[a-z]+:/, '') : docsPath(S, d.project_name);
+        const path = d.local_location_mode === 'custom' && d.local_location ? d.local_location : d.storage_mode === 'network_location' ? (O55.nas && O55.nas.placeLabel ? O55.nas.placeLabel(S, d.storage_location) : d.storage_location.replace(/^[a-z]+:/, '')) : docsPath(S, d.project_name);
         const auto = !(d.local_location_mode === 'custom' && d.local_location) && d.storage_mode !== 'network_location';
         out += `<p class="o55-locline" data-key="loc">${C.small('folder', 16)}<span>${U.esc(T(auto && !named(d.project_name) ? 'name.keptUnnamed' : 'name.kept', { path }))}</span>${C.link(T('name.change'), 'change')}</p>`;
         if (S.sess.ui.sheet === 'loc') {
@@ -182048,7 +182048,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (n.key === 'k-pm' && !keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
     if (S.sess.ops && S.sess.ops['sshcheck:' + d.id] && S.sess.ops['sshcheck:' + d.id].state === 'done') d.ssh = true;
   }]);
-  O55.nas = { dev, N, pubLine, entry, transport, endPair, remember };
+  /* a files place or source on a NAS as a person reads it: the folder as it was picked (the NAS's own name and the folders
+     in it), or else the NAS's name and the path for SSH and pairing, the share and path for SMB and NFS, the volume for a
+     mounted one; never a connection profile's locator (FO-45: Name and Review read 'sshp:server-this:<hash>/volume1/
+     projects') */
+  function placeLabel(S, ref) {
+    const r = String(ref || ''), n = S.sess.nas || {}, d0 = md(S);
+    if (n.folderLabel && ((n.purpose === 'storage' && d0.storage_location === r) || ((n.purpose || 'source') === 'source' && d0.project_source_ref === r))) return n.folderLabel;
+    const m = /^(ssh|pm|mounted|smb|nfs):(.*)$/.exec(r); if (!m) return r;
+    if (m[1] === 'mounted') return m[2];
+    const rest = m[2].replace(/^(sshp|shp):[^:/]*:[0-9a-f]+:?/, '');
+    if (m[1] === 'smb' || m[1] === 'nfs') return rest;
+    const at = rest.indexOf('/'), path = at >= 0 ? rest.slice(at) : '', slug = m[1] === 'pm' ? rest.slice(0, at >= 0 ? at : rest.length) : '';
+    const dv = (S.env.devices || []).find((x) => x.id === n.device) || (slug ? (S.env.devices || []).find((x) => U.slug(x.name) === slug || U.slug(x.id) === slug) : null);
+    return (dv ? dv.name + ' · ' : '') + path;
+  }
+  O55.nas = { dev, N, pubLine, entry, transport, endPair, remember, placeLabel };
 })();
 
 /* ---- js/71-screens-safe.js ---- */
@@ -183411,17 +183426,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   }
   function beginsAs(S) {
     const d = md(S);
-    if (newNasFolder(S)) return T('review.begins.deviceNew', { device: (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref });
-    if (d.project_mode === 'existing_local') return d.project_transport !== 'local' ? T(d.project_transport === 'puppet_master' ? 'review.begins.devicePaired' : 'review.begins.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref }) : T('review.begins.existing_local', { path: d.local_location });
+    if (newNasFolder(S)) return T('review.begins.deviceNew', { device: O55.nas.placeLabel(S, d.project_source_ref) });
+    if (d.project_mode === 'existing_local') return d.project_transport !== 'local' ? T(d.project_transport === 'puppet_master' ? 'review.begins.devicePaired' : 'review.begins.device', { device: O55.nas.placeLabel(S, d.project_source_ref) }) : T('review.begins.existing_local', { path: d.local_location });
     if (d.project_mode === 'existing_online') return unchosen(d) || !d.repository_ref ? T('review.begins.onlineAgain') : T('review.begins.existing_online', { repo: d.repository_ref.replace(/^[a-z_]+:/, ''), service: forgeName(d) });
     if (d.project_mode === 'restore') return T('review.begins.restore', { project: d.project_name });
     return T('review.begins.new');
   }
   function filesAt(S) {
     const d = md(S);
-    if (d.project_mode === 'existing_local') return d.project_transport === 'local' ? d.local_location : (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref;
+    if (d.project_mode === 'existing_local') return d.project_transport === 'local' ? d.local_location : O55.nas.placeLabel(S, d.project_source_ref);
     if (d.storage_mode === 'with_server') return P().serverName(S); /* (p14: "Files kept in · Garage Pi") */
-    if (d.storage_mode === 'network_location') return d.storage_location.replace(/^[a-z]+:/, '');
+    if (d.storage_mode === 'network_location') return O55.nas.placeLabel(S, d.storage_location); /* (FO-45: never the profile's locator) */
     if (d.local_location_mode === 'custom' && d.local_location) return d.local_location;
     return P().docsPath(S, d.project_name);
   }
