@@ -21,6 +21,12 @@
   const fill = (s, v) => String(s || '').replace(/\{(\w+)\}/g, (m, k) => (v && v[k] != null ? v[k] : m));
   const line = (scr, id, v) => { const t = lines(scr)[id]; return t ? fill(t, v) : ''; };
   const has = (scr, id) => !!lines(scr)[id];
+  /* the control a choice line belongs to (<action>:<value>) is the chosen one on the screen showing */
+  const chosen = (S, key) => {
+    const i = key.indexOf(':'), act = key.slice(0, i), arg = key.slice(i + 1), L = S.root && S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    const c = L && Array.from(L.querySelectorAll('[data-o55-do]')).find((n) => n.getAttribute('data-o55-do') === act && n.getAttribute('data-arg') === arg);
+    return !!c && ['aria-checked', 'aria-pressed', 'aria-selected'].some((a) => c.getAttribute(a) === 'true');
+  };
   const stg = (scr, k, v) => { const t = O55.tx('pip.stage.screens.' + scr + '.' + k); return typeof t === 'string' ? fill(t, v) : ''; };
   const P = (kind, slot, o) => Object.assign({ id: kind, kind, slot }, o || {});
   const op = (S, key) => (O55.flow && key ? O55.flow.state(S, key) : null);
@@ -181,6 +187,9 @@
     let props = [];
     try { props = sc.props(S, o.hover || null) || []; } catch (e) { props = []; }
     let lid = h || (sc.state ? sc.state(S) : 'enter');
+    /* a choice only pointed at is previewed, never said as made: hovering Bitbucket with Gitea chosen said "Bitbucket. In it
+       goes." (FO-28). Its peek: line is said until it is the chosen one; the pick line once it is */
+    if (h && h === lid && has(id, 'peek:' + h) && !chosen(S, h)) lid = 'peek:' + h;
     /* (p25: a field with a line of its own gets it: typing:<bind>) */
     if (o.typing && has(id, 'typing:' + o.typing)) lid = 'typing:' + o.typing;
     else if (o.typing && has(id, 'typing')) lid = 'typing';

@@ -1667,6 +1667,7 @@
         "pickFamily:retro": "Retro! Straight out of an old computer.",
         "pickNier": "NieR? I can do stoic.",
         "pickMode:light": "Light it is. Bright and clear.",
+        "peek:pickMode:light": "Light? Bright and clear.",
         "pickMode:dark": "Dark. Easy on the eyes.",
         "nierOff": "Back to my usual self."
       },
@@ -1686,6 +1687,7 @@
         "route:local_or_vpn": "Same network. Nice and close.",
         "route:tailscale": "Tailscale reaches it from anywhere.",
         "route:reverse_proxy": "Your own web address, then.",
+        "peek:route:reverse_proxy": "Your own web address?",
         "route:remote_link": "A Remote Link? Paste it in.",
         "typing": "Type it in. I'll go and knock."
       },
@@ -1788,9 +1790,11 @@
         "loc:auto": "In Documents. Easy to find.",
         "loc:custom": "Somewhere else? Show me where.",
         "loc:network": "On the network drive, then.",
+        "peek:loc:network": "On the network drive?",
         "storage:with_server": "Right next to the work. Smart.",
         "storage:this_device": "Kept here, worked on there.",
-        "storage:network_location": "On a shared drive. Got it."
+        "storage:network_location": "On a shared drive. Got it.",
+        "peek:storage:network_location": "On a shared drive?"
       },
       "like": {
         "enter": "Copy a Project you already trust?",
@@ -1803,10 +1807,13 @@
         "pick:github": "GitHub. Free and widely used.",
         "pick:gitlab": "GitLab. A good home for it.",
         "pick:azure_devops": "Azure DevOps, then.",
+        "peek:pick:azure_devops": "Azure DevOps?",
         "pick:bitbucket_cloud": "Bitbucket. In it goes.",
+        "peek:pick:bitbucket_cloud": "Bitbucket?",
         "pick:forgejo": "Forgejo. Where shall we find yours?",
         "pick:gitea": "Gitea. Small and tidy.",
         "pick:github_enterprise": "Your company's GitHub. Got it.",
+        "peek:pick:github_enterprise": "Your company's GitHub?",
         "typing": "Ooh, your own server's address."
       },
       "online-signin": {
@@ -1846,7 +1853,9 @@
         "backup": "A backup box. Sensible.",
         "bdest:nas": "On your home NAS. Close by.",
         "bdest:gdrive": "Google Drive. Up it goes.",
+        "peek:bdest:gdrive": "Google Drive?",
         "bdest:onedrive": "OneDrive, then.",
+        "peek:bdest:onedrive": "OneDrive?",
         "bdest:s3": "A bucket you rent. Its details come later.",
         "bdest:sftp": "Another server you can reach.",
         "bdest:none": "Not now? Later's fine.",
@@ -1855,10 +1864,12 @@
       "away": {
         "enter": "Should it answer when you're out?",
         "pick:home": "Home it is. I'll keep the lights on.",
+        "peek:pick:home": "Only at home? I'll keep the lights on.",
         "pick:anywhere": "I'll come with you. Anywhere.",
         "route:headscale": "Your own Headscale. Very handy.",
         "route:reverse_proxy": "Your own web address. Smart.",
         "route:remote_link": "A Remote Link, then.",
+        "peek:route:remote_link": "A Remote Link?",
         "typing": "Ooh, an address. Type away.",
         "pick:vpn": "Your own VPN. Tidy."
       },

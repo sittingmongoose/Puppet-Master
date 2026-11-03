@@ -107,6 +107,10 @@
       this.kick();
       this.ro = new ResizeObserver(() => this.measure());
       this.ro.observe(root);
+      /* a window resize measures again on the next frame and once the window has settled: the pane's clip can change
+         with nothing on the stage itself resizing, and a span measured mid-change let a sign keep 1024's room at 860 */
+      this.onWinResize = () => { if (this.dead) return; requestAnimationFrame(() => { if (!this.dead) this.measure(); }); clearTimeout(this.winRT); this.winRT = setTimeout(() => { if (!this.dead) this.measure(); }, 450); };
+      window.addEventListener('resize', this.onWinResize);
     }
     /* ------------------------------------------------------- building */
     build() {
@@ -181,6 +185,11 @@
       this.bubble.setAttribute('aria-hidden', 'true');
       this.bubble.innerHTML = (w.fam === 'nier' ? `<b class="pst-bn">${esc(T('bubble.name'))}</b>` : '') + '<span class="pst-bt"></span>' + (w.fam === 'nier' ? '<i class="pst-bgo" aria-hidden="true"></i>' : '');
       this.btext = this.bubble.querySelector('.pst-bt');
+      /* new words that change the bubble's size are placed before they are painted, past Retro's stepped draw: a stepped
+         stage left a grown bubble over a prop for up to a tenth of a second */
+      if (this.bubbleMO) this.bubbleMO.disconnect();
+      this.bubbleMO = new MutationObserver(() => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; this.kick(); } });
+      this.bubbleMO.observe(this.bubble, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ['class'] });
       if (this.tube === 'phosphor') div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
       if (this.tube === 'teletype') { div('pst-grain', this.screen); this.head = div('pst-printer', this.screen, '<i class="pst-bail"></i><i class="pst-platen"></i><i class="pst-head"><b></b></i>').querySelector('.pst-head'); }
       this.hudHtml();
@@ -425,9 +434,7 @@
       /* the whole prop stays inside the pane it is painted in, as it swings too: a sign with a long name hung at pairB
          crossed the pane's right edge at the divider and lost its end (SOL-AST1-01); it moves in, or is drawn smaller
          only when even that is not room enough. Its strings move with it. */
-      const fit = this.fitX(pr, hang[0], sc, tieMid); hang[0] += fit.dx; sc *= fit.f; pr.dx = fit.dx;
-      { const bb = pr.bb; if (bb && bb[2]) { const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tieMid[0]) * sc, (y - tieMid[1]) * sc], pr.a));
-        pr.box = [hang[0] + Math.min(...cs.map((c) => c[0])), hang[1] + Math.min(...cs.map((c) => c[1])), hang[0] + Math.max(...cs.map((c) => c[0])), hang[1] + Math.max(...cs.map((c) => c[1]))]; } else pr.box = null; }
+      const fit = this.fit(pr, hang, sc, tieMid); hang[0] += fit.dx; hang[1] += fit.dy; sc *= fit.f; pr.dx = fit.dx; pr.box = fit.box; pr.placedN = this.renderN;
       const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
       pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
       const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12), squash = Math.abs(sq) > .002 ? ` translate(0 ${R(pr.foot)}) scale(${R(1 + sq * .6)} ${R(1 - sq)}) translate(0 ${R(-pr.foot)})` : '';
@@ -444,22 +451,69 @@
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
       });
     }
-    /* how far a prop must move (dx) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
-       (this.vis, from measure), with a margin */
-    fitX(pr, hx, sc, tm) {
+    /* how far a prop must move (dx, dy) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
+       (this.vis, from measure) with a margin, and off a speech box that cannot move out of its way (this.keepOff: NieR's
+       fixed box, or a bubble that found no clear place); box is where it is then painted */
+    fit(pr, hang, sc, tm) {
       const v = this.vis; let bb = pr.bb;
-      if (!v) return { dx: 0, f: 1 };
-      if (!bb || !bb[2]) { bb = pr.bb = this.boxOf(pr.el); if (!bb || !bb[2]) return { dx: 0, f: 1 }; }
-      const xs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], pr.a)[0]);
-      let lo = Math.min(...xs), hi = Math.max(...xs), f = 1;
-      const pad = 8, room = v.x1 - v.x0 - pad * 2;
-      if (hi - lo > room && room > 0) { f = room / (hi - lo); lo *= f; hi *= f; }
-      let dx = 0;
+      if (!v) return { dx: 0, dy: 0, f: 1, box: null };
+      if (!bb || !bb[2]) { bb = pr.bb = this.boxOf(pr.el); if (!bb || !bb[2]) return { dx: 0, dy: 0, f: 1, box: null }; }
+      const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], pr.a));
+      let lo = Math.min(...cs.map((c) => c[0])), hi = Math.max(...cs.map((c) => c[0])), tp = Math.min(...cs.map((c) => c[1])), bt = Math.max(...cs.map((c) => c[1])), f = 1;
+      const pad = 8, room = v.x1 - v.x0 - pad * 2, hx = hang[0], hy = hang[1];
+      if (hi - lo > room && room > 0) { f = room / (hi - lo); lo *= f; hi *= f; tp *= f; bt *= f; }
+      let dx = 0, dy = 0;
       if (hx + hi > v.x1 - pad) dx = v.x1 - pad - (hx + hi);
       if (hx + lo + dx < v.x0 + pad) dx = v.x0 + pad - (hx + lo);
-      return { dx, f };
+      /* (up and down too, for a prop at rest: one coming in or going out passes the top edge on its strings, and Creating's
+         blocks stand on the floor) */
+      const rest = pr.state !== 'out' && pr.spec.stack == null;
+      if (rest) {
+        if (hy + bt > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
+        if (pr.op > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
+        /* off what it must not touch: a speech box that cannot move (keepOff) and the props already placed this frame
+           (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
+           inside the pane, and is drawn a little smaller only when no way does */
+        const obs = []; if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
+        const L0 = lo, H0 = hi, T0 = tp, B0 = bt, f0 = f; let g = 1;
+        for (let it = 0; it < 6 && obs.length; it++) {
+          const X0 = hx + lo + dx, X1 = hx + hi + dx, Y0 = hy + tp + dy, Y1 = hy + bt + dy;
+          const hit = (ax, ay) => obs.find((o) => X0 + ax < o[2] && X1 + ax > o[0] && Y0 + ay < o[3] && Y1 + ay > o[1]);
+          const o = hit(0, 0); if (!o) break;
+          const inside = (ax, ay) => X0 + ax >= v.x0 + pad - .5 && X1 + ax <= v.x1 - pad + .5 && Y0 + ay >= v.y0 + pad - .5 && Y1 + ay <= v.y1 - pad + .5;
+          const c = [[0, o[3] - Y0], [0, o[1] - Y1], [o[0] - X1, 0], [o[2] - X0, 0], [o[0] - X1, o[3] - Y0], [o[2] - X0, o[3] - Y0], [o[0] - X1, o[1] - Y1], [o[2] - X0, o[1] - Y1]]
+            .filter(([ax, ay]) => inside(ax, ay) && !hit(ax, ay)).sort((p, q) => Math.hypot(p[0], p[1]) - Math.hypot(q[0], q[1]));
+          if (c.length) { dx += c[0][0]; dy += c[0][1]; break; }
+          if (g <= .66) break;
+          g *= .9; f = f0 * g; lo = L0 * g; hi = H0 * g; tp = T0 * g; bt = B0 * g;
+        }
+      }
+      return { dx, dy, f, box: [hx + lo + dx, hy + tp + dy, hx + hi + dx, hy + bt + dy] };
+    }
+    /* Creating's and Protect's stack of blocks stands on the lowest floor a person can see, and is drawn closer and
+       smaller when it would rise past the pane's top or into a speech box that cannot move (Retro's tube crops the floor
+       at a narrow window; NieR's box sits over the column): its blocks were cut at the bottom, or under NieR's words */
+    stackFit() {
+      const Lay = this.L, [x, base, step] = Lay.stack, v = this.vis;
+      if (!v) return { base, step, f: 1 };
+      const pad = 8, half = 34 * Lay.propScale, o = this.keepOff;
+      let bottom = Math.min(base, v.y1 - pad), top = v.y0 + pad;
+      if (o && o[0] < x + half && o[2] > x - half) { if ((o[1] + o[3]) / 2 > (top + bottom) / 2) bottom = Math.min(bottom, o[1] - 4); else top = Math.max(top, o[3] + 4); }
+      let n = 0; this.props.forEach((p) => { if (p.spec.stack != null && p.state !== 'out') n = Math.max(n, p.spec.stack + 1); });
+      const need = Math.max(1, n) * step + 22 * Lay.propScale, room = bottom - top;
+      const f = need > room && room > 0 ? Math.max(.45, room / need) : 1;
+      return { base: bottom, step: step * f, f };
     }
     boxOf(g) { try { const b = g.getBBox(); return [b.x, b.y, b.width, b.height]; } catch (e) { return null; } }
+    boxInScene(el, gap) {
+      if (!el || !el.classList.contains('on') || !(el.textContent || '').trim() || !this.map || !this.screen) return null;
+      const r0 = this.screen.getBoundingClientRect(), c = el.getBoundingClientRect(), sx = r0.width / (this.screen.offsetWidth || r0.width || 1), m = this.map;
+      if (!c.width || !c.height) return null;
+      const u = (px, py) => [((px - r0.left) / sx - m.ox) / m.k, ((py - r0.top) / sx - m.oy) / m.k];
+      const a = u(c.left, c.top), z = u(c.right, c.bottom), g = (gap || 0) / m.k;
+      return [a[0] - g, a[1] - g, z[0] + g, z[1] + g];
+    }
     drawProp(pr) {
       const key = JSON.stringify(pr.spec.params || {}) + '|' + pr.spec.kind;
       if (key === pr.key) return;
@@ -478,11 +532,11 @@
     slotXY(spec) {
       if (spec.at) return spec.at;
       const Lay = this.L;
-      if (spec.stack != null) { const [x, base, step] = Lay.stack; return [x + [-3, 4, -2, 3, 0, -3][spec.stack % 6] * Lay.propScale, base - spec.stack * step - 22 * Lay.propScale]; }
+      if (spec.stack != null) { const [x] = Lay.stack, sf = this.stackFit(); return [x + [-3, 4, -2, 3, 0, -3][spec.stack % 6] * Lay.propScale, sf.base - spec.stack * sf.step - 22 * Lay.propScale * sf.f]; }
       return Lay.slots[spec.slot] || Lay.slots.side;
     }
     propTarget(pr) {
-      const Lay = this.L, [x, y0] = this.slotXY(pr.spec), sc = (pr.spec.scale || 1) * Lay.propScale;
+      const Lay = this.L, [x, y0] = this.slotXY(pr.spec), sc = (pr.spec.scale || 1) * Lay.propScale * (pr.spec.stack != null ? this.stackFit().f : 1);
       const tieY = pr.ties.reduce((m, t) => Math.min(m, t[1]), 0);
       /* a prop at rest hangs whole above the floor, never sunk into it or cut by the stage's edge (Muse m3: the server on
          Where is the backup? sat in the floor line); Creating's blocks stack on the floor by design */
@@ -693,13 +747,19 @@
       this.map = { k, ox: (r.width - Lay.w * k) / 2, oy: (r.height - Lay.h * k) / 2 };
       /* the part of the scene a person can see, in its own units: the screen box, cut by every box that clips it up to
          the stage (the pane's divider, Retro's tube); a sliced tube's sides are off screen too */
-      const sx = r0.width / (w || 1); let vl = 0, vr = w;
+      const sx = r0.width / (w || 1); let vl = 0, vr = w, vt = 0, vb = h;
       for (let e = this.screen; e; e = e.parentElement) {
-        if (e !== this.screen && /hidden|clip/.test(getComputedStyle(e).overflowX)) { const c = e.getBoundingClientRect(); vl = Math.max(vl, (c.left - r0.left) / sx); vr = Math.min(vr, (c.right - r0.left) / sx); }
-        if (e.classList && e.classList.contains('o55-stage')) break;
+        if (e !== this.screen) {
+          const cs = getComputedStyle(e), c = (/hidden|clip|auto|scroll/.test(cs.overflowX + cs.overflowY)) ? e.getBoundingClientRect() : null;
+          if (c && /hidden|clip|auto|scroll/.test(cs.overflowX)) { vl = Math.max(vl, (c.left - r0.left) / sx); vr = Math.min(vr, (c.right - r0.left) / sx); }
+          if (c && /hidden|clip|auto|scroll/.test(cs.overflowY)) { vt = Math.max(vt, (c.top - r0.top) / sx); vb = Math.min(vb, (c.bottom - r0.top) / sx); }
+        }
       }
-      this.vis = k > 0 && vr > vl ? { x0: (vl - this.map.ox) / k, x1: (vr - this.map.ox) / k } : null;
-      this.dirty = true; if (this.raf === 0 && this.kick) this.kick(); /* (a resize redraws the props in their new room) */
+      /* (and the viewport: a short window can scroll the stage partly out of view) */
+      vl = Math.max(vl, -r0.left / sx); vr = Math.min(vr, (window.innerWidth - r0.left) / sx); vt = Math.max(vt, -r0.top / sx); vb = Math.min(vb, (window.innerHeight - r0.top) / sx);
+      this.vis = k > 0 && vr > vl && vb > vt ? { x0: (vl - this.map.ox) / k, x1: (vr - this.map.ox) / k, y0: (vt - this.map.oy) / k, y1: (vb - this.map.oy) / k } : null;
+      this.nierBox = null;
+      this.dirty = true; this.frameT = -1e9; if (this.svg && this.kick) this.kick(); /* (a resize redraws the props in their new room, at once: past Retro's stepped gate too) */
       this.headTo();
     }
     toScreen(p) { const m = this.map || { k: 1, ox: 0, oy: 0 }; return [m.ox + p[0] * m.k, m.oy + p[1] * m.k]; }
@@ -714,7 +774,6 @@
       if (!this.live()) { this.park(); return; }
       if (this.remeasureAt && tn > this.remeasureAt) { this.remeasureAt = 0; this.measure(); }
       if (this.still() && !this.dirty && this.t > this.moodUntil + .3 && !this.fx.length && !this.faceOut && this.faceT0 == null) return;
-      this.dirty = false;
       this.raf = requestAnimationFrame(this.loop);
       this.t += dt;
       const sub = 3; for (let i = 0; i < sub; i++) this.step(dt / sub);
@@ -724,6 +783,9 @@
       /* (on a steady cadence: each draw is due one step after the last was due, so a frame that comes a little late
          does not push every later draw back; Retro Light then draws ten times a second, Retro Dark twenty) */
       if (fps && !this.reduced) { const step = 1 / fps; if (this.t - this.frameT < step - 0.006) return; this.frameT = this.t - this.frameT > 2 * step ? this.t : this.frameT + step; }
+      /* (a change is drawn only once a frame is: cleared before Retro's stepped gate, a still stage that skipped one never
+         drew it, and a sign kept 1024's place at 860 after a resize) */
+      this.dirty = false;
       this.render();
     }
     // how often the stage is drawn: every frame, but Retro in steps (Retro Light, paper, at half Retro Dark's rate,
@@ -749,7 +811,10 @@
     }
     step(dt) {
       /* (Pip parts: sway-and-physics off holds the rig and the props still, as Reduced Motion does) */
-      const ps = this.ps, F = this.fam, Lay = this.L, red = this.reduced || !H.part('sway-and-physics');
+      /* (a still stage draws only when something changed, so on a low-resource computer its props take their places at once,
+         as under Reduced Motion: moving there by physics, they stopped after one frame, an outgoing folder prop beside Pip
+         and the incoming name's sign half-way in, after a long run of Backs, B-A2-G-1) */
+      const ps = this.ps, F = this.fam, Lay = this.L, red = this.reduced || !!O55.motion.lowResource || !H.part('sway-and-physics');
       // the hand: springs to its spot, with a slow idle drift that keeps Pip alive
       const swayX = red ? 0 : F.sway * Math.sin(this.t * F.swayW) * (ps.asleep ? .2 : 1);
       const swayY = red || !F.bob ? 0 : F.bob * .6 * Math.sin(this.t * F.swayW * 1.7);
@@ -866,6 +931,11 @@
         this.blinkEl.setAttribute('transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
       }
       // props
+      /* (NieR's box is fixed: its band is kept clear from when it is first seen, also while it is silent, so a stack
+         that lands before it talks is already below it) */
+      if (f === 'nier') { const nb = this.boxInScene(this.bubble, 6); if (nb) this.nierBox = nb; }
+      this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
+      this.renderN = (this.renderN || 0) + 1;
       this.props.forEach((pr) => this.placeProp(pr));
       // particles
       this.fx.forEach((p) => {
@@ -931,17 +1001,54 @@
       const bw = this.bubble.offsetWidth || 160, bh = this.bubble.offsetHeight || 34, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
       const pad = this.tube ? 14 : 8, top = this.tube ? (tall ? 44 : 34) : 8, foot = this.tube === 'teletype' ? (tall ? 70 : 48) : this.tube ? (tall ? 44 : 34) : 8;
       let x = clamp(sp[0] + (tall ? -bw * .3 : 6), pad, bx - bw - pad), y = clamp(tall ? sp[1] - bh - 22 : sp[1] - bh / 2, top, by - bh - foot);
-      /* the bubble never covers a prop (FO26: on Name it covered the left of the name's sign): it moves to the nearest side
-         that clears every prop shown, inside the pane; its tail still points at Pip */
-      const gap = 6, obs = [];
+      /* the bubble covers no prop and never Pip's face (FO26: the name's sign on Name; RDA-01: Pip's eyes on Review). Where
+         its usual place is taken it moves to the nearest clear place inside the pane, and keeps that side while it stays
+         clear, so new words never send it across Pip; if nowhere is clear it still keeps off the face, and the props
+         make way for it (keepOff). Its tail still points at Pip. */
+      const gap = 6, obs = [], hx0 = head[0], hy0 = head[1];
+      const fc = [[12, 32], [52, 32], [12, 58], [52, 58]].map((q) => this.toScreen(this.headXf(q, H, ang, 1, 1)));
+      const face = [Math.min(...fc.map((c) => c[0])) - gap, Math.min(...fc.map((c) => c[1])) - gap, Math.max(...fc.map((c) => c[0])) + gap, Math.max(...fc.map((c) => c[1])) + gap];
+      /* (its tail too: about 12 px below the bubble when it points down, left of it when it points left) */
+      if (tall) face[1] -= 12; else face[2] += 12;
       this.props.forEach((pr) => { if (pr.box && pr.op > .05 && pr.state !== 'out') { const a = this.toScreen([pr.box[0], pr.box[1]]), c = this.toScreen([pr.box[2], pr.box[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
-      const hits = (bx0, by0) => obs.some((o) => bx0 < o[2] && bx0 + bw > o[0] && by0 < o[3] && by0 + bh > o[1]);
-      if (obs.length && hits(x, y)) {
+      const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
+      const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
+      const fx = (face[0] + face[2]) / 2, sideOf = (cx) => (cx + bw / 2 < fx ? 'L' : 'R');
+      const over = (cx, cy, o) => cx < o[2] && cx + bw > o[0] && cy < o[3] && cy + bh > o[1];
+      const fits = (cx, cy) => cx >= X0 - .5 && cx <= X1 + .5 && cy >= Y0 - .5 && cy <= Y1 + .5;
+      const clear = (cx, cy) => fits(cx, cy) && !over(cx, cy, face) && !obs.some((o) => over(cx, cy, o));
+      /* (a place on Pip's other side counts as far: new words never send the bubble across Pip, it goes above instead) */
+      const cost = ([cx, cy]) => Math.hypot(cx - x, cy - y) + (this.bubbleSide && sideOf(cx) !== this.bubbleSide && !(cy + bh <= face[1]) ? 400 : 0);
+      const near = (list) => list.filter(([cx, cy]) => clear(cx, cy)).sort((p, q) => cost(p) - cost(q))[0];
+      const prev = this.bubbleRel ? [hx0 + this.bubbleRel[0], hy0 + this.bubbleRel[1]] : null;
+      let at = null;
+      if (prev && clear(prev[0], prev[1]) && this.t - (this.bubbleRelT || 0) < 2.5) at = prev; /* (the side it moved to, while it stays clear) */
+      else if (clear(x, y) && !(this.bubbleSide && sideOf(x) !== this.bubbleSide && y + bh > face[1])) at = [x, y];
+      else {
         const cand = [];
-        obs.forEach((o) => { cand.push([o[0] - bw, y], [o[2], y], [x, o[1] - bh], [x, o[3]]); });
-        const ok = cand.filter(([cx, cy]) => cx >= pad && cx <= bx - bw - pad && cy >= top && cy <= by - bh - foot && !hits(cx, cy));
-        if (ok.length) { ok.sort((p, q) => Math.hypot(p[0] - x, p[1] - y) - Math.hypot(q[0] - x, q[1] - y)); [x, y] = ok[0]; }
+        [face].concat(obs).forEach((o) => { cand.push([o[0] - bw, y], [o[2], y], [x, o[1] - bh], [x, o[3]], [o[0] - bw, o[1] - bh], [o[2], o[1] - bh], [o[0] - bw, o[3]], [o[2], o[3]]); });
+        cand.push([X0, Y0], [X1, Y0], [X0, Y1], [X1, Y1]);
+        at = near(cand.map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]));
       }
+      const talking = this.bubble.classList.contains('on') && !!(this.bubble.textContent || '').trim();
+      const claimed = this.bubbleClaim && talking && at && Math.abs(at[0] - this.bubbleClaim[0]) < 10 && Math.abs(at[1] - this.bubbleClaim[1]) < 10;
+      if (!claimed) this.bubbleKeepOff = null;
+      if (!at) {
+        /* nowhere clear: off Pip's face at least, nearest its usual place; the props keep off it next frame */
+        const cand = [[x, y], [x, face[1] - bh], [x, face[3]], [face[0] - bw, y], [face[2], y], [X0, Y0], [X1, Y0]].map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]).filter(([cx, cy]) => !over(cx, cy, face));
+        at = cand.sort((p, q) => Math.hypot(p[0] - x, p[1] - y) - Math.hypot(q[0] - x, q[1] - y))[0] || [x, y];
+        this.bubbleClaim = talking ? at.slice() : null;
+      }
+      /* (the place it claimed is kept while it stays there and talks: the props stay off it, instead of coming back under it
+         as soon as their moving away has made its usual place clear, and going again the next frame) */
+      if ((!claimed && this.bubbleClaim && at && !(Math.abs(at[0] - this.bubbleClaim[0]) < 10 && Math.abs(at[1] - this.bubbleClaim[1]) < 10)) || !talking) this.bubbleClaim = null;
+      if (this.bubbleClaim) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(at[0] - gap, at[1] - gap), a1 = u(at[0] + bw + gap, at[1] + bh + gap); this.bubbleKeepOff = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleKeepOff = null;
+      /* (a new claim moves the props off it in this same frame, before it is painted: on a stepped stage the props learnt of
+         it a step later and sat under it for a tenth of a second) */
+      if (this.bubbleKeepOff && !claimed) { this.keepOff = this.bubbleKeepOff; this.renderN = (this.renderN || 0) + 1; this.props.forEach((pr) => this.placeProp(pr)); }
+      if (at[0] !== x || at[1] !== y) { if (!this.bubbleRel || at !== prev) this.bubbleRelT = this.t; this.bubbleRel = [at[0] - hx0, at[1] - hy0]; } else this.bubbleRel = null;
+      [x, y] = at;
+      this.bubbleSide = talking ? sideOf(x) : null;
       this.bubble.style.transform = `translate(${R(x)}px, ${R(y)}px)`;
       this.bubble.dataset.side = tall ? 'down' : 'left';
       this.bubble.style.setProperty('--tx', R(clamp(head[0] - x, 16, bw - 16)) + 'px');
@@ -984,7 +1091,7 @@
       };
       flip();
     }
-    destroy() { if (this.off) this.off(); clearTimeout(this.questT); cancelAnimationFrame(this.raf); clearTimeout(this.parkT); this.dead = true; this.ro.disconnect(); clearTimeout(this.wakeT); [this.tipW, this.typeT, this.decT, this.cmdT, this.bootT].forEach((w) => w && w.cancel()); this.root.innerHTML = ''; }
+    destroy() { if (this.off) this.off(); clearTimeout(this.questT); cancelAnimationFrame(this.raf); clearTimeout(this.parkT); clearTimeout(this.holdT); this.dead = true; this.ro.disconnect(); window.removeEventListener('resize', this.onWinResize); clearTimeout(this.winRT); if (this.bubbleMO) this.bubbleMO.disconnect(); clearTimeout(this.wakeT); [this.tipW, this.typeT, this.decT, this.cmdT, this.bootT].forEach((w) => w && w.cancel()); this.root.innerHTML = ''; }
 
     /* ------------------------------------------------------------- the product's own */
     /* Pip parts the stage's CSS reads: setup-world-life off holds the world's own loops (clouds, caustics, motes, the
@@ -995,7 +1102,7 @@
       this.dirty = true; this.kick();
     }
     // whether the loop runs: the window open and shown, the page visible, no drag under way, the stage on the page
-    live() { return !this.dead && this.active && !this.held && !document.hidden && this.root.isConnected && !document.body.classList.contains('pm-resizing'); }
+    live() { if (this.held && this.heldAt && now() - this.heldAt > 3) { this.held = false; this.heldAt = 0; } return !this.dead && this.active && !this.held && !document.hidden && this.root.isConnected && !document.body.classList.contains('pm-resizing'); }
     // a stage that draws only what changed: Reduced Motion (nothing swings, travels, flickers or trails) and a computer
     // in low-resource mode
     still() { return this.reduced || !!O55.motion.lowResource; }
@@ -1015,7 +1122,10 @@
     // how many blocks rest on the stack (Creating's Continue waits for the last one, O12 B)
     blocksLanded() { let n = 0; this.props.forEach((pr) => { if (pr.spec.ground && pr.state !== 'out' && pr.landed) n++; }); return n; }
     // a screen change the window holds back a frame (60-ui-core.js transition): the scene waits with it
-    hold(on) { this.held = !!on; if (!on) this.kick(); }
+    /* (a hold is for a screen change, a frame or a skin's bow, never longer: after a long run of Backs the last change's
+       release never came, and the stage stood still mid-exchange, the old folder prop beside Pip and the name's sign
+       half-way in under the header (B-A2-G-1); a hold that outlasts any change lets go by itself) */
+    hold(on) { this.held = !!on; this.heldAt = on ? now() : 0; if (!on) this.kick(); else { clearTimeout(this.holdT); this.holdT = setTimeout(() => { if (this.held && now() - this.heldAt >= 2.9) this.hold(false); }, 3000); } }
     release() { this.hold(false); }
     // a letter lands on the sign (Name): it swings a little, alternately left and right (Reduced Motion: still)
     poke(id, o) { this.busy(); const pr = id && this.props.get(id); if (!pr || this.reduced) return; pr.av += (o.dir || 1) * this.fam.kick * 0.35 * (o.amp || 1); this.kick(); }
