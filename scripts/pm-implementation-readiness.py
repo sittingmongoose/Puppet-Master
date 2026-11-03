@@ -777,16 +777,22 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # home_named_layouts:v1) adds one deferred_not_build_blocking later_gui_or_feature_projection family, deferred
 # until the widget-layout envelope has a physical value schema. Retention policies and critical/MVP memberships
 # are unchanged.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 301
+# Re-pinned 2026-11-03 for the projects/settings refresh (SP-337..SP-349; DL-280..DL-299, Jared's no-project
+# rulings in DL-292): 41 materialized families are added, none removed or re-tiered. 33 are app-scope
+# (*_application) counterparts of existing Project families under SP-345's app-data root and keep their
+# counterpart's tier (29 tier_0_launch_critical, 4 later_gui_or_feature_projection); 8 are new settings,
+# chat-move, build-grant, created-resource, pause and approval records (6 tier_0_launch_critical, 2 later).
+# App families carry no Project-keyed legacy aliases (SP-349). Retention policies are unchanged.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 342
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 277,
+    "materialized": 318,
     "deferred_not_build_blocking": 23,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
-    "tier_0_launch_critical": 40,
-    "later_gui_or_feature_projection": 251,
+    "tier_0_launch_critical": 75,
+    "later_gui_or_feature_projection": 257,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [

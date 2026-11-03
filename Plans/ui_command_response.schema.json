@@ -230,133 +230,22 @@
     },
     "OwnerSchemaRef": {
       "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef"
-    },
-    "ApplicationCommandResponseV1": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_id",
-        "schema_version",
-        "scope",
-        "storage_instance_id",
-        "thread_id",
-        "owner_object_ref",
-        "owner_revision",
-        "owner_sha256",
-        "source_evidence",
-        "read_checkpoint_ref",
-        "source_host_ref",
-        "return_context_ref"
-      ],
-      "properties": {
-        "schema_id": {
-          "const": "pm.application_command_response.v1"
-        },
-        "schema_version": {
-          "const": "1.0.0"
-        },
-        "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
-        },
-        "storage_instance_id": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "thread_id": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "owner_object_ref": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "owner_revision": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "owner_sha256": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
-        },
-        "source_evidence": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
-        },
-        "read_checkpoint_ref": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "source_host_ref": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "return_context_ref": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        }
-      }
     }
   },
   "allOf": [
     {
-      "if": {
-        "properties": {
-          "command_id": {
-            "type": "null"
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "response_kind": {
-            "const": "pre_dispatch_rejection"
-          },
-          "error": {
-            "type": "object",
-            "properties": {
-              "code": {
-                "const": "unknown_command"
-              }
-            }
-          }
-        }
-      }
+      "if": {"properties": {"command_id": {"type": "null"}}},
+      "then": {"properties": {
+        "response_kind": {"const": "pre_dispatch_rejection"},
+        "error": {"type": "object", "properties": {"code": {"const": "unknown_command"}}}
+      }}
     },
     {
-      "if": {
-        "properties": {
-          "error": {
-            "type": "object",
-            "properties": {
-              "code": {
-                "const": "unknown_command"
-              }
-            }
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "command_id": {
-            "type": "null"
-          },
-          "response_kind": {
-            "const": "pre_dispatch_rejection"
-          }
-        }
-      }
+      "if": {"properties": {"error": {"type": "object", "properties": {"code": {"const": "unknown_command"}}}}},
+      "then": {"properties": {
+        "command_id": {"type": "null"},
+        "response_kind": {"const": "pre_dispatch_rejection"}
+      }}
     },
     {
       "if": {

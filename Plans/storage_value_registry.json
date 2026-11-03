@@ -118484,16 +118484,10 @@
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
       "migration": "Explicit new application family; Project resource/key/hash unchanged.",
       "migration_disposition": {
-        "mode": "coordinator_copy_forward",
+        "mode": "current_schema",
         "canonical_write_key_only": true,
         "compatibility_keys_read_only": true,
         "ambiguity_policy": "fail_closed",
-        "alias_dispositions": [
-          {
-            "key_shape": "restore_point_record.v1:{project_id}:{restore_point_id}",
-            "disposition": "coordinator_copy_forward"
-          }
-        ],
         "source_refs": [
           "Plans/storage-plan.md#SP-349"
         ]
@@ -118601,20 +118595,10 @@
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
       "migration": "Explicit new application family; Project resource/key/hash unchanged.",
       "migration_disposition": {
-        "mode": "compatibility_read_only",
+        "mode": "current_schema",
         "canonical_write_key_only": true,
         "compatibility_keys_read_only": true,
         "ambiguity_policy": "fail_closed",
-        "alias_dispositions": [
-          {
-            "key_shape": "home_workspace_layout:v1:{project_id}:{workspace_tab_id}",
-            "disposition": "coordinator_copy_forward"
-          },
-          {
-            "key_shape": "pm.home_workspace_layout:v1:{project_id}:{workspace_tab_id}",
-            "disposition": "coordinator_copy_forward"
-          }
-        ],
         "source_refs": [
           "Plans/storage-plan.md#SP-349"
         ]
