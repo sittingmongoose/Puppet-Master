@@ -221,7 +221,7 @@
             "uniqueItems": true
           },
           "layering": {
-            "$ref": "https://puppetmaster.local/Plans/settings_inventory.schema.json#/$defs/layering"
+            "$ref": "#/$defs/layering"
           }
         },
         "additionalProperties": false
