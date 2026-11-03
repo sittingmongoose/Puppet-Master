@@ -1,0 +1,51 @@
+{
+  "schema_id": "pm.goal_runtime.application_scope_contract_cases.v1",
+  "schema_version": "1.0.0",
+  "evidence_level": "schema_fixture_only",
+  "native_runtime_executed": false,
+  "source_pin": "41d8119aec71789de7422018ea9c167e6c60a156",
+  "cases": [
+    {
+      "case_id": "app_goal_body_null_project",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalRecordApplicationV1",
+      "record": {
+        "goal_id": "goal-a",
+        "project_id": null,
+        "thread_id": "thread-a",
+        "objective_text": "Build a local tool in the admitted chat folder.",
+        "revision": 1,
+        "state": "active",
+        "blocked_reason_ref": null,
+        "active_run_ref": null,
+        "created_at": "2026-11-03T00:00:00Z",
+        "updated_at": "2026-11-03T00:00:00Z",
+        "currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_expectation": "native_unavailable_until_source_adoption"
+    },
+    {
+      "case_id": "app_goal_update_cannot_rebind",
+      "before": {
+        "project_id": null,
+        "thread_id": "thread-a",
+        "goal_id": "goal-a"
+      },
+      "after": {
+        "project_id": "project-a",
+        "thread_id": "thread-a",
+        "goal_id": "goal-a"
+      },
+      "expected": "refuse_immutable_binding"
+    },
+    {
+      "case_id": "retired_goal_lifecycle_stays_historical",
+      "event_types": [
+        "goal.scheduled",
+        "goal.degraded",
+        "goal.child_status_changed"
+      ],
+      "expected": "no_active_app_writer"
+    }
+  ]
+}

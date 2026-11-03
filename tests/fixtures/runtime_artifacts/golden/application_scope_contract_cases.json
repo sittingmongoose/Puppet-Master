@@ -1,0 +1,33 @@
+{
+  "schema_id": "pm.runtime_artifacts.application_scope_contract_cases.v1",
+  "schema_version": "1.0.0",
+  "evidence_level": "schema_fixture_only",
+  "native_runtime_executed": false,
+  "source_pin": "41d8119aec71789de7422018ea9c167e6c60a156",
+  "cases": [
+    {
+      "case_id": "app_restore_shared_cap",
+      "server_id": "server-a",
+      "thread_ids": [
+        "thread-a",
+        "thread-b"
+      ],
+      "existing_records": 2048,
+      "reference_released": false,
+      "retention_seconds": 7776000,
+      "expected": "refuse_until_eligible_release_no_per_thread_bucket"
+    },
+    {
+      "case_id": "app_restore_hold_after_chat_undo",
+      "move_undo_expired": true,
+      "canonical_owner_hold": true,
+      "expected": "keep_canonical_source_and_payloads"
+    },
+    {
+      "case_id": "computer_use_frame_transient",
+      "source": "computer_use",
+      "raw_frame_in_history": true,
+      "expected": "refuse_persistence"
+    }
+  ]
+}
