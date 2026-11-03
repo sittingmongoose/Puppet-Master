@@ -419,9 +419,15 @@
        before it is placed) */
     placeProp(pr) {
       const Lay = this.L;
-      const tg = this.propTarget(pr), sc = tg.sc * (pr.scale / (pr.spec.scale || 1));
+      const tg = this.propTarget(pr); let sc = tg.sc * (pr.scale / (pr.spec.scale || 1));
       const tieMid = [pr.ties.reduce((m, t) => m + t[0], 0) / pr.ties.length, tg.tieY];
       const hang = [pr.ax + Math.sin(pr.a) * Math.max(0, pr.len), Lay.anchorY + Math.cos(pr.a) * Math.max(0, pr.len)];
+      /* the whole prop stays inside the pane it is painted in, as it swings too: a sign with a long name hung at pairB
+         crossed the pane's right edge at the divider and lost its end (SOL-AST1-01); it moves in, or is drawn smaller
+         only when even that is not room enough. Its strings move with it. */
+      const fit = this.fitX(pr, hang[0], sc, tieMid); hang[0] += fit.dx; sc *= fit.f; pr.dx = fit.dx;
+      { const bb = pr.bb; if (bb && bb[2]) { const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tieMid[0]) * sc, (y - tieMid[1]) * sc], pr.a));
+        pr.box = [hang[0] + Math.min(...cs.map((c) => c[0])), hang[1] + Math.min(...cs.map((c) => c[1])), hang[0] + Math.max(...cs.map((c) => c[0])), hang[1] + Math.max(...cs.map((c) => c[1]))]; } else pr.box = null; }
       const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
       pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
       const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12), squash = Math.abs(sq) > .002 ? ` translate(0 ${R(pr.foot)}) scale(${R(1 + sq * .6)} ${R(1 - sq)}) translate(0 ${R(-pr.foot)})` : '';
@@ -432,19 +438,35 @@
       const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
       pr.ties.forEach((t, i) => {
         const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
-        const top = [pr.ax + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
+        const top = [pr.ax + (pr.dx || 0) + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
         pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
         pr.strs[i].setAttribute('opacity', R(strOp));
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
       });
     }
+    /* how far a prop must move (dx) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
+       (this.vis, from measure), with a margin */
+    fitX(pr, hx, sc, tm) {
+      const v = this.vis; let bb = pr.bb;
+      if (!v) return { dx: 0, f: 1 };
+      if (!bb || !bb[2]) { bb = pr.bb = this.boxOf(pr.el); if (!bb || !bb[2]) return { dx: 0, f: 1 }; }
+      const xs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], pr.a)[0]);
+      let lo = Math.min(...xs), hi = Math.max(...xs), f = 1;
+      const pad = 8, room = v.x1 - v.x0 - pad * 2;
+      if (hi - lo > room && room > 0) { f = room / (hi - lo); lo *= f; hi *= f; }
+      let dx = 0;
+      if (hx + hi > v.x1 - pad) dx = v.x1 - pad - (hx + hi);
+      if (hx + lo + dx < v.x0 + pad) dx = v.x0 + pad - (hx + lo);
+      return { dx, f };
+    }
+    boxOf(g) { try { const b = g.getBBox(); return [b.x, b.y, b.width, b.height]; } catch (e) { return null; } }
     drawProp(pr) {
       const key = JSON.stringify(pr.spec.params || {}) + '|' + pr.spec.kind;
       if (key === pr.key) return;
       pr.key = key;
       const d = PW.PROPS[pr.spec.kind](this.pen, pr.spec.params || {});
       pr.el.innerHTML = d.svg;
-      pr.ties = d.ties; pr.foot = d.foot;
+      pr.ties = d.ties; pr.foot = d.foot; pr.bb = this.boxOf(pr.el);
       const n = d.ties.length;
       while (pr.strs.length < n) pr.strs.push(el('path', { class: 'pst-pstrl', fill: 'none', opacity: '0' }, this.gPropStr));
       while (pr.strs.length > n) pr.strs.pop().remove();
@@ -669,6 +691,15 @@
       const r = this.box = { left: r0.left + (r0.width - w) / 2, top: r0.top + (r0.height - h) / 2, width: w, height: h, right: r0.left + (r0.width + w) / 2, bottom: r0.top + (r0.height + h) / 2 };
       const k = this.tube ? Math.max(r.width / Lay.w, r.height / Lay.h) : Math.min(r.width / Lay.w, r.height / Lay.h);
       this.map = { k, ox: (r.width - Lay.w * k) / 2, oy: (r.height - Lay.h * k) / 2 };
+      /* the part of the scene a person can see, in its own units: the screen box, cut by every box that clips it up to
+         the stage (the pane's divider, Retro's tube); a sliced tube's sides are off screen too */
+      const sx = r0.width / (w || 1); let vl = 0, vr = w;
+      for (let e = this.screen; e; e = e.parentElement) {
+        if (e !== this.screen && /hidden|clip/.test(getComputedStyle(e).overflowX)) { const c = e.getBoundingClientRect(); vl = Math.max(vl, (c.left - r0.left) / sx); vr = Math.min(vr, (c.right - r0.left) / sx); }
+        if (e.classList && e.classList.contains('o55-stage')) break;
+      }
+      this.vis = k > 0 && vr > vl ? { x0: (vl - this.map.ox) / k, x1: (vr - this.map.ox) / k } : null;
+      this.dirty = true; if (this.raf === 0 && this.kick) this.kick(); /* (a resize redraws the props in their new room) */
       this.headTo();
     }
     toScreen(p) { const m = this.map || { k: 1, ox: 0, oy: 0 }; return [m.ox + p[0] * m.k, m.oy + p[1] * m.k]; }
@@ -899,7 +930,18 @@
       const sp = this.toScreen(this.headXf(tall ? [44, 30] : [58, 44], H, ang, 1, 1));
       const bw = this.bubble.offsetWidth || 160, bh = this.bubble.offsetHeight || 34, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
       const pad = this.tube ? 14 : 8, top = this.tube ? (tall ? 44 : 34) : 8, foot = this.tube === 'teletype' ? (tall ? 70 : 48) : this.tube ? (tall ? 44 : 34) : 8;
-      const x = clamp(sp[0] + (tall ? -bw * .3 : 6), pad, bx - bw - pad), y = clamp(tall ? sp[1] - bh - 22 : sp[1] - bh / 2, top, by - bh - foot);
+      let x = clamp(sp[0] + (tall ? -bw * .3 : 6), pad, bx - bw - pad), y = clamp(tall ? sp[1] - bh - 22 : sp[1] - bh / 2, top, by - bh - foot);
+      /* the bubble never covers a prop (FO26: on Name it covered the left of the name's sign): it moves to the nearest side
+         that clears every prop shown, inside the pane; its tail still points at Pip */
+      const gap = 6, obs = [];
+      this.props.forEach((pr) => { if (pr.box && pr.op > .05 && pr.state !== 'out') { const a = this.toScreen([pr.box[0], pr.box[1]]), c = this.toScreen([pr.box[2], pr.box[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
+      const hits = (bx0, by0) => obs.some((o) => bx0 < o[2] && bx0 + bw > o[0] && by0 < o[3] && by0 + bh > o[1]);
+      if (obs.length && hits(x, y)) {
+        const cand = [];
+        obs.forEach((o) => { cand.push([o[0] - bw, y], [o[2], y], [x, o[1] - bh], [x, o[3]]); });
+        const ok = cand.filter(([cx, cy]) => cx >= pad && cx <= bx - bw - pad && cy >= top && cy <= by - bh - foot && !hits(cx, cy));
+        if (ok.length) { ok.sort((p, q) => Math.hypot(p[0] - x, p[1] - y) - Math.hypot(q[0] - x, q[1] - y)); [x, y] = ok[0]; }
+      }
       this.bubble.style.transform = `translate(${R(x)}px, ${R(y)}px)`;
       this.bubble.dataset.side = tall ? 'down' : 'left';
       this.bubble.style.setProperty('--tx', R(clamp(head[0] - x, 16, bw - 16)) + 'px');
