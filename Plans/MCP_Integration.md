@@ -33,7 +33,7 @@ Core rules:
 - Effective availability uses `connected | disabled | needs_auth | needs_client_registration | failed`.
 - The individual auth-state tokens are `authenticated`, `expired`, and `not_authenticated`; the individual effective-state tokens are `connected`, `disabled`, `needs_auth`, `needs_client_registration`, and `failed`.
 - requested vs effective MCP availability remains canonical across runtime and GUI surfaces.
-- effective state depends on the enabled flag, auth state, server health, project context, and policy/permission state.
+- effective state depends on resolved home/reach and exact optional-Project switches, enabled flag, work Computer launch/readiness, auth, server health and current policy/permission state. No project omits the Project tier and Project-owned servers; MI-044 owns that form.
 - Traceability label `/effective-state` maps to this requested-versus-effective availability owner section; consumer-style paraphrases must not replace the stored enum values.
 
 Fields:
@@ -95,7 +95,7 @@ Canonical config fields include:
 - `enabled`
 - `timeout_ms`
 - local launch fields (`command`, `args[]`, `env?`, `working_directory?`)
-- runtime handoff fields, including `working_directory`, let MCP tools/providers and `/providers` bridge launches auto-scope to the active worktree via cwd when a worktree is bound
+- runtime handoff `working_directory` is the active worktree cwd when bound; otherwise it is the explicit app chat/granted working root on the work Computer. Per-run derived files use that app thread owned area, never an inferred Project/profile root.
 - remote launch fields (`host_id`, `remote_command`, `remote_args[]`, `remote_env?`)
 - auth binding fields, including OAuth-disabled / auth-state semantics
 - per-tool enable/disable entries independent of connection state; slash-form trace/control label `/disable` maps to this enablement handling and does not replace effective availability
@@ -105,11 +105,11 @@ Server-entry config preserves the portable launch shape before projection into p
 `/config/override/debug` is the read-only debug surface for final effective MCP config, override-layer provenance, auth/client-registration state, and provider projection sync. It closes the old FIX lineage for not-fully-packetized auth/config/override/debug coverage: it may show source layers and redacted derived values, but it does not mutate config, serialize secrets, or bypass policy.
 
 Canonical MCP data records:
-- `mcp_server_record` owns server definition fields: `server_id`, `label`, `description`, `transport_kind`, `endpoint_or_command`, `scope`, `ownership`, `secret_ref?`, `enabled`, `last_health_check_at?`, and `last_error?`.
+- `mcp_server_record` owns server definition fields: `server_id`, `label`, `description`, `transport_kind`, `endpoint_or_command`, `scope`, `ownership`, `secret_ref?`, `enabled`, `last_health_check_at?`, and `last_error?`. The scope-aware owner envelope also binds definition home/reach/revision, declared Project switch refs and separate per-Computer launch/auth/readiness records; exact historic Project records keep their original schema.
 - `transport_kind` is exactly `stdio | sse | http`.
-- `scope` is exactly `global | project | profile | external`.
+- `scope` is exactly `global | project | profile | external`; `global` is library reach including No project, `project` requires its real Project, and `profile`/`external` reach is read-only. Computer launch/install/auth fields are separate owner records, not a field-merge layer.
 - `ownership` is exactly `pm_managed | external_managed`.
-- `mcp_runtime_availability` owns per-runtime availability fields: `server_id`, `runtime_platform_id`, `provider_family_id`, `connection_profile_id?`, `account_id?`, `availability_state`, `reason_code?`, `last_verified_at?`, and `config_sync_state`.
+- `mcp_runtime_availability` owns per-runtime availability fields: `server_id`, `runtime_platform_id`, `provider_family_id`, `connection_profile_id?`, `account_id?`, `availability_state`, `reason_code?`, `last_verified_at?`, and `config_sync_state`, bound by the scope-aware envelope to the actual Server/Host/Environment and definition/binding revision; readiness on one Computer is not reusable on another.
 - `availability_state` is exactly `working | not_configured | needs_auth | untrusted_folder | unhealthy | unsupported | external_not_managed`.
 - `config_sync_state` is exactly `not_needed | in_sync | out_of_sync | sync_failed`.
 - `mcp_tool_record` owns tool fields: `tool_ref`, `server_id`, `label`, `enabled`, and `permission_scope`.
@@ -168,10 +168,10 @@ CLI-provider MCP reference facts:
 - Cursor CLI provider-native MCP inspection includes `cursor-agent mcp list`; PM still treats the central MCP records as authoritative and maps provider-native output into those records.
 - Cursor CLI MCP durable base lives in the PM-managed Cursor profile root. PM generates or `/refreshed` syncs `.cursor/mcp.json` / `cursor/mcp.json` only when workspace-local MCP visibility is required; this workspace adapter is derived from central records and is not the MCP source of truth.
 - DirectApi providers (`Gemini`, `Codex`, `GitHub Copilot`, `Alibaba Coding Plan`, `MiniMax Coding Plan`, `Z.AI Coding Plan`) use PM-native MCP only; no provider-side MCP config files are canonical for `DirectApi` rows, including `MiniMax` and `Z.AI` coding-plan surfaces.
-- CLI-provider bridge state is long-lived provider/profile configuration rather than per-call installation: PM maps each CLI's project-vs-user scope onto project-shared versus profile-local MCP records for all supported CLIs, and only creates per-run files when `/workspace` visibility requires an adapter in the active cwd.
+- CLI bridge state remains long-lived provider/profile configuration. Project-vs-user mapping consumes central library/Project home and reach plus exact Computer installation/auth readiness. Per-run files are generated only for required cwd visibility, using the actual worktree or owned app thread area; no-project never grants visibility to Project-local definitions.
 - Cursor CLI evidence includes `cursor-agent` headless output modes such as `/stream-json`, auth status, MCP management, model listing, and about `/version` probing; those probes feed MCP availability instead of redefining the account boundary.
 - Native CLI probes include `claude mcp list`, which returns server locations plus connection `/auth` status, and `gemini mcp list`, which reports configured-server state even when no MCP servers are present in the current profile.
-- Generated provider-facing adapter files are config synchronization artifacts: PM may `/configure`, `/update`, or `/repair` them when provider profile/workspace state changes, while spawn-time regeneration is reserved for derived files that must exist in the exact run worktree.
+- Generated provider-facing adapter files remain derived config-sync artifacts. Configure/update/repair and spawn-time generation use the exact owned worktree or app thread area required by the transport. Conversion explicitly re-homes future derived files and rechecks source/version trust; it does not move credentials, profiles or live MCP sessions.
 - Web provider MCP projections derive from the PM WebProviderAdapterRegistry. MCP server rows, provider-facing config files, and coding-agent bridge files may expose web/search/fetch/extract/research/crawl/map capability only as no-secret projections of registry rows with capability refs, health refs, egress policy refs, and projection state. DirectApi providers use PM-native registry rows without provider-side MCP config as canon; model-native web search uses the selected provider account/model row; MCP projection failure degrades that projection but does not erase PM-native Site Reader or other registry-backed adapters. `Plans/web_provider_projection_fixtures.json` is the validator-backed generated-projection target for `.claude`, `.cursor`, and `.codex`; the tracked provider config files may remain profile/local adapter state until an explicit projection sync writes derived no-secret config.
 
 ## 6. Supported flows
@@ -1551,7 +1551,12 @@ plan_unit_id: MI-024
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
-canonical_text: DirectApi providers use PM-native MCP only, while CLI-provider bridge state is long-lived provider/profile configuration mapped into project-shared or profile-local MCP records; PM may configure, update, repair, or spawn-time regenerate derived provider files only where workspace visibility requires it.
+canonical_text: >-
+  DirectApi providers use PM-native MCP only. CLI-provider bridge state stays long-lived
+  provider/profile configuration; project-vs-user mappings consume central definition home/reach plus
+  Computer launch/auth readiness and optional Project bindings. A no-project launch uses its owned
+  chat working root and app-owned derived adapter area. Reconfiguration or conversion re-homes future
+  derived files explicitly, without making provider files canonical or moving live profile/auth state.
 gui_related: false
 gui_classification_reason: The unit defines MCP runtime, identity, config, auth, provider, storage, or ownership behavior rather than direct GUI presentation.
 split_recommended: true
@@ -1575,6 +1580,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MCP_Integration-S0006
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - DirectApi providers
 - Gemini
@@ -2040,7 +2047,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
 canonical_text: >-
-  P1-MCP-AND-THIRD-PARTY-CONFIG-IMPORT (P1) is compiled as canonical Puppet Master intent for MCP and external agent config import with trust boundaries: Add ImportedToolConfigSource records: source app/file, hash, cwd resolution, permission default, secret redaction, first-run review. The preserved PM gap/delta is: Need config-import provenance and trust policy: imported MCP config is a suggestion, not automatically executable. The observed external-repo signal remains source-lineage evidence: Cline emphasizes MCP/plugins and `.clinerules`; Warp changelog says MCP servers detected from third-party agents become visible/spawnable and project MCP servers spawn from repo root; Codex docs expose MCP/skills/plugins surfaces.
+  P1-MCP-AND-THIRD-PARTY-CONFIG-IMPORT (P1) is compiled as canonical Puppet Master intent for MCP and
+  external agent config import with trust boundaries: Add ImportedToolConfigSource records: source
+  app/file, hash, cwd resolution, permission default, secret redaction, first-run review. The
+  preserved PM gap/delta is: Need config-import provenance and trust policy: imported MCP config is a
+  suggestion, not automatically executable. The observed external-repo signal remains source-lineage
+  evidence: Cline emphasizes MCP/plugins and `.clinerules`; Warp changelog says MCP servers detected
+  from third-party agents become visible/spawnable and project MCP servers spawn from repo root; Codex
+  docs expose MCP/skills/plugins surfaces.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -2048,9 +2062,10 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Imported MCP server from `.claude`/Codex/Warp config defaults ask/disabled until reviewed.
-- Relative command cwd is project-root only when explicitly resolved and shown.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+- Imported MCP configuration defaults ask/disabled until exact source/hash review.
+- Relative command cwd resolves only against an explicitly selected and displayed Project root or app thread working
+  root; no-project launch never guesses a Project.
+- Import, copy and conversion do not transfer trust, secrets, account approval or live transport sessions.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
@@ -2077,6 +2092,8 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:13
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids:
 - atom-0017
 external_atom_id: extrepo-20260703-0013
@@ -2694,9 +2711,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
 canonical_text: >-
-  MCP catalogs use compatibility-keyed stale-while-refresh with one in-flight refresh, deterministic underscore-only
-  projection order, deferred schema proxies, shared rich-result settlement, and deterministic lowest-canonical-server-id
-  ownership for normalized tool-name collisions. Suppressed and omitted tools remain receipted and inspectable.
+  MCP catalogs use compatibility-keyed stale-while-refresh with one in-flight refresh, deterministic
+  underscore-only projection order, deferred schema proxies, shared rich-result settlement, and
+  deterministic lowest-canonical-server-id ownership for normalized tool-name collisions. Suppressed
+  and omitted tools remain receipted and inspectable. Compatibility and catalog eligibility also bind
+  the resolved home/reach/Project-switch revision and exact work Computer; a cached library catalog
+  does not prove installation or authority there.
 gui_related: false
 gui_classification_reason: Backend MCP catalog/projection/collision contract; visible managers consume but do not own it.
 depends_on: [MI-003, MI-033, MI-036, MI-038, T-176]
@@ -2722,9 +2742,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
-  - 04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#MCP-lifecycle
-  - reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+- 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
+- 04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#MCP-lifecycle
+- reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: []
 preserved_exact_tokens:
   - stale-while-refresh
@@ -2749,10 +2771,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
 canonical_text: >-
-  MCP resource subscription setup is transactional and rolls acquired handles back in reverse deterministic order on
-  partial failure. Protocol/version/extension/auth/cache compatibility is explicit, while all config, catalog, cache,
-  receipt, artifact, debug, and projection surfaces remain no-secret, no-SQLite, and outside any PM-owned external
-  browser-test MCP or compatibility surface.
+  MCP resource subscription setup is transactional and rolls acquired handles back in reverse
+  deterministic order on partial failure. Protocol/version/extension/auth/cache compatibility is
+  explicit, while all config, catalog, cache, receipt, artifact, debug, and projection surfaces remain
+  no-secret, no-SQLite, and outside any PM-owned external browser-test MCP or compatibility surface.
+  Copy and rollback use only non-secret owner definition/binding references; host launch/auth
+  readiness stays on its Computer, and no-project derived output stays in the app thread owned area.
 gui_related: false
 gui_classification_reason: Backend transaction, compatibility, storage, and security boundary; not GUI implementation work.
 depends_on: [MI-014, MI-035, MI-039, MI-040]
@@ -2778,9 +2802,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - 04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#MCP-lifecycle
-  - SHARED_PROCESS_RULES.md#Shared-non-negotiable-rules
-  - REFERENCE_SUPERSESSIONS.md
+- 04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#MCP-lifecycle
+- SHARED_PROCESS_RULES.md#Shared-non-negotiable-rules
+- REFERENCE_SUPERSESSIONS.md
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: []
 preserved_exact_tokens:
   - resource subscription rollback
@@ -2807,7 +2833,13 @@ plan_unit_id: MI-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
-canonical_text: Per-MCP-tool output caps follow the shared tool-result shaping policy snapshot; replay retains the effective policy so truncation stays consistent and observable. Notebook and transition paths use the same instruction precedence, tool schemas, MCP availability checks, and plugin transforms as ordinary prompts; no notebook-specific shadow tool or post-dispatch transform exists.
+canonical_text: >-
+  Per-MCP-tool output caps follow the shared tool-result shaping policy snapshot; replay retains the
+  effective policy so truncation stays consistent and observable. Notebook and transition paths use
+  the same instruction precedence, tool schemas, MCP availability checks, and plugin transforms as
+  ordinary prompts; no notebook-specific shadow tool or post-dispatch transform exists. Notebook,
+  transition and no-project calls use the same exact place/Computer availability resolution;
+  Project-owned servers do not enter an app request.
 gui_related: false
 gui_classification_reason: MCP parity is integration behavior, not GUI work.
 depends_on: [MI-042, PP-089]
@@ -2823,9 +2855,11 @@ context_scope: mcp_integration
 implementation_surfaces: [Plans/MCP_Integration.md, Plans/Tools.md, Plans/Prompt_Pipeline.md]
 node_compile_hint: {mode: integration_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-C13
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-I10
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A55
+- source_packet:PM-WNC-2026-09-05-v1:WNC-C13
+- source_packet:PM-WNC-2026-09-05-v1:WNC-I10
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A55
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["policy snapshot", "no notebook-specific shadow tool"]
 negative_constraints:
   - Do not exempt MCP tools from shaping caps.
@@ -2834,3 +2868,103 @@ owner_hints: [Plans/MCP_Integration.md, Plans/Tools.md]
 ```
 
 ContractRef: ContractName:Plans/MCP_Integration.md, ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md
+
+### MI-044 - MCP Definition Home, Reach And Computer Readiness
+
+```yaml
+plan_unit_id: MI-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MCP_Integration.md
+canonical_text: MCP keeps one central registry. Existing scope global means library home/reach and includes
+  No project when Every project is selected; scope project requires its actual Project, while profile
+  and external stay read-only reach under their current owner. Home, reach and whole Project versions
+  are distinct from per-Computer command, installation and auth fields. project_switch_ids are system.mcp.server-enabled
+  and system.mcp.tool-toggle, bound to the exact server/tool; What it may do consumes Permissions rather
+  than a second policy store. Other definition changes make a whole Project version by stable server_id,
+  never a per-field layered header/URL/argv merge. Requested/effective availability resolves Everywhere/Computer
+  and optional Project/Persona bindings with the existing auth, health, trust, policy, epoch, collision
+  and budget rules. Without Project/worktree the launch cwd is the chat folder or an expressly granted
+  root; projected files that must exist at spawn live in that app thread owned area. Conversion rediscovers
+  and explicitly re-homes future projections; it does not migrate a live MCP session or provider profile.
+  The Settings transaction carries exact selected definition hashes/revisions, new destination IDs/bindings,
+  reach additions and owner apply/readback/rollback sub-results; only MCP writes the registry. Host credentials
+  and trust do not travel, and offline writers produce refused/not_reached with no write queue. The owner
+  contribution is named in owner_thing_previews; scope_model and project_switch_ids describe its manager
+  boundary. settings.follow never grants thing mutation or Project content authority. The selected whole-version/copy
+  operation is cmd.mcp.server.copy through sole planned handler handlers::mcp::copy_server, with Plans/shared_integration_runtime.schema.json#/$defs/mcp_server_copy_request
+  and Plans/shared_integration_runtime.schema.json#/$defs/mcp_server_copy_result. The Settings batch invokes
+  this owner contribution, including exact source hash/revision, destination CAS, declared reach/switch
+  deltas, readback and eligible compensation; it never writes owner records directly. These registrations
+  do not prove native availability; missing schema, handler, trust, installation or currentness remains
+  typed unavailable.
+gui_related: true
+gui_classification_reason: Owns user-visible manager, activity or control behavior.
+depends_on:
+- MI-032
+- MI-041
+- MI-042
+- MI-043
+- SSYS-061
+- SSYS-062
+unblocks: []
+acceptance_criteria:
+- Library reach works in No project; Project-only and externally managed entries cannot leak or become
+  writable.
+- Per-Computer launch/auth/readiness is checked before invocation; copying a definition neither installs
+  nor authenticates it.
+- Preview/readback/rollback includes whole copies, exact switches and reach additions; partial failures
+  cannot claim all Computers changed.
+validation_surfaces:
+- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
+- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+risk_class: scope_authority_or_custody_drift
+reasoning_tier: high
+context_scope: project_and_application_scope
+implementation_surfaces:
+- Plans/MCP_Integration.md
+- Plans/settings_system_contracts.schema.json
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N6/N12/N25
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/SETTINGS-PROPOSAL.md#4.1;4.3;5
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- 'Jared, 2026-11-03: "Those look good, except goals and crew should be allowed in no project."'
+- 'Jared, 2026-11-03: "Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t."'
+- projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-B02
+preserved_exact_tokens:
+- global
+- project
+- profile
+- external
+- server_id
+- project_switch_ids
+- system.mcp.server-enabled
+- system.mcp.tool-toggle
+- No project
+- owner_thing_previews
+- scope_model
+- settings.follow
+- cmd.mcp.server.copy
+- handlers::mcp::copy_server
+negative_constraints:
+- Do not serialize headers, tokens, OAuth material or decrypted environment values into copies, mirrors
+  or adapters.
+- Do not add another registry, provider-specific source of truth, per-field merge, hidden Project root
+  or unreviewed first-load execution.
+- Do not infer an implemented handler, admitted event writer, native verification, WorkNode, NodeSeed
+  or governance clearance from this accepted contract.
+owner_hints:
+- Plans/MCP_Integration.md
+- Plans/Settings_System.md
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/MCP_Integration.md#MI-044, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365

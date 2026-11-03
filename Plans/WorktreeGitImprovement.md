@@ -96,6 +96,8 @@ The plan is **ready to implement** with the following in mind:
 
 ## 2. Worktree Improvements
 
+Ordinary app chat, Goal, Crew, Assistant Plan and scheduled work may use explicit Computer/chat/granted roots without a PM worktree. Project worktree commands and typed leases in this section still require their real Project/repository/backend target. No-project cwd is never an implicit main Project; conversion admits a new destination route through the selected Git/JJ owner.
+
 ### 2.0 Symlink resolution in worktree paths
 
 
@@ -384,7 +386,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec
 ### 3.4 Git repo check: use project path
 
 - **Gap:** `GitRepoCheck` uses `resolve_git_init_dir()` (CWD if writable, else HOME). The "current directory" may not be the active project; fix runs `git init` in the wrong place.
-- **Fix:** When a project/working directory is known (e.g. from config or app state), run the check and fix in that directory. Only fall back to CWD/home when no project is set.
+- **Fix:** Run checks only in the explicit frozen work directory: a real Project/worktree when bound, otherwise the admitted app chat/granted root on the named Computer. If absent, show a target-required reason or picker; never fall back to process CWD or HOME, and never run init without the Project/SCM owner's actual target authority.
 
 ### 3.5 Branch strategy from config
 
@@ -444,12 +446,12 @@ Source Control mirrors Orchestrator's SCM lineage acceptance details for worktre
 
 Source Control owns two GUI task modes above the ordinary staged/unstaged diff list.
 
-- `History / graph / worktree parity` and `Branch/worktree lineage graph` go beyond a plain commit graph by showing which worktree, run, or branch owns each branch tip in `Source Control > Graph`. Required GUI state includes branch filter, worktree overlay toggle, ahead`/behind/diverged` badges, compact vs expanded graph density, and persisted graph viewport/filter state. Required `/events/storage` behavior: `cmd.source_control.graph.focus/filter/layout`, `cmd.source_control.graph_focus`, and `cmd.source_control.graph_filter` compatibility aliases resolve to `cmd.source_control.graph.focus`, `cmd.source_control.graph.filter`, and `cmd.source_control.graph.layout`; the `/filter/layout` state is project scoped. Orchestrator linkage lets graph nodes deep-link to run history and lets run history focus a graph node when a `/commit` belongs to a known run. `/disabled` fallback degrades to branch list/history when repo graph parsing fails. `/tradeoffs`: dense graphs must balance rendering density and performance on large repos.
+- `History / graph / worktree parity` and `Branch/worktree lineage graph` go beyond a plain commit graph by showing which worktree, run, or branch owns each branch tip in `Source Control > Graph`. Required GUI state includes branch filter, worktree overlay toggle, ahead`/behind/diverged` badges, compact vs expanded graph density, and persisted graph viewport/filter state. Required `/events/storage` behavior: `cmd.source_control.graph.focus/filter/layout`, `cmd.source_control.graph_focus`, and `cmd.source_control.graph_filter` compatibility aliases resolve to `cmd.source_control.graph.focus`, `cmd.source_control.graph.filter`, and `cmd.source_control.graph.layout`; actual graph viewport/selection/targets remain Project runtime/view state; ordinary filter/layout presentation defaults consume the Settings ladder without copying graph identity. Orchestrator linkage lets graph nodes deep-link to run history and lets run history focus a graph node when a `/commit` belongs to a known run. `/disabled` fallback degrades to branch list/history when repo graph parsing fails. `/tradeoffs`: dense graphs must balance rendering density and performance on large repos.
 - `AI commit batching` suggests logical commit groupings and draft messages from diff clusters in `Source Control > Changes` near staged and `/unstaged` groups. Required `/settings` include auto-suggest on/off, batching aggressiveness, message tone/style, and cross-directory grouping. `cmd.source_control.suggest_commit_batches` produces advisory candidate batches only; no grouping, staging, or `/commit` is canonical until the user accepts it. Accepted batches preserve run/tier attribution in receipts where available, while manual staging/commit remains the canonical fallback. `/tradeoffs`: incorrect grouping can damage history, so batching is advisory, reviewable, and never automatic.
 - External Source Control UX baselines reinforce dense owner-surface behavior without making the panel side-panel-only. JetBrains Git log and conflict-resolution references validate roomy history/log tabs, strong filtering, and a dedicated conflict-resolution surface; GitLens and `/GitKraken` validate commit-graph-centric workflows, `/compare` discovery, and worktree compare affordances. These references justify letting dense Source Control `/resources` expand beyond a cramped side panel when needed.
 - `Review mode` compares a worktree against a base branch, another worktree, a PR target, or a selected commit range in a roomy diff-centric Source Control GUI lens. `Source Control > History` and `Worktrees` both expose `Open Review Mode`; dense compares may take over the editor-area while staying a Source Control task mode rather than ordinary file editing. Required `/settings` include left/right compare targets, preferred diff mode, ignore-whitespace, file filter, collapse-unchanged, generated-file visibility, and review-comments/notes local state. Required `/events/storage` behavior: `cmd.source_control.review.open/swap/filter` compatibility aliases resolve to `cmd.source_control.open_review`, `cmd.source_control.set_compare_target`, and `cmd.source_control.toggle_generated_filter`; these commands persist the last compare target and filter choices per-project without turning review notes into canonical history before user acceptance. Run receipts and blocked cards open directly into a compare target when review is the remediation step. `/disabled` fallback: when the compare target is gone, pruned, or otherwise a `stale-target`, open the nearest valid baseline when one exists, explain the stale-target downgrade, and offer alternate pivots. `/tradeoffs`: direct comparison between worktrees requires robust baseline selection so the GUI does not present confusing or misleading diffs.
 - `Conflict assistant` turns merge, `/rebase/worktree`, and worktree conflict-caused blocked episodes into a guided repair flow instead of leaving users only with raw file markers. The primary placement is the `Source Control > Changes` conflict group plus a dedicated conflict flyout; blocked worktree cards should include affected file list, safe-point context, and an `Open Conflict Assistant` action into the same surface. Required `/settings` include conflict presentation mode, show base/origin annotations, open external merge tool preference, AI assist enabled/disabled, and an `auto-open` first conflicted file toggle. Required `/event/storage` behavior: `cmd.source_control.open_conflict`, `cmd.source_control.open_merge_editor`, `cmd.source_control.resolve_conflict_side`, and `cmd.source_control.mark_conflict_resolved` persist per-project presentation preference, not conflict content; resolution events and blocked-state handoff outcomes are recorded separately. `/disabled` fallback: if the structured merge view cannot load, show the file list, textual diff/conflict markers, and an explicit warning rather than hiding the conflict. `/tradeoffs`: assistant guidance must explain choices and propose repairs, but it must not silently resolve semantic conflicts or auto-write a side selection without explicit approval.
-- Source Control owns the canonical compare/diff identity contract for reuse across chat, file surfaces, and Source Control. Hunk-level actions are explicit review commands: `stage`, `unstage`, `discard`, `apply`, `expand/collapse`, and conflict-resolution actions. Grouped undo/redo for diff-driven mutations must explain whether a change is buffer-local, restore-history, or git/source-control history. Search-within-diff is scoped to the active compare identity, and diff heat-map/change-marker behavior is a review projection over that same identity.
+- Source Control owns the canonical compare/diff identity contract for reuse across chat, file surfaces, and Source Control. Hunk-level actions are explicit review commands: `stage`, `unstage`, `discard`, `apply`, `expand/collapse`, and conflict-resolution actions. Grouped undo/redo for diff-driven mutations must explain whether a change is buffer-local, restore-history, or git/source-control history. Search-within-diff is scoped to the active compare identity, and diff heat-map/change-marker behavior is a review projection over that same identity. Starter file sets are Project-owned (PJCT-011), distinct from Saved setups. FGI-024 contribution sync consumes exact original/fork, head/base and fetched-revision/native-workspace/reconciliation-strategy identity through the existing remote.sync owner; W-073 consumes the selected `source_control_command_request_v2`/`remote_operation_target_v2`/`remote_sync_local_reconcile_target_v2`; dispatch still requires its actual native/source/currentness evidence.
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Orchestrator_Page.md#Source Control boundary, ContractName:Plans/storage-plan.md
 
@@ -612,8 +614,8 @@ pub enum BranchGranularity {
 ### 7.2 Doctor: project path context
 
 - Doctor checks implement `async fn run(&self) -> CheckResult` with **no parameters**. They have no built-in "project path" or "working directory."
-- **GitRepoCheck** and **GitConfiguredCheck** "use project path when available" can be implemented by **resolving project root inside `run()`**: e.g. call `config_discovery::discover_config_path(None)` (or with a hint if the app can pass it), then take the parent directory as project root; run `git rev-parse --git-dir` or `git config user.name` with `current_dir(project_root)`. If no config is found, fall back to current behavior (CWD or HOME). This matches the pattern used in the orchestrator-subagent plan for the Gemini plan-mode Doctor check.
-- **App → Doctor:** When the app runs Doctor (e.g. from the Doctor view), it could pass a "config hint" (e.g. `current_project.path`) so `discover_config_path(Some(hint))` finds the project's config. That would require extending the Doctor run API to accept an optional hint (e.g. `run_all(hint: Option<&Path>)`) and threading it into checks that need it. Alternatively, keep discovery inside each check with `discover_config_path(None)` so the "project" is whatever directory would be used when no project is selected (cwd, default workspace, etc.).
+- Doctor receives an exact owner context rather than deriving a target from focus, `discover_config_path(None)`, process CWD or HOME. A Project check binds its real Project/root; an app file/command check binds its actual Computer and admitted root. Missing directory or a Project-native operation with no actual Project returns the precise target-required reason.
+- General tools/defaults come from the same Settings resolver with Project omitted when absent. Conversion performs fresh destination inspection; it neither auto-creates a main Project nor transfers source worktree/lease authority.
 
 ### 7.3 Backend run does not use current project
 
@@ -5039,8 +5041,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
-  Mutation-capable WorkNode attempts must run in a known repo/worktree context. Parallel WorkNodes require isolated worktrees or explicit clean allocation, and dirty, conflicted, contaminated, blocked-preserved, or lineage-mismatched worktrees cannot be reused silently. Worktree allocation records preserve repo_id, worktree_id, worktree_path, baseline_commit_oid, branch/head state, head_commit_oid, changed_files, conflict_refs, owner lane, lease state, dirty_state_policy, conflict_policy, merge_policy, github_policy, rollback_available, rollback_ref, and restore_command_or_action. Local source-control/worktree state remains execution truth; GitHub is an optional promotion/output layer when configured.
-  This is the source-control execution contract for worktree allocation; a dirty worktree or merge conflict blocks silent reuse, and GitHub optional promotion cannot replace local source-control truth.
+  Mutation-capable WorkNode attempts must run in a known repo/worktree context. Parallel WorkNodes
+  require isolated worktrees or explicit clean allocation, and dirty, conflicted, contaminated,
+  blocked-preserved, or lineage-mismatched worktrees cannot be reused silently. Worktree allocation
+  records preserve repo_id, worktree_id, worktree_path, baseline_commit_oid, branch/head state,
+  head_commit_oid, changed_files, conflict_refs, owner lane, lease state, dirty_state_policy,
+  conflict_policy, merge_policy, github_policy, rollback_available, rollback_ref, and
+  restore_command_or_action. Local source-control/worktree state remains execution truth; GitHub is an
+  optional promotion/output layer when configured. This is the source-control execution contract for
+  worktree allocation; a dirty worktree or merge conflict blocks silent reuse, and GitHub optional
+  promotion cannot replace local source-control truth. This WorkNode requirement remains
+  Project-bound. Ordinary app chat/Goal/Crew/Assistant Plan/task attempts instead use T-187/SIR app
+  execution identity and admitted directories; no Project or WorkNode is fabricated for their cwd.
 gui_related: true
 gui_classification_reason: Worktree allocation, Source Control status, lease state, conflicts, and blocked-preserved states are user-visible source-control UI surfaces.
 depends_on: [W-071]
@@ -5061,10 +5073,12 @@ context_scope: plans_to_code_worktrees
 implementation_surfaces: [Plans/WorktreeGitImprovement.md, Plans/Executor_Protocol.md, Plans/FileSafe.md, Plans/GitHub_Integration.md]
 node_compile_hint: {mode: worktree_allocation_source_control_truth, create_worknodes: false}
 source_lineage:
-  - pldg-20260617-001-plans-to-code-handoff:atom-0035
-  - pldg-20260617-001-plans-to-code-handoff:atom-0036
-  - pldg-20260617-001-plans-to-code-handoff:atom-0038
-  - pldg-20260617-001-plans-to-code-handoff:dec-0015
+- pldg-20260617-001-plans-to-code-handoff:atom-0035
+- pldg-20260617-001-plans-to-code-handoff:atom-0036
+- pldg-20260617-001-plans-to-code-handoff:atom-0038
+- pldg-20260617-001-plans-to-code-handoff:dec-0015
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "worktree_id"
   - "isolated worktree"
@@ -5098,16 +5112,48 @@ plan_unit_id: W-073
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: 'After the user selects or provides a project, Planning Wizard may automatically inspect local or remote paths, repository presence, current branch, remotes, status, file tree, package managers, frameworks, configuration, architecture signals, and test commands without mutation. Clone, fork, repository creation, git init, remote changes, branch checkout or creation, worktree creation, commit, push, PR creation, stash, discard, reset, and protected-branch operations require the applicable permission policy and durable receipts. Planning Wizard records repository context and may perform explicitly authorized project setup, but implementation worktree allocation, mutation preparation, and execution safe points belong to Executor provisioning after Plan Compile. For greenfield work, Planning Wizard can create a directory, initialize Git, select an initial branch, create an empty or baseline initialization commit, and optionally connect
-  or create a GitHub repository when explicitly authorized. Existing uncommitted user changes are preserved and inventoried; Puppet Master must not silently commit, stash, discard, reset, overwrite, or mingle with them and must create evidence-backed isolation or block unsafe mutation. Contribution PR mode records upstream and fork identities, base and head branches, contribution policy, compatibility expectations, required checks, commit policy, and optional PR delivery without conflating those with implementation truth. Testing-tool installation and configuration writes use FileSafe/source-control safe points, bounded write surfaces, receipts, revalidation, and rollback so discovery cannot damage the user''s project or environment.'
+canonical_text: After the user selects or provides a project, Planning Wizard may automatically inspect
+  local or remote paths, repository presence, current branch, remotes, status, file tree, package managers,
+  frameworks, configuration, architecture signals, and test commands without mutation. Clone, fork, repository
+  creation, git init, remote changes, branch checkout or creation, worktree creation, commit, push, PR
+  creation, stash, discard, reset, and protected-branch operations require the applicable permission policy
+  and durable receipts. Planning Wizard records repository context and may perform explicitly authorized
+  project setup, but implementation worktree allocation, mutation preparation, and execution safe points
+  belong to Executor provisioning after Plan Compile. For greenfield work, Planning Wizard can create
+  a directory, initialize Git, select an initial branch, create an empty or baseline initialization commit,
+  and optionally connect or create a GitHub repository when explicitly authorized. Existing uncommitted
+  user changes are preserved and inventoried; Puppet Master must not silently commit, stash, discard,
+  reset, overwrite, or mingle with them and must create evidence-backed isolation or block unsafe mutation.
+  Contribution PR mode records upstream and fork identities, base and head branches, contribution policy,
+  compatibility expectations, required checks, commit policy, and optional PR delivery without conflating
+  those with implementation truth. Testing-tool installation and configuration writes use FileSafe/source-control
+  safe points, bounded write surfaces, receipts, revalidation, and rollback so discovery cannot damage
+  the user's project or environment. Project-owned Starter file sets and Saved setups remain different
+  sources; manager copying is only owner subtransactions. FGI-024 contribution uses exact original/fork
+  and head/base bindings, the captured original fetched revision, chosen native fork workspace and explicit
+  reconciliation strategy. Separate branch/change is the default; direct main is an explicit alternative
+  under normal protection. The selected owner route remains cmd.source_control.remote.sync through handlers::source_control::remote_sync
+  and catalog.source_control_remote_sync. Plans/source_control_contracts.schema.json selects source_control_command_request_v2/source_control_command_result_v2
+  and the closed remote_operation_target_v2 union. kind=remote_effect retains its exact historical v1
+  target; kind=local_reconcile_only uses remote_sync_local_reconcile_target_v2 with the captured original/fork/head/base
+  repositories, fetched original revision and fetch receipt, exact native fork workspace/revision, resolved
+  reconciliation_strategy policy/ref/hash, current preview, permission/FileSafe/Stop and writer generations.
+  Require push_targets=[] and publish_performed=false; publication remains a separately admitted cmd.source_control.remote.publish
+  action. Refuse stale identities, unsupported strategy/backend or absent source/native proof. No magic
+  fork-sync command, path/focus/remote-name inference, synthetic app Project or Git fallback from unavailable
+  JJ is admitted.
 gui_related: false
-gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual
+  presentation.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
-- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
-- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger
+  as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future
+  audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts,
+  or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
@@ -5136,6 +5182,9 @@ source_lineage:
 - pldg-20260618-001-prd-planning-wizard:atom-0088
 - Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md#SRC-PROJECT
 - Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; E-B01; P2/P3/P6; S8–S11; N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-E01
 source_atom_ids:
 - atom-0067
 - atom-0070
@@ -5172,7 +5221,8 @@ preserved_exact_tokens:
 - safe point
 - rollback
 negative_constraints:
-- Do not create implementation worktrees or execution safe points as an implicit Planning Wizard side effect.
+- Do not create implementation worktrees or execution safe points as an implicit Planning Wizard side
+  effect.
 - Never silently commit, stash, discard, reset, or overwrite user changes.
 owner_hints:
 - Plans/Planning_Wizard.md
@@ -5250,27 +5300,35 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
-  The persisted worktree panel filters mandated by section 4.0 filter on exactly four dimensions: lifecycle state
-  (reserved, active, blocked_preserved, released, orphaned), owner class (thread, orchestrator-lane, manual, agent-role),
-  row flags (locked, prunable, dirty, repairable), and blocked-reason family (approval-gated, policy-blocked,
-  preflight-blocked, auth-blocked, governance-blocked, stale-data-blocked). Owner class is a display/filter
-  classification projected from the canonical package/lane ownership and effective-scope precedence truth; it never
-  replaces those vocabularies as ownership canon. Filters present as toggleable chips above the worktree list;
-  multi-select within a dimension is OR, across dimensions is AND; active chip selection persists per project with the
-  panel state alongside the existing sort mode, hide-stale toggle, and ownership display mode, and rehydrates on
-  startup. A zero-result filter state shows an explicit filtered-empty explainer with a clear-filters action, distinct
-  from the true zero-worktrees empty state. Amended 2026-10-09 (DL-162): in the left rail each filter dimension presents
-  as one dropdown in the chat picker style, the owner-class one labelled Owner, instead of a row of chips
-  (FinalGUISpec F3-622); the dimensions, the OR and AND rules and the persistence above are unchanged.
+  The persisted worktree panel filters mandated by section 4.0 filter on exactly four dimensions:
+  lifecycle state (reserved, active, blocked_preserved, released, orphaned), owner class (thread,
+  orchestrator-lane, manual, agent-role), row flags (locked, prunable, dirty, repairable), and
+  blocked-reason family (approval-gated, policy-blocked, preflight-blocked, auth-blocked,
+  governance-blocked, stale-data-blocked). Owner class is a display/filter classification projected
+  from the canonical package/lane ownership and effective-scope precedence truth; it never replaces
+  those vocabularies as ownership canon. Filters present as toggleable chips above the worktree list;
+  multi-select within a dimension is OR, across dimensions is AND; active chip selection persists per
+  project with the panel state alongside the existing sort mode, hide-stale toggle, and ownership
+  display mode, and rehydrates on startup. A zero-result filter state shows an explicit filtered-empty
+  explainer with a clear-filters action, distinct from the true zero-worktrees empty state. Amended
+  2026-10-09 (DL-162): in the left rail each filter dimension presents as one dropdown in the chat
+  picker style, the owner-class one labelled Owner, instead of a row of chips (FinalGUISpec F3-622);
+  the dimensions, the OR and AND rules and the persistence above are unchanged. Ordinary
+  sort/hide/filter presentation defaults use admitted Everywhere/Computer/Project settings; selected
+  worktree, viewport, exact compare targets and conflict content remain owner runtime/view records.
+  Per-Project panel state remains isolated and No project has no invented worktree inventory.
 gui_related: true
 gui_classification_reason: This defines the visible filter controls and persisted filter behavior of the Worktrees topology panel.
 depends_on: [W-032, W-070]
 unblocks: []
 acceptance_criteria:
-  - Filters cover exactly the four dimensions with the enumerated values and no invented lifecycle states.
-  - Filter selection persists per project and rehydrates with the worktree panel state.
-  - Filtered-empty and zero-worktrees states render distinct explainers.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+- Filters cover exactly the four dimensions with the enumerated values and no invented lifecycle states.
+- Filter selection persists per project and rehydrates with the worktree panel state.
+- Filtered-empty and zero-worktrees states render distinct explainers.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this
+  PlanUnit.
+- Layered presentation defaults cannot copy runtime selection, compare identity or conflict contents to another
+  Project.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Future worktree panel filter persistence and filtered-empty tests.
@@ -5280,12 +5338,14 @@ context_scope: worktree_panel_filters
 implementation_surfaces: [Plans/WorktreeGitImprovement.md, future Source Control Worktrees panel]
 node_compile_hint: {mode: worktree_panel_filter_taxonomy, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)
-  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
-  - Plans/WorktreeGitImprovement.md:437-439
-  - Plans/WorktreeGitImprovement.md:297
-  - user decision 2026-07-27
-  - Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; filters present as dropdowns, FinalGUISpec F3-622)
+- Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)
+- Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
+- Plans/WorktreeGitImprovement.md:437-439
+- Plans/WorktreeGitImprovement.md:297
+- user decision 2026-07-27
+- Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; filters present as dropdowns, FinalGUISpec F3-622)
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: []
 preserved_exact_tokens: ["persisted worktree panel filters", "hide-stale", "blocked_preserved", "owner class", "filtered-empty"]
 negative_constraints:
@@ -5587,13 +5647,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
-  A child-worktree lease is a typed durable resource with exact owner/runtime, repository, worktree, branch, baseline,
-  topology/source, write-mode, time, policy, cleanup, result, integration, and reconciliation identity coordinated by
-  the shared LeaseCoordinator. Holder, generation, epoch, topology generation, and Source Location fence every create,
-  attach, renew, capture, merge, release, and cleanup. Renewal is an atomic same-holder compare-and-swap that cannot
-  widen scope. Expiry blocks new dispatch/mutation and starts reconciliation; it never proves owner death or authorizes
-  cleanup. Release is idempotent, fence-checked, requires terminal child and durable result/integration disposition,
-  and is distinct from physical prune/remove.
+  A child-worktree lease is a typed durable resource with exact owner/runtime, repository, worktree,
+  branch, baseline, topology/source, write-mode, time, policy, cleanup, result, integration, and
+  reconciliation identity coordinated by the shared LeaseCoordinator. Holder, generation, epoch,
+  topology generation, and Source Location fence every create, attach, renew, capture, merge, release,
+  and cleanup. Renewal is an atomic same-holder compare-and-swap that cannot widen scope. Expiry
+  blocks new dispatch/mutation and starts reconciliation; it never proves owner death or authorizes
+  cleanup. Release is idempotent, fence-checked, requires terminal child and durable
+  result/integration disposition, and is distinct from physical prune/remove. PM Project worktree
+  leases keep actual Project/repository/backend identity. A rootless app attempt has an app execution
+  lease/context under SIR, not a nullable Project worktree lease or main-worktree allocation.
 gui_related: false
 gui_classification_reason: This is a backend typed lease and concurrency-control contract.
 depends_on: [SIR-007, W-015, W-016, W-017, W-080, W-081]
@@ -5613,7 +5676,9 @@ context_scope: child_worktree_typed_lease
 implementation_surfaces: [Plans/WorktreeGitImprovement.md, Plans/Shared_Integration_Runtime.md, future Source Control lease store]
 node_compile_hint: {mode: child_worktree_typed_lease, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Child-worktrees
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Child-worktrees
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["LeaseCoordinator", "lease_id", "holder", "generation", "epoch", "TopologyGeneration", "SourceLocationId", "expires_at", "renew_by", "cmd.git.worktree.release"]
 negative_constraints:
   - Never infer lease release from process exit, timestamp expiry, branch name, or path absence.
@@ -5630,14 +5695,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
-  Startup reconciliation precedes child dispatch, lease renewal, integration, and cleanup, comparing durable lease and
-  owner records with exact topology/source identity, Git common-dir inventory, worktree/gitdir/branch/OIDs,
-  baseline/result hashes, active Git operation, FileSafe journals and holds, runtime liveness, resource admission, and
-  permission visibility. Domain findings feed the shared bounded recovery outcomes rather than inventing peer terminal
-  states. Persisted child cold revival is allowed only after exact durable context and workspace identity,
-  non-conflicting ownership, current permissions/capabilities, and remaining budget/deadline verify. Revival advances
-  the lease generation and creates a new runtime identity; expired credentials, PIDs, terminals, language servers, MCP
-  sessions, streams, in-memory locks, and hidden provider state are never revived.
+  Startup reconciliation precedes child dispatch, lease renewal, integration, and cleanup, comparing
+  durable lease and owner records with exact topology/source identity, Git common-dir inventory,
+  worktree/gitdir/branch/OIDs, baseline/result hashes, active Git operation, FileSafe journals and
+  holds, runtime liveness, resource admission, and permission visibility. Domain findings feed the
+  shared bounded recovery outcomes rather than inventing peer terminal states. Persisted child cold
+  revival is allowed only after exact durable context and workspace identity, non-conflicting
+  ownership, current permissions/capabilities, and remaining budget/deadline verify. Revival advances
+  the lease generation and creates a new runtime identity; expired credentials, PIDs, terminals,
+  language servers, MCP sessions, streams, in-memory locks, and hidden provider state are never
+  revived. Rootless app continuation reconciles its own exact Computer/root/attempt record and never
+  enters a main worktree; conversion only admits a new destination backend route after its owner
+  checks.
 gui_related: false
 gui_classification_reason: This is backend restart recovery and safe runtime reconstruction behavior.
 depends_on: [SIR-007, SIR-011, W-008, W-052, W-064, W-082]
@@ -5658,7 +5727,9 @@ context_scope: child_worktree_restart_revival
 implementation_surfaces: [Plans/WorktreeGitImprovement.md, Plans/Shared_Integration_Runtime.md, future Source Control reconciler]
 node_compile_hint: {mode: child_worktree_restart_and_cold_revival, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Child-worktrees
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Child-worktrees
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["cleanup/reconcile after restart", "persisted child cold revival", "ObservableWork", "manual_recovery_required", "terminal_unknown_with_disclosure", "new runtime identity"]
 negative_constraints:
   - Never settle an interrupted transaction from path existence, PID absence, branch name, or expiry alone.
@@ -5676,12 +5747,15 @@ status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
   Project-scope child worktree operations reuse cmd.git.worktree.create, cmd.git.worktree.merge, and
-  cmd.git.worktree.release; no cmd.worktree.* peer namespace is minted. cmd.chat.worktree.* remains a thread-scoped
-  wrapper only for a real Assistant thread binding. Permissions admits the exact actor/runtime, action class,
-  repository/worktree/branch target, generation, and write mode. FileSafe independently owns canonical path/scope and
-  filesystem mutation admission, fencing, safe points, rollback, equality, and recovery. Source Control owns Git
-  identity, lease/materialization binding, administrative serialization, result capture, integration, and Git
-  postconditions; neither owner's success substitutes for the other.
+  cmd.git.worktree.release; no cmd.worktree.* peer namespace is minted. cmd.chat.worktree.* remains a
+  thread-scoped wrapper only for a real Assistant thread binding. Permissions admits the exact
+  actor/runtime, action class, repository/worktree/branch target, generation, and write mode. FileSafe
+  independently owns canonical path/scope and filesystem mutation admission, fencing, safe points,
+  rollback, equality, and recovery. Source Control owns Git identity, lease/materialization binding,
+  administrative serialization, result capture, integration, and Git postconditions; neither owner's
+  success substitutes for the other. A no-project chat is allowed independently, but PM Project
+  worktree commands require a real destination Project and Git/JJ-supported owner route. Conversion
+  grants no automatic bind, merge, cleanup or copied lease authority.
 gui_related: false
 gui_classification_reason: This defines backend command namespace and cross-owner security boundaries, not a visual surface.
 depends_on: [SIR-007, W-005, W-022, W-080, W-081, W-082]
@@ -5702,7 +5776,9 @@ context_scope: child_worktree_command_filesafe_permissions
 implementation_surfaces: [Plans/WorktreeGitImprovement.md, Plans/UI_Command_Catalog.md, Plans/FileSafe.md, Plans/Permissions_System.md]
 node_compile_hint: {mode: child_worktree_command_security_boundary, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Child-worktrees
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Child-worktrees
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["cmd.git.worktree.create", "cmd.git.worktree.merge", "cmd.git.worktree.release", "cmd.chat.worktree.*", "FileSafe", "Permissions"]
 negative_constraints:
   - Do not mint cmd.worktree.* commands.

@@ -105,7 +105,7 @@ Skills are discovered from deterministic on-disk roots.
 - `~/.claude/skills/**/SKILL.md`
 - `~/.agents/skills/**/SKILL.md`
 
-Rule: Project-local discovery MUST resolve relative to the active project root (walk up from CWD to git worktree root, or use the app's selected project path).
+Rule: Project-local discovery resolves against the explicitly bound Project/worktree root. In No project, `project_root=null`: skip all Project-local roots and use the same allowed user/global roots and Computer installation/readiness records. Do not walk up from a chat/granted directory to infer a Project or add arbitrary Computer skill-source roots.
 
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/MiscPlan.md
 
@@ -157,7 +157,7 @@ The skill registry remains the discovery and validation source for available ski
 Skills consume the canonical `CapabilityStageRecord` and `CapabilityCatalogMaterialization` from `Plans/Tools.md`. For a Skill the stages mean:
 
 1. `installed` — the package/manifest is present in a canonical discovery root with provenance and content hash.
-2. `project_enabled` — the resolved first-wins Skill entry is enabled for the active Project/profile; invalid or shadowed entries cannot advance.
+2. `project_enabled` — the resolved first-wins Skill is enabled by its owner bindings and Everywhere/Computer/optional-Project context. With no Project this records no applicable Project gate, never an unconditional allow; invalid/shadowed entries still cannot advance.
 3. `policy_available` — readiness, required-tool refs, route/runtime compatibility, Permissions, FileSafe, trust, and resource policy permit consideration.
 4. `selected_for_request` — the current request explicitly names the Skill or deterministic task matching selects it from eligible candidates.
 5. `invoked` — `invoke_skill` passes validation and receives a concrete attempt identity.
@@ -180,17 +180,17 @@ This section defines the canonical contract for this surface.
 
 Runtime contract addendum:
 - The canonical invocation key is `skill_id`. Legacy or provider-style inputs such as `path_or_name` and `path_or_name -> content, name` MAY be normalized only as compatibility aliases; they do not bypass Skill ID validation, permission checks by exact skill name, registry lookup, or readiness gating.
-- The shared `invoke_skill` payload carries `skill_id`, `input`, optional `context`, and optional `timeout`; when context is supplied it includes `project_root`, optional `active_file`, optional `selection`, and `conversation_id` so invocation is tied to the active thread and workspace scope.
+- `invoke_skill` retains `skill_id`, `input`, optional `context` and `timeout`. Its scope-aware context binds real Computer/thread/conversation identity, optional file/selection, and `project_root=null` in No project; a Project/worktree root is carried only when truly bound. The successor context is versioned; existing Project request codecs stay exact.
 - `timeout` is measured in milliseconds. When omitted, `invoke_skill` uses `timeout_ms = 120000`; callers may lower it, and may raise it only up to `max_timeout_ms = 600000` when the active runtime policy permits. Timeout expiry emits `skill.invocation_timed_out`, cancels any outstanding skill-owned work, and returns a non-success result without retrying automatically.
 - If a skill is valid but blocked by missing permissions, invocation pauses before tool dispatch and emits a permission blocked payload with `blocked_reason_code = permission_required`, `approval_scope_key`, `permission_snapshot_id?`, ordered `allowed_action_ids[]`, and the required tool/capability refs. `Review permissions` routes to the canonical Permissions approval/settings surface; Skills never owns a parallel consent dialog.
 - Skill defines its own `input` schema via manifest, and PM validates that schema before invocation.
 - The `skill` result is a structured `skill-content` envelope: `skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, and `metadata?`; `name` is a compatibility display alias for `title`. Resource guidance is relative-resource guidance only: assistant-visible paths must be relative to `resource_base_dir` and remain within FileSafe-permitted skill resources. `source_type` uses the canonical source vocabulary below; legacy `built-in` or `/built-in` wording normalizes to `bundled` / PM-bundled, `resource-root` normalizes to `resource_base_dir?`, and provider-private skill injection is not a canonical runtime path.
-- Assistant awareness (`assistant-awareness`) does not make every discovered skill assistant-auto-usable. Auto-invoking is limited to skills that are `runtime-ready`, eligible in the active project/session, permission-allowed, and flagged `auto_invokable`; `runtime-ready-with-warnings`, `ready_with_warnings`, imported-with-warnings, invalid, disabled, shadowed, and `warning-blocked` skills require explicit user or agent selection.
+- Assistant awareness (`assistant-awareness`) does not make every discovered skill assistant-auto-usable. Auto-invoking is limited to skills that are `runtime-ready`, eligible in the exact Project or app-thread/Computer session under SS-039, permission-allowed, and flagged `auto_invokable`; `runtime-ready-with-warnings`, `ready_with_warnings`, imported-with-warnings, invalid, disabled, shadowed, and `warning-blocked` skills require explicit user or agent selection.
 - The `skill` tool-description is dynamic and bounded: when PM presents the tool to a model, it exposes a deterministic budgeted slice of currently runtime-ready Skill names/descriptions plus total/omitted counts and catalog-search guidance. It never injects the complete roster when that would exceed the catalog budget, and it updates after registry changes such as import, enable, disable, or revalidate.
 - The `skill` tool does not create a hidden `nested-task` and does not own shell or PTY execution. Skill-triggered tool work remains under that tool's permission, Terminal, and audit contracts; chat rendering of skill or tool output is only an audited `/expandable` result surface.
 - Skill-triggered runtime actions normalize legacy `allowed_actions[]` displays to canonical `allowed_action_ids[]`; `allowed_actions` is a compatibility label, while `allowed_action_ids` is the stable ordered action vocabulary used by runtime blocked/recovery contracts.
-- Skill routes that open `/artifact/search/attention` consumers use the shared `route-target` contract, preserving active project, conversation, selection, run/thread/attempt, and skill identity instead of emitting feature-local deep-link payloads.
-- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.
+- Skill routes that open `/artifact/search/attention` consumers use the shared `route-target` contract, preserving explicit application-or-Project place, actual Computer, conversation, selection, run/thread/attempt and Skill identity instead of emitting feature-local deep-link payloads.
+- Skill-driven tree, evidence, restore and `/revert` routes use exact Project/worktree identity when bound, otherwise explicit app thread/Computer/root identity. They never assume a single active-worktree; missing/archived/stale actual targets remain typed unavailable rather than causing Project fallback.
 
 Core rules:
 - Agent behavior management is locked under Agent Config, with Skills as a tab inside it, while Settings retains system-level dependencies and rules.
@@ -372,7 +372,7 @@ Additional import/install rules:
 - Manual GUI import accepts a folder drop, file-browser/folder picker, single `SKILL.md`, `.zip`, or `.tar.gz` package. The flow unpacks/copies into the selected PM-managed scope, validates immediately, and auto-populates catalog entry metadata from `SKILL.md` frontmatter and import provenance (`name`, `description`, source/provenance, readiness, and optional metadata/tags); the visible result is an auto-populating catalog entry until validation finishes.
 - Catalog and Store distribution use `/catalog/install`; generic `/install` buttons must resolve either to `/catalog/install` or to the same local import contract. Remote `URL` or git clone import remains out of v1 except as provenance for catalog-installed or GitHub-installed skills.
 - Imported packages default to portable unless validation finds unsupported dependencies, missing runtime requirements, permission/risk blockers, or bad schema. Warnings surface as `imported-with-warnings`, `ready_with_warnings`, or `runtime-ready-with-warnings` rather than silently failing; unsupported entries remain discoverable but are not auto-invoked.
-- Natural-language examples such as `use the doc-lookup skill`, `load the swiftui-pro skill`, and `what skills do I have available?` route through the same registry-backed `invoke_skill` contract as `/skill` and Agent Config > Skills. The assistant knows runtime-ready skills in the active project/session, but auto-invoking is limited to eligible `auto_invokable` entries.
+- Natural-language examples such as `use the doc-lookup skill`, `load the swiftui-pro skill`, and `what skills do I have available?` route through the same registry-backed `invoke_skill` contract as `/skill` and Agent Config > Skills. The assistant knows runtime-ready skills in the exact Project or app-thread/Computer session under SS-039, but auto-invoking is limited to eligible `auto_invokable` entries.
 
 ### 6.3 Slash and runtime boundary
 
@@ -684,7 +684,12 @@ plan_unit_id: SS-006
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Skills_System.md
-canonical_text: Skill discovery uses deterministic project-local and global roots and resolves project-local roots relative to the active project root or git worktree root.
+canonical_text: >-
+  Skill discovery keeps the canonical Project-local and user/global root order. Library content is
+  mirrored from its owner home and each Computer records installation/readiness separately. With
+  project_root=null the Project roots are absent and discovery uses only allowed user/global roots; it
+  never walks up from a chat folder to claim a repository or invents a per-Computer source-root tier.
+  A real bound active project root retains its existing root meaning.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -713,6 +718,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0011
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0012
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - .puppet-master/skills/**/SKILL.md
 - .claude/skills/**/SKILL.md
@@ -739,7 +746,10 @@ plan_unit_id: SS-007
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Skills_System.md
-canonical_text: Discovery walks roots in canonical order and resolves duplicate Skill IDs by first match wins, treating later duplicates as shadowed.
+canonical_text: >-
+  Discovery walks roots in canonical order and resolves duplicate Skill IDs by first match wins,
+  treating later duplicates as shadowed. No-project discovery skips only the inapplicable Project
+  roots and retains the same first-match order, hash/provenance and shadowed-entry disclosure.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -767,6 +777,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0013
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - SEARCH-ORDER
 - first match wins
@@ -957,7 +969,12 @@ plan_unit_id: SS-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Skills_System.md
-canonical_text: The canonical skill invocation payload uses skill_id with input, optional context, optional timeout, active project/thread context, and manifest-defined input schema validation.
+canonical_text: >-
+  The canonical invoke_skill payload keeps skill_id, input, optional context and timeout plus
+  manifest-defined input schema validation. Its scope-aware context carries the real thread/Computer
+  and project_root=null in No project; a Project/worktree root is present only for a real admitted
+  binding. SS-039 governs app discovery/readiness, and exact-root/capability/permission checks still
+  apply.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -986,6 +1003,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0018
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - skill_id
 - invoke_skill
@@ -998,7 +1017,9 @@ preserved_exact_tokens:
 - conversation_id
 - input schema
 negative_constraints:
-- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.
+- Do not assume a single active-worktree or synthesize a Project for an app invocation.
+- Skill-driven tree, evidence, restore and /revert routes preserve exact place/root identity and refuse absent,
+  archived or stale actual targets.
 preserved_contractrefs: []
 compatibility_only_notes:
 - The canonical invocation key is `skill_id`. Legacy or provider-style inputs such as `path_or_name` and `path_or_name -> content, name` MAY be normalized only as compatibility aliases; they do not bypass Skill ID validation, permission checks by exact skill name, registry lookup, or readiness gating.
@@ -2595,9 +2616,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Skills_System.md
 canonical_text: >-
-  Skills preserve installed, project_enabled, policy_available, selected_for_request, and invoked as independent stages.
-  Persona defaults nominate eligible candidates instead of eagerly injecting them; bounded L0-L3 materialization admits
-  only request-selected instructions/resources in deterministic Skill-ID/hash order and emits explicit omission receipts.
+  Skills preserve installed, project_enabled, policy_available, selected_for_request, and invoked as
+  independent stages. Persona defaults nominate eligible candidates instead of eagerly injecting them;
+  bounded L0-L3 materialization admits only request-selected instructions/resources in deterministic
+  Skill-ID/hash order and emits explicit omission receipts. In No project, project_enabled records the
+  resolver result from library/Computer enablement with no applicable Project gate; it is never an
+  unconditional permission allow or evidence of a ready installation.
 gui_related: false
 gui_classification_reason: Backend Skill discovery, selection, prompt admission, and receipt contract; not GUI implementation work.
 depends_on: [SS-007, SS-009, SS-010, SS-013, T-176, PP-009]
@@ -2624,10 +2648,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
-  - ACCOUNTABILITY_MATRIX.json:CTX-012
-  - ACCOUNTABILITY_MATRIX.json:CTX-015
-  - reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+- 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
+- ACCOUNTABILITY_MATRIX.json:CTX-012
+- ACCOUNTABILITY_MATRIX.json:CTX-015
+- reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: []
 preserved_exact_tokens:
   - installed
@@ -2849,3 +2875,98 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Personas.md, ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Decision_Log.md
+
+### SS-039 - Skill Library Reach, Computer Readiness And App Invocation
+
+```yaml
+plan_unit_id: SS-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: Skills retains the single SKILL.md registry, source vocabulary, canonical Project/user/global
+  discovery order and first-wins deduplication. Library home/reach, a whole Project version and Computer
+  installation/readiness are separate owner records. project_switch_ids=[extensions.skills.skill-on-off]
+  binds a switch to a stable skill_id; permission rules remain Permissions-owned. The project_enabled
+  stage retains independent policy checks. No project discovers only allowed global/user roots, offers
+  global-only create/import, and carries null project_root with real thread, Computer and working-root
+  identities into invoke_skill. A Computer-specific installation record suffices; no arbitrary Computer
+  skill-source roots are added. Source/version trust, package validation, permission_class, child ceilings,
+  dependency readiness and bounded L0-L3 selection remain. Copy contributes selected whole content/hash,
+  destination identity, switch/reach edits, first-load trust status and owner readback/rollback to the
+  same Settings transaction; copying does not install, execute, auto-trust or copy a credential. Conversion
+  reruns discovery and admission at the destination. SS-038 grilling keeps its complete frontier, user-decision
+  and confirmation rules in every admitted app chat or Crew; this pass changes neither the Skill nor its
+  interview contract. The owner contribution is named in owner_thing_previews; scope_model and project_switch_ids
+  describe its manager boundary. settings.follow never grants thing mutation or Project content authority.
+  The selected whole-version/copy operation is cmd.skill.copy through sole planned handler handlers::skills::copy,
+  with Plans/shared_integration_runtime.schema.json#/$defs/skill_copy_request and Plans/shared_integration_runtime.schema.json#/$defs/skill_copy_result.
+  The Settings batch invokes this owner contribution, including exact source hash/revision, destination
+  CAS, declared reach/switch deltas, readback and eligible compensation; it never writes owner records
+  directly. These registrations do not prove native availability; missing schema, handler, trust, installation
+  or currentness remains typed unavailable.
+gui_related: true
+gui_classification_reason: Owns user-visible manager, activity or control behavior.
+depends_on:
+- SS-006
+- SS-007
+- SS-011
+- SS-036
+- SS-038
+- SSYS-061
+- SSYS-062
+unblocks: []
+acceptance_criteria:
+- No-project discovery and global-only creation succeed without a Project; Project-only/shadowed/invalid
+  skills stay absent or blocked.
+- The same Skill on another Computer is not Ready until its dependencies and source/version trust pass
+  there.
+- Copy/rollback preserves exact package identity and reaches only previewed targets, with no hidden source
+  roots.
+validation_surfaces:
+- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
+- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+risk_class: scope_authority_or_custody_drift
+reasoning_tier: high
+context_scope: project_and_application_scope
+implementation_surfaces:
+- Plans/Skills_System.md
+- Plans/settings_system_contracts.schema.json
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/SETTINGS-PROPOSAL.md#4.1;4.5;5
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- 'Jared, 2026-11-03: "Those look good, except goals and crew should be allowed in no project."'
+- 'Jared, 2026-11-03: "Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t."'
+- projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-B02
+preserved_exact_tokens:
+- SKILL.md
+- skill_id
+- project_root
+- project_enabled
+- project_switch_ids
+- extensions.skills.skill-on-off
+- owner_thing_previews
+- scope_model
+- settings.follow
+- cmd.skill.copy
+- handlers::skills::copy
+negative_constraints:
+- Do not turn project_enabled into a policy bypass or inject all enabled Skill instructions.
+- Do not add an arbitrary Computer source-root tier, export secret resources or change grilling decisions.
+- Do not infer an implemented handler, admitted event writer, native verification, WorkNode, NodeSeed
+  or governance clearance from this accepted contract.
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Settings_System.md
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Skills_System.md#SS-039, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365

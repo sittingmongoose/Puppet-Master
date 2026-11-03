@@ -19,7 +19,7 @@
 
 ## Summary
 
-The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below. Amended 2026-10-09 (DL-180): the editor is the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `Plans/FinalGUISpec.md#F3-639`); the File Editor strip is lineage (section 2.1).
+The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the exact Project or app Computer/working-root context, while foreign read references keep their own source identity; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below. Amended 2026-10-09 (DL-180): the editor is the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `Plans/FinalGUISpec.md#F3-639`); the File Editor strip is lineage (section 2.1).
 
 This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets**; and the editor enhancement set. **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** remains in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**. Amended 2026-10-09 (DL-180): the editor is now the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `Plans/FinalGUISpec.md#F3-639`); the File Editor strip, dragging the editor out to its own window and back, and split editor panes as editor-only groups are lineage (section 2.1), and split panes are the panels' own splits (`Plans/FinalGUISpec.md#F3-630`).
 
@@ -152,7 +152,7 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/LSPSupport.md, C
 
 ## 1. File Manager panel
 
-**Done when:** (1) Tree lists all project files under root; (2) Selecting a file opens it in the editor via §4.1; (3) Virtualized tree handles 10k+ rows without freezing; (4) Expand/collapse state restores per project on reopen. **Error handling:** **Open failed** -- If opening the selected file fails (permission denied, not found, too large), show "Open failed" with brief reason in status or toast; do not leave tree in inconsistent state. **Refresh failure** -- If directory read fails (e.g. permission), show error on that node and optionally "Retry." **Edge cases:** **Empty project** -- Show "No files" or project root only; no crash. **No permission on subfolder** -- Show node but mark or filter; AutoDecision: show node as inaccessible and do not enumerate children. **Expand/collapse persistence:** Redb key e.g. `file_manager/expanded/{project_id}` → list of expanded path prefixes or node ids (§2.9). **Requires** §4.1 open-file contract before "select file opens it"; requires project context (project root). **Settings:** **Hide ignored** (toggle): Settings → File Manager (or header); default off (ignored dimmed); persist in redb. **Row cap per directory:** AutoDecision: default 10_000 entries; configurable; persist in redb key `file_manager/row_cap_per_directory`.
+**Done when:** the tree lists files beneath the exact bound Project root or explicit app Computer/chat/granted directory; selecting a file uses §4.1/F-090; virtualized 10k+ rows remain usable; expansion restores by exact place/root/workspace identity. Open failed, directory read failure/Retry, empty root and inaccessible subfolders remain explicit. An inaccessible subfolder is not enumerated. Project expansion keeps `file_manager/expanded/{project_id}`; F supplies a separate versioned app key with actual Server/root/workspace identity. Hide ignored stays default off (ignored dimmed), and row cap remains 10_000 with the existing setting/Show more behavior. Without an admitted app directory show a picker/empty state; never enumerate home or another Project implicitly.
 
 Day-to-day tree interaction is implementation-ready and carries implementation-readiness detail: header search is an active repo/worktree tree filter, not universal search, full-text search, or a mixed-root result surface. Matching includes name-only and repo-relative path matches; ignored files remain dimmed by default or absent when Hide ignored is enabled. Floating-window File Manager behavior uses the same filter, `/worktree-aware` repo_id/worktree_id context, and Source Control strip (`Open in Source Control`, `Open diff`, `Open compare`) as the docked panel.
 
@@ -164,10 +164,10 @@ ContractRef: Plans/Decision_Policy.md, Plans/storage-plan.md §2.3, Plans/Tools.
 
 - **Placement:** Docked File Manager is the Activity Bar side-panel occupant in the single right-hand shell slot by default, with the same detachable/pop-out behavior as Chat and re-docking back to that slot. Per FinalGUISpec §4.1, Composergui5 §5, and feature-list layout: header ("FILES"), refresh, pop-out; search; virtualized file tree; optional Git status strip.
 - **Virtualized file tree:** Only visible nodes are rendered; scroll position determines which slice of the tree is shown. Total height uses an estimated row height (AutoDecision: `row_height_px = 24`) so the scrollbar is correct. Supports deep trees; **very large directories** (e.g. node_modules): virtualize by row, apply a row cap per directory (AutoDecision: 10_000 entries; key `file_manager/row_cap_per_directory`) with "Show more" or type-ahead to narrow; AutoDecision: no explicit depth limit (children are loaded lazily on expand).
-- **Behavior:** Lists all files in the current project. **Selecting a file opens it in the in-app IDE-style editor** (§2). File Manager and editor share the same project context. Amended 2026-10-09 (DL-180): the file opens as an editor tab in the home panels by F-090: a single click opens the panel's preview tab, a double click or Enter keeps it, Alt+click opens a new panel, and a file already open anywhere is revealed where it is.
+- **Behavior:** Lists files beneath the exact Project or admitted app working root, with current permission exclusions. **Selecting a file opens it in the in-app IDE-style editor** (§2). File Manager and editor share the same explicit place/Computer/root context. Amended 2026-10-09 (DL-180): the file opens as an editor tab in the home panels by F-090: a single click opens the panel's preview tab, a double click or Enter keeps it, Alt+click opens a new panel, and a file already open anywhere is revealed where it is.
 - **.gitignore / exclude:** File tree respects `.gitignore` (and optionally a project exclude list) as the File Manager's gitignore-aware traversal contract. Ignored files/folders are **dimmed** by default. Optional user setting **"Hide ignored"** hides them entirely (toggle in header or Settings).
 - **Context menu:** Summary-only entrypoint for the canonical file-tree action catalog in §11.1 and §11.4. Core actions include create/rename/delete/path copy, workspace-node clipboard actions, Add to Assistant Chat, Open in Terminal, Open With, and Save Local Copy. Aligns with selectable labels and context menus (AGENTS.md).
-- **Drag and drop (external ↔ File Manager):** User can **drop** files/folders from the desktop (or another app) **onto** a folder or project root in the tree (items are copied into that folder), and **drag** files/folders **out** of the tree onto the desktop or another app (copied to drop target). Copy is default; optional modifier for move. Full specification: **§1.1**.
+- **Drag and drop (external ↔ File Manager):** User can **drop** files/folders from the desktop (or another app) **onto** a folder or admitted working root in the tree; an app drop creates/uses the chat folder under the same FileSafe/Permissions rules (items are copied into that folder), and **drag** files/folders **out** of the tree onto the desktop or another app (copied to drop target). Copy is default; optional modifier for move. Full specification: **§1.1**.
 - **Expand/collapse persistence:** Which folders are expanded is persisted per project (e.g. in redb under project key); restore on reopen.
 - **Keyboard:** Arrow keys navigate the tree; Enter opens the selected file (or expands/collapses folders). Type-ahead (or search) narrows to matching nodes. Keyboard-only use must be supported for accessibility.
 - **Current file ("you are here"):** When the editor has focus, optionally highlight and scroll the File Manager tree to the current file so the two surfaces stay visually connected.
@@ -228,7 +228,7 @@ If the UI stack (e.g. Slint) provides a **unified drag-drop API** that abstracts
 
 | Problem | Solution |
 |---------|----------|
-| **Security: dropping outside project** | When **dropping onto** the tree, resolve the drop target to an **absolute path** and check that it is **under the project root** (e.g. `target.starts_with(project_root)` with normalized paths). If not (e.g. path traversal), **reject** the drop and do not write anywhere. Never write to paths outside the project for this feature. |
+| **Security: dropping outside project** | When **dropping onto** the tree, resolve the drop target to an **absolute path** and check that it is **under the project root** (e.g. `target.starts_with(project_root)` with normalized paths). If not (e.g. path traversal), **reject** the drop and do not write anywhere. Never write to paths outside the project for this feature. | For app drops the corresponding boundary is the explicitly admitted Computer/chat/granted root; no read-only foreign Project reference becomes a writable drop target.
 | **Security: drag out exposes sensitive paths** | When **dragging out**, we only expose **paths under the current project**. The user is explicitly moving project files; no other app state (e.g. config, tokens) is included in the D&D payload. |
 | **Large drop blocks UI** | Run copy (and optional move) in a **background task**; show progress and allow cancel. Do not block the main thread or the tree UI. |
 | **Partial failure (multi-item drop)** | If one of N items fails (e.g. permission denied), **continue** with the rest; at the end show a summary: "Copied N-1 items. Failed: {path} -- {reason}." Optionally "Retry failed" to retry only the failed items. |
@@ -238,7 +238,7 @@ If the UI stack (e.g. Slint) provides a **unified drag-drop API** that abstracts
 
 #### 1.1.5 Enhancements
 
-- **Drag to reorder within tree:** Allow dragging a file/folder to a different folder in the **same** tree to move it (reorder). Same security (target must be under project root); implement as move within project. Optional for MVP.
+- **Drag to reorder within tree:** Allow dragging a file/folder to a different folder in the **same** tree to move it (reorder). Same security (target must be under project root); implement as move within project. Optional for MVP. For app drops the corresponding boundary is the explicitly admitted Computer/chat/granted root; no read-only foreign Project reference becomes a writable drop target.
 - **"Move" as default on same filesystem:** When source and target are on the same volume, some UIs default to move (faster). We keep **copy** as default for safety; the modifier for move remains optional.
 - **Undo:** After a drop (copy or move), optionally offer "Undo" in the toast so the user can revert (e.g. delete the copied files or move back). Requires tracking the last drop operation; optional for MVP.
 - **Settings:** Expose "Default action for drop: Copy / Move" and "When name exists: Ask / Overwrite / Keep both (rename)" in Settings → File Manager so power users can avoid dialogs.
@@ -408,18 +408,18 @@ name is the panel's editor tab (`Plans/FinalGUISpec.md#F3-635`) (F-030).
 ## 3. @ mention in chat
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md
 
-The `@` mention system is project-scoped and identity-preserving.
+The `@` mention system is place-scoped and identity-preserving: exact Project files when bound, explicit chat/granted Computer roots in No project, or an expressly selected foreign reference through T-185 read authority.
 
 Rules:
-- invoking `@` opens a picker rooted in the active project context
+- invoking `@` opens the File Manager-owned picker rooted in that explicit place/Computer context; choosing a foreign Project file is read-only under its current grant and does not widen roots
 - sources may include recent files, modified files, folder navigation, and symbol-aware results when LSP data exists
 - the inserted mention preserves the canonical file identity/path needed by prompt assembly and click-to-open behavior
 - mentions work in Assistant and Interview chat surfaces
 - when the referenced file is already open, mention navigation resolves to the existing editor state instead of opening duplicate buffers unnecessarily
 ## 4. Integration: File Manager, editor, and chat
 
-- File Manager, editor, and chat share the **same project context**.
-- `@` mention resolution uses the same file list as the File Manager (single source of truth for project files).
+- File Manager, editor and chat share the exact application-or-Project place, Computer and working-root context; selected foreign source references retain their separate read-only identity.
+- `@` uses the File Manager file list for the selected root; cross-Project results come only from the approved T-185 tools and preserve source/coverage rather than entering an ambient combined tree.
 - Clicking a file path or code block in chat opens the file in the editor; see §5.
 
 ### 4.1 Open-file contract
@@ -427,7 +427,7 @@ Rules:
 FileManager is the canonical owner of the file-open and artifact-storage contract. When a file is opened (via GUI, CLI, or internal routing), the following rules apply:
 
 1. **Identity-based routing**: If the file path includes a route_target scheme (e.g., `github://owner/repo/file.md`), the open request is resolved through the shared route/open semantics in Contracts_V0.md, not a raw filesystem read.
-2. **Worktree binding**: Opened files are bound to the active worktree via an execution_unit_context; artifacts opened in different worktrees have separate identity chains.
+2. **Worktree/root binding:** Project files bind to the exact execution_unit_context worktree; app files bind to the recorded absolute Computer/root/file/version identity with null Project. Neither focus nor an absent worktree chooses a main root.
 3. **Chat edit-card open target**: For chat `file-edit` cards, the path `to-open` resolves from `working_directory + relative_path`: the card displays the worktree-relative path, and the File Manager/editor opens the worktree's filesystem location as a real file on disk at the worktree path without a special rewrite layer.
 4. **Artifact-by-identity**: Artifacts (outputs, logs, diffs) are stored by content hash and indexed by (concern_id, route_target, artifact_type, timestamp); raw paths are deprecated.
 5. **Open-file visibility**: The open-file list visible in the GUI is filtered by the active execution_role and the current approval_scope. Files opened in restricted approval scopes are not shown to unprivileged users.
@@ -565,7 +565,7 @@ File Manager, File Editor, and diff/review surfaces may consume the Backup-owned
 | Browse snapshot | `cmd.backup.browse` | Show a paginated, read-only, untrusted snapshot tree/preview pinned to the explicit backup/repository/snapshot/capture set. Browsing does not open a writable workspace buffer, run preview content, or become a restore mode. |
 | Download to this Client | `cmd.backup.file.download` | Deliver only to the `initiating_client_id` through the Client-owned picker/transfer surface. It is not `cmd.file.save_local_copy`, does not redirect to a Server because the Client disconnects, and does not change workspace or snapshot path identity. |
 | Extract to Host | `cmd.backup.extract` | Require the explicitly selected `target_host_id`, owning Server/Environment, an authorized target path reference, permission/currentness, and a FileSafe decision before any output. Symlink/reparse traversal, case/Unicode collision, reserved-name, metadata, executable-bit, ACL/xattr, existing-target, partial-output, cancellation, and rollback rules fail closed. |
-| Compare with current | `cmd.backup.file.compare` | Bind the immutable snapshot-side path and content identity plus the exact current Project/file/source version and currentness. The compare surface is read-only; a user must choose again when either side is ambiguous or stale, and no branch, worktree, current file, or latest snapshot is inferred. |
+| Compare with current | `cmd.backup.file.compare` | Bind the immutable snapshot-side path and content identity plus the exact selected Project or app Computer/root/file/source version and currentness. The compare surface is read-only; a user must choose again when either side is ambiguous or stale, and no branch, worktree, current file, or latest snapshot is inferred. |
 | Export portable backup | `cmd.backup.export` | Disclose output destination, artifact kind, encryption/protection state, selected coverage, dependency closure, and whether the result is partial/non-restorable before writing. A decrypted export warns that ordinary saved files no longer have backup encryption. Export is a delivery artifact, not a restored Project or Full Server archive, and never activates or executes content. |
 | Retrieve archived snapshot | `cmd.backup.archive.retrieve` | Project provider capability, wait/external prerequisite, and fee/cost note without a hard-coded price; require explicit human consent before a billable external effect and show correlated `ObservableWork`/indeterminate-outcome recovery. Retrieval alone neither downloads nor restores content. |
 
@@ -1027,8 +1027,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
-  The File Manager panel lists project files under root, opens selected files through the editor open-file contract, virtualizes large trees, restores expand/collapse state, exposes Hide ignored and row-cap settings, and shows explicit open/refresh/empty/permission error states.
-  Amended 2026-10-09 (DL-180): opening a selected file into the home panels follows F-090: a single click opens the target panel's preview tab, a double click or Enter keeps it, Alt+click opens a new panel, and a file already open anywhere is revealed where it is; the target panel is the opening module's (Plans/FinalGUISpec.md#F3-634).
+  The File Manager panel lists project files under root, opens selected files through the editor
+  open-file contract, virtualizes large trees, restores expand/collapse state, exposes Hide ignored
+  and row-cap settings, and shows explicit open/refresh/empty/permission error states. Amended
+  2026-10-09 (DL-180): opening a selected file into the home panels follows F-090: a single click
+  opens the target panel's preview tab, a double click or Enter keeps it, Alt+click opens a new panel,
+  and a file already open anywhere is revealed where it is; the target panel is the opening module's
+  (Plans/FinalGUISpec.md#F3-634). In No project the same tree is rooted in an explicitly selected
+  Computer/chat/granted directory, with app workspace/root-keyed view state; it does not enumerate the
+  whole home by default.
 gui_related: true
 gui_classification_reason: This unit defines visible File Manager tree behavior, settings, and error states.
 split_recommended: true
@@ -1053,6 +1060,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0011
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - File Manager panel
 - Done when
@@ -1201,7 +1210,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
-  File Manager external drag/drop supports dropping files/folders onto project folders with copy default, Shift-move semantics, valid drop target validation, tree refresh/progress, drag-out URIs for project files, and deterministic per-item handling for multi-select operations.
+  File Manager external drag/drop supports dropping files/folders onto project folders with copy
+  default, Shift-move semantics, valid drop target validation, tree refresh/progress, drag-out URIs
+  for project files, and deterministic per-item handling for multi-select operations. An app-context
+  drop or saved attachment creates/uses the owned chat folder or an explicitly admitted destination;
+  Project references remain read-only and cannot be drop/write targets through a cross-read grant.
 gui_related: true
 gui_classification_reason: This unit governs user-visible external drag/drop behavior and multi-selection operations.
 split_recommended: false
@@ -1226,6 +1239,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0012
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0013
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Drag and drop
 - external ↔ File Manager
@@ -1254,7 +1269,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
-  Drag/drop implementation uses platform file-drop APIs for Windows, macOS, and Linux, normalizes and validates target paths under the project root, provides conflict dialog or setting behavior, performs large copy/move in background tasks with progress/cancel, and shows visual drag target plus post-drop feedback.
+  Drag/drop implementation uses platform file-drop APIs for Windows, macOS, and Linux, normalizes and
+  validates target paths under the project root, provides conflict dialog or setting behavior,
+  performs large copy/move in background tasks with progress/cancel, and shows visual drag target plus
+  post-drop feedback. For an app write, canonicalization binds the actual Computer and admitted root
+  instead of a Project root, with the same traversal, symlink, sensitivity, conflict, cancel and
+  rollback rules.
 gui_related: true
 gui_classification_reason: This unit defines visible drag target feedback and platform drag/drop implementation behavior.
 split_recommended: true
@@ -1278,6 +1298,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0014
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - IDropTarget
 - CF_HDROP
@@ -2269,7 +2291,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
-  The @ mention system is project-scoped and identity-preserving: invoking @ opens a picker rooted in active project context, sources can include recent/modified/folder/symbol results, inserted mentions preserve canonical file identity/path, and already-open references resolve to existing editor state.
+  The @ mention system is project-scoped and identity-preserving: invoking @ opens a picker rooted in
+  active project context, sources can include recent/modified/folder/symbol results, inserted mentions
+  preserve canonical file identity/path, and already-open references resolve to existing editor state.
+  The app picker uses the chat folder and explicitly admitted directories; an explicit foreign
+  Project/file pick follows T-185 read grants and preserves its source identity/read-only posture,
+  never an ambient all-Project picker.
 gui_related: true
 gui_classification_reason: Although span_map inferred non-GUI, this unit governs the visible @ mention picker and chat navigation behavior.
 split_recommended: false
@@ -2293,6 +2320,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0031
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "@ mention"
 - project-scoped
@@ -2321,8 +2350,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
-  File Manager, editor, and chat share one project context, @ mention uses the same file list as File Manager, and clicking a file path or code block in chat opens the file in the editor.
-  Amended 2026-10-09 (DL-180): a file path clicked in the chat opens by the same rules as the file tree (F-090): the panel's preview tab on a single click, revealed where it is when already open; what the chat opens is Plans/assistant-chat-design.md#ACD-500's and the rules are Plans/FinalGUISpec.md#F3-634's.
+  File Manager, editor, and chat share one project context, @ mention uses the same file list as File
+  Manager, and clicking a file path or code block in chat opens the file in the editor. Amended
+  2026-10-09 (DL-180): a file path clicked in the chat opens by the same rules as the file tree
+  (F-090): the panel's preview tab on a single click, revealed where it is when already open; what the
+  chat opens is Plans/assistant-chat-design.md#ACD-500's and the rules are
+  Plans/FinalGUISpec.md#F3-634's. The shared context may instead be an explicit app
+  Computer/root/thread binding with null Project; selected foreign read references keep their own
+  source scope and grant rather than rebinding the active editor.
 gui_related: true
 gui_classification_reason: Although span_map inferred non-GUI, this unit governs visible click-to-open integration between chat and editor.
 split_recommended: false
@@ -2346,6 +2381,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0032
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - same project context
 - "@ mention resolution"
@@ -2371,11 +2408,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
-  FileManager owns identity-based file-open routing: route_target paths resolve through
-  Contracts_V0 route/open semantics, opened files bind to the active worktree
-  execution_unit_context, and chat file-edit cards open the worktree filesystem path resolved from
-  working_directory + relative_path without a special rewrite layer.
-  Amended 2026-10-09 (DL-180): which home panel an opened file lands in is decided by the one opening module (Plans/FinalGUISpec.md#F3-634) from the placement fields of Plans/Contracts_V0.md#CV-360, never by an editor panel or group target; route_target resolution and worktree binding are unchanged.
+  FileManager owns identity-based file-open routing: route_target paths resolve through Contracts_V0
+  route/open semantics, opened files bind to the active worktree execution_unit_context, and chat
+  file-edit cards open the worktree filesystem path resolved from working_directory + relative_path
+  without a special rewrite layer. Amended 2026-10-09 (DL-180): which home panel an opened file lands
+  in is decided by the one opening module (Plans/FinalGUISpec.md#F3-634) from the placement fields of
+  Plans/Contracts_V0.md#CV-360, never by an editor panel or group target; route_target resolution and
+  worktree binding are unchanged. App files use recorded absolute Computer/root/file/version identity
+  in the scope-aware execution context; no main worktree or Project is inferred when unbound.
 gui_related: true
 gui_classification_reason: >-
   This unit governs visible file/editor open behavior from GUI, CLI, chat cards, and internal
@@ -2400,7 +2440,9 @@ node_compile_hint:
   mode: identity_based_open_routing_and_worktree_file_realization
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0033"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0033
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "route_target"
 - "github://owner/repo/file.md"
@@ -5060,12 +5102,14 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
-  File Manager consumes Backup-owned immutable snapshot browse, initiating-Client download,
-  explicitly authorized Host extraction, snapshot-to-current-file compare, disclosed portable
-  export, and consented archive retrieval. Every route preserves repository, snapshot, capture
-  set, Project/path/current-file, Client/Host, currentness, return, and focus identity; no Files
-  handler, latest-by-implication, RestoreRun mode, Project activation, or content execution is
-  created.
+  File Manager consumes Backup-owned immutable snapshot browse, initiating-Client download, explicitly
+  authorized Host extraction, snapshot-to-current-file compare, disclosed portable export, and
+  consented archive retrieval. Every route preserves repository, snapshot, capture set,
+  Project/path/current-file, Client/Host, currentness, return, and focus identity; no Files handler,
+  latest-by-implication, RestoreRun mode, Project activation, or content execution is created. With no
+  active Project, Compare with current names an explicitly selected authorized
+  Computer/root/file/source version; the snapshot and current side are independently pinned and a
+  Project is never inferred.
 gui_related: true
 gui_classification_reason: Snapshot tree, download/extract/compare/export/retrieve choices, FileSafe decisions, progress, disabled reasons, and exact reverse focus are visible Files surfaces.
 depends_on: [F-055, F-058, F-059, BRS-014, BRS-016]
@@ -5085,9 +5129,11 @@ context_scope: file_manager_backup_snapshot_consumer
 implementation_surfaces: [Plans/FileManager.md, future File Manager snapshot browser and compare surfaces, future Backup Restore native owner]
 node_compile_hint: {mode: filemanager_backup_consumer_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:2026-09-01:REST-002-REST-005
-  - source_ref:packet:2026-09-01:REST-009
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
+- source_ref:packet:2026-09-01:REST-002-REST-005
+- source_ref:packet:2026-09-01:REST-009
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 negative_constraints:
   - Do not create FileManager-owned snapshot, fetch, download, extract, compare, export, archive, or restore handlers.
   - Do not infer latest snapshot, current file, Host, Project, path, or successful delivery.
@@ -5161,11 +5207,15 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   The eight existing cmd.chat.attachment commands add, remove, retry, open, download, details,
-  freeze_reference and save_to_project remain File Manager-owned. Their exact request/result
-  names and sole handlers are the existing UCC-156 declarations with UCC-158 corrections, not new chat-local file services.
-  Attachment identity, captured version, permissions, bounded folder materialization and originating
-  thread/composer identity survive every route. FileSafe alone owns project writes. Owner placement,
-  named contracts and production-intent rows are not proof that machine schemas or native effects exist.
+  freeze_reference and save_to_project remain File Manager-owned. Their exact request/result names and
+  sole handlers are the existing UCC-156 declarations with UCC-158 corrections, not new chat-local
+  file services. Attachment identity, captured version, permissions, bounded folder materialization
+  and originating thread/composer identity survive every route. FileSafe alone owns project writes.
+  Owner placement, named contracts and production-intent rows are not proof that machine schemas or
+  native effects exist. In app scope attachments bind the real thread/Computer and folder.
+  save_to_project requires a chosen real destination Project and its current owner authority;
+  otherwise offer the existing save-to-disk/download flow without inventing a Project. A foreign
+  Project read grant cannot authorize that write.
 gui_related: true
 gui_classification_reason: Attachment tray, details, viewers, downloads and save controls are visible file-owner consumers.
 depends_on: [F-048, UCC-156, UCC-158, DR-040, DR-041]
@@ -5185,7 +5235,12 @@ reasoning_tier: high
 context_scope: attachment_owner_reference_repair
 implementation_surfaces: [Plans/FileManager.md, Plans/touch_closure.json, Plans/Wiring_Matrix.production.json]
 node_compile_hint: {mode: owner_and_touch_accounting_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/UI_Command_Catalog.md#UCC-158, PM_Assistant_v2_Additive_Correction_v4:FOLDER-001..008]
+source_lineage:
+- USER-PACKET-GAP-CLOSURE-20260910
+- Plans/UI_Command_Catalog.md#UCC-158
+- PM_Assistant_v2_Additive_Correction_v4:FOLDER-001..008
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 negative_constraints: [No invented machine schema or native proof., No peer file or folder transfer owner., No loss of captured version or source identity., No event or readiness admission.]
 ```
 
@@ -5335,25 +5390,33 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   The file tree opens files into the home panels through the one opening module (DL-180, D7;
-  Plans/FinalGUISpec.md#F3-634, Plans/DRY_Rules.md#DR-071) and keeps no placement or dedupe rule of its own. A single
-  click on a file row opens the file in the target panel's preview tab, with an italic label, which the next single
-  click replaces, and leaves keyboard focus in the tree so the arrow keys keep walking it; a double click opens the
-  file kept and moves focus to its tab; an edit in the tab, or dragging the tab, keeps a preview tab. With the Preview
-  Tabs setting off (`general.interaction.preview-tabs`, Plans/Settings_System.md#SSYS-050), a single click opens the
-  file kept. Enter on a focused file row opens it as a double click does. The tree dispatches the existing `cmd.file.open` with the placement
-  fields of Plans/Contracts_V0.md#CV-360 beside the file's identity: `mode: preview` for a single click, `mode: keep`
-  for a double click or Enter, `where: panel` for Alt+click, and `background: true` for Ctrl+click (Cmd+click on
-  macOS), which opens the file without taking focus. A file already open anywhere is revealed where it is, as F3-634
-  says. Alt+click opens the file in a new panel by the fit rule (Plans/FinalGUISpec.md#F3-630). The target of an ordinary
-  click is the last-focused panel that holds documents, as F3-634 says; this unit does not restate that rule. The
-  file row's context menu starts with Open (kept, in that target), Open in new panel (`where: panel`) and Open to the
-  side (`where: right`, a new panel to the right of the target panel), then a separator and the existing file-tree
-  actions of section 11. The Open in Panel submenu with Panel 1 to Panel 4 and its `target_editor_panel_id` routing
-  retire. Open in Terminal on a folder reveals the last-focused terminal tab whose folder is that folder, else opens a new terminal tab there; on a file it uses the file's folder in the same way; the terminal tab lands where F3-634 places a terminal. A folder row's single
-  click still expands or collapses it and opens nothing. Opening, revealing and keeping a file change only the Home
-  layout and the file's tab: the tree's selection, expansion, filter and multi-select state are its own (F-009,
-  F-011) and never written into the Home layout record. This supersedes F-080 and the editor-panel targets of F-017,
-  F-034 and F-036, and amends F-009, F-023, F-033, F-040 and F-067.
+  Plans/FinalGUISpec.md#F3-634, Plans/DRY_Rules.md#DR-071) and keeps no placement or dedupe rule of
+  its own. A single click on a file row opens the file in the target panel's preview tab, with an
+  italic label, which the next single click replaces, and leaves keyboard focus in the tree so the
+  arrow keys keep walking it; a double click opens the file kept and moves focus to its tab; an edit
+  in the tab, or dragging the tab, keeps a preview tab. With the Preview Tabs setting off
+  (`general.interaction.preview-tabs`, Plans/Settings_System.md#SSYS-050), a single click opens the
+  file kept. Enter on a focused file row opens it as a double click does. The tree dispatches the
+  existing `cmd.file.open` with the placement fields of Plans/Contracts_V0.md#CV-360 beside the file's
+  identity: `mode: preview` for a single click, `mode: keep` for a double click or Enter, `where:
+  panel` for Alt+click, and `background: true` for Ctrl+click (Cmd+click on macOS), which opens the
+  file without taking focus. A file already open anywhere is revealed where it is, as F3-634 says.
+  Alt+click opens the file in a new panel by the fit rule (Plans/FinalGUISpec.md#F3-630). The target
+  of an ordinary click is the last-focused panel that holds documents, as F3-634 says; this unit does
+  not restate that rule. The file row's context menu starts with Open (kept, in that target), Open in
+  new panel (`where: panel`) and Open to the side (`where: right`, a new panel to the right of the
+  target panel), then a separator and the existing file-tree actions of section 11. The Open in Panel
+  submenu with Panel 1 to Panel 4 and its `target_editor_panel_id` routing retire. Open in Terminal on
+  a folder reveals the last-focused terminal tab whose folder is that folder, else opens a new
+  terminal tab there; on a file it uses the file's folder in the same way; the terminal tab lands
+  where F3-634 places a terminal. A folder row's single click still expands or collapses it and opens
+  nothing. Opening, revealing and keeping a file change only the Home layout and the file's tab: the
+  tree's selection, expansion, filter and multi-select state are its own (F-009, F-011) and never
+  written into the Home layout record. This supersedes F-080 and the editor-panel targets of F-017,
+  F-034 and F-036, and amends F-009, F-023, F-033, F-040 and F-067. The same opening module and
+  preview/keep rules serve explicit app file identities; Open in Terminal uses that file's admitted
+  Computer/folder/profile. Conversion maps moved files and preserves outside-file/buffer identities
+  without opening a second Assistant or losing unsaved edits.
 gui_related: true
 gui_classification_reason: Defines what a person sees happen when they click, double-click, Alt+click or right-click a file or folder in the file tree.
 split_recommended: false
@@ -5383,11 +5446,18 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D7, D8)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 6 and 6.2; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (section 3.4 and gap C5; audit lineage only)"
-  - "Concepts/home-redesign/src/panels/js/48-shims.js on concept/home-panels-20261009 (the tree's clicks and its context-menu rows; concept lineage only)"
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D7, D8)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 6 and 6.2; concept lineage
+  only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8
+  (section 3.4 and gap C5; audit lineage only)
+- Concepts/home-redesign/src/panels/js/48-shims.js on concept/home-panels-20261009 (the tree's clicks and its context-menu
+  rows; concept lineage only)
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "cmd.file.open"
   - "mode: preview"

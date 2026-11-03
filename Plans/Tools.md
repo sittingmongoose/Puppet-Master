@@ -31,7 +31,7 @@
 Tool availability is a staged fact, not one Boolean. Every built-in, custom, Skill-backed, provider-native, and MCP-projected capability uses a `CapabilityStageRecord` with these independent stages in this exact order:
 
 1. `installed` — the implementation/package/adapter is present on the selected Host/Environment.
-2. `project_enabled` — the active Project/profile configuration enables it.
+2. `project_enabled` — the resolved Everywhere/Computer/thing and optional-Project bindings enable it; in No project the Project gate is inapplicable, not a permission allow.
 3. `policy_available` — current route/model/account/runtime capability plus Permissions, FileSafe, host, network, trust, and resource policy permit it to be considered.
 4. `selected_for_request` — deterministic request-local selection admitted the capability for the current request.
 5. `invoked` — a concrete invocation passed pre-dispatch gates and received an attempt identity.
@@ -85,9 +85,9 @@ Full definitions: `Plans/Permissions_System.md` §2.
 
 ### 2.2 Config and precedence (summary)
 
-Permission rules are evaluated in a deterministic precedence order: Mode override > Session cache > Persona overrides > Project-level > Global-level > Defaults. Within a single ruleset, last-match-wins. Full precedence table: `Plans/Permissions_System.md` §2.4.
+Permissions_System §2.4 alone owns rule precedence. The summary is Mode > Session > Persona > optional Project > Computer > Everywhere > Defaults, with owner-defined specificity/deny and retained guards unchanged. Ordinary Settings layering never creates execution authority or reverses agent-instruction precedence.
 
-Config is stored in TOML files at deterministic paths (global: `~/.config/puppet-master/permissions.toml`, project: `<project_root>/.puppet-master/permissions.toml`). A `tool_permissions` key in redb `config:v1` is a projection of the merged ruleset. Full schema: `Plans/Permissions_System.md` §9.
+Permissions_System §9 owns the Everywhere library, Computer-local and optional Project rule sources. Existing `~/.config/puppet-master/permissions.toml` and `<project_root>/.puppet-master/permissions.toml` remain recognized; the first may be a read-only library mirror. `tool_permissions` in redb `config:v1` is only the merged compatibility projection. D/F define the exact Computer key/path and sole writer together.
 
 ### 2.3 Session vs run; subagents
 
@@ -372,7 +372,7 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_Syst
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `command` | string | yes | Shell command text to execute in the project/workspace environment. |
+| `command` | string | yes | Shell command text to execute in the frozen exact Project/worktree or app Computer/working-root context (T-187). |
 | `mode` | enum (`"sync"` \| `"async"`) | no | Execution mode. Default `sync`. `sync` waits through `initial_wait`; `async` returns immediately with a live shell handle. |
 | `initial_wait` | integer seconds | no | Sync-mode wait window before returning partial output and a running shell handle. Default `30`; minimum `1`; maximum `300`; values outside this closed range are `validation_error`. |
 | `shellId` | string | no | Existing shell/session binding to reuse for stateful commands; omitted to create a new shell binding. |
@@ -486,7 +486,7 @@ For file reads, `content` preserves line numbering in the agent-visible renderin
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `pattern` | string | yes | Regex or literal search expression. |
-| `path` | string | no | Root directory or file to search within. Default = current workspace root. |
+| `path` | string | no | Root directory or file to search within. Default = current workspace root. | In No project, the omitted path resolves only to the admitted chat/granted cwd under T-187, not home or a Project inferred from focus.
 | `glob` | string | no | Optional file-pattern filter such as `*.rs` or `src/**/*.ts`. |
 | `output_mode` | enum (`"content"` \| `"files_with_matches"` \| `"count"`) | no | Result shape selector. Default `files_with_matches`. |
 | `flags` | object | no | Search modifiers such as `case_insensitive`, `multiline`, `line_numbers`, `before_context`, `after_context`, or `head_limit`. |
@@ -524,7 +524,7 @@ Where `matches` is:
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `pattern` | string | yes | Glob expression such as `**/*.md`. |
-| `path` | string | no | Search root. Default = current workspace root. |
+| `path` | string | no | Search root. Default = current workspace root. | In No project, the omitted path resolves only to the admitted chat/granted cwd under T-187, not home or a Project inferred from focus.
 
 **Successful output**
 
@@ -875,10 +875,10 @@ ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md
 
 This subsection supplements the per-tool table below with required behavior for new MVP tools and multi-lane search backends.
 
-**chatsearch (project chat index)**
+**chatsearch (explicit Project or calling app-thread chat corpus)**
 - **Input:** `query: string`, optional `filters: { thread_id?, time_range? }`, `k?: number`.
 - **Output:** hits with `{ thread_id, message_id, ts, role, snippet, score }`.
-- **Scope rule:** MUST be project-scoped (per-project Tantivy index directory).
+- **Scope rule:** Project Tantivy corpus when truly bound, otherwise the calling thread's explicit app partition on its Computer. Cross-thread/Project reads use T-185; no automatic mixed corpus or Project fallback.
 - **Secrets policy:** Persisted chat index content MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence).
 - **Context Lens integration:** When Context Lens mutes messages, chatsearch MUST exclude muted message_ids from results returned to the agent (or annotate them as excluded so the context packer can drop them).
 
@@ -902,7 +902,7 @@ The `grep` tool keeps its existing interface and transparently uses a per-projec
 
 Plans/Tools.md (`/Tools.md`) owns `grep` /fallback semantics, `/sparse-n-gram` index-acceleration behavior, tool-event field disclosure, filtering, and /degradation language: acceleration may narrow candidates, but raw ripgrep remains the visible fallback when the index is unavailable, disabled, invalid, or skipped by query rules. The `/fallback/freshness/degradation/filtering/event-field` owner bundle maps to this section: fallback causes, stale-index freshness, degradation language, filtering rules, and the `tool.invoked.index_used` event field live here.
 
-For multi-project scope, each `grep` call carries a project context from the active tool registry or from the project owning the `path` parameter. PM queries that project's index only; there is no cross-project index merging.
+Ordinary grep queries only the exact authorized root/Project index named by its context/path. In app scope it uses the chat/granted root. Indexes are never physically merged or searched across Projects implicitly. T-185 is the sole approved exception: explicitly requested sources can contribute bounded, separately authorized results to a coverage-bearing answer; this does not alter grep's API or correctness checks.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
 
@@ -1083,7 +1083,7 @@ The central tool registry should support:
 ### 4.2 Schema and discovery
 
 - **Schema:** JSON Schema or equivalent for parameters; description for model prompt. Stored in config or a dedicated tools manifest (e.g. project-level or user-level).
-- **Discovery:** Registry must know which custom tools are available for a run (project config, enabled list, or scan). Avoid loading arbitrary code from disk without explicit enablement.
+- **Discovery:** Use resolved owner definitions/enabled lists for the actual run/Computer and optional Project. No project uses only explicitly admitted user/global custom tools and their local installation/source trust; scans do not auto-load arbitrary code or claim a repository.
 
 ### 4.3 Sandboxing and safety
 
@@ -1187,7 +1187,7 @@ Rules:
 ### 8.1 Config persistence
 
 - **Where:** Tool permissions live in the same config as the rest of Settings (e.g. `GuiConfig` in memory, persisted to redb as `config:v1` per FinalGUISpec §15.1). Use the key **`tool_permissions`** (object: tool name or wildcard → `"allow"` | `"deny"` | `"ask"`, or per-tool object for granular rules per §10.1).
-- **Scope:** Tool permissions support app-level defaults plus project-scoped overrides for the active project context. Project switching recalculates the effective permission set from the current scope layers.
+- **Scope:** Settings resolves admitted Everywhere/Computer/optional-Project defaults; Permissions composes the actual rule sources and retained guards. New runs recompute after place/Computer changes; the existing run snapshot remains frozen except for live revocation/Stop checks owned by dispatch.
 - **Mid-run:** Run config is an immutable snapshot at start (FinalGUISpec §9.7). Changing Settings (including tool permissions) mid-run does **not** affect the active run; next run picks up the new config.
 
 ### 8.2 Policy application order and invocation flow
@@ -1364,7 +1364,7 @@ The following are **optional** improvements. MVP is defined by §3 built-in tool
 | **Per-tool rate limits** | Limit invocations per tool per run/session (e.g. max 100 grep calls). | Reduces runaway tool use; configurable per tool or global. |
 | **Tool usage dashboard** | Dashboard widget: most-used tools, latency p50/p95, error rate by tool (from seglog rollups). | storage-plan + usage-feature; already implied by analytics scan. |
 | **Permission presets** | Presets: "Read-only" allows read/grep/glob/list/codesearch/chatsearch/logsearch/skill/read-only lsp/question/todoread/todowrite/capabilities.get, asks for webfetch/websearch/logread/task, and denies edit/bash/repo.import/media.generate; "Plan mode" allows the Read-only set, asks for the full web family plus logread/task, and denies state mutation; "Full" allows read/search/skill/lsp/question/todo with asks for mutation-capable tools. | Simplifies config; maps to assistant modes (Ask, Plan, Agent). Plan mode allows information gathering but not state mutation. |
-| **Custom tool templates** | Project or org templates for common custom tools (e.g. "run tests", "deploy staging") with schema and default permission. | Encourages reuse; catalog in docs or GUI. |
+| **Custom tool templates** | Library or explicit Project templates under their existing owner (no org settings level) for common custom tools (e.g. "run tests", "deploy staging") with schema and default permission. | Encourages reuse; catalog in docs or GUI. |
 | **MCP tool allowlist** | Option to allow only specific MCP tools by name (e.g. only `context7_query_docs`) even if server is enabled. | Finer control than server-level enable; complements wildcards. |
 | **Audit log for denied/ask** | Explicit audit event when a tool is denied or when user declines an "ask". | Helps compliance and debugging; store in seglog with tool name, reason, timestamp. |
 | **Tool description in UI** | In Config or run summary, show which tools are available and their permission (allow/deny/ask) for the current run. | Transparency; can be generated from registry + run config. |
@@ -1402,7 +1402,7 @@ ContractRef: ContractName:Plans/Permissions_System.md
 | child-agent `question` | `deny` |
 ### 10.3 Resolution algorithm
 
-Canonical algorithm: `Plans/Permissions_System.md` §8. Summary: Mode override → Session cache → Persona overrides → Project rules → Global rules → Defaults → Special guards. Post-resolution, FileSafe applies (§10.6).
+Canonical algorithm: `Plans/Permissions_System.md` §8. Summary: Mode override → Session cache → Persona overrides → optional Project → Computer → Everywhere → Defaults → Special guards, then FileSafe (§10.6). T-187 app context skips Project without skipping target/root/policy checks.
 
 ### 10.4 Presets → config mapping
 
@@ -2284,8 +2284,8 @@ Core rules:
 - The PM-owned web cache contract must preserve two-phase lookup, state vocabulary, and per-project cache sizing.
 - Two-phase cache-check is locked: before provider selection, PM checks `(url, formats_hash)` only as an adapter-agnostic lookup; after provider selection, PM validates `adapter_id`, discards a mismatched hit, and fetches fresh.
 - Cache routing must skip read-time cache for requests with actions, may still store the post-action result, and must preserve PM-cache precedence over Firecrawl cache with diff-reuse audit states.
-- Web content caching is per-project with a 500 MB default cache budget, per-operation TTL defaults, LRU eviction for bounded storage, stable cache key ordering, and change detection persistence for later `change_tracking` comparison.
-- Amended 2026-10-31 (DL-270): cached bodies are stored in the payload store (SP-337) and entries keep only a content reference. The 500 MB per-project budget is a per-family disk budget reported in storage health with usage and reclaimable bytes (SP-340), and SP-344 gates it. The setting is `web.fetch.cache-size`. Persistence and budgets stay owned by Plans/storage-plan.md section 8.
+- Web cache has separate Project and app-on-this-Computer buckets; all no-project chats on that Computer share the app bucket. Both use the same 500 MB default, per-operation TTL, LRU, stable key ordering and change-tracking rules. `web.fetch.cache-size` resolves via the Settings ladder; no new chat resets a bucket.
+- Amended 2026-10-31 (DL-270): cached bodies are stored in the payload store (SP-337) and entries keep only a content reference. The 500 MB default per-Project or app-Computer bucket budget is a per-family disk budget reported in storage health with usage and reclaimable bytes (SP-340), and SP-344 gates it. The setting is `web.fetch.cache-size`. Persistence and budgets stay owned by Plans/storage-plan.md section 8.
 - When `change_tracking: true` and a cached entry exists, even if expired, PM fetches fresh content, compares `content_hash` against the cached entry, returns `change_status: "changed"` with `diff_summary` when content differs, returns `change_status: "same"` and may extend TTL when content matches, and returns `change_status: "removed"` when the previous URL entry existed but the fresh fetch resolves to 404.
 
 Fields:
@@ -2332,7 +2332,7 @@ ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Collaborativ
 
 `Plans/ToDo_Runtime.md` is the sole semantic owner of the one current thread To-Do list, item identity, hierarchy, dependencies, parallel groups, statuses, work bindings, rollups, recovery, and Activity projection. Tools owns only the tool-shaped surface through which an agent or provider asks that owner to change something.
 
-The `todowrite` tool and every provider-native `TodoWrite`-style equivalent are **proposal endpoints**. A whole-list payload is a *proposed* list state, never an applied one. Tools normalizes the payload, binds it to exact thread, project, list revision, actor, permission snapshot, and idempotency key, and hands it to the `ToDoController` for reconciliation against the canonical list. The controller decides which proposed items are created, matched to existing `todo_id` values, reordered, or rejected, and which proposed status changes are admissible. A payload that arrives with no expected list revision, or with a stale one, is reconciled or rejected — it is never applied by overwrite. `todoread` returns the canonical projection of the current list and remains a read operation with no `source_surface` mutation authority.
+The `todowrite` tool and every provider-native `TodoWrite`-style equivalent are **proposal endpoints**. A whole-list payload is a *proposed* list state, never an applied one. Tools normalizes the payload, binds it to exact thread, explicit application-or-Project scope/nullable project_id, actual Computer, list revision, actor, permission snapshot, and idempotency key, and hands it to the `ToDoController` for reconciliation against the canonical list. The controller decides which proposed items are created, matched to existing `todo_id` values, reordered, or rejected, and which proposed status changes are admissible. A payload that arrives with no expected list revision, or with a stale one, is reconciled or rejected — it is never applied by overwrite. `todoread` returns the canonical projection of the current list and remains a read operation with no `source_surface` mutation authority.
 
 The following are explicitly retired as tool-layer behavior: whole-list replacement as live authority; the tool marking items complete because the model's internal checklist changed; a tool result being treated as the durable list; and the earlier statement in `### 3.5C` that the TODO tool family is "the SSOT for plan execution state". The normalized TODO schema in `### 3.5C` remains the wire shape for proposals and reads; the canonical record shapes are `pm.chat.todo_item.v2`, `pm.chat.todo_work_binding.v1`, and `pm.chat.todo_transition.v1` under the To-Do Runtime owner.
 
@@ -2714,8 +2714,12 @@ plan_unit_id: T-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Tools summarizes permission actions, precedence, and persistence for registry context only; canonical permission
-  semantics remain in Plans/Permissions_System.md.
+canonical_text: >-
+  Tools summarizes permission actions, precedence and persistence for registry context only;
+  Permissions_System remains the sole owner. Computer rules sit between Project and Everywhere, while
+  Settings provides only declared default values through its resolver. In app context the Project tier
+  is absent; mode, session, Persona, specificity/deny behavior, retained guards and FileSafe keep
+  their owner-defined order.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -2742,6 +2746,8 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0005
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0006
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0007
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S3/S8; N6/N12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - 'ContractRef: ContractName:Plans/Permissions_System.md, Primitive:DRYRules'
 - allow
@@ -4938,18 +4944,22 @@ plan_unit_id: T-044
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: '`chatsearch` is project-scoped with `query: string`, optional `filters: { thread_id?, time_range? }`, optional
-  `k?: number`, hit shape `{ thread_id, message_id, ts, role, snippet, score }`, project Tantivy scope, strict secret scrubbing,
-  and Context Lens muted-message exclusion or annotation.'
+canonical_text: >-
+  chatsearch keeps query: string, optional filters: { thread_id?, time_range? }, optional k?: number
+  and hit shape { thread_id, message_id, ts, role, snippet, score }. A Project call searches only its
+  authorized Project Tantivy corpus; an app call uses the explicit app partition and calling thread
+  scope, with real Computer identity and no Project fallback. Other-thread or cross-Project reads
+  require T-185, never automatic retrieval. Strict secret scrubbing and Context Lens muted-message
+  exclusion/annotation apply in both scopes.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Input and output schema are preserved.
-- Per-project Tantivy scope is enforced.
-- Muted `message_ids` do not enter agent context.
+- Project and app local search retain the same bounded hit shape and exact source refs.
+- An app search cannot silently read other app threads or a currently focused Project.
+- Muted message_ids never enter agent context; explicit cross-scope queries disclose T-185 coverage.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -4963,6 +4973,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - chatsearch
 - 'query: string'
@@ -5046,9 +5058,13 @@ plan_unit_id: T-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Tools owns `grep` fallback, `/sparse-n-gram`, degradation, filtering, freshness, and event-field semantics
-  while external callers keep `{ pattern, path?, glob? }`, the 1000 result limit, the 30s timeout, read-only posture, and
-  final ripgrep verification.
+canonical_text: >-
+  Tools owns `grep` fallback, `/sparse-n-gram`, degradation, filtering, freshness, and event-field
+  semantics while external callers keep `{ pattern, path?, glob? }`, the 1000 result limit, the 30s
+  timeout, read-only posture, and final ripgrep verification. Ordinary grep never merges Project
+  indexes; T-185 is the sole explicit-grant exception for merging already authorized bounded results,
+  not an ambient combined index. App grep uses the exact chat/granted root and cannot infer a main
+  Project.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -5062,9 +5078,10 @@ unblocks:
 - T-051
 - T-052
 acceptance_criteria:
-- No new user-facing or agent-facing tool name is introduced.
-- Sparse index candidate narrowing never changes final correctness.
-- Project indexes are not merged across projects.
+- No new grep tool name or compatibility signature is introduced.
+- Sparse candidate narrowing never changes final ripgrep correctness.
+- Ordinary Project indexes remain separate; only T-185 explicitly authorized results can be merged with complete
+  coverage.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -5078,6 +5095,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - grep
 - /sparse-n-gram
@@ -5454,8 +5473,12 @@ plan_unit_id: T-053
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: '`logsearch` indexes summaries and snippets; `logread` fetches bounded full payloads by `event_id` or `blob_ref`;
-  full payload remains out of the index and all persisted or returned log material is strictly scrubbed.'
+canonical_text: >-
+  `logsearch` indexes summaries and snippets; `logread` fetches bounded full payloads by `event_id` or
+  `blob_ref`; full payload remains out of the index and all persisted or returned log material is
+  strictly scrubbed. App logsearch/logread resolve their authorized exact event/payload references
+  through storage-plan rather than interpolating an empty Project into a legacy logs path; DL-270
+  payload custody and scrub remain.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -5478,6 +5501,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - logsearch
 - logread
@@ -6121,8 +6146,12 @@ plan_unit_id: T-066
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Custom tool schemas use JSON Schema or equivalent and discovery comes from project config, enabled lists,
-  or explicit scans without arbitrary disk loading.
+canonical_text: >-
+  Custom tool schemas use JSON Schema or equivalent. Discovery reads the resolved owner definitions,
+  enabled lists or explicit permitted scans for the frozen work Computer and optional Project; app
+  discovery uses only admitted user/global definitions. Computer-local installation/executable
+  readiness is separate from definition home. No arbitrary disk loading, repository walk-up, new org
+  layer or copied executable-source trust is implied.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -6144,6 +6173,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0043
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8; N6/N12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - JSON Schema
 - description for model prompt
@@ -6478,8 +6509,13 @@ plan_unit_id: T-073
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Tool permissions persist under `tool_permissions` in config with app defaults and project overrides; active
-  runs use immutable snapshots and settings changes affect only the next run.
+canonical_text: >-
+  Tool permission defaults consume the Settings resolver through Everywhere, Computer and optional
+  Project, while exact rules and TOML/redb projection remain Permissions-owned. Active runs keep
+  immutable snapshots; new runs recompute after place/Computer/Project changes and conversion. Live
+  revocation, Stop and other retained dispatch gates still apply; no settings default grants execution
+  authority. tool_permissions remains the compatibility view; ordinary preference edits are taken by
+  the next run.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -6501,6 +6537,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0050
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S3/S8; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - GuiConfig
 - redb
@@ -7524,16 +7562,21 @@ plan_unit_id: T-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Durable permission config uses global and project TOML files and projects the merged set to redb `tool_permissions`
-  in `config:v1` for backward compatibility.
+canonical_text: >-
+  Durable permissions consume the Everywhere library rules, Computer-local rules and optional Project
+  TOML rules from Permissions_System. Existing global ~/.config/puppet-master/permissions.toml and
+  Project .puppet-master/permissions.toml are owner-managed sources/projections; Computer rules use
+  D's exact admitted key/path. redb tool_permissions in config:v1 remains a derived compatibility
+  view, never a second writer. That projection preserves backward compatibility.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Global and project TOML locations are preserved.
-- Merged permission projection to redb remains backward-compatible.
+- Existing source paths remain recognized by their owner and no new org layer exists.
+- No-project resolution skips Project and a stale or read-only mirror cannot accept a write.
+- Merged permission projection remains backward compatible and secret-free.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -7547,6 +7590,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0064
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8; N6/N12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - ~/.config/puppet-master/permissions.toml
 - <project_root>/.puppet-master/permissions.toml
@@ -7626,8 +7671,11 @@ plan_unit_id: T-095
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Permission resolution order is summarized as Mode override, Session cache, Persona, Project, Global, Defaults,
-  Special guards, then FileSafe post-resolution application.
+canonical_text: >-
+  Permission resolution is summarized as Mode override, Session cache, Persona, optional Project,
+  Computer, Everywhere, Defaults, then Special guards and post-resolution FileSafe. Permissions_System
+  owns specificity, deny behavior, mode authority and all exceptions; the Settings ladder supplies
+  values but never changes instruction precedence or creates an approval.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -7649,6 +7697,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0066
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S3/S8; N6/N12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Mode override
 - Session cache
@@ -10613,8 +10663,12 @@ plan_unit_id: T-152
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Action requests bypass read-time cache but may store final results; PM cache precedes Firecrawl cache, and
-  change tracking compares fresh content to prior entries.
+canonical_text: >-
+  Action requests bypass read-time cache but may store final results; PM cache precedes Firecrawl
+  cache, and change tracking compares fresh content to prior entries. The app partition has a separate
+  per-Computer cache bucket shared by its no-project chats, with the same 500 MB default, TTL/LRU and
+  payload-store rules. The budget resolves through web.fetch.cache-size under the Settings ladder; a
+  new chat does not reset the bucket or borrow a Project cache.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -10622,9 +10676,10 @@ depends_on:
 - T-151
 unblocks: []
 acceptance_criteria:
-- Per-project 500 MB, TTL, LRU, stable ordering, and change detection persistence are preserved.
-- Amended 2026-10-31 (DL-270): the 500 MB per-project limit is registered as a per-family disk budget (SP-340) and cached bodies are payload-store references (SP-337); see section 14. The setting is `web.fetch.cache-size`.
-- Question/questionnaire and TODO storage carry-through are not overwritten by web cache/activity payloads.
+- Project and app cache buckets retain the same 500 MB default, TTL/LRU and stable-key/change-tracking rules.
+- DL-270/SP-337/SP-340 keep cached bodies in the payload store and metadata bounded; no raw-body redb values or
+  unlimited app bucket.
+- Question/questionnaire and To-Do custody is independent of web cache/activity data.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -10638,6 +10693,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0108
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - actions
 - always fresh-execute
@@ -11352,7 +11409,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  The agent-facing discovery operation is discover_paths, delegating to DiscoveryService. DiscoveryRequest carries request_id, consumer_id, surface_type, project/worktree or remote identity, query_text, intent, target_kind, limit, budget_ms, current_context, policy_context, redaction_profile, and permission/approval/SSH trust fields where applicable. DiscoveryResult returns ranked candidates with result_id, rank, canonical_path_identity, display_path, path_kind, target_kind, score_total, score_breakdown, match_type, policy-filtered matched_ranges when available, provenance, freshness_state, fallback_state, policy_decision, source_index_generation, requires_exact_verification, and verification_handoff. Discovery receipts use discovery.invoked, discovery.candidates_returned, discovery.selected, discovery.fallback, discovery.verified, discovery.disabled, discovery.unsupported, and discovery.backpressure. The allowed values for discover_paths request, result, receipt_event, and error_code fields come from the CV-291 canonical exact value registry.
+  The agent-facing discovery operation is discover_paths, delegating to DiscoveryService.
+  DiscoveryRequest carries request_id, consumer_id, surface_type, project/worktree or remote identity,
+  query_text, intent, target_kind, limit, budget_ms, current_context, policy_context,
+  redaction_profile, and permission/approval/SSH trust fields where applicable. DiscoveryResult
+  returns ranked candidates with result_id, rank, canonical_path_identity, display_path, path_kind,
+  target_kind, score_total, score_breakdown, match_type, policy-filtered matched_ranges when
+  available, provenance, freshness_state, fallback_state, policy_decision, source_index_generation,
+  requires_exact_verification, and verification_handoff. Discovery receipts use discovery.invoked,
+  discovery.candidates_returned, discovery.selected, discovery.fallback, discovery.verified,
+  discovery.disabled, discovery.unsupported, and discovery.backpressure. The allowed values for
+  discover_paths request, result, receipt_event, and error_code fields come from the CV-291 canonical
+  exact value registry. App discovery carries application scope, null project_id, real thread/Computer
+  and explicitly admitted working roots. It never substitutes a focused Project or treats a discovered
+  path as a grant; CV-291 owns the versioned request/result identity.
 gui_related: false
 gui_classification_reason: This is the tool/API behavior contract; GUI presentation is owned by GUI docs.
 depends_on: [T-160, CV-291, T-072]
@@ -11370,16 +11440,18 @@ context_scope: discovery_tool_contract
 implementation_surfaces: [Plans/Tools.md, Plans/Contracts_V0.md, future discover_paths tool route]
 node_compile_hint: {mode: discover_paths_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - pldg-20260622-001-fff:atom-0023
-  - pldg-20260622-001-fff:atom-0035
-  - pldg-20260622-001-fff:atom-0036
-  - pldg-20260622-001-fff:atom-0063
-  - pldg-20260622-001-fff:atom-0076
-  - pldg-20260622-001-fff:atom-0051
-  - pldg-20260622-001-fff:atom-0088
-  - pldg-20260622-001-fff:atom-0092
-  - pldg-20260622-001-fff:state/precision_contract.json
-  - pldg-20260622-001-fff:state/consumer_conformance_matrix.json#shared_agent_tool_discover_paths
+- pldg-20260622-001-fff:atom-0023
+- pldg-20260622-001-fff:atom-0035
+- pldg-20260622-001-fff:atom-0036
+- pldg-20260622-001-fff:atom-0063
+- pldg-20260622-001-fff:atom-0076
+- pldg-20260622-001-fff:atom-0051
+- pldg-20260622-001-fff:atom-0088
+- pldg-20260622-001-fff:atom-0092
+- pldg-20260622-001-fff:state/precision_contract.json
+- pldg-20260622-001-fff:state/consumer_conformance_matrix.json#shared_agent_tool_discover_paths
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: [atom-0023, atom-0035, atom-0036, atom-0051, atom-0063, atom-0076, atom-0088, atom-0092]
 preserved_exact_tokens: ["discover_paths", "DiscoveryRequest", "DiscoveryResult", "request_id", "consumer_id", "surface_type", "intent", "target_kind", "path_kind", "match_type", "score_breakdown", "freshness_state", "fallback_state", "policy_decision", "error_code", "receipt_event", "requires_exact_verification", "verification_handoff", "discovery.invoked", "discovery.candidates_returned", "discovery.selected", "discovery.fallback", "discovery.verified", "discovery.disabled", "discovery.unsupported", "discovery.backpressure"]
 negative_constraints:
@@ -12056,7 +12128,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  P0-SESSION-TOOL-NAMESPACE-ACTIVATION (P0) is compiled as canonical Puppet Master intent for Runtime-valid plugins/tools that are not actually injected into the session: Imported external-repo finding extrepo-20260703-0078 / P0-SESSION-TOOL-NAMESPACE-ACTIVATION (P0). The preserved PM gap/delta is: Capability catalogs and tool registries were covered, but not the final active-session namespace proof that a tool family is both configured and injected into this run. The observed external-repo signal remains source-lineage evidence: Codex issue #31023 described a Computer Use/plugin/cache/runtime configuration that was valid, but session tools were not injected and node_repl did not start. | Warp and Codex changelogs show explicit tool/plugin/runtime capability stages and immediate tool refreshes. | Cline and Warp both expose imported third-party agent/tool configs and custom model/provider flows.
+  P0-SESSION-TOOL-NAMESPACE-ACTIVATION (P0) is compiled as canonical Puppet Master intent for
+  Runtime-valid plugins/tools that are not actually injected into the session: Imported external-repo
+  finding extrepo-20260703-0078 / P0-SESSION-TOOL-NAMESPACE-ACTIVATION (P0). The preserved PM
+  gap/delta is: Capability catalogs and tool registries were covered, but not the final active-session
+  namespace proof that a tool family is both configured and injected into this run. The observed
+  external-repo signal remains source-lineage evidence: Codex issue #31023 described a Computer
+  Use/plugin/cache/runtime configuration that was valid, but session tools were not injected and
+  node_repl did not start. | Warp and Codex changelogs show explicit tool/plugin/runtime capability
+  stages and immediate tool refreshes. | Cline and Warp both expose imported third-party agent/tool
+  configs and custom model/provider flows. T-186 computer use is offered only when this same
+  active-session namespace proves the selected model/provider can receive it and its signed-in desktop
+  and DAE-safe path are admitted; concept/test drivers are not product capability evidence.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -12091,6 +12174,8 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:5
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N10
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids:
 - atom-0082
 external_atom_id: extrepo-20260703-0078
@@ -12400,10 +12485,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  Every tool, Skill, provider, and MCP capability progresses through independently receipted installed,
-  project_enabled, policy_available, selected_for_request, and invoked stages. Prompt-facing catalogs use deterministic
-  L0-L3 materialization, stable schema ordering, and bounded omission receipts; no complete large catalog or all full
-  schemas/instructions are injected eagerly.
+  Every tool, Skill, provider, and MCP capability progresses through independently receipted
+  installed, project_enabled, policy_available, selected_for_request, and invoked stages.
+  Prompt-facing catalogs use deterministic L0-L3 materialization, stable schema ordering, and bounded
+  omission receipts; no complete large catalog or all full schemas/instructions are injected eagerly.
+  With no Project, project_enabled records resolved Everywhere/Computer/thing enablement and the
+  absence of an inapplicable Project gate. Installation, policy_available, selection and invocation
+  must still independently pass; true is not an automatic allow.
 gui_related: false
 gui_classification_reason: Backend tool admission, prompt-materialization, and receipt contract; not GUI implementation work.
 depends_on: [T-170, T-172, PP-072]
@@ -12430,9 +12518,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
-  - ACCOUNTABILITY_MATRIX.json:CTX-015
-  - reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+- 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
+- ACCOUNTABILITY_MATRIX.json:CTX-015
+- reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8; N6/N12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: []
 preserved_exact_tokens:
   - installed
@@ -12574,12 +12664,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  The todowrite tool and every provider-native TodoWrite-style whole-list payload are proposal endpoints that Tools
-  normalizes, binds to exact thread, project, list revision, actor, permission snapshot, and idempotency key, and hands
-  to the ToDoController owned by Plans/ToDo_Runtime.md for reconciliation against the canonical list; whole-list
-  replacement is never live authority, per-item proposal outcomes are returned individually, and every canonical status
-  change is one receipted transition carrying item-level cause evidence with a satisfied expected outcome rather than a
-  bare tool success.
+  The todowrite tool and every provider-native TodoWrite-style whole-list payload are proposal
+  endpoints that Tools normalizes, binds to exact thread, explicit application-or-Project scope with
+  nullable project_id, Computer, list revision, actor, permission snapshot, and idempotency key, and
+  hands to the ToDoController owned by Plans/ToDo_Runtime.md for reconciliation against the canonical
+  list; whole-list replacement is never live authority, per-item proposal outcomes are returned
+  individually, and every canonical status change is one receipted transition carrying item-level
+  cause evidence with a satisfied expected outcome rather than a bare tool success. Conversion uses
+  the To-Do owner's explicit binding map and fresh admission, never a whole-list rewrite or completion
+  inference.
 gui_related: true
 gui_classification_reason: Determines what the Activity To-Do list and approval prompts may show as an applied change versus a proposal outcome.
 depends_on: [T-027, T-028, T-007, T-076]
@@ -12603,11 +12696,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:TODO-009
-  - pm-assistant-implementation-2026-09-02-recovered:TODO-010
-  - pm-assistant-implementation-2026-09-02-recovered:TODO-011
-  - pm-assistant-implementation-2026-09-02-recovered:TODO-012
-  - pm-assistant-implementation-2026-09-02-recovered:PROVIDER-007
+- pm-assistant-implementation-2026-09-02-recovered:TODO-009
+- pm-assistant-implementation-2026-09-02-recovered:TODO-010
+- pm-assistant-implementation-2026-09-02-recovered:TODO-011
+- pm-assistant-implementation-2026-09-02-recovered:TODO-012
+- pm-assistant-implementation-2026-09-02-recovered:PROVIDER-007
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids: []
 preserved_exact_tokens:
   - todowrite
@@ -12801,7 +12896,7 @@ Packet `PM-WNC-2026-09-05-v1`. Logical notebook semantics are owned by `Plans/Wo
 
 ### Registered tool contracts
 
-**`chatread` — exact bounded history read.** Complements `chatsearch` (T-044): a search hit (`thread_id`, `message_id`, `ts`, `role`, `snippet`, `score`) can be followed by an exact read of the retained source. Input: `{ thread_id, message_id | item_id, revision?, range?, include_neighbors?, include_tool_pair? }`. The range convention is exactly one of `unicode_char_offsets` or `utf8_byte_offsets` per request, never mixed; ranges are UTF-8-safe and explicit truncation is reported. Optional bounded neighboring-message or tool-pair expansion names what was added and stays inside the same aggregate output budget (default 8 KiB, hard 32 KiB per response, plus the live token-budget limit). Direct reads apply the same project/thread/actor/phase permission, redaction, visibility, Context Lens, retention, and lineage checks as search at read time: knowledge of an opaque ID is not permission. Denied visibility, pruned sources, not-yet-indexed state, stale indexes, and incomplete pagination stay distinct internally; user/model-facing responses do not leak forbidden existence. Direct reads use durable authoritative source where authorized, so a search watermark lag never fabricates absence, and a bounded lag/retry or scan fallback never fabricates recollection.
+**`chatread` — exact bounded history read.** Complements `chatsearch` (T-044): a search hit (`thread_id`, `message_id`, `ts`, `role`, `snippet`, `score`) can be followed by an exact read of the retained source. Input: `{ thread_id, message_id | item_id, revision?, range?, include_neighbors?, include_tool_pair? }`. The range convention is exactly one of `unicode_char_offsets` or `utf8_byte_offsets` per request, never mixed; ranges are UTF-8-safe and explicit truncation is reported. Optional bounded neighboring-message or tool-pair expansion names what was added and stays inside the same aggregate output budget (default 8 KiB, hard 32 KiB per response, plus the live token-budget limit). Direct reads apply the same explicit place/Computer/thread/actor/phase permission, redaction, visibility, Context Lens, retention, and lineage checks as search at read time: knowledge of an opaque ID is not permission. Denied visibility, pruned sources, not-yet-indexed state, stale indexes, and incomplete pagination stay distinct internally; user/model-facing responses do not leak forbidden existence. Direct reads use durable authoritative source where authorized, so a search watermark lag never fabricates absence, and a bounded lag/retry or scan fallback never fabricates recollection.
 
 **`notebook_search` — scoped notebook search.** Input: `{ query?, scope, filters?, cursor?, limit? }`. Default 5 hits, hard 10 per page; snippets at most 512 bytes each; total response at most 8 KiB including metadata; current token budget may narrow output. Hits carry `notebook_id`, `entry_id`, `revision`, `epistemic_kind`, `freshness`, `snippet`, `score`. Query success does not imply exhaustive corpus review. Lexical retrieval is the default; optional semantic retrieval is a distinguished mode, never silently blended.
 
@@ -12892,3 +12987,368 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Working_Notebook.md
 Tools retains proposal-only `todowrite` authority and non-mutating `todoread` projection reads under T-179. Permission approval authorizes proposal processing, not direct canonical writes. TDR-012 in `Plans/ToDo_Runtime.md` owns the complete approved historical-read/future-event mapping and its admission gates.
 
 ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Decision_Log.md
+
+### T-185 - Explicit Project Reads And One Coverage Contract
+
+```yaml
+plan_unit_id: T-185
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: 'The agent tools projects.list, projects.status, projects.search, projects.read_file,
+  projects.read_chat and projects.read_plans are explicit read-only operations usable from Project and
+  No project chats. list returns only accessible Project names/place/status/reachability metadata without
+  content consent; status returns owner summaries and Safe lines, but a Project with reading Off yields
+  name only. search requires an explicit scope: all or an exact named set; direct reads name their exact
+  Project/chat/file/version/range. read_chat may name an app thread under the same explicit read authority;
+  read_plans returns bounded Plan/Goal/scheduled-work summaries. These tools never fall back to the current
+  Project when scope is absent. Regular uses the approved per-chat consent choices (This time, For this
+  chat, Always on this computer, No), including an explicit file/Project mention grant; YOLO uses recorded
+  task-scoped authority for an explicit requested set, never fabricated human approval. Every read runs
+  through the source Computer and current person-access, source-Project reading switch, path/content,
+  actor/phase, retention, secret and provider-exposure checks. Archived Projects are skipped unless named.
+  No notebooks, private memory, FileSafe safe copies, PM-private data or secrets are exposed. Only bounded
+  authorized result sets may merge; physical indexes and automatic retrieval stay isolated. Each tool
+  returns one shared coverage shape: requested, looked_in (exact source and Computer/currentness), not_looked_in
+  (closed reason), partial (missing range/cursor/index coverage). Empty/partial answers disclose coverage
+  in text; multi-source, empty and partial tool cards show the quiet expandable line, and successful one-source
+  cards retain it in Details. Offline, denied, archived-skipped, missing/rebuilding index, truncation
+  and missing ranges cannot become none anywhere. One scope: all call performs fan-out through existing
+  source owners; no second index, route registry or History engine is created. Reading conveys no write,
+  Stop or service-control authority; requests to act use the existing thread.request/spawn/await owner
+  and receiver mode. Permissions_System PS-145 owns other_projects_read and outward_after_cross_project_read;
+  acting requests consume other_projects_message and incoming_chat_messages receiver ceilings. settings.follow
+  is never content-read authority.'
+gui_related: true
+gui_classification_reason: Owns user-visible manager, activity or control behavior.
+depends_on:
+- T-044
+- T-046
+- T-053
+- SSYS-002
+unblocks: []
+acceptance_criteria:
+- Missing explicit scope refuses rather than silently using the visible Project.
+- A mixed all query reports every requested source as looked_in, not_looked_in or partial with truthful
+  reasons; an empty result never hides offline/denied/archived sources.
+- A direct ID, symlink into a Project, copied grant or read permission cannot reveal notebooks, private
+  memory, secrets or permit a Project mutation.
+- Every retained read and result preserves source/Computer/version/range provenance through scrub and
+  outward-effect policy.
+validation_surfaces:
+- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
+- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+risk_class: scope_authority_or_custody_drift
+reasoning_tier: high
+context_scope: project_and_application_scope
+implementation_surfaces:
+- Plans/Tools.md
+- Plans/settings_system_contracts.schema.json
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N12/N24; N4/N19
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#4.1–4.6;9.4
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- 'Jared, 2026-11-03: "Those look good, except goals and crew should be allowed in no project."'
+- 'Jared, 2026-11-03: "Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t."'
+- projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-B01
+preserved_exact_tokens:
+- projects.list
+- projects.status
+- projects.search
+- projects.read_file
+- projects.read_chat
+- projects.read_plans
+- coverage
+- requested
+- looked_in
+- not_looked_in
+- partial
+- 'scope: all'
+negative_constraints:
+- Do not make ambient cross-Project retrieval, a merged physical index, a memory share or a permission
+  bypass.
+- Do not run a foreign Project read from another Computer's filesystem/cache when its owner is unavailable.
+- Do not infer an implemented handler, admitted event writer, native verification, WorkNode, NodeSeed
+  or governance clearance from this accepted contract.
+owner_hints:
+- Plans/Tools.md
+- Plans/Settings_System.md
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Tools.md#T-185, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365
+
+### T-186 - Computer Use Admission, Disclosure And Targeted Stop
+
+```yaml
+plan_unit_id: T-186
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Computer use is the stage-3 computer.* family for any chat, with or without Project. Its
+  executable census is exactly computer.screen, computer.pointer and computer.keys; computer.* is a family/policy
+  selector, never a callable tool or native capability proof. It is off until task-bound per-chat/per-app
+  admission names the target Computer, permitted apps, signed-in desktop, supported provider/model/session
+  ActiveToolNamespaceReceipt and a DAE-safe execution path. Regular asks per chat/app; YOLO may satisfy
+  the ordinary tool ask through its task authority but cannot invent permitted apps, change Computers,
+  bypass protected auth or skip separate scoped permission to send screen pictures to the named AI service.
+  Images are scrubbed and transient, not retained as chat image history; bounded action/target audit remains.
+  Password/sign-in pages, protected browser sessions, terminal secret prompts and secret stores remain
+  human-only. A visible Using the screen of [Computer] strip and labelled Stop stay active; two Esc presses
+  call the same Stop. cmd.computer_use.stop targets the exact chat/session/Computer/controller generation,
+  releases only its own input authority and cancels its queued actions; it never claims global mouse ownership
+  or stops another session. Unsupported/no-desktop/offline/no-safe-path states return typed unavailable
+  reasons before input. Sends, purchases, installs, deletion and publication use their actual effect's
+  Permissions/FileSafe/capability policy; computer use is no shortcut around it. The computer_use permission
+  input is owned by PS-145, not this tool dispatcher. The attached T-186 census fixes the three sole planned
+  tools::computer handlers and request/result definitions. Exact per-tool and per-action schema hashes,
+  supported native adapter mapping and current ActiveToolNamespaceReceipt evidence must join the existing
+  CapabilityStageRecord and L0-L3 materialization before injection or dispatch. No shell/test-driver/remote-desktop
+  CLI, guessed provider tool name, wildcard or installed package proves an active native surface. cmd.computer_use.stop
+  uses handlers::computer_use::stop and Plans/computer_use_contracts.schema.json#/$defs/ComputerUseStopRequest
+  and ComputerUseStopResult; this separate user control is not a fourth agent tool. Screen contracts,
+  native surfaces and effect evidence remain unavailable until actually admitted together. The sole planned
+  handler map is computer.screen -> tools::computer::screen, computer.pointer -> tools::computer::pointer,
+  and computer.keys -> tools::computer::keys.
+gui_related: true
+gui_classification_reason: Owns user-visible manager, activity or control behavior.
+depends_on:
+- T-172
+- T-176
+- SSYS-002
+unblocks: []
+acceptance_criteria:
+- A task cannot input into an unallowed app, another Computer, another controller generation or any protected
+  auth/secret prompt.
+- YOLO with no valid screen-provider disclosure grant asks for that disclosure; no admitted desktop/DAE
+  path means unavailable.
+- Stop and double Esc fence queued input immediately for the exact owner session while unrelated work
+  remains intact.
+validation_surfaces:
+- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
+- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+risk_class: scope_authority_or_custody_drift
+reasoning_tier: high
+context_scope: project_and_application_scope
+implementation_surfaces:
+- Plans/Tools.md
+- Plans/settings_system_contracts.schema.json
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N10; N6/N12/N24
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#3.5;9.4–9.5
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- 'Jared, 2026-11-03: "Those look good, except goals and crew should be allowed in no project."'
+- 'Jared, 2026-11-03: "Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t."'
+- projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/PHASE2-BRIEF.md#known-corrections
+- projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-B02
+- projects-refresh-20261030/pass2/plans-edit-requests/Fd-requests.md#Fd-B01
+preserved_exact_tokens:
+- computer.*
+- computer_use
+- cmd.computer_use.stop
+- ActiveToolNamespaceReceipt
+- Stop
+- computer.screen
+- computer.pointer
+- computer.keys
+- tools::computer::screen
+- tools::computer::pointer
+- tools::computer::keys
+- handlers::computer_use::stop
+negative_constraints:
+- Do not imply that filesystem guards can constrain every GUI effect; visible bounded app/target admission
+  and Stop remain required.
+- Do not retain raw screenshots in chat, expose test-only desktop drivers as product capability or silently
+  expand the app set.
+- Do not infer an implemented handler, admitted event writer, native verification, WorkNode, NodeSeed
+  or governance clearance from this accepted contract.
+owner_hints:
+- Plans/Tools.md
+- Plans/Settings_System.md
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Tools.md#T-186, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365
+
+**T-186 executable tool census — closed, version 1.0.0**
+
+The product namespace contains exactly these three agent tools. These are PM contract identities;
+an adapter must separately prove its native implementation and session injection. Names of test
+drivers, provider APIs or desktop-control executables are not aliases or availability evidence.
+
+| Tool ID | Sole planned handler | Closed operations | Request / result in `Plans/computer_use_contracts.schema.json#/$defs/` |
+|---|---|---|---|
+| `computer.screen` | `tools::computer::screen` | `capture`: capture only the admitted app/window or a bounded region inside it; exclude other windows and protected surfaces before provider disclosure. | `ComputerScreenRequestV1` / `ComputerScreenResultV1` |
+| `computer.pointer` | `tools::computer::pointer` | `move`, `click`, `scroll`, `drag`: one bounded pointer operation in the admitted app/window, using the exact observed geometry. Click names its button and single/double count; drag names start/end; scroll names axis/delta. | `ComputerPointerRequestV1` / `ComputerPointerResultV1` |
+| `computer.keys` | `tools::computer::keys` | `press`, `type`: one supported key/chord or bounded nonsecret text insertion into the admitted app/window. No clipboard read, secret entry, macro, script or shell operation is implied. | `ComputerKeysRequestV1` / `ComputerKeysResultV1` |
+
+The six definitions have logical IDs `pm.computer_use.{screen|pointer|keys}.{request|result}.v1`,
+version `1.0.0`. Each definition is closed; pointer and keys use a discriminated operation union,
+with no arbitrary action string, script, provider argument bag or additional properties. F-d owns
+their schema/fixture materialization; F-b owns registry/binding/touch joins. The agent-tool census
+is three screen tools plus T-185's six read tools. `computer.*` is only a family selector. No
+`computer.stop` tool or `cmd.computer.*` primary is admitted.
+
+Every request binds its exact `tool_id`, tool-call/operation and idempotency identities,
+`WorkflowScopeV2`, real thread, execution Host/Environment, desktop session, controller identity
+and generation, permitted app/window identity, namespace/schema generation, current permission
+and disclosure refs, Stop epoch and initiating return context. Project execution has its real
+Project; application execution has required-present null Project and the real Server. Existing
+scope, permission, currentness and return contracts are referenced rather than copied. Each
+input operation also binds an admitted observation ref, its app/window generation and geometry;
+coordinates are physical pixels in that exact observation, with explicit adapter scale mapping.
+Stale geometry, changed foreground/target ownership or an unobserved replacement window refuses
+before input. There is no focus, main-screen, current-Project or other-Computer fallback.
+
+An active tool entry requires its exact schema ID/version/hash and canonical-to-native
+tool/action mapping in the supported adapter/session capability evidence, plus T-172's configured,
+allowed, injected, model-visible, UI-visible and ready `ActiveToolNamespaceReceipt`. Existing
+`CapabilityStageRecord` stages and deterministic L0–L3 selection still apply. Unsupported
+operation, OS permission, desktop, adapter, provider/model/session, namespace injection or DAE
+path returns `unavailable` with the exact stage/reason before capture/input. An installed package
+or a schema-valid request does not enable any producer. Permission key `computer_use` remains
+PS-145-owned and the inventory control is `safety.rules.computer-use`; per-tool names add no
+permission key, settings row, resolver or trust grant.
+
+App/window admission and provider disclosure are rechecked for capture and input. Protected
+auth/password/secret surfaces are excluded before capture as well as input; an adapter that
+cannot enforce that boundary is unavailable. Capture returns only scrubbed, size-bounded,
+request-scoped transient image input and observation metadata to the admitted provider. Images
+expire with the observation/session and are not copied into chat history, evidence, exports or
+backups. Audit keeps bounded redacted action/target/outcome metadata. Provider disclosure does
+not grant mutation; sends, purchases, installs, deletion, publication and system changes still
+require their actual effect authority. An unclassifiable effect cannot dispatch through a
+generic click or key operation.
+
+Results bind the original tool call/operation, scope/session/controller generation, target and
+return context, with one outcome `succeeded|refused|unavailable|cancelled|failed|unknown_effect`
+and a bounded owner reason/receipt. A reported success requires the actual native result;
+transport settlement alone proves no effect. Matching replay returns the retained original
+outcome and never repeats input. Unknown effect requires owner reconciliation before a fresh
+mutation; an expired image/observation is not renewed by replay. Late completion cannot retarget
+another tab, session or app. No new EventRecord family is admitted by this census.
+
+Visible Stop and double Esc use only `cmd.computer_use.stop` → `handlers::computer_use::stop`,
+with `Plans/computer_use_contracts.schema.json#/$defs/ComputerUseStopRequest` and
+`Plans/computer_use_contracts.schema.json#/$defs/ComputerUseStopResult`. Stop fences this
+controller generation, cancels queued input, releases only its own authority and returns an
+idempotent settled result. Missing screen schemas, fixtures, dispatch/registry/touch joins or
+native/session evidence keeps the affected screen tool unavailable; it does not disable the
+independently admitted cross-Project read tools or invent a fourth screen tool.
+
+ContractRef: ContractName:Plans/Tools.md#T-172, ContractName:Plans/Tools.md#T-176, ContractName:Plans/Permissions_System.md#PS-145, ContractName:Plans/Contracts_V0.md#CV-365, ContractName:Plans/Commands_System.md#CS-112
+
+### T-187 - Application Tool Context, Local Search And Bounded Custody
+
+```yaml
+plan_unit_id: T-187
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Every app tool call uses explicit application scope, project_id=null, real thread/Server/Host/Environment,
+  operation/attempt and frozen working roots. A command or saved file lazily creates the visible chat
+  folder; pure conversation creates no user folder. bash/edit/read/grep/glob and explicitly supported
+  evaluation use that folder or admitted exact directories, never CWD/home/main-Project guesses. Task-needed
+  home reads follow Permissions' listed FileSafe-on exception; canonical identity checks exclude Project
+  folders, PM data and secrets through symlinks/reparse points, and external-directory default ask remains
+  a guard. Local chatsearch/chatread stay in the calling thread's app corpus; other-thread/Project reads
+  use T-185. codesearch uses explicitly selected roots and reports missing indexes instead of searching
+  the whole Computer. App log reads use the payload store, and app web caching shares the counterpart
+  500 MB per-Computer bucket with the same TTL/LRU. The project_enabled stage and web.fetch.cache-size
+  use their owner rules. Discovery, enablement and immutable defaults consume the single Settings/Permissions
+  owners without a Project tier or org layer; installed, enabled and permitted remain distinct. todowrite
+  carries the exact thread/place/Computer into ToDoController. Notebook tools and exact-history reads
+  preserve identical scope/actor/phase/visibility checks with nullable Project; notes never become cross-Project
+  readable. Conversion re-resolves future roots, discovery, indexes, caches and runtime context against
+  the destination manifest; frozen receipts, original payload scope and already-running processes retain
+  their original identities. Permissions_System PS-145 owns external_directory and system_change admission;
+  no tool-local rule table widens them. Application tool, notebook, memory, browser, restore-point, terminal
+  and Eval roots use the selected CV-366 graph in Plans/application_workflow_contracts.schema.json, Plans/application_workflow_sources.schema.json
+  and Plans/application_workflow_source_graph.json, with SP-349 physical keys and counterpart quotas.
+  Original Project sources remain exact. A missing actual source/handler/retention/backup join is unavailable
+  rather than an app-capable alias. C-B01 conversion re-resolves these destinations through the one owner
+  manifest; it neither transfers a live process/controller nor reuses source permissions.
+gui_related: false
+gui_classification_reason: Defines runtime scope, data identity and custody without owning visual presentation.
+depends_on:
+- T-044
+- T-053
+- T-066
+- T-152
+- T-161
+- T-176
+- T-179
+- WN-021
+- AMS-054
+- CV-366
+- SP-349
+unblocks: []
+acceptance_criteria:
+- A no-project call never synthesizes an empty/sentinel Project key or derives authority from focused
+  UI.
+- App cache and search limits are shared per owning Computer as their counterparts require, with per-thread
+  access isolation.
+- Conversion preserves original events/usage/process identity, revalidates new work and reports unsupported/missing
+  roots honestly.
+validation_surfaces:
+- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
+- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+risk_class: scope_authority_or_custody_drift
+reasoning_tier: high
+context_scope: project_and_application_scope
+implementation_surfaces:
+- Plans/Tools.md
+- Plans/settings_system_contracts.schema.json
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N6/N12/N24/N25/N26
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#3.3–3.4;5;7.12;9.4
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- 'Jared, 2026-11-03: "Those look good, except goals and crew should be allowed in no project."'
+- 'Jared, 2026-11-03: "Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t."'
+- projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
+preserved_exact_tokens:
+- application
+- project_id=null
+- project_enabled
+- chatsearch
+- chatread
+- todowrite
+- 500 MB
+- web.fetch.cache-size
+negative_constraints:
+- Do not scrape home/desktop/downloads as an implicit default or let a raw path bypass Project read/write
+  policy.
+- Do not add a second tool dispatch, permission engine, notebook API or unbounded app cache.
+- Do not infer an implemented handler, admitted event writer, native verification, WorkNode, NodeSeed
+  or governance clearance from this accepted contract.
+owner_hints:
+- Plans/Tools.md
+- Plans/Settings_System.md
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Tools.md#T-187, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365
