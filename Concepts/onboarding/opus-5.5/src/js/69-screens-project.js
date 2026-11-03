@@ -79,7 +79,16 @@
   def('begin', {
     chapter: 'project', stage: 'first_project', charmSlot: 'begin',
     scene: (S) => ({ id: 'begin', beat: choiceOf(S) === 'existing' ? (S.sess.ui.beginSub || 'folder') : choiceOf(S) }),
-    enter(S) { S.sess.active = 'main'; },
+    /* (the card shown is the beginning the plan holds: a record whose stored pick disagrees with its plan, a constructed or
+       older one, shows the committed beginning, the lead's ruling 1103074359 and Sol reader-b's K9a case 6) */
+    enter(S) {
+      S.sess.active = 'main';
+      const d = md(S), b = O55.branch && O55.branch.began ? O55.branch.began(S) : null;
+      if (b && (S.sess.ui.beganAs || d.project_mode !== 'new')) {
+        const [sel, sub] = b === 'later' ? ['new', null] : b.indexOf('existing:') === 0 ? ['existing', b.slice(9)] : [b, null];
+        if (S.sess.ui.begin !== sel || (sel === 'existing' && S.sess.ui.beginSub !== sub)) { S.sess.ui.begin = sel; S.sess.ui.beginSub = sub; }
+      }
+    },
     eyebrow: () => T('begin.eyebrow'),
     title: () => T('begin.title'),
     lead: () => T('begin.lead'),
