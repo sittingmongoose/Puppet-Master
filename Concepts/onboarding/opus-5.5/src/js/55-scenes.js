@@ -62,7 +62,7 @@
     'c-pair': { props: two('idcard', 'qr'), state: (S) => { const c = S.sess.connect || {}, m = cdr(S).connection_pairing; return c.paired ? 'done' : m === 'qr' ? 'qr' : m === 'approval' ? 'waiting' : 'enter'; } },
     'c-ready': { props: () => [P('laptop', 'pairA'), P('server', 'pairB')], state: (S) => { const s = (S.env.pmServers || []).find((x) => x.id === cdr(S).server_ref); return s && !(s.projects || []).length ? 'empty' : 'enter'; } },
     's-kind': { props: (S, h) => { const c = choice(h, 'kind', (S.sess.server && S.sess.server.kind) || 'nas'); return [P({ cloud: 'cloud', pc: 'server' }[c.v] || 'nas', 'side', { preview: c.preview })]; }, vars: (S) => ({ kind: (S.sess.server && S.sess.server.kind) || 'nas' }) },
-    's-wait': { props: two('nas', 'key'), state: (S) => { const sv = S.sess.server || {}, op = (S.sess.ops || {})['discover:server:' + (sv.kind || 'nas')]; return sv.kind !== 'cloud' && op && op.state === 'done' ? 'found' : 'enter'; } },
+    's-wait': { props: two('nas', 'key'), state: (S) => { const sv = S.sess.server || {}, op = (S.sess.ops || {})['discover:server:' + (sv.kind || 'nas')]; return sv.claimed && sv.id && sv.chainFor === sv.id ? 'mine' : sv.kind !== 'cloud' && op && op.state === 'done' ? 'found' : 'enter'; } },
     's-confirm': { props: two('server', 'key'), vars: (S) => ({ name: (S.sess.server && S.sess.server.displayName) || '' }),
       state: (S) => { const sv = S.sess.server || {}; return sv.claimed ? 'done' : sv.orRunOk ? 'selfMatch' : sv.orClaimReq && !sv.orClaimErr ? 'working' : 'enter'; } },
     's-ready': { props: () => [P('server', 'pairA'), P('qr', 'pairB'), P('phone', 'hi')],
