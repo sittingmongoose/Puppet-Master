@@ -53,12 +53,31 @@
     b.addEventListener('click', (e) => { e.preventDefault(); run && run(e); });
     return b;
   }
+  /* a radio group the way the keyboard expects one (spec 15): one tab stop (the chosen one, else the first that can be
+     chosen), arrows and Home/End move to the next choice and choose it, disabled choices are skipped. Built over
+     PJX.flow's parts, which A and B keep as they are */
+  function roving(box, sel, pick) {
+    const all = () => Array.from(box.querySelectorAll(sel));
+    const ok = (b) => b.getAttribute('aria-disabled') !== 'true' && !b.classList.contains('is-off');
+    const list = all(), on = list.find((b) => b.getAttribute('aria-checked') === 'true' && ok(b)) || list.find(ok);
+    list.forEach((b) => { b.tabIndex = b === on ? 0 : -1; });
+    box.addEventListener('keydown', (e) => {
+      if (!/^(Arrow(Up|Down|Left|Right)|Home|End)$/.test(e.key)) return;
+      const bs = all().filter(ok), i = bs.indexOf(D.activeElement); if (i < 0) return;
+      e.preventDefault(); e.stopPropagation();
+      const n = e.key === 'Home' ? bs[0] : e.key === 'End' ? bs[bs.length - 1] : bs[(i + (/Down|Right/.test(e.key) ? 1 : bs.length - 1)) % bs.length];
+      if (!n || n === D.activeElement) return;
+      n.focus(); if (n.getAttribute('aria-checked') !== 'true') pick(n);
+    }, true);
+    return box;
+  }
   /* radio cards (PJX.flow.choices) whose buttons keep their focus across renders */
   function choices(key, items, sel, onPick, o) {
     o = o || {};
     const box = FL().choices(items, sel, onPick, { label: o.label || key, cls: o.cls || 'pjx-choices-list' });
     box.setAttribute('data-np-group', key);
     box.querySelectorAll('.pjx-choice').forEach((b) => { b.setAttribute('data-c-key', key + ':' + b.getAttribute('data-v')); const it = items.find((x) => x.id === b.getAttribute('data-v')); if (it && it.cmd) b.setAttribute('data-cmd', it.cmd); });
+    if (!o.multi) roving(box, '.pjx-choice', (b) => b.click());
     return box;
   }
   function seg(key, items, value, onPick, label) {
@@ -66,7 +85,15 @@
     box.querySelectorAll('.pjx-seg-btn').forEach((b, i) => { b.setAttribute('data-c-key', key + ':' + items[i].id); if (items[i].off) { b.setAttribute('aria-disabled', 'true'); tip(b, items[i].title, items[i].off); } });
     // a disabled segment says why and does nothing
     box.addEventListener('click', (e) => { const b = e.target.closest('.pjx-seg-btn'); if (b && b.getAttribute('aria-disabled') === 'true') e.stopImmediatePropagation(); }, true);
+    roving(box, '.pjx-seg-btn', (b) => b.click());
     return box;
+  }
+  /* what YOLO does at this yes-point instead (shown while the run mode is YOLO): the mark, the word and one sentence */
+  function yoloLine(text, o) {
+    o = o || {};
+    if (!(PJX.yolo && PJX.yolo()) && !o.always) return null;
+    const said = String(text).replace(/^In YOLO, (\w)/, (m0, c) => c.toUpperCase());
+    return h('div.pjx-yolo-line', { 'data-yolo': o.asks ? 'asks' : 'goes' }, h('span.pjx-st-mark', { html: PJX.calm(o.asks ? 'waiting' : 'info', 14), 'aria-hidden': 'true' }), h('span', null, h('b', { text: w('np.yolo.cap') + ' · ' }), said));
   }
   /* a text field, kept with its caret across renders by data-pjx-key */
   function input(key, value, ph, onInput, attrs) {
@@ -126,9 +153,11 @@
     o = o || {};
     const open = o.force || !!s.ui.disc[id];
     const rid = 'pjx-np-d-' + s.id + '-' + id;
-    const b = h('button.pjx-np-disc', { type: 'button', 'aria-expanded': String(open), 'aria-controls': rid, 'data-c-key': 'disc:' + id, 'data-disc': o.kind || 'advanced' },
-      h('span.pjx-np-disc-chev', { html: icon(open ? 'chevron-down' : 'chevron-right', 13), 'aria-hidden': 'true' }), h('span', { text: label }));
-    b.addEventListener('click', () => { s.ui.disc[id] = !open; s.changed(); });
+    // held open because the chosen answer is inside it: a plain heading (a toggle that can't close would do nothing)
+    const b = o.force ? h('div.pjx-np-disc.is-held', { id: rid + '-h', 'data-disc': o.kind || 'advanced' }, h('span', { text: label }))
+      : h('button.pjx-np-disc', { type: 'button', 'aria-expanded': String(open), 'aria-controls': rid, 'data-c-key': 'disc:' + id, 'data-disc': o.kind || 'advanced' },
+        h('span.pjx-np-disc-chev', { html: icon(open ? 'chevron-down' : 'chevron-right', 13), 'aria-hidden': 'true' }), h('span', { text: label }));
+    if (!o.force) b.addEventListener('click', () => { s.ui.disc[id] = !open; s.changed(); });
     const wrap = h('div', { class: ['pjx-np-discwrap', o.cls], 'data-disc-kind': o.kind || 'advanced' }, b);
     if (open) put(wrap, h('div.pjx-np-discbody', { id: rid, role: 'region', 'aria-label': label }, ...[].concat(typeof body === 'function' ? body() : body).filter(Boolean)));
     return wrap;
@@ -171,7 +200,8 @@
   /* a mini-step inside a section: "1 of 3", folded to one line with Change once it is done (spec 2.2, 8 rule 9) */
   function mini(o) {
     const head = h('div.pjx-np-minihead', null, h('span.pjx-np-mininum', { text: w('np.sec.step', { n: o.n, total: o.total }) }), h('span.pjx-np-minititle', { text: o.title }));
-    const el = h('div', { class: ['pjx-np-mini', 'is-' + o.state] }, head);
+    const el = h('div', { class: ['pjx-np-mini', 'is-' + o.state], 'data-np-esc': o.state === 'open' && o.esc ? o.key : null }, head);
+    if (o.state === 'open' && o.esc && o.s) { o.s.ui.esc = o.s.ui.esc || {}; o.s.ui.esc[o.key] = o.esc; }
     if (o.state === 'done') {
       put(head, h('span.pjx-np-minisum', null, PJX.parts.st('complete', o.summary || 'Done')));
       if (o.change) put(head, link(w('np.sec.change'), o.change, { key: o.key + ':change' }));
@@ -208,7 +238,7 @@
     if (i.size && !i.known) rows.push(line(null, w('np.look.size', { size: i.size }), { icon: 'code' }));
     const known = i.known && PJX.get(i.known), same = i.sameOnline && PJX.get(i.sameOnline);
     if (known) rows.push(line('blocked', w('np.look.known', { project: known.name }), { after: btn(w('np.look.knownOpen', { project: known.name }), () => PJX.ACT.open(known.id), { key: 'look:open', cmd: 'cmd.project.open' }) }));
-    if (same) rows.push(line('info', w('np.look.sameOnline', { project: same.name }), { after: link(w('np.look.sameOnlineOpen', { project: same.name }), () => PJX.ACT.open(same.id), { key: 'look:same', cmd: 'cmd.project.open' }) }));
+    if (same) rows.push(line('info', w('np.look.sameOnline', { project: same.name, name: NP().nameOf(s) || same.name }), { after: link(w('np.look.sameOnlineOpen', { project: same.name }), () => PJX.ACT.open(same.id), { key: 'look:same', cmd: 'cmd.project.open' }) }));
     if (i.online && !known && !opts.noNext) rows.push(hint(w('np.look.next')));
     return h('div.pjx-np-look', { 'data-cmd': 'cmd.source_control.backend.detect + new:inspection' }, cap(w('np.look.title')), lines(rows));
   }
@@ -319,14 +349,19 @@
     const keyName = (k) => (keys.find((x2) => x2.id === k) || {}).name || '';
     const step1 = dv.idOk ? 'done' : 'open', step2 = !dv.idOk ? 'later' : dv.keyDone ? 'done' : 'open', step3 = !dv.keyDone ? 'later' : 'open';
     const box = h('div.pjx-np-connect', { 'data-cmd': 'gap:ssh trust and key install' }, cap(w('np.connect.title', { device: x.name })));
-    put(box, mini({ n: 1, total: 3, key: 'conn1', title: w('np.connect.id.title'), state: step1, summary: w('np.connect.id.done', { device: x.name }),
-      change: () => { dv.idOk = false; dv.keyDone = false; s.secrets.delete('devpw'); s.changed(); },
+    const backToKey = () => { dv.keyDone = false; const el = s.secrets.get('devpw'); if (el) el.value = ''; s.secrets.delete('devpw'); s.ui.keyOp = null; Object.keys(s.ops).forEach((k) => { if (/^keyadd:/.test(k)) delete s.ops[k]; }); s.ui.connNeedBoth = false; s.changed(); };
+    put(box, mini({ n: 1, total: 3, key: 'conn1', s, title: w('np.connect.id.title'), state: step1, summary: w('np.connect.id.done', { device: x.name }),
+      change: () => { dv.idOk = false; dv.keyDone = false; const el = s.secrets.get('devpw'); if (el) el.value = ''; s.secrets.delete('devpw'); s.ui.keyOp = null; s.changed(); },
+      esc: () => NP().set(s, 'device.id', null),
       body: [h('p.pjx-np-say', { text: w('np.connect.id.lead', { device: x.name }) }), h('div.pjx-np-words', { text: x.words, 'data-pmh-tag': 'literal' }),
         h('div.pjx-row', null, btn(w('np.connect.id.yes'), () => { dv.idOk = true; dv.key = dv.key || 'ed25519'; s.changed(); }, { key: 'conn:yes', primary: false }), btn(w('np.connect.id.stop'), () => NP().set(s, 'device.id', null), { key: 'conn:stop', quiet: true })),
+        yoloLine(w('np.yolo.identity'), { asks: true }),
         hint('The technical fingerprint is under Advanced.')] }));
     const userBad = dv.user && /@/.test(dv.user) ? w('np.connect.userEmail', { device: x.name }) : s.ui.connUserErr ? w('np.connect.userEmpty', { device: x.name }) : '';
-    put(box, mini({ n: 2, total: 3, key: 'conn2', title: w('np.connect.key.title'), state: step2, summary: w('np.connect.key.done', { key: keyName(dv.key), user: dv.user }),
-      change: () => { NP().set(s, 'device.key', dv.key); },
+    put(box, mini({ n: 2, total: 3, key: 'conn2', s, title: w('np.connect.key.title'), state: step2, summary: w('np.connect.key.done', { key: keyName(dv.key), user: dv.user }),
+      // Change reopens the key step, even when the same key stays chosen: the one-time password and step 3 go
+      change: backToKey,
+      esc: () => { dv.idOk = false; s.changed(); },
       body: [h('p.pjx-np-say', { text: w('np.connect.key.lead', { computer: d.runsOn === 'here' ? 'this computer' : cn }) }),
         choices('conn:key', keys.map((k) => ({ id: k.id, glyph: 'key', title: k.name, sub: k.weak ? w('np.connect.key.old') : k.sub || (k.where === 'agent' ? w('np.connect.key.agent') : w('np.connect.key.file')) + ' · ' + w('np.connect.key.notAdded', { device: x.name }), disabled: k.weak ? w('np.connect.key.old') : null })), dv.key, (v) => NP().set(s, 'device.key', v), { label: w('np.connect.key.title') }),
         line(null, w('np.connect.key.reads'), { icon: 'lock' }),
@@ -346,6 +381,7 @@
             secret(s, 'devpw', w('np.connect.signin.pw'), w('np.connect.signin.pwHint'), { problem: fail, real: true, enter: () => go() })) : null,
           dv.signin === 'pw' ? demo([{ label: 'jared · correct horse', outcome: 'works', run: () => { dv.user = 'jared'; const el = s.secrets.get('devpw'); if (el) el.value = 'correct horse'; s.changed(); } }, { label: 'jared · not-the-password', outcome: 'refused', run: () => { dv.user = 'jared'; const el = s.secrets.get('devpw'); if (el) el.value = 'not-the-password'; s.changed(); } }], { id: 'devpw' }) : null,
           dv.signin === 'self' ? h('div.pjx-np-say', null, w('np.connect.signin.selfLead', { device: x.name, key: keyName(dv.key) }), h('div.pjx-np-words.is-code', { text: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPm…q7 jared@puppet-master', 'data-pmh-tag': 'literal' })) : null,
+          yoloLine(w('np.yolo.signin'), { asks: true }),
           h('div.pjx-row', null, btn(dv.signin === 'pw' ? w('np.connect.signin.add') : w('np.connect.signin.selfCheck'), () => go(), { key: 'conn:add', primary: true, cmd: 'gap:ssh key install' }))];
       }
     }
@@ -354,7 +390,7 @@
       s.ui.connNeedBoth = !!(r && r.fail === 'needBoth');
       s.changed();
     }
-    put(box, mini({ n: 3, total: 3, key: 'conn3', title: w('np.connect.signin.title', { device: x.name }), state: step3, body: body3 }));
+    put(box, mini({ n: 3, total: 3, key: 'conn3', s, title: w('np.connect.signin.title', { device: x.name }), state: step3, body: body3, esc: backToKey }));
     return box;
   }
   /* folders on a device, a share or a drive, then the look inside */
@@ -362,12 +398,20 @@
     const d = s.d, dv = d.device;
     if (NP().trusted(s, dv.id) && s.ui.pendingPath && !dv.path) { const p = s.ui.pendingPath; s.ui.pendingPath = null; dv.path = p; }
     put(box, line('complete', dv.method === 'ssh' ? w('np.connect.done') : where, { cls: 'is-quiet' }));
-    const list = (folders || []).map((f) => ({ id: f, glyph: 'folder', title: f.split('/').pop(), sub: f }));
+    const made = (s.ui.newFolders || []).filter((f) => f.indexOf(root) === 0);
+    const list = (folders || []).concat(made).map((f) => ({ id: f, glyph: made.indexOf(f) >= 0 ? 'folder-plus' : 'folder', title: f.split('/').pop(), sub: made.indexOf(f) >= 0 ? f + ' · ' + w('np.device.newFolderSub') : f }));
     if (dv.path && !list.some((x) => x.id === dv.path)) list.push({ id: dv.path, glyph: 'folder', title: dv.path.split('/').pop(), sub: dv.path });
     put(box, group(w('np.device.folders', { device: dv.method === 'ssh' ? (NP().dev(dv.id) || {}).name : where.replace(/^Opened |\.$/g, '') }), choices('device:path', list, dv.path, (v) => { dv.browse = null; NP().set(s, 'device.path', v); }, { label: w('np.folder.pick') })));
     if (tree) {
-      put(box, h('div.pjx-row', null, btn(w('np.folder.browse'), () => { dv.browse = dv.browse ? null : root; s.changed(); }, { key: 'device:browse', icon: 'folder-search', quiet: true }), dv.method === 'ssh' ? btn(w('np.folder.newFolder'), () => PJX.toast('New folder', 'Made on the device when the Project is added.', 'info'), { key: 'device:newfolder', quiet: true, icon: 'folder-plus' }) : null));
+      put(box, h('div.pjx-row', null, btn(w('np.folder.browse'), () => { dv.browse = dv.browse ? null : root; s.changed(); }, { key: 'device:browse', icon: 'folder-search', quiet: true }), btn(w('np.folder.newFolder'), () => { s.ui.newFolderOpen = !s.ui.newFolderOpen; s.changed(); }, { key: 'device:newfolder', quiet: true, icon: 'folder-plus' })));
       if (dv.browse) put(box, picker(s, 'dev-' + (dv.id || dv.share || dv.volume), tree, root, (p) => { dv.browse = null; NP().set(s, 'device.path', p); }));
+      if (s.ui.newFolderOpen) {
+        const nm = String(s.ui.newFolderName || ''), bad = nm && R().folderNameProblem(nm);
+        const make = () => { const v = String(s.ui.newFolderName || '').trim(); if (!v || R().folderNameProblem(v)) return; const pth = root.replace(/\/+$/, '') + '/' + v; s.ui.newFolders = (s.ui.newFolders || []).concat([pth]); s.ui.newFolderOpen = false; s.ui.newFolderName = ''; NP().set(s, 'device.path', pth); };
+        const inp = input('newFolder', nm, 'family-photos', (v) => { s.ui.newFolderName = v; s.changed(); });
+        inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); make(); } });
+        put(box, field(w('np.device.newFolderLabel', { place: root }), inp, w('np.device.newFolderHint', { device: where.replace(/^Opened |\.$/g, '') }), bad || '', { after: h('div.pjx-row', null, btn(w('np.device.newFolderGo'), make, { key: 'device:newfolder:go' })) }));
+      }
     }
   }
   function sharePart(s, box, cn) {
@@ -395,11 +439,13 @@
       }
       if (o && o.state === 'working') put(box, working(w('np.smb.phase.open') + ' · ' + w('np.smb.phase.read')));
       else if (!(o && o.state === 'done')) put(box, h('div.pjx-row', null, btn(w('np.smb.check'), () => {
-        const pw = pwEl ? pwEl.value : '', u = String(dv.smbUser || '').trim();
+        // the field and its key are read now, as the person left them (the username may have been typed since the draw)
+        const pwNow = s.secrets.get('devsmb') || pwEl, pw = pwNow ? pwNow.value : '', u = String(dv.smbUser || '').trim();
         s.ui.smbFail = false; s.ui.smbNeed = !u || !pw; if (s.ui.smbNeed) { s.changed(); return; }
-        delete s.ops[key];
-        NP().op(s, key, 900, () => { if (u === sh.user && pw === sh.password) return { ok: true }; s.ui.smbFail = true; delete s.ops[key]; return { fail: 'wrong' }; });
-        if (pwEl) pwEl.value = '';
+        const k2 = 'smb:' + d.runsOn + ':' + NP().smbShareKey(s) + ':' + dv.smbUser;
+        delete s.ops[k2];
+        NP().op(s, k2, 900, () => { if (u === sh.user && pw === sh.password) return { ok: true }; s.ui.smbFail = true; delete s.ops[k2]; return { fail: 'wrong' }; });
+        if (pwNow) pwNow.value = '';
         s.changed();
       }, { key: 'smb:check', primary: true, cmd: 'cmd.project.source_location.test' })));
     } else {
@@ -461,7 +507,8 @@
     if (si && si.expired) put(box, line('warning', w('np.link.expired', { service: svc.name, computer: cn })));
     if (op0 && op0.state === 'working') { put(box, working(methods[0] === 'token' ? 'Checking the token…' : w('np.signin.waiting'))); return { done: false, node: box }; }
     if (op0 && op0.state === 'failed') put(box, line('failed', op0.result.fail === 'token' ? w('np.signin.tokenBad') : w('np.signin.fail')));
-    const method = s.ui['method:' + key] || methods[0];
+    // a method kept from another service or server is never used here (FF-11): only this service's own methods
+    const method = methods.indexOf(s.ui['method:' + key]) >= 0 ? s.ui['method:' + key] : methods[0];
     if (methods.length > 1) put(box, seg(key + ':method', methods.map((m) => ({ id: m, title: { browser: 'Sign in on its page', device: 'A code to type', token: 'Access token' }[m] })), method, (v) => { s.ui['method:' + key] = v; s.changed(); }, 'How to sign in'));
     if (method === 'token') {
       put(box, h('p.pjx-np-say', { text: w('np.signin.tokenLead', { host: rec.host || svc.name }) }));
@@ -480,6 +527,8 @@
       put(box, h('div.pjx-row', null, btn(si && si.expired ? 'Sign in again' : w('np.signin.signIn'), () => { s.ui['another:' + key] = false; NP().signIn(s, rec, 'browser'); s.changed(); }, { key: key + ':go', primary: true, icon: 'key', cmd: si && si.expired ? 'cmd.forge.connection.reauthorize' : 'cmd.auth_profile.sign_in' }),
         methods.indexOf('device') >= 0 ? link(w('np.signin.noBrowser'), () => { s.ui['method:' + key] = 'device'; s.changed(); }, { key: key + ':nobrowser' }) : null));
     }
+    put(box, h('div.pjx-row', null, link(w('np.signin.signup', { service: svc.name }), () => PJX.toast(svc.name, 'Opens ' + svc.name + '’s own sign-up page in your browser. Come back here to sign in.', 'info'), { key: key + ':signup', cmd: 'cmd.auth_profile.open_official_page' })));
+    put(box, yoloLine(w('np.yolo.signin'), { asks: true }));
     return { done: false, node: box };
   }
 
@@ -487,7 +536,7 @@
   function secSource(s) {
     const d = s.d, box = h('div.pjx-np-source');
     put(box, serviceCards(s, 'src', { value: d.src.service, kind: d.src.kind, address: d.src.address, git: true,
-      onService: (v) => NP().set(s, 'src.service', v), onKind: (v) => NP().set(s, 'src.kind', v), onAddress: (v) => { d.src.address = v; NP().set(s, 'src.address', v); } }));
+      onService: (v) => NP().set(s, 'src.service', v), onKind: (v) => NP().set(s, 'src.kind', v), onAddress: (v) => NP().set(s, 'src.address', v) }));
     if (d.src.service === 'git') {
       const a = d.src.gitAddress, valid = NP().gitAddrValid(a), o = valid ? NP().gitAddressCheck(s) : null;
       put(box, field(w('np.svc.gitAddressLabel'), input('gitAddress', a, '', (v) => { d.src.gitAddress = v; s.changed(); }), o && o.state === 'working' ? w('np.svc.gitAddressChecking') : w('np.svc.gitAddressHint'), a && !valid ? w('np.svc.gitAddressBad') : o && o.state === 'failed' ? w('np.svc.gitAddressNone') : '', { real: true }));
@@ -517,7 +566,7 @@
         put(box, list.length ? choices('find:pick', list.map(rowOf), d.find.project, (v) => NP().set(s, 'find.project', v), { label: w('np.find.yours') }) : line('off', (rec.repos || []).length ? w('np.find.noMatch') : w('np.find.empty', { account: si.account, service: svc.name })));
       }
     } else {
-      const go = () => { d.find.anyAsked = String(d.find.anyQ || '').trim(); NP().set(s, 'find.project', null); };
+      const go = () => { const q = String(d.find.anyQ || '').trim(); if (!q) return; d.find.anyAsked = q; if (d.find.project) NP().set(s, 'find.project', null); else s.changed(); };
       const inp = input('findAny', d.find.anyQ, w('np.find.searchAnyPh'), (v) => { d.find.anyQ = v; });
       inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); go(); } });
       put(box, field(w('np.find.searchAny'), inp, '', null, { real: true, after: h('div.pjx-row', null, btn(w('np.find.findBtn'), go, { key: 'find:go', cmd: 'gap:search anyone’s Projects (FGI-011 scope)' })) }));
@@ -534,6 +583,11 @@
     if (!d.find.project) return box;
     // what you can do with it (the access check), then what you want to do
     const a = NP().access(s);
+    if (a && a.state === 'signin') {
+      put(box, line('waiting', w('np.access.signinFirst', { service: svc.name, project: d.find.project, computer: cn })));
+      if (tab !== 'yours') { const sv = signinView(s, rec, 'find'); if (!sv.done) put(box, sv.node); }
+      return box;
+    }
     if (!a || a.state === 'working') { put(box, working(w('np.access.checking', { project: d.find.project }))); return box; }
     if (a.state === 'failed') return box;
     const acc = a.result, r = NP().repoOf(s), owner = String(r.id).split('/')[0];
@@ -609,7 +663,8 @@
     put(box, group(w('np.restore.pick'), choices('restore:pick', l.result.projects.map((p) => ({ id: p, glyph: 'box', title: p, sub: w('np.restore.pickRow', { when: src.latest || 'Oct 28', inList: PJX.get(p) ? w('np.restore.inList') : w('np.restore.notInList') }) })), r.pick, (v) => NP().set(s, 'restore.pick', v), { label: w('np.restore.pick') })));
     if (r.pick) {
       const lin = NP().lineage(s);
-      put(box, group(w('np.restore.comes'), lines(line('complete', w('np.restore.files')), line('complete', w('np.restore.pm')), line('info', w('np.restore.never')),
+      const rh = NP().restoredHist(s);
+      put(box, group(w('np.restore.comes'), lines(line('complete', rh && rh.backend ? w('np.restore.filesKind', { kind: NP().kindWord(rh.backend), ref: rh.branch ? (rh.backend === 'jujutsu' ? 'bookmark ' : 'branch ') + rh.branch : '' }) : w('np.restore.filesOnly')), line('complete', w('np.restore.pm')), line('info', w('np.restore.never')),
         PJX.get(r.pick) ? line('info', w('np.restore.both', { project: r.pick })) : null, lin ? line('info', w('np.restore.lineage', { service: lin[0], project: lin[1] })) : null)));
     }
     return box;
@@ -670,14 +725,31 @@
         put(loc, demo([{ label: '~/Documents', outcome: 'works', run: () => { d.files.parent = '~/Documents'; s.changed(); } }, { label: '/System/Library', outcome: 'refused', run: () => { d.files.parent = '/System/Library'; s.changed(); } }, { label: '~/Projects + tastebook', outcome: 'taken', run: () => { d.files.parent = '~/Projects'; d.folderName = 'tastebook'; d.folderNameTouched = true; s.ui.disc['where-adv'] = true; s.changed(); } }], { id: 'parent' }));
       }
       if (m === 'network') {
-        put(loc, group(w('np.loc.networkPick'), choices('where:net', NPx.networkPlaces(s).map((x) => ({ id: x.id, glyph: x.route === 'drive' ? 'folder' : 'network', title: x.title, sub: x.sub, disabled: x.off })), d.files.network, (v) => { d.files.network = v; NPx.set(s, 'files.network', v); }, { label: w('np.loc.networkPick') })));
+        put(loc, group(w('np.loc.networkPick'), choices('where:net', NPx.networkPlaces(s).map((x) => ({ id: x.id, glyph: x.route === 'drive' ? 'folder' : 'network', title: x.title, sub: x.sub, disabled: x.off })), d.files.network, (v) => NPx.set(s, 'files.network', v), { label: w('np.loc.networkPick') }),
+          line(null, w('np.loc.net.other'), { icon: 'info' })));
         put(loc, demo([{ label: '/Volumes/Backup Drive', outcome: 'nothing there (no room)', run: () => NPx.set(s, 'files.network', 'vol:vol-backup') }], { id: 'room', hide: d.way !== 'online' }));
+        const n = NPx.netPlace(s);
+        if (n && !n.off) {
+          const o = NPx.netCheck(s), place = n.title, computer = cn;
+          if (n.route === 'SMB' && !(o && o.state === 'done')) {
+            put(loc, h('div.pjx-np-pair', null, field(w('np.smb.user'), input('netUser', d.files.netUser, '', (v) => { d.files.netUser = v; }), '', null, { real: true }),
+              secret(s, 'net:smb', w('np.smb.pw'), w('np.smb.pwHint', { computer }), { problem: o && o.state === 'failed' ? w('np.loc.net.refused.wrong', { place }) : s.ui.netNeed ? w('np.loc.net.refused.needBoth') : '', real: true, enter: () => NPx.netSignIn(s) })));
+            put(loc, demo([{ label: 'jared · correct horse', outcome: 'works', run: () => { d.files.netUser = 'jared'; const el = s.secrets.get('net:smb'); if (el) el.value = 'correct horse'; s.changed(); } }, { label: 'jared · wrong password', outcome: 'refused', run: () => { d.files.netUser = 'jared'; const el = s.secrets.get('net:smb'); if (el) el.value = 'wrong'; s.changed(); } }], { id: 'netsmb' }));
+            if (o && o.state === 'working') put(loc, working(w('np.loc.net.checking', { place })));
+            else put(loc, h('div.pjx-row', null, btn(w('np.loc.net.check'), () => NPx.netSignIn(s), { key: 'where:netcheck', primary: true, cmd: 'cmd.project.source_location.test' })));
+          } else if (o && o.state === 'working') put(loc, working(w('np.loc.net.checking', { place })));
+          else if (o && o.state === 'failed') put(loc, line('blocked', w('np.loc.net.refused.' + (o.result.fail || 'denied'), { place, computer })));
+          else if (o && o.state === 'done') put(loc, line('complete', w('np.loc.net.ok.' + (o.result.how || 'key'), { place, user: d.files.netUser, computer })));
+        }
       }
       const r = NPx.placeRoot(s), fp = NPx.fullPath(s), named = !!String(nm || '').trim();
       const pathEl = r ? (named && fp ? code(fp) : h('span.pjx-np-code.is-open', { text: w('np.loc.fullNoName', { parent: r.root }), 'data-pmh-tag': 'literal' })) : h('span.pjx-np-code.is-open', { text: w('np.sec.notChosen') });
       const off = r && r.net && r.net.off;
+      // a network place answers only once its check passed: until then the path says so instead
+      const nc = r && r.net && !off ? NPx.netCheck(s) : null, netOk = !r || !r.net || (nc && nc.state === 'done');
       put(loc, h('div.pjx-np-path', null, cap(w('np.loc.full')), pathEl,
-        r ? h('div.pjx-np-pathfacts', null, st('complete', w('np.loc.answers', { place: r.net ? r.net.holder : r.holder })), r.free ? h('span.pjx-np-free', { text: w('np.loc.free', { free: r.free }) }) : null) : null,
+        r && netOk && !off ? h('div.pjx-np-pathfacts', null, st('complete', w('np.loc.answers', { place: r.net ? r.net.holder : r.holder })), r.free ? h('span.pjx-np-free', { text: w('np.loc.free', { free: r.free }) }) : null) : null,
+        r && !netOk && !off ? h('div.pjx-np-pathfacts', null, st('pending', w('np.loc.net.first', { place: r.net.title }))) : null,
         off ? line('offline', w('np.loc.notAnswering', { place: r.net.holder })) : null));
       if (d.way === 'online' && fp && named) put(loc, hint(w('np.loc.copyGoes', { path: fp })));
       if (d.way === 'restore' && fp && named) put(loc, hint(w('np.loc.restoreGoes', { path: fp })));
@@ -716,14 +788,15 @@
     const kindsDiff = NPx.andList(Array.from(new Set(S.own.map((r) => r[0]))).map((k) => KIND_SHORT[k]));
     const rows = NPx.accountRows(s);
     const comes = h('div.pjx-np-comes', { 'data-cmd': 'cmd.settings.transaction.preview' }, cap(w('np.like.comes')), lines(
-      S.own.length ? line('complete', w('np.like.diffs', { n: S.own.length, kinds: kindsDiff })) : line('off', 'It has no settings of its own: it uses your usual settings.'),
+      S.own.length ? line(c.picked ? 'complete' : 'off', c.picked === S.own.length ? w('np.like.diffs', { n: S.own.length, kinds: kindsDiff }) : w('np.like.diffsPicked', { k: c.picked, n: S.own.length, kinds: kindsDiff })) : line('off', 'It has no settings of its own: it uses your usual settings.'),
       S.things.length ? line('complete', w('np.like.things', { n: S.things.length, things: NPx.andList(S.things.map((t) => (t.kind === 'persona' ? 'the persona ' : t.kind === 'mcp' ? 'the MCP server ' : 'the command ') + t.name)) })) : null,
       L.accounts ? line('complete', w('np.like.accounts', { computer: cn })) : line('off', w('np.like.acctOff'))));
     if (L.accounts) put(comes, acctRows(s, rows, false));
     put(comes, lines(line(null, w('np.like.never'), { icon: 'lock' }), hint(w('np.like.separate', { name: NPx.nameOf(s) || 'the new Project', project: p.name }))));
     put(box, comes);
     put(box, disc(s, 'like-adv', w('np.like.adv'), () => likeAdvanced(s, p, S, rows)));
-    put(box, h('p.pjx-np-totals', { 'aria-live': 'polite', text: c.own || c.things || c.accounts ? w('np.like.totals', { settings: NPx.plural(c.own, 'setting'), things: NPx.plural(c.things, 'thing'), accounts: NPx.plural(c.accounts, 'AI account') }) : w('np.like.totalsNone') }));
+    const parts0 = [NPx.plural(c.own, 'setting'), NPx.plural(c.things, 'thing'), NPx.plural(c.accounts, 'AI account')].concat(c.headers ? [NPx.plural(c.headers, 'sign-in header')] : []).concat(c.files ? [c.files + ' of its own files'] : []);
+    put(box, h('p.pjx-np-totals', { 'aria-live': 'polite', text: c.own || c.things || c.accounts || c.headers || c.files ? w('np.like.totals', { list: NPx.andList(parts0) }) : w('np.like.totalsNone') }));
     put(box, hint(w('np.like.undoNote')));
     return box;
   }
@@ -757,7 +830,7 @@
         { disabled: own.length ? null : w('np.like.kindNone'), mixed: on > 0 && on < own.length, sub: own.length ? w('np.like.kindCount', { k: on, n: own.length }) : w('np.like.kindNone') }));
       if (ownShown.length || sameShown.length) put(k, h('div.pjx-np-kindrows', null,
         ...ownShown.map((r) => check('like:id:' + r[1], w('np.like.singleRow', { label: r[2], value: r[4], usual: r[3] }), NPx.picked(L.ids, r[1]), (v) => { L.ids = L.ids || {}; L.ids[r[1]] = v; s.changed(); })),
-        ...sameShown.map((r) => check('like:same:' + r[1], w('np.like.sameRow', { label: r[2], value: r[3] }), L.fixed, () => {}, { disabled: L.fixed ? null : w('np.like.sameOff') }))));
+        ...sameShown.map((r) => check('like:same:' + r[1], w('np.like.sameRow', { label: r[2], value: r[3] }), L.fixed && NPx.picked(L.sameIds, r[1]), (v) => { L.sameIds = L.sameIds || {}; L.sameIds[r[1]] = v; s.changed(); }, { disabled: L.fixed ? null : w('np.like.sameOff'), sub: L.fixed ? w('np.like.sameOn') : null }))));
       put(kinds, k);
     });
     put(kinds, hint(w('np.like.computerOnly', { computer: NPx.comp(p.runsOn || 'here').name })));
@@ -770,7 +843,7 @@
     if (NPx.SETTINGS.sendKeys && d.runsOn !== (p.runsOn || 'here') && rows.some((r) => r.kind === 'key')) out.push(lines(sw('like:sendkeys', w('np.like.sendKeys', { computer: cn }), w('np.like.sendKeysSub', { computer: cn, tools: 'Claude Code and Codex' }), !!L.sendKeys, (v) => { L.sendKeys = v; s.changed(); }), hint(w('np.like.sendKeysNew'), 'is-concept')));
     // about its own files (all off), then Also
     if (S.ownFiles.length) out.push(group(w('np.like.ownFilesHead'), hint(w('np.like.ownFilesSub')), ...S.ownFiles.map((f) => check('like:file:' + f.id, f.label, !!L.ownFiles[f.id], (v) => { L.ownFiles[f.id] = v; s.changed(); }))));
-    out.push(group(w('np.like.alsoHead'), check('like:fixed', w('np.like.fixed'), L.fixed, (v) => { L.fixed = v; s.changed(); }, { sub: w('np.like.fixedSub', { project: p.name, name: NPx.nameOf(s) || 'the new Project' }) }),
+    out.push(group(w('np.like.alsoHead'), check('like:fixed', w('np.like.fixed'), L.fixed, (v) => { L.fixed = v; if (v) { L.onlyDiff = false; } s.changed(); }, { sub: w('np.like.fixedSub', { project: p.name, n: S.same.length, name: NPx.nameOf(s) || 'the new Project' }), disabled: S.same.length ? null : w('np.like.kindNone') }),
       S.fromComputer ? check('like:fromcomputer', w('np.like.fromComputer', { project: p.name, computer: NPx.comp(p.runsOn || 'here').name, n: S.fromComputer }), L.fromComputer, (v) => { L.fromComputer = v; s.changed(); }) : null));
     // never copied, with the reasons
     const keys = rows.filter((r) => r.kind === 'key').map((r) => w('np.like.never.key', { key: r.name + (r.mcp ? ' sign-in header' : ' key') }));
@@ -781,9 +854,11 @@
   /* ------------------------------------------------------------------ section: versions (6.8) */
   function secVersions(s) {
     const d = s.d, NPx = NP(), box = h('div.pjx-np-ver'), k = NPx.histKeeps(s), cn = NPx.comp(d.runsOn).name;
-    if (k === 'restored') put(box, line('complete', w('np.ver.restored', { kind: 'Git' })));
+    const rh = d.way === 'restore' ? NPx.restoredHist(s) : null;
+    if (k === 'restored') put(box, line('complete', w('np.ver.restored', { kind: NPx.kindWord(rh.backend), ref: rh.branch ? (rh.backend === 'jujutsu' ? 'bookmark ' : 'branch ') + rh.branch : '' })));
     else if (k) put(box, line('complete', w('np.ver.keeps', { kind: k === 'jujutsu' ? 'Jujutsu' : 'Git' })));
     else {
+      if (d.way === 'restore' && rh && !rh.backend) put(box, line('info', w('np.ver.restoredNone')));
       const lim = NPx.histLimits(s);
       put(box, group(d.way === 'online' ? w('np.ver.copyWith') : w('np.ver.with'), seg('ver:history', [{ id: 'git', title: w('np.ver.git') }, { id: 'jujutsu', title: w('np.ver.jj') }], d.history, (v) => NPx.set(s, 'history', v), w('np.ver.with')),
         hint(d.history === 'jujutsu' ? w('np.ver.jjSub') : w('np.ver.gitSub'))));
@@ -806,6 +881,7 @@
       if (d.src.service === 'git') put(box, line('info', w('np.online.plain', { address: d.src.gitAddress })));
       else if (it === 'contribute') {
         put(box, lines(line('info', a.fork ? w('np.online.forkExists', { fork: a.fork }) : w('np.online.fork', { fork: NPx.forkOwner(s) + '/' + NPx.forkName(s), verb: 'Copy' })), line('info', w('np.online.original', { project: d.find.project })), line('info', w('np.online.branch', { branch: d.find.branch }))));
+        if (!a.fork) put(box, yoloLine(w('np.yolo.fork', { service: svcName })));
         if (!a.fork) put(box, disc(s, 'online-adv', w('np.sec.advanced'), () => {
           const fp = R().nameProblem(d.src.service, d.src.kind, NPx.forkName(s)), up = d.fork.upstreamName, upBad = !/^[A-Za-z0-9._-]+$/.test(up) || up === 'origin';
           return [field(w('np.fork.name', { service: svcName }), input('forkName', NPx.forkName(s), '', (v) => { d.fork.name = v; d.fork.nameTouched = true; s.changed(); }), w('np.fork.nameHint'), d.fork.nameTouched && fp ? fp : ''),
@@ -838,13 +914,15 @@
     const st1 = s.ui.mini.online === 1 || !addrOk ? 'open' : 'done';
     const st2 = st1 === 'open' ? 'later' : s.ui.mini.online === 2 || !signed ? 'open' : 'done';
     const st3 = st2 === 'done' ? 'open' : 'later';
-    put(box, mini({ n: 1, total: 3, key: 'make1', title: w('np.online.where'), state: st1, summary: svc ? kd.label + (kd.address ? ' · ' + o.address : '') : '',
-      change: () => { s.ui.mini.online = 1; s.changed(); },
+    put(box, yoloLine(w('np.yolo.make')));
+    put(box, mini({ n: 1, total: 3, key: 'make1', s, title: w('np.online.where'), state: st1, summary: svc ? kd.label + (kd.address ? ' · ' + o.address : '') : '',
+      change: () => { s.ui.mini.online = 1; s.changed(); }, esc: s.ui.mini.online === 1 && addrOk ? () => { s.ui.mini.online = null; s.changed(); } : null,
       body: [serviceCards(s, 'osvc', { value: o.service, kind: o.kind, address: o.address, onService: (v) => NPx.set(s, 'online.service', v), onKind: (v) => NPx.set(s, 'online.kind', v), onAddress: (v) => NPx.set(s, 'online.address', v) }),
         h('div.pjx-row', null, btn(w('np.sec.continue'), () => { if (addrOk) { s.ui.mini.online = null; s.changed(); } }, { key: 'make1:go', off: addrOk ? null : 'Type the server’s address first' }))] }));
     let body2 = [];
     if (st2 === 'open' && rec) { const sv = signinView(s, rec, 'osign'); body2 = [sv.node, sv.done ? h('div.pjx-row', null, btn(w('np.sec.continue'), () => { s.ui.mini.online = null; s.changed(); }, { key: 'make2:go' })) : null]; }
-    put(box, mini({ n: 2, total: 3, key: 'make2', title: w('np.link.signin', { service: svc ? svc.name : '' }), state: st2, summary: si ? w('np.signin.signedIn', { account: si.account, computer: NPx.comp(d.runsOn).name }) : '', change: () => { s.ui.mini.online = 2; s.ui['another:osign'] = true; s.changed(); }, body: body2 }));
+    put(box, mini({ n: 2, total: 3, key: 'make2', s, title: w('np.link.signin', { service: svc ? svc.name : '' }), state: st2, summary: si ? w('np.signin.signedIn', { account: si.account, computer: NPx.comp(d.runsOn).name }) : '', change: () => { s.ui.mini.online = 2; s.ui['another:osign'] = true; s.changed(); },
+      esc: s.ui.mini.online === 2 && signed ? () => { s.ui.mini.online = null; s.ui['another:osign'] = false; s.changed(); } : null, body: body2 }));
     let body3 = [];
     if (st3 === 'open') body3 = detailsView(s, rec);
     put(box, mini({ n: 3, total: 3, key: 'make3', title: w('np.details.title', { service: svc ? svc.name : '' }), state: st3, body: body3 }));
@@ -893,13 +971,14 @@
       return box;
     }
     const rec = NPx.linkRec(s), si = NPx.signedIn(rec, d.runsOn), signed = !!(si && !si.expired), cn = NPx.comp(d.runsOn).name;
+    put(box, yoloLine(w('np.yolo.link')));
     if (signed && !s.ui['another:link']) put(box, mini({ n: 1, total: 2, key: 'link1', title: w('np.link.signin', { service: t.service }), state: 'done', summary: w('np.link.signedIn', { service: t.service, account: si.account, computer: cn }), change: () => { s.ui['another:link'] = true; s.changed(); } }));
     else put(box, mini({ n: 1, total: 2, key: 'link1', title: w('np.link.signin', { service: t.service }), state: 'open', body: [signinView(s, rec, 'link').node] }));
     const c = signed ? NPx.linkCheck(s) : null;
     let body = [];
     if (c && c.state === 'working') body = [working(w('np.link.checking', { project: t.project, service: t.service }))];
     else if (c && c.state === 'failed') body = [line('blocked', c.result.fail === 'gone' ? w('np.link.gone', { project: t.project, service: t.service }) : w('np.link.mismatch', { project: t.project }))];
-    else if (c && c.state === 'done') { const i = NPx.lookDone(s); body = [line('complete', w('np.link.match')), i && i.changed ? line('info', w('np.link.ahead', { n: i.changed })) : null]; }
+    else if (c && c.state === 'done') { const i = NPx.lookDone(s); body = [line('complete', w('np.link.match')), c.result.vis ? line('info', w('np.link.vis', { vis: c.result.vis, service: t.service })) : line('info', w('np.link.visUnknown', { service: t.service })), i && i.changed ? line('info', w('np.link.ahead', { n: i.changed })) : null]; }
     put(box, mini({ n: 2, total: 2, key: 'link2', title: 'Check it’s this Project', state: signed ? 'open' : 'later', body }));
     if (t.remote) put(box, disc(s, 'online-adv', w('np.sec.advanced'), () => [line(null, w('np.link.remote', { remote: t.remote }), { icon: 'link' })]));
     return box;
@@ -923,9 +1002,9 @@
     const repos = (rec.repos || []).filter((r) => !r.tfvc);
     put(box, group(w('np.link.pick'), choices('ol:pick', repos.map((r) => ({ id: r.id, glyph: 'box', title: r.id, sub: r.vis + ' · updated ' + r.when })), o.linkProject, (v) => { o.linkProject = v; s.changed(); }, { label: w('np.link.pick') })));
     const folder = (NPx.lookTarget(s) || {}).path || '';
-    put(box, demo([{ label: 'jared/budget-tracker', outcome: /budget-tracker$/.test(folder) ? 'works' : 'wrong (doesn’t match)', run: () => { o.linkProject = 'jared/budget-tracker'; s.changed(); } }, { label: 'jared/garden-planner', outcome: 'wrong (doesn’t match)', run: () => { o.linkProject = 'jared/garden-planner'; s.changed(); } }], { id: 'olpick' }));
+    put(box, demo([{ label: 'jared/budget-tracker', outcome: /budget-tracker$/.test(folder) ? 'works' : 'wrong (doesn’t match)', run: () => { o.linkProject = 'jared/budget-tracker'; s.changed(); } }, { label: 'jared/garden-planner', outcome: 'wrong (doesn’t match)', run: () => { o.linkProject = 'jared/garden-planner'; s.changed(); } }, { label: 'jared/dotfiles', outcome: 'empty: your history goes up', run: () => { o.linkProject = 'jared/dotfiles'; s.changed(); } }], { id: 'olpick' }));
     const c = o.linkProject ? NPx.linkCheck(s) : null;
-    if (c) put(box, c.state === 'working' ? working(w('np.link.checking', { project: o.linkProject, service: R().service(o.service).name })) : c.state === 'failed' ? line('blocked', c.result.fail === 'gone' ? w('np.link.gone', { project: o.linkProject, service: R().service(o.service).name }) : w('np.link.mismatch', { project: o.linkProject })) : line('complete', w('np.link.match')));
+    if (c) put(box, c.state === 'working' ? working(w('np.link.checking', { project: o.linkProject, service: R().service(o.service).name })) : c.state === 'failed' ? line('blocked', c.result.fail === 'gone' ? w('np.link.gone', { project: o.linkProject, service: R().service(o.service).name }) : w('np.link.mismatch', { project: o.linkProject })) : line('complete', c.result.empty ? w('np.link.empty', { project: o.linkProject }) : w('np.link.match')));
     put(box, disc(s, 'online-adv', w('np.sec.advanced'), () => [field(w('np.link.remoteName'), input('remoteName', o.remoteName || 'origin', 'origin', (x) => { o.remoteName = x; s.changed(); }), 'Letters, numbers, - _ and . only.', o.remoteName && R().remoteProblem(o.remoteName, []) ? R().remoteProblem(o.remoteName, []) : '')]));
     return box;
   }
@@ -957,13 +1036,17 @@
     if (b.dest === 'nas') put(under, line(null, d.runsOn === 'homenas' ? w('np.bk.place.nasPaired', { nas: 'Home NAS' }) : w('np.bk.place.nasKey', { nas: 'Home NAS' }), { icon: 'key' }));
     if ((b.dest === 'gdrive' && !gacct) || b.dest === 'onedrive') put(under, line(null, w('np.bk.signinLater'), { icon: 'lock' }));
     if (b.dest === 'bucket' || b.dest === 'server') put(under, accessFields(s, fam));
+    if (onNas && b.dest !== 'nas' && NPx.bkOnNas(s)) put(under, line('blocked', w('np.bk.nasSameAddr', { nas: 'Home NAS', host: NPx.bkHost(s) })));
     put(box, under);
+    const out0 = Object.keys(b.leaveOut || {}).filter((k) => b.leaveOut[k]);
     put(box, lines(line(null, w('np.bk.what.safe', { computer: cn }), { icon: 'lock' }),
-      line('complete', b.include === 'all' ? w('np.bk.what.all') : b.include === 'pm' ? w('np.bk.what.pm') : w('np.bk.what.some')),
+      line('complete', b.include === 'all' ? w('np.bk.what.all') : b.include === 'pm' ? w('np.bk.what.pm') : w('np.bk.what.some') + (out0.length ? ': ' + NPx.andList(out0) + ' left out' : '')),
       line('complete', b.mode === 'manual' ? w('np.bk.when.manual') : w('np.bk.when.daily', { time: b.time, computer: cn }))));
+    put(box, yoloLine(w('np.yolo.backup', { where: bkLabelFor(s) })));
     put(box, disc(s, 'bk-adv', w('np.sec.advanced'), () => backupAdvanced(s)));
     return box;
   }
+  const bkLabelFor = (s) => NP().bkDestLabel(s);
   function accessFields(s, fam) {
     const d = s.d, acc = d.backup.acc, box = h('div.pjx-np-access-fields', null, cap(w('np.bk.accessHead')));
     R().shown(fam, acc).forEach((f) => {
@@ -971,7 +1054,11 @@
       if (type === 'password') put(box, secret(s, 'bk:' + fam + ':' + k, wd.label, wd.hint, { real: true, onTyped: (t) => { acc[k + 'Typed'] = t; s.changed(); } }));
       else put(box, field(wd.label + (f[3] === 'opt' ? '' : ''), input('acc-' + fam + '-' + k, acc[k] || '', wd.ph, (v) => { acc[k] = v; s.changed(); }), wd.hint, bad ? wd.bad : '', { real: true }));
     });
-    if (fam === 'aws_s3') put(box, h('div.pjx-row', null, link(acc.temp ? 'Not using temporary keys' : 'Using temporary keys?', () => { acc.temp = !acc.temp; s.changed(); }, { key: 'bk:temp' })));
+    // turning temporary keys off throws the session token away: it never comes back if they are turned on again (FO-22)
+    if (fam === 'aws_s3') put(box, h('div.pjx-row', null, link(acc.temp ? 'Not using temporary keys' : 'Using temporary keys?', () => {
+      if (acc.temp) { const el = s.secrets.get('bk:aws_s3:session'); if (el) el.value = ''; s.secrets.delete('bk:aws_s3:session'); acc.sessionTyped = false; }
+      acc.temp = !acc.temp; s.changed();
+    }, { key: 'bk:temp' })));
     put(box, demo((R().DEMO_ACCESS[fam] || []).map(([outcome, fills]) => ({ label: (fills.find(([k]) => k === 'bucket') || fills[0])[1], outcome, run: () => {
       fills.forEach(([k, v]) => { const f = (R().ACCESS[fam] || []).find((x) => x[0] === k); if (f && f[1] === 'password') { const el = s.secrets.get('bk:' + fam + ':' + k) || null; if (el) el.value = v; acc[k + 'Typed'] = true; } else acc[k] = v; });
       s.changed();
@@ -993,7 +1080,8 @@
       sel.addEventListener('change', () => { b.time = sel.value; s.changed(); });
       out.push(h('div.pjx-field', null, h('label.pjx-field-label', { for: sel.id, text: w('np.bk.when.time') }), sel));
     }
-    out.push(group(w('np.bk.when.keep'), choices('bk:keep', [{ id: 'standard', glyph: 'history', title: w('np.bk.keep.standard'), tag: w('np.svc.recommended') }, { id: 'more', glyph: 'history', title: w('np.bk.keep.more') }, { id: 'fewer', glyph: 'history', title: w('np.bk.keep.fewer') }, { id: 'custom', glyph: 'sliders', title: w('np.bk.keep.custom') }], b.keep, (v) => { b.keep = v; s.changed(); }, { label: w('np.bk.when.keep') })));
+    // P8 (Jared, 2026-11-03): Standard, or how many to keep, here under Advanced; no More or Fewer presets
+    out.push(group(w('np.bk.when.keep'), choices('bk:keep', [{ id: 'standard', glyph: 'history', title: w('np.bk.keep.standard'), tag: w('np.svc.recommended') }, { id: 'custom', glyph: 'sliders', title: w('np.bk.keep.custom'), sub: b.keep === 'custom' ? w('np.bk.keep.customVal', b.keepCustom) : null }], b.keep === 'custom' ? 'custom' : 'standard', (v) => { b.keep = v; s.changed(); }, { label: w('np.bk.when.keep') })));
     if (b.keep === 'custom') {
       const k = b.keepCustom, bad = NPx.keepBad(k);
       out.push(h('div.pjx-np-trio', null, ...[['d', 'np.bk.keep.days'], ['w', 'np.bk.keep.weeks'], ['m', 'np.bk.keep.months']].map(([x, key]) => field(w(key), input('keep-' + x, String(k[x]), '', (v) => { k[x] = Number(v) || 0; s.changed(); }, { inputmode: 'numeric' }), ''))), bad ? line('warning', w('np.bk.keep.bad')) : null);
@@ -1018,6 +1106,7 @@
     ctx = ctx || {};
     const NPx = NP();
     NPx.enter(s);
+    s.ui.esc = {};
     const list = NPx.sections(s), n = list.length;
     const nextOpen = s.ui.open ? NPx.firstNotDone(s, s.ui.open) : null;
     const kids = list.map((id, i) => {
@@ -1081,11 +1170,13 @@
     if (fork) put(foot, line('info', w('np.rv.forkSays', { fork: NPx.forkOwner(s) + '/' + NPx.forkName(s), service: fork.service }), { cls: 'pjx-np-forksays' }));
     if (pr) { const why = h('button.pjxc-why', { type: 'button', id: 'pjxc-why', 'data-c-key': 'rv:why' }, h('span.pjx-st-mark', { html: PJX.calm('warning', 13), 'aria-hidden': 'true' }), h('span', { text: pr.text })); why.addEventListener('click', () => ctx.change && ctx.change(pr.section, pr.field)); put(foot, why); }
     const label = d.way === 'chat' ? w('np.rv.goChat') : w('np.rv.go', { verb, name: name || 'it' });
-    const go = h('button', { type: 'button', class: ['pmw-act', 'pjxc-btn', 'pjxc-go', !pr && 'is-primary'], 'data-c-key': 'rv:go', 'aria-disabled': pr ? 'true' : null, 'aria-describedby': pr ? 'pjxc-why' : null, 'data-cmd': ph.map((x) => x.cmd).join(' → ') },
+    // while the agent demo asks, its Allow is the one accent on screen
+    const go = h('button', { type: 'button', class: ['pmw-act', 'pjxc-btn', 'pjxc-go', !pr && !(s.ui.agent && !PJX.yolo()) && 'is-primary'], 'data-c-key': 'rv:go', 'aria-disabled': pr ? 'true' : null, 'aria-describedby': pr ? 'pjxc-why' : null, 'data-cmd': ph.map((x) => x.cmd).join(' → ') },
       h('span.pjxc-bico', { html: icon(d.way === 'restore' ? 'history' : d.way === 'online' ? 'download' : 'check', 15), 'aria-hidden': 'true' }), h('span.pjxc-blabel', { text: label }));
     go.addEventListener('click', () => { if (pr) { ctx.change && ctx.change(pr.section, pr.field); return; } ctx.create && ctx.create(); });
     put(foot, go);
     put(foot, h('p.pjxc-steps-n', { text: w('np.rv.steps', { n: ph.length }) }));
+    put(foot, yoloCreate(s, ph, label));
     const D0 = s.ui.demo = s.ui.demo || {};
     const boxes = [];
     if (ph.some((x) => x.net)) boxes.push(check('rv:demo:net', w('np.rv.demo.net'), !!D0.net, (v) => { D0.net = v; if (v) { D0.taken = false; D0.fork = false; } s.changed(); }));
@@ -1094,6 +1185,22 @@
     if (fork) boxes.push(check('rv:demo:fork', w('np.rv.demo.fork'), !!D0.fork, (v) => { D0.fork = v; if (v) { D0.net = false; D0.taken = false; } s.changed(); }));
     if (boxes.length) put(foot, disc(s, 'rv-demo', w('np.rv.demo'), boxes, { kind: 'review', cls: 'pjxc-demo' }));
     return foot;
+  }
+
+  /* YOLO at the Review: what an agent asked to do this does instead of waiting for the button */
+  function yoloCreate(s, ph, label) {
+    if (!(PJX.yolo && PJX.yolo())) return null;
+    const d = s.d, acts = [], stops = [];
+    const fork = ph.find((x) => x.key === 'fork'), create = ph.find((x) => x.key === 'create'), link0 = ph.find((x) => x.key === 'link');
+    if (fork) acts.push(w('np.yolo.createActs.fork', { service: fork.service }));
+    if (create) acts.push(w('np.yolo.createActs.make', { service: create.service }));
+    if (link0 && link0.service) acts.push(w('np.yolo.createActs.link', { service: link0.service }));
+    if (d.way === 'chat') return yoloLine(w('np.yolo.chatNew'));
+    if (d.backup.dest !== 'none') stops.push(w('np.yolo.stops.signin'), w('np.yolo.stops.kit'));
+    if (d.way === 'device' && d.device.method === 'ssh') stops.push(w('np.yolo.stops.device'));
+    if (!stops.length) stops.push(w('np.yolo.stops.none'));
+    const svc = create ? create.service : fork ? fork.service : null;
+    return yoloLine(w('np.yolo.create', { go: label, acts: acts.length ? ': ' + NP().andList(acts) : '', stops: NP().andList(stops.filter((x, i) => stops.indexOf(x) === i)), cant: svc ? w('np.yolo.cant', { service: svc, what: create ? 'the online copy' : 'the fork' }) : '' }));
   }
 
   /* ------------------------------------------------------------------ "Finish protecting your work" (6.12.3) */
@@ -1142,6 +1249,7 @@
       put(ol, li);
     });
     put(box, ol);
+    if (!stp.done) put(box, yoloLine(w('np.yolo.protect')));
     if (stp.done) put(box, line('complete', tgt.mode === 'manual' ? w('np.prot.doneManual') : w('np.prot.done', { time: tgt.time })));
     return box;
   }
@@ -1159,6 +1267,6 @@
     }
   }
 
-  PJX.npui = { line, lines, code, hint, cap, group, btn, link, choices, seg, input, field, secret, sw, check, disc, demo, picker, mini, lookView, gitJjAnswer, signinView, serviceCards,
+  PJX.npui = { line, lines, code, hint, cap, group, btn, link, choices, seg, input, field, secret, sw, check, disc, demo, picker, mini, lookView, gitJjAnswer, signinView, serviceCards, yoloLine, roving,
     sections: sectionsView, review: reviewView, reviewFoot, protectSteps, render, RENDER, title, lead, secOnline, secBackup, secWhere };
 })(window);

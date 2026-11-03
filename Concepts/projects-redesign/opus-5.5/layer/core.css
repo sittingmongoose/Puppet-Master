@@ -12,7 +12,10 @@
 
 /* ------------------------------------------------------------------ the mount */
 html[data-pjx] #panel-projects > :not(.pjx-root) { display: none !important; }
-html[data-pjx] #panel-projects.page-projects { padding: 0 !important; overflow: hidden !important; display: flex; flex-direction: column; }
+html[data-pjx] #panel-projects.page-projects { padding: 0 !important; overflow: hidden !important; flex-direction: column; }
+/* shown only while it is the active page: the host's own .page / .page.active rule decides, so Home and Usage are never
+   drawn with Projects underneath */
+html[data-pjx] #panel-projects.page-projects.active { display: flex; }
 .pjx-root { position: relative; flex: 1 1 auto; min-height: 0; min-width: 0; display: flex; flex-direction: column; container-type: inline-size; container-name: pjx; }
 .pjx-root > .pmu-shell { flex: 1 1 auto; min-height: 0; }
 /* Usage's plates carry a grab cursor for its board; a project plate is not draggable */
@@ -93,8 +96,19 @@ html[data-theme^="retro"] .pjx-dlg { box-shadow: 6px 6px 0 color-mix(in srgb, va
 html[data-o55-nier="on"] .pjx-dlg { box-shadow: none; }
 html[data-o55-nier="on"] .pjx-dlg-title { text-transform: uppercase; letter-spacing: .08em; font-size: 15px; }
 html[data-theme^="retro"] .pjx-dlg-back, html[data-o55-nier="on"] .pjx-dlg-back { transition-timing-function: steps(3, end); }
-/* Liquid Glass: the dialog is a dense menu sheet (glass.js mounts it from data-lg-surface); nothing inside paints a plate */
+/* Liquid Glass: the dialog is a dense menu sheet (glass.js mounts it from data-lg-surface); nothing inside paints a plate.
+   A Glass sheet is never transformed, entrance included: it arrives by its scrim's opacity alone */
 html[data-lg="on"][data-theme^="glass"] .pjx-dlg[data-lg-surface] { background: transparent; border-color: transparent; box-shadow: none; }
+html[data-theme^="glass"] .pjx-dlg, html[data-theme^="glass"] .pjx-dlg-back[data-open] .pjx-dlg { transform: none !important; transition: none !important; }
+
+/* ------------------------------------------------------------------ YOLO at a yes-point: the mark, the word and one sentence */
+.pjx-yolo-line { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 8px; align-items: start; font-size: 12.5px; line-height: 17px; color: var(--pmu-ink-2);
+  padding: 7px 10px; border: 1px dashed var(--pmu-rule-strong, var(--pmu-rule)); border-radius: min(var(--pmu-r-card, 8px), 8px); margin-top: 8px; }
+.pjx-yolo-line .pjx-st-mark { margin-top: 1px; }
+.pjx-yolo-line b { color: var(--pmu-ink); font-weight: 640; }
+.pjx-yolo-line[data-yolo="asks"] b { color: var(--pmg-ink-attention, var(--pmu-ink-warn)); }
+html[data-theme^="retro"] .pjx-yolo-line, html[data-o55-nier="on"] .pjx-yolo-line { border-radius: 0; }
+html[data-lg="on"][data-theme^="glass"] .pjx-yolo-line { border-color: var(--lg-line); }
 
 /* ------------------------------------------------------------------ the New Project flow's parts (flow.js) */
 .pjx-q { margin: 2px 0 14px; }
@@ -265,3 +279,8 @@ html[data-o55-nier="on"] :is(.pjx-root, .pjx-dlg-back) .pjx-notice:is([data-tone
 /* Notices stage under the bell on every page, Usage included (Jared, 2026-10-13 22:10 ET; 19-notify.js): the concepts'
    own placements are held off, so a toast may sit over the head for its few seconds but never takes a click */
 html[data-pjx] body #rsStage { translate: none !important; }
+
+/* a very narrow window: the person chose to give New Project the chat's room (c.js roomNote); only the width is set aside,
+   and only while the Projects page is the active page */
+html[data-pjx][data-pjx-roomy] body.pjx-page-active #chatPanel.chat-panel { flex: 0 0 0px !important; width: 0 !important; min-width: 0 !important; overflow: hidden !important; border: 0 !important; }
+html[data-pjx][data-pjx-roomy] body.pjx-page-active #chatResizer { display: none !important; }

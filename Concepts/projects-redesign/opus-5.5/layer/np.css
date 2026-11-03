@@ -191,6 +191,8 @@ html[data-lg="on"][data-theme^="glass"] :is(.pjx-np-sum, .pjx-np-hint, .pjx-np-s
 /* light looks: the accent words reach 4.5:1 */
 html[data-theme$="-light"]:not([data-theme="glass-light"]) .pjx-np-act { color: color-mix(in srgb, var(--accent-primary) 55%, var(--pmu-ink)); }
 html[data-theme$="-light"]:not([data-theme="glass-light"]) .pjx-np-sec[data-state="open"] .pjx-np-num { color: color-mix(in srgb, var(--accent-primary) 55%, var(--pmu-ink)); }
+/* Retro and NieR fill the open step's number with the ink: its numeral takes the card colour back (after the rule above) */
+html[data-theme^="retro"][data-theme] .pjx-np-sec[data-state="open"] .pjx-np-num, html[data-o55-nier="on"][data-theme] .pjx-np-sec[data-state="open"] .pjx-np-num { background: var(--pmu-ink); color: var(--pjx-num-ink, var(--background, #fff)); border-color: var(--pmu-ink); }
 html[data-theme$="-light"] .pjx-demo-out, html[data-theme$="-light"] .pjx-demo-label { color: var(--pmu-ink-2); }
 html[data-o55-nier="on"][data-theme$="-light"] :is(.pjx-np-hint, .pjx-np-sum.is-todo, .pjx-np-cap, .pjx-np-check-sub, .pjx-np-switch-sub) { color: color-mix(in srgb, var(--pmu-ink-2) 45%, var(--pmu-ink)); }
 
@@ -217,3 +219,21 @@ html[data-o55-nier="on"][data-theme$="-light"] :is(.pjx-np-hint, .pjx-np-sum.is-
 /* a section's own box stacks its groups with the body's rhythm */
 .pjx-np-body > div:not(.pjx-np-foot), .pjxc-form > div { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .pjx-np-body > div > .pjx-row, .pjx-np-body > div > .pjx-field { margin-top: 0; }
+
+/* a disclosure held open by the chosen answer inside it is a plain heading */
+.pjx-np-disc.is-held { cursor: default; color: var(--pmu-ink-2); padding-left: 0; }
+.pjx-np-disc.is-held:hover { background: transparent; color: var(--pmu-ink-2); }
+/* inline links keep their line but reach a 24 px target (WCAG 2.5.8) */
+.pjx-np-sec .pjx-link, .pjx-demo .pjx-link, .pjx-np-rrows .pjx-link, .pjx-np-making .pjx-link { padding-block: 4px; margin-block: -4px; }
+
+/* the narrowest panes (a 640 px window with the chat open): every control wraps inside the pane, nothing runs off it */
+@container pjx (max-width: 520px) {
+  .pjx-np-body .pjx-btn, .pjxc-form .pjx-btn { white-space: normal; height: auto; min-height: 32px; padding-block: 6px; text-align: left; }
+  .pjx-np-body .pjx-seg, .pjxc-form .pjx-seg { flex-wrap: wrap; height: auto; max-width: 100%; }
+  .pjx-np-body .pjx-seg-btn, .pjxc-form .pjx-seg-btn { white-space: normal; min-width: 0; flex: 1 1 auto; height: auto; min-height: 28px; }
+  .pjx-np-kindshead, .pjx-np-minihead { flex-wrap: wrap; }
+  .pjx-np-acct .pjx-seg { justify-self: stretch; }
+  .pjx-demo { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .pjx-demo-item { flex-wrap: wrap; }
+  .pjx-np-words { font-size: 14px; }
+}

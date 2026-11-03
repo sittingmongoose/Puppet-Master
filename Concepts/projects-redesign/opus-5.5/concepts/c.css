@@ -708,3 +708,38 @@ html[data-pjx] #pjxc .pjxc-facts .pmu-factv { min-width: 0; }
   #pjxc .pjxc-place { white-space: normal; align-items: flex-start; }
   #pjxc .pjxc-headst, #pjxc .pjxc-headst .pjx-st-word { white-space: normal; min-width: 0; }
 }
+
+/* ------------------------------------------------------------------ moving a chat into a project you have (NOPROJECT 7.4) */
+#pjxc .pjxc-mvq { display: flex; flex-direction: column; gap: 16px; padding: 12px 16px 18px; }
+#pjxc .pjxc-mvsec { display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 1px solid var(--pmu-rule-2); }
+#pjxc .pjxc-mvh { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 15px; line-height: 20px; font-weight: 640; color: var(--pmu-ink); }
+#pjxc .pjxc-mvh:focus-visible { outline: 2px solid var(--pmw-focus, var(--accent-primary)); outline-offset: 2px; }
+html[data-o55-nier="on"] #pjxc .pjxc-mvh { text-transform: uppercase; letter-spacing: .06em; font-size: 13.5px; }
+#pjxc .pjxc-mvfiles { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; }
+#pjxc .pjxc-mvfile { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 2px 10px; }
+#pjxc .pjxc-mvfile .pjx-st { flex: none; }
+#pjxc .pjxc-mvsays { margin: 0 0 10px; padding-left: 18px; display: grid; gap: 6px; font-size: 12.5px; line-height: 17px; color: var(--pmu-ink); }
+#pjxc .pjxc-mvreview dd { display: flex; flex-direction: column; gap: 3px; }
+#pjxc .pjxc-mvpv { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2px 8px; }
+#pjxc .pjxc-move .pjxc-making { padding: 0; border: 0; }
+/* the agent demo, in the Review */
+#pjxc .pjxc-agent { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; margin-bottom: 10px; border: 1px solid var(--pmu-rule-strong, var(--pmu-rule)); border-radius: min(var(--pmu-r-card, 8px), 8px); }
+#pjxc .pjxc-agent-head { display: grid; grid-template-columns: 14px minmax(0, 1fr); align-items: start; gap: 2px 8px; font-size: 13px; line-height: 18px; color: var(--pmu-ink); }
+#pjxc .pjxc-agent-head > .pjx-st-mark { margin-top: 2px; }
+#pjxc .pjxc-agent-mode { grid-column: 2; font-family: var(--pmu-mono); font-size: 11px; line-height: 14px; letter-spacing: .06em; color: var(--pmu-ink-3); text-transform: uppercase; }
+#pjxc .pjxc-flash-agent { font-size: 12.5px; }
+html[data-theme^="retro"] #pjxc .pjxc-agent, html[data-o55-nier="on"] #pjxc .pjxc-agent { border-radius: 0; }
+html[data-lg="on"][data-theme^="glass"] #pjxc .pjxc-agent { border-color: var(--lg-line); }
+@container pjx (max-width: 319.98px) {
+  #pjxc .pjxc-mvq { padding: 8px 10px 14px; }
+  #pjxc .pjxc-mvh { font-size: 14px; }
+}
+
+/* the narrow-window note (the chat leaves New Project a sliver) */
+#pjxc .pjxc-room { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 4px 8px; align-items: start; padding: 8px 10px; margin-bottom: 8px; font-size: 12.5px; line-height: 17px; color: var(--pmu-ink-2);
+  border: 1px dashed var(--pmu-rule-strong, var(--pmu-rule)); border-radius: min(var(--pmu-r-card, 8px), 8px); }
+#pjxc .pjxc-room > .pjx-link { grid-column: 2; justify-self: start; text-align: left; }
+html[data-theme^="retro"] #pjxc .pjxc-room, html[data-o55-nier="on"] #pjxc .pjxc-room { border-radius: 0; }
+
+/* a step or a failure that names a long path wraps inside the Review (folder names keep their spaces, P7) */
+#pjxc .pjxc-review :is(.pjx-fact-text, .pjx-phase-label) { overflow-wrap: break-word; min-width: 0; }

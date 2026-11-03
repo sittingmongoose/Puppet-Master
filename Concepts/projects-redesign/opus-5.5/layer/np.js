@@ -59,8 +59,8 @@
   /* ------------------------------------------------------------------ the draft */
   const blankDevice = () => ({ method: 'ssh', id: null, typing: false, address: '', port: '22', asked: '', user: '', path: null, share: null, typedShare: '', shareTyping: false, volume: null, smbUser: '', smbDomain: '', idOk: false, key: null, keyDone: false, signin: 'pw', browse: null });
   const blankOnline = (mode) => ({ mode: mode || null, service: 'github', kind: null, address: '', acct: null, owner: null, project: null, visibility: null, name: '', nameTouched: false, description: '', branch: '', branchTouched: false, remoteName: '', linkProject: null, step: null });
-  const blankFiles = () => ({ mode: null, parent: '~/Documents', network: null, browse: false, touched: false });
-  const blankLike = (source) => ({ source: source || 'usual', ids: null, things: null, accounts: true, per: {}, onlyDiff: true, fixed: false, fromComputer: false, ownFiles: {}, q: '', showAll: false });
+  const blankFiles = () => ({ mode: null, parent: '~/Documents', network: null, netUser: '', browse: false, touched: false });
+  const blankLike = (source) => ({ source: source || 'usual', ids: null, sameIds: null, things: null, accounts: true, per: {}, onlyDiff: true, fixed: false, fromComputer: false, ownFiles: {}, q: '', showAll: false });
   function blank() {
     return {
       way: null, runsOn: 'here', name: '', nameTouched: false,
@@ -103,6 +103,8 @@
   const putp = (o, p, v) => { const ks = p.split('.'), last = ks.pop(); const t = ks.reduce((a, k) => a[k], o); t[last] = v; };
   const dropSecret = (s, prefix) => { Array.from(s.secrets.keys()).forEach((k) => { if (k.indexOf(prefix) === 0) { const el = s.secrets.get(k); if (el) el.value = ''; s.secrets.delete(k); } }); };
   const dropOps = (s, prefix) => { Object.keys(s.ops).forEach((k) => { if (k.indexOf(prefix) === 0) delete s.ops[k]; }); };
+  /* the sign-in method picked and "use another account" belong to one service on one computer: a change drops them (FF-11) */
+  const dropUi = (s, re) => { Object.keys(s.ui).forEach((k) => { if (re.test(k)) delete s.ui[k]; }); };
 
   /* set one answer and clear what depends on it (spec 8 rule 3 and its table) */
   function set(s, path, v, quiet) {
@@ -113,7 +115,9 @@
     const resetHistory = () => { d.history = 'git'; d.historyTouched = false; };
     switch (path) {
       case 'runsOn':
-        d.folder.path = null; d.device = blankDevice(); dropSecret(s, 'dev'); d.files = blankFiles();
+        d.folder.path = null; d.device = blankDevice(); dropSecret(s, 'dev'); d.files = blankFiles(); dropSecret(s, 'net');
+        // an unfinished key or sign-in attempt belongs to the computer that started it: its late result is dropped
+        s.ui.keyOp = null; dropOps(s, 'keyadd:'); dropUi(s, /^(method|another):/);
         // sign-ins and account choices belong to a computer (rule 10): the finds and links made on the old one go
         Object.assign(d.find, { project: null, intent: null, forkOwner: null, anyAsked: '', another: false });
         Object.assign(d.online, { acct: null, owner: null, project: null, visibility: null, linkProject: null, step: null });
@@ -122,27 +126,27 @@
         break;
       case 'folder.path': resetOnline(); resetHistory(); s.ui.err.folder = null; break;
       case 'device.method': Object.assign(d.device, blankDevice(), { method: v }); dropSecret(s, 'dev'); resetOnline(); resetHistory(); break;
-      case 'device.id': Object.assign(d.device, { path: null, idOk: false, key: null, keyDone: false, user: '', signin: 'pw', browse: null }); dropSecret(s, 'dev'); resetOnline(); resetHistory(); break;
+      case 'device.id': Object.assign(d.device, { path: null, idOk: false, key: null, keyDone: false, user: '', signin: 'pw', browse: null }); dropSecret(s, 'dev'); s.ui.keyOp = null; dropOps(s, 'keyadd:'); s.ui.newFolders = null; resetOnline(); resetHistory(); break;
       case 'device.share': case 'device.volume': d.device.path = null; d.device.browse = null; d.device.smbUser = ''; dropSecret(s, 'dev'); resetOnline(); resetHistory(); break;
       case 'device.path': resetOnline(); resetHistory(); break;
-      case 'device.key': d.device.keyDone = false; dropSecret(s, 'devpw'); dropOps(s, 'keyadd:'); break;
+      case 'device.key': d.device.keyDone = false; dropSecret(s, 'devpw'); dropOps(s, 'keyadd:'); s.ui.keyOp = null; break;
       case 'src.service': case 'src.kind': case 'src.address':
         if (path === 'src.service') { d.src.kind = null; d.src.address = ''; }
         if (path === 'src.kind') d.src.address = '';
         Object.assign(d.find, { tab: null, q: '', anyQ: '', anyAsked: '', project: null, intent: null, forkOwner: null, another: false });
         if (!d.find.branchTouched) d.find.branch = 'my-change';
         d.fork = { name: '', nameTouched: false, upstreamName: 'upstream' };
-        dropSecret(s, 'tok');
+        dropSecret(s, 'tok'); dropUi(s, /^(method|another):(find|fork)$/);
         break;
       case 'find.tab': d.find.project = null; d.find.intent = null; d.find.forkOwner = null; break;
       case 'find.project': Object.assign(d.find, { intent: null, forkOwner: null, another: false }); d.fork.name = ''; d.fork.nameTouched = false; resetHistory(); break;
       case 'find.intent': if (v === 'copy' || v === 'direct') { d.fork = { name: '', nameTouched: false, upstreamName: 'upstream' }; d.find.branch = 'my-change'; d.find.branchTouched = false; d.find.forkOwner = null; } break;
-      case 'online.mode': d.online = blankOnline(v); dropSecret(s, 'tok'); break;
+      case 'online.mode': d.online = blankOnline(v); dropSecret(s, 'tok'); dropUi(s, /^(method|another):(osign|olsign|link)$/); s.ui.mini.online = null; break;
       case 'online.service': case 'online.kind': case 'online.address':
         if (path === 'online.service') { d.online.kind = null; d.online.address = ''; }
         if (path === 'online.kind') d.online.address = '';
         Object.assign(d.online, { acct: null, owner: null, project: null, visibility: null, linkProject: null });
-        dropSecret(s, 'tok');
+        dropSecret(s, 'tok'); dropUi(s, /^(method|another):(osign|olsign|link)$/);
         break;
       case 'online.owner': d.online.project = null; d.online.visibility = null; break;
       case 'online.project': d.online.visibility = null; break;
@@ -152,7 +156,8 @@
       case 'chat.id': case 'chat.files': d.files = blankFiles(); resetOnline(); resetHistory(); break;
       case 'restore.from': case 'restore.cloud': d.restore.unlocked = false; d.restore.pick = null; dropSecret(s, 'phrase'); resetOnline(); break;
       case 'restore.pick': resetOnline(); break;
-      case 'files.mode': d.files.parent = '~/Documents'; d.files.network = null; d.files.browse = false; d.files.touched = true; break;
+      case 'files.mode': d.files.parent = '~/Documents'; d.files.network = null; d.files.netUser = ''; dropSecret(s, 'net'); d.files.browse = false; d.files.touched = true; break;
+      case 'files.network': d.files.netUser = ''; dropSecret(s, 'net'); d.files.touched = true; break;
       case 'history': d.historyTouched = true; break;
       default: break;
     }
@@ -163,8 +168,11 @@
   function enforce(s) {
     const d = s.d;
     if (d.backup.dest === 'nas' && filesOnNas(s)) { d.backup.dest = 'none'; d.backup.acc = {}; s.ui.nasDropped = true; }
-    // a service or kind this flow doesn't offer (an older saved draft) clears the online answers (R5, R6)
-    if (d.online.service && !R().service(d.online.service)) { d.online = blankOnline(d.online.mode); s.ui.retired = true; }
+    // a service or kind this flow doesn't offer (an older saved draft) clears the online answers (R5, R6). "Any Git
+    // address" is a real choice where it is offered (Link one you already have), never a retired service
+    const svcOk = d.online.service === 'git' ? d.online.mode === 'link' : !d.online.service || !!R().service(d.online.service);
+    if (!svcOk) { d.online = blankOnline(d.online.mode); s.ui.retired = true; }
+    else if (s.ui.retired) s.ui.retired = false;
   }
 
   /* how the Project begins; answers that belong to the old beginning go (6.0, 8 rule 6 and 11) */
@@ -179,7 +187,10 @@
       d.chat = { id: way === 'chat' ? ((ENV.chats || [])[0] || {}).id || null : null, files: null };
       d.online = blankOnline(); dropSecret(s, 'tok');
       d.history = 'git'; d.historyTouched = false;
+      // what it starts with belongs to "Start a new Project": another way leaves it behind (spec 8 rule 11)
+      d.start = 'basics'; d.basics = { readme: true, ignore: 'automatic', license: 'none' };
       if (!d.files.touched) d.files = blankFiles();
+      s.settled = [];
       if (way === 'restore') d.like = blankLike();
       s.ui.open = undefined; s.ui.err = {}; s.ui.mini = {}; s.ui.entered = false;
     }
@@ -200,7 +211,7 @@
     if (d.way !== 'restore' && d.like.source !== 'usual' && false) out.push('settings');
     return out;
   }
-  function startOver(s) { const purpose = s.purpose; Object.assign(s, { d: blank() }); s.ui = { open: undefined, err: {}, disc: {}, mini: {}, entered: false, nasDropped: false, refused: {} }; s.ops = {}; Array.from(s.secrets.values()).forEach((el) => { el.value = ''; }); s.secrets.clear(); s.purpose = purpose; s.changed(); }
+  function startOver(s) { const purpose = s.purpose; Object.assign(s, { d: blank() }); s.ui = { open: undefined, err: {}, disc: {}, mini: {}, entered: false, nasDropped: false, refused: {} }; s.ops = {}; s.settled = []; Array.from(s.secrets.values()).forEach((el) => { el.value = ''; }); s.secrets.clear(); s.purpose = purpose; s.changed(); }
 
   /* ------------------------------------------------------------------ simulated owner results, cached per input */
   function op(s, key, ms, fn) {
@@ -210,6 +221,7 @@
       if (s.ops[key] !== o) return;
       let r; try { r = fn(); } catch (e) { console.error('[pjx np op]', key, e); r = { fail: 'error' }; }
       o.result = r || {}; o.state = r && r.fail ? 'failed' : 'done';
+      if (!(r && r.stale) && PJX.np.onSettled) { try { PJX.np.onSettled(s, key, o); } catch (e) { console.error('[pjx np say]', e); } }
       s.changed();
     }, PJX.reduced() ? Math.min(ms, 220) : ms);
     return o;
@@ -217,6 +229,9 @@
   const peek = (s, key) => s.ops[key] || null;
   const retry = (s, key) => { delete s.ops[key]; s.changed(); };
 
+  /* a path on this computer that is a connected drive (or a share of Home NAS shown as one) is that drive, whatever route
+     reached it: the look inside, the holder and the NAS rule all follow the drive (6.10.6) */
+  const volOfPath = (p) => { const f = full(p); return f ? ENV.volumes.find((v) => f === v.path || f.indexOf(v.path + '/') === 0) || null : null; };
   /* the look inside (6.2.1): read-only, on the computer that does the work, through the chosen route */
   function inspectAt(holder, path) {
     let r = ENV.inspect[holder + ':' + path], seen = 0;
@@ -231,7 +246,11 @@
   }
   function lookTarget(s) {
     const d = s.d;
-    if (d.way === 'folder' && d.folder.path) return { holder: d.runsOn === 'homenas' ? 'nas' : 'here', path: d.folder.path, route: d.runsOn === 'homenas' ? 'local@homenas' : 'local', label: d.folder.path };
+    if (d.way === 'folder' && d.folder.path) {
+      const v = d.runsOn === 'here' && s.purpose !== 'page' ? volOfPath(d.folder.path) : null;
+      if (v) return { holder: v.id, path: full(d.folder.path), route: 'vol@here', label: d.folder.path };
+      return { holder: d.runsOn === 'homenas' ? 'nas' : 'here', path: d.folder.path, route: d.runsOn === 'homenas' ? 'local@homenas' : 'local', label: d.folder.path };
+    }
     if (d.way === 'device') {
       const m = d.device.method;
       if (m === 'ssh' && d.device.id && d.device.path && deviceReady(s)) return { holder: d.device.id, path: d.device.path, route: 'ssh@' + d.runsOn, label: d.device.path };
@@ -288,14 +307,17 @@
     });
   }
   function addKey(s, how) {
-    const pw = s.secrets.get('devpw'), x = dev(s.d.device.id);
+    const pw = s.secrets.get('devpw'), x = dev(s.d.device.id), c = s.d.runsOn, id = x && x.id, k0 = s.d.device.key;
     s.attempt++;
-    const key = 'keyadd:' + s.d.runsOn + ':' + (x && x.id) + ':' + s.attempt;
+    const key = 'keyadd:' + c + ':' + id + ':' + s.attempt;
     const user = String(s.d.device.user || '').trim(), val = pw ? pw.value : '';
     if (how === 'pw' && (!user || !val)) return { fail: 'needBoth' };
     s.ui.keyOp = key;
     const o = op(s, key, 1200, () => {
-      if (how === 'self' || (user === 'jared' && val === 'correct horse')) { F().trusted[s.d.runsOn + ':' + x.id] = true; return { ok: true }; }
+      // the result trusts only the connection it checked: this computer, this device, this key, this attempt. A change
+      // since (another computer does the work, another device or key, a newer attempt) drops it
+      if (s.ui.keyOp !== key || s.d.runsOn !== c || s.d.device.id !== id || s.d.device.key !== k0) return { fail: 'stale', stale: true };
+      if (how === 'self' || (user === 'jared' && val === 'correct horse')) { F().trusted[c + ':' + id] = true; return { ok: true }; }
       return { fail: 'wrong' };
     });
     if (pw) pw.value = '';
@@ -333,6 +355,8 @@
     let tok = '';
     if (method === 'token') { const el = s.secrets.get(slot || 'tok'); tok = el ? el.value : ''; if (el) el.value = ''; }
     return op(s, key, method === 'token' ? 700 : 1300, () => {
+      // an earlier attempt that settles after a newer one never writes the world (FF-12b)
+      if ((s.ui.signin || {})[rec.key + ':' + c] !== key) return { fail: 'stale', stale: true };
       if (method === 'token' && (!tok || tok.trim() === 'abc' || tok.trim().length < 5)) return { fail: 'token' };
       const account = (rec.signedIn && rec.signedIn[c] && rec.signedIn[c].account) || (rec.signedIn && rec.signedIn.here && rec.signedIn.here.account) || 'jared';
       F().signins[c + ':' + rec.key] = { account, method, expired: false };
@@ -362,9 +386,13 @@
       return r && r.access !== 'none' ? { id: r.id } : { fail: 'notFound', id };
     });
   }
+  /* a Project only an account can see (private, internal, a team project) is checked with that account's current sign-in */
+  const needsAccount = (r) => !!(r && r.vis && /^(Private|Internal|Team project)$/i.test(r.vis));
   function access(s) {
     const d = s.d, rec = srcRec(s), r = repoOf(s); if (!r || r.plain) return null;
-    return op(s, 'access:' + (rec && rec.key) + ':' + d.runsOn + ':' + r.id, 700, () => {
+    const si = signedIn(rec, d.runsOn);
+    if (needsAccount(r) && (!si || si.expired)) return { state: 'signin', result: null, expired: !!(si && si.expired) };
+    return op(s, 'access:' + (rec && rec.key) + ':' + d.runsOn + ':' + r.id + ':' + (si ? si.account : '-'), 700, () => {
       if (r.access === 'none') return { fail: 'none' };
       const myOwner = r.owner === ((signedIn(rec, d.runsOn) || {}).account || 'jared');
       return { access: r.access, team: r.access === 'write' && !myOwner, fork: F().forks[r.id] || r.fork || null, tfvc: !!r.tfvc };
@@ -372,7 +400,7 @@
   }
   const accessDone = (s) => { const o = access(s); return o && o.state === 'done' ? o.result : null; };
   function inside(s) {
-    const d = s.d, rec = srcRec(s), r = repoOf(s); if (!r || r.plain || r.access === 'none') return null;
+    const d = s.d, rec = srcRec(s), r = repoOf(s); if (!r || r.plain || r.access === 'none' || !accessDone(s)) return null;
     return op(s, 'inside:' + (rec && rec.key) + ':' + r.id, 850, () => ({ submodules: r.submodules || [], lfs: r.lfs || null, size: r.size || '10 MB', sizeGB: r.sizeGB || 0.01 }));
   }
   function gitAddressCheck(s) {
@@ -417,6 +445,9 @@
     s.ui.phraseBad = true; s.changed(); return { fail: 'wrong' };
   }
   const lineage = (s) => { const src = restoreSource(s), p = s.d.restore.pick; return src && src.lineage && p ? src.lineage[p] || null : null; };
+  /* what the chosen backup holds for that Project (its manifest): the history comes back as it was kept, never relabelled */
+  const restoredHist = (s) => { const src = restoreSource(s), p = s.d.restore.pick; return src && src.manifest && p ? src.manifest[p] || null : null; };
+  const kindWord = (k) => (k === 'jujutsu' ? 'Jujutsu' : k === 'git' ? 'Git' : '');
 
   /* ------------------------------------------------------------------ chat (spec 12) */
   const chatFiles = (s) => { const c = chatOf(s.d.chat.id); return s.d.chat.files || (c && c.files ? 'move' : 'empty'); };
@@ -425,7 +456,11 @@
   function derivedName(s) {
     const d = s.d;
     if (d.way === 'folder' && d.folder.path) return d.folder.path.split('/').pop();
-    if (d.way === 'device' && d.device.path) return d.device.path.split('/').pop();
+    if (d.way === 'device' && d.device.path) {
+      // a copy of a Project you already have is said, never blocked (P5): its name says where this copy is
+      const i = lookDone(s), base = d.device.path.split('/').pop();
+      return i && i.sameOnline && PJX.get(i.sameOnline) && lc(PJX.get(i.sameOnline).name) === lc(base) ? base + ' on ' + holderName(s) : base;
+    }
     if (d.way === 'online') { if (d.src.service === 'git' && d.src.gitAddress) return d.src.gitAddress.replace(/\.git$/, '').split(/[/:]/).pop(); if (d.find.project) return String(d.find.project).split('/').pop(); }
     if (d.way === 'restore' && d.restore.pick) { const p = d.restore.pick; return PJX.all().some((x) => lc(x.name) === lc(p)) ? p + '-restored' : p; }
     if (d.way === 'chat') { const c = chatOf(d.chat.id); if (c) return c.title; }
@@ -466,7 +501,12 @@
     if (m === 'projects') return { root: c.rootFull, holder: c.id === 'here' ? 'This computer' : c.name, free: c.free, freeGB: c.freeGB, short: c.root };
     if (m === 'this_computer') return { root: comp('here').rootFull, holder: 'This computer', free: comp('here').free, freeGB: comp('here').freeGB, short: comp('here').root };
     if (m === 'with_server') return { root: comp('homenas').rootFull, holder: 'Home NAS', free: comp('homenas').free, freeGB: comp('homenas').freeGB, short: comp('homenas').root };
-    if (m === 'custom') { const p = String(d.files.parent || '').trim().replace(/\/+$/, ''); return { root: full(p), holder: c.name, free: c.free, freeGB: c.freeGB, custom: p }; }
+    if (m === 'custom') {
+      const p = String(d.files.parent || '').trim().replace(/\/+$/, ''), v = d.runsOn === 'here' ? volOfPath(p) : null;
+      // the free space is the folder's own drive: a connected drive or a Home NAS share has its own room
+      if (v) return { root: full(p), holder: v.device ? 'Home NAS' : 'This computer', free: v.free, freeGB: v.freeGB, custom: p, vol: v };
+      return { root: full(p), holder: c.name, free: c.free, freeGB: c.freeGB, custom: p };
+    }
     const n = netPlace(s); if (!n) return null;
     return { root: full(n.root), holder: n.holder, free: n.free, freeGB: n.freeGB, net: n };
   }
@@ -483,7 +523,7 @@
   /* the computer or share that has the files, which can differ from the computer doing the work */
   function holderName(s) {
     const d = s.d;
-    if (d.way === 'folder') return d.runsOn === 'homenas' ? 'Home NAS' : 'This computer';
+    if (d.way === 'folder') { const v = d.runsOn === 'here' ? volOfPath(d.folder.path) : null; return d.runsOn === 'homenas' || (v && v.device === 'nas') ? 'Home NAS' : 'This computer'; }
     if (d.way === 'device') { const m = d.device.method; if (m === 'ssh') return (dev(d.device.id) || {}).name || ''; if (m === 'mounted') { const v = vol(d.device.volume); return v && v.device ? 'Home NAS' : 'This computer'; } const sh = resolveShare(s); return sh ? (dev(sh.device) || {}).name : ''; }
     if (filesStay(s)) return 'This computer';
     const r = placeRoot(s); return r ? r.holder : '';
@@ -495,6 +535,12 @@
     if (filesStay(s)) return null;
     const m = filesMode(s);
     if (m === 'network' && !netPlace(s)) return { text: w('np.loc.bad.network'), field: 'files' };
+    if (m === 'network') {
+      const n = netPlace(s), o = netCheck(s);
+      if (n.off) return { text: n.off, field: 'files' };
+      if (!o || o.state === 'working') return { text: o ? w('np.loc.net.checking', { place: n.title }) : w('np.loc.net.first', { place: n.title }), field: n.route === 'SMB' ? 'netUser' : 'netcheck', wait: !!o };
+      if (o.state === 'failed') return { text: w('np.loc.net.refused.' + (o.result.fail || 'denied'), { place: n.title }), field: n.route === 'SMB' ? 'netUser' : 'netcheck' };
+    }
     const r = placeRoot(s);
     if (m === 'custom' && r && /^\/System/i.test(r.custom || '')) return { text: w('np.loc.bad.readonly', { path: r.custom }), field: 'parent' };
     const fnp = R().folderNameProblem(folderNameOf(s)); if (fnp) return { text: fnp, field: 'folderName' };
@@ -513,7 +559,9 @@
      drive that is one of its shares, or the Server doing the work being that NAS while the files stay on it */
   function filesOnNas(s) {
     const d = s.d;
-    if (d.way === 'folder') return d.runsOn === 'homenas';
+    // a form on a Project's page: the Project's own files decide, wherever the work happens
+    if (s.purpose === 'page' && s.project && PJX.get(s.project)) { const p = PJX.get(s.project), v = volOfPath(p.where.path); return p.where.kind !== 'local' ? p.where.device === 'Home NAS' : !!(v && v.device === 'nas'); }
+    if (d.way === 'folder') { const v = d.runsOn === 'here' ? volOfPath(d.folder.path) : null; return d.runsOn === 'homenas' || !!(v && v.device === 'nas'); }
     if (d.way === 'device') {
       if (d.device.method === 'ssh') return d.device.id === 'nas';
       if (d.device.method === 'mounted') { const v = vol(d.device.volume); return !!(v && v.device === 'nas'); }
@@ -523,7 +571,40 @@
     const m = filesMode(s);
     if (m === 'with_server') return true;
     if (m === 'network') { const n = netPlace(s); return !!(n && n.device === 'nas'); }
+    if (m === 'custom') { const r = placeRoot(s); return !!(r && r.vol && r.vol.device === 'nas'); }
     return false;
+  }
+  /* the network places a new Project's files can live in are checked before they are used: an SSH place needs the work
+     computer's key, a shared folder (SMB) its account and password, an NFS share to let the computer in */
+  function netCheck(s) {
+    const d = s.d, n = netPlace(s); if (!n || n.off) return null;
+    if (n.route === 'drive') return op(s, 'net:' + d.runsOn + ':' + n.id, 500, () => ({ ok: true, how: 'drive' }));
+    if (n.route === 'SSH') return op(s, 'net:' + d.runsOn + ':' + n.id, 800, () => ((ENV.reach[d.runsOn] || []).indexOf(n.device) >= 0 || F().trusted[d.runsOn + ':' + n.device] ? { ok: true, how: 'key' } : { fail: 'nokey' }));
+    if (n.route === 'NFS') { const sh = share('nfs-nas'); return op(s, 'net:' + d.runsOn + ':' + n.id, 700, () => (sh && sh.allows.indexOf(d.runsOn) >= 0 ? { ok: true, how: 'nfs' } : { fail: 'denied' })); }
+    return s.ops['net:' + d.runsOn + ':' + n.id + ':' + d.files.netUser] || null;
+  }
+  function netSignIn(s) {
+    const d = s.d, n = netPlace(s), el = s.secrets.get('net:smb'), pw = el ? el.value : '', u = String(d.files.netUser || '').trim(), sh = share('smb-nas');
+    if (!n || n.route !== 'SMB') return null;
+    if (!u || !pw) { s.ui.netNeed = true; s.changed(); return { fail: 'needBoth' }; }
+    s.ui.netNeed = false;
+    const key = 'net:' + d.runsOn + ':' + n.id + ':' + u;
+    delete s.ops[key];
+    const o = op(s, key, 900, () => (sh && u === sh.user && pw === sh.password ? { ok: true, how: 'smb' } : { fail: 'wrong' }));
+    if (el) el.value = '';
+    return o;
+  }
+  /* a backup that goes to the same NAS by another route (an SFTP or WebDAV address, an S3-compatible server on it) */
+  function bkHost(s) {
+    const a = s.d.backup.acc || {}, fam = bkFamily(s);
+    const addr = fam === 'sftp' || fam === 'webdav' ? a.address : fam === 's3_compatible' ? a.server : '';
+    const m = /^[a-z0-9+.-]+:\/\/(?:[^@/]+@)?([^/:?#]+)/i.exec(String(addr || '').trim());
+    return m ? m[1].toLowerCase() : '';
+  }
+  function bkOnNas(s) {
+    if (s.d.backup.dest === 'nas') return true;
+    const host = bkHost(s), n = dev('nas'); if (!host || !n) return false;
+    return host === n.address || host === n.ip || host.split('.')[0] === n.address.split('.')[0];
   }
 
   /* ------------------------------------------------------------------ like: copy settings (SETTINGS-PROPOSAL 5.1 to 5.4) */
@@ -531,13 +612,29 @@
   const settingsOf = (id) => (ENV.projectSettings[id] || { uses: ['claude'], own: [], same: [], things: [], ownFiles: [], fromComputer: 0 });
   function likePreview(s) { const p = likeSrc(s); if (!p) return null; return op(s, 'preview:' + p.id + ':' + p.runsOn, 650, () => ({ ok: true })); }
   const picked = (map, id) => (map == null ? true : map[id] !== false);
+  /* the one selection a copy makes (SETTINGS-PROPOSAL 5.3): exact ids for every kind of thing, from which the counts, the
+     Review, the setup plan, the made Project and Undo all read */
+  function likeSel(s) {
+    const p = likeSrc(s); if (!p) return null;
+    const S = settingsOf(p.id), L = s.d.like, rows = L.accounts ? accountRows(s) : [];
+    const sel = {
+      from: p.id, fixed: !!L.fixed,
+      settings: S.own.filter((r) => picked(L.ids, r[1])).map((r) => r[1]),
+      same: L.fixed ? S.same.filter((r) => picked(L.sameIds, r[1])).map((r) => r[1]) : [],
+      fromComputer: L.fromComputer ? S.fromComputer : 0,
+      things: S.things.filter((t) => picked(L.things, t.id)).map((t) => t.id),
+      accounts: rows.filter((r) => r.choice === 'same' && !r.mcp).map((r) => r.id),
+      headers: rows.filter((r) => r.choice === 'same' && r.mcp).map((r) => r.id),
+      later: rows.filter((r) => r.choice === 'later').map((r) => r.id),
+      ownFiles: S.ownFiles.filter((f) => L.ownFiles[f.id]).map((f) => f.id)
+    };
+    return sel;
+  }
   function likeCounts(s) {
     const p = likeSrc(s); if (!p) return null;
-    const S = settingsOf(p.id), L = s.d.like;
-    const own = S.own.filter((r) => picked(L.ids, r[1])).length + (L.fixed ? S.same.length : 0) + (L.fromComputer ? S.fromComputer : 0);
-    const things = S.things.filter((t) => picked(L.things, t.id)).length;
-    const accounts = L.accounts ? S.uses.filter((a) => (L.per[a] || 'same') === 'same').length : 0;
-    return { own, ownAll: S.own.length, things, thingsAll: S.things.length, accounts, uses: S.uses.length };
+    const S = settingsOf(p.id), x = likeSel(s);
+    return { own: x.settings.length + x.same.length + x.fromComputer, picked: x.settings.length, ownAll: S.own.length, same: x.same.length, sameAll: S.same.length, fromComputer: x.fromComputer,
+      things: x.things.length, thingsAll: S.things.length, accounts: x.accounts.length, headers: x.headers.length, uses: S.uses.length, files: x.ownFiles.length, sel: x };
   }
   /* each account's readiness on the computer doing the work (5.4): reused on the same computer only when chosen (S10),
      checked first on another computer, keys never sent (S11) */
@@ -564,7 +661,7 @@
   /* ------------------------------------------------------------------ versions (6.8) */
   function histKeeps(s) {
     const d = s.d;
-    if (d.way === 'restore') return 'restored';
+    if (d.way === 'restore') { const r = restoredHist(s); return r && r.backend ? 'restored' : null; }
     if (d.way === 'folder' || d.way === 'device' || (d.way === 'chat' && /useFolder|worked/.test(chatFiles(s)))) { const i = lookDone(s); return i && i.history ? i.history : null; }
     return null;
   }
@@ -607,7 +704,21 @@
     if (rule) return { state: 'done', result: { bad: rule } };
     const refused = s.ui.refused[rec.key + ':' + owner.id] || [];
     if (refused.indexOf(lc(n)) >= 0) return { state: 'done', result: { bad: w('np.details.refused', { service: R().service(s.d.online.service).name }) } };
-    return op(s, 'name:' + rec.key + ':' + owner.id + ':' + lc(n), 450, () => ((rec.taken || []).some((t) => lc(t) === lc(n)) ? { bad: w('np.details.taken', { owner: owner.label }) } : { ok: true }));
+    return op(s, 'name:' + rec.key + ':' + owner.id + ':' + lc(n), 450, () => (takenFor(rec, owner).some((t) => lc(t) === lc(n)) ? { bad: w('np.details.taken', { owner: owner.label }) } : { ok: true, name: n, owner: owner.label }));
+  }
+  /* the names an owner already uses on a service: its listed Projects and the demo's taken names (a plain name is the first
+     owner's, "acme/name" is acme's) */
+  function takenFor(rec, owner) {
+    const own = (rec.repos || []).filter((r) => String(r.id).split('/')[0] === owner.id).map((r) => String(r.id).split('/').pop());
+    const listed = (rec.taken || []).filter((t) => (t.indexOf('/') >= 0 ? t.split('/')[0] === owner.id : (rec.owners || [])[0] && rec.owners[0].id === owner.id)).map((t) => t.split('/').pop());
+    return own.concat(listed);
+  }
+  /* your fork's name is checked under the account it goes to, like any new name (FF-09) */
+  function forkNameCheck(s) {
+    const rec = srcRec(s), n = forkName(s), ow = forkOwner(s), a = accessDone(s);
+    if (!rec || !n || (a && a.fork)) return null;
+    const owner = (rec.owners || []).find((x) => x.id === ow) || { id: ow, label: ow };
+    return op(s, 'forkname:' + rec.key + ':' + ow + ':' + lc(n), 450, () => (takenFor(rec, owner).some((t) => lc(t) === lc(n)) ? { bad: w('np.fork.taken', { name: ow + '/' + n, service: R().service(s.d.src.service).name }) } : { ok: true, name: ow + '/' + n }));
   }
   /* the link check (6.9.2): a found online copy, or one you picked, is linked only after sign-in and this check */
   function linkTarget(s) {
@@ -635,11 +746,18 @@
     const folder = (lookTarget(s) || {}).path || (s.d.restore.pick || '');
     return op(s, 'link:' + rec.key + ':' + t.project + ':' + folder + ':' + s.d.runsOn, 900, () => {
       const base = String(folder).split('/').pop(), last = String(t.project).split('/').pop();
+      const r = (rec.repos || []).find((x) => x.id === t.project);
+      if (t.picked && !r) return { fail: 'gone' };
+      if (r && r.empty) return { ok: true, empty: true, vis: visWord(r.vis, r.owner) };
       if (t.picked && lc(base) !== lc(last)) return { fail: 'mismatch' };
-      if (!(rec.repos || []).some((r) => r.id === t.project) && t.picked) return { fail: 'gone' };
-      return { ok: true };
+      // who can see it is what the service says now; a Project already linked to it knows too; otherwise it is unknown
+      const known = PJX.all().find((p) => p.online && p.online.repo === t.project && p.online.privacy);
+      return { ok: true, vis: r ? visWord(r.vis, r.owner) : known ? known.online.privacy : null };
     });
   }
+
+  /* the service's own visibility, in the words the Project page uses */
+  const visWord = (v, owner) => (!v ? null : /^private$/i.test(v) ? (owner && owner !== 'jared' ? 'Members of ' + owner : 'Only you') : /^(public|everyone)$/i.test(v) ? 'Everyone' : /^internal$/i.test(v) ? 'Everyone in ' + (owner || 'your company') : v);
 
   /* ------------------------------------------------------------------ backup (6.10) */
   function bkFamily(s) { const b = s.d.backup; return b.dest === 'none' ? null : R().family(b.dest, b.sub); }
@@ -706,6 +824,7 @@
         const b = d.backup;
         if (s.ui.nasDropped && b.dest === 'none') return { text: w('np.bk.nasSame', { nas: 'Home NAS' }), field: 'bkdest', blocked: true };
         if (b.dest === 'nas' && filesOnNas(s)) return { text: w('np.bk.nasSame', { nas: 'Home NAS' }), field: 'bkdest', blocked: true };
+        if (b.dest !== 'nas' && filesOnNas(s) && bkOnNas(s)) return { text: w('np.bk.nasSameAddr', { nas: 'Home NAS', host: bkHost(s) }), field: 'acc-' + (bkFamily(s) === 's3_compatible' ? 'server' : 'address'), blocked: true };
         if (b.dest === 'bucket' || b.dest === 'server') { const a = R().accessProblem(bkFamily(s), b.acc); if (a) return { text: a.text, field: 'acc-' + a.field }; }
         if (b.keep === 'custom' && keepBad(b.keepCustom)) return { text: w('np.bk.keep.bad'), field: 'keepCustom' };
         return null;
@@ -755,6 +874,7 @@
     const r = repoOf(s);
     if (r && r.tfvc) return { text: w('np.find.tfvc', { project: r.id }), field: 'find' };
     const a = access(s);
+    if (a && a.state === 'signin') return { text: w('np.access.signinFirst', { service: R().service(d.src.service).name, project: d.find.project, computer: comp(d.runsOn).name }), field: 'find' };
     if (!a || a.state === 'working') return { text: w('np.access.checking', { project: d.find.project }), field: 'find', wait: true };
     if (a.state === 'failed') return { text: w('np.find.notFound', { project: d.find.project }), field: 'find', blocked: true };
     const k = knownFor(s); if (k && !d.find.another) return { text: w('np.find.known', { project: k.name, computer: k.where.label }), field: 'find' };
@@ -770,6 +890,9 @@
     if (m === 'from') {
       if (intentOf(s) === 'contribute') {
         const fp = R().nameProblem(d.src.service, d.src.kind, forkName(s)); if (fp) return { text: fp, field: 'forkName' };
+        const fc = forkNameCheck(s);
+        if (fc && fc.state === 'working') return { text: w('np.details.checking'), field: 'forkName', wait: true };
+        if (fc && fc.state === 'done' && fc.result.bad) return { text: fc.result.bad, field: 'forkName' };
         const up = d.fork.upstreamName; if (!/^[A-Za-z0-9._-]+$/.test(up) || up === 'origin') return { text: w('np.fork.upstreamBad'), field: 'upstream' };
       }
       return null;
@@ -865,7 +988,7 @@
         const own = plural(c.ownAll, 'setting') + (c.thingsAll ? ' and ' + plural(c.thingsAll, 'thing') : '');
         return partial ? w('np.sum.like.partial', { project: p.name, picked: c.own + ' of ' + c.ownAll + ' settings' + (c.thingsAll ? ' and ' + c.things + ' of ' + c.thingsAll + ' things' : ''), plus }) : w('np.sum.like.source', { project: p.name, own, plus });
       }
-      case 'versions': { const k = histKeeps(s); const kind = k === 'restored' ? 'Comes back with its history' : k ? 'Keeps its ' + (k === 'jujutsu' ? 'Jujutsu' : 'Git') + ' history' : d.history === 'jujutsu' ? 'Jujutsu' : 'Git'; return w('np.sum.ver', { kind, off: d.filesafe ? '' : w('np.sum.verOff') }); }
+      case 'versions': { const k = histKeeps(s); const kind = k === 'restored' ? 'Comes back with its ' + kindWord(restoredHist(s).backend) + ' history' : k ? 'Keeps its ' + kindWord(k) + ' history' : d.history === 'jujutsu' ? 'Jujutsu' : 'Git'; return w('np.sum.ver', { kind, off: d.filesafe ? '' : w('np.sum.verOff') }); }
       case 'online': return onlineLine(s);
       case 'backup': { const b = d.backup; if (b.dest === 'none') return w('np.bk.none'); return b.mode === 'manual' ? w('np.bk.sum.manual', { dest: bkDestLabel(s) }) : w('np.bk.sum.daily', { dest: bkDestLabel(s), time: b.time }); }
       default: return '';
@@ -914,11 +1037,11 @@
   }
   function review(s) {
     const d = s.d, NOT = w('np.sec.notChosen'), named = !!String(nameOf(s) || '').trim();
-    const row = (k, v, sec, more) => Object.assign({ k, v: v || NOT, open: !v, sec }, more || {});
+    const row = (k, v, sec, more) => Object.assign({ k, v: v || NOT, sec }, more || {}, { open: !v || !!(more && more.open) });
     const c = chatOf(d.chat.id);
     const project = [row(w('np.rv.name'), named && !nameProblem(s) ? nameOf(s) : null, 'where', { field: 'name' }), row(w('np.rv.begins'), begins(s), sections(s)[0])];
     if (d.way === 'chat' && c) project.push(row(w('np.rv.chat'), w('np.rv.chatLine', { chat: c.title }), 'chat'));
-    if (d.way !== 'restore') { const p = likeSrc(s), k = p && likeCounts(s); project.push(row(w('np.rv.like'), p ? 'Like ' + p.name + ': ' + plural(k.own, 'setting') + (k.things ? ', ' + plural(k.things, 'thing') : '') + (d.like.accounts && k.accounts ? ' and its AI accounts' : '') : w('np.sum.like.usual'), 'like')); }
+    if (d.way !== 'restore') { const p = likeSrc(s), k = p && likeCounts(s); project.push(row(w('np.rv.like'), p ? 'Like ' + p.name + ': ' + plural(k.own, 'setting') + (k.things ? ', ' + plural(k.things, 'thing') : '') + (k.accounts ? ', ' + plural(k.accounts, 'AI account') : '') + (k.headers ? ', ' + plural(k.headers, 'sign-in header') : '') + (k.files ? ', ' + plural(k.files, 'of its own files', 'of its own files') : '') : w('np.sum.like.usual'), 'like')); }
     if (d.way === 'chat' && c) {
       project.push(row('Stays behind', w('np.rv.chatStays', { outside: andList(c.outside), folders: andList(c.folders) }).replace(/^Stays behind: /, ''), 'chat'));
       project.push(row('Undo', w('np.rv.chatUndo'), 'chat'));
@@ -926,12 +1049,15 @@
     const fp = fullPath(s), r = placeRoot(s);
     const loc = [row(w('np.rv.runsOn'), comp(d.runsOn).name + (d.runsOn === 'here' ? ' (' + comp('here').detail + ')' : ''), 'where', { field: 'runsOn' }),
       row(w('np.rv.files'), fp && (named || filesStay(s)) ? fp + (holderName(s) && holderName(s) !== comp(d.runsOn).name ? ' on ' + holderName(s) : '') : null, 'where', { field: 'files', code: true })];
-    if (!filesStay(s) && r) loc.push(row(w('np.rv.room'), r.free ? w('np.loc.free', { free: r.free }) : null, 'where'));
+    // the room is the chosen place's: shown once the place is (never beside "Not chosen yet")
+    if (!filesStay(s) && r && fp && named) loc.push(row(w('np.rv.room'), r.free ? w('np.loc.free', { free: r.free }) : null, 'where'));
     const k = histKeeps(s), lim = d.history === 'jujutsu' ? histLimits(s) : [];
-    const ver = k === 'restored' ? 'Comes back with its history' : k ? 'Keeps its ' + (k === 'jujutsu' ? 'Jujutsu' : 'Git') + ' history' : d.history === 'jujutsu' ? 'Jujutsu' + (lim.length ? ' · ' + andList(lim.map((x) => w('np.ver.eff.' + x))) : '') : 'Git';
-    const ol = problem(s, 'online') && !/^(none|leave|from)$/.test(onlineMode(s)) ? null : onlineLine(s, true);
+    const ver = k === 'restored' ? 'Comes back with its ' + kindWord(restoredHist(s).backend) + ' history' + (restoredHist(s).branch ? ' · ' + (restoredHist(s).backend === 'jujutsu' ? 'bookmark ' : '') + restoredHist(s).branch : '') : k ? 'Keeps its ' + kindWord(k) + ' history' : d.history === 'jujutsu' ? 'Jujutsu' + (lim.length ? ' · ' + andList(lim.map((x) => w('np.ver.eff.' + x))) : '') : 'Git';
+    // a choice made but not finished says what is left, so the row and the closed plan below never disagree
+    const op0 = problem(s, 'online'), olm = onlineMode(s);
+    const ol = op0 && !/^(none|leave|from)$/.test(olm) ? (/make|instead/.test(olm) && R().service(d.online.service) ? 'New on ' + R().kind(d.online.service, d.online.kind).label + ' · ' + op0.text : null) : onlineLine(s, true);
     const bk = d.backup.dest === 'none' ? w('np.bk.none') : problem(s, 'backup') ? null : w('np.rv.bkLine', { place: bkPlace(s), when: d.backup.mode === 'manual' ? 'when you click Back up now' : 'every day at ' + d.backup.time });
-    const safe = [row(w('np.rv.ver'), ver, 'versions'), row(w('np.rv.filesafe'), d.filesafe ? 'On' : 'Off', 'versions'), row(w('np.rv.online'), ol, 'online', { field: 'omode' }), row(w('np.rv.bk'), bk, 'backup')];
+    const safe = [row(w('np.rv.ver'), ver, 'versions'), row(w('np.rv.filesafe'), d.filesafe ? 'On' : 'Off', 'versions'), row(w('np.rv.online'), ol, 'online', { field: 'omode', open: !!(op0 && ol && !/^(none|leave|from)$/.test(olm)) }), row(w('np.rv.bk'), bk, 'backup')];
     const groups = [{ id: 'project', label: w('np.rv.project'), rows: project }, { id: 'loc', label: w('np.rv.loc'), rows: loc }, { id: 'safe', label: w('np.rv.safe'), rows: safe }];
     if (/make|instead/.test(onlineMode(s))) {
       const o = d.online, rec = onlineRec(s), owner = ownerOf(s, rec), pj = projectOf(s, owner), v = visOf(s, rec, owner, pj), si = signedIn(rec, d.runsOn);
@@ -951,6 +1077,9 @@
     const d = s.d, out = [], m = onlineMode(s), svcName = d.src.service === 'git' ? 'the Git address' : R().service(d.src.service) ? R().service(d.src.service).name : '';
     const kind = (k) => (k === 'jujutsu' ? 'Jujutsu' : 'Git'), name = nameOf(s), fp = fullPath(s) || '';
     const add = (key, label, cmd, more) => out.push(Object.assign({ key, label, cmd }, more || {}));
+    const k0 = histKeeps(s);
+    // Jujutsu goes on the work computer before anything uses it (a clone, a bookmark, a push)
+    if (d.history === 'jujutsu' && !k0 && !jjOn(s)) add('jj', w('np.ph.jj'), 'cmd.capability.ensure');
     if (d.way === 'online') {
       const it = intentOf(s), a = accessDone(s), fork = a && a.fork;
       if (it === 'contribute' && !fork) add('fork', w('np.ph.fork', { service: svcName }), 'cmd.forge.repository.fork', { net: true, remote: true, service: svcName });
@@ -968,9 +1097,9 @@
     if (newFolder) add('local', w('np.ph.newLocal', { path: fp }), 'cmd.project.new_local');
     if (d.way === 'new') { if (d.start === 'basics') add('basics', w('np.ph.basics'), 'new:basics without an online copy'); else if (/^starter:/.test(d.start)) add('starter', w('np.ph.starter', { starter: summary(s, 'start').replace(/ starter$/, '') }), 'cmd.project_template.create_project (gap: file set, G11)'); }
     if (d.way === 'chat' && chatFiles(s) === 'move') add('chatfiles', w('np.ph.chatFiles', { n: chatOf(d.chat.id).files, path: fp }), 'gap:thread files move');
-    const k = histKeeps(s);
-    if (d.history === 'jujutsu' && !k && !jjOn(s)) add('jj', w('np.ph.jj'), 'cmd.capability.ensure');
+    const k = k0;
     if (d.way !== 'online' && d.way !== 'restore') add('hist', k ? w('np.ph.histKeep', { kind: kind(k) }) : w('np.ph.histNew', { kind: kind(d.history) }), 'cmd.source_control.backend.select');
+    if (d.way === 'restore' && !k) add('hist', w('np.ph.histNew', { kind: kind(d.history) }), 'cmd.source_control.backend.select');
     const p = likeSrc(s);
     if (p && d.way !== 'restore') { add('settings', w('np.ph.settings', { project: p.name }), 'cmd.settings.transaction.apply'); if (likeCounts(s).things) add('things', w('np.ph.things'), 'gap:each owner’s copy (personas, MCP, commands)'); }
     if (/link_found|again|link/.test(m)) { const t = linkTarget(s); add('link', w('np.ph.link', { project: t ? (t.project || t.address) : '', service: t ? t.service || 'a Git address' : '' }), 'cmd.source_control.repository.bind' + (m === 'link' ? ' + gap:add remote' : ''), { net: true, service: t && t.service }); }
@@ -979,7 +1108,8 @@
       add('create', w('np.ph.create', { service: svc.name }), svc.id === 'github' ? 'cmd.project.new_github_repo' : 'cmd.forge.repository.create (gap: G1/G7)', { net: true, remote: true, service: svc.name, taken: true });
       add('send', w('np.ph.send'), d.history === 'jujutsu' ? 'cmd.jujutsu.git.push' : 'cmd.source_control.remote.publish', { net: true, service: svc.name });
     }
-    add('add', w('np.ph.add'), d.way === 'new' || newFolder ? 'cmd.project.new_local (registers)' : 'cmd.project.add_existing');
+    const g2 = (d.way === 'online' && intentOf(s) === 'contribute') ? ' (gap: G2 fork kind)' : d.way === 'device' && d.device.method !== 'ssh' ? ' (gap: G2 ' + ({ smb: 'SMB', nfs: 'NFS', mounted: 'mounted drive' }[d.device.method]) + ' kind)' : d.way === 'folder' && volOfPath(d.folder.path) ? ' (gap: G2 mounted drive kind)' : '';
+    add('add', w('np.ph.add'), d.way === 'new' || newFolder ? 'cmd.project.new_local (registers)' : 'cmd.project.add_existing' + g2);
     if (d.way === 'chat') add('chat', w('np.ph.chat', { chat: chatOf(d.chat.id).title }), 'gap:thread conversion [Depends: no-project]');
     add('check', w('np.ph.check'), 'cmd.project.refresh');
     return out;
@@ -990,21 +1120,29 @@
     opts = opts || {}; const demo = opts.demo || {};
     const pr = firstProblem(s); if (pr) return { ok: false, fail: { kind: 'problem', text: pr.text, section: pr.section } };
     const list = phases(s), made = [];
+    s.settled = s.settled || [];
+    // a step already made in this draft (the same step, the same inputs) isn't made again (6.12.4)
+    const already = (x) => s.settled.some((y) => y.key === x.key && y.label === x.label);
     let failAt = -1, failKind = null;
     if (demo.fork) { failAt = list.findIndex((x) => x.key === 'clone'); failKind = 'recovery'; }
     else if (demo.taken) { failAt = list.findIndex((x) => x.key === 'create'); failKind = 'taken'; }
-    else if (demo.net) { failAt = list.findIndex((x) => x.net); failKind = 'net'; }
+    else if (demo.net) { failAt = list.findIndex((x) => x.net && !already(x)); failKind = 'net'; }
     for (let i = 0; i < list.length; i++) {
+      if (already(list[i]) && i !== failAt) { if (list[i].remote) made.push(list[i]); if (opts.onPhase) opts.onPhase(i, list, 'complete', true); continue; }
       if (opts.onPhase) opts.onPhase(i, list, 'working');
       await PJX.wait(PJX.reduced() ? 160 : (list[i].net ? 950 : 600));
       if (i === failAt) {
         if (opts.onPhase) opts.onPhase(i, list, 'failed');
+        // what is already done, said as done ("made the folder …, added the starting files")
+        const PAST = { Making: 'made', Adding: 'added', Starting: 'started', Copying: 'copied', Linking: 'linked', Installing: 'installed', Applying: 'applied', Checking: 'checked', Picking: 'picked up', Moving: 'moved', Sending: 'sent', Connecting: 'connected to', Getting: 'got', Putting: 'put' };
+        const local = s.settled.filter((x) => !x.remote).map((x) => x.label.replace(/^(\w+)/, (m0) => PAST[m0] || m0.toLowerCase()));
+        const kept = local.length ? ' ' + w('np.fail.kept', { list: andList(local) }) : '';
         if (failKind === 'taken') {
           const rec = onlineRec(s), owner = ownerOf(s, rec), key = rec.key + ':' + owner.id;
           s.ui.refused[key] = (s.ui.refused[key] || []).concat([lc(onlineName(s))]);
-          return { ok: false, fail: { kind: 'taken', text: w('np.fail.taken', { service: R().service(s.d.online.service).name, project: owner.label + '/' + onlineName(s) }), section: 'online', service: R().service(s.d.online.service).name } };
+          return { ok: false, fail: { kind: 'taken', text: w('np.fail.taken', { service: R().service(s.d.online.service).name, project: owner.label + '/' + onlineName(s) }) + kept, section: 'online', service: R().service(s.d.online.service).name, kept: local } };
         }
-        if (failKind === 'net' && !made.length) return { ok: false, fail: { kind: 'net', text: w('np.fail.net', { service: list[i].service || 'the service' }), section: sections(s)[0] } };
+        if (failKind === 'net' && !made.length) return { ok: false, fail: { kind: 'net', text: (local.length ? w('np.fail.netPart', { service: list[i].service || 'the service' }) : w('np.fail.net', { service: list[i].service || 'the service' })) + kept, section: sections(s)[0], kept: local } };
         // something was made remotely, then a later step failed: listed as recovery, with Continue setup (6.12.4 C)
         const p = makeProject(s, 'recovery');
         const first = made[0] || list[0];
@@ -1017,6 +1155,7 @@
         return { ok: false, project: p, fail: { kind: 'recovery' } };
       }
       if (list[i].remote) made.push(list[i]);
+      s.settled.push({ key: list[i].key, label: list[i].label, remote: !!list[i].remote });
       if (opts.onPhase) opts.onPhase(i, list, 'complete');
     }
     const p = makeProject(s, 'listed', demo);
@@ -1027,44 +1166,60 @@
   /* the Project the reviewed draft becomes */
   function makeProject(s, lifecycle, demo) {
     const d = s.d, name = String(nameOf(s)).trim(), listed = lifecycle === 'listed', info = lookDone(s), fp = fullPath(s);
-    const slugId = R().folderSlug(name) || 'project';
+    const slugId = R().idSlug(name) || 'project';
     let where;
-    if (d.way === 'folder') where = d.runsOn === 'homenas' ? { kind: 'device', label: 'Home NAS', path: d.folder.path, device: 'Home NAS', via: 'Puppet Master' } : { kind: 'local', label: 'This computer', path: d.folder.path };
+    const vf = d.way === 'folder' && d.runsOn === 'here' ? volOfPath(d.folder.path) : null;
+    if (d.way === 'folder') where = d.runsOn === 'homenas' ? { kind: 'device', label: 'Home NAS', path: d.folder.path, device: 'Home NAS', via: 'Puppet Master' } : vf && vf.device ? { kind: 'device', label: 'Home NAS', path: full(d.folder.path), device: 'Home NAS', via: 'a connected drive' } : { kind: 'local', label: 'This computer', path: d.folder.path };
     else if (d.way === 'device') {
       const hn = holderName(s), via = { ssh: d.runsOn === 'homenas' ? 'SSH from Home NAS' : 'SSH', smb: 'SMB', nfs: 'NFS', mounted: 'a connected drive' }[d.device.method];
       where = hn === 'This computer' ? { kind: 'local', label: 'This computer', path: d.device.path } : { kind: 'device', label: hn, path: d.device.path, device: hn, via };
     } else if (filesStay(s)) where = { kind: 'local', label: 'This computer', path: (lookTarget(s) || {}).path || fp };
     else {
       const m = filesMode(s), n = netPlace(s);
+      const r0 = placeRoot(s);
       if (m === 'with_server') where = { kind: 'device', label: 'Home NAS', path: fp, device: 'Home NAS', via: 'Puppet Master' };
-      else if (m === 'network' && n && n.holder !== 'This computer') where = { kind: 'device', label: n.holder, path: fp, device: n.holder, via: n.route };
-      else where = { kind: 'local', label: 'This computer', path: fp.replace(HOME, '~') };
+      else if (m === 'network' && n && n.holder !== 'This computer') where = { kind: 'device', label: n.holder, path: fp, device: n.holder, via: n.route === 'drive' ? 'a connected drive' : n.route };
+      else if (m === 'custom' && r0 && r0.vol && r0.vol.device) where = { kind: 'device', label: 'Home NAS', path: fp, device: 'Home NAS', via: 'a connected drive' };
+      // files on this computer that the Server reaches over the network (files.mode this_computer): Home NAS can reach them
+      else where = Object.assign({ kind: 'local', label: 'This computer', path: fp.replace(HOME, '~') }, m === 'this_computer' ? { reach: ['homenas'] } : {});
     }
     if (!listed) where.pending = true;
-    const k = histKeeps(s), backend = k && k !== 'restored' ? k : d.way === 'restore' ? 'git' : d.history;
-    const m = onlineMode(s);
+    const k = histKeeps(s), rh = d.way === 'restore' ? restoredHist(s) : null, backend = k === 'restored' ? rh.backend : k || d.history;
+    const m = onlineMode(s), it0 = d.way === 'online' ? intentOf(s) : null;
+    // the branch work goes on: the folder's own, the restored one, the new online copy's main branch, or your change's
+    const branch = d.way === 'restore' && rh && rh.branch ? rh.branch : info && info.branch ? info.branch : it0 === 'contribute' || it0 === 'offer' ? d.find.branch : /make|instead/.test(m) && d.online.branch ? d.online.branch : 'main';
     let online = { service: null, repo: null, state: 'off', ahead: 0, behind: 0 };
     if (m === 'from') {
       const it = intentOf(s), svcName = d.src.service === 'git' ? 'Git address' : R().service(d.src.service).name, a = accessDone(s) || {};
-      if (d.src.service === 'git') online = { service: 'Git address', repo: d.src.gitAddress, state: 'complete', ahead: 0, behind: 0, note: 'Copies and sends only' };
-      else if (it === 'contribute') online = { service: svcName, repo: a.fork || forkOwner(s) + '/' + forkName(s), state: 'complete', ahead: 0, behind: 0, privacy: 'Everyone', note: 'Your fork', upstream: { service: svcName, repo: d.find.project, behind: 0, branch: d.find.branch, remote: d.fork.upstreamName } };
-      else if (it === 'copy') online = { service: svcName, repo: d.find.project, state: 'complete', ahead: 0, behind: 0, privacy: 'Everyone', note: 'Read only', readOnly: true };
-      else online = { service: svcName, repo: d.find.project, state: 'complete', ahead: 0, behind: 0, privacy: (repoOf(s) || {}).vis, note: 'Up to date', branch: it === 'offer' ? d.find.branch : null, team: it === 'offer' };
+      const rec0 = srcRec(s), r0 = repoOf(s) || {}, ident = rec0 ? { kind: rec0.kind, kindLabel: R().kind(d.src.service, d.src.kind).label, host: rec0.host, address: rec0.address } : {};
+      if (d.src.service === 'git') online = { service: 'Git address', repo: d.src.gitAddress, state: 'complete', ahead: 0, behind: 0, note: 'Copies and sends only', url: d.src.gitAddress, privacy: null };
+      else if (it === 'contribute') online = Object.assign({ service: svcName, repo: a.fork || forkOwner(s) + '/' + forkName(s), state: 'complete', ahead: 0, behind: 0, privacy: 'Everyone', note: 'Your fork', upstream: { service: svcName, repo: d.find.project, behind: 0, branch: d.find.branch, remote: d.fork.upstreamName } }, ident);
+      else if (it === 'copy') online = Object.assign({ service: svcName, repo: d.find.project, state: 'complete', ahead: 0, behind: 0, privacy: visWord(r0.vis, r0.owner) || 'Everyone', note: 'Read only', readOnly: true }, ident);
+      else online = Object.assign({ service: svcName, repo: d.find.project, state: 'complete', ahead: 0, behind: 0, privacy: visWord(r0.vis, r0.owner), note: 'Up to date', branch: it === 'offer' ? d.find.branch : null, team: it === 'offer', container: r0.project || null }, ident);
     } else if (/link_found|again|link/.test(m)) {
-      const t = linkTarget(s) || {};
-      online = { service: t.address ? 'Git address' : t.service, repo: t.project || t.address, state: 'complete', ahead: 0, behind: 0, privacy: 'Only you', note: 'Up to date' };
+      const t = linkTarget(s) || {}, c = linkCheck(s), lr = linkRec(s);
+      online = { service: t.address ? 'Git address' : t.service, repo: t.project || t.address, state: 'complete', ahead: 0, behind: 0, privacy: c && c.state === 'done' ? c.result.vis || null : null, note: 'Up to date',
+        kind: lr ? lr.kind : null, host: lr ? lr.host : null, address: lr ? lr.address : t.address || null, remote: t.remote || (d.online.remoteName || null) };
     } else if (/make|instead/.test(m)) {
-      const rec = onlineRec(s), owner = ownerOf(s, rec), v = visOf(s, rec, owner, projectOf(s, owner));
-      online = { service: R().service(d.online.service).name, repo: (owner ? owner.label.replace(/ \/ /g, '/') : 'jared') + '/' + onlineName(s), state: 'complete', ahead: 0, behind: 0, privacy: v.v ? v.v.title : 'Follows its project', note: listed ? 'Up to date' : 'Created online' };
+      const rec = onlineRec(s), owner = ownerOf(s, rec), pj = projectOf(s, owner), v = visOf(s, rec, owner, pj), svc = R().service(d.online.service), kd = R().kind(d.online.service, d.online.kind);
+      const ownerPath = owner ? owner.label.replace(/ \/ /g, '/') : 'jared', team = R().projectNoun(d.online.service, kd.id) === 'teamProject';
+      // the whole identity: the service and its kind, the server, the owner, the team project or project, the name
+      const repo = [ownerPath, team && pj ? pj.id : null, onlineName(s)].filter(Boolean).join('/');
+      const url = rec.address.replace(/\/+$/, '') + '/' + (team && pj ? ownerPath + '/' + pj.id + '/_git/' + onlineName(s) : ownerPath + '/' + R().slug(onlineName(s)));
+      online = { service: svc.name, kind: kd.id, kindLabel: kd.label, host: rec.host, address: rec.address, owner: owner ? owner.id : null, container: pj ? pj.label : null, containerNoun: pj ? (team ? 'Team project' : 'Project') : null, repo, url,
+        branch: d.online.branch || 'main', description: String(d.online.description || '').trim() || null, state: 'complete', ahead: 0, behind: 0, privacy: v.v ? v.v.title : 'Follows its project', note: listed ? 'Up to date' : 'Created online' };
     } else if (m === 'leave' && info && info.online) online.found = { service: info.online.service || 'Git address', repo: info.online.repo || info.online.address, remote: info.online.remote };
     let backup = { dest: null, state: 'off', versions: 0 };
     if (d.backup.dest !== 'none') {
       const fam = bkFamily(s);
-      backup = { dest: R().FAMILIES[fam].label, family: fam, place: bkPlace(s), include: d.backup.include, mode: d.backup.mode, time: d.backup.time, keep: d.backup.keep,
+      const acc = d.backup.acc || {}, locator = {};
+      Object.keys(acc).forEach((k) => { if (!/Typed$/.test(k) && k !== 'temp' && typeof acc[k] === 'string') locator[k] = acc[k]; });
+      backup = { dest: R().FAMILIES[fam].label, family: fam, place: bkPlace(s), include: d.backup.include, leaveOut: d.backup.include === 'some' ? Object.keys(d.backup.leaveOut).filter((k) => d.backup.leaveOut[k]) : [], mode: d.backup.mode, time: d.backup.time, keep: d.backup.keep, keepCustom: d.backup.keep === 'custom' ? Object.assign({}, d.backup.keepCustom) : null, locator,
         schedule: d.backup.mode === 'manual' ? 'When you click Back up now' : 'Every day', state: listed ? 'setup' : 'pending', last: null, versions: 0, kit: null, note: listed ? null : 'Starts after setup',
         setup: listed ? { steps: ['todo', 'todo', 'todo', 'todo', 'todo'], fail: !!(demo && demo.bk), open: true, access: d.backup.dest === 'bucket' || d.backup.dest === 'server' } : null };
     }
     const src = likeSrc(s), counts = src && likeCounts(s);
+    const startFiles = d.way === 'new' ? (d.start === 'basics' ? Object.assign({ kind: 'basics' }, d.basics) : { kind: d.start }) : null;
     const c = chatOf(d.chat.id);
     const glyph = { new: 'seed', folder: 'folder', online: 'cloud', device: 'server', restore: 'history', chat: 'chat' }[d.way] || 'seed';
     const inside0 = d.way === 'online' ? (inside(s) || {}).result || {} : info || {};
@@ -1072,9 +1227,10 @@
       id: slugId + '-' + PJX.uid('n').split('-').pop(), name, glyph, active: false, lifecycle, order: PJX.all().length, runsOn: d.runsOn,
       stack: (info && info.stack) || [], where, opened: 'Just added', openedRank: -0.5,
       activity: listed ? { key: 'idle', word: 'Ready', text: d.way === 'restore' ? 'Restored from a backup · plan or open it' : 'Ready to plan in the Planning Wizard', at: 'just now', runs: 0 } : { key: 'waiting', word: 'Setup didn’t finish', text: '', at: 'just now', runs: 0 },
-      history: { backend, branch: (info && info.branch) || 'main', worktrees: listed ? 1 : 0, changed: (info && info.changed) || 0, submodules: inside0.submodules || null, lfs: inside0.lfs || null, hooks: inside0.hooks || null, filesafe: d.filesafe },
+      history: { backend, branch, defaultBranch: it0 === 'contribute' || it0 === 'offer' ? 'main' : null, worktrees: listed ? 1 : 0, changed: (info && info.changed) || 0, submodules: inside0.submodules || null, lfs: inside0.lfs || null, hooks: inside0.hooks || null, filesafe: d.filesafe },
+      startFiles,
       online, backup, sync: { devices: listed ? 2 : 0, state: listed ? 'complete' : 'pending' }, attention: [], fresh: true,
-      copied: src ? { from: src.name, settings: counts.own, things: counts.things, accounts: counts.accounts } : null,
+      copied: src ? { from: src.name, settings: counts.own, things: counts.things, accounts: counts.accounts, headers: counts.headers, files: counts.files, sel: counts.sel } : null,
       needsSignin: listed ? needsAfter(s) : 0,
       fromChat: d.way === 'chat' && c ? c.title : null
     };
@@ -1082,18 +1238,25 @@
 
   /* the draft read as onboarding's setup plan, for the verification read-out (spec 7) */
   function toPlan(s) {
-    const d = s.d, m = onlineMode(s), rec = /make|instead|link/.test(m) ? onlineRec(s) : null;
+    const d = s.d, m = onlineMode(s), rec = /make|instead/.test(m) || m === 'link' ? (d.online.service === 'git' ? null : onlineRec(s)) : /link_found|again/.test(m) ? linkRec(s) : m === 'from' ? srcRec(s) : null;
+    const sel = likeSrc(s) ? likeSel(s) : null, lt = /link/.test(m) || m === 'again' ? linkTarget(s) : null;
     return {
       project_mode: { new: 'new', chat: 'new', folder: 'existing_local', device: 'existing_local', online: 'existing_online', restore: 'restore' }[d.way] || null,
       project_transport: d.way === 'device' ? ({ ssh: 'ssh', smb: 'mounted', nfs: 'mounted', mounted: 'mounted' }[d.device.method]) : d.way === 'folder' && d.runsOn === 'homenas' ? 'puppet_master' : null,
       server_mode: d.runsOn === 'here' ? 'this_device' : 'existing_server', server_ref: d.runsOn === 'here' ? null : 'homenas',
       project_name: nameOf(s), local_location: fullPath(s), storage_mode: filesMode(s) === 'network' ? 'network_location' : null,
-      history_backend: histKeeps(s) && histKeeps(s) !== 'restored' ? histKeeps(s) : d.history, filesafe: d.filesafe,
-      settings_transfer: likeSrc(s) ? { mode: 'copy', source_project_id: likeSrc(s).id, explicit_choice_setting_ids: d.like.ids ? Object.keys(d.like.ids).filter((k) => d.like.ids[k] !== false) : null } : { mode: 'usual' },
+      history_backend: histKeeps(s) === 'restored' ? restoredHist(s).backend : histKeeps(s) || d.history, filesafe: d.filesafe,
+      settings_transfer: sel ? { mode: 'copy', source_project_id: sel.from, explicit_choice_setting_ids: sel.settings.concat(sel.same), keep_fixed: sel.fixed, computer_values_as_own: sel.fromComputer > 0, thing_ids: sel.things,
+        account_choices: sel.accounts.map((id) => ({ id, choice: 'same' })).concat(sel.headers.map((id) => ({ id, choice: 'same', header: true }))).concat(sel.later.map((id) => ({ id, choice: 'later' }))), project_only_row_ids: sel.ownFiles, send_keys: false } : { mode: 'usual' },
       online_mode: { none: 'none', leave: 'none', make: 'new', instead: 'new', link_found: 'existing', link: 'existing', again: 'existing', from: 'existing' }[m],
-      forge: rec ? rec.key.split('@')[0] : null, repository_ref: m === 'from' ? d.find.project : null,
+      forge: rec ? rec.key.split('@')[0] : null, forge_address: rec ? rec.address : null,
+      repository_ref: m === 'from' ? (d.src.service === 'git' ? d.src.gitAddress : d.find.project) : lt ? (lt.project || lt.address) : /make|instead/.test(m) && rec ? [ownerOf(s, rec) ? ownerOf(s, rec).id : null, projectOf(s, ownerOf(s, rec)) ? projectOf(s, ownerOf(s, rec)).id : null, onlineName(s)].filter(Boolean).join('/') : null,
+      repository_branch: /make|instead/.test(m) ? d.online.branch || 'main' : null, repository_description: /make|instead/.test(m) ? String(d.online.description || '').trim() || null : null,
+      working_branch: d.way === 'online' && /contribute|offer/.test(intentOf(s) || '') ? d.find.branch : null,
       repository_initialize_readme: /make|instead/.test(m) && d.way === 'new' ? d.start === 'basics' && d.basics.readme : null,
-      backup_destination: d.backup.dest === 'none' ? null : bkFamily(s), secrets_in_draft: false
+      backup_destination: d.backup.dest === 'none' ? null : bkFamily(s), backup_place: d.backup.dest === 'none' ? null : bkPlace(s),
+      backup_include: d.backup.dest === 'none' ? null : d.backup.include, backup_leave_out: d.backup.include === 'some' ? Object.keys(d.backup.leaveOut).filter((k) => d.backup.leaveOut[k]) : [],
+      backup_retention: d.backup.dest === 'none' ? null : d.backup.keep === 'custom' ? Object.assign({ kind: 'custom' }, d.backup.keepCustom) : { kind: 'standard' }, secrets_in_draft: false
     };
   }
 
@@ -1111,14 +1274,15 @@
     if ((m = /^(?:https?:\/\/)?bitbucket\.org[/:]([\w.-]+\/[\w.-]+?)(?:\.git)?\/?$/i.exec(t))) return { way: 'online', service: 'bitbucket', kind: 'cloud', project: m[1], say: w('np.detect.bitbucket', { project: m[1] }), tab: 'yours' };
     if ((m = /^(?:https?:\/\/)?dev\.azure\.com\/([\w.-]+)\/([\w. -]+)\/_git\/([\w.-]+)\/?$/i.exec(t))) { const id = m[1] + '/' + m[2] + '/' + m[3]; return { way: 'online', service: 'azure', kind: 'services', project: id, say: w('np.detect.azure', { project: m[1] + ' / ' + m[2] + ' / ' + m[3] }), tab: 'yours' }; }
     if ((m = /^(https:\/\/git\.home\.arpa)\/([\w.-]+\/[\w.-]+?)(?:\.git)?\/?$/i.exec(t))) return { way: 'online', service: 'forgejo', kind: 'own', address: m[1], project: m[2], say: w('np.detect.forgejo', { host: 'git.home.arpa', project: m[2] }), tab: 'yours' };
-    if (/^(https?:\/\/\S+\.git|git@[\w.-]+:\S+\.git|ssh:\/\/git@\S+)$/i.test(t)) return { way: 'online', service: 'git', gitAddress: t, say: w('np.detect.git') };
+    if (/^(https?:\/\/\S+\.git|git@[\w.-]+:\S+|ssh:\/\/git@\S+)$/i.test(t)) return { way: 'online', service: 'git', gitAddress: t, say: w('np.detect.git') };
+    // host:/absolute/path with no user is an NFS share (spec 5.3); user@host:path, host:~/path and ssh:// are SSH
+    if ((m = /^([\w-]+\.local):(\/\S+)$/.exec(t))) { const sh = ENV.shares.find((x) => x.kind === 'nfs' && x.address === t); return { way: 'device', method: 'nfs', share: sh ? sh.id : 'typed', typed: t, say: w('np.detect.nfs', { device: sh ? dev(sh.device).name : m[1] }) }; }
     if ((m = /^(?:ssh:\/\/)?(?:([\w.-]+)@)?([\w-]+\.local)(?::|\/)(.+)$/.exec(t))) {
       const host = m[2], d0 = ENV.devices.concat(ENV.found).find((x) => x.address === host);
       const path = /^~|^\//.test(m[3]) ? m[3] : '/' + m[3];
       if (d0) return { way: 'device', method: 'ssh', device: d0.id, path, user: m[1] || '', say: w('np.detect.ssh', { device: d0.name }) };
     }
     if ((m = /^(?:smb:)?\/\/([\w.-]+)\/(\S+)$/i.exec(t))) { const sh = ENV.shares.find((x) => x.kind === 'smb' && x.address === '//' + m[1] + '/' + m[2].replace(/\/+$/, '')); return { way: 'device', method: 'smb', share: sh ? sh.id : 'typed', typed: '//' + m[1] + '/' + m[2], say: w('np.detect.smb', { device: sh ? dev(sh.device).name : m[1] }) }; }
-    if ((m = /^([\w-]+\.local):(\/\S+)$/.exec(t))) { const sh = ENV.shares.find((x) => x.kind === 'nfs' && x.address === t); return { way: 'device', method: 'nfs', share: sh ? sh.id : 'typed', typed: t, say: w('np.detect.nfs', { device: sh ? dev(sh.device).name : m[1] }) }; }
     if (/\.pmkit$/i.test(t) || /recovery[ -]?kit/i.test(t)) return { way: 'restore', from: 'kit', say: w('np.detect.kit') };
     if (/^(~|\/|[a-z]:\\)/i.test(t)) return { way: 'folder', path: t.replace(/\/+$/, '').replace(/^\/Users\/jared/, '~'), say: w('np.detect.folder') };
     return null;
@@ -1137,8 +1301,114 @@
     else if (x.way === 'restore') d.restore.from = x.from;
   }
 
+  /* ------------------------------------------------------------------ moving a chat into a project you have (NOPROJECT 7.4 to
+     7.8, N2: both conversions first-class). One draft per move; nothing moves before the named button (or, in YOLO with a
+     clear destination, before the statement and preview are shown, N27); afterwards a report with Undo. [Depends: no-project] */
+  function moveStart(chatId) {
+    const c = chatOf(chatId); if (!c) return null;
+    const m = { id: PJX.uid('mv'), chat: c.id, target: null, q: '', files: {}, chatOnly: false, place: 'draft', branch: 'chat/' + c.slug, branchTouched: false, folder: 'tools/printer', resolve: 'both', ui: { disc: {} }, L: [] };
+    (c.fileList || []).forEach((f) => { m.files[f] = true; });
+    m.on = (fn) => { m.L.push(fn); return m; };
+    m.changed = () => m.L.slice().forEach((fn) => { try { fn(m); } catch (e) { console.error('[pjx move]', e); } });
+    return m;
+  }
+  const moveChat = (m) => chatOf(m.chat);
+  function moveOff(p) {
+    if (p.where.missing) return w('np.mv.off.missing', { project: p.name });
+    if ((p.attention || []).some((a) => a.code === 'device_offline')) return w('np.mv.off.offline', { device: p.where.device || 'Its computer' });
+    if (p.lifecycle === 'recovery') return w('np.mv.off.recovery', { project: p.name });
+    return null;
+  }
+  function moveTargets(m) {
+    const q = lc(m.q).trim(), c = moveChat(m);
+    return PJX.listed().filter((p) => p.lifecycle !== 'archived' && (!q || lc(p.name).indexOf(q) >= 0 || lc(p.where.label).indexOf(q) >= 0))
+      .map((p) => ({ p, off: moveOff(p), other: (p.runsOn || 'here') !== c.runsOn ? comp(p.runsOn).name : null }));
+  }
+  const moveMark = (m, f) => ((ENV.projectFiles || {})[m.target] || {})[f] || 'new';
+  const moveHist = (m) => { const p = PJX.get(m.target); return !!(p && p.history && (p.history.backend === 'git' || p.history.backend === 'jujutsu')); };
+  const movePlace = (m) => (moveHist(m) ? m.place : 'folder');
+  const movePicked = (m) => (m.chatOnly ? [] : (moveChat(m).fileList || []).filter((f) => m.files[f]));
+  const moveSame = (m) => movePicked(m).filter((f) => moveMark(m, f) === 'same');
+  const moveConflicts = (m) => (movePlace(m) === 'draft' ? [] : movePicked(m).filter((f) => moveMark(m, f) === 'different'));
+  const moveMoving = (m) => movePicked(m).filter((f) => moveMark(m, f) !== 'same' && !(moveConflicts(m).indexOf(f) >= 0 && m.resolve === 'skip'));
+  const moveFolder = (m) => String(m.folder || '').trim().replace(/^\/+|\/+$/g, '');
+  function moveProblem(m) {
+    const p = PJX.get(m.target);
+    if (!p) return { text: w('np.mv.pick'), field: 'target' };
+    const off = moveOff(p); if (off) return { text: off, field: 'target' };
+    if (!m.chatOnly && !movePicked(m).length) return { text: w('np.mv.noFiles'), field: 'files' };
+    if (!m.chatOnly && movePlace(m) === 'draft') { const b = R().branchProblem(m.branch); if (b) return { text: b, field: 'branch' }; }
+    if (!m.chatOnly && (!moveFolder(m) || /[\\:*?"<>|]|\.\./.test(moveFolder(m)))) return { text: w('np.mv.folderBad'), field: 'folder' };
+    return null;
+  }
+  /* the plain statement (7.5): each line only when it applies */
+  function moveStatement(m) {
+    const c = moveChat(m), p = PJX.get(m.target); if (!p) return [];
+    const picked = movePicked(m), moving = moveMoving(m), same = moveSame(m), conf = moveConflicts(m), pl = movePlace(m), fd = moveFolder(m) + '/';
+    const out = [w('np.mv.s.chat', { chat: c.title, project: p.name, n: c.messages, a: c.attachments })];
+    if (m.chatOnly) out.push(w('np.mv.s.noFiles', { n: (c.fileList || []).length, folder: c.folder }));
+    else {
+      const files = plural(moving.length, 'file');
+      out.push(pl === 'draft' ? w('np.mv.s.draft', { files, project: p.name, branch: m.branch, folder: fd, jj: p.history.backend === 'jujutsu' ? w('np.mv.s.jj') : '' })
+        : pl === 'main' ? w('np.mv.s.main', { files, project: p.name, folder: fd }) : w('np.mv.s.folder', { files, project: p.name, folder: fd }));
+      if (same.length) out.push(w('np.mv.s.same', { list: andList(same), n: same.length }));
+      if (conf.length) out.push(w('np.mv.s.conflict.' + m.resolve, { list: andList(conf), example: conf[0] }));
+    }
+    if ((p.runsOn || 'here') !== c.runsOn) out.push(w('np.mv.s.computer', { project: p.name, computer: comp(p.runsOn).name }));
+    const ps = (ENV.projectSettings[p.id] || {}).own || [];
+    if (ps.length) out.push(w('np.mv.s.settings', { project: p.name, label: ps[0][2], value: ps[0][4], usual: ps[0][3] }));
+    const left = (c.fileList || []).length - picked.length;
+    out.push(w('np.mv.s.stays', { left: left ? plural(left, 'file') + ' you didn’t pick (they stay in the chat folder), ' : '', outside: andList(c.outside), n: c.outside.length, folders: andList(c.folders) }));
+    out.push(w('np.mv.s.undo'));
+    return out;
+  }
+  const moveLabel = (m) => (m.chatOnly ? w('np.mv.goOnly') : w('np.mv.go'));
+  function movePhases(m) {
+    const c = moveChat(m), p = PJX.get(m.target), out = [], moving = moveMoving(m), pl = movePlace(m);
+    const add = (key, label, cmd) => out.push({ key, label, cmd });
+    if (!m.chatOnly && moving.length) {
+      if (pl === 'draft') add('draft', w('np.mv.ph.draft', { branch: m.branch, project: p.name }), p.history.backend === 'jujutsu' ? 'cmd.jujutsu.bookmark.create' : 'cmd.source_control.branch.create');
+      add('copy', w('np.mv.ph.copy', { n: moving.length, folder: moveFolder(m) + '/' }), 'gap:thread files move [Depends: no-project]');
+      add('check', w('np.mv.ph.check'), 'gap:thread files move (verify)');
+      if (pl === 'draft') add('save', w('np.mv.ph.save', { chat: c.title }), p.history.backend === 'jujutsu' ? 'cmd.jujutsu.change.describe' : 'gap:commit in a PM worktree (thread-bound merge wrapper)');
+    }
+    if ((p.runsOn || 'here') !== c.runsOn) add('sync', w('np.mv.ph.sync', { computer: comp(p.runsOn).name }), 'gap:chat-sized move through Project Sync (N20, PSB-006)');
+    add('chat', w('np.mv.ph.chat', { chat: c.title, project: p.name }), 'gap:thread conversion [Depends: no-project]');
+    if (!m.chatOnly && moving.length) add('tidy', w('np.mv.ph.tidy'), 'gap:thread files move (sealed old copy, 7 days)');
+    return out;
+  }
+  async function moveCommit(m, opts) {
+    opts = opts || {};
+    const pr = moveProblem(m); if (pr) return { ok: false, fail: pr };
+    const list = movePhases(m);
+    for (let i = 0; i < list.length; i++) {
+      if (opts.onPhase) opts.onPhase(i, list, 'working');
+      await PJX.wait(PJX.reduced() ? 160 : 700);
+      if (opts.onPhase) opts.onPhase(i, list, 'complete');
+    }
+    const c = moveChat(m), p = PJX.get(m.target);
+    const rec = { chat: c.id, title: c.title, into: p.id, files: moveMoving(m), place: movePlace(m), branch: m.branch, folder: moveFolder(m), chatOnly: m.chatOnly, computer: (p.runsOn || 'here') !== c.runsOn ? comp(p.runsOn).name : null, by: opts.yolo ? 'yolo' : 'you' };
+    F().moved = F().moved || {}; F().moved[c.id] = rec;
+    return { ok: true, project: p, rec };
+  }
+  /* Undo's own statement first (7.7): what goes back, what stays because it changed, what is never deleted */
+  function moveUndoStatement(rec) {
+    const p = PJX.get(rec.into) || { name: rec.into };
+    const lines = [w('np.mv.u.chat', { chat: rec.title })];
+    if (rec.files.length) lines.push(w('np.mv.u.files', { files: plural(rec.files.length, 'file') }));
+    if (rec.place === 'draft' && rec.files.length) lines.push(w('np.mv.u.draft', { branch: rec.branch }));
+    if (rec.place !== 'draft' && rec.files.length) lines.push(w('np.mv.u.main', { project: p.name }));
+    if (rec.computer) lines.push(w('np.mv.u.computer', { computer: rec.computer }));
+    lines.push(w('np.mv.u.never'));
+    return lines;
+  }
+  const moved = (chatId) => ((F().moved || {})[chatId]) || null;
+  function moveUndo(chatId) { const r = moved(chatId); if (r) delete F().moved[chatId]; return r; }
+
   PJX.np = {
     SETTINGS, WAYS, VERB, SECTIONS, start, set, enforce, chooseWay, wayLoss, startOver, sections, problem, summary, state, enter, open, fold, cont, allDone, firstProblem, firstNotDone,
+    moveStart, moveTargets, moveMark, moveHist, movePlace, movePicked, moveSame, moveConflicts, moveMoving, moveProblem, moveStatement, moveLabel, movePhases, moveCommit, moveUndoStatement, moveUndo, moved,
+    volOfPath, netCheck, netSignIn, bkHost, bkOnNas, likeSel, takenFor, forkNameCheck, visWord, restoredHist, kindWord, needsAccount, dropUi, onSettled: null,
     op, peek, retry, look, lookDone, lookTarget, limits, inspectAt, trusted, devicesFor, lookFor, addKey, resolveShare, smbShareKey, nfsShareKey, smbOk, nfsOk, volOk, dev, share, vol, comp, chatOf, chatFiles, serverOn,
     forgeRec, signedIn, signIn, signinOp, serverCheck, addrOk, srcRec, repoOf, findAnyone, access, accessDone, inside, gitAddressCheck, gitAddrValid, intentOf, intentDefault, forkName, forkOwner, knownFor,
     restoreSource, restoreWhere, restoreList, unlock, lineage, derivedName, nameOf, folderNameOf, nameProblem, filesModes, filesMode, networkPlaces, netPlace, placeRoot, fullPath, filesStay, holderName, filesOnNas,
