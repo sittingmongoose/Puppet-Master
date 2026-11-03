@@ -3550,12 +3550,7 @@ Amended 2026-10-09 (DL-180): the Home layout lives in the v2 Home layout record 
 | `gha_panel_state.v1:{project_id}` | GitHub Actions panel UI state: account-sensitive pins, filters, auto-refresh preference, collapsed groups, and last viewed run partitioned by effective account or invalidated on account switch | On change (debounced 250ms) |
 | `artifact_panel_state.v1:{project_id}` | Artifacts panel UI state: expanded groups, selected artifact, compare target, and preview mode | On change (debounced 250ms) |
 
-The shell appearance keys above are Project-scoped even where a compatibility key name omits an inline
-`{project_id}` suffix. On an untouched first open or a genuinely fresh Project with no committed appearance
-snapshot, the GUI seeds Basic Dark plus the factory layout. Opening, reopening, or switching to an existing
-Project restores that Project's explicit saved theme and layout without reapplying factory values. An admitted
-Project copy materializes the source theme/layout values into a new destination-owned snapshot at the copy
-boundary; source and destination then evolve independently, with no live inheritance or later propagation.
+Appearance consumes the SSYS-002/059 effective look pair from SP-348’s sparse level records. Existing theme:v1 and glass_alpha:v1 Project readers are compatibility bindings, not extra writers. Basic Dark is the bundled fallback only when no applicable explicit look exists. Layout is separate exact-context state: Project layouts stay SP-330 and No project uses SP-349. A copied own setting is detached from its source Project; rows left unset continue to follow their actual wider levels. No conversion merges app boards into a Project.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
 
@@ -3642,7 +3637,7 @@ Amended 2026-10-09 (DL-180): Home restores from its v2 layout record `home_works
 
 On startup:
 1. Resolve the active Project's detached shell snapshot. Read its `layout:v1` and restore panel positions, sizes, dock states, and detached-terminal geometry; only a genuinely absent fresh-project snapshot receives the factory layout. A copied Project reads its destination-owned snapshot, never a live source-project value. Amended 2026-10-09 (DL-180): `layout:v1` restores only side-panel dock state and the popped-out chat window's geometry, and detached-terminal geometry goes with the bottom terminal (F3-061); the home panels, their tabs and the chat column restore from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), and the factory layout is the Home named layout (F3-630).
-2. Read the active Project's `theme:v1` and apply its explicit saved selection. Only an untouched first-open/fresh-project absence seeds Basic Dark; startup never replaces an existing saved selection with either Basic Dark or the superseded Friendly Dark default.
+2. Resolve SSYS-002/059’s atomic look pair for the exact restored Project or No project Computer/Device context before first paint (F3-468). Use Basic Dark only as the bundled absence fallback; never overwrite an existing own value or keep another theme hint. Restore Project keys only for a real Project; restore SP-349 app keys when No project is selected.
 3. Read `widget_layout:v1:dashboard` and restore dashboard widget layout. On first launch after migration, read from deprecated `dashboard_layout:v1` only when the canonical key is absent, then write back to `widget_layout:v1:dashboard`. Amended 2026-10-09 (DL-180): each dashboard board restores its widget layout from `widget_layout:v1:dashboard:<board_id>`; `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home` on first read and is never reset, and stays, like `dashboard_layout:v1`, a read-only migration input (WS-030). Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board. Nothing writes `widget_layout:v1:dashboard` now; it stays only a read-only record and rollback backup (`Plans/Widget_System.md#WS-009`), so the write-back to it at the start of this step is lineage; what storage keeps of it is `Plans/storage-plan.md`'s.
 4. Read `activity_bar_order:v1` and restore icon order.
 5. Read `editor_workspace_state.v1:{project_id}` and restore open tabs and view positions. Restore each dirty per-file buffer from `editor_state.v1:{project_id}:{file_path_hash}` before focusing the active tab; if the disk baseline differs, present a diff and never overwrite either side implicitly.
@@ -3662,7 +3657,7 @@ Restore rules:
 - startup restore MUST prefer revealing prior selected terminal containers over creating new empty terminals automatically; a saved terminal tab whose session did not survive comes back with its saved scrollback above a new session in the same folder and profile (F3-640), which is not a new empty terminal
 - project `/reopen` restores the saved terminal tabs, their panels, labels, and session cwd/profile metadata before liveness checks; it must not fall back to a default single-pane layout when durable terminal layout exists (amended 2026-10-09, DL-181: the earlier sections, panes, layout style and dock/detach state are migration inputs, SP-332)
 - `/restored`, `/exited`, and `/disconnected` UI copy must keep structural restore separate from live PTY proof; a restored terminal tab whose session did not survive says so in its restored notice and starts a new session in the same tab (F3-640), Restart session (`/restart`) attaches a fresh runtime to the same tab, and Close tab removes it (amended 2026-10-09, DL-181: the earlier slot and workspace container are now the tab)
-- Session restore is project-scoped and `/session-aware`: thread-specific restoration prompts before rebinding thread, chat, terminal, or editor focus, and the saved `/layout` projection may restore only after that scope is confirmed.
+- Session restore is exact-scope and `/session-aware`: confirm the Project or Server/app/thread/root identity before restoring layout or rebinding focus. Restore sessions structurally before liveness checks; conversion does not migrate a PTY, process, port or browser controller.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
 ### 15.5 Session Recovery
@@ -3670,11 +3665,11 @@ On crash or unexpected shutdown, restore as much state as possible without inven
 
 Recoverable state:
 - **Chat state:** unsent input text and active thread selection may restore from `chat_state:v1`; queue state is transient and is not restored across reload or restart
-- **Wizard state:** current wizard step and form data resume from `wizard_state:v1:{project_id}`
+- **Wizard/setup state:** a real Project uses its Project key; before Project commit, setup draft/recovery uses the session/recovery-keyed SP-252 record, never an empty project_id.
 - **Document pane state:** embedded document-pane selection and view (`document` or `plan_graph`) restore from `document_pane_state:v1:{project_id}:{page_context}`
 - **Document checkpoints:** checkpoint list and selected checkpoint context restore so the user can continue restore or approval workflows
 - **Review findings and approval state:** findings summary and approval state restore so interrupted review runs return to the correct approval surface
-- **Active project:** the last active project is restored automatically
+- **Selected place:** restore the last authorized real Project or the explicit No project workspace; unavailable targets stay named and unavailable, with no silent fallback.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md
 
@@ -3965,31 +3960,8 @@ plan_unit_id: F3-457
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Advanced Storage and Retention settings display effective owner minima, anchors,
-  holds, storage pressure, compaction state, and deletion/quarantine progress; allow
-  only supported policy strengthening; route legal-hold and maintenance mutation to
-  protected owners; distinguish project-list removal from data deletion; and secure
-  exact invalid bytes before any registered reset, rebuild, migration, replacement,
-  or purge while critical authority always fails closed.
-  Amended 2026-10-31 (DL-270, SP-340): the same page opens with a read-only storage health
-  block. For each user-facing storage group that the storage owner's registry names, about
-  eight and not every redb family, it shows usage against that group's disk budget,
-  reclaimable bytes, and the last store compaction with its result and time, drawn with the
-  Usage meter primitive (F3-628, DR-058) and carrying the projection freshness and health of
-  section 15.6. The existing Request storage compaction row is the verified reclaim action.
-  It is one request for the whole storage instance that dispatches
-  `cmd.storage.compaction.request`, shows the owner's maintenance lifecycle and any wait
-  reason, and reports its result per group; it states reclaimed bytes only from the owner's
-  before-and-after measurement of that operation, never from the dispatch receipt. When
-  admission fails it is disabled with the Case L reason (`storage_read_only`,
-  `operation_in_progress` and the rest of the closed list). The block also shows the last
-  verified backup, meaning the newest backup at Structure verified or higher with its level,
-  and what a restore from it would lose; a newer unverified backup is shown beside it
-  (BRS-031, F3-528). Disk budgets, cache sizes, the fragmentation threshold and the
-  compaction schedule are owner values shown here, not Settings rows. The existing Keep
-  usage history for setting keeps its meaning, and daily usage totals are kept whatever it
-  says (SP-341, UF-108).
+canonical_text: |-
+  Advanced Storage and Retention settings display effective owner minima, anchors, holds, storage pressure, compaction state, and deletion/quarantine progress; allow only supported policy strengthening; route legal-hold and maintenance mutation to protected owners; distinguish project-list removal from data deletion; and secure exact invalid bytes before any registered reset, rebuild, migration, replacement, or purge while critical authority always fails closed. Amended 2026-10-31 (DL-270, SP-340): the same page opens with a read-only storage health block. For each user-facing storage group that the storage owner's registry names, about eight and not every redb family, it shows usage against that group's disk budget, reclaimable bytes, and the last store compaction with its result and time, drawn with the Usage meter primitive (F3-628, DR-058) and carrying the projection freshness and health of section 15.6. The existing Request storage compaction row is the verified reclaim action. It is one request for the whole storage instance that dispatches `cmd.storage.compaction.request`, shows the owner's maintenance lifecycle and any wait reason, and reports its result per group; it states reclaimed bytes only from the owner's before-and-after measurement of that operation, never from the dispatch receipt. When admission fails it is disabled with the Case L reason (`storage_read_only`, `operation_in_progress` and the rest of the closed list). The block also shows the last verified backup, meaning the newest backup at Structure verified or higher with its level, and what a restore from it would lose; a newer unverified backup is shown beside it (BRS-031, F3-528). Disk budgets, cache sizes, the fragmentation threshold and the compaction schedule are owner values shown here, not Settings rows. The existing Keep usage history for setting keeps its meaning, and daily usage totals are kept whatever it says (SP-341, UF-108). For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This unit defines user-visible settings, hold, deletion-status, storage-pressure, and quarantine recovery surfaces.
 depends_on: [SP-237, CV-319, F3-441, UCC-124, SP-340, SP-341, BRS-031, F3-528, F3-628]
@@ -4013,7 +3985,13 @@ node_compile_hint:
   mode: case_l_gui_retention_deletion_quarantine
   create_worknodes: false
   create_nodeseeds: false
-source_lineage: [Case-L:L-005, Case-L:L-010, Case-L:L-015, Case-L:L-033]
+source_lineage:
+- Case-L:L-005
+- Case-L:L-010
+- Case-L:L-015
+- Case-L:L-033
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens: [storage.legal_hold.manage, cmd.storage.legal_hold.manage, cmd.storage.compaction.request, cmd.settings.open_storage_retention, cmd.project.remove, cmd.project.delete_data, Q-CRITICAL, Q-RESETTABLE, recovery_blocked]
 negative_constraints:
   - Do not infer deletion eligibility from prefix, path, filename, or mtime.
@@ -5504,22 +5482,23 @@ owner_hints:
 
 This addendum supersedes conflicting Settings and protected-browser presentation clauses without creating implementation or generated-governance artifacts.
 
-### F3-510 - Concrete Project Settings Resolution
+### F3-510 - Layered Settings Resolution And Detached Copy
 
 ```yaml
 plan_unit_id: F3-510
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: Project settings are concrete persisted project values with an explicit source and effective-value projection; Global values may seed a project only through a previewed one-time copy, and copied, explicitly set, reset, imported, invalid, and unavailable are distinguishable without any continuous inheritance state.
+canonical_text: |-
+  Settings presentation consumes the sparse own-value ladder in SSYS-002/059 and the effective-value result, not independently interpreted storage. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Setting Details separates origin, own value, requested/effective value, factory difference, variation elsewhere, managed restriction and stale source. A changed Everywhere value updates following contexts; an explicit Project own value still wins subject to declared safety/ceiling rules. Copy Settings From remains one previewed detached Settings transaction with owner contributions and atomic per-writer readback/rollback.
 gui_related: true
 gui_classification_reason: Settings source, scope, preview, override, reset, and effective-value disclosure are visible behavior.
 depends_on: [F3-439, F3-442]
 unblocks: []
 acceptance_criteria:
-  - SET-012 is owned here for behavior while Plans/settings_inventory.json remains the machine inventory.
-  - A Project value never changes merely because a Global value changed; there is no inherited Project state.
-  - One-time copy previews the exact keys and supports atomic read-back or rollback.
+- The one resolver supplies value, source, Changed and Varies for app and Project contexts.
+- A following Project changes when a wider value changes; a Project own value remains its own.
+- Copy stays detached; stale/offline sources do not fabricate a saved value.
 validation_surfaces: [settings inventory schema validation, project settings scope fixtures]
 risk_class: settings_scope_or_inheritance_drift
 reasoning_tier: high
@@ -5527,8 +5506,12 @@ context_scope: concrete_project_settings
 implementation_surfaces: [Plans/FinalGUISpec.md, Plans/settings_inventory.json]
 node_compile_hint: {mode: concrete_project_settings_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#SET-012
-negative_constraints: [Do not treat Settings inventory rows as behavior authority., Do not silently convert copied values into inheritance., Do not store or resolve an inherited Project state.]
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#SET-012
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F01,A-F08,A-F09,C-F11
+negative_constraints:
+- Do not implement a second settings resolver or continuous linking to the Project that was copied.
+- Do not retain the superseded universal inheritance/no-app-write ban.
 ```
 
 ### F3-511 - Settings Lifecycle And Recovery
@@ -5538,7 +5521,8 @@ plan_unit_id: F3-511
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: Settings lifecycle supports schema-versioned previewed import, export, backup, restore, reset, and migration with scope disclosure, secret exclusion, owner validation, atomic commit, read-back, rollback, and a durable result; unsupported versions or owner-invalid values fail closed without partial mutation.
+canonical_text: |-
+  Settings lifecycle supports schema-versioned previewed import, export, backup, restore, reset, and migration with scope disclosure, secret exclusion, owner validation, atomic commit, read-back, rollback, and a durable result; unsupported versions or owner-invalid values fail closed without partial mutation. A level transaction names level/key and per-setting revisions, includes owner whole-thing contributions and account readiness refs, and reports per-target done/not_reached/refused for a multi-Computer batch without queueing or claiming distributed atomicity. Join Undo lasts 30 days; ordinary change Undo follows its owner policy. Secret bytes, installations, pairings and trust grants are excluded.
 gui_related: true
 gui_classification_reason: Settings import, export, reset, migration, validation, recovery, and result disclosure are user-facing flows.
 depends_on: [F3-510]
@@ -5554,7 +5538,9 @@ context_scope: settings_lifecycle_recovery
 implementation_surfaces: [Plans/FinalGUISpec.md, Plans/settings_inventory.json, Plans/storage-plan.md]
 node_compile_hint: {mode: settings_lifecycle_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#SET-013
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#SET-013
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F01,A-F03,A-F08,B-F02
 negative_constraints: [Do not describe Settings as having no import or export lifecycle., Do not persist raw credentials in Settings exports.]
 ```
 
@@ -7543,9 +7529,8 @@ plan_unit_id: F3-036
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The status bar shows project-sensitive sparse n-gram index build or refresh progress only when
-  useful, while Search results own the unindexed annotation for true raw-ripgrep fallback.
+canonical_text: |-
+  The status bar shows project-sensitive sparse n-gram index build or refresh progress only when useful, while Search results own the unindexed annotation for true raw-ripgrep fallback. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -7569,7 +7554,9 @@ node_compile_hint:
   mode: status_bar_indexing_indicator
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0030"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0030
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Building search index - first build may take several minutes"
 - "Indexing"
@@ -8622,10 +8609,8 @@ plan_unit_id: F3-055
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The command palette is transient project-scoped navigation and launcher search; Search owns
-  persistent find/replace result state, File Manager owns local tree search, LSP owns semantic
-  surfaces, and auto-retrieval remains project-scoped rather than active-worktree scoped.
+canonical_text: |-
+  The command palette is transient navigation and launcher search for the explicitly selected Project or No project context. App targets include app chats/files and admitted workflow controls. Search owns persistent find/replace state, File Manager local tree search, and LSP semantic surfaces. Auto-retrieval stays inside its actual Project or app thread/roots; explicit T-185 cross-Project reads carry grants and coverage. Commands intrinsically requiring a Project, repository or other resource require that actual target; focus never fabricates one.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -8633,10 +8618,9 @@ split_recommended: true
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Palette works in genuine app scope without a fake Project.
+- Local and explicit cross-Project search have distinct source/coverage contracts.
+- Actual target and permission requirements remain enforced.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -8649,7 +8633,9 @@ node_compile_hint:
   mode: command_palette_search_boundaries
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0041"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0041
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F11,B-F04
 preserved_exact_tokens:
 - "transient project-scoped"
 - "Search side panel"
@@ -9489,19 +9475,15 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-071 - Project Scoped Panel Persistence
+### F3-071 - Scoped Panel Persistence
 
 ```yaml
 plan_unit_id: F3-071
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Panel dock state, activity bar icon order, and last visible panel persist per project in redb
-  scoped by project_id and restore on startup or project switch, with disconnected-monitor
-  fallback.
-  Amended 2026-10-09 (DL-180): Home's panels, tabs and chat column persist in the v2 Home layout record (SP-330); this
-  unit's dock state covers the side panels and the popped-out chat's window only.
+canonical_text: |-
+  Panel dock state, activity bar icon order, and last visible panel persist per actual Project, or in the separately registered Server/app sibling when No project is selected and restore on startup or project switch, with disconnected-monitor fallback. Amended 2026-10-09 (DL-180): Home's panels, tabs and chat column persist in the v2 Home layout record (SP-330); this unit's dock state covers the side panels and the popped-out chat's window only. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -9525,7 +9507,9 @@ node_compile_hint:
   mode: project_scoped_panel_persistence
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0056"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0056
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "dock state"
 - "activity bar icon order"
@@ -9605,14 +9589,8 @@ plan_unit_id: F3-073
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The GUI exposes exactly ten built-in theme choices across five families, Basic Dark, Basic Light, Friendly
-  Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark and NieR Light, with Basic
-  Dark as the untouched first-open/fresh-project factory default. An existing explicit saved Project selection
-  survives, and a copied Project receives a detached selection snapshot. The former Friendly Dark default and
-  the earlier three-choice Retro Dark/Retro Light/Basic contract are superseded lineage kept findable; all ten
-  variants remain supported. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
-  independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+canonical_text: |-
+  The GUI exposes exactly ten built-in theme choices across five families, Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark and NieR Light, with Basic Dark as the bundled factory fallback when no applicable explicit value exists. An existing explicit saved Project selection survives, and a copied Project receives a detached selection snapshot. The former Friendly Dark default and the earlier three-choice Retro Dark/Retro Light/Basic contract are superseded lineage kept findable; all ten variants remain supported. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Resolve the atomic look pair before the first visible frame, including No project. Preserve Q22 migration, retired general.visual.nier-mode, the five-family/ten-variant set and all existing look/animation behavior.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -9620,11 +9598,10 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "Basic Dark is used only at the untouched first-open/fresh-project factory boundary; an existing saved Project selection and a copied Project's detached snapshot take precedence."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Five families and ten variants remain available; atomic look resolution precedes first paint in app and Project
+  contexts.
+- Existing explicit values survive; wider values feed only following contexts.
+- No extra paint hint or independent look writer; Q22 migration is idempotent.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -9637,7 +9614,9 @@ node_compile_hint:
   mode: theme_family_selector_contract
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0059"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0059
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F01,A-F09,C-F11
 preserved_exact_tokens:
 - "Retro Dark"
 - "Retro Light"
@@ -9645,7 +9624,7 @@ preserved_exact_tokens:
 - "exactly three built-in theme choices"
 - "fourth user-facing built-in theme promise"
 negative_constraints:
-- "Basic internal palette choice must not create a fourth user-facing built-in theme promise."
+- No retired NieR toggle, second theme store or first-frame Basic Dark flash when another effective look exists.
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Friendly Dark as the factory default is superseded by the later Basic Dark first-open/fresh-project contract; Friendly Dark remains a supported variant."
@@ -10230,13 +10209,8 @@ plan_unit_id: F3-083
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Terminal theme selection keeps preview before apply, fast switching, /search, /contrast readability
-  signals and instant apply/revert. Its palette is semantic, not raw ANSI-only. F3-642 owns the shared
-  catalog in place of the earlier /fun/funky and /expressive preset groups; F3-650 owns the full Customize
-  screen and both entry points, and F3-654 owns settled-text contrast. Every committed change applies live
-  with no restart and uses the scope writer owned by SSYS-051/UCC-201. The earlier popover-only entry is
-  superseded. F3-642 retains the user-selectable program-output floor; it never lowers interface contrast.
+canonical_text: |-
+  Terminal theme selection keeps preview before apply, fast switching, /search, /contrast readability signals and instant apply/revert. Its palette is semantic, not raw ANSI-only. F3-642 owns the shared catalog in place of the earlier /fun/funky and /expressive preset groups; F3-650 owns the full Customize screen and both entry points, and F3-654 owns settled-text contrast. Every committed change applies live with no restart and uses the scope writer owned by SSYS-051/UCC-201. The earlier popover-only entry is superseded. F3-642 retains the user-selectable program-output floor; it never lowers interface contrast. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible terminal theme, preview, palette, and readability behavior.
@@ -10263,9 +10237,12 @@ node_compile_hint:
   mode: terminal_theme_ownership_and_semantic_catalog
   create_worknodes: false
 source_lineage:
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064"
-- "Plans/Decision_Log.md#DL-183"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064
+- Plans/Decision_Log.md#DL-183
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "terminal color-scheme selection"
 - "preview before apply"
@@ -10291,8 +10268,10 @@ stale_retired_dispositions:
 - 'Amended 2026-10-14: F3-650 replaces the popover-only entry and F3-654 retires disabling the interface-text contrast
   floor.'
 owner_boundary_notes:
-- "Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls."
-- "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the Customize screen (F3-650) writes the tab's override or, through All terminals, the project layer by the same Settings transaction Settings uses (F3-642), and no surface writes an app-wide value until q-035 admits one."
+- Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls.
+- Current level/scope/write presentation follows SSYS-002/059, F3-670 and SP-348; old q-035 and universal inheritance/no-app-write
+  bans are superseded. Detached copies remain independent of their source Project. Exact owner/trust/permission/currentness
+  rules remain.
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -11562,10 +11541,8 @@ plan_unit_id: F3-107
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Indexing settings expose project-search index controls for enablement, thresholds, generated and
-  custom exclusions, follow-symlinks default OFF, partial remote cache controls, disk usage, cache
-  eviction confirmation, and rebuild.
+canonical_text: |-
+  Indexing settings expose project-search index controls for enablement, thresholds, generated and custom exclusions, follow-symlinks default OFF, partial remote cache controls, disk usage, cache eviction confirmation, and rebuild. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Settings controls for search indexing administration.
@@ -11589,7 +11566,9 @@ node_compile_hint:
   mode: indexing_settings_admin_surface
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0073"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0073
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "enable/disable index"
 - "large file threshold"
@@ -12244,10 +12223,8 @@ plan_unit_id: F3-119
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Panel-specific persistence and visibility controls live in Settings only when durable app or
-  project preferences, are grouped by owning surface, and Settings/inspector language names
-  Agent-Config and effective runtime concepts instead of generic provider settings.
+canonical_text: |-
+  Panel-specific persistence and visibility controls live in Settings only when durable app or project preferences, are grouped by owning surface, and Settings/inspector language names Agent-Config and effective runtime concepts instead of generic provider settings. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Settings grouping, persistence boundaries, and inspector naming.
@@ -12271,7 +12248,9 @@ node_compile_hint:
   mode: panel_settings_persistence_and_agent_config_naming
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0076"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0076
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Source Control / Branching"
 - "GitHub Actions"
@@ -12298,16 +12277,8 @@ plan_unit_id: F3-120
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Settings > Terminal is the in-product cheat sheet and durable preferences owner for terminal defaults,
-  high-frequency preview/change controls, shortcut mappings, conflict explanations, terminal appearance,
-  profile/cwd, transcript retention, performance, diagnostics, and project/workspace scope labels. Its
-  appearance rows bind the one terminal appearance model (F3-642, DR-068): the app default as Settings
-  rows (SSYS-051) and the project default in the Project's settings, which only Settings writes; the
-  per-tab override is not a Settings row but lives in the terminal tab and is written by the Customize
-  screen (F3-650)'s This terminal (SP-331). Every terminal appearance row applies live, with no restart
-  badge. Shell profiles and SSH hosts replace the retired per-tab role setting (DL-181), and the terminal
-  tab's own actions stay in the tab.
+canonical_text: |-
+  Settings > Terminal is the in-product cheat sheet and durable preferences owner for terminal defaults, high-frequency preview/change controls, shortcut mappings, conflict explanations, terminal appearance, profile/cwd, transcript retention, performance, diagnostics, and project/workspace scope labels. Its appearance rows bind the one terminal appearance model (F3-642, DR-068): the app default as Settings rows (SSYS-051) and the project default in the Project's settings, which only Settings writes; the per-tab override is not a Settings row but lives in the terminal tab and is written by the Customize screen (F3-650)'s This terminal (SP-331). Every terminal appearance row applies live, with no restart badge. Shell profiles and SSH hosts replace the retired per-tab role setting (DL-181), and the terminal tab's own actions stay in the tab. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Terminal Settings surfaces, labels, preferences, and explanations.
@@ -12332,8 +12303,10 @@ node_compile_hint:
   mode: terminal_settings_durable_preferences_owner
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0077"
-- "Plans/Decision_Log.md#DL-183"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0077
+- Plans/Decision_Log.md#DL-183
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F08,A-F09,C-F11,B-F13
 preserved_exact_tokens:
 - "Settings > Terminal"
 - "in-product cheat sheet"
@@ -12698,11 +12671,8 @@ plan_unit_id: F3-127
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The minimum concern record shape preserves concern identity, project/run/scope/source/evidence
-  references, severity, category, status, visibility, attention, chatworthy, owner, creator,
-  resolver, governance fields, and a blocking_effect separate from severity while compatibility
-  labels normalize to the concern/escalation/help model.
+canonical_text: |-
+  The minimum concern record shape preserves concern identity, project/run/scope/source/evidence references, severity, category, status, visibility, attention, chatworthy, owner, creator, resolver, governance fields, and a blocking_effect separate from severity while compatibility labels normalize to the concern/escalation/help model. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: false
 gui_classification_reason: This unit defines durable record shape and compatibility vocabulary rather than GUI layout.
 split_recommended: false
@@ -12725,7 +12695,9 @@ node_compile_hint:
   mode: minimum_concern_record_shape_and_compatibility_labels
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0081"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0081
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "system-notification"
 - "project-card"
@@ -13299,10 +13271,8 @@ plan_unit_id: F3-138
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  File Manager is the persistent project-tree side panel for tree navigation and file discovery,
-  defers detailed tree behavior to FileManager, and exposes local filtering, reveal disclosure,
-  read-only Git row badges, detached-panel alignment, and owner-boundary routing.
+canonical_text: |-
+  File Manager is the persistent file-tree side panel for the selected Project or permitted app Computer roots for tree navigation and file discovery, defers detailed tree behavior to FileManager, and exposes local filtering, reveal disclosure, read-only Git row badges, detached-panel alignment, and owner-boundary routing. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This unit defines visible File Manager side panel, tree, row, and reveal behavior.
 split_recommended: true
@@ -13325,7 +13295,9 @@ node_compile_hint:
   mode: file_manager_tree_owner_boundary_and_reveal_disclosure
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0087"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0087
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "File Manager Panel"
 - "Plans/FileManager.md"
@@ -13909,10 +13881,8 @@ plan_unit_id: F3-149
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The embedded document pane is a visible shared-buffer review/document surface for Interview,
-  Builder, and bundle-review workflows, with persisted selection, scroll, review stage, approval
-  state, shared File Editor buffers, and adjacent findings or approval gates.
+canonical_text: |-
+  The embedded document pane is a visible shared-buffer review/document surface for Interview, Builder, and bundle-review workflows, with persisted selection, scroll, review stage, approval state, shared File Editor buffers, and adjacent findings or approval gates. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Embedded document panes are visible review/document UI despite the source span inference being false.
 split_recommended: false
@@ -13935,7 +13905,9 @@ node_compile_hint:
   mode: embedded_document_pane
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0092"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0092
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "document_pane_state:v1:{project_id}:{page_context}"
 - "Interview"
@@ -13959,10 +13931,8 @@ plan_unit_id: F3-150
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved
-  notes as revision context, final approval blocked until notes are handled, status progression,
-  bundle registry persistence, and linked note records.
+canonical_text: |-
+  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved notes as revision context, final approval blocked until notes are handled, status progression, bundle registry persistence, and linked note records. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Bundle controls and review gates are visible controls despite the source span inference being false.
 split_recommended: false
@@ -13985,7 +13955,9 @@ node_compile_hint:
   mode: bundle_controls_and_review_gate
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0093"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0093
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Resubmit"
 - "draft -> in_review -> all_notes_resolved -> approved -> merged"
@@ -14579,16 +14551,8 @@ plan_unit_id: F3-162
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Persistence boundaries discard unpromoted ephemeral state, require stable keys and versioned
-  migrations, rewrite deprecated keys during forward migration, and keep shell persistence plus
-  Orchestrator Progress widget layout in narrow project shell records.
-  Amended 2026-10-09 (DL-180): Home's shell layout persists in its own record,
-  `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), and each dashboard board's widget layout in
-  `widget_layout:v1:dashboard:<board_id>` (WS-030); the Orchestrator Progress widget layout and the narrow project
-  shell records are unchanged.
-  Amended 2026-10-10 (DL-186): each dashboard board's widget layout is kept per project in
-  `widget_layout:v1:<project_id>:<board_id>` (WS-030), not in the per-board key above.
+canonical_text: |-
+  Persistence boundaries discard unpromoted ephemeral state, require stable keys and versioned migrations, rewrite deprecated keys during forward migration, and keep shell persistence plus Orchestrator Progress widget layout in narrow project shell records. Amended 2026-10-09 (DL-180): Home's shell layout persists in its own record, `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), and each dashboard board's widget layout in `widget_layout:v1:dashboard:<board_id>` (WS-030); the Orchestrator Progress widget layout and the narrow project shell records are unchanged. Amended 2026-10-10 (DL-186): each dashboard board's widget layout is kept per project in `widget_layout:v1:<project_id>:<board_id>` (WS-030), not in the per-board key above. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This unit defines GUI shell persistence, widget layout, and view-state storage behavior.
 split_recommended: true
@@ -14611,7 +14575,9 @@ node_compile_hint:
   mode: persistence_promotion_shell_records_and_widget_layout
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0105"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0105
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "stable keys"
 - "versioned migrations"
@@ -16761,13 +16727,8 @@ plan_unit_id: F3-202
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  All interactive elements are reachable by Tab; focus order follows Activity bar to primary
-  content to side panel to bottom panel to status bar; lists, tables, and trees support
-  Up/Down, Enter, Escape, Home/End, and type-ahead filtering where appropriate.
-  Amended 2026-10-09 (DL-180): the visual order is now the activity bar, the side panel, the primary content (on Home
-  the panels in tree order), the chat column and the status bar, so focus follows that order; F6 and Shift+F6 cycle the
-  rail, the panels and the chat (F3-635).
+canonical_text: |-
+  All interactive elements are reachable by Tab; focus order follows Activity bar to primary content to side panel to bottom panel to status bar; lists, tables, and trees support Up/Down, Enter, Escape, Home/End, and type-ahead filtering where appropriate. Amended 2026-10-09 (DL-180): the visual order is now the activity bar, the side panel, the primary content (on Home the panels in tree order), the chat column and the status bar, so focus follows that order; F6 and Shift+F6 cycle the rail, the panels and the chat (F3-635). For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines keyboard navigation and focus order.
@@ -16791,7 +16752,9 @@ node_compile_hint:
   mode: keyboard_navigation_contract
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0137"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0137
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Tab navigation"
 - "Activity bar -> primary content -> side panel -> bottom panel -> status bar"
@@ -17575,24 +17538,8 @@ plan_unit_id: F3-217
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  GUI shell persistence includes `layout:v1`, `widget_layout:v1:dashboard`,
-  `activity_bar_order:v1`, `theme:v1`, `editor_state:v1:{project_id}`,
-  `filetree_state:v1:{project_id}`, `search_panel_state.v1:{project_id}`,
-  `project_state:v1:{project_id}`, `gha_panel_state.v1:{project_id}`, and
-  `artifact_panel_state.v1:{project_id}` with their debounce/write frequencies and owner
-  ContractRefs. Shell theme and layout are Project-scoped snapshots: a genuinely absent
-  first-open/fresh-project snapshot receives Basic Dark and the factory layout, an existing
-  Project's explicit saved theme/layout survives every open and Project switch, and Project
-  copy materializes a detached destination snapshot with no continuing source inheritance.
-  Amended 2026-10-09 (DL-180): the Home layout persists in `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`,
-  the only Home layout authority (SP-330); `layout:v1` loses its Home part (center splits, the bottom runtime-panel
-  height, terminal section split ratios), which becomes a read-only migration input converted on first read and never
-  reset, and keeps only side-panel and detached-window geometry; each dashboard board keeps
-  `widget_layout:v1:dashboard:<board_id>` (WS-030).
-  Amended 2026-10-10 (DL-186): each dashboard board keeps its contents per project in `widget_layout:v1:<project_id>:<board_id>`,
-  and the person's dashboard presets live in `widget_presets:v1` (WS-030); `widget_layout:v1:dashboard` is no board's
-  key and nothing writes it now, so its write frequency is lineage (Plans/Widget_System.md#WS-009).
+canonical_text: |-
+  GUI shell persistence includes `layout:v1`, `widget_layout:v1:dashboard`, `activity_bar_order:v1`, `theme:v1`, `editor_state:v1:{project_id}`, `filetree_state:v1:{project_id}`, `search_panel_state.v1:{project_id}`, `project_state:v1:{project_id}`, `gha_panel_state.v1:{project_id}`, and `artifact_panel_state.v1:{project_id}` with their debounce/write frequencies and owner ContractRefs. Appearance is resolved through SSYS-002/059; compatibility theme:v1 is not an independent authority. Layout is exact-context UI state under SP-330/349, rather than an ordinary layered preference. Existing explicit appearance values and saved layouts are preserved; copy is detached from its source Project. Amended 2026-10-09 (DL-180): the Home layout persists in `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home layout authority (SP-330); `layout:v1` loses its Home part (center splits, the bottom runtime-panel height, terminal section split ratios), which becomes a read-only migration input converted on first read and never reset, and keeps only side-panel and detached-window geometry; each dashboard board keeps `widget_layout:v1:dashboard:<board_id>` (WS-030). Amended 2026-10-10 (DL-186): each dashboard board keeps its contents per project in `widget_layout:v1:<project_id>:<board_id>`, and the person's dashboard presets live in `widget_presets:v1` (WS-030); `widget_layout:v1:dashboard` is no board's key and nothing writes it now, so its write frequency is lineage (Plans/Widget_System.md#WS-009). For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI shell, layout, editor, search, project, GitHub Actions, and artifact
@@ -17618,7 +17565,9 @@ node_compile_hint:
   mode: shell_layout_and_editor_persistence_keys
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,A-F09,C-F11
 preserved_exact_tokens:
 - "layout:v1"
 - "widget_layout:v1:dashboard"
@@ -17653,11 +17602,8 @@ plan_unit_id: F3-218
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Chat, settings, and review persistence includes `settings:v1`, `config:v1`, `chat_state:v1`,
-  `wizard_state:v1:{project_id}`, document pane/checkpoint records, review finding/approval
-  records, debug investigation records, bundle/note records, slash command keys, and
-  `projects:v1`.
+canonical_text: |-
+  Chat, settings, and review persistence includes `settings:v1`, `config:v1`, `chat_state:v1`, `wizard_state:v1:{project_id}`, document pane/checkpoint records, review finding/approval records, debug investigation records, bundle/note records, slash command keys, and `projects:v1`. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI chat, settings, wizard, document, review, bundle, note, command, and
@@ -17682,7 +17628,9 @@ node_compile_hint:
   mode: chat_settings_review_persistence_keys
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "settings:v1"
 - "config:v1"
@@ -17715,16 +17663,8 @@ plan_unit_id: F3-219
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Preview, browser, LSP, account, MCP, skill, web operation, terminal, and remote GUI
-  persistence keys include preview state/source artifact, browser session/profile state,
-  canonical per-file editor buffer recovery, search query, LSP session/diagnostics, provider
-  account/server profile, pressure/switch records, MCP/skill records, `web_operation_payload`,
-  terminal layout/session summaries, and `ssh_remotes/{id}`. The former
-  `editor_unsaved_buffer.v1:{project_id}:{document_id}` token is source-lineage only; live
-  buffer recovery uses `editor_state.v1:{project_id}:{file_path_hash}`. Since DL-180 and DL-181,
-  `terminal_layout.v1:{project_id}` is a migration input only: terminal tabs and their panels are kept in the Home
-  layout record (SP-330) and the old sections and pane arrangement are read once (SP-332, F3-221).
+canonical_text: |-
+  Preview, browser, LSP, account, MCP, skill, web operation, terminal, and remote GUI persistence keys include preview state/source artifact, browser session/profile state, canonical per-file editor buffer recovery, search query, LSP session/diagnostics, provider account/server profile, pressure/switch records, MCP/skill records, `web_operation_payload`, terminal layout/session summaries, and `ssh_remotes/{id}`. The former `editor_unsaved_buffer.v1:{project_id}:{document_id}` token is source-lineage only; live buffer recovery uses `editor_state.v1:{project_id}:{file_path_hash}`. Since DL-180 and DL-181, `terminal_layout.v1:{project_id}` is a migration input only: terminal tabs and their panels are kept in the Home layout record (SP-330) and the old sections and pane arrangement are read once (SP-332, F3-221). For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI preview, browser, recovery, LSP, account, MCP, skill, web-operation,
@@ -17749,7 +17689,9 @@ node_compile_hint:
   mode: preview_browser_lsp_account_remote_keys
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "preview_state.v1:{project_id}:{preview_subject_id}"
 - "preview_source_artifact.v1:{project_id}:{artifact_id}"
@@ -18087,18 +18029,8 @@ plan_unit_id: F3-225
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order,
-  editor workspace and per-file dirty buffers, active project-facing shell state, historical
-  hot-reload state, project onboarding/tour state, and safe detached-window coordinates from
-  canonical persistence keys. Resettable corruption is secured before a disclosed reset;
-  canonical editor loss uses mandatory-backup recovery and never becomes a false empty project.
-  Amended 2026-10-09 (DL-180): Home's layout restores from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`
-  (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out
-  chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>`
-  (WS-030); section 15.4 gives the order.
-  Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>`
-  (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board.
+canonical_text: |-
+  On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order, editor workspace and per-file dirty buffers, active project-facing shell state, historical hot-reload state, project onboarding/tour state, and safe detached-window coordinates from canonical persistence keys. Resettable corruption is secured before a disclosed reset; canonical editor loss uses mandatory-backup recovery and never becomes a false empty project. Amended 2026-10-09 (DL-180): Home's layout restores from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>` (WS-030); section 15.4 gives the order. Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines startup restoration of visible shell state.
@@ -18122,7 +18054,9 @@ node_compile_hint:
   mode: startup_shell_state_restore
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0148"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0148
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "layout:v1"
 - "theme:v1"
@@ -18228,11 +18162,8 @@ plan_unit_id: F3-227
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Crash recovery restores provable nonterminal state including chat draft/active thread
-  selection, wizard form state, document pane selection and view, document checkpoints, review
-  findings and approval state, and active project, while not restoring transient queue
-  continuity.
+canonical_text: |-
+  Crash recovery restores provable nonterminal state including chat draft/active thread selection, wizard form state, document pane selection and view, document checkpoints, review findings and approval state, and active project, while not restoring transient queue continuity. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible nonterminal state recovery after crash or unexpected shutdown.
@@ -18256,7 +18187,9 @@ node_compile_hint:
   mode: crash_recovery_nonterminal_state
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0149"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0149
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "crash"
 - "unexpected shutdown"
@@ -20306,11 +20239,8 @@ plan_unit_id: F3-265
 unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The `Project switch state reload performance` risk is mitigated as follows: Project
-  switching loads config, file tree, editor tabs, LSP/Search/Source Control projections, then
-  chat threads in priority order with skeleton placeholders and a sub-500ms interactive
-  target.
+canonical_text: |-
+  The `Project switch state reload performance` risk is mitigated as follows: Selecting a Project loads config, file tree, editor tabs, LSP/Search/Source Control projections, then chat threads in priority order with skeleton placeholders and a sub-500ms interactive target. Selecting No project instead restores its app keys and reads only its admitted roots; absent LSP, SCM or debug targets stay unavailable without fabricating a Project. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -20334,7 +20264,9 @@ node_compile_hint:
   mode: project_switch_reload_performance_risk
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Project switch state reload performance"
 - "priority order"
@@ -23665,11 +23597,8 @@ plan_unit_id: F3-325
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Accepting the wizard recommendation switches to the Planning Wizard intake/interview flow, shows an
-  Imported from Assistant Chat or Imported from Deep Plan banner, shows whether a plan
-  artifact was included, shows imported goal and scope summary, and opens an existing project
-  on the preloaded feature/enhancement path instead of a blank intent picker.
+canonical_text: |-
+  Accepting the wizard recommendation switches to the Planning Wizard intake/interview flow, shows an Imported from Assistant Chat or Imported from Deep Plan banner, shows whether a plan artifact was included, shows imported goal and scope summary, and opens an existing project on the preloaded feature/enhancement path instead of a blank intent picker. A No project Wizard handoff first offers ACD-510’s two conversion choices or an explicit real Project selection. Cancellation leaves the app Plan/chat untouched. A subsequent Wizard entry uses its own current exact-version handoff; app Assistant Build is available independently and never creates a Wizard/PRD/Orchestrator run.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec GUI behavior.
@@ -23693,7 +23622,9 @@ node_compile_hint:
   mode: imported_context_wizard_handoff_surface
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0194"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0194
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F08,C-F11,E-F07
 preserved_exact_tokens:
 - "Imported from Assistant Chat"
 - "Imported from Deep Plan"
@@ -24694,12 +24625,8 @@ plan_unit_id: F3-344
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Safe points are runtime recovery anchors under the canonical sp identity and must not be
-  presented as Assistant Chat restore points under the separate rp identity; retry controls
-  distinguish Retry from safe point from Start fresh attempt; unavailable recovery disables
-  retry with an explanation; and exact-replace receipts preserve the closed Case L outcomes
-  without conflict-success or partial-success invention.
+canonical_text: |-
+  Safe points are runtime recovery anchors under the canonical sp identity and must not be presented as Assistant Chat restore points under the separate rp identity; retry controls distinguish Retry from safe point from Start fresh attempt; unavailable recovery disables retry with an explanation; and exact-replace receipts preserve the closed Case L outcomes without conflict-success or partial-success invention. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec GUI behavior.
@@ -24723,7 +24650,9 @@ node_compile_hint:
   mode: safe_point_recovery_control_language
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0222"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0222
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "safe points"
 - "runtime recovery anchors"
@@ -25354,12 +25283,8 @@ plan_unit_id: F3-356
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Queue semantics stay transient, stale chat_state:v1 restore residue must not rehydrate
-  queued work across reload or restart, and runtime identity carry-through includes
-  requested_account_binding, operational_identity, effective_account_label,
-  effective_provider_identity, and effective_project_id without reviving requested_persona_id
-  as GUI identity canon.
+canonical_text: |-
+  Queue semantics stay transient, stale chat_state:v1 restore residue must not rehydrate queued work across reload or restart, and runtime identity carry-through includes requested_account_binding, operational_identity, effective_account_label, effective_provider_identity, and effective_project_id without reviving requested_persona_id as GUI identity canon. effective_project_id is required-present null for app execution and remains nonempty for actual Project work; history never follows later conversion focus. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec GUI behavior.
@@ -25383,7 +25308,9 @@ node_compile_hint:
   mode: queue_and_runtime_identity_widget_carry_through
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0229"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0229
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "FID-038"
 - "Queue semantics stay transient"
@@ -28349,8 +28276,8 @@ plan_unit_id: F3-399
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  GUI path/context discovery surfaces route through the shared DiscoveryService while preserving established user-facing names and shortcuts. Quick Open, command palette fuzzy search, Search path narrowing, Assistant Chat file mentions, File Manager type-ahead, Planning Wizard source picker, and PRD Builder source picker expose loading, indexing/warming, stale, fallback, denied, no-results, hidden-by-policy, disabled, unsupported, over-budget/backpressure, rank explanation, disclosed local sort/filter, settings, and reset states. GUI surfaces preserve DiscoveryService ranking order unless they disclose a local sort/filter, and coarse rank explanations may show path match, recent in this project, current context, stale cache, or fallback without exposing raw private frecency/query/open history or blocked path details.
+canonical_text: |-
+  GUI path/context discovery surfaces route through the shared DiscoveryService while preserving established user-facing names and shortcuts. Quick Open, command palette fuzzy search, Search path narrowing, Assistant Chat file mentions, File Manager type-ahead, Planning Wizard source picker, and PRD Builder source picker expose loading, indexing/warming, stale, fallback, denied, no-results, hidden-by-policy, disabled, unsupported, over-budget/backpressure, rank explanation, disclosed local sort/filter, settings, and reset states. GUI surfaces preserve DiscoveryService ranking order unless they disclose a local sort/filter, and coarse rank explanations may show path match, recent in this project, current context, stale cache, or fallback without exposing raw private frecency/query/open history or blocked path details. App local ranking says recent in this chat or current permitted root; cross-Project T-185 result cards carry explicit coverage and source, never a pooled ambient index. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This defines user-visible GUI states, controls, ranking presentation, and route migration.
 depends_on: [T-160, T-161, T-163, CV-291, F2-191, SP-217]
@@ -28370,20 +28297,22 @@ context_scope: gui_discovery_surfaces
 implementation_surfaces: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md, Plans/FileManager.md, Plans/assistant-chat-design.md, Plans/Planning_Wizard.md, Plans/PRD_Builder.md]
 node_compile_hint: {mode: gui_discovery_consumer_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - pldg-20260622-001-fff:atom-0013
-  - pldg-20260622-001-fff:atom-0021
-  - pldg-20260622-001-fff:atom-0044
-  - pldg-20260622-001-fff:atom-0056
-  - pldg-20260622-001-fff:atom-0059
-  - pldg-20260622-001-fff:atom-0063
-  - pldg-20260622-001-fff:atom-0078
-  - pldg-20260622-001-fff:atom-0081
-  - pldg-20260622-001-fff:atom-0084
-  - pldg-20260622-001-fff:atom-0087
-  - pldg-20260622-001-fff:atom-0089
-  - pldg-20260622-001-fff:atom-0090
-  - pldg-20260622-001-fff:atom-0093
-  - pldg-20260622-001-fff:state/doc_impact_matrix.json#DIM-008
+- pldg-20260622-001-fff:atom-0013
+- pldg-20260622-001-fff:atom-0021
+- pldg-20260622-001-fff:atom-0044
+- pldg-20260622-001-fff:atom-0056
+- pldg-20260622-001-fff:atom-0059
+- pldg-20260622-001-fff:atom-0063
+- pldg-20260622-001-fff:atom-0078
+- pldg-20260622-001-fff:atom-0081
+- pldg-20260622-001-fff:atom-0084
+- pldg-20260622-001-fff:atom-0087
+- pldg-20260622-001-fff:atom-0089
+- pldg-20260622-001-fff:atom-0090
+- pldg-20260622-001-fff:atom-0093
+- pldg-20260622-001-fff:state/doc_impact_matrix.json#DIM-008
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 source_atom_ids: [atom-0013, atom-0021, atom-0044, atom-0056, atom-0059, atom-0063, atom-0078, atom-0081, atom-0084, atom-0087, atom-0089, atom-0090, atom-0093]
 preserved_exact_tokens: ["Quick Open", "command palette fuzzy search", "Search path narrowing", "Assistant Chat file mentions", "File Manager type-ahead", "Planning Wizard source picker", "PRD Builder source picker", "hidden-by-policy", "over-budget/backpressure", "rank explanation", "local sort/filter disclosed"]
 negative_constraints:
@@ -29275,24 +29204,8 @@ plan_unit_id: F3-411
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  First-run onboarding for newbie vibecoders appears as a separate modal/wizard before the user enters the full shell,
-  remains skippable guided setup, and keeps the normal path focused on provider setup rather than a full Settings tour,
-  dense Home shell, or product training sequence. The accepted four-screen order is `Connect Puppet Master to an AI
-  provider`, `Set up a paid provider`, `Optional: Free Models`, and `You are ready to plan`. The first screen uses the
-  body copy `Puppet Master needs an AI provider account before it can plan or code with you. Start with a paid provider
-  for the most reliable setup. You can skip this and come back later.` with actions `Set up a paid provider` and `Skip
-  for now`. The paid-provider screen presents compact rows with one primary action and friendly row labels such as
-  `Use this provider`, `Sign in`, `Set up provider`, `Reconnect`, `Connected`, `Needs sign-in`, and `Could not connect`.
-  `Optional: Free Models` appears only after the paid-provider prompt and offers `Review Free Models`, `Maybe later`, and
-  `Continue to Planning Wizard` without recommendation, quality-rank, coding-strength, online-review, local-learning, or
-  benchmark/probe-calibration language. The final setup screen says `Need help later? Ask Assistant Chat for Teacher.
-  Try: 'What does this mean?' or 'Show me how to use this page.' Teacher explains the current screen from chat.` and
-  routes `Open Planning Wizard` as the first full app page. `Skip for now` routes directly to Planning Wizard in limited
-  setup state with the copy `Provider setup is not finished. You can still open Planning Wizard, but assistant features
-  may need a provider before they can run.` Doctor remains a compact Health summary after onboarding with labels `Ready`,
-  `Needs setup`, `Needs attention`, and `Could not connect`; it shows the simplest next action first, keeps critical
-  blockers visible, and puts advanced diagnostics behind details/support.
+canonical_text: |-
+  The earlier four-screen onboarding below is compatibility/source lineage; current full onboarding presentation/stages are F3-520/663 and PWIZ-037. First-run onboarding for newbie vibecoders appears as a separate modal/wizard before the user enters the full shell, remains skippable guided setup, and keeps the normal path focused on provider setup rather than a full Settings tour, dense Home shell, or product training sequence. The accepted four-screen order is `Connect Puppet Master to an AI provider`, `Set up a paid provider`, `Optional: Free Models`, and `You are ready to plan`. The first screen uses the body copy `Puppet Master needs an AI provider account before it can plan or code with you. Start with a paid provider for the most reliable setup. You can skip this and come back later.` with actions `Set up a paid provider` and `Skip for now`. The paid-provider screen presents compact rows with one primary action and friendly row labels such as `Use this provider`, `Sign in`, `Set up provider`, `Reconnect`, `Connected`, `Needs sign-in`, and `Could not connect`. `Optional: Free Models` appears only after the paid-provider prompt and offers `Review Free Models`, `Maybe later`, and `Continue to Planning Wizard` without recommendation, quality-rank, coding-strength, online-review, local-learning, or benchmark/probe-calibration language. The final setup screen says `Need help later? Ask Assistant Chat for Teacher. Try: 'What does this mean?' or 'Show me how to use this page.' Teacher explains the current screen from chat.` and routes `Open Planning Wizard` as the first full app page. `Skip for now` routes directly to Planning Wizard in limited setup state with the copy `Provider setup is not finished. You can still open Planning Wizard, but assistant features may need a provider before they can run.` Doctor remains a compact Health summary after onboarding with labels `Ready`, `Needs setup`, `Needs attention`, and `Could not connect`; it shows the simplest next action first, keeps critical blockers visible, and puts advanced diagnostics behind details/support. Current SSYS-059/065 scope classification supersedes universal no-Project look/sound write wording: claimed app levels can persist, only pre-claim preview remains ephemeral. Project Later still sets up AI on the named Computer and lands in No project; explicit Skip AI remains valid. Re-entry reads the exact resolved app/Project look, without a private reader/store. Preserve PM7’s current service admission, FO-22 valid-answer Back/Review, all art/solver/Pip/Glass/motion/audio and calm Almost ready rules; new native availability is not inferred.
 gui_related: true
 gui_classification_reason: This PlanUnit defines first-run wizard screens, copy, actions, visible provider rows, Doctor/Health labels, and GUI presentation rules.
 depends_on: [F3-409, MA-040, MA-064, MS-120, MS-121, ACD-426, UCC-102, CS-053, T-088, MI-028, F2-155]
@@ -29323,44 +29236,46 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0006
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0007
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0008
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0010
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0015
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0024
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0025
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0027
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0029
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0031
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0032
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0034
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0035
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0039
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0043
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0044
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0003
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0004
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0005
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0006
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0007
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0008
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/pmconcept_gui_reference_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0006
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0007
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0008
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0010
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0015
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0024
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0025
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0027
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0029
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0031
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0032
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0034
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0035
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0039
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0043
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0044
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0003
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0004
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0005
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0006
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0007
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0008
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/pmconcept_gui_reference_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F09,C-F02,C-F11,E-F07,E-F08
 source_atom_ids: [atom-0006, atom-0007, atom-0008, atom-0010, atom-0015, atom-0016, atom-0024, atom-0025, atom-0027, atom-0029, atom-0031, atom-0032, atom-0033, atom-0034, atom-0035, atom-0036, atom-0037, atom-0038, atom-0039, atom-0040, atom-0041, atom-0042, atom-0043, atom-0044, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0001, dec-0002, dec-0003, dec-0004, dec-0005, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:
@@ -30513,33 +30428,18 @@ plan_unit_id: F3-425
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'The built-in theme set is exactly ten variants across five families, ordered Basic, Friendly, Glass,
-  Retro and NieR: basic-dark, basic-light, friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light,
-  nier-dark and nier-light. Basic Dark is the factory seed only for an untouched first open or a genuinely fresh Project
-  without a committed snapshot. Existing explicit saved Project selections and detached copied snapshots survive startup
-  and Project switches. Light, Dark and Auto remain the presentation-mode dimension; Auto follows OS appearance live,
-  including for family nier. The existing Project-scoped theme:v1 carries family, presentation mode and resolved variant;
-  no new identity key is added. general.visual.nier-mode is a retired migration-only key, removed from the active inventory.
-  On load, stored true selects the NieR theme in the stored presentation mode (Light, Dark or Auto, resolving Auto through
-  the OS), preserving parts and background; false or absent preserves the existing family/mode. The old boolean is then
-  cleared, and repeating migration has no further effect. No second underlying family is saved to restore later. The
-  selected NieR family resolves to nier-light or nier-dark and one corresponding precomputed palette; the shared brand
-  kit consumes that resolved family/scheme. Implementation paint markers are source lineage, never an independent appearance
-  state (DL-257/Q22; DL-260). NieR uses its existing precomputed palette and local fonts; its accent/font ownership while
-  selected is unchanged, and stored general appearance overrides resume where applicable after another family is selected.
-  Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns
-  migration and retained Adjust controls. Retained historical/source tokens (not active overrides): prefers-color-scheme,
-  Light, Dark, Auto.'
+canonical_text: |-
+  The built-in theme set is exactly ten variants across five families, ordered Basic, Friendly, Glass, Retro and NieR: basic-dark, basic-light, friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light, nier-dark and nier-light. Basic Dark is the bundled factory fallback only when the Settings resolver has no applicable explicit value; a new Project follows applicable Everywhere/Computer values until it sets its own. Existing explicit saved Project selections and detached copied snapshots survive startup and Project switches. Light, Dark and Auto remain the presentation-mode dimension; Auto follows OS appearance live, including for family nier. SSYS-059 resolves the atomic theme_pair; SP-348 owns level snapshots. The existing theme:v1 Project reader is compatibility input, never a second theme writer or cross-context paint hint. general.visual.nier-mode is a retired migration-only key, removed from the active inventory. On load, stored true selects the NieR theme in the stored presentation mode (Light, Dark or Auto, resolving Auto through the OS), preserving parts and background; false or absent preserves the existing family/mode. The old boolean is then cleared, and repeating migration has no further effect. No second underlying family is saved to restore later. The selected NieR family resolves to nier-light or nier-dark and one corresponding precomputed palette; the shared brand kit consumes that resolved family/scheme. Implementation paint markers are source lineage, never an independent appearance state (DL-257/Q22; DL-260). NieR uses its existing precomputed palette and local fonts; its accent/font ownership while selected is unchanged, and stored general appearance overrides resume where applicable after another family is selected. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. Retained historical/source tokens (not active overrides): prefers-color-scheme, Light, Dark, Auto. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Resolve the atomic look pair before the first visible frame, including No project. Preserve Q22 migration, retired general.visual.nier-mode, the five-family/ten-variant set and all existing look/animation behavior.
 gui_related: true
 gui_classification_reason: This unit defines the user-visible built-in theme set and the default theme selection.
 split_recommended: false
 depends_on: [F3-073, F3-217]
 unblocks: []
 acceptance_criteria:
-  - "The ten variants are basic-dark, basic-light, friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light, nier-dark and nier-light."
-  - "Basic Dark seeds untouched/fresh Projects; explicit existing and copied selections survive."
-  - "theme:v1 retains family/mode/resolved variant; old true migrates once to family nier in the stored mode."
-  - "Each of the ten variants resolves to its existing deterministic precomputed token table."
+- Five families and ten variants remain available; atomic look resolution precedes first paint in app and Project
+  contexts.
+- Existing explicit values survive; wider values feed only following contexts.
+- No extra paint hint or independent look writer; Q22 migration is idempotent.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -30562,6 +30462,8 @@ source_lineage:
 - 'DL-257/Q22 paint implementation lineage only: data-theme=''basic-<scheme>'' plus html[data-o55-nier=''on''] derives
   from family nier; PMLogo.look() returns nier-<scheme>. These CSS/JavaScript names are not product identity, storage
   or native API contracts (DL-260).'
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F01,A-F09,C-F11
 preserved_exact_tokens:
 - "friendly-dark"
 - "friendly-light"
@@ -30571,10 +30473,7 @@ preserved_exact_tokens:
 - "prefers-color-scheme"
 - "Light, Dark, Auto"
 negative_constraints:
-- "Retro Dark is not the default."
-- "Friendly Dark is not the current factory default; it remains one supported theme and superseded default lineage."
-- "Do not overwrite an explicit saved Project theme/layout or keep a copied Project live-linked to its source Project."
-- "Do not register a new storage key for theme identity; theme:v1 carries the theme family, presentation mode, and resolved variant."
+- No retired NieR toggle, second theme store or first-frame Basic Dark flash when another effective look exists.
 compatibility_only_notes:
 - "Slint portability: all ten built-in variants resolve (Q22) to deterministic precomputed token sets; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
@@ -32018,12 +31917,11 @@ canonical_text: >-
   set is: toggle, select, radio, slider with a value bubble showing the current value, number, text,
   path with a Browse control, color, action with working-then-done verb states on invocation,
   multiselect, list, and keyvalue, where multiselect, list, and keyvalue render as expandable
-  editors that open in place beneath the row. The 824-setting inventory's rows resolve across eleven
+  editors that open in place beneath the row. The live inventory’s reviewed rows resolve across eleven
   of these renderer types at promotion; the color renderer is part of the contract and serves
   color-typed rows. Rows show badges from the vocabulary restart, adjudication, and new; status
-  marks for ok, needs-setup, and attention from the derived-status feed; and scope tags from the six
-  scopes global, project, run, persona, account, and provider. A Project row discloses its concrete
-  origin (copied, explicit, reset or imported) under SSYS-002 without continuous global inheritance.
+  marks for ok, needs-setup, and attention from the derived-status feed; and offered-level origin words from SSYS-059/063. Default, Everywhere, Computer or Device, Project
+  and applicable owner levels consume one resolver; legacy global metadata normalizes before policy.
   Amended 2026-10-10 (DL-184, F3-648): a status renders as a mark and a word, the mark in a 1em
   glyph slot with no container, never a pill; the toggle renderer follows the approved switch
   grammar below; Glass has F3-652's later curved lens variant. A Settings switch has a gripped key
@@ -32033,7 +31931,7 @@ canonical_text: >-
   meters have square ends and Retro counts in blocks. Non-label switch keys are outside the
   label-pill detector. The general.visual.wallpaper select renderer is the catalog-backed radio
   gallery of F3-653; this is a registered presentation of select, not a new inventory type. Scope
-  metadata such as global is interpreted by SSYS-002, never as continuous app-global inheritance.
+  metadata such as global is compatibility input; layering determines offered levels under SSYS-059.
   Settings shell navigation, retained updates and first-frame width consume SSYS-053. One shared
   one-of-several selector grammar applies in Settings, Customize, Usage, the Wizard and other
   consumers. Choices never wrap while sharing a sliding highlight. First stack neighbouring fields,
@@ -32052,23 +31950,14 @@ canonical_text: >-
   square key, never a radius of half its height, and Glass alone takes F3-652's curved lens variant. SSYS-029
   and F3-656 consume it. The concept's capsule switches in Basic and Friendly onboarding are not adopted.
 gui_related: true
-gui_classification_reason: This unit defines visible setting row control renderers, badge and status mark vocabulary, scope tags, and the inherit-origin line.
+gui_classification_reason: This unit defines visible setting row control renderers, badge and status mark vocabulary, offered-level origin words, and the Details/Changed presentation.
 split_recommended: false
 depends_on: [F3-432, F3-441]
 unblocks: []
 acceptance_criteria:
-- Renderer selection maps the inventory type field to the renderer set toggle, select, radio, slider, number,
-  text, path, color, action, multiselect, list, and keyvalue; multiselect, list, and keyvalue render as expandable
-  editors.
-- The slider renderer shows a value bubble, the path renderer includes a Browse control, and the action renderer
-  shows working-then-done verb states on invocation.
-- Rows render badges only from the vocabulary restart, adjudication, and new, and status marks (a mark and a
-  word, no pill) only from ok, needs-setup, and attention.
-- Scope tags render from the six scopes global, project, run, persona, account, and provider, and Project rows
-  disclose their concrete source such as copied, explicitly set, reset, or imported without continuous inheritance.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
-- Settings Spacing, Light/Dark/Auto, Customize choices, Usage ranges and Wizard work types fit without wrapped
-  highlight tracks, clipped words or lost accessible names; control focus survives an in-place update.
+- Renderer types and all existing switch/selector/material/motion/accessibility rules remain as stated.
+- F3-670 adds Changed plus a 1px control outline and origin-word Details; default rows stay quiet.
+- Offer only inventory-declared levels and keep requested/effective values and reasons distinct.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -32089,12 +31978,13 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/EDITOR-QUICKSETS.js, SHA-256 3e41e8ae1594be81401985bebaa2a4917e066593236fca04e54f02f9b7e7f7f6
   (decision/source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016075014-d904.txt, SHA-256
-  c47ba9668ab4537387f255ce3c05384c84c114d4f27eb04a1572a1adf337dcf6 (Jared's stepped-motion ruling;
-  decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016075014-d904.txt, SHA-256 c47ba9668ab4537387f255ce3c05384c84c114d4f27eb04a1572a1adf337dcf6
+  (Jared's stepped-motion ruling; decision lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--liquid-glass--opus-5.5--src--glass.js,
-  SHA-256 782352b2f604875dcb16ae6683a033b5a8bd0bbd0af39d3de70300b4dadc6593 (Q16 landed on main as
-  aec2916c94, Retro's two-jump step and NieR's cut; source lineage; not native certification)
+  SHA-256 782352b2f604875dcb16ae6683a033b5a8bd0bbd0af39d3de70300b4dadc6593 (Q16 landed on main as aec2916c94, Retro's
+  two-jump step and NieR's cut; source lineage; not native certification)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F02,A-F09,A-F10
 preserved_exact_tokens:
 - "toggle"
 - "select"
@@ -32138,24 +32028,17 @@ plan_unit_id: F3-439
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Ordinary settings rows apply instantly on change. The settings experience exposes no global Save control,
-  no undo history, no per-setting copy-id affordance, and no favorites surface. Schema-versioned
-  import/export/backup/restore/reset/migration is a separate previewed transaction surface under F3-511,
-  not an ordinary row-edit mode. Exactly two
-  exceptions to instant apply exist: the Permissions surface keeps its existing dirty/save
-  review model, and the Project Settings Modal keeps an explicit Save with Cancel (F3-442),
-  which is the only Save in the settings experience.
+canonical_text: |-
+  Ordinary settings rows apply instantly through the existing Settings transaction owner, with one outcome note, origin and narrow Undo under SSYS-063. There is no global Save, per-setting copy-id or favorites surface. Settings History, Recent changes, Differences and explicit Reset are available under SSYS-009/018/060/063. Permissions keeps its existing dirty/save review. The Project Settings modal keeps its explicit Save and Cancel for the pending batch under F3-442; its Save is local to that modal. Schema-versioned lifecycle previews and owner readback/rollback remain F3-511.
 gui_related: true
 gui_classification_reason: This unit defines the user-facing apply model for settings changes.
 split_recommended: false
 depends_on: [F3-432]
 unblocks: []
 acceptance_criteria:
-- "Ordinary setting changes take effect immediately with no global Save, undo history, copy-id, or favorites surface; F3-511 lifecycle transactions remain previewed and atomic."
-- "Per-category two-step Reset and the F3-511 lifecycle transactions are the only bulk settings operations."
-- "The only exceptions to instant apply are the Permissions dirty/save review model and the Project Settings Modal explicit Save."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Ordinary row edits apply once at the shown origin with truthful outcome and Undo.
+- History/Recent changes are available without a second writer.
+- Permissions and Project Settings retain their scoped review/Save exceptions.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -32168,13 +32051,15 @@ node_compile_hint:
   mode: instant_apply_model_and_save_exceptions
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:1329"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:1329
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F10
 preserved_exact_tokens:
 - "Reset"
 - "dirty/save"
 negative_constraints:
-- "Do not add a global Save, undo history, per-setting copy-id, or favorites surface; do not bypass the previewed F3-511 lifecycle transaction for import/export/backup/restore/reset/migration."
+- No fake success, global Save, or second transaction engine.
 compatibility_only_notes:
 - "Slint portability: instant apply maps to typed state setters invoked on control change; no arbitrary-content backdrop blur, no SVG filters, and color styling is precomputed rather than runtime-mixed."
 stale_retired_dispositions: []
@@ -32191,17 +32076,8 @@ plan_unit_id: F3-440
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives
-  the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through
-  SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer;
-  the glass alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists
-  at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state;
-  and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10,
-  DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column,
-  F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050).
-  Each binding applies on change with no reload. The concept's interface-density live-apply hook had
-  no consumer and is demo residue excluded from this canonical wiring map.
+canonical_text: |-
+  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer; the glass alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10, DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies on change with no reload. The concept's interface-density live-apply hook had no consumer and is demo residue excluded from this canonical wiring map. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Existing theme:v1/glass_alpha:v1 names are compatibility/reader bindings, not additional independent writers; SP-348 owns level storage.
 gui_related: true
 gui_classification_reason: This unit defines visible live-apply bindings between settings and shell surfaces.
 split_recommended: false
@@ -32226,9 +32102,11 @@ node_compile_hint:
   mode: settings_live_apply_wiring_map
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:1329"
-- "Plans/FinalGUISpec.md:2291"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:1329
+- Plans/FinalGUISpec.md:2291
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F01,A-F08,A-F09
 preserved_exact_tokens:
 - "theme:v1"
 - "glass_background_mode:v1"
@@ -32254,33 +32132,8 @@ plan_unit_id: F3-441
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  `Plans/settings_inventory.json` is the canonical inventory registry of all 1010 settings across 12 categories.
-  Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`.
-  Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search,
-  badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation
-  service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded
-  by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was
-  concept scaffolding. Registry provenance pins the concept sidecar extraction
-  `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256
-  9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces,
-  including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind
-  to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc
-  and option words in this inventory are the one wording the product renders for it, on every surface that draws
-  the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording,
-  such as the onboarding Settings kit's plain-language rows.d labels and help, is a proposal until adopted here.
-  Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it
-  rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as
-  "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label
-  stays one of its search aliases, and its option words are option_labels, display words for stored option
-  values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill
-  and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain",
-  "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels
-  beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and
-  general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one
-  row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or
-  sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede
-  earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage.
+canonical_text: |-
+  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain-language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. F-d’s seven canonical additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false
@@ -32303,10 +32156,12 @@ node_compile_hint:
   mode: settings_inventory_registry_binding
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:1329"
-- "Plans/FinalGUISpec.md:1359"
-- "Concepts/pm6-build/sidecar/pm_settings_data.json (sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d)"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:1329
+- Plans/FinalGUISpec.md:1359
+- Concepts/pm6-build/sidecar/pm_settings_data.json (sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d)
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F02,A-F10,B-F01,E-F05
 preserved_exact_tokens:
 - "Plans/settings_inventory.json"
 - "Plans/settings_inventory.schema.json"
@@ -32394,28 +32249,17 @@ plan_unit_id: F3-442
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The Project Settings Modal shows project-scope settings derived from the settings inventory
-  registry: every registry row whose scope includes project is eligible, and the modal's rows
-  are generated from the registry rather than authored separately. Rows group into three
-  tabs: General, Environment, and Agent behavior. Each row edits one concrete project value
-  and shows whether that value was copied, explicitly set, reset, imported, invalid, or unavailable.
-  `Copy Settings From...` is a separate one-time previewed transaction and never establishes
-  continuous inheritance. The modal provides its own scoped substring search over
-  its rows. Changes commit through an explicit Save with a Cancel that discards pending
-  changes; per F3-439 this is the only Save in the settings experience. The concept's 12
-  hardcoded modal rows are a demo shim, not the canonical row set.
+canonical_text: |-
+  The Project Settings modal is an exact-Project view over inventory layering.may_differ_by, not a second inventory. Eligible rows offer the Project level through SSYS-059; unoffered levels show their owner reason. General, Computer and Agent behavior are the visible groups; Environment is a retained historical label, not a new settings level or synonym for Execution Environment. Rows show effective value and origin, Project own value when set, and the same Details/Changed/Varies grammar as F3-670. Explicit Save commits the pending exact-Project transaction; Cancel discards pending changes. Copy Settings From is the detached preview/apply/rollback flow and does not link the destination to the source Project. Wider level changes reach only rows that continue to follow them. The old twelve hardcoded rows are demo lineage.
 gui_related: true
 gui_classification_reason: This unit defines the visible Project Settings Modal rows, tabs, search, and save model.
 split_recommended: false
 depends_on: [F3-439, F3-441]
 unblocks: []
 acceptance_criteria:
-- "Project Settings Modal rows are derived from inventory registry rows whose scope includes project; the concept's 12 hardcoded rows are not promoted."
-- "Rows group into the General, Environment, and Agent behavior tabs, each row stores a concrete project value with source disclosure, and the modal offers scoped substring search."
-- "Copy Settings From... previews and atomically copies selected values once; later Global changes cannot mutate the Project."
-- "The modal commits through an explicit Save with Cancel discarding pending changes, and this remains the only Save in the settings experience."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Rows are derived from offered Project levels and exact Project identity.
+- Pending batch Save/Cancel preserves origin, revisions, preview and owner readback/rollback.
+- Detached copy and legitimate wider-level inheritance are distinguishable.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -32428,9 +32272,11 @@ node_compile_hint:
   mode: project_settings_modal_reconciliation
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:1329"
-- "Plans/FinalGUISpec.md:1363"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:1329
+- Plans/FinalGUISpec.md:1363
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F01,A-F09,A-F10
 preserved_exact_tokens:
 - "General"
 - "Environment"
@@ -32438,8 +32284,8 @@ preserved_exact_tokens:
 - "Save"
 - "Cancel"
 negative_constraints:
-- "PSM rows must not be hardcoded independently of the inventory registry."
-- "Do not expose inherit-vs-override or continuously resolve a Project value from later Global changes."
+- Do not hardcode modal rows or restore the inheritance ban.
+- Do not interpret Computer as Execution Environment.
 compatibility_only_notes:
 - "Slint portability: the modal renders as an opaque precomputed surface with typed row models; no arbitrary-content backdrop blur, no SVG filters, and color styling is precomputed rather than runtime-mixed."
 stale_retired_dispositions: []
@@ -33053,11 +32899,8 @@ plan_unit_id: F3-451
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The Testing side panel joins the canonical side-panel inventory. The occupant displays
-  the project's test policy, the last test run status and results, and a run-tests control
-  wired to the test runner subsystem so runs started from the panel execute through the
-  canonical test execution path.
+canonical_text: |-
+  The Testing side panel joins the canonical side-panel inventory. The occupant displays the project's test policy, the last test run status and results, and a run-tests control wired to the test runner subsystem so runs started from the panel execute through the canonical test execution path. A runnable test action needs the actual admitted test target/root and capability; a missing Project test policy is not an app chat mode prohibition. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This unit defines a visible side panel and its displayed testing surface.
 split_recommended: false
@@ -33080,9 +32923,11 @@ node_compile_hint:
   mode: testing_side_panel
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:5854"
-- "Plans/FinalGUISpec.md:5482"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:5854
+- Plans/FinalGUISpec.md:5482
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Testing"
 - "test policy"
@@ -33463,13 +33308,8 @@ plan_unit_id: F3-462
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  On non-retro themes, the Orchestrator, Usage, and Planning Wizard workspace page headers
-  match the Projects page top layout: title cluster left, actions and meta right, open
-  flex, and no dense full-bleed IDE chrome bar. The friendly theme family renders rounded
-  inset header boxes using radius-lg and the cozy card surface; the glass and basic
-  families render the open Projects-like layout; the retro family keeps its existing
-  chrome bars.
+canonical_text: |-
+  Orchestrator, Usage and Planning Wizard headers use their existing shared page-header primitives: title left, actions/meta right, open flex, with Friendly inset boxes and its radius-lg/cozy surface; Retro retains its chrome bars. The old Projects header is retired as the template for other pages. F3-668 owns the new quiet Split Projects library/detail composition; it changes no unrelated header, look, motion or overlay rule.
 gui_related: true
 gui_classification_reason: This unit defines visible page-header layout and theme box presentation.
 split_recommended: false
@@ -33491,8 +33331,10 @@ node_compile_hint:
   mode: page_header_projects_like_layout
   create_worknodes: false
 source_lineage:
-- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
-- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)
+- Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; E-F08,C-F11
 preserved_exact_tokens:
 - "radius-lg"
 negative_constraints:
@@ -33923,33 +33765,17 @@ plan_unit_id: F3-468
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Theme boot stamps a pre-paint layer with the persisted theme's solid background color
-  and color-scheme before heavy styles and assets settle, fonts load non-blocking via
-  preload then swap, and page-enter transitions are gated until after first paint so boot
-  never runs an opacity-zero enter animation or a double flash. The persisted theme is the look
-  stored in the Settings of the Project the application opens on, NieR Mode included (its
-  ground, and while NieR's boot log is coming the page waits under the log's own paper), so
-  the first frame is already that look and no default look shows before it. The pre-paint only
-  reads it: it stores no theme of its own, and the Project's Settings stay the one owner and the
-  one store of the theme (DL-153). A new install's onboarding paints Basic Dark instead (F3-520).
-  Amended 2026-10-29 (A1, L1; PM7): First-paint look owner also feeds the static Pip brand and splash loader, with no second theme reader, store or paint hint. App release icon stays fixed Basic Dark rather than following a Project.
+canonical_text: |-
+  Before the first visible frame, read the one SSYS-002/059 effective atomic look pair for the exact Computer/Host/Device and actual Project, omitting Project in No project. Stamp its solid ground and color-scheme; the same result feeds static Pip and the splash. Keep no theme hint, last-painted store or second reader/writer. Basic Dark is the bundled fallback for absence or the authorized pre-claim onboarding preview only; never flash it over another effective look. Fonts load non-blocking through preload/swap; page-enter transitions start after first paint and cannot produce opacity-zero boot or double flash. NieR shows its resolved Light/Dark paper under its eligible boot log; five families and ten variants remain. The release icon remains fixed Basic Dark. OS Reduce motion and admitted Everywhere/Device/Project requests combine more carefully through the resolver, rather than reading a private boot preference.
 gui_related: true
 gui_classification_reason: This unit defines visible boot paint, font loading, and first-paint transition gating behavior.
 split_recommended: false
 depends_on: [DL-153]
 unblocks: []
 acceptance_criteria:
-- Boot stamps the persisted theme's solid background and color-scheme on a pre-paint layer before heavy styles and assets
-  settle.
-- The first frame of an ordinary open is the look stored for the Project the application opens on, in all ten built-in
-  variants across five families, including NieR Light and NieR Dark (DL-257/Q22); no default look shows before it, and
-  with NieR's boot log coming the page shows only the log's paper before the log (DL-153).
-- 'The pre-paint reads the Project''s stored Settings and writes no theme anywhere: no global or cross-Project theme
-  key exists (DL-153).'
-- Fonts load non-blocking via preload then swap.
-- Page-enter transitions gate until after first paint; boot never runs an opacity-zero enter animation or a double flash.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- First frame, Pip and splash consume the same exact resolved look, including No project.
+- No extra theme store/hint or forced factory flash; font/transition gates remain.
+- Atomic look pair and more-careful motion retain all Q22/RM1 constraints.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -33962,12 +33788,14 @@ node_compile_hint:
   mode: boot_paint_and_first_paint_transition_gate
   create_worknodes: false
 source_lineage:
-- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
-- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)
+- Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F09,C-F11
 preserved_exact_tokens:
 - "color-scheme"
 negative_constraints:
-- "Do not render-block first paint on font loading and do not run an enter animation on first paint."
+- No separate pre-paint theme writer or old Project-only look ban.
 compatibility_only_notes:
 - "Slint portability: the pre-paint layer maps to painting the persisted theme's solid background at window creation before content loads; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
@@ -34368,16 +34196,8 @@ plan_unit_id: F3-475
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The dot-v1 panel-state key family gains four registrations:
-  docker_manager_panel_state.v1:{project_id}, testing_panel_state.v1:{project_id},
-  agents_panel_state.v1:{project_id}, and source_control_panel_state.v1:{project_id},
-  joining the existing search_panel_state.v1, gha_panel_state.v1, and
-  artifact_panel_state.v1 registrations (F3-217). Plans/storage-plan.md remains the
-  schema owner for every panel-state key; this unit is the GUI-side cross-registration
-  that names the keys and their per-project scope, and the storage plan must carry the
-  matching schema rows. The F3-162 source_control.project_state.{project_id} mention
-  remains a separate data-scope record and is not this panel UX-state key.
+canonical_text: |-
+  The dot-v1 panel-state key family gains four registrations: docker_manager_panel_state.v1:{project_id}, testing_panel_state.v1:{project_id}, agents_panel_state.v1:{project_id}, and source_control_panel_state.v1:{project_id}, joining the existing search_panel_state.v1, gha_panel_state.v1, and artifact_panel_state.v1 registrations (F3-217). Plans/storage-plan.md remains the schema owner for every panel-state key; this unit is the GUI-side cross-registration that names the keys and their per-project scope, and the storage plan must carry the matching schema rows. The F3-162 source_control.project_state.{project_id} mention remains a separate data-scope record and is not this panel UX-state key. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This unit registers the persistence keys behind visible panel UX state restoration.
 split_recommended: false
@@ -34400,8 +34220,11 @@ node_compile_hint:
   mode: side_panel_state_persistence_key_registrations
   create_worknodes: false
 source_lineage:
-- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
-- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves files concept; source-lineage-only)"
+- Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only
+  per Plans/usage-feature.md)
+- Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves files concept; source-lineage-only)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "docker_manager_panel_state.v1:{project_id}"
 - "testing_panel_state.v1:{project_id}"
@@ -35254,25 +35077,8 @@ plan_unit_id: F3-488
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Breakpoint types are line, conditional (expression and/or hit-count), logpoint (a
-  log message with {} interpolation that does not pause), function breakpoint, and
-  exception breakpoints (adapter-provided filters rendered as checkbox rows). The
-  breakpoints shelf lists all breakpoints with an activation toggle per row, a type
-  glyph (logpoint diamond, conditional badge showing the condition), a file:line
-  label that opens the source in the editor on click, and an inline edit strip
-  (mode selector: Expression / Hit Count / Log Message, plus a single-line input;
-  Enter commits, Esc cancels) reachable from a per-row edit action. Header actions:
-  Add Function Breakpoint, Toggle All Activations, Remove All. Breakpoint states
-  are enabled, disabled (dimmed), and unverified (hollow, adapter-rejected at
-  session time, with the reason on hover). Breakpoints are project state that
-  persists across sessions and app restarts; storage keys are referenced from
-  Plans/storage-plan.md, not restated. Editor-gutter sync: the gutter marker and
-  the shelf row are two renderers of the same breakpoint record; the record is the
-  truth with a single owner, and toggling either renderer updates both.
-  Amended 2026-10-09 (DL-162): in the rail the conditional badge is the condition written out after the location and
-  function as when followed by the expression, with no capsule (F3-619); the logpoint diamond and the hollow
-  unverified mark stay.
+canonical_text: |-
+  Breakpoint types are line, conditional (expression and/or hit-count), logpoint (a log message with {} interpolation that does not pause), function breakpoint, and exception breakpoints (adapter-provided filters rendered as checkbox rows). The breakpoints shelf lists all breakpoints with an activation toggle per row, a type glyph (logpoint diamond, conditional badge showing the condition), a file:line label that opens the source in the editor on click, and an inline edit strip (mode selector: Expression / Hit Count / Log Message, plus a single-line input; Enter commits, Esc cancels) reachable from a per-row edit action. Header actions: Add Function Breakpoint, Toggle All Activations, Remove All. Breakpoint states are enabled, disabled (dimmed), and unverified (hollow, adapter-rejected at session time, with the reason on hover). Breakpoints are project state that persists across sessions and app restarts; storage keys are referenced from Plans/storage-plan.md, not restated. Editor-gutter sync: the gutter marker and the shelf row are two renderers of the same breakpoint record; the record is the truth with a single owner, and toggling either renderer updates both. Amended 2026-10-09 (DL-162): in the rail the conditional badge is the condition written out after the location and function as when followed by the expression, with no capsule (F3-619); the logpoint diamond and the hollow unverified mark stay. App debugging binds an explicitly supported absolute file/root and real adapter session. Project-owned launch presets still require their real Project target. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This unit defines the visible breakpoint shelf rows, glyphs, edit strip, and gutter-sync rendering contract.
 split_recommended: false
@@ -35297,10 +35103,12 @@ node_compile_hint:
   mode: breakpoint_canon
   create_worknodes: false
 source_lineage:
-- "user-decision:2026-07-27-run-debug-revival"
-- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
-- "nvim-dap-ui (research lineage)"
-- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
+- user-decision:2026-07-27-run-debug-revival
+- microsoft/vscode src/vs/workbench/contrib/debug (research lineage)
+- nvim-dap-ui (research lineage)
+- Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - "Expression"
 - "Hit Count"
@@ -36755,277 +36563,17 @@ plan_unit_id: F3-520
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Product Onboarding is a beautiful, calm first impression presented as one bounded modal window over
-  a theme-aware scrim, with the live PMConcept7 application still visibly present behind it; it is never a full-page
-  route or a replacement application surface. The modal consumes PWIZ-021''s exact eleven-stage main journey welcome
-  -> simple_path -> first_project -> source_control_setup -> server_storage_client -> remote_access_setup -> review_setup_plan
-  -> automatic_preparation -> provider_setup -> free_models_setup -> ready. Choosing the connect-existing path uses the
-  exact bounded six-stage shortcut welcome -> simple_path -> remote_access_setup -> review_setup_plan -> automatic_preparation
-  -> ready and does not fabricate empty first_project, source_control_setup, server_storage_client, provider_setup, or
-  free_models_setup stages. Explicit Project Later uses the owner-defined deferred path, without a placeholder Project
-  or provider setup. The bounded ten-theme choice appears at welcome before Project/infrastructure choices. It offers
-  five ordered families, including NieR Light/Dark with Adjust NieR opening the same editor (F3-598); no independent
-  checkbox remains (Q22). On a new install, when the window opens by itself because no Project exists yet, onboarding
-  always starts in Basic Dark, from its first frame, with Basic Dark preselected, whatever look was shown before; stored
-  values are not changed. Run Onboarding Again (from Settings or the Home menu) is the one exception: it starts in the
-  look then shown, NieR Mode included, preselected, with no change of look as the window opens (DL-153). The window''s
-  hero moments take five styles, one per look family (F3-600). A persistent Look menu (`Change the look`), carrying the
-  same five-family choices, Light/Dark controls and NieR Adjust button, and a sound control remain reachable in the onboarding
-  header on every stage beyond welcome. Look selections preview presentation without dispatching owner work. Before a
-  verified current Project exists, Look and sound changes, NieR Mode with its parts and background included, remain ephemeral
-  and perform no durable Settings write; after Project commit or connection to an existing Project, persistence requires
-  that exact current Project Settings binding. The ten-theme choice, the Look menu and the NieR Adjust editor panel emit
-  one typed local action, `ui.onboarding.choose_look` (DL-153), which never dispatches `cmd.theme.*` or a Settings transaction:
-  the look is written with the Project at commit, and a look changed after the commit is written to that Project through
-  the same Settings binding when the window finishes or closes. The sound control consumes the Settings-owned `general.interaction.sound-effects`
-  effective pref (or its factory default while no Project exists), stays keyboard-reachable with an explicit sound-off
-  state, and audio is never the sole status signal; onboarding''s cues are the onboarding and Guided Tour cue category
-  of F3-599. In user language, the main journey welcomes the person, chooses whether to begin here or connect to an existing
-  Puppet Master, drafts how to create or open their first project, chooses its safe version history, chooses the computer
-  and storage places that will do and hold the work, offers private access, reviews the complete setup plan, prepares
-  only the approved choices, and commits the approved Project once, offers paid-provider setup and then Free Models,
-  and finishes in a concise Ready state. First Project choices persist a bounded uncreated draft, including a fresh-settings
-  default or explicit Settings-owned copy preview. Before commit, only owner-authorized read-only preflight and just-in-time
-  authentication necessary for the selected source are allowed by PWIZ-021; broad provider setup, enrollment, Connected
-  Server pairing/trust, restore, repository creation or binding, filesystem writes, and Project creation are not. The
-  sole pre-Review pairing exception is PWIZ-029''s individually consented Server-owned selected-source access to a chosen
-  folder, backup, or network storage on another Puppet Master: `cmd.client.pair.start` approval, code, or QR on the verified
-  identity, recorded as `puppet_master` transport with a non-secret device-and-path reference and bound `source_access_authorization_refs`,
-  limited to read-only browsing and validation of the chosen folder or backup under the current draft/session revision,
-  hash, and expiry. The paired device stays a Source Location, backup source, or storage location and never becomes the
-  Connected Server. Source sign-in uses the protected MACS-005 first-time variant when no verified account exists; it
-  never invents a Project/account/repository identifier. Confirm and prepare validates the exact current draft/hash and
-  PJCT-007 commit binding; Automatic Preparation observes the Project owner''s one commit chain and any Settings-owned
-  post-commit rebind/apply results. When a remote repository was created and a later step fails, Automatic Preparation
-  keeps observing the same owner operation and shows the retained Project recovery with the three owner-routed choices
-  Continue Setup, Open Repository, and Delete Repository; each choice stays disabled with its exact owner reason until
-  its Project or Forge gates hold, an unknown remote effect offers reconciliation only, and no setup commit binding or
-  provider phase advances until the listed persisted Project exists. Paid providers then use the actual committed Project,
-  followed by Free Models after paid readiness or explicit Skip. Each screen has one clear decision, one dominant primary
-  action, short human copy, automatic detection, safe defaults, and calm progressive disclosure. DL-259 H2/FF-20: the
-  First Project decision shows three aligned, keyboard-reachable groups — New, Existing and Restore. Selecting Existing
-  opens its local/online/device choices in the joined tray before sibling alternatives. The four semantic intents new/existing_local/existing_online/restore
-  remain available; no unrelated More/Other disclosure hides a source route. Safe History is the beginner-facing local
-  version timeline: Git is the recommended local engine, Jujutsu is an alternative local engine with no account, FileSafe
-  adds complementary local recovery points, and GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo or Gitea may hold a
-  separate optional online copy without replacing local history. User-visible copy assumes no coding or IDE knowledge:
-  it uses familiar words and never exposes the internal term `shell`, raw command/route/schema identifiers, owner names,
-  host/environment vocabulary, provider matrices, diagnostics dashboards, network topology, or unexplained source-control
-  jargon. Optional owner-routed branches cover opening an existing or online project, restoring a backup, keeping history
-  locally or using a connected source service, discovering/pairing or manually locating another computer, setting up
-  a work computer, optional service help, and private-access choices; advanced detail remains deferred or disclosed only
-  when needed. Server, Storage, and this Client are three independent placements; local/mounted folders, advanced SSH/SFTP
-  sources, and backup sources remain distinct. Every main stage has a scene-specific, theme-native cinematic composition
-  rather than a generic repeated fade. The five theme families use substantially different illustration systems and directing
-  language--Basic is an exact instructional blueprint, Friendly is an organic storybook workspace, Glass is a layered
-  spatial composition, and Retro is a pixel/terminal sequence--rather than recoloring one shared image or silhouette.
-  The fifth family, NieR, has its own system, including its onboarding preview: NieR ink marionettes in original line
-  art and the NieR window touches of F3-598. The interruptible opening hero assembles the Puppet Master identity in approximately
-  1.2-1.5 seconds without blocking input; step transitions use 420-560 ms, element choreography uses 60-80 ms stagger,
-  microinteractions use 120-220 ms, and success settles in approximately 700 ms. Reduced Motion preserves hierarchy with
-  immediate state change or a very short opacity settle. Retro uses deliberate stepped, no-scale motion and hard compact
-  reveals; Basic, Friendly, and Glass use material-appropriate easing and paint; NieR uses stepped, glow-free ink motion,
-  and its hero moments, typed text and one-way large exits are F3-598''s. Those moments do not hold input. A resumed
-  onboarding repaints the session''s stored look_choice, NieR Mode included, with null fields falling back to this unit''s
-  start rule (DL-153). Amended 2026-10-17 (DL-228): in every look the application beneath stays still while the window
-  is open: nothing in it animates, takes focus or wakes until both the window and its exit have finished. Ready''s Enter
-  answers on the click''s frame; the Planning Wizard is drawn whole beneath the window, the window''s exit is the only
-  move, and the hand-over never passes through Home (PWIZ-021 keeps the destination). F3-598 consumes this rule. The
-  Home options menu row is named Run Onboarding Again everywhere (DL-153, UCC-200); Run setup wizard is its earlier name,
-  and it sits directly below Restore home layout, the former Reset Layout. Amended 2026-10-29 (O1–O12; PM7): F3-663 supersedes
-  the troupe, no-physics/no-loop prohibition and separately drawn spinner. One Pip in distinct family worlds, bounded
-  shared life and solved strings, with implementation technique open under Jared’s O2 A ruling of 2026-10-30, six kits
-  including Retro split, live voice/music through one player. One option-anchored ? opens the shared explanatory note
-  (DL-260). All real routes/errors/203 tips expand beyond the small concept. O12 B (Jared 2026-10-30) amends the former
-  animation-never-gates rule: Creating Continue and Ready wait for owner completion and the last block to land; Reduced
-  Motion settles instantly. Real flow and 14 onboarding actions remain. O11 defers the Tour. O7 (2026-10-29): preserving
-  the settled scene during Details/? permits F3-663’s same-stage choice preview, note-directed Pip and typed answer/idea
-  cue; no choice commit or entrance replay. The older settled-scene acceptance is read with this specific interaction.
-  O6, Jared 2026-10-30: hovering a look tile changes neither the theme nor sound. Click or keyboard activation requests
-  ui.onboarding.choose_look; this keeps the existing ephemeral/current-Project persistence boundary. Amended Q22, Jared
-  2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained
-  Adjust controls. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation
-  1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only. QA round 2, Jared
-  2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is
-  an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud
-  sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue
-  waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate
-  the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication.
-  Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a
-  copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner
-  recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory;
-  only a verified Backup owner result proves unlock or restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately
-  in a tray joined to that card, before sibling alternatives. One shared joined-choice component owns the join, indentation
-  and line from the parent mark across all twelve affected screens (DL-258; source mechanics stay lineage under DL-260).
-  The parent opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring; narrow
-  layouts put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the option,
-  its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks,
-  sign-up links, Settings copy, remote route and proxy-configuration choices (certificate choices removed by CERT-1 /
-  srv C1), online service kind/address, device notes and connection routes. Naming and Review display the same selected
-  mounted/network source, rather than an empty local-location field. Q3/Q8/Q9: question controls answer pointer hover
-  and keyboard focus in the current look. Remove duplicate explanation-only disclosures (What is a Server?, the Connect
-  proxy explanation, and What does Puppet Master read? on Choose a key); put their information in the shared option tips.
-  Keep functional sections: More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik
-  selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating
-  system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use
-  protected flow; never reuse its never-saved hint for SMB. H5: the onboarding owner holds one original inert-state basis
-  for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it
-  never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only
-  the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. Q1/Q2: onboarding sound defaults
-  on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. Until the Settings
-  owner supplies the applicable sound preference, retain the factory-on or current effective choice rather than muting
-  on every refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused.
-  An unavailable Settings projection never fabricates a saved value or authorizes a write. QA2 follow-up N1, integration
-  6609384fd0; DL-258: A reached backup place is bound to the selected service or device, not a reusable signed-in/ready
-  boolean. Choosing another source, service, device, Kit or folder invalidates its old reach proof, protected access
-  fields, unlock, copy selection and completed bucket check. A late sign-in/check result stays bound to the service/device
-  it authenticated and cannot advance a different current choice. A protected SSH key passphrase unlock belongs to that
-  exact selected key; changing keys requires that key’s own owner-proven access and never inherits another key’s unlock.
-  The Remote Link endpoint belongs only to the Remote Link route; choosing Only at home/local-or-VPN, Tailscale or another
-  route clears it from the reviewed draft. No stale endpoint enters an unrelated route. DL-259, Jared 2026-10-31: D1
-  A: the online-service step creates or selects a code repository; onboarding does not publish a website, GitHub Pages,
-  GitLab Pages or another site. Local-only Project choices remain valid. D2 A: explicit always-on Server setup on this
-  computer, manual private HTTPS, a self-hosted Remote Link gateway, rarer SSH key types, China-region AI variants and
-  local AI servers live in Settings, with a clear context-correct pointer from onboarding. The ordinary This computer
-  choice remains the easy local-work default. The wizard says AI accounts available in this setup, not every AI. Existing
-  Settings routes and owners retain the advanced capabilities. D3 A: generated proxy settings support Caddy, NGINX and
-  Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing proxy but
-  never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding offers Make
-  the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik configuration for the
-  person to add on their own system before the owner’s DNS, reachability and live-connection checks; Caddy is the default.
-  The second only checks the existing proxy route and live connection, with nothing generated. Set it up for me is removed:
-  Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only or existing_proxy
-  for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating a file proves
-  neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding proxy_kind
-  is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch
-  may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
-  a family. D4: confirm provider admission and executable conformance immediately before building Puppet Master. The
-  wizard lists its provider choices without unconfirmed/not-verified badges, warnings or caveats. This scheduling decision
-  does not change per-account authentication, entitlement, health or quota truth: Ready is the shared account owner’s
-  current usable result, not merely signed in. D6 A: the human signs in on the initiating active device while the AI/tool
-  runs on the selected execution host. Official tool sign-ins and private account roots stay with that tool on that host;
-  direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection
-  and Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets.
-  Protected returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing
-  account, host or route invalidates stale validation; another account of the same provider has a distinct identity.
-  D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have
-  their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no separate
-  Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps
-  one active node per stable server_id; a native Client installation keeps one active node per stable client_id, independent
-  of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization,
-  egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide
-  bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server
-  nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default and unavailable on
-  Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain
-  browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the
-  device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale
-  stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering command blocklist, write
-  scope, security filter and pre-write safe points together. Individual controls remain in Settings. The switch expresses
-  a requested owner configuration, never approval to bypass a required guard, an absent allowlist/baseline, failed canonical-path
-  resolution, failed initialization or failed safe-point persistence. Mandatory policy and effective guard state win;
-  a refused change stays refused with a clear reason. No failure silently turns a guard off. ELI5: the wizard bar and
-  Guided Tour bar expose the same global general.interaction.mode through the Settings owner, with values ELI5 and Expert,
-  labels Plain English and Expert, and default ELI5. Both bars reflect the same effective state. Every opened onboarding
-  question tip and prose help section has useful Plain English and technical versions, including FileSafe, service differences,
-  storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints,
-  paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without
-  rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5
-  is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor
-  tour_narration_only tag is retired. DL-257/Q22 and DL-259 QA2 M4, 2026-10-31: the welcome look chooser gives Basic,
-  Friendly, Glass, Retro and NieR equal choice prominence. Each tile has an accessible family label and reachable question/Adjust
-  controls where applicable. At narrow and short supported sizes the title, all five choices and footer remain readable
-  and reachable without clipping or a hidden extra-family strip; the chooser fits above the footer or scrolls within
-  its bounded content area. Click or keyboard activation selects; silent hover does not select. DL-259 late integration,
-  2026-10-31: for an unnamed Project using the automatic local destination, Name shows the base destination plus “in
-  a folder with your Project’s name”. With the factory base the line is “Kept in Documents › Puppet Master, in a folder
-  with your Project''s name”. A placeholder or unselected suggestion never supplies a chosen folder leaf. Typing a name
-  or explicitly choosing a suggestion adds that current draft name; clearing it restores the generic line. The local-location
-  picker’s On this computer card names the base destination. Existing folders and selected network/mounted/remote sources
-  still display their actual resolved location under H8. These are truthful draft previews and create no folder or Project
-  before the reviewed commit. DL-259 late integration, 2026-10-31: pressing the AI phase’s Skip for now immediately acknowledges
-  the skipped choice and brings its concise skipped-state/consequence message into view at the start of that step, rather
-  than leaving the feedback below a long provider list. It does not wait for detection, sign-in or key checks. Optional
-  Free Models remains available and continuation reflects the explicit phase skip. No account becomes Ready from skipping;
-  current paid/free account usability still comes from its owner. This phase skip remains distinct from whole-session
-  Skip. Reduced Motion reveals the feedback in its settled position. DL-259 FO-4, 2026-10-31: onboarding provider rows
-  and connected-account summaries show the category and concise product/account identity without billing explanations,
-  prices, limits or extra-usage pitches. Retain useful category names and exact account/product distinctions; this presentation
-  rule does not alter the provider owner’s charging model, auth surface, account identity or credential custody. DL-259
-  FO-6, 2026-10-31: a protected field keeps its typed value through redraws of the same screen and field identity, including
-  typing in another field, opening help and changing Plain English/Expert. A blank rendering template alone must not
-  erase it. The action clears the field when it consumes the input; leaving/recreating the screen, changing its service/method/target
-  or explicit cancel/reset clears it too. Keep that input only in the protected entry control until consumption, never
-  in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential or validation proof;
-  submission reads the current protected value and rechecks its existing owner requirements. DL-259 FO-9 final, 2026-10-31:
-  Creating’s checklist and block stack share the accepted owner’s phase/effect projection. When GitHub creation only
-  partly settles, show only verified completed phases as checked or landed blocks; the phase proven to have failed may
-  show failure and unexecuted/unproven phases remain pending. Unexecuted or unproven phases stay pending through an incomplete
-  or unclear result until a later accepted owner result from Continue Setup or Check again proves those effects settled.
-  The checklist, stage block count and stage progress use that same result; a settled phase keeps its block and an unproven
-  phase has no completed block. Refresh alone neither completes a phase nor repeats a settled remote create. Transport
-  completion and animation never prove the later registration, settings or connection steps. The recovery banner/actions,
-  Continue availability and Ready use that same current owner result; O12’s last-block landing condition is additional
-  to owner completion, never a replacement for it. DL-259 FO-10 final, 2026-10-31: on Connect’s route screen, disabled
-  Continue gives an actionable reason for the selected route’s visible input before an unresolved Server-choice reason.
-  Web address and Remote Link use that field’s current missing/invalid-address result; an address typed instead of the
-  found list asks for the address when empty and explains when no Puppet Master answers, with a route back to the list.
-  Say Choose your Puppet Master only while the found-Server choice list is shown. Pip’s feedback conveys the same cause.
-  These screen/status words stay single in Plain English and Expert (DL-126); only tips/help have two versions. Reason
-  priority changes no validation, route identity, readiness, pairing or permission gate and admits no address/Remote
-  Link grammar. DL-271 FO-11, 2026-10-31: where an OpenCode server requires its own HTTP Basic credentials, the Password
-  field asks for that server’s password, not an AI provider’s API key or the person’s Puppet Master sign-in. Its hint
-  states that distinction and identifies credential custody in the OS keychain on the selected execution host, through
-  the existing credential owner. Optional server auth stays optional when the server needs none. Protected entry, secret-free
-  readback and exact host/account binding remain; an API-key-only hint is used only on an actual API-key field. DL-271
-  FO-12, 2026-10-31: Protect’s missing-access guidance is count-neutral: ask for the access details without claiming
-  a fixed number of fields. The selected Backup destination family, auth method and credential mode determine the actual
-  required fields and validation through their existing owner. Changing the line never omits a required credential, locator,
-  region or temporary-session value and never turns incomplete access into an available Connect action. DL-271 Unlock
-  wording, 2026-10-31: ask for your recovery phrase, rather than six words or another fixed word count. The Recovery
-  Kit is not a six-word format (PWIZ-025/BRS-018); the Backup owner still defines and verifies the real protected recovery
-  material and its exact source/target binding. The wording admits no new phrase format, key derivation, unlock proof
-  or weaker secret-handling rule. DL-271 weak-key eligibility, 2026-10-31: Choose a key may list a DSA or RSA-1024 key
-  as Too weak to use, but it cannot be selected, used as a default, advanced or installed. The refusal reads Older key
-  type — too weak to use. Check this eligibility before an existing authorization, matching prior profile or passphrase/unlock
-  state; those cannot make a weak key usable. A retained weak selection must be replaced by an owner-eligible key before
-  the flow advances. Other keys keep their existing owner checks, identity binding and custody; the shared list never
-  exposes or moves a private half. DL-271 initial request waiting, 2026-10-31: while the current invitation is live and
-  no device request has arrived, Your Server is ready shows No requests yet with Check again. Checking re-reads the current
-  owner run; a real arriving request also updates that view. This neutral state is not an error and invents no candidate,
-  approval or trust. Continue retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection:
-  a completed request stays answered, and a fresh request requires the existing new-code/new-generation route.
+canonical_text: |-
+  Product Onboarding is a beautiful, calm first impression presented as one bounded modal window over a theme-aware scrim, with the live PMConcept7 application still visibly present behind it; it is never a full-page route or a replacement application surface. The modal consumes PWIZ-021's exact eleven-stage main journey welcome -> simple_path -> first_project -> source_control_setup -> server_storage_client -> remote_access_setup -> review_setup_plan -> automatic_preparation -> provider_setup -> free_models_setup -> ready. Choosing the connect-existing path uses the exact bounded six-stage shortcut welcome -> simple_path -> remote_access_setup -> review_setup_plan -> automatic_preparation -> ready and does not fabricate empty first_project, source_control_setup, server_storage_client, provider_setup, or free_models_setup stages. Explicit Project Later follows PWIZ-037: set up paid-first AI and Free Models on the named Computer in application scope, then enter No project, without a placeholder Project or Settings copy. The bounded ten-theme choice appears at welcome before Project/infrastructure choices. It offers five ordered families, including NieR Light/Dark with Adjust NieR opening the same editor (F3-598); no independent checkbox remains (Q22). On a new install, when the window opens by itself because no Project exists yet, onboarding always starts in Basic Dark, from its first frame, with Basic Dark preselected, whatever look was shown before; stored values are not changed. Run Onboarding Again (from Settings or the Home menu) is the one exception: it starts in the look then shown, NieR Mode included, preselected, with no change of look as the window opens (DL-153). The window's hero moments take five styles, one per look family (F3-600). A persistent Look menu (`Change the look`), carrying the same five-family choices, Light/Dark controls and NieR Adjust button, and a sound control remain reachable in the onboarding header on every stage beyond welcome. Look selections preview presentation without dispatching owner work. Look and sound changes use SSYS-059/065’s classified target and exact writer. Claimed app scope may persist at an offered Everywhere/Computer/Device level without a Project; pre-claim preview is ephemeral. Project writes still require the real committed or connected Project. The ten-theme choice, Look menu and NieR Adjust editor use the existing typed local `ui.onboarding.choose_look` presentation and the Settings-owned classified binding; a durable choice calls the same Settings transaction, never cmd.theme.* or a private finish/close writer. Pre-claim preview remains ephemeral. The sound control consumes the Settings-owned `general.interaction.sound-effects` effective pref (or its bundled factory fallback while no applicable explicit level exists), stays keyboard-reachable with an explicit sound-off state, and audio is never the sole status signal; onboarding's cues are the onboarding and Guided Tour cue category of F3-599. In user language, the main journey welcomes the person, chooses whether to begin here or connect to an existing Puppet Master, drafts how to create or open their first project, chooses its safe version history, chooses the computer and storage places that will do and hold the work, offers private access, reviews the complete setup plan, prepares only the approved choices, and commits the approved Project once, offers paid-provider setup and then Free Models, and finishes in a concise Ready state. First Project choices persist a bounded uncreated draft, including a fresh-settings default or explicit Settings-owned copy preview. Before commit, only owner-authorized read-only preflight and just-in-time authentication necessary for the selected source are allowed by PWIZ-021; broad provider setup, enrollment, Connected Server pairing/trust, restore, repository creation or binding, filesystem writes, and Project creation are not. The sole pre-Review pairing exception is PWIZ-029's individually consented Server-owned selected-source access to a chosen folder, backup, or network storage on another Puppet Master: `cmd.client.pair.start` approval, code, or QR on the verified identity, recorded as `puppet_master` transport with a non-secret device-and-path reference and bound `source_access_authorization_refs`, limited to read-only browsing and validation of the chosen folder or backup under the current draft/session revision, hash, and expiry. The paired device stays a Source Location, backup source, or storage location and never becomes the Connected Server. Source sign-in uses the protected MACS-005 first-time variant when no verified account exists; it never invents a Project/account/repository identifier. Confirm and prepare validates the exact current draft/hash and PJCT-007 commit binding; Automatic Preparation observes the Project owner's one commit chain and any Settings-owned post-commit rebind/apply results. When a remote repository was created and a later step fails, Automatic Preparation keeps observing the same owner operation and shows the retained Project recovery with the three owner-routed choices Continue Setup, Open Repository, and Delete Repository; each choice stays disabled with its exact owner reason until its Project or Forge gates hold, an unknown remote effect offers reconciliation only, and no setup commit binding or provider phase advances until the listed persisted Project exists. Paid providers then use the actual committed Project, followed by Free Models after paid readiness or explicit Skip. Each screen has one clear decision, one dominant primary action, short human copy, automatic detection, safe defaults, and calm progressive disclosure. DL-259 H2/FF-20: the First Project decision shows three aligned, keyboard-reachable groups — New, Existing and Restore. Selecting Existing opens its local/online/device choices in the joined tray before sibling alternatives. The four semantic intents new/existing_local/existing_online/restore remain available; no unrelated More/Other disclosure hides a source route. Safe History is the beginner-facing local version timeline: Git and Jujutsu are equal available local history choices with no account; a fresh form may start with Git, existing inspected history wins, and submodules/LFS/hooks may explain a Git suggestion, FileSafe adds complementary local recovery points, and GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo or Gitea may hold a separate optional online copy without replacing local history. User-visible copy assumes no coding or IDE knowledge: it uses familiar words and never exposes the internal term `shell`, raw command/route/schema identifiers, owner names, host/environment vocabulary, provider matrices, diagnostics dashboards, network topology, or unexplained source-control jargon. Optional owner-routed branches cover opening an existing or online project, restoring a backup, keeping history locally or using a connected source service, discovering/pairing or manually locating another computer, setting up a work computer, optional service help, and private-access choices; advanced detail remains deferred or disclosed only when needed. Server, Storage, and this Client are three independent placements; local/mounted folders, advanced SSH/SFTP sources, and backup sources remain distinct. Every main stage has a scene-specific, theme-native cinematic composition rather than a generic repeated fade. The five theme families use substantially different illustration systems and directing language--Basic is an exact instructional blueprint, Friendly is an organic storybook workspace, Glass is a layered spatial composition, and Retro is a pixel/terminal sequence--rather than recoloring one shared image or silhouette. The fifth family, NieR, has its own system, including its onboarding preview: NieR ink marionettes in original line art and the NieR window touches of F3-598. The interruptible opening hero assembles the Puppet Master identity in approximately 1.2-1.5 seconds without blocking input; step transitions use 420-560 ms, element choreography uses 60-80 ms stagger, microinteractions use 120-220 ms, and success settles in approximately 700 ms. Reduced Motion preserves hierarchy with immediate state change or a very short opacity settle. Retro uses deliberate stepped, no-scale motion and hard compact reveals; Basic, Friendly, and Glass use material-appropriate easing and paint; NieR uses stepped, glow-free ink motion, and its hero moments, typed text and one-way large exits are F3-598's. Those moments do not hold input. A resumed onboarding repaints the session's stored look_choice, NieR Mode included, with null fields falling back to this unit's start rule (DL-153). Amended 2026-10-17 (DL-228): in every look the application beneath stays still while the window is open: nothing in it animates, takes focus or wakes until both the window and its exit have finished. Ready's Enter answers on the click's frame; the Planning Wizard is drawn whole beneath the window, the window's exit is the only move, and the hand-over never passes through Home (PWIZ-021 keeps the destination). F3-598 consumes this rule. The Home options menu row is named Run Onboarding Again everywhere (DL-153, UCC-200); Run setup wizard is its earlier name, and it sits directly below Restore home layout, the former Reset Layout. Amended 2026-10-29 (O1–O12; PM7): F3-663 supersedes the troupe, no-physics/no-loop prohibition and separately drawn spinner. One Pip in distinct family worlds, bounded shared life and solved strings, with implementation technique open under Jared’s O2 A ruling of 2026-10-30, six kits including Retro split, live voice/music through one player. One option-anchored ? opens the shared explanatory note (DL-260). All real routes/errors/203 tips expand beyond the small concept. O12 B (Jared 2026-10-30) amends the former animation-never-gates rule: Creating Continue and Ready wait for owner completion and the last block to land; Reduced Motion settles instantly. Real flow and 14 onboarding actions remain. O11 defers the Tour. O7 (2026-10-29): preserving the settled scene during Details/? permits F3-663’s same-stage choice preview, note-directed Pip and typed answer/idea cue; no choice commit or entrance replay. The older settled-scene acceptance is read with this specific interaction. O6, Jared 2026-10-30: hovering a look tile changes neither the theme nor sound. Click or keyboard activation requests ui.onboarding.choose_look; this keeps the existing ephemeral/current-Project persistence boundary. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation 1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; only a verified Backup owner result proves unlock or restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately in a tray joined to that card, before sibling alternatives. One shared joined-choice component owns the join, indentation and line from the parent mark across all twelve affected screens (DL-258; source mechanics stay lineage under DL-260). The parent opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links, Settings copy, remote route and proxy-configuration choices (certificate choices removed by CERT-1 / srv C1), online service kind/address, device notes and connection routes. Naming and Review display the same selected mounted/network source, rather than an empty local-location field. Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in the current look. Remove duplicate explanation-only disclosures (What is a Server?, the Connect proxy explanation, and What does Puppet Master read? on Choose a key); put their information in the shared option tips. Keep functional sections: More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use protected flow; never reuse its never-saved hint for SMB. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. Until the Settings owner supplies the applicable sound preference, retain the factory-on or current effective choice rather than muting on every refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused. An unavailable Settings projection never fabricates a saved value or authorizes a write. QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service or device, not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder invalidates its old reach proof, protected access fields, unlock, copy selection and completed bucket check. A late sign-in/check result stays bound to the service/device it authenticated and cannot advance a different current choice. A protected SSH key passphrase unlock belongs to that exact selected key; changing keys requires that key’s own owner-proven access and never inherits another key’s unlock. The Remote Link endpoint belongs only to the Remote Link route; choosing Only at home/local-or-VPN, Tailscale or another route clears it from the reviewed draft. No stale endpoint enters an unrelated route. DL-259, Jared 2026-10-31: D1 A: the online-service step creates or selects a code repository; onboarding does not publish a website, GitHub Pages, GitLab Pages or another site. Local-only Project choices remain valid. D2 A: explicit always-on Server setup on this computer, manual private HTTPS, a self-hosted Remote Link gateway, rarer SSH key types, China-region AI variants and local AI servers live in Settings, with a clear context-correct pointer from onboarding. The ordinary This computer choice remains the easy local-work default. The wizard says AI accounts available in this setup, not every AI. Existing Settings routes and owners retain the advanced capabilities. D3 A: generated proxy settings support Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik configuration for the person to add on their own system before the owner’s DNS, reachability and live-connection checks; Caddy is the default. The second only checks the existing proxy route and live connection, with nothing generated. Set it up for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes a family. D4: confirm provider admission and executable conformance immediately before building Puppet Master. The wizard lists its provider choices without unconfirmed/not-verified badges, warnings or caveats. This scheduling decision does not change per-account authentication, entitlement, health or quota truth: Ready is the shared account owner’s current usable result, not merely signed in. D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or route invalidates stale validation; another account of the same provider has a distinct identity. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering command blocklist, write scope, security filter and pre-write safe points together. Individual controls remain in Settings. The switch expresses a requested owner configuration, never approval to bypass a required guard, an absent allowlist/baseline, failed canonical-path resolution, failed initialization or failed safe-point persistence. Mandatory policy and effective guard state win; a refused change stays refused with a clear reason. No failure silently turns a guard off. ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect the same effective state. Every opened onboarding question tip and prose help section has useful Plain English and technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. DL-257/Q22 and DL-259 QA2 M4, 2026-10-31: the welcome look chooser gives Basic, Friendly, Glass, Retro and NieR equal choice prominence. Each tile has an accessible family label and reachable question/Adjust controls where applicable. At narrow and short supported sizes the title, all five choices and footer remain readable and reachable without clipping or a hidden extra-family strip; the chooser fits above the footer or scrolls within its bounded content area. Click or keyboard activation selects; silent hover does not select. DL-259 late integration, 2026-10-31: for an unnamed Project using the automatic local destination, Name shows the base destination plus “in a folder with your Project’s name”. With the factory base the line is “Kept in Documents › Puppet Master, in a folder with your Project's name”. A placeholder or unselected suggestion never supplies a chosen folder leaf. Typing a name or explicitly choosing a suggestion adds that current draft name; clearing it restores the generic line. The local-location picker’s On this computer card names the base destination. Existing folders and selected network/mounted/remote sources still display their actual resolved location under H8. These are truthful draft previews and create no folder or Project before the reviewed commit. DL-259 late integration, 2026-10-31: pressing the AI phase’s Skip for now immediately acknowledges the skipped choice and brings its concise skipped-state/consequence message into view at the start of that step, rather than leaving the feedback below a long provider list. It does not wait for detection, sign-in or key checks. Optional Free Models remains available and continuation reflects the explicit phase skip. No account becomes Ready from skipping; current paid/free account usability still comes from its owner. This phase skip remains distinct from whole-session Skip. Reduced Motion reveals the feedback in its settled position. DL-259 FO-4, 2026-10-31: onboarding provider rows and connected-account summaries show the category and concise product/account identity without billing explanations, prices, limits or extra-usage pitches. Retain useful category names and exact account/product distinctions; this presentation rule does not alter the provider owner’s charging model, auth surface, account identity or credential custody. DL-259 FO-6, 2026-10-31: a protected field keeps its typed value through redraws of the same screen and field identity, including typing in another field, opening help and changing Plain English/Expert. A blank rendering template alone must not erase it. The action clears the field when it consumes the input; leaving/recreating the screen, changing its service/method/target or explicit cancel/reset clears it too. Keep that input only in the protected entry control until consumption, never in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential or validation proof; submission reads the current protected value and rechecks its existing owner requirements. DL-259 FO-9 final, 2026-10-31: Creating’s checklist and block stack share the accepted owner’s phase/effect projection. When GitHub creation only partly settles, show only verified completed phases as checked or landed blocks; the phase proven to have failed may show failure and unexecuted/unproven phases remain pending. Unexecuted or unproven phases stay pending through an incomplete or unclear result until a later accepted owner result from Continue Setup or Check again proves those effects settled. The checklist, stage block count and stage progress use that same result; a settled phase keeps its block and an unproven phase has no completed block. Refresh alone neither completes a phase nor repeats a settled remote create. Transport completion and animation never prove the later registration, settings or connection steps. The recovery banner/actions, Continue availability and Ready use that same current owner result; O12’s last-block landing condition is additional to owner completion, never a replacement for it. DL-259 FO-10 final, 2026-10-31: on Connect’s route screen, disabled Continue gives an actionable reason for the selected route’s visible input before an unresolved Server-choice reason. Web address and Remote Link use that field’s current missing/invalid-address result; an address typed instead of the found list asks for the address when empty and explains when no Puppet Master answers, with a route back to the list. Say Choose your Puppet Master only while the found-Server choice list is shown. Pip’s feedback conveys the same cause. These screen/status words stay single in Plain English and Expert (DL-126); only tips/help have two versions. Reason priority changes no validation, route identity, readiness, pairing or permission gate and admits no address/Remote Link grammar. DL-271 FO-11, 2026-10-31: where an OpenCode server requires its own HTTP Basic credentials, the Password field asks for that server’s password, not an AI provider’s API key or the person’s Puppet Master sign-in. Its hint states that distinction and identifies credential custody in the OS keychain on the selected execution host, through the existing credential owner. Optional server auth stays optional when the server needs none. Protected entry, secret-free readback and exact host/account binding remain; an API-key-only hint is used only on an actual API-key field. DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance is count-neutral: ask for the access details without claiming a fixed number of fields. The selected Backup destination family, auth method and credential mode determine the actual required fields and validation through their existing owner. Changing the line never omits a required credential, locator, region or temporary-session value and never turns incomplete access into an available Connect action. DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase, rather than six words or another fixed word count. The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the Backup owner still defines and verifies the real protected recovery material and its exact source/target binding. The wording admits no new phrase format, key derivation, unlock proof or weaker secret-handling rule. DL-271 weak-key eligibility, 2026-10-31: Choose a key may list a DSA or RSA-1024 key as Too weak to use, but it cannot be selected, used as a default, advanced or installed. The refusal reads Older key type — too weak to use. Check this eligibility before an existing authorization, matching prior profile or passphrase/unlock state; those cannot make a weak key usable. A retained weak selection must be replaced by an owner-eligible key before the flow advances. Other keys keep their existing owner checks, identity binding and custody; the shared list never exposes or moves a private half. DL-271 initial request waiting, 2026-10-31: while the current invitation is live and no device request has arrived, Your Server is ready shows No requests yet with Check again. Checking re-reads the current owner run; a real arriving request also updates that view. This neutral state is not an error and invents no candidate, approval or trust. Continue retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed request stays answered, and a fresh request requires the existing new-code/new-generation route.
 
+  DL-272 footage alignment, 2026-11-01: preserve the current Server/Remote Access, source-control and provider owners across the wizard. SRV-004 owns matching Client identity and answered pairing; RAS-014 owns explicit native-Client sign-in before listing and opaque Remote Link output; RAS-005 owns in-step proxy files and actionable route failures. PWIZ-024/FGI-011/015 own retained name refusals, owner-correct privacy, true token reach, current service address validation and action-specific Review/Creating/Ready summaries. MA-045/046/047 and Models MS-121/122 own protected provider additions, per-service device expiry and usable-AI readiness. Keep the actual human-readable labels, no sample credentials, concept host, prefill, artificial wait or Studio behavior.
 
-  DL-272 footage alignment, 2026-11-01: preserve the current Server/Remote Access, source-control and provider owners
-  across the wizard. SRV-004 owns matching Client identity and answered pairing; RAS-014 owns explicit native-Client
-  sign-in before listing and opaque Remote Link output; RAS-005 owns in-step proxy files and actionable route failures.
-  PWIZ-024/FGI-011/015 own retained name refusals, owner-correct privacy, true token reach, current service address validation
-  and action-specific Review/Creating/Ready summaries. MA-045/046/047 and Models MS-121/122 own protected provider additions,
-  per-service device expiry and usable-AI readiness. Keep the actual human-readable labels, no sample credentials, concept
-  host, prefill, artificial wait or Studio behavior.
+  DL-272 FO-16/FO-18/FO-19, 2026-11-01: PWIZ-022 owns choice-scoped refusal feedback and full readable detail values. MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment, including NieR. F3-663 consumes these rules with unchanged choice, identity and Creating gates.
 
-
-  DL-272 FO-16/FO-18/FO-19, 2026-11-01: PWIZ-022 owns choice-scoped refusal feedback and full readable detail values.
-  MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment, including NieR. F3-663
-  consumes these rules with unchanged choice, identity and Creating gates.
-
-
-  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
-  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
-  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.
-
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged. generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or mirror authority.
   DL-273, Jared 2026-11-01: Saved onboarding selections follow PWIZ-024 retirement invalidation on entry and resume. The wizard returns to explicit admitted service/address/account selection and never presents the retired selection or its authorization and Review as current.
-
-  DL-273, Jared 2026-11-01: Source Control service controls and their activation consume the same current
-  admission rule from PWIZ-024. A restored card choice cannot expose an eligible service action or open
-  sign-in merely because the main online-service draft is unpicked; the person must select an admitted
-  choice again.
-
-  FO-22, 2026-11-02: The visible step and typed Back control consume PWIZ-021’s current-answer navigation and
-  PWIZ-024’s source-step entry/resume rules. Abandoned steps do not reappear through Back or subsequent Continue;
-  fresh Review and a resumed service chooser keep their valid Back destination. Missing service identity is shown
-  as a choice to make, never as an empty service name, raw enum or unresolved placeholder.'
+  DL-273, Jared 2026-11-01: Source Control service controls and their activation consume the same current admission rule from PWIZ-024. A restored card choice cannot expose an eligible service action or open sign-in merely because the main online-service draft is unpicked; the person must select an admitted choice again.
+  FO-22, 2026-11-02: The visible step and typed Back control consume PWIZ-021’s current-answer navigation and PWIZ-024’s source-step entry/resume rules. Abandoned steps do not reappear through Back or subsequent Continue; fresh Review and a resumed service chooser keep their valid Back destination. Missing service identity is shown as a choice to make, never as an empty service name, raw enum or unresolved placeholder. F3-669/PWIZ-037 consume the same reviewed setup draft for New Project; all six entry ways, inspected full paths and retained spaces, Settings-only JJ object format, typed Starters, Standard backup and detached Your usual settings are owner-driven. Only Planning Wizard, PRD Builder and Orchestrator retain the no-project workflow gate; Goals/Crew/Plan/Deep Plan/scheduled tasks remain available. This supersedes only earlier Later/provider-deferred and universal no-Project Settings wording; current-answer FO-22 Back/Edit/Review, current DL-273 admission, all protected-auth/Recovery Kit gates, quiet Almost ready and O12 phases remain.
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
@@ -37391,34 +36939,36 @@ source_lineage:
 - Concepts/pm7-tools/home_workspace_source.py
 - Concepts/pm7-tools/home_workspace_refresh_source.py
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
-  rules, no hints.
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md — QA2 review M2/m4 five equal look choices;
-  grid geometry is source evidence only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31;
+  product-only rules, no hints.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md — QA2 review M2/m4 five equal look
+  choices; grid geometry is source evidence only.
 - 'DL-260 source lineage only: C.cards with its under slot and o55-under/o55-card-parent classes implement the shared
   joined-choice tray; these source APIs/classes are not native product contracts.'
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
   product behavior only.
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
-  sweep; source implementation serviceChoice and address map are lineage only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and
+  same-kind sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
-  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
-  report FO-9 final.'
-- PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
-  FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
-  API/error-grammar admission.
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1;
+  fields report FO-9 final.'
+- PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee
+  and srv/final-onb FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source
+  lineage, not native API/error-grammar admission.
 - 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
-  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
-  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
-  refusal.'
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host,
+  seeded situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional
+  weak-key refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
 - PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
   Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
   are source lineage only.
 - DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F06,A-F09,C-F02,C-F11,E-F07,E-F08
 preserved_exact_tokens:
 - welcome
 - simple_path
@@ -37520,70 +37070,10 @@ plan_unit_id: F3-521
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Guided Tour teaches through successful actions over the mounted Puppet Master application in one stable
-  chapter order: Assistant Chat with Teacher, workspace practice, then Planning Wizard. Chat opens through its real control;
-  the learner sends the supplied local question, sees Teacher''s answer stream in the same labeled guided-example conversation,
-  and then sees that same answer in simple words through Explain this reply simply (`cmd.chat.eli5.explain_reply`), which
-  adds one extra, simpler reply after the example answer and never rewrites or regenerates the original; the callout
-  then points to the quick dot by the message box, which makes later replies simple, and names the ELI5 popup behind
-  the wand''s ELI5 row (the ELI5 sheet, F3-581), where the chat''s choice is set (DL-126, ACD-484). Workspace practice
-  explains navigation and panels and follows the workspace chapter named in the 2026-10-09 amendment below (PWIZ-035).
-  Every important action offers Try it and Show Me; both invoke the same mounted owner handler and satisfy the same observed
-  success predicate. Show Me uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation
-  or a second implementation. Planning Wizard is about half of meaningful actions and dwell time. Amended 2026-10-17
-  (DL-230, Jared): the bar is that Planning is about half of the tour''s actions and time (it read: at least half); the
-  accepted 20-step tour, Planning at 44 percent of actions and 49 percent of dwell, meets it. Jared will redo the tour
-  completely once chat is rolled in and the Planning Wizard is redesigned, so no other tour work is planned until then.
-  A book-club goal becomes three outcomes, the learner answers who may edit, sees why it matters, reviews decisions/assumptions/
-  unresolved choices, edits one answer, and watches only the affected shared-access consequence change before the approval
-  boundary. Teacher retains a broad discoverable beginner question library. The shared Plain English / Expert control
-  remains beside Pause and Skip and is called out in the first scene; the same opening moment explains that people who
-  prefer less animation can enable Reduced Motion later in Settings. All visible copy is written for a person who has
-  never coded or used an IDE and never calls the application a `shell` or exposes command IDs, owners, providers, models,
-  tokens, receipts, routes, or implementation terms. The overlay tracks and highlights mounted controls without cloning
-  them, intercepting owner work, or fabricating success. Automatic scene transitions focus the current scene heading,
-  never an action, and do not open a visual hover tag without user intent. Pause, Back, Skip, interruption, resize, theme
-  change, and effective Reduced Motion preserve real state and focus. The Tour bar carries the same persistent Look menu
-  (`Change the look`) and sound control beyond setup on every step: Look choices, family nier and its Adjust NieR editor
-  included (F3-598), apply through the Settings owner at once only with a verified current Project binding, and the Tour
-  follows that Project''s effective theme. Neither control is a `ui.guided_tour.*` action (DL-153): a family/mode Look
-  choice or live edit in the editor and the sound control''s write of `general.interaction.sound-effects` compose cmd.settings.transaction.preview
-  then cmd.settings.transaction.apply, and Adjust NieR is ui.settings.nier_editor.open. Project switching invalidates
-  stale bindings and rebinds both controls before persistence; without a Project they offer ephemeral preview and no
-  durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with
-  a keyboard-accessible sound-off state. Both are shared chrome controls, not tour-specific preference toggles, and audio
-  is never the sole status signal; the Tour''s cues are the onboarding and Guided Tour cue category of F3-599. Back and
-  forward movement follow the valid story state and never become inert or skip required practice. Basic, Friendly, Glass,
-  Retro and NieR (F3-598), direct the film with substantially different callout composition, illustration, typography,
-  target treatment, and motion--not one recolored overlay--while never using a left-edge accent rail. Transitions preserve
-  the mounted application continuously without a black or empty flash. Skip restores captured layout, Chat state, and
-  focus. While any restore runs, the application''s own notices about it (a widget removed, a persona applied from the
-  next turn) stay quiet in every look, and the Tour''s own closing note says what was put back (DL-153). Finish restores
-  the temporary arrangement by default or keeps it only on explicit selection, removes practice content, and lands on
-  the real Planning Wizard with the committed Project selected and no work auto-started. Close/reload resumes a safe
-  checkpoint after owner revalidation. Amended 2026-10-09 (DL-180): the workspace practice no longer asks the learner
-  to move or dock the chat, which is a fixed column (F3-637). It teaches opening a tab from the "+" menu (F3-632), opening
-  a file from the rail into a panel (F3-634), splitting by dragging a tab to a panel''s edge (F3-630), and adding a widget
-  to the dashboard (F3-638); Skip and Finish restore the captured v2 Home layout. The steps and their contracts are PWIZ-035''s.
-  Amended 2026-10-10 (DL-186, P1 B and P10): the old Home widgets have left Home, so the widget step now teaches a Usage
-  widget: it opens the Home dashboard and asks the learner to add Upcoming resets with Add widget and then move it to
-  where they can glance at it (F3-638); it is finished by the Home board''s own accepted add of that widget followed
-  by a move or resize of it, never by a timer, highlighting or a generic Next. The step and its contract are PWIZ-035''s.
-  Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns
-  migration and retained Adjust controls. Retained historical/source tokens (not active overrides): NieR Mode. Q22 visible
-  copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation 1030182542-5544). The earlier
-  label Adjust NieR look is retained as historical source text only. DL-259, Jared 2026-10-31: the wizard and Guided
-  Tour bars read and write one global general.interaction.mode, default ELI5, with the labels Plain English and Expert.
-  Existing cmd.settings.transaction.preview/apply owns the write. ui.guided_tour.toggle_eli5 is a compatibility local
-  adapter to this shared setting, not a tour-specific preference. Both bars reflect the same effective value; neither
-  seeds a separate Off state. Dual copy stays limited to tips/help under DL-126, and the mode change does not rewrite,
-  regenerate or send a chat reply.
+canonical_text: |-
+  Guided Tour teaches through successful actions over the mounted Puppet Master application in one stable chapter order: Assistant Chat with Teacher, workspace practice, then Planning Wizard. Chat opens through its real control; the learner sends the supplied local question, sees Teacher's answer stream in the same labeled guided-example conversation, and then sees that same answer in simple words through Explain this reply simply (`cmd.chat.eli5.explain_reply`), which adds one extra, simpler reply after the example answer and never rewrites or regenerates the original; the callout then points to the quick dot by the message box, which makes later replies simple, and names the ELI5 popup behind the wand's ELI5 row (the ELI5 sheet, F3-581), where the chat's choice is set (DL-126, ACD-484). Workspace practice explains navigation and panels and follows the workspace chapter named in the 2026-10-09 amendment below (PWIZ-035). Every important action offers Try it and Show Me; both invoke the same mounted owner handler and satisfy the same observed success predicate. Show Me uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation or a second implementation. Planning Wizard is about half of meaningful actions and dwell time. Amended 2026-10-17 (DL-230, Jared): the bar is that Planning is about half of the tour's actions and time (it read: at least half); the accepted 20-step tour, Planning at 44 percent of actions and 49 percent of dwell, meets it. Jared will redo the tour completely once chat is rolled in and the Planning Wizard is redesigned, so no other tour work is planned until then. A book-club goal becomes three outcomes, the learner answers who may edit, sees why it matters, reviews decisions/assumptions/ unresolved choices, edits one answer, and watches only the affected shared-access consequence change before the approval boundary. Teacher retains a broad discoverable beginner question library. The shared Plain English / Expert control remains beside Pause and Skip and is called out in the first scene; the same opening moment explains that people who prefer less animation can enable Reduced Motion later in Settings. All visible copy is written for a person who has never coded or used an IDE and never calls the application a `shell` or exposes command IDs, owners, providers, models, tokens, receipts, routes, or implementation terms. The overlay tracks and highlights mounted controls without cloning them, intercepting owner work, or fabricating success. Automatic scene transitions focus the current scene heading, never an action, and do not open a visual hover tag without user intent. Pause, Back, Skip, interruption, resize, theme change, and effective Reduced Motion preserve real state and focus. The Tour bar carries the same persistent Look menu (`Change the look`) and sound control beyond setup on every step: Look choices, family nier and its Adjust NieR editor included (F3-598), apply through the Settings owner at the exact offered level, and the Tour follows the effective look for its actual app or Project context. Neither control is a `ui.guided_tour.*` action (DL-153): a family/mode Look choice or live edit in the editor and the sound control's write of `general.interaction.sound-effects` compose cmd.settings.transaction.preview then cmd.settings.transaction.apply, and Adjust NieR is ui.settings.nier_editor.open. Project switching invalidates stale bindings and rebinds both controls before persistence; without a Project they use admitted app levels, retaining ephemeral preview only for pre-claim or unavailable writers. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with a keyboard-accessible sound-off state. Both are shared chrome controls, not tour-specific preference toggles, and audio is never the sole status signal; the Tour's cues are the onboarding and Guided Tour cue category of F3-599. Back and forward movement follow the valid story state and never become inert or skip required practice. Basic, Friendly, Glass, Retro and NieR (F3-598), direct the film with substantially different callout composition, illustration, typography, target treatment, and motion--not one recolored overlay--while never using a left-edge accent rail. Transitions preserve the mounted application continuously without a black or empty flash. Skip restores captured layout, Chat state, and focus. While any restore runs, the application's own notices about it (a widget removed, a persona applied from the next turn) stay quiet in every look, and the Tour's own closing note says what was put back (DL-153). Finish restores the temporary arrangement by default or keeps it only on explicit selection, removes practice content, and lands on the real Planning Wizard when a committed Project exists, otherwise returns to No project chat, with no work auto-started and no fake practice Project. Close/reload resumes a safe checkpoint after owner revalidation. Amended 2026-10-09 (DL-180): the workspace practice no longer asks the learner to move or dock the chat, which is a fixed column (F3-637). It teaches opening a tab from the "+" menu (F3-632), opening a file from the rail into a panel (F3-634), splitting by dragging a tab to a panel's edge (F3-630), and adding a widget to the dashboard (F3-638); Skip and Finish restore the captured v2 Home layout. The steps and their contracts are PWIZ-035's. Amended 2026-10-10 (DL-186, P1 B and P10): the old Home widgets have left Home, so the widget step now teaches a Usage widget: it opens the Home dashboard and asks the learner to add Upcoming resets with Add widget and then move it to where they can glance at it (F3-638); it is finished by the Home board's own accepted add of that widget followed by a move or resize of it, never by a timer, highlighting or a generic Next. The step and its contract are PWIZ-035's. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. Retained historical/source tokens (not active overrides): NieR Mode. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation 1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only. DL-259, Jared 2026-10-31: the wizard and Guided Tour bars read and write one global general.interaction.mode, default ELI5, with the labels Plain English and Expert. Existing cmd.settings.transaction.preview/apply owns the write. ui.guided_tour.toggle_eli5 is a compatibility local adapter to this shared setting, not a tour-specific preference. Both bars reflect the same effective value; neither seeds a separate Off state. Dual copy stays limited to tips/help under DL-126, and the mode change does not rewrite, regenerate or send a chat reply.
 
-
-  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
-  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
-  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged. generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or mirror authority.
 gui_related: true
 gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
 split_recommended: false
@@ -37736,6 +37226,8 @@ source_lineage:
   (the widget step as built; concept lineage only)
 - Plans/Decision_Log.md#DL-259 (Jared 2026-10-31; shared interaction mode)
 - DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F09,C-F11,E-F07
 preserved_exact_tokens:
 - Planning Wizard
 - Assistant Chat
@@ -37867,39 +37359,8 @@ plan_unit_id: F3-523
 unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'One shared PMHoverTag and HoverTagController renders theme-native hover/focus help in a shared overlay
-  root for every actionable or focusable control, truncated value, technical identifier, status, badge, chart mark, disabled
-  control, and dynamic state such as pin/unpin, unless a documented static-copy or decorative exemption applies. A one-line
-  tag has at least 24 px height, 8 px horizontal padding, and compact 12 px text; detailed tags emphasize line one and
-  use 11 px explanatory text. Tags are at most 280 px wide, keep an 8 px anchor gap and 8 px viewport margin, center
-  above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the visible
-  tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent within a 5
-  px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement, pointer press,
-  a scroll that moves the anchor, or departure before the thresholds resets or cancels the pending opening; pointer departure
-  after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and that
-  anchor''s tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145; scroll narrowed 2026-10-23, DL-232).
-  Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state, shortcut,
-  full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route IDs, DOM labels,
-  machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current. While Product Onboarding
-  or Guided Tour is open, only anchors inside the active overlay may open tags. Pending or open tags outside it close,
-  outside description nodes temporarily lose tooltip semantics and accessibility exposure, and their stable relationships
-  restore when the overlay closes. Non-Retro entrance is the reference 240 ms translate/scale/fade; Retro uses 140 ms
-  stepped motion with no scale; Reduced Motion is immediate. Glass follows live transparency while maintaining readable
-  contrast. Initial and live census work is frame-bounded, performs one startup pass, and ignores exact old/current attribute
-  reassertions while retaining every real semantic change, so unrelated application reconciliation cannot create a perpetual
-  tooltip invalidation loop or steal Onboarding or Guided Tour''s animation budget. Amended 2026-10-17 (DL-228): a tag
-  never covers a primary action such as the chat''s Send: it slides along its side or flips, and with no clear place
-  it stays shut while its accessible description is still read. File references and tabs keep their path or name literally
-  (a reference''s tag is its path and line), the one exception to replacing paths, file names and host:port text with
-  generic words. Focus the application moves, by an open, a reveal, a panel focus change or F6, opens no tag until the
-  pointer reaches that control or focus moves on; the 1000 ms keyboard-focus tag is for focus the person moves with Tab
-  or the arrows. Documented exemptions also include a picker plate (`menu`: its rows without their own label, Back and
-  the search field already show their names; a row given its own hover label keeps its tag) and a Settings field whose
-  label and help line sit beside it (`labelled-field`). DL-259 QA2 M2, 2026-10-31: technical-identifier candidacy requires
-  a small element that actually presents the identifier, or an explicit technical-identifier declaration. Transcript,
-  whole-message and card containers do not qualify merely because they carry internal identity, render, sort or scroll
-  keys; such internal keys never create a technical tooltip target. An explicit technical declaration remains eligible,
-  and a container’s own semantic control label may independently qualify it under this same shared controller.'
+canonical_text: |-
+  One shared PMHoverTag and HoverTagController renders theme-native hover/focus help in a shared overlay root for every actionable or focusable control, truncated value, technical identifier, status, badge, chart mark, disabled control, and dynamic state such as pin/unpin, unless a documented static-copy or decorative exemption applies. A one-line tag has at least 24 px height, 8 px horizontal padding, and compact 12 px text; detailed tags emphasize line one and use 11 px explanatory text. Tags are at most 280 px wide, keep an 8 px anchor gap and 8 px viewport margin, center above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement, pointer press, a scroll that moves the anchor, or departure before the thresholds resets or cancels the pending opening; pointer departure after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145; scroll narrowed 2026-10-23, DL-232). Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state, shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current. While Product Onboarding or Guided Tour is open, only anchors inside the active overlay may open tags. Pending or open tags outside it close, outside description nodes temporarily lose tooltip semantics and accessibility exposure, and their stable relationships restore when the overlay closes. Non-Retro entrance is the reference 240 ms translate/scale/fade; Retro uses 140 ms stepped motion with no scale; Reduced Motion is immediate. Glass follows live transparency while maintaining readable contrast. Initial and live census work is frame-bounded, performs one startup pass, and ignores exact old/current attribute reassertions while retaining every real semantic change, so unrelated application reconciliation cannot create a perpetual tooltip invalidation loop or steal Onboarding or Guided Tour's animation budget. Amended 2026-10-17 (DL-228): a tag never covers a primary action such as the chat's Send: it slides along its side or flips, and with no clear place it stays shut while its accessible description is still read. File references and tabs keep their path or name literally (a reference's tag is its path and line), the one exception to replacing paths, file names and host:port text with generic words. Focus the application moves, by an open, a reveal, a panel focus change or F6, opens no tag until the pointer reaches that control or focus moves on; the 1000 ms keyboard-focus tag is for focus the person moves with Tab or the arrows. Documented exemptions also include a picker plate (`menu`: its rows without their own label, Back and the search field already show their names; a row given its own hover label keeps its tag) and a Settings field whose label and help line sit beside it (`labelled-field`). DL-259 QA2 M2, 2026-10-31: technical-identifier candidacy requires a small element that actually presents the identifier, or an explicit technical-identifier declaration. Transcript, whole-message and card containers do not qualify merely because they carry internal identity, render, sort or scroll keys; such internal keys never create a technical tooltip target. An explicit technical declaration remains eligible, and a container’s own semantic control label may independently qualify it under this same shared controller. The origin word opens F3-670’s Details panel; it is visible and keyboard reachable without waiting for a hover tag. Hover help, labels, accessible descriptions and exact full paths keep the existing shared controller rules and FO-20 material. No new tooltip system or automatic theme write is introduced.
 gui_related: true
 gui_classification_reason: This unit owns the global tooltip overlay's paint, geometry, timing, and accessible attachment.
 split_recommended: false
@@ -37953,8 +37414,11 @@ node_compile_hint: {mode: global_hover_tag_contract, create_worknodes: false, cr
 source_lineage:
 - Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html
 - Concepts/pm7-tools/global_hover_tags_source.py
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/chatpip/REPORT.md — F5 candidate rule, 2026-10-31; source
-  attributes data-technical-id, data-scroll-key, data-hover-key and render/sort keys are implementation evidence only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/chatpip/REPORT.md — F5 candidate rule, 2026-10-31;
+  source attributes data-technical-id, data-scroll-key, data-hover-key and render/sort keys are implementation evidence
+  only.
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F10
 preserved_exact_tokens: [PMHoverTag, HoverTagController, 24px, 8px, 12px, 11px, 280px, 1600 ms, 1100 ms, 5 px, 1000 ms, 160 ms, 240 ms, 140 ms, role=tooltip, aria-describedby, general.interaction.show-tooltips, attributeOldValue]
 negative_constraints:
   - "Do not invent domain commands for opening, closing, or repositioning a hover tag; these are typed local UI actions."
@@ -39874,18 +39338,8 @@ plan_unit_id: F3-543
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Under USER-SETTINGS-MANAGER-REFRESH-20260908 the Settings manager presentation grammar gains four principles
-  beyond the six restored native ones: no header-level action strip, at most six tabs, exactly one labeled
-  Advanced disclosure per manager view, and one side-panel anatomy shared by manager drawers and the setting
-  Details inspector (identity header, sectioned body, quiet footer, spring open and material close, no
-  decorative accent bars, inspector width tokens unchanged). Manager workspaces of the published concept are
-  presentation groupings over the unchanged 38-key registry: separate Code & Tools workspaces for Skills,
-  Plugins, MCP Servers, and Commands & Shortcuts; one System workspace Server & Project Location; Single Owners
-  and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain switches
-  obey F3-513, built-in sounds are labelled demonstration tones per F3-405, and All Settings scrolls with the
-  page while remaining virtualized per SSYS-005. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family
-  supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+canonical_text: |-
+  Under USER-SETTINGS-MANAGER-REFRESH-20260908 the Settings manager presentation grammar gains four principles beyond the six restored native ones: no header-level action strip, at most six tabs, exactly one labeled Advanced disclosure per manager view, and one side-panel anatomy shared by manager drawers and the setting Details inspector (identity header, sectioned body, quiet footer, spring open and material close, no decorative accent bars, inspector width tokens unchanged). Manager workspaces of the published concept are presentation groupings over the unchanged 38-key registry: separate Code & Tools workspaces for Skills, Plugins, MCP Servers, and Commands & Shortcuts; one System workspace Server & Project Location; Single Owners and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain switches obey F3-513, built-in sounds are labelled demonstration tones per F3-405, and All Settings scrolls with the page while remaining virtualized per SSYS-005. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. The unchanged project-defaults-templates manager route shows separate Saved setups and Starters / My starters children. Saved setups are detached configuration, Starters are Project-owned file sets (PJCT-011); no 39th manager. Home/reach/project switches/whole Project versions use SSYS-061 and domain owners; library reach Every project includes No project, Project-owned things do not. Persona management remains the existing Settings Agent Config realization, with no second editor.
 gui_related: true
 gui_classification_reason: Owns the visible manager presentation grammar, workspace grouping, and side-panel anatomy of every Settings manager in the published concept.
 split_recommended: false
@@ -39910,11 +39364,13 @@ node_compile_hint:
   mode: gui_presentation_specification
   create_worknodes: false
 source_lineage:
-  - USER-SETTINGS-MANAGER-REFRESH-20260908
-  - USER-REFERENCE-LAYOUT-ROLLBACK-20260908
-  - F3-542
-  - SSYS-033
-  - USER-SETTINGS-MANAGER-REFRESH-20260909
+- USER-SETTINGS-MANAGER-REFRESH-20260908
+- USER-REFERENCE-LAYOUT-ROLLBACK-20260908
+- F3-542
+- SSYS-033
+- USER-SETTINGS-MANAGER-REFRESH-20260909
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F03,B-F01,B-F13,E-F05
 preserved_exact_tokens:
   - "No Top Action Bar"
   - "Bounded Tabs"
@@ -42344,35 +41800,8 @@ plan_unit_id: F3-579
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Teach is a standard sheet of F3-566 and the only capture form: the wand's Teach…, /teach,
-  natural-language intent and Save as a rule… all open it, prefilled with the rule text and its
-  source, and there is no inline capture card in the chat (DL-127, ACD-477). Head: the Teach mark,
-  Teach Puppet Master a rule and one lead sentence; in correct mode, Edit your rule. The hero is the
-  rule field, with example rules that fill it. Under it one safety line says either that no password
-  or key was spotted or, in the warm tone, that the text looks like a password or key and must be
-  removed to save. The plate is three nested rings, This thread inside This project inside Every project, each a button with a helper; Every project stays disabled with its reason until the tick
-  "It's safe to use in my other projects" is set, and in correct mode the wider rings are disabled
-  because an edit cannot widen a rule. A Locked tick says only the user can change the rule
-  (ACD-481). Beside them, the rule card shows the rule exactly as it will be saved, with its scope,
-  lock and source message; when a similar rule exists, the old and new wording are shown side by
-  side with a choice between Replace the old rule and Keep both, and saving waits for it. The foot
-  holds Cancel and one primary, Save rule, Save and replace or Save as version 2. In the chat each
-  change is one receipt line of F3-569's grammar: Rule saved, Rule updated to a new version, Rule
-  turned off, with several saves in a row coalesced into one line. Your rules is an editor document
-  (the taught memory document): one row per rule with its words, its scope, lock and version, a
-  state word (In use, In use · locked, Replaced by v2, Turned off) and the actions Edit, Lock or
-  Unlock, Turn off and From your message; Turn off asks inline (ACD-481), never in a modal. Teacher
-  stays a Persona, and the sheet says Teach isn't the Teacher Persona. The note a reply carries for
-  its taught rules is F3-570's rule note under DL-116 as AMS-053 defines following: it counts only
-  rules whose check the finished reply passed, a failed check reads "Missed 1 of your rules" with a
-  way to see which rule and a way to ask for a fix, and a check that could not run earns no tick.
-  DL-138 confirms the final wording. Persisted AMS-053 check results drive the note on reopen: passed
-  counts as Followed, failed counts as Missed and could_not_run earns no tick. A mixed result is one
-  line, Missed first, for example "Missed 1 of your rules · followed 2". See which rule opens the
-  saved check evidence as view state. Ask for a fix reuses cmd.review.send_findings_to_agent with
-  the taught_rule_check source variant (UCC-172): it fills the source thread's empty composer, returns
-  ComposerBufferResult, refuses composer_not_empty, and never sends or executes a fix. The user sends it.
+canonical_text: |-
+  Teach is a standard sheet of F3-566 and the only capture form: the wand's Teach…, /teach, natural-language intent and Save as a rule… all open it, prefilled with the rule text and its source, and there is no inline capture card in the chat (DL-127, ACD-477). Head: the Teach mark, Teach Puppet Master a rule and one lead sentence; in correct mode, Edit your rule. The hero is the rule field, with example rules that fill it. Under it one safety line says either that no password or key was spotted or, in the warm tone, that the text looks like a password or key and must be removed to save. The plate is three nested rings, This thread inside the available This project ring inside Everywhere, each a button with a helper; Everywhere stays disabled with its reason until the tick "It's safe to use in my other projects" is set, and in correct mode the wider rings are disabled because an edit cannot widen a rule. A Locked tick says only the user can change the rule (ACD-481). Beside them, the rule card shows the rule exactly as it will be saved, with its scope, lock and source message; when a similar rule exists, the old and new wording are shown side by side with a choice between Replace the old rule and Keep both, and saving waits for it. The foot holds Cancel and one primary, Save rule, Save and replace or Save as version 2. In the chat each change is one receipt line of F3-569's grammar: Rule saved, Rule updated to a new version, Rule turned off, with several saves in a row coalesced into one line. Your rules is an editor document (the taught memory document): one row per rule with its words, its scope, lock and version, a state word (In use, In use · locked, Replaced by v2, Turned off) and the actions Edit, Lock or Unlock, Turn off and From your message; Turn off asks inline (ACD-481), never in a modal. Teacher stays a Persona, and the sheet says Teach isn't the Teacher Persona. The note a reply carries for its taught rules is F3-570's rule note under DL-116 as AMS-053 defines following: it counts only rules whose check the finished reply passed, a failed check reads "Missed 1 of your rules" with a way to see which rule and a way to ask for a fix, and a check that could not run earns no tick. DL-138 confirms the final wording. Persisted AMS-053 check results drive the note on reopen: passed counts as Followed, failed counts as Missed and could_not_run earns no tick. A mixed result is one line, Missed first, for example "Missed 1 of your rules · followed 2". See which rule opens the saved check evidence as view state. Ask for a fix reuses cmd.review.send_findings_to_agent with the taught_rule_check source variant (UCC-172): it fills the source thread's empty composer, returns ComposerBufferResult, refuses composer_not_empty, and never sends or executes a fix. The user sends it. In No project omit the inapplicable Project ring; Everywhere is the existing public_safe user-taught scope, not a new Computer memory tier. Keep the public-safe checkbox, correction narrowing and source evidence; the display name changes no historical teaching record.
 gui_related: true
 gui_classification_reason: "Defines the Teach sheet, its chat receipts and the Your rules document."
 split_recommended: false
@@ -42400,12 +41829,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.11 (G-26, G-33, G-38)"
-  - "IMPACT-REGISTER B-FGS-08 (Teach part); cards p09 (E-12) and p15 (E-32)"
-  - "Plans/Decision_Log.md#DL-127"
-  - "Plans/Decision_Log.md#DL-130"
-  - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  section 8.11 (G-26, G-33, G-38)
+- IMPACT-REGISTER B-FGS-08 (Teach part); cards p09 (E-12) and p15 (E-32)
+- Plans/Decision_Log.md#DL-127
+- Plans/Decision_Log.md#DL-130
+- Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; B-F08,B-F13,C-F11
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"
@@ -42511,50 +41943,19 @@ plan_unit_id: F3-581
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  ELI5's GUI, as Jared confirmed it on 2026-09-27 (DL-126); the behaviour is assistant-chat-design
-  ACD-484. The wand's ELI5 row opens the ELI5 sheet and is not a check. The sheet is a compact sheet of F3-566 at 720 x 560 and never changes height while open (opening its disclosure fits
-  inside the 560). Its choices apply at once, so its foot shows only Done. Head: the ELI5 kind mark
-  (a speech bubble holding one short line), the title Explain things simply in this chat? and the
-  lead sentence "Answers use everyday words and explain terms as they go. Your code, plans and files
-  never change." The plate shows two voices side by side, Standard and Simple, each a short specimen
-  of the same answer, over one shared code line that spans both and never moves; choosing a voice
-  dispatches cmd.chat.eli5.set with off or on for this chat. Under the plate, Follow my usual setting dispatches cmd.chat.eli5.set with inherit, which deletes this chat's override. The one
-  disclosure, How it's decided, draws the resolution order as a trace, All chats, then Chats in this
-  project, then This chat, with the level that decides lit. The All chats node is the Explain Terms Everywhere setting and the Chats in this project node is that setting at project scope;
-  both require Settings-owned commits, never a chat command, and the This chat node is the same
-  cmd.chat.eli5.set as the plate. The project transaction is defined by SSYS-028. The retained All chats
-  edit remains disabled with the Settings owner's reason while its app-wide persistence route conflicts
-  with SSYS-002 and awaits pldg-20260927-001-wand-collab-workflows q-035; no global writer is inferred
-  from this GUI requirement. The foot reads "Takes effect from your next message. Answers already here keep their wording." and, while a reply streams, says that reply keeps its current
-  style. If the active chat changes while the sheet is open, the sheet changes nothing and reads
-  "You switched chats. Open this again from the chat you want to change." Closing it returns focus
-  to the wand trigger (UIW-025). The quick dot is the ELI5 kind mark among the composer's capability
-  glyphs inside the text field, present in both of its states: lit while Simple explanations are in
-  effect for the chat and muted while they are not. One click on it dispatches cmd.chat.eli5.set
-  with on or off for this chat and never opens the sheet, and its app hover card says whether
-  Simple explanations are on in this chat. In the transcript, a reply written in Simple carries the quiet Simple explanation tick in its meta row (F3-570), and a change-point divider reads
-  Simple explanations from here or Back to standard explanations between the last reply in the old
-  style and the first reply in the new one; no earlier reply changes. Each finished assistant reply's message actions may offer Explain this reply simply, which dispatches
-  cmd.chat.eli5.explain_reply with that reply's message id; while the reply is still streaming the
-  action is disabled and prints its reason. The one extra reply it writes lands at the end of the
-  thread as an ordinary assistant reply, carries the Simple explanation tick, names and links the
-  reply it explains, and adds no divider. The concept's fine print calling project defaults a
-  preview feature is not canon. The command catalog's surface id for the sheet is eli5_sheet.
-  The project-level general.interaction.eli5-default is persisted through Settings SSYS-028
-  (DL-138), so Chats in this project is a real editable level, resolved below This chat and above All chats.
+canonical_text: |-
+  ELI5's GUI, as Jared confirmed it on 2026-09-27 (DL-126); the behaviour is assistant-chat-design ACD-484. The wand's ELI5 row opens the ELI5 sheet and is not a check. The sheet is a compact sheet of F3-566 at 720 x 560 and never changes height while open (opening its disclosure fits inside the 560). Its choices apply at once, so its foot shows only Done. Head: the ELI5 kind mark (a speech bubble holding one short line), the title Explain things simply in this chat? and the lead sentence "Answers use everyday words and explain terms as they go. Your code, plans and files never change." The plate shows two voices side by side, Standard and Simple, each a short specimen of the same answer, over one shared code line that spans both and never moves; choosing a voice dispatches cmd.chat.eli5.set with off or on for this chat. Under the plate, Follow my usual setting dispatches cmd.chat.eli5.set with inherit, which deletes this chat's override. The one disclosure, How it's decided, draws the resolution order as a trace, Everywhere, then This computer, then Chats in this project when applicable, then This chat, with the level that decides lit. The All chats node is the Explain Terms Everywhere setting and the Chats in this project node is that setting at project scope; both require Settings-owned commits, never a chat command, and the This chat node is the same cmd.chat.eli5.set as the plate. The project transaction is defined by SSYS-028. All chats is the enabled Everywhere Settings transaction at its actual writer; q-035 is resolved in live canon. Computer and Project options appear only where offered, with honest offline/managed reasons. The foot reads "Takes effect from your next message. Answers already here keep their wording." and, while a reply streams, says that reply keeps its current style. If the active chat changes while the sheet is open, the sheet changes nothing and reads "You switched chats. Open this again from the chat you want to change." Closing it returns focus to the wand trigger (UIW-025). The quick dot is the ELI5 kind mark among the composer's capability glyphs inside the text field, present in both of its states: lit while Simple explanations are in effect for the chat and muted while they are not. One click on it dispatches cmd.chat.eli5.set with on or off for this chat and never opens the sheet, and its app hover card says whether Simple explanations are on in this chat. In the transcript, a reply written in Simple carries the quiet Simple explanation tick in its meta row (F3-570), and a change-point divider reads Simple explanations from here or Back to standard explanations between the last reply in the old style and the first reply in the new one; no earlier reply changes. Each finished assistant reply's message actions may offer Explain this reply simply, which dispatches cmd.chat.eli5.explain_reply with that reply's message id; while the reply is still streaming the action is disabled and prints its reason. The one extra reply it writes lands at the end of the thread as an ordinary assistant reply, carries the Simple explanation tick, names and links the reply it explains, and adds no divider. The concept's fine print calling project defaults a preview feature is not canon. The command catalog's surface id for the sheet is eli5_sheet. The project-level general.interaction.eli5-default is persisted through Settings SSYS-028 (DL-138), so Chats in this project is a real editable level, resolved below This chat and above All chats. No project omits the Project node and keeps its thread override. This supersedes the older q-035 disabled acceptance; one Settings engine and cmd.chat.eli5.set remain the owners.
 gui_related: true
 gui_classification_reason: "Defines the ELI5 sheet, the quick dot and ELI5's traces in the chat."
 split_recommended: false
 depends_on: [F3-566, F3-567, F3-570, F3-572, ACD-484, DL-126, UIW-025]
 unblocks: [ATS-065]
 acceptance_criteria:
-  - "The wand's ELI5 row opens a 720 x 560 compact sheet whose height never changes while open."
-  - "Standard, Simple and Follow my usual setting dispatch cmd.chat.eli5.set with off, on and inherit for the active chat."
-  - "The project node commits through Settings; the retained All chats edit requires its Settings-owned commit contract and stays disabled while ledger001 q-035 is open. Neither uses a chat command."
-  - "The quick dot is present lit or muted, and one click switches this chat's ELI5 without opening the sheet."
-  - "After any switch, every earlier reply's text is unchanged; only the divider and later replies show the new style."
-  - "Explain this reply simply is disabled while the reply streams, and on a finished reply adds exactly one reply at the end of the thread."
+- Everywhere/Computer/conditional Project/This chat trace is the actual resolver trace.
+- All chats uses the existing Settings transaction; This chat uses cmd.chat.eli5.set.
+- Current level/scope/write presentation follows SSYS-002/059, F3-670 and SP-348; old q-035 and universal inheritance/no-app-write
+  bans are superseded. Detached copies remain independent of their source Project. Exact owner/trust/permission/currentness
+  rules remain.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -42570,11 +41971,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 3.2 (the ELI5 compact height), 4.3 C23, 7.10, 8.13 and its amendments G-21 and G-34, 10.1 item f"
-  - "IMPACT-REGISTER B-FGS-02 (the ELI5 mark), B-FGS-03 (the ELI5 mark), B-FGS-08 (ELI5); card p08, E-11"
-  - "Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5) answer record p08"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  sections 3.2 (the ELI5 compact height), 4.3 C23, 7.10, 8.13 and its amendments G-21 and G-34, 10.1 item f
+- IMPACT-REGISTER B-FGS-02 (the ELI5 mark), B-FGS-03 (the ELI5 mark), B-FGS-08 (ELI5); card p08, E-11
+- Plans/Decision_Log.md#DL-126 (Owner resolution, Jared, 2026-09-27, confirmed in chat)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS-20260927-final.json (SHA-256 33d13386f28fc5f667fd1df85ba9cb70eefff7eb43c92723e14cefa08237aaf5)
+  answer record p08
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F09,C-F11
 preserved_exact_tokens:
   - "DL-138"
   - "general.interaction.eli5-default"
@@ -43939,97 +43344,10 @@ plan_unit_id: F3-598
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable theme family (nier), ordered after Basic,
-  Friendly, Glass and Retro. NieR Light (nier-light) and NieR Dark (nier-dark) complete ten built-in variants. A NieR
-  family pick uses general.visual.theme and the existing mode through cmd.settings.transaction.preview then cmd.settings.transaction.apply;
-  no independent NieR switch or command remains. Adjust NieR opens the one existing editor. general.visual.nier-parts
-  (29 parts) and general.visual.nier-background remain its Adjust rows, shown when general.visual.theme is NieR Light
-  or NieR Dark, with hidden values retained. Basic High contrast and Basic color scheme remain Basic-only; Glass and
-  Retro controls remain confined to their own families. The title-bar selector, Guided Tour Look menu, onboarding welcome
-  and its Look menu all offer the same five families in order basic, friendly, glass, retro, nier. Live family picks
-  use the Settings transaction pair; inside onboarding, choose_look on ui.onboarding.choose_look previews family/mode
-  or retained NieR Adjust values in the closed look_choice and persists only at the existing exact Project commit/finish
-  boundary. preview_nier and the independent nier_mode field are retired. Hover is silent and changes no theme; click
-  or keyboard activation selects (O6). ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay
-  remain presentation-only; nier.editor.open is the Adjust binding. No manager_id, route, detail id, command, new part
-  or event is added. shell.nier.mode, tour.nier.mode and onboarding.nier.mode are retired non_dispatch census tombstones
-  with no action, setting or production writer. The editor retains a focus-contained popup over the application and an
-  in-window panel during onboarding, with Escape and exact return. While NieR Mode is painted, its preview included,
-  onboarding and the Tour take a NieR direction in place of Basic''s. Superseded 2026-10-29 for onboarding by O8/X3/F3-663,
-  retained as Tour/source lineage only: the earlier illustration system used the NieR unit marionettes, original line
-  art drawn for Puppet Master with no game asset and no character likeness: small android units whose shield-shaped head
-  is crossed by a rigid ink visor band that overhangs it on both sides and is the unit''s only face (a scan notch at
-  rest, two chevrons for joy, two dashes in a bow), with a high collar, one coat silhouette per variant (long coat, short
-  cape, hood, pauldron), square pins at shoulders, elbows and knees, square hands, and hairline strings tied to an ink
-  diamond knot on the head; head to torso is 1.21 to 1 at scene and icon scale. A solid-ink figure with a paper visor
-  slit, the only unstrung one, steers the floating control unit from a broken column, a small machine lifeform watches
-  from the snapped corner of a ruined stage, and the icon form keeps the same unit on the 28-unit marionette grid, dropping
-  detail as it shrinks (pins below 36 px, hands below 28 px, one string below 22 px, a pixel map at 14 to 16 px). The
-  art paints only NieR''s ink, paper and raised-surface roles, strings in ink at about half strength, the accent ochre
-  on one item per scene and rust only in a fifth of the confetti; no NieR part gates the units or their visor, which
-  follow NieR Mode being painted, while the parts gate the scene''s decoration and motion (YoRHa headers the kicker,
-  Machine glyphs the glyph strip, Parchment ground the dot grid, Map ticks the map label and ruler ticks, Scan sweep
-  the visor scan, Menu cursor the blinks, Target brackets the lock-on corners of a cheer, Slice open and Text decode
-  the scene changes). The window and the Tour callout gain, each under its own part: the YoRHa header band, kicker and
-  ink rail (YoRHa headers); square fields and switches (Square hairlines); the menu cursor on cards, tiles, switches
-  and choice rows (Menu cursor); ink target brackets on the chosen card or tile and around the Tour''s target (Target
-  brackets); labels of 8 characters or fewer decode, and longer words type on (Text decode); slice-opening panels and
-  callouts (Slice open); a page wipe on a back move (Page wipe); a block progress meter (Block progress); and, under
-  Quest banners, the cards named below rather than a chapter banner. A torn alert marks an error or a missing Tour target
-  (Alert glitch). Pod 042 docks in the Tour callout, flies Show Me''s pointer and reports each screen once, led by `Report:`,
-  `Proposal:`, `Alert:` or `Query:` (Pod companion for the unit, Pod voice for the words), and never covers an actor,
-  a hung card or the stage kicker. No part is added. In the concept the moments, as built, are these. Entering NieR uses
-  its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving
-  NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant
-  settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting. The cold open: the window
-  opens empty and a boot log types in the pane, and each of its stamps wakes the puppets. At a chapter''s end in onboarding
-  an ink act card is lowered on two strings, and on landing the ink block walks the rail to the next chapter, instead
-  of a chapter banner. The Project''s name is stamped Created, and at Ready a two-panel curtain closes over the last
-  scene and opens on the troupe standing in a line, for a curtain call that re-stamps the rail. Ready hands the window
-  over as one ink line into the tour''s first callout, and the same Pod flies into that callout. In the tour, Show Me
-  is Pod 042 taking the strings inside a frame that reads In control and Press any key to stop. Each new tour chapter
-  hangs a chapter card while the bar''s ink block walks from the old chapter''s name to the new one. At the finish the
-  callout folds, a results card opens, and then Pod flies home. Entering NieR with Reboot installed uses the shared slat
-  plate with the existing wake cue; all other family/scheme transitions use the standard look cover. The NieR boot log
-  on the Settings page paints in the stored Light, Dark or Auto mode from its first frame. NieR motion is stepped, with
-  no glow, filter or blur, loops only by transform or opacity, and scales with Animation speed. Words longer than 8 characters
-  type on, with their final layout reserved from the first frame. No surface larger than 340x256 px reverses its opacity
-  more than once a second: a large area leaves one way, by a fold, a wipe or slats, and only a small element such as
-  a caret, a stamp or a tick may flicker. Input never waits: a key or a press snaps a running performance to its end
-  state. Every beat is gated by an existing part. Reduced Motion, the Still and Colors only presets and low resource
-  show each moment''s end state, and Quiet drops the Pod beats. A background change made from the editor cross-fades
-  as F3-589 sets out. The application beneath the onboarding window stays still while the window is open (F3-520 owns
-  this in every look). The five theme families have hero moments of their own (F3-600); NieR''s play whenever the NieR
-  family is selected, only while the NieR family is selected (Q22) (DL-153). Q22 adds the NieR family and its two variants
-  without a new settings key, part, command, route or tour action: inside the onboarding window the five-family look
-  choice and its Adjust editor panel use the one typed local action `ui.onboarding.choose_look`, the editor''s open,
-  close and Play reboot moment are `ui.settings.nier_editor.open`, `ui.settings.nier_editor.close` and `ui.settings.nier_editor.replay`,
-  and every live control composes the Settings transaction pair (SSYS-043, DL-153). Amended 2026-10-16 (DL-215): the
-  reboot cover''s exit is smooth: its slats tear the cover away in place, with no sideways jumps of the cover over the
-  page beneath (Jared, 2026-10-16). Amended 2026-10-16 (DL-216, Jared): while the reboot cover waits for the look to
-  finish applying, it keeps moving in NieR''s language, a scanline sweep or a progress glyph within NieR''s stepped motion
-  rule, so a long wait never reads as frozen. Amended 2026-10-16 (DL-217, the Settings lane): under Reduced Motion the
-  NieR switch shows a calm cover in the outgoing look''s colours, with no slats or travel, that names what is being applied,
-  is announced politely, and lifts once the new look is drawn; the waiting reboot cover''s movement is a compositor ink
-  sweep across its segmented meter. Current PM7 replacement: Amended 2026-10-29 (O8/O11, X3; PM7): F3-663’s NieR Pip
-  replaces the unit marionette for onboarding and chat agents. NieR Pip shows eyes through the band on live and static
-  marks, including title bar, app icon and tray, at every size (X3 B, Jared 2026-10-30). Retain NieR material/HUD/reboot
-  and Pod 042 as Tour/Chat narrator; no Tour redesign now. Retained historical/source tokens (not active overrides):
-  menuitemcheckbox. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation
-  1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only. DL-259 QA2 Q5/Q21,
-  Jared 2026-10-31: look menus fit the available window/viewport with bounded scrolling where needed. Highlight plates
-  fit their family/scheme rows; Customize Pip has its own clearly grouped entry through the existing editor action. The
-  five-family order and ten variants stay DL-257’s. DL-257/Q22 and DL-259 QA2 M4, 2026-10-31: the welcome look chooser
-  gives Basic, Friendly, Glass, Retro and NieR equal choice prominence. Each tile has an accessible family label and
-  reachable question/Adjust controls where applicable. At narrow and short supported sizes the title, all five choices
-  and footer remain readable and reachable without clipping or a hidden extra-family strip; the chooser fits above the
-  footer or scrolls within its bounded content area. Click or keyboard activation selects; silent hover does not select.
+canonical_text: |-
+  Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable theme family (nier), ordered after Basic, Friendly, Glass and Retro. NieR Light (nier-light) and NieR Dark (nier-dark) complete ten built-in variants. A NieR family pick uses general.visual.theme and the existing mode through cmd.settings.transaction.preview then cmd.settings.transaction.apply; no independent NieR switch or command remains. Adjust NieR opens the one existing editor. general.visual.nier-parts (29 parts) and general.visual.nier-background remain its Adjust rows, shown when general.visual.theme is NieR Light or NieR Dark, with hidden values retained. Basic High contrast and Basic color scheme remain Basic-only; Glass and Retro controls remain confined to their own families. The title-bar selector, Guided Tour Look menu, onboarding welcome and its Look menu all offer the same five families in order basic, friendly, glass, retro, nier. Live family picks use the Settings transaction pair; inside onboarding, choose_look on ui.onboarding.choose_look previews family/mode or retained NieR Adjust values in the closed look_choice and persists only at the existing exact Project commit/finish boundary. preview_nier and the independent nier_mode field are retired. Hover is silent and changes no theme; click or keyboard activation selects (O6). ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay remain presentation-only; nier.editor.open is the Adjust binding. No manager_id, route, detail id, command, new part or event is added. shell.nier.mode, tour.nier.mode and onboarding.nier.mode are retired non_dispatch census tombstones with no action, setting or production writer. The editor retains a focus-contained popup over the application and an in-window panel during onboarding, with Escape and exact return. While NieR Mode is painted, its preview included, onboarding and the Tour take a NieR direction in place of Basic's. Superseded 2026-10-29 for onboarding by O8/X3/F3-663, retained as Tour/source lineage only: the earlier illustration system used the NieR unit marionettes, original line art drawn for Puppet Master with no game asset and no character likeness: small android units whose shield-shaped head is crossed by a rigid ink visor band that overhangs it on both sides and is the unit's only face (a scan notch at rest, two chevrons for joy, two dashes in a bow), with a high collar, one coat silhouette per variant (long coat, short cape, hood, pauldron), square pins at shoulders, elbows and knees, square hands, and hairline strings tied to an ink diamond knot on the head; head to torso is 1.21 to 1 at scene and icon scale. A solid-ink figure with a paper visor slit, the only unstrung one, steers the floating control unit from a broken column, a small machine lifeform watches from the snapped corner of a ruined stage, and the icon form keeps the same unit on the 28-unit marionette grid, dropping detail as it shrinks (pins below 36 px, hands below 28 px, one string below 22 px, a pixel map at 14 to 16 px). The art paints only NieR's ink, paper and raised-surface roles, strings in ink at about half strength, the accent ochre on one item per scene and rust only in a fifth of the confetti; no NieR part gates the units or their visor, which follow NieR Mode being painted, while the parts gate the scene's decoration and motion (YoRHa headers the kicker, Machine glyphs the glyph strip, Parchment ground the dot grid, Map ticks the map label and ruler ticks, Scan sweep the visor scan, Menu cursor the blinks, Target brackets the lock-on corners of a cheer, Slice open and Text decode the scene changes). The window and the Tour callout gain, each under its own part: the YoRHa header band, kicker and ink rail (YoRHa headers); square fields and switches (Square hairlines); the menu cursor on cards, tiles, switches and choice rows (Menu cursor); ink target brackets on the chosen card or tile and around the Tour's target (Target brackets); labels of 8 characters or fewer decode, and longer words type on (Text decode); slice-opening panels and callouts (Slice open); a page wipe on a back move (Page wipe); a block progress meter (Block progress); and, under Quest banners, the cards named below rather than a chapter banner. A torn alert marks an error or a missing Tour target (Alert glitch). Pod 042 docks in the Tour callout, flies Show Me's pointer and reports each screen once, led by `Report:`, `Proposal:`, `Alert:` or `Query:` (Pod companion for the unit, Pod voice for the words), and never covers an actor, a hung card or the stage kicker. No part is added. In the concept the moments, as built, are these. Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting. The cold open: the window opens empty and a boot log types in the pane, and each of its stamps wakes the puppets. At a chapter's end in onboarding an ink act card is lowered on two strings, and on landing the ink block walks the rail to the next chapter, instead of a chapter banner. The Project's name is stamped Created, and at Ready a two-panel curtain closes over the last scene and opens on the troupe standing in a line, for a curtain call that re-stamps the rail. Ready hands the window over as one ink line into the tour's first callout, and the same Pod flies into that callout. In the tour, Show Me is Pod 042 taking the strings inside a frame that reads In control and Press any key to stop. Each new tour chapter hangs a chapter card while the bar's ink block walks from the old chapter's name to the new one. At the finish the callout folds, a results card opens, and then Pod flies home. Entering NieR with Reboot installed uses the shared slat plate with the existing wake cue; all other family/scheme transitions use the standard look cover. The NieR boot log on the Settings page paints in the stored Light, Dark or Auto mode from its first frame. NieR motion is stepped, with no glow, filter or blur, loops only by transform or opacity, and scales with Animation speed. Words longer than 8 characters type on, with their final layout reserved from the first frame. No surface larger than 340x256 px reverses its opacity more than once a second: a large area leaves one way, by a fold, a wipe or slats, and only a small element such as a caret, a stamp or a tick may flicker. Input never waits: a key or a press snaps a running performance to its end state. Every beat is gated by an existing part. Reduced Motion, the Still and Colors only presets and low resource show each moment's end state, and Quiet drops the Pod beats. A background change made from the editor cross-fades as F3-589 sets out. The application beneath the onboarding window stays still while the window is open (F3-520 owns this in every look). The five theme families have hero moments of their own (F3-600); NieR's play whenever the NieR family is selected, only while the NieR family is selected (Q22) (DL-153). Q22 adds the NieR family and its two variants without a new settings key, part, command, route or tour action: inside the onboarding window the five-family look choice and its Adjust editor panel use the one typed local action `ui.onboarding.choose_look`, the editor's open, close and Play reboot moment are `ui.settings.nier_editor.open`, `ui.settings.nier_editor.close` and `ui.settings.nier_editor.replay`, and every live control composes the Settings transaction pair (SSYS-043, DL-153). Amended 2026-10-16 (DL-215): the reboot cover's exit is smooth: its slats tear the cover away in place, with no sideways jumps of the cover over the page beneath (Jared, 2026-10-16). Amended 2026-10-16 (DL-216, Jared): while the reboot cover waits for the look to finish applying, it keeps moving in NieR's language, a scanline sweep or a progress glyph within NieR's stepped motion rule, so a long wait never reads as frozen. Amended 2026-10-16 (DL-217, the Settings lane): under Reduced Motion the NieR switch shows a calm cover in the outgoing look's colours, with no slats or travel, that names what is being applied, is announced politely, and lifts once the new look is drawn; the waiting reboot cover's movement is a compositor ink sweep across its segmented meter. Current PM7 replacement: Amended 2026-10-29 (O8/O11, X3; PM7): F3-663’s NieR Pip replaces the unit marionette for onboarding and chat agents. NieR Pip shows eyes through the band on live and static marks, including title bar, app icon and tray, at every size (X3 B, Jared 2026-10-30). Retain NieR material/HUD/reboot and Pod 042 as Tour/Chat narrator; no Tour redesign now. Retained historical/source tokens (not active overrides): menuitemcheckbox. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation 1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only. DL-259 QA2 Q5/Q21, Jared 2026-10-31: look menus fit the available window/viewport with bounded scrolling where needed. Highlight plates fit their family/scheme rows; Customize Pip has its own clearly grouped entry through the existing editor action. The five-family order and ten variants stay DL-257’s. DL-257/Q22 and DL-259 QA2 M4, 2026-10-31: the welcome look chooser gives Basic, Friendly, Glass, Retro and NieR equal choice prominence. Each tile has an accessible family label and reachable question/Adjust controls where applicable. At narrow and short supported sizes the title, all five choices and footer remain readable and reachable without clipping or a hidden extra-family strip; the chooser fits above the footer or scrolls within its bounded content area. Click or keyboard activation selects; silent hover does not select.
 
-
-  DL-272 FO-18, 2026-11-01: The Ready curtain call is eligible only when MS-122 reports usable AI, including a
-  usable free route. Otherwise show the calm Almost ready state without a celebration or celebratory sound.
-  This eligibility check precedes NieR’s and every other family’s Ready moment; it does not change O12’s
-  Creating owner-completion and last-block gates.'
+  DL-272 FO-18, 2026-11-01: The Ready curtain call is eligible only when MS-122 reports usable AI, including a usable free route. Otherwise show the calm Almost ready state without a celebration or celebratory sound. This eligibility check precedes NieR’s and every other family’s Ready moment; it does not change O12’s Creating owner-completion and last-block gates. Current SSYS-059/065 scope classification supersedes universal no-Project look/sound write wording: claimed app levels can persist, only pre-claim preview remains ephemeral. Project Later still sets up AI on the named Computer and lands in No project; explicit Skip AI remains valid. Re-entry reads the exact resolved app/Project look, without a private reader/store. Preserve PM7’s current service admission, FO-22 valid-answer Back/Review, all art/solver/Pip/Glass/motion/audio and calm Almost ready rules; new native availability is not inferred.
 gui_related: true
 gui_classification_reason: Defines fifth-family NieR selection and how onboarding and the Guided Tour look (Q22)
   under it.
@@ -44111,17 +43429,19 @@ source_lineage:
   lineage only)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md, SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9
   (the global acceptance bar and the A4, A11, A13 and B9 findings; source lineage)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md, SHA-256
-  a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of 2026-10-16 ~12:10Z; decision
-  lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
+  SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of 2026-10-16 ~12:10Z;
+  decision lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--pm7-motion-settings--NOTES.md,
-  SHA-256 969a47e289d72c048f7f44b94488b1953a2edeba0fa28c41b72bdc5d4ca5e094 (Settings lane notes, B1, B3 and B5; source
-  lineage)
-- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md — QA2 review M2/m4 five equal look choices;
-  grid geometry is source evidence only.
+  SHA-256 969a47e289d72c048f7f44b94488b1953a2edeba0fa28c41b72bdc5d4ca5e094 (Settings lane notes, B1, B3 and B5;
+  source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md — QA2 review M2/m4 five equal look
+  choices; grid geometry is source evidence only.
 - PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
   Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
   are source lineage only.
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F09,C-F02,C-F11,E-F07,E-F08
 preserved_exact_tokens:
 - NieR Mode
 - Adjust NieR look
@@ -44156,88 +43476,8 @@ plan_unit_id: F3-599
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Product Onboarding and the Guided Tour play sound cues for their own moments, and those cues form one
-  onboarding and Guided Tour cue category in the Notifications & Sounds routing matrix (F3-405), beside the chat cue
-  category (F3-564): mapped through general.interaction.sound-mapping, switched by general.interaction.sound-effects
-  (on by default, DL-107) and silenced by the onboarding and Tour sound controls, which toggle that same key (F3-520,
-  F3-521). Its moments, as the concept plays them, are: in setup, the window opening, moving forward or back, entering
-  a new chapter, choosing a card or tile, a tap, a switch turned on or off, a sheet or panel opening or closing, a reveal,
-  typing, a phase of owner work, something found, a warning, a failure, a copy, moving through folders, the Project made,
-  a helper''s cheer, the celebration, and the finish or a close; in the Tour, its opening, a callout arriving, next,
-  back and skip, a step done, Show Me''s pointer setting off, picking up, dropping, pressing and arriving, typing, moving
-  through parts, a phase, a missing target, an interruption, pause and resume, a choice, and the finish or a close; NieR
-  Mode turned on or off; and, while NieR Mode is painted, the reboot cover, a title decode, the act card or hung chapter
-  card, Pod''s chirp and the menu cursor''s tick. The cues added for these moments are wake, which falls back to a reveal,
-  string to a tap, land to a drop, bow to back, save to a success, showPointer to the pointer and showInterrupt to an
-  interruption. wake plays when the cover reveals, string when strings go taut or the name sign or Show Me''s string
-  sounds, land when a unit or prop is set down, bow when a unit bows, save when the Project is stamped made, showPointer
-  while Pod demonstrates and showInterrupt when that demonstration hands control back. A moment without a sound of its
-  own in a kit plays the sound of a fixed related moment, never silence by accident and never an unrelated sound; pointer
-  hover alone is silent outside NieR Mode. Each of the five families has a cue kit shared by its Light/Dark variants
-  (Q22). The NieR kit uses original Puppet Master sounds in the spirit of the game’s menus while family nier is selected/previewed
-  and its Menu sounds part is installed; otherwise the existing cue fallback remains, without changing family; turning
-  NieR Mode on or off and the reboot cover use the NieR kit whenever Menu sounds is installed, even mid-change. Pod''s
-  chirp plays only while Pod companion or Pod voice is installed and a Pod is on screen to turn toward what it reports;
-  it is the NieR kit''s chirp with Menu sounds installed and the painted kit''s tap otherwise. Frequent cues (a tap,
-  a choice, next, back, the switches, a step, typing, moves, callouts, steps done, and in the NieR kit Pod, decode, quest
-  and the cursor tick) draw from pools of three to five takes in a shuffle that never repeats the last take; every cue
-  follows the journey''s pitch (a chord per chapter, forward steps climbing with progress, back descending). The legacy
-  Guided Tour cue motifs remain scoped to the unchanged Tour (O11). Pip onboarding instead uses the six approved recipe
-  roots/offsets below (O3/O4); the former Friendly G A B D and Glass C G D A table is retired for onboarding, never a
-  re-key target. A chapter already stung in the current run does not sting again, so moving Back and then forward plays
-  the plain forward cue. A take never changes a cue''s meaning, loudness tier or timing. Cues requested in one task or
-  within 70 ms merge by importance: only the most important plays (a commit, then a celebration, then the finish, then
-  NieR Mode turning on or off and wake, then the reboot, then an outcome such as a success and then save, then a chapter
-  sting, then screen changes, moves and choices, then taps, with title decode, typing and hover last), and a lesser cue
-  already sounding gives way to a more important one arriving inside the window. Each moment has one signature cue: no
-  two cues of priority 75 or higher play within 1000 ms, except the designed layers. Those layers are the texture ticks
-  (a title decode''s chatter, typing, moves and the cursor''s hover) and the stage''s foley (a string, a landing and
-  a bow) under anything, the celebration''s sparkles over a commit or the finish, and Pod''s chirp just after a callout,
-  a quest card, a chapter or a step. Before a resolution, Ready''s chord and the tour''s finish, the other cues rest
-  for 150 ms. Very frequent cues keep a minimum gap between two of the same, and a burst of six sounds within half a
-  second keeps only the important ones. These limits are the onboarding and Guided Tour category''s; the chat''s cues
-  keep ACD-475''s. Every onboarding, Tour and NieR sound, the NieR parts'' menu sounds included, plays through the Notifications
-  & Sounds owner''s one player with its one switch, volume and gesture gate: audio starts only after a user gesture,
-  each cue accompanies a visible change and never carries information alone, and Reduced Motion does not mute. With no
-  Project the onboarding sound control starts on, as general.interaction.sound-effects''s factory default (DL-107), as
-  a session-only preview that writes nothing. The Settings sound library lists every take of every onboarding and Tour
-  cue of every kit, the NieR kit included, as its own built-in entry in styles of their own beside the notification sounds
-  (Setup & tour, one per look, and NieR), the main take of each moment first and the other takes behind a Show N more
-  takes control; each is previewed after an explicit gesture under F3-405''s preview rules. Setup & tour shows one look''s
-  takes at a time, chosen by a Which look switch; that switch (ui.settings.sound_library.look.select) and Show N more
-  takes (ui.settings.sound_library.takes.toggle) are typed local presentation actions that write nothing, and previewing
-  an entry dispatches the existing cmd.sound.preview (DL-153). In the concept that library holds 354 entries (Basic 69
-  takes, Friendly, Glass and Retro 66 each, and the NieR kit 87), generated demonstration tones labelled as such and
-  previewed through the onboarding''s own player. This pass changes the four family kits'' sounds; the five families''
-  pictures change only at their own hero moments (F3-600, DL-153), which play those kits'' existing cues and add no take.
-  Production built-in cues carry source, licence, version, duration and hash metadata, and no game audio is used. Amended
-  2026-10-29 (O3–O6, S3/S4; PM7): Onboarding now has six live-synthesized kits with distinct Retro Dark/Light, voice
-  and eight-bar music as Pip parts through the existing player/master sound, with recipe metadata in the existing library/tools.
-  The earlier 354 cue count is a historical cue-only snapshot, not a total that excludes new recipes. Approved tunes
-  are not re-keyed. Reduced Motion never mutes; look-tile hover is silent. No hums/drones/beating/gated buzz/moan/deep
-  thump. Master sound defaults on; first input gates audio. Preserve library preview and licence/source/hash rules for
-  shipped assets. O3/O4 normative Pip setup recipes (2026-10-29), from Concepts/onboarding/opus-5.5-pip/sound.js: Friendly
-  MIDI root 72 with offsets [12,14,16,19] (C D E G); Glass root 74, [0,7,14,21] (D A E B); Basic root 72, [4,7,11,14]
-  (E G B D); Retro Dark root 72, [0,4,7,12] (C E G C); Retro Light root 79, [0,2,4,7] (G A B D); NieR root 69 minor,
-  [12,15,19,22] (A C E G). Preserve approved pitch/chapter transposition and synthesis recipes with source/licence/version
-  metadata through the one player; no re-key to the old canon. Six setup kits coexist with the unchanged Tour’s existing
-  cue mappings, not another player, switch or local registry. O6, Jared 2026-10-30: look-tile hover has no sound or theme
-  change in any look, NieR included. Only click/keyboard activation selects the look; this does not silence deliberate
-  Ask Pip or other owner-routed cues. O3/O4/O5/O8/O9/SND1 B, PM7 Step4 final-source alignment, 2026-10-30 (integration
-  e9b15abc64): the existing sound_render.mjs renders Pip’s six kits with --pip-only into sound.json pip records and pip/<kit>/<key>.wav;
-  sound_catalog.py --pip measures/levels them and --write updates the shared TRIM/MAKEUP. sound_board.py --pip builds
-  the boards/spectrograms; --pip-page builds the listening page. The separate pip_sound_board.py, pip_sound_levels.mjs
-  and pip_sound_texture.mjs tools are retired in favor of these shared tools. This is one recipe/catalog/player path,
-  not a second sound registry. Land on the tools’ measured numbers as Jared decided SND1 B; product listening remains
-  his later check. Block cues occur once per touchdown, rise with stack position and flourish on the last, through the
-  same sound/mute/gesture gates; hover over a look tile is silent in every look, including NieR. Amended Q22, Jared 2026-10-30
-  (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust
-  controls. Q22, Jared 2026-10-30 (DL-257): family nier replaces the independent overlay model; retained sound parts
-  and the shared player remain. DL-259, Jared 2026-10-31: Q1 B, Jared 2026-10-31: the shared Pip voice, say and vocals
-  everywhere Pip speaks, sends 0.35 after trim and pan into its look’s room; Glass uses 0.30 and NieR 0.16. Each look
-  uses its one per-look kit room, registered before the first shared voice in every host, with no stacked rooms. These
-  restore the old voice’s own sends. Loudness remains within approximately 0.4 dB. The existing preference, gesture and
-  sound owner still gates playback.'
+canonical_text: |-
+  Product Onboarding and the Guided Tour play sound cues for their own moments, and those cues form one onboarding and Guided Tour cue category in the Notifications & Sounds routing matrix (F3-405), beside the chat cue category (F3-564): mapped through general.interaction.sound-mapping, switched by general.interaction.sound-effects (on by default, DL-107) and silenced by the onboarding and Tour sound controls, which toggle that same key (F3-520, F3-521). Its moments, as the concept plays them, are: in setup, the window opening, moving forward or back, entering a new chapter, choosing a card or tile, a tap, a switch turned on or off, a sheet or panel opening or closing, a reveal, typing, a phase of owner work, something found, a warning, a failure, a copy, moving through folders, the Project made, a helper's cheer, the celebration, and the finish or a close; in the Tour, its opening, a callout arriving, next, back and skip, a step done, Show Me's pointer setting off, picking up, dropping, pressing and arriving, typing, moving through parts, a phase, a missing target, an interruption, pause and resume, a choice, and the finish or a close; NieR Mode turned on or off; and, while NieR Mode is painted, the reboot cover, a title decode, the act card or hung chapter card, Pod's chirp and the menu cursor's tick. The cues added for these moments are wake, which falls back to a reveal, string to a tap, land to a drop, bow to back, save to a success, showPointer to the pointer and showInterrupt to an interruption. wake plays when the cover reveals, string when strings go taut or the name sign or Show Me's string sounds, land when a unit or prop is set down, bow when a unit bows, save when the Project is stamped made, showPointer while Pod demonstrates and showInterrupt when that demonstration hands control back. A moment without a sound of its own in a kit plays the sound of a fixed related moment, never silence by accident and never an unrelated sound; pointer hover alone is silent outside NieR Mode. Each of the five families has a cue kit shared by its Light/Dark variants (Q22). The NieR kit uses original Puppet Master sounds in the spirit of the game’s menus while family nier is selected/previewed and its Menu sounds part is installed; otherwise the existing cue fallback remains, without changing family; turning NieR Mode on or off and the reboot cover use the NieR kit whenever Menu sounds is installed, even mid-change. Pod's chirp plays only while Pod companion or Pod voice is installed and a Pod is on screen to turn toward what it reports; it is the NieR kit's chirp with Menu sounds installed and the painted kit's tap otherwise. Frequent cues (a tap, a choice, next, back, the switches, a step, typing, moves, callouts, steps done, and in the NieR kit Pod, decode, quest and the cursor tick) draw from pools of three to five takes in a shuffle that never repeats the last take; every cue follows the journey's pitch (a chord per chapter, forward steps climbing with progress, back descending). The legacy Guided Tour cue motifs remain scoped to the unchanged Tour (O11). Pip onboarding instead uses the six approved recipe roots/offsets below (O3/O4); the former Friendly G A B D and Glass C G D A table is retired for onboarding, never a re-key target. A chapter already stung in the current run does not sting again, so moving Back and then forward plays the plain forward cue. A take never changes a cue's meaning, loudness tier or timing. Cues requested in one task or within 70 ms merge by importance: only the most important plays (a commit, then a celebration, then the finish, then NieR Mode turning on or off and wake, then the reboot, then an outcome such as a success and then save, then a chapter sting, then screen changes, moves and choices, then taps, with title decode, typing and hover last), and a lesser cue already sounding gives way to a more important one arriving inside the window. Each moment has one signature cue: no two cues of priority 75 or higher play within 1000 ms, except the designed layers. Those layers are the texture ticks (a title decode's chatter, typing, moves and the cursor's hover) and the stage's foley (a string, a landing and a bow) under anything, the celebration's sparkles over a commit or the finish, and Pod's chirp just after a callout, a quest card, a chapter or a step. Before a resolution, Ready's chord and the tour's finish, the other cues rest for 150 ms. Very frequent cues keep a minimum gap between two of the same, and a burst of six sounds within half a second keeps only the important ones. These limits are the onboarding and Guided Tour category's; the chat's cues keep ACD-475's. Every onboarding, Tour and NieR sound, the NieR parts' menu sounds included, plays through the Notifications & Sounds owner's one player with its one switch, volume and gesture gate: audio starts only after a user gesture, each cue accompanies a visible change and never carries information alone, and Reduced Motion does not mute. Without a Project the onboarding sound control resolves general.interaction.sound-effects from admitted app levels; On remains the bundled default. Only pre-claim/unavailable-writer preview writes nothing. The Settings sound library lists every take of every onboarding and Tour cue of every kit, the NieR kit included, as its own built-in entry in styles of their own beside the notification sounds (Setup & tour, one per look, and NieR), the main take of each moment first and the other takes behind a Show N more takes control; each is previewed after an explicit gesture under F3-405's preview rules. Setup & tour shows one look's takes at a time, chosen by a Which look switch; that switch (ui.settings.sound_library.look.select) and Show N more takes (ui.settings.sound_library.takes.toggle) are typed local presentation actions that write nothing, and previewing an entry dispatches the existing cmd.sound.preview (DL-153). In the concept that library holds 354 entries (Basic 69 takes, Friendly, Glass and Retro 66 each, and the NieR kit 87), generated demonstration tones labelled as such and previewed through the onboarding's own player. This pass changes the four family kits' sounds; the five families' pictures change only at their own hero moments (F3-600, DL-153), which play those kits' existing cues and add no take. Production built-in cues carry source, licence, version, duration and hash metadata, and no game audio is used. Amended 2026-10-29 (O3–O6, S3/S4; PM7): Onboarding now has six live-synthesized kits with distinct Retro Dark/Light, voice and eight-bar music as Pip parts through the existing player/master sound, with recipe metadata in the existing library/tools. The earlier 354 cue count is a historical cue-only snapshot, not a total that excludes new recipes. Approved tunes are not re-keyed. Reduced Motion never mutes; look-tile hover is silent. No hums/drones/beating/gated buzz/moan/deep thump. Master sound defaults on; first input gates audio. Preserve library preview and licence/source/hash rules for shipped assets. O3/O4 normative Pip setup recipes (2026-10-29), from Concepts/onboarding/opus-5.5-pip/sound.js: Friendly MIDI root 72 with offsets [12,14,16,19] (C D E G); Glass root 74, [0,7,14,21] (D A E B); Basic root 72, [4,7,11,14] (E G B D); Retro Dark root 72, [0,4,7,12] (C E G C); Retro Light root 79, [0,2,4,7] (G A B D); NieR root 69 minor, [12,15,19,22] (A C E G). Preserve approved pitch/chapter transposition and synthesis recipes with source/licence/version metadata through the one player; no re-key to the old canon. Six setup kits coexist with the unchanged Tour’s existing cue mappings, not another player, switch or local registry. O6, Jared 2026-10-30: look-tile hover has no sound or theme change in any look, NieR included. Only click/keyboard activation selects the look; this does not silence deliberate Ask Pip or other owner-routed cues. O3/O4/O5/O8/O9/SND1 B, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): the existing sound_render.mjs renders Pip’s six kits with --pip-only into sound.json pip records and pip/<kit>/<key>.wav; sound_catalog.py --pip measures/levels them and --write updates the shared TRIM/MAKEUP. sound_board.py --pip builds the boards/spectrograms; --pip-page builds the listening page. The separate pip_sound_board.py, pip_sound_levels.mjs and pip_sound_texture.mjs tools are retired in favor of these shared tools. This is one recipe/catalog/player path, not a second sound registry. Land on the tools’ measured numbers as Jared decided SND1 B; product listening remains his later check. Block cues occur once per touchdown, rise with stack position and flourish on the last, through the same sound/mute/gesture gates; hover over a look tile is silent in every look, including NieR. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. Q22, Jared 2026-10-30 (DL-257): family nier replaces the independent overlay model; retained sound parts and the shared player remain. DL-259, Jared 2026-10-31: Q1 B, Jared 2026-10-31: the shared Pip voice, say and vocals everywhere Pip speaks, sends 0.35 after trim and pan into its look’s room; Glass uses 0.30 and NieR 0.16. Each look uses its one per-look kit room, registered before the first shared voice in every host, with no stacked rooms. These restore the old voice’s own sends. Loudness remains within approximately 0.4 dB. The existing preference, gesture and sound owner still gates playback.
 gui_related: true
 gui_classification_reason: Places onboarding and Guided Tour sound cues, their kits and the NieR kit in the
   sound settings model.
@@ -44302,7 +43542,9 @@ source_lineage:
 - Plans/Decision_Log.md#DL-152
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-REQUEST-20261007.md, SHA-256 416638453431ef6bac2b4a8066560214c4fa3bcd8e0663cf778fba89bc63e652
 - Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/polish-nier-onboarding-sounds)
-- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F09,C-F11,E-F07
 preserved_exact_tokens:
 - general.interaction.sound-effects
 - general.interaction.sound-mapping
@@ -44956,21 +44198,8 @@ plan_unit_id: F3-612
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  When the assistant chat opens as a page of its own, its first painted frame is the viewer's stored look
-  (DL-159, F3-468): the stored theme in its family and mode, Basic Dark when nothing is stored, and with the
-  NieR family selected, Basic in the stored mode under NieR Mode's attributes with the installed parts listed,
-  so the ground of every family, NieR Mode's parchment or ink and Glass's backdrop are right before the chat's
-  content draws. A reader that runs before the first frame reads the chat's own look store and never writes it.
-  It stores nothing new, keeps no app-global copy of the theme, and writes only what the chat's renderer and
-  NieR Mode's engine write on their first render, which still own the look and write the same values. No large
-  surface changes colour between the first frame and the rendered chat. Reduced motion is the system's setting
-  and is not read from the store. NieR Mode's boot log plays only when the chat opens in NieR Mode with the Boot
-  sequence part installed and motion allowed, as it did; it arrives with the first render, so the chat never
-  shows before it, and the reboot moment never plays on a reload. A pinned history drawer is in place from the
-  first frame. When the chat is ported into PMConcept7 (the home redesign), PMConcept7's head boot script owns
-  first paint for the page and the chat's own reader is dropped (DR-054). Amended Q22, Jared 2026-10-30
-  (DL-257): the fifth family uses the existing theme owner; no separate override remains.
+canonical_text: |-
+  A standalone Assistant chat page paints its first frame from F3-468’s one resolved look, including app scope, and uses the same OS-plus-Settings motion result. It keeps no chat-private theme store. When hosted in PMConcept7 the shared host remains the first-paint owner. Keep the five-family/ten-variant choice, resolved NieR Light/Dark ground, eligible initial boot log, pinned History placement and no large-surface recolor or reboot replay on reload. The previous standalone private reader and no-app-global-value wording are historical source lineage.
 gui_related: true
 gui_classification_reason: Defines what the assistant chat paints in its first frame and which reader paints it.
 split_recommended: false
@@ -44995,10 +44224,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-159"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md, SHA-256 8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/MEASUREMENTS.md, SHA-256 edee5055e6a1ce894478b13a0c63a0103f5ef4ae0c20c615213a082b696469b7"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md, First paint: the stored look from the first frame (concept lineage only)"
+- Plans/Decision_Log.md#DL-159
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md, SHA-256 8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/MEASUREMENTS.md, SHA-256 edee5055e6a1ce894478b13a0c63a0103f5ef4ae0c20c615213a082b696469b7
+- 'Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md, First paint: the stored look from the first frame (concept
+  lineage only)'
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F09,C-F11
 preserved_exact_tokens:
   - "first frame"
   - "Boot sequence"
@@ -45379,20 +44611,8 @@ plan_unit_id: F3-622
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The Polish design adds two Source Control behaviours (DL-162). First, the Worktrees owner filter is one dropdown
-  labelled Owner, in the chat picker style of F3-621, that lists All and the owner classes (Threads, Orchestrator,
-  Agents, Manual) with each chosen class checked, in place of a row of filter chips; picking applies the same
-  owner-class filter with W-075's selection rules and persistence, and any other W-075 filter dimension the panel
-  shows uses the same dropdown; the Jujutsu Workspaces view uses the same Owner dropdown (F3-624).
-  Second, the publish and review card stays at the foot of the Git view and of the Jujutsu view (F3-623) and its
-  facts (destinations, expected head, review state) fold away and back from a fold button or from the card's head,
-  the height moving in the family's voice; a button inside the card never folds it, and folded or open is one
-  state for both engines, kept with the Source Control panel state (source_control_panel_state.v1, F3-475). Neither adds a command or an action: the filter is W-075's filter state
-  and the fold is panel state.
-  Amended 2026-10-17 (DL-228): the Owner dropdown uses F3-621's pick-several mode. The Jujutsu Workspaces
-  view's Owner filter is the same filter state as the Worktrees view's, kept with W-075's persistence, not a
-  separate view-local filter; this is a deliberate change from the concept, which keeps it view-local (amended 2026-10-17, review r1).
+canonical_text: |-
+  The Polish design adds two Source Control behaviours (DL-162). First, the Worktrees owner filter is one dropdown labelled Owner, in the chat picker style of F3-621, that lists All and the owner classes (Threads, Orchestrator, Agents, Manual) with each chosen class checked, in place of a row of filter chips; picking applies the same owner-class filter with W-075's selection rules and persistence, and any other W-075 filter dimension the panel shows uses the same dropdown; the Jujutsu Workspaces view uses the same Owner dropdown (F3-624). Second, the publish and review card stays at the foot of the Git view and of the Jujutsu view (F3-623) and its facts (destinations, expected head, review state) fold away and back from a fold button or from the card's head, the height moving in the family's voice; a button inside the card never folds it, and folded or open is one state for both engines, kept with the Source Control panel state (source_control_panel_state.v1, F3-475). Neither adds a command or an action: the filter is W-075's filter state and the fold is panel state. Amended 2026-10-17 (DL-228): the Owner dropdown uses F3-621's pick-several mode. The Jujutsu Workspaces view's Owner filter is the same filter state as the Worktrees view's, kept with W-075's persistence, not a separate view-local filter; this is a deliberate change from the concept, which keeps it view-local (amended 2026-10-17, review r1). For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines two visible Source Control behaviours the Polish design adds.
 split_recommended: false
@@ -45417,8 +44637,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-162"
-  - "Concepts/leftrail-redesign/src/concepts/d/10-skin.js applyWorktreeFilter and 20-fit.js wirePublish (concept lineage only, commit c93e341606)"
+- Plans/Decision_Log.md#DL-162
+- Concepts/leftrail-redesign/src/concepts/d/10-skin.js applyWorktreeFilter and 20-fit.js wirePublish (concept lineage
+  only, commit c93e341606)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
   - "Owner"
   - "source_control_panel_state.v1"
@@ -46078,148 +45301,8 @@ plan_unit_id: F3-630
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The home centre, between the left rail and the chat column (F3-637), is one universal panel system
-  (DL-180). Its layout is an n-ary split tree: a split is a row or a column of two or more children, each
-  child a panel or another split, and every leaf is a panel. A panel is a tab group, one tab strip (F3-631)
-  over one body, and any panel can hold any tab kind (F3-635). Every split has its own sizes, stored as
-  proportions of that split, never as pixels, so panel widths and heights are independent. The tree always
-  keeps these invariants: every leaf is a panel; a split has two or more children and never runs in its
-  parent's direction; every size is above 0.02; a tab lives in exactly one panel; pinned tabs come first in
-  their strip; a panel has at most one preview tab. A panel's minimum is the largest content minimum of its
-  tabs (F3-635) and never less than 280 x 120 px. Inserting a panel starts from half the target's share,
-  redistributing available room from neighbours when necessary to preserve every resulting panel's own
-  minimum; a new panel along the centre's outer edge takes 0.34 of the root. Removing a panel gives its
-  share to its previous sibling, else to the next. Closing the last tab of a panel closes the panel and its
-  neighbour takes the space, unless it is the only panel in the centre or the user locked it: then it stays
-  and shows the empty-panel launcher (F3-632). Closing a panel closes its tabs, each kind asking first where
-  it asks (F3-635). Locking a panel keeps it in place when its last tab closes, and automatic placement
-  skips it (F3-634). Split fit rule: offer a split whenever the complete resulting layout can meet each
-  panel's own minimum, borrowing available room from neighbours; drag, the tab menu's splits, Move panel and
-  Alt+Shift+arrows use this room rule, and a panel the application places uses the automatic rule of the 2026-10-17
-  amendment below (it read: drag, split menus, Move panel and Alt+Shift+arrows use this one rule). For an unspecified side prefer right, then below, else refuse with a
-  reason. Panels are 6 px apart, the divider line in the middle of the gap, and the centre is inset 6 px
-  from the rail, the chat and the bars; a divider's hit target is 8 px. Dragging a divider moves only the
-  two neighbours it separates and commits once on release (cmd.workspace_layout.resize_surface); from the
-  keyboard, Tab reaches a divider, arrows move it 8 px, Shift+arrows 48 px, Home and End move it to a
-  neighbour's minimum, and Enter or a double click evens the two sides. A panel dragged below half its
-  minimum along the divider's axis collapses to its 35 px strip and keeps every tab and its state; dragging
-  it out again, or Expand in its panel menu, restores it (cmd.workspace_layout.set_collapsed). This replaces
-  Collapse Bottom Terminal for every panel. Maximize is a flag outside the tree: the maximized panel fills
-  the centre and the tree underneath does not change; Shift+Escape, the panel menu, or Escape while focus is
-  in its strip restores it (ui.workspace_layout.maximize, view state with no receipt and no event). Each
-  panel has a small corner grip and a panel menu (⋮) at the end of its strip: Split right, Split down,
-  Maximize or Restore panels, Collapse to tabs or Expand, a hairline, Move panel, Lock panel or Unlock panel, Show all
-  tabs in this panel, a hairline, Layouts, a hairline, Close other tabs and Close panel (amended 2026-10-17, DL-228:
-  this unit holds the rows and their order; UCC-200 maps their dispatch).
-  A whole panel moves by its grip, or by Move panel from the menu or Enter on the grip
-  (cmd.workspace_layout.move_surface): beside another panel on any edge, along the centre's outer edge, or
-  into another panel as its tabs. A tab dragged into the diagonal region nearest a panel side splits on that
-  side (cmd.panel_tab.move with a split target); dropped on a strip, it moves into that panel at the drop
-  position; pulled off its strip by 14 px vertically or 40 px horizontally beyond the strip band, it tears
-  off and follows the pointer until it lands on a strip, an edge band or the "+N" list (F3-633). The panel
-  body is divided along diagonals into four side regions. Only the central Join tile or a strip slot joins
-  as tabs; other body regions split. A whole panel carried onto another panel's strip shows the exact
-  caption Join as tabs and reuses the existing join command and caption placement rule. A central guide
-  shows the four sides around Join, and outer-side dock targets plus thin left/right/bottom edge bands
-  create a full-height or full-width panel; a drag starts after 4 px of travel, a zone is adopted after 100
-  ms of dwell, scaled by Animation speed (skipped on release and under Reduced Motion, where the result appears in
-  place, fading only, once the zone has held briefly; amended 2026-10-17, DL-228, it read: retained under Reduced
-  Motion, which removes travel), and an adopted zone holds by the three hold rules of the 2026-10-17 amendment below
-  (it read: while the pointer stays within 12 px of it). Every drag runs the gesture transaction Home already
-  uses and shares with the Usage board's gesture kit (F3-HOME-002, F3-503, DR-066): the preview is local,
-  nothing dispatches while dragging, a changed release commits one command, an unchanged release, Escape, a
-  pointer cancel, a lost pointer capture, a lost window or a drop past the workspace commits nothing and
-  restores the exact earlier picture, and a failed commit rolls back. Every drag outcome also has a menu
-  path and a keyboard path (Move panel, Move to panel, Alt+Shift+arrows; F3-635). Motion: a panel glides
-  into its new place in 180 ms by default, in Friendly 220 ms, Glass 260 ms, Basic 200 ms, Retro 140 ms in
-  steps and NieR Mode 200 ms; the landing preview glides in 160 ms and fades in 140 ms; neighbours slide
-  aside in 250 ms on cubic-bezier(.22,1,.36,1); a tab settles in 160 ms on cubic-bezier(.17,.84,.29,.99); a
-  drop settles on a critically damped spring of stiffness 520 and damping 45.6; a cancel returns in 300 ms;
-  under Reduced Motion every one of these is 0. The default layout, Home, keeps a full-width bottom row
-  where the terminal sat before, 0.4 of the centre's height: an ordinary panel row that holds any tab kind
-  and can be split side by side. Four named layouts ship. Home: a column of a row of 0.6 (a dashboard panel
-  0.5 holding the pinned Home dashboard, F3-638, and a documents panel 0.5) over a tools row of 0.4 holding
-  terminals and Output. Build: a column of a row of 0.62 (documents 0.66 and a side panel 0.34 for browsers
-  and dashboards) over a row of 0.38 (terminals 0.6 and tools 0.4 holding Output and Problems). Terminals
-  2x2: a column of two rows of two terminal panels, every size 0.5, one terminal in each, new ones started
-  where fewer than four are open, and every other tab joining the first panel in the background. Focus: one
-  panel holding every tab. Applying a named layout keeps every open tab: no terminal session ends, no
-  unsaved buffer is dropped, and each tab moves to the slot that holds its kind
-  (cmd.workspace_layout.apply_named). Restore home layout (cmd.workspace_layout.reset; the Settings row
-  general.startup.reset-home-layout) applies Home the same way, keeping every tab. A user can save the
-  current arrangement as a named layout (cmd.workspace_layout.save_named); a saved layout keeps its shape,
-  its sizes, the kinds each slot holds and the tabs each slot held, and never recreates a closed tab (amended
-  2026-10-17, DL-228; it read: never the tabs themselves). The named and saved layouts, Save this
-  layout... and Restore home layout sit in the panel menu's Layouts submenu and in the title bar's Home
-  options menu (F3-502). The layout persists in the v2 Home layout record
-  `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home layout authority
-  (Plans/storage-plan.md#SP-330, Plans/home_workspace_layout_v2.schema.json), through F3-HOME-004's
-  write-then-read-back transaction; this unit does not restate its fields. Narrow states (F3-636), menus,
-  overlays and drags are never saved. A layout from before this redesign is converted on first read and
-  never reset: an upgrade never loses a user's tabs or layout. Every committed change emits the one existing
-  event workspace.layout_changed (CV-361); a reveal of an open tab emits nothing. This unit supersedes
-  F3-501 and the composition of F3-HOME-001 (four fixed editor panels, the singleton dashboard, the chat as
-  a movable surface, terminal sections docked at the bottom), the fixed bottom runtime zone of sections 3.1,
-  3.2, 5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row,
-  the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home
-  panels, section 5.8's 240 px panel minimum. A saved named layout also keeps at most 64 KB (65,536 bytes)
-  of its dashboard boards' contents; a larger save keeps the layout without those contents, records
-  boards_skipped_bytes and says so (SP-330). Amended 2026-10-31 (DL-270): the 64 KB figure is a payload budget,
-  not a stored value size; board contents larger than the 16 KiB value cap are kept by payload reference (SP-337,
-  SP-340), and the boards_skipped_bytes rule is unchanged. The guide responds immediately while a stable-intent gate
-  prevents a passing pointer from repeatedly rearranging the live preview. A split ghost shows the resulting
-  panel/tab, joining opens the destination strip slot, a moving panel leaves an outline, and a source
-  emptied by the move fades back. Escape returns the exact earlier arrangement; release commits precisely
-  the shown result. Every target name remains outside the carried tab, pointer, other docks and preview
-  tab/mark, including a resting pointer at bottom and edge docks. Each zone has an ordered list of caption
-  positions: choose the first with 12 px clearance from the carried tab and pointer, retain it while at
-  least 4 px remains clear, and return to an earlier place only after 160 ms. Captions draw above the
-  carried tab. After ordinary clear positions fail, a position just past the carried tab is tried before
-  sacrificing the preview mark or tab. Bottom, left and right outer docks prefer above the carried tab; the
-  top dock uses below; the +N caption is below the strip. The existing clearance and hysteresis apply to
-  every candidate, so a resting pointer never hides a target name. While a carried tab rests over "+N", that
-  target stays under the pointer with no insertion gap pushing it away, shows "To the end", and release
-  appends the tab to that strip. Approaching through the end insertion slot or directly produces the same
-  settled target. The guide, captions and preview use each family's motion and material; Reduced Motion
-  keeps the legible end state without spatial travel. The screen reader announces the held destination once
-  its intent settles. F3-657 owns resize feedback. Jared’s 2026-10-14 grip correction puts the grip’s narrow
-  end in the panel’s top-right corner. Orientation changes no drag threshold, menu route or command. Move
-  panel and Layouts levels consume the shared F3-632 level/Back rule and F3-647 material; navigating them
-  dispatches nothing.
-  Amended 2026-10-17 (DL-228): applying a saved layout returns each tab still open to the slot it was saved
-  in, with that slot's active tab, and puts back each slot's lock and collapse (a locked slot survives empty);
-  tabs no longer open are not recreated, and the other open tabs go to a slot that accepts their kind
-  (Plans/home_workspace_layout_v2.schema.json $defs.slot). Amended 2026-10-17 (DL-230, Jared): a saved named
-  layout belongs to the person across projects, as the concept keeps it, in home_named_layouts:v1 (SP-330),
-  and the dashboard boards inside a layout stay per project, skipped when it is applied elsewhere. Two fit
-  rules: the room rule above serves every move whose side the person chooses, offered when the result leaves
-  every panel it changes at its minimum, neighbours along the split giving up room, and a panel already under
-  its minimum failing only if the move shrinks it further; the automatic split rule serves a new panel the
-  application places (an open by the fit rule, Alt+click, the "+" and panel menus' Split right and Split down
-  with a new tab, Ctrl+\ and Ctrl+Shift+\): right when both halves of the source panel stay at least the
-  larger minimum, else down, else none. A panel cannot collapse while every other child of its split is
-  collapsed (last_open_in_split), so a split never leaves its room to nobody; the menu row and the refusal say
-  so. Maximize is unavailable with one panel and in the one-column narrow centre, each with its reason;
-  maximizing a collapsed panel expands it first and announces "<panel> maximized. Press Escape to restore."
-  Moving focus to another panel (Alt+arrows, Alt+Shift+N, a reveal or open that activates a tab elsewhere, the
-  narrow switcher) restores the panels in the same view action and announces it, so the focused panel is never
-  hidden; an agent's background open never restores them. A panel collapsed in a row split, side by side, is a
-  35 px column: pinned tabs first, then a window of 32 px icon tabs around the active tab, "+N" for the rest,
-  and its Expand control, "+" and panel menu kept at its foot; the active tab never hides, and Expand points
-  the way the panel will open. Drop zones: a side whose result does not fit shows its guide tile dimmed and
-  empty and gives its region to the nearest side that fits; with no side left the whole body joins, or offers
-  nothing over the carried tab's own panel, which never joins itself; the top dock sits just below the strips
-  so a strip's first slots stay strip slots; outer docks are offered only with two panels or more; zones are
-  measured on the committed layout, never on the live preview, so the preview never moves a zone under the
-  pointer. The three hold rules: a side holds until another side is nearer by about 5 % of the body, Join
-  until the pointer is 12 px past its slack, and a dock until it is 12 px past its band. The stable-intent
-  gate settles a zone once the pointer has held it and slowed, or held it longer, and the guide shrinks its
-  tiles in small bodies and below that shows Join alone; those values are tuning, not acceptance numbers. Zone
-  captions: Split left, Split right, Split up, Split down, Join as a tab (a carried tab) or Join as tabs (a
-  carried panel), New panel along the left, New panel along the right, New row across the top, New row across
-  the bottom, and To the end. The Lock row's second line says what locking does: "Files open in other panels"
-  or "Files can open here again", and locking announces "Panel locked: files open elsewhere".
+canonical_text: |-
+  The home centre, between the left rail and the chat column (F3-637), is one universal panel system (DL-180). Its layout is an n-ary split tree: a split is a row or a column of two or more children, each child a panel or another split, and every leaf is a panel. A panel is a tab group, one tab strip (F3-631) over one body, and any panel can hold any tab kind (F3-635). Every split has its own sizes, stored as proportions of that split, never as pixels, so panel widths and heights are independent. The tree always keeps these invariants: every leaf is a panel; a split has two or more children and never runs in its parent's direction; every size is above 0.02; a tab lives in exactly one panel; pinned tabs come first in their strip; a panel has at most one preview tab. A panel's minimum is the largest content minimum of its tabs (F3-635) and never less than 280 x 120 px. Inserting a panel starts from half the target's share, redistributing available room from neighbours when necessary to preserve every resulting panel's own minimum; a new panel along the centre's outer edge takes 0.34 of the root. Removing a panel gives its share to its previous sibling, else to the next. Closing the last tab of a panel closes the panel and its neighbour takes the space, unless it is the only panel in the centre or the user locked it: then it stays and shows the empty-panel launcher (F3-632). Closing a panel closes its tabs, each kind asking first where it asks (F3-635). Locking a panel keeps it in place when its last tab closes, and automatic placement skips it (F3-634). Split fit rule: offer a split whenever the complete resulting layout can meet each panel's own minimum, borrowing available room from neighbours; drag, the tab menu's splits, Move panel and Alt+Shift+arrows use this room rule, and a panel the application places uses the automatic rule of the 2026-10-17 amendment below (it read: drag, split menus, Move panel and Alt+Shift+arrows use this one rule). For an unspecified side prefer right, then below, else refuse with a reason. Panels are 6 px apart, the divider line in the middle of the gap, and the centre is inset 6 px from the rail, the chat and the bars; a divider's hit target is 8 px. Dragging a divider moves only the two neighbours it separates and commits once on release (cmd.workspace_layout.resize_surface); from the keyboard, Tab reaches a divider, arrows move it 8 px, Shift+arrows 48 px, Home and End move it to a neighbour's minimum, and Enter or a double click evens the two sides. A panel dragged below half its minimum along the divider's axis collapses to its 35 px strip and keeps every tab and its state; dragging it out again, or Expand in its panel menu, restores it (cmd.workspace_layout.set_collapsed). This replaces Collapse Bottom Terminal for every panel. Maximize is a flag outside the tree: the maximized panel fills the centre and the tree underneath does not change; Shift+Escape, the panel menu, or Escape while focus is in its strip restores it (ui.workspace_layout.maximize, view state with no receipt and no event). Each panel has a small corner grip and a panel menu (⋮) at the end of its strip: Split right, Split down, Maximize or Restore panels, Collapse to tabs or Expand, a hairline, Move panel, Lock panel or Unlock panel, Show all tabs in this panel, a hairline, Layouts, a hairline, Close other tabs and Close panel (amended 2026-10-17, DL-228: this unit holds the rows and their order; UCC-200 maps their dispatch). A whole panel moves by its grip, or by Move panel from the menu or Enter on the grip (cmd.workspace_layout.move_surface): beside another panel on any edge, along the centre's outer edge, or into another panel as its tabs. A tab dragged into the diagonal region nearest a panel side splits on that side (cmd.panel_tab.move with a split target); dropped on a strip, it moves into that panel at the drop position; pulled off its strip by 14 px vertically or 40 px horizontally beyond the strip band, it tears off and follows the pointer until it lands on a strip, an edge band or the "+N" list (F3-633). The panel body is divided along diagonals into four side regions. Only the central Join tile or a strip slot joins as tabs; other body regions split. A whole panel carried onto another panel's strip shows the exact caption Join as tabs and reuses the existing join command and caption placement rule. A central guide shows the four sides around Join, and outer-side dock targets plus thin left/right/bottom edge bands create a full-height or full-width panel; a drag starts after 4 px of travel, a zone is adopted after 100 ms of dwell, scaled by Animation speed (skipped on release and under Reduced Motion, where the result appears in place, fading only, once the zone has held briefly; amended 2026-10-17, DL-228, it read: retained under Reduced Motion, which removes travel), and an adopted zone holds by the three hold rules of the 2026-10-17 amendment below (it read: while the pointer stays within 12 px of it). Every drag runs the gesture transaction Home already uses and shares with the Usage board's gesture kit (F3-HOME-002, F3-503, DR-066): the preview is local, nothing dispatches while dragging, a changed release commits one command, an unchanged release, Escape, a pointer cancel, a lost pointer capture, a lost window or a drop past the workspace commits nothing and restores the exact earlier picture, and a failed commit rolls back. Every drag outcome also has a menu path and a keyboard path (Move panel, Move to panel, Alt+Shift+arrows; F3-635). Motion: a panel glides into its new place in 180 ms by default, in Friendly 220 ms, Glass 260 ms, Basic 200 ms, Retro 140 ms in steps and NieR Mode 200 ms; the landing preview glides in 160 ms and fades in 140 ms; neighbours slide aside in 250 ms on cubic-bezier(.22,1,.36,1); a tab settles in 160 ms on cubic-bezier(.17,.84,.29,.99); a drop settles on a critically damped spring of stiffness 520 and damping 45.6; a cancel returns in 300 ms; under Reduced Motion every one of these is 0. The default layout, Home, keeps a full-width bottom row where the terminal sat before, 0.4 of the centre's height: an ordinary panel row that holds any tab kind and can be split side by side. Four named layouts ship. Home: a column of a row of 0.6 (a dashboard panel 0.5 holding the pinned Home dashboard, F3-638, and a documents panel 0.5) over a tools row of 0.4 holding terminals and Output. Build: a column of a row of 0.62 (documents 0.66 and a side panel 0.34 for browsers and dashboards) over a row of 0.38 (terminals 0.6 and tools 0.4 holding Output and Problems). Terminals 2x2: a column of two rows of two terminal panels, every size 0.5, one terminal in each, new ones started where fewer than four are open, and every other tab joining the first panel in the background. Focus: one panel holding every tab. Applying a named layout keeps every open tab: no terminal session ends, no unsaved buffer is dropped, and each tab moves to the slot that holds its kind (cmd.workspace_layout.apply_named). Restore home layout (cmd.workspace_layout.reset; the Settings row general.startup.reset-home-layout) applies Home the same way, keeping every tab. A user can save the current arrangement as a named layout (cmd.workspace_layout.save_named); a saved layout keeps its shape, its sizes, the kinds each slot holds and the tabs each slot held, and never recreates a closed tab (amended 2026-10-17, DL-228; it read: never the tabs themselves). The named and saved layouts, Save this layout... and Restore home layout sit in the panel menu's Layouts submenu and in the title bar's Home options menu (F3-502). The layout persists in the v2 Home layout record `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home layout authority (Plans/storage-plan.md#SP-330, Plans/home_workspace_layout_v2.schema.json), through F3-HOME-004's write-then-read-back transaction; this unit does not restate its fields. Narrow states (F3-636), menus, overlays and drags are never saved. A layout from before this redesign is converted on first read and never reset: an upgrade never loses a user's tabs or layout. Every committed change emits the one existing event workspace.layout_changed (CV-361); a reveal of an open tab emits nothing. This unit supersedes F3-501 and the composition of F3-HOME-001 (four fixed editor panels, the singleton dashboard, the chat as a movable surface, terminal sections docked at the bottom), the fixed bottom runtime zone of sections 3.1, 3.2, 5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row, the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home panels, section 5.8's 240 px panel minimum. A saved named layout also keeps at most 64 KB (65,536 bytes) of its dashboard boards' contents; a larger save keeps the layout without those contents, records boards_skipped_bytes and says so (SP-330). Amended 2026-10-31 (DL-270): the 64 KB figure is a payload budget, not a stored value size; board contents larger than the 16 KiB value cap are kept by payload reference (SP-337, SP-340), and the boards_skipped_bytes rule is unchanged. The guide responds immediately while a stable-intent gate prevents a passing pointer from repeatedly rearranging the live preview. A split ghost shows the resulting panel/tab, joining opens the destination strip slot, a moving panel leaves an outline, and a source emptied by the move fades back. Escape returns the exact earlier arrangement; release commits precisely the shown result. Every target name remains outside the carried tab, pointer, other docks and preview tab/mark, including a resting pointer at bottom and edge docks. Each zone has an ordered list of caption positions: choose the first with 12 px clearance from the carried tab and pointer, retain it while at least 4 px remains clear, and return to an earlier place only after 160 ms. Captions draw above the carried tab. After ordinary clear positions fail, a position just past the carried tab is tried before sacrificing the preview mark or tab. Bottom, left and right outer docks prefer above the carried tab; the top dock uses below; the +N caption is below the strip. The existing clearance and hysteresis apply to every candidate, so a resting pointer never hides a target name. While a carried tab rests over "+N", that target stays under the pointer with no insertion gap pushing it away, shows "To the end", and release appends the tab to that strip. Approaching through the end insertion slot or directly produces the same settled target. The guide, captions and preview use each family's motion and material; Reduced Motion keeps the legible end state without spatial travel. The screen reader announces the held destination once its intent settles. F3-657 owns resize feedback. Jared’s 2026-10-14 grip correction puts the grip’s narrow end in the panel’s top-right corner. Orientation changes no drag threshold, menu route or command. Move panel and Layouts levels consume the shared F3-632 level/Back rule and F3-647 material; navigating them dispatches nothing. Amended 2026-10-17 (DL-228): applying a saved layout returns each tab still open to the slot it was saved in, with that slot's active tab, and puts back each slot's lock and collapse (a locked slot survives empty); tabs no longer open are not recreated, and the other open tabs go to a slot that accepts their kind (Plans/home_workspace_layout_v2.schema.json $defs.slot). Amended 2026-10-17 (DL-230, Jared): a saved named layout belongs to the person across projects, as the concept keeps it, in home_named_layouts:v1 (SP-330), and the dashboard boards inside a layout stay per project, skipped when it is applied elsewhere. Two fit rules: the room rule above serves every move whose side the person chooses, offered when the result leaves every panel it changes at its minimum, neighbours along the split giving up room, and a panel already under its minimum failing only if the move shrinks it further; the automatic split rule serves a new panel the application places (an open by the fit rule, Alt+click, the "+" and panel menus' Split right and Split down with a new tab, Ctrl+\ and Ctrl+Shift+\): right when both halves of the source panel stay at least the larger minimum, else down, else none. A panel cannot collapse while every other child of its split is collapsed (last_open_in_split), so a split never leaves its room to nobody; the menu row and the refusal say so. Maximize is unavailable with one panel and in the one-column narrow centre, each with its reason; maximizing a collapsed panel expands it first and announces "<panel> maximized. Press Escape to restore." Moving focus to another panel (Alt+arrows, Alt+Shift+N, a reveal or open that activates a tab elsewhere, the narrow switcher) restores the panels in the same view action and announces it, so the focused panel is never hidden; an agent's background open never restores them. A panel collapsed in a row split, side by side, is a 35 px column: pinned tabs first, then a window of 32 px icon tabs around the active tab, "+N" for the rest, and its Expand control, "+" and panel menu kept at its foot; the active tab never hides, and Expand points the way the panel will open. Drop zones: a side whose result does not fit shows its guide tile dimmed and empty and gives its region to the nearest side that fits; with no side left the whole body joins, or offers nothing over the carried tab's own panel, which never joins itself; the top dock sits just below the strips so a strip's first slots stay strip slots; outer docks are offered only with two panels or more; zones are measured on the committed layout, never on the live preview, so the preview never moves a zone under the pointer. The three hold rules: a side holds until another side is nearer by about 5 % of the body, Join until the pointer is 12 px past its slack, and a dock until it is 12 px past its band. The stable-intent gate settles a zone once the pointer has held it and slowed, or held it longer, and the guide shrinks its tiles in small bodies and below that shows Join alone; those values are tuning, not acceptance numbers. Zone captions: Split left, Split right, Split up, Split down, Join as a tab (a carried tab) or Join as tabs (a carried panel), New panel along the left, New panel along the right, New row across the top, New row across the bottom, and To the end. The Lock row's second line says what locking does: "Files open in other panels" or "Files can open here again", and locking announces "Panel locked: files open elsewhere". No project has its own SP-349 Home layout and boards, shared across that Server’s app chats rather than one fresh bucket per thread. Selecting or converting into a Project loads that Project’s saved UI state or its fresh defaults; do not import app boards into it. Saved named layouts remain per person; saved board snapshots apply only to the exact saved scope/Server/Project identity and are skipped elsewhere, including null-board snapshots. Keep the 64 KB board-payload cap, 16 KiB redb cap, one Assistant node, existing geometry and view-state/event distinctions. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines the home centre's panel model, its layout tree, its named layouts and how panels move, split, collapse and persist.
 split_recommended: false
@@ -46278,13 +45361,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/DND-NOTES-20261014-COMBINED.md, SHA-256
-  6ffc7b0308acc0b371f997fd643f5711169f4d7d9f431ea090f3243668752734 (landing source recheck; approved direction,
-  not native implementation evidence)
-- Plans/FinalGUISpec.md F3-HOME-002, F3-HOME-004 and F3-HOME-005 (prose headings with no PlanUnit; cited,
-  not a dependency (lead ruling L22, 2026-10-10))
-- Plans/FinalGUISpec.md#F3-635 (the tab kinds consume this model; cited, not a dependency (lead ruling
-  L22, 2026-10-10))
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/DND-NOTES-20261014-COMBINED.md, SHA-256 6ffc7b0308acc0b371f997fd643f5711169f4d7d9f431ea090f3243668752734
+  (landing source recheck; approved direction, not native implementation evidence)
+- Plans/FinalGUISpec.md F3-HOME-002, F3-HOME-004 and F3-HOME-005 (prose headings with no PlanUnit; cited, not a
+  dependency (lead ruling L22, 2026-10-10))
+- Plans/FinalGUISpec.md#F3-635 (the tab kinds consume this model; cited, not a dependency (lead ruling L22, 2026-10-10))
 - Plans/Decision_Log.md#DL-180
 - Plans/Decision_Log.md#DL-181
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
@@ -46293,31 +45374,27 @@ source_lineage:
   SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
   SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)
-- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256
-  52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage
-  only)
-- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256
-  f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981
+  (the agreed anatomy; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8
+  (audit lineage only)
 - Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
-  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage
-  only)
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
-  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage
-  only)
-- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/DND-NOTES-20261014-FOLLOWUP.md, SHA-256
-  b5b883caeef6d774fbca250e5c7b6c82dd31eee05af8da207727179baa21b5c3 (approved campaign source lineage;
-  not native implementation evidence)
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/DND-NOTES-20261014-FOLLOWUP.md, SHA-256 b5b883caeef6d774fbca250e5c7b6c82dd31eee05af8da207727179baa21b5c3
+  (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
   (decision/source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-13-panel-dnd-resize--NOTES.md,
-  SHA-256 6ffc7b0308acc0b371f997fd643f5711169f4d7d9f431ea090f3243668752734 (source lineage; not native
-  certification)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
-  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
-  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-13-panel-dnd-resize--NOTES.md, SHA-256
+  6ffc7b0308acc0b371f997fd643f5711169f4d7d9f431ea090f3243668752734 (source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md, SHA-256
+  29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native certification)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
 - n-ary split tree
 - '0.34'
@@ -47626,143 +46703,8 @@ plan_unit_id: F3-638
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'A dashboard is a tab kind (F3-635), not a singleton surface (DL-180, D10). Every dashboard tab holds
-  its own board on the Usage board engine (DL-186): it shows the Usage page''s widget design and can show every Usage
-  widget, and Plans/usage-feature.md#UF-062''s rule that every Usage widget can be hosted on the dashboard now holds.
-  Boards are built for more than one widget source: Usage widgets now, Orchestrator widgets after the Orchestrator page''s
-  own redesign, and other sources later, each under its own label (Plans/Widget_System.md#WS-030); the widget commands''
-  payloads do not change. The built-in dashboards are Home (`dashboard:home`, pinned in the default layout, F3-630),
-  Metrics (`dashboard:metrics`), Monitoring (`dashboard:monitoring`) and Agents (`dashboard:agents`), and a person can
-  make custom dashboards with n from 1 to 9999 (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home, Metrics
-  and Monitoring start from their own sets of Usage widgets (WS-030); a new custom dashboard starts empty. The old Home
-  widgets (run progress, lanes and results) have left Home until Orchestrator widgets join the board engine after that
-  page''s redesign, and there is no Home (current) board (Jared, P1 B). Agents is drawn by the dashboard kind itself,
-  not by the board engine: one card per agent at work, each opening that agent''s transcript as a kept tab (Alt+click
-  in a new panel), with the filters All agents, Working, Needs you, Waiting and Finished in its Show menu; it has no
-  widgets and no board record, and resetting it means its filter (lead ruling F7). A dashboard tab sits in the same tab
-  strip as every other tab (F3-631): it has no strip of its own and no second tab model. Inside the tab the board is
-  the Usage widget board: its widget grid, its gestures, gravity and Tidy behave exactly as on the Usage page, each settled
-  change one transaction (Plans/Widget_System.md#WS-019), and they act inside the tab only, never laying out panels (DR-066).
-  The board lays out on the Usage board''s tracks and width classes (Plans/Widget_System.md#WS-017), measured on the
-  tab''s own width, never the window (F3-635), and it sits on Home''s tab surface, not the Usage page''s background,
-  in every look (P11). Each board''s contents are kept per project (`widget_layout:v1:<project_id>:<board_id>`; the keys,
-  the one-time adoption of an older key and the records are Plans/Widget_System.md#WS-030''s and Plans/storage-plan.md''s),
-  so a project switch shows each dashboard tab with that project''s board and a project lists only its own custom dashboards.
-  A dashboard''s widget layout is never stored inside the Home layout record, and Home''s panels are not widgets. The
-  header row is F3-635''s shared row. Its left side shows the dashboard''s name, the Live mark while Live readings are
-  on and the board holds a Usage widget, the widget count ("N widgets", "1 widget" or "No widgets") and the range, with
-  the scope when it is not all usage; its right side shows Add widget, Board and Maximize (Restore while maximized; Shift+Escape).
-  The Live mark is the Usage page''s own indicator in each look''s words (Live; Retro [LIVE]; NieR Mode LIVE) and pulses
-  once for each live change the board applies, never between them and never under Reduced Motion. On Agents the left
-  side counts the agents at work ("N agents · N working · N need you", and "Showing <filter>" under a filter) and Show
-  takes the place of Add widget and Board. Add widget opens a searchable list ("Find a widget") of every widget the board
-  can be given: a section for each Usage room in the Usage page''s room order (F3-514), then the Usage widgets that belong
-  to no room, then one section for each other widget source under its label. Each row''s second line names its room or
-  source and what kind of widget it is in plain words; a widget already on the board is checked and disabled with the
-  reason "Already on this dashboard". Choosing one adds it (cmd.widget.add), scrolls to it and moves focus onto it. The
-  Board menu holds, in order: Dashboards (Home, Metrics, Monitoring, Agents, this project''s custom dashboards by name
-  with their widget counts, and New dashboard; the current one checked); This dashboard (Range, Scope, Start from, Save
-  as preset..., Tidy, Reset widgets); Live (Live readings); and, on a custom dashboard only, after a hairline, Rename
-  dashboard... and Delete dashboard.... On Agents it holds Dashboards and Show. On an empty board Save as preset... and
-  Tidy are disabled with their reasons ("Add a widget first", "Nothing to tidy yet"). Range (Last 5 hours, Last 24 hours,
-  Last 7 days, Last 30 days) and Scope (All current usage, Work accounts, Personal accounts, or one provider) belong
-  to each dashboard and change only its board, independent of the Usage page''s (P2); choosing one is the typed local
-  action ui.widget_board.set_view, view state kept in the board''s record with no receipt and no event (lead ruling F1).
-  Live readings is the Usage page''s own Live / Paused choice, one switch shared with the Usage page (Plans/usage-feature.md#UF-107).
-  Tidy and Reset widgets are the board''s own (WS-019, WS-030): Reset widgets returns Home, Metrics and Monitoring to
-  their default sets and a custom dashboard to empty. Start from lists the sets a board can start from in four groups
-  (P4): This dashboard (the board''s own default), Dashboard starter, Usage rooms (the Usage page''s 13 room sets, in
-  its room order) and Your presets. Each row''s second line says what the set holds, a preset adding the day it was saved,
-  and the active set is checked; a filter field ("Find a room or a preset") appears once there are more than three presets.
-  Choosing a set replaces the board''s widgets with it through one cmd.widget.reset_layout naming the set (set_id; WS-030).
-  Because Start from replaces the widgets, an Undo notice then shows at the foot of the tab for 8 s, held while the pointer
-  or focus is on it and for 3 s after; it ends at the next change to the board''s widgets, on Escape (focus returns to
-  Board), on a project switch and when the tab closes, and Undo puts the board back as it was and says so. Amended 2026-10-10
-  (lead ruling): Undo dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision },
-  restore_revision being the board''s committed layout revision just before that Start from, with one receipt and only
-  while the notice is up; it never carries set_id, the owner puts back exactly that revision''s records, a restore is
-  refused without dispatch if any other change was committed on the board since, excluding the preset hold''s own settling
-  resizes, and Undo is disabled with its reason, and it emits no workspace.layout_changed (WS-030, UCC-200). The empty
-  board''s Start from... button opens the same list. Presets are the person''s own, kept across projects and offered
-  on every dashboard (WS-030). Save as preset... asks for a name, starting from the dashboard''s name made unique; a
-  name is trimmed, its spaces collapsed and kept to at most 80 characters, and a preset saved without one is called "Preset
-  <n>". With no presets, Your presets holds "Save this dashboard as a preset..."; with some, its last row, "Rename or
-  delete presets", lists them, each with Start from this preset, Rename preset... and Delete preset... behind a confirm
-  (Delete preset or Keep it). A dashboard that started from a deleted preset keeps its widgets. A preset keeps the widgets
-  shown at each board width class with their sizes and settings, never the board''s own range and scope. Saving, renaming
-  and deleting a preset are the typed local actions ui.widget_preset.save, ui.widget_preset.rename and ui.widget_preset.delete,
-  with no command; using one is cmd.widget.reset_layout with set_id user:<id> (lead ruling F2). New dashboard, in the
-  Board menu, the "+" menu''s Dashboard sub-row (F3-632) and the catalog, makes a custom dashboard (D35); so does a new
-  tab or a split in a panel whose usual kind is the dashboard (Ctrl+T, F3-632). It starts empty and is called "Dashboard
-  <n>". Rename dashboard... asks for a name and renames the tab with cmd.panel_tab.rename; renaming the tab renames the
-  dashboard too, and clearing the tab''s label gives back "Dashboard <n>". A name is trimmed and kept to at most 80 characters,
-  and is kept per project with the board (WS-030). The name shows on the tab, in the header row, in the Board menu, in
-  the "+" menu and in the catalog. Delete dashboard... asks first ("Delete <name>?": Delete dashboard, whose widgets
-  cannot be brought back, or Keep it), then closes the tab (cmd.panel_tab.close), drops it from the reopen list and forgets
-  its board and its name; it leaves the "+" menu and the catalog. Home, Metrics, Monitoring and Agents can be reset but
-  never deleted, and show neither Rename dashboard... nor Delete dashboard...; a label the person gives one of their
-  tabs names that tab only (F3-631). A closed custom dashboard keeps its board while it can be reopened from the reopen
-  list and is forgotten when it leaves the list, unless it is open as a tab; the built-in dashboards keep theirs (P6).
-  A saved named layout keeps the boards of the dashboards it holds, at most 64 KB of them per named layout; a larger
-  save keeps the layout without its boards and says so (lead ruling F3; Plans/storage-plan.md#SP-330); applying the layout
-  puts back the boards it kept, and a named layout saved before this applies as before. Amended 2026-10-31 (DL-270):
-  the 64 KB per named layout is a payload budget; board contents larger than the 16 KiB value cap are kept by payload
-  reference (SP-337, SP-340), and SP-330 owns the stored form. A board''s first show plays the Usage page''s calm reading-order
-  entrance, and none under Reduced Motion (P7). An empty board shows an invitation over the board, which stays laid out
-  beneath it: a small sketch of a board, "<Name> is empty", one line saying what to do, and Add widget and Start from...
-  buttons; a new, empty dashboard puts focus on its Add widget, and otherwise focus goes to the board''s first card in
-  reading order. Details on a widget opens the Usage page at that widget''s room with its inspector open (P8). Live readings
-  apply to dashboards too, each board separately, with the Usage page''s idle rule (F3-628, UF-107): nothing animates
-  at idle except one live change per applied batch while Live is on, and a board that is not on screen does no live work
-  (P12). This supersedes F3-279''s exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and
-  C.4.1, F3-517''s "distinct tab models" for Home and Dashboard and its Dashboard-frozen resize peers (with F3-515''s
-  and F3-518''s), section 7.2''s singleton dashboard, and the dashboard''s own Main, Metrics and Monitoring strip of
-  F3-505. Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of width;
-  Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below 520 px
-  and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The Live
-  mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly''s lavender
-  #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE
-  and a 6 px ink diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode and, in
-  the other looks, a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above the tab''s
-  foot (10 px below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent fill (outlined
-  in Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under Reduced Motion.
-  The empty board''s invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by 30 px rows hides
-  below 320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at most 360 px wide;
-  its buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and buttons follow from
-  160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while shown; a filter other
-  than All agents is that tab''s own state, saved about 250 ms after it changes. The Dashboard plus sub-row keeps the
-  four built-ins and New dashboard inline; Your dashboards opens this project''s custom dashboards by name with their
-  widget counts and search above 7 (F3-632). A custom board''s number is one more than the largest across open tabs,
-  the reopen list, this project''s stores, unadopted unscoped board stores, names and live boards; past 9999, opening
-  falls back to Home. An unknown board opens Home; dashboard:new creates one and dashboard:current resolves to dashboard:home.
-  Custom names collapse whitespace before trimming, at most 80 characters; a clash with a built-in or another of this
-  project''s dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name clears the stored name. Preset
-  names use the same uniqueness rule among presets. The current dashboard in Board and the active set in Start from are
-  checked and focused. Board shows Empty for a zero-widget custom board''s detail; Start from shows the active set''s
-  label, Save as preset... says Reuse these widgets anywhere, and Reset widgets says Back to its default widgets or Back
-  to an empty dashboard. Add widget labels the Usage widgets without a room More widgets. An Undo notice follows a Reset
-  widgets that changed anything as well as Start from; its restore_revision is the committed revision immediately before
-  that operation. The owner writes and reads that revision''s captured envelope in this project, with one receipt and
-  no workspace.layout_changed, and restore_revision never accompanies set_id. Undo''s availability is checked on a commit
-  that leaves the notice up, on pointer or focus entering it and on its click; if stale, the envelope is invalid or the
-  board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and the notice text and button''s hover detail
-  give the reason. Preset-hold resizes settle the set and never end the notice or make its revision stale. The notice
-  is at most the body width minus 24 px, with padding 5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes, Retro and
-  NieR''s Undo reverses on hover, and Glass uses a 30 px blur at saturation 1.5. NieR''s Live word is 11.5 px in the
-  code face with 0.08 em spacing. The empty board stays laid out but is visually hidden under its invitation; its three-track
-  sketch has 6 px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an API move or resize
-  returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or pointed on a board,
-  pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds every mounted board
-  whose tab the new layout keeps, hidden ones included, reloads custom names and refreshes the catalog; an unmounted
-  tab writes to its prior project. A named layout restores only envelopes saved for the current project, skipping another
-  project''s envelope; a custom board that the applied layout does not hold keeps its current contents. Amended 2026-10-16
-  (DL-214; Jared''s 2026-10-15 panel item 1): the Home board opens as the pinned 36 px Home tab from every path, the
-  "+" menu, the Board menu and a page''s subtab, never as a second, unpinned tab at natural width. D7, PM7 Step4 final-source
-  alignment, 2026-10-30 (integration e9b15abc64): dashboard:agents uses PM7_WORK_UI.list, agentGroup and agentSummary
-  over PM_WORK, the same rows/needs-you set as the platform panel and Agents rail. Its existing frame, All/Working/Needs
-  you/Waiting/Finished filter and short time form stay with this owner; no private AGENTS list or clock owns different
-  agents. DR-078 defines subscription teardown and show-time catch-up. Amended DL-260, Jared 2026-10-31: only real product
-  behavior remains an implementation requirement.'
+canonical_text: |-
+  A dashboard is a tab kind (F3-635), not a singleton surface (DL-180, D10). Every dashboard tab holds its own board on the Usage board engine (DL-186): it shows the Usage page's widget design and can show every Usage widget, and Plans/usage-feature.md#UF-062's rule that every Usage widget can be hosted on the dashboard now holds. Boards are built for more than one widget source: Usage widgets now, Orchestrator widgets after the Orchestrator page's own redesign, and other sources later, each under its own label (Plans/Widget_System.md#WS-030); the widget commands' payloads do not change. The built-in dashboards are Home (`dashboard:home`, pinned in the default layout, F3-630), Metrics (`dashboard:metrics`), Monitoring (`dashboard:monitoring`) and Agents (`dashboard:agents`), and a person can make custom dashboards with n from 1 to 9999 (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home, Metrics and Monitoring start from their own sets of Usage widgets (WS-030); a new custom dashboard starts empty. The old Home widgets (run progress, lanes and results) have left Home until Orchestrator widgets join the board engine after that page's redesign, and there is no Home (current) board (Jared, P1 B). Agents is drawn by the dashboard kind itself, not by the board engine: one card per agent at work, each opening that agent's transcript as a kept tab (Alt+click in a new panel), with the filters All agents, Working, Needs you, Waiting and Finished in its Show menu; it has no widgets and no board record, and resetting it means its filter (lead ruling F7). A dashboard tab sits in the same tab strip as every other tab (F3-631): it has no strip of its own and no second tab model. Inside the tab the board is the Usage widget board: its widget grid, its gestures, gravity and Tidy behave exactly as on the Usage page, each settled change one transaction (Plans/Widget_System.md#WS-019), and they act inside the tab only, never laying out panels (DR-066). The board lays out on the Usage board's tracks and width classes (Plans/Widget_System.md#WS-017), measured on the tab's own width, never the window (F3-635), and it sits on Home's tab surface, not the Usage page's background, in every look (P11). Each board's contents are kept per project (`widget_layout:v1:<project_id>:<board_id>`; the keys, the one-time adoption of an older key and the records are Plans/Widget_System.md#WS-030's and Plans/storage-plan.md's), so a project switch shows each dashboard tab with that project's board and a project lists only its own custom dashboards. A dashboard's widget layout is never stored inside the Home layout record, and Home's panels are not widgets. The header row is F3-635's shared row. Its left side shows the dashboard's name, the Live mark while Live readings are on and the board holds a Usage widget, the widget count ("N widgets", "1 widget" or "No widgets") and the range, with the scope when it is not all usage; its right side shows Add widget, Board and Maximize (Restore while maximized; Shift+Escape). The Live mark is the Usage page's own indicator in each look's words (Live; Retro [LIVE]; NieR Mode LIVE) and pulses once for each live change the board applies, never between them and never under Reduced Motion. On Agents the left side counts the agents at work ("N agents · N working · N need you", and "Showing <filter>" under a filter) and Show takes the place of Add widget and Board. Add widget opens a searchable list ("Find a widget") of every widget the board can be given: a section for each Usage room in the Usage page's room order (F3-514), then the Usage widgets that belong to no room, then one section for each other widget source under its label. Each row's second line names its room or source and what kind of widget it is in plain words; a widget already on the board is checked and disabled with the reason "Already on this dashboard". Choosing one adds it (cmd.widget.add), scrolls to it and moves focus onto it. The Board menu holds, in order: Dashboards (Home, Metrics, Monitoring, Agents, this project's custom dashboards by name with their widget counts, and New dashboard; the current one checked); This dashboard (Range, Scope, Start from, Save as preset..., Tidy, Reset widgets); Live (Live readings); and, on a custom dashboard only, after a hairline, Rename dashboard... and Delete dashboard.... On Agents it holds Dashboards and Show. On an empty board Save as preset... and Tidy are disabled with their reasons ("Add a widget first", "Nothing to tidy yet"). Range (Last 5 hours, Last 24 hours, Last 7 days, Last 30 days) and Scope (All current usage, Work accounts, Personal accounts, or one provider) belong to each dashboard and change only its board, independent of the Usage page's (P2); choosing one is the typed local action ui.widget_board.set_view, view state kept in the board's record with no receipt and no event (lead ruling F1). Live readings is the Usage page's own Live / Paused choice, one switch shared with the Usage page (Plans/usage-feature.md#UF-107). Tidy and Reset widgets are the board's own (WS-019, WS-030): Reset widgets returns Home, Metrics and Monitoring to their default sets and a custom dashboard to empty. Start from lists the sets a board can start from in four groups (P4): This dashboard (the board's own default), Dashboard starter, Usage rooms (the Usage page's 13 room sets, in its room order) and Your presets. Each row's second line says what the set holds, a preset adding the day it was saved, and the active set is checked; a filter field ("Find a room or a preset") appears once there are more than three presets. Choosing a set replaces the board's widgets with it through one cmd.widget.reset_layout naming the set (set_id; WS-030). Because Start from replaces the widgets, an Undo notice then shows at the foot of the tab for 8 s, held while the pointer or focus is on it and for 3 s after; it ends at the next change to the board's widgets, on Escape (focus returns to Board), on a project switch and when the tab closes, and Undo puts the board back as it was and says so. Amended 2026-10-10 (lead ruling): Undo dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision being the board's committed layout revision just before that Start from, with one receipt and only while the notice is up; it never carries set_id, the owner puts back exactly that revision's records, a restore is refused without dispatch if any other change was committed on the board since, excluding the preset hold's own settling resizes, and Undo is disabled with its reason, and it emits no workspace.layout_changed (WS-030, UCC-200). The empty board's Start from... button opens the same list. Presets are the person's own, kept across projects and offered on every dashboard (WS-030). Save as preset... asks for a name, starting from the dashboard's name made unique; a name is trimmed, its spaces collapsed and kept to at most 80 characters, and a preset saved without one is called "Preset <n>". With no presets, Your presets holds "Save this dashboard as a preset..."; with some, its last row, "Rename or delete presets", lists them, each with Start from this preset, Rename preset... and Delete preset... behind a confirm (Delete preset or Keep it). A dashboard that started from a deleted preset keeps its widgets. A preset keeps the widgets shown at each board width class with their sizes and settings, never the board's own range and scope. Saving, renaming and deleting a preset are the typed local actions ui.widget_preset.save, ui.widget_preset.rename and ui.widget_preset.delete, with no command; using one is cmd.widget.reset_layout with set_id user:<id> (lead ruling F2). New dashboard, in the Board menu, the "+" menu's Dashboard sub-row (F3-632) and the catalog, makes a custom dashboard (D35); so does a new tab or a split in a panel whose usual kind is the dashboard (Ctrl+T, F3-632). It starts empty and is called "Dashboard <n>". Rename dashboard... asks for a name and renames the tab with cmd.panel_tab.rename; renaming the tab renames the dashboard too, and clearing the tab's label gives back "Dashboard <n>". A name is trimmed and kept to at most 80 characters, and is kept per project with the board (WS-030). The name shows on the tab, in the header row, in the Board menu, in the "+" menu and in the catalog. Delete dashboard... asks first ("Delete <name>?": Delete dashboard, whose widgets cannot be brought back, or Keep it), then closes the tab (cmd.panel_tab.close), drops it from the reopen list and forgets its board and its name; it leaves the "+" menu and the catalog. Home, Metrics, Monitoring and Agents can be reset but never deleted, and show neither Rename dashboard... nor Delete dashboard...; a label the person gives one of their tabs names that tab only (F3-631). A closed custom dashboard keeps its board while it can be reopened from the reopen list and is forgotten when it leaves the list, unless it is open as a tab; the built-in dashboards keep theirs (P6). A saved named layout keeps the boards of the dashboards it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its boards and says so (lead ruling F3; Plans/storage-plan.md#SP-330); applying the layout puts back the boards it kept, and a named layout saved before this applies as before. Amended 2026-10-31 (DL-270): the 64 KB per named layout is a payload budget; board contents larger than the 16 KiB value cap are kept by payload reference (SP-337, SP-340), and SP-330 owns the stored form. A board's first show plays the Usage page's calm reading-order entrance, and none under Reduced Motion (P7). An empty board shows an invitation over the board, which stays laid out beneath it: a small sketch of a board, "<Name> is empty", one line saying what to do, and Add widget and Start from... buttons; a new, empty dashboard puts focus on its Add widget, and otherwise focus goes to the board's first card in reading order. Details on a widget opens the Usage page at that widget's room with its inspector open (P8). Live readings apply to dashboards too, each board separately, with the Usage page's idle rule (F3-628, UF-107): nothing animates at idle except one live change per applied batch while Live is on, and a board that is not on screen does no live work (P12). This supersedes F3-279's exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and C.4.1, F3-517's "distinct tab models" for Home and Dashboard and its Dashboard-frozen resize peers (with F3-515's and F3-518's), section 7.2's singleton dashboard, and the dashboard's own Main, Metrics and Monitoring strip of F3-505. Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below 520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly's lavender #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE and a 6 px ink diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode and, in the other looks, a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above the tab's foot (10 px below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent fill (outlined in Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under Reduced Motion. The empty board's invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by 30 px rows hides below 320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at most 360 px wide; its buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and buttons follow from 160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while shown; a filter other than All agents is that tab's own state, saved about 250 ms after it changes. The Dashboard plus sub-row keeps the four built-ins and New dashboard inline; Your dashboards opens this project's custom dashboards by name with their widget counts and search above 7 (F3-632). A custom board's number is one more than the largest across open tabs, the reopen list, this project's stores, unadopted unscoped board stores, names and live boards; past 9999, opening falls back to Home. An unknown board opens Home; dashboard:new creates one and dashboard:current resolves to dashboard:home. Custom names collapse whitespace before trimming, at most 80 characters; a clash with a built-in or another of this project's dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name clears the stored name. Preset names use the same uniqueness rule among presets. The current dashboard in Board and the active set in Start from are checked and focused. Board shows Empty for a zero-widget custom board's detail; Start from shows the active set's label, Save as preset... says Reuse these widgets anywhere, and Reset widgets says Back to its default widgets or Back to an empty dashboard. Add widget labels the Usage widgets without a room More widgets. An Undo notice follows a Reset widgets that changed anything as well as Start from; its restore_revision is the committed revision immediately before that operation. The owner writes and reads that revision's captured envelope in this project, with one receipt and no workspace.layout_changed, and restore_revision never accompanies set_id. Undo's availability is checked on a commit that leaves the notice up, on pointer or focus entering it and on its click; if stale, the envelope is invalid or the board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and the notice text and button's hover detail give the reason. Preset-hold resizes settle the set and never end the notice or make its revision stale. The notice is at most the body width minus 24 px, with padding 5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes, Retro and NieR's Undo reverses on hover, and Glass uses a 30 px blur at saturation 1.5. NieR's Live word is 11.5 px in the code face with 0.08 em spacing. The empty board stays laid out but is visually hidden under its invitation; its three-track sketch has 6 px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an API move or resize returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or pointed on a board, pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds every mounted board whose tab the new layout keeps, hidden ones included, reloads custom names and refreshes the catalog; an unmounted tab writes to its prior project. A named layout restores only envelopes saved for the current project, skipping another project's envelope; a custom board that the applied layout does not hold keeps its current contents. Amended 2026-10-16 (DL-214; Jared's 2026-10-15 panel item 1): the Home board opens as the pinned 36 px Home tab from every path, the "+" menu, the Board menu and a page's subtab, never as a second, unpinned tab at natural width. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): dashboard:agents uses PM7_WORK_UI.list, agentGroup and agentSummary over PM_WORK, the same rows/needs-you set as the platform panel and Agents rail. Its existing frame, All/Working/Needs you/Waiting/Finished filter and short time form stay with this owner; no private AGENTS list or clock owns different agents. DR-078 defines subscription teardown and show-time catch-up. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement. No project has its own SP-349 Home layout and boards, shared across that Server’s app chats rather than one fresh bucket per thread. Selecting or converting into a Project loads that Project’s saved UI state or its fresh defaults; do not import app boards into it. Saved named layouts remain per person; saved board snapshots apply only to the exact saved scope/Server/Project identity and are skipped elsewhere, including null-board snapshots. Keep the 64 KB board-payload cap, 16 KiB redb cap, one Assistant node, existing geometry and view-state/event distinctions. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
@@ -47799,26 +46741,40 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-186"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1-P13; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1; design lineage only)"
-  - "The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10)"
-  - "Concepts/home-redesign/NUMBERS.md (SHA-256 77e9c04c23959812da6799a54708c487fcb2f33f342219a1c79dae9c396614d7) and CONTRACT.md section 3.1 (SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9) at c4e32ec0b7 on branch concept/home-panels-20261009 (the dashboard kind as built; concept lineage only)"
-  - "Concepts/home-redesign/src/panels/kinds/30-dashboard.js at c4e32ec0b7 on branch concept/home-panels-20261009 (labels, prompts and confirms as built; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D10)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
-  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--home-redesign--src--panels--kinds--30-dashboard.js,
-    SHA-256 68f488e94f6ffb0927ea52c46a03771d93f9dde05a7852b2f19170fe0a9781e5 (Q16 landed on main as aec2916c94;
-    source lineage; not native certification)
-  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/c0305227f7-friendly-lavender.diff,
-    SHA-256 fb6f7127bfa67d809d9fdfef3b44da8603511e24c4782b1f24627376566a3b77 (landed main c0305227f7;
-    Jared approved lavender 2026-10-15; source lineage)
+- Plans/Decision_Log.md#DL-186
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md,
+  SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1-P13; Jared's answers relayed by the
+  planning thread, pm-mail 1010191613-9ce1; design lineage only)
+- The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10)
+- Concepts/home-redesign/NUMBERS.md (SHA-256 77e9c04c23959812da6799a54708c487fcb2f33f342219a1c79dae9c396614d7) and
+  CONTRACT.md section 3.1 (SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9) at c4e32ec0b7
+  on branch concept/home-panels-20261009 (the dashboard kind as built; concept lineage only)
+- Concepts/home-redesign/src/panels/kinds/30-dashboard.js at c4e32ec0b7 on branch concept/home-panels-20261009 (labels,
+  prompts and confirms as built; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D10)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
+  SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8
+  (audit lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--home-redesign--src--panels--kinds--30-dashboard.js,
+  SHA-256 68f488e94f6ffb0927ea52c46a03771d93f9dde05a7852b2f19170fe0a9781e5 (Q16 landed on main as aec2916c94; source
+  lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/c0305227f7-friendly-lavender.diff, SHA-256 fb6f7127bfa67d809d9fdfef3b44da8603511e24c4782b1f24627376566a3b77
+  (landed main c0305227f7; Jared approved lavender 2026-10-15; source lineage)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
   - "dashboard:home"
   - "dashboard:dash-<n>"
@@ -48716,162 +47672,8 @@ plan_unit_id: F3-642
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The terminal's appearance is one layered model (DL-183, DR-068), resolved field by field: the
-  look's defaults ("Follow look") under the app default (Settings > Terminal, SSYS-051) under the
-  project default (written through Settings transactions, in the Project's settings) under this
-  tab's override; a field left unset falls through to the layer below. Every field applies live, and
-  no terminal appearance setting carries a restart badge; the terminal draws its own glyphs
-  (DL-035), and section 6.4's restart rule for the app's font families is retired (DL-230). "Follow
-  look" resolves per look, light and dark: Friendly Catppuccin Latte and Mocha; Glass Tokyo Night
-  Day and Storm, drawn at 70 % (light) and 74 % (dark) opacity over the shell's existing glass blur,
-  the terminal adding no backdrop blur of its own (F3-431); Retro PM Paper Teletype and PM Phosphor
-  Green, with PM Phosphor Amber as Phosphor Green's sibling; Basic One Half Light and Dark; NieR
-  Mode PM YoRHa Parchment and PM YoRHa Ink. Thirty-four schemes ship: 27 third-party schemes in 13
-  families, each read from the project's own terminal port pinned to a commit, and 7 Puppet Master
-  originals. Puppet Master originals: PM Phosphor Green, PM Phosphor Amber, PM Paper Teletype, PM
-  YoRHa Parchment, PM YoRHa Ink, PM High Contrast Light, PM High Contrast Dark. Catppuccin (MIT):
-  Latte, Frappé, Macchiato, Mocha. Tokyo Night (Apache-2.0): Day, Storm, Night. One Half (MIT):
-  Light, Dark. Rosé Pine (MIT): Dawn, Moon, Main. Solarized (MIT): Light, Dark. Gruvbox (MIT):
-  Light, Dark. Dracula (MIT): Dark. Nord (MIT): Dark. Kanagawa (MIT): Wave, Lotus. Everforest (MIT):
-  Light, Dark. Flexoki (MIT): Light, Dark. GitHub (MIT): Light, Dark. Ayu (MIT): Mirage. Every
-  third-party scheme ships with its licence text and its source address and SHA-256; the
-  iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and
-  import covers them. These schemes are one code colour-scheme catalog that serves the editor and
-  the terminal (D30, amending D15 and D21): each of the 34 schemes carries the terminal palette and
-  the editor's 17 syntax tokens. Each catalog scheme's 17 editor syntax colours are authored to
-  4.5:1 for every syntax token, comments included, against the scheme's background (7:1 throughout
-  on PM High Contrast Light and Dark), and the editor and the terminal both draw the catalog values
-  as they are; an imported scheme takes its editor syntax colours from its ANSI 16 by a fixed map.
-  Each surface's scheme choice defaults to "Follow look" — the terminal's "Follow look" per-look
-  scheme above, the editor's per-look syntax colours (F3-426, F3-639) — and each surface keeps its
-  own scheme choice. The shared Customize presentation, its two entry points, scope memory, live
-  previews, quick sets, trials and docking rule are F3-650's; the editor's field behavior is
-  F3-651's. No surface keeps a separate scheme catalog (DR-068). "Switch with light and dark", on by
-  default, swaps a chosen scheme for its family's other appearance when the app changes between
-  light and dark. A minimum-contrast floor applies per cell to the text colour against its cell
-  background by moving OKLab lightness only, keeping hue and chroma: default 4.5:1, with Off, 3:1,
-  4.5:1 and the existing higher 7:1 choice for program output only under F3-654; block elements,
-  powerline and sextant glyphs are exempt, because they are shapes that meet their neighbours, and a
-  selection uses the scheme's selection text colour. Phosphor schemes (PM Phosphor Green and PM
-  Phosphor Amber) map colours outside their 16 (the 256-colour cube and truecolor), and any colour a
-  program sets (OSC 4, 10, 11 and 12), onto the phosphor by brightness, so a program's `38;5;196`
-  never paints red on a green tube; the scheme's own 16 stay as authored. Import reads iTerm2
-  `.itermcolors`, Windows Terminal JSON (one scheme, or a settings file's list of schemes), kitty
-  `.conf`, Ghostty themes, Alacritty TOML and its legacy YAML, base16 and base24 YAML, and
-  Xresources; input is capped at 256 KB, nothing in a file is evaluated, and every error message is
-  fixed and never echoes the file. The fields and their defaults: scheme (Follow look, or a scheme);
-  Switch with light and dark (on); minimum contrast (4.5:1); font (Follow look, JetBrains Mono,
-  Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or the system
-  monospace; F3-644); font size and line height (the face's defaults, F3-644); weight (400); letter
-  spacing (0); ligatures (on); bold as bright (off); cursor shape (Follow look, block, bar or
-  underline); cursor blink (on); cursor trail (Follow look, off, soft, glow, phosphor or trace);
-  background (Follow look, theme surface, solid colour, gradient or image) with its colour, its
-  gradient or image from Plans/terminal_background_catalog.json, or a custom image; image dim (Auto,
-  the least dim needed for readable text) and image blur (0 px, baked once into the image and never
-  a backdrop blur); opacity (Glass); padding (0 px by default, the vertical padding 60 % of the
-  selected horizontal padding); effects (Follow look, off or custom) with the effect fields of
-  F3-643; inactive dimming; smooth scrolling; bell (Follow look or off, F3-643); sticky header (on);
-  copy on select (off); and Sixtyfour's scan and bleed axes. Cell geometry: a cell is a whole number
-  of device pixels, its width round((advance + letter spacing) x device pixel ratio) and its height
-  round(font size in px x line height x device pixel ratio), never less than 90 % of the font's
-  ascent plus descent, with the baseline centred; the padding is painted in the cell background, so
-  the remainder smaller than a cell never shows as a stripe. The Customize screen (F3-650) (More,
-  Appearance...) previews every change live on the terminal and writes either This terminal (the
-  tab's override) or All terminals (enabled, the project default through the same Settings
-  transaction Settings uses over SSYS-051's rows); This terminal commits with
-  `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same model with the same
-  fields (SSYS-051) and writes the project layer through that same Settings transaction. The app and
-  project layers are Settings values and the tab's override lives in the terminal tab's serialized
-  state; a custom background image is kept as SP-331 says. There is one model: the look's defaults,
-  the Customize screen and Settings read and write it, and no second terminal theme or font store
-  exists (DR-068). The Retro scheme choice also colours Retro's editor syntax: Phosphor Green or
-  Amber, with Amber turning the Retro editor amber. Retro syntax stays monochrome, using brightness
-  and weight in dark and the black and red ribbon in light. This choice is stored once in the
-  terminal's appearance model; the editor reads it and keeps no copy (F3-639, F3-647). The Customize
-  screen’s All terminals is enabled and writes the project default row of SSYS-051 through the same
-  Settings transaction Settings uses, so it changes every terminal while this Project is open; its
-  hover tag says in this project; no surface writes an app-wide value until q-035 admits one.
-  Hovering a scheme previews it on this terminal only after the pointer rests on that row for 110
-  ms; arrow keys preview at once, with a 110 ms wait while a key repeats, so passing over rows or
-  scrolling them beneath a stationary pointer never flashes through the schemes. Hover previews a
-  scheme exactly as named, regardless of light/dark pairing. Choosing a scheme of the opposite
-  appearance keeps that scheme and turns pairing off in the chosen scope, with a visible
-  explanation. Scheme hints read the catalog's actual Light/Dark appearance. Font Rendering offers
-  Auto (renderer default), Crisp (whole device-pixel text placement with hard pixel edges, as a
-  terminal with anti-aliasing off) and Smooth (unhinted outlines);
-  unsupported capabilities are disclosed, not silently mislabeled. Sixtyfour Scanlines and Bleed are
-  static face-axis choices, not a native-only promise. Off and 3:1 remain valid program-output
-  choices and are not rewritten on read. The look's app-default layer remains the bundled inventory
-  default until an app-wide store is admitted; Project and tab writes keep SSYS-002/SP-331
-  ownership. Plans/terminal_background_catalog.json is the one finite catalog of 64 designs, in
-  Tonal, Wash, Pattern, Scene, Glass, Retro, Mark and Moving categories. Tonal/Wash ids use the
-  gradient field, other design ids use the image field; defaults are fade and hills. Existing
-  dusk/dawn/deep/paper gradients and hills/grid/paper image values retain their meaning through the
-  catalog's explicit compatibility map. Every design is offered in every look; Suggested for <look>
-  is a suggestion, never a filter, and Show includes All. The catalog includes plain Clear, Frosted,
-  Tinted and Reeded glass and plain Phosphor glow, Tube glass, Aperture grille and Static. The Lens
-  refracts the currently selected shared wallpaper print through F3-653/DR-073, or the scheme's
-  light where no wallpaper shows, never a page-computed background or independent backdrop blur.
-  Designs use the current scheme and remain visibly distinct while respecting the selected output
-  contrast floor; low-headroom light schemes use a lighter-than-ground version rather than veiling
-  different choices into an identical plain surface. Strength is 0–1, default 1; pattern Size is
-  Fine/Medium/Coarse, default Medium; Motion is Off/Gentle/Lively, default Gentle and active only
-  for moving designs under F3-643; a custom picture offers Cover/Contain/Tile/Centre, default Cover,
-  and desaturation 0–1, default 0.5. Auto dim is not an explicit zero; an explicit dim never defeats
-  the readability floor. Look's own and Solid colour always appear in Plain. Theme surface appears
-  separately only when it differs from Look's own (Friendly in the landed design); an existing saved
-  Theme surface remains valid and selects Look's own where their drawing coincides. F3-643 owns the
-  independent bezel and CRT fields; F3-650 owns saved presets. Amended 2026-10-16 (DL-213, terminal
-  rounds 4 and 5): every choice a field offers draws visibly apart from every other in every look,
-  an inheritance choice (Follow look, Auto, the style's or face's own) aside. A custom picture is
-  prepared at its own size, at most 1920 x 1200, so Tile and Centre differ for a small picture; Blur
-  is a custom picture's own and the built-in designs take none; on a scheme with no contrast to
-  spare (Glass light's Tokyo Night Day) the picture is veiled in white, or in black under light
-  text, and shows as a pale print at the same text contrast, rather than being covered by the
-  scheme's ground; under a dim of 85 % it offers full colour or grey only, and under 90 % Dim stays
-  at 90 %, Blur offers 0 or 12 px and desaturation is not offered, the screen saying why in one line.
-  Pattern Size applies to every Pattern design but Paper, whose fibre looks alike at any scale: on
-  Waves it is the swell and on Scanline field the pitch. Lively is a motion of its own, not only a
-  faster Gentle: Drifting aurora's curtains sweep twice as far, lean and pulse; Lava climbs further
-  and swells; Running rain runs four times as fast and a run clears a pale pane's fog. Solid colour
-  with no colour picked is the scheme's ground a visible step away from its text, so it always shows
-  and only gains contrast. Bold as bright takes a more intense colour where a
-  scheme's bright colour is within a small step of its normal one (on NieR's two-tone schemes,
-  toward the text). In NieR Mode the YoRHa scheme of the other mode keeps its own colours. Glass
-  Opacity in Glass light is offered only over a wallpaper, where its stops differ. The Glass light
-  uploaded-picture case the options audit found wholly hidden is closed by the veil (40 cases,
-  lowest text contrast 4.78:1 in the concept); that is concept evidence, not native certification.
-  Plans/terminal_background_catalog.schema.json validates the catalog's closed finite-data shape;
-  scripts/pm7-canon-check.py checks unique ids, choices and defaults against the Settings rows.
-  Amended 2026-10-17 (DL-222): a design or scheme already previewed by hover stays shown through the
-  pick's frame, and the preview ends only with the write, so the old ground is never drawn between the
-  preview and the pick.
-  Amended 2026-10-17 (DL-228): Switch with light and dark swaps by an explicit pair: Catppuccin Frappé and
-  Macchiato go light to Latte, and Latte goes dark to Mocha; Tokyo Night Night and Storm go light to Day, and
-  Day goes dark to Storm; Rosé Pine Moon and Main go light to Dawn, and Dawn goes dark to Main; Kanagawa Wave
-  and Lotus pair; PM YoRHa Parchment and Ink pair, as do the PM High Contrast schemes; the other families swap
-  within the family; Phosphor Green and Amber go light to PM Paper Teletype, and going dark from Paper
-  Teletype returns to the phosphor last chosen, Green when none was (PM-ORIGINALS section 4; the concept
-  always returns Green, which is not adopted). Dracula, Nord, Ayu Mirage and every imported scheme have no
-  sibling and stay as chosen. With a PM High Contrast scheme the program-output floor is 7:1 unless the person
-  set a floor in some layer. The floor holds as drawn: the look's own ground (Friendly's stage) and Retro's
-  scanlines and glow raise each cell's target by what they take, so every word meets the chosen floor on
-  screen. PM YoRHa Parchment and Ink map colours outside their 16, and program-set colours, onto the
-  ink-parchment line by brightness, as the phosphor schemes do; in NieR Mode the YoRHa scheme of the current
-  mode takes its colours from NieR's token tables, its catalog values being the fallback. A scheme change,
-  previewed or chosen, crosses the terminal in the look's motion from the chosen tile (Basic fades, Friendly
-  and Glass grow, Retro steps, NieR wipes only with its part, and Glass changes the tint and lays only the
-  text over), the terminal's text never moving; under Reduced Motion it is a short cross-fade and on battery
-  saver it is immediate (ACD-475). Background designs preview on hover after the same 110 ms rest, in
-  Suggested and in Show, and revert on leaving or Escape, as schemes do (CS-102). Choose a picture takes PNG,
-  JPEG or WebP under 4 MB and says "Choose a picture under 4 MB", "There is no room to keep that picture on
-  this computer" or "That picture could not be read"; a picture is kept once by its content hash (SP-331). An
-  import needs a background and a foreground; missing ANSI 0-7 take the xterm defaults and missing 8-15 copy
-  the normal colours, with a warning; light or dark is read from the background; a Windows Terminal settings
-  file with several schemes imports the first and names the others in a warning; an import with the same name
-  replaces the earlier one; an imported scheme has no sibling and is then chosen in the current scope by a
-  separate write.
+canonical_text: |-
+  The terminal's appearance is one layered model (DL-183, DR-068), resolved field by field: the look's defaults ("Follow look") under Everywhere then Computer defaults (Settings > Terminal, SSYS-051) under the applicable Project default (written through Settings transactions, in the Project's settings) under this tab's override; a field left unset falls through to the layer below. Every field applies live, and no terminal appearance setting carries a restart badge; the terminal draws its own glyphs (DL-035), and section 6.4's restart rule for the app's font families is retired (DL-230). "Follow look" resolves per look, light and dark: Friendly Catppuccin Latte and Mocha; Glass Tokyo Night Day and Storm, drawn at 70 % (light) and 74 % (dark) opacity over the shell's existing glass blur, the terminal adding no backdrop blur of its own (F3-431); Retro PM Paper Teletype and PM Phosphor Green, with PM Phosphor Amber as Phosphor Green's sibling; Basic One Half Light and Dark; NieR Mode PM YoRHa Parchment and PM YoRHa Ink. Thirty-four schemes ship: 27 third-party schemes in 13 families, each read from the project's own terminal port pinned to a commit, and 7 Puppet Master originals. Puppet Master originals: PM Phosphor Green, PM Phosphor Amber, PM Paper Teletype, PM YoRHa Parchment, PM YoRHa Ink, PM High Contrast Light, PM High Contrast Dark. Catppuccin (MIT): Latte, Frappé, Macchiato, Mocha. Tokyo Night (Apache-2.0): Day, Storm, Night. One Half (MIT): Light, Dark. Rosé Pine (MIT): Dawn, Moon, Main. Solarized (MIT): Light, Dark. Gruvbox (MIT): Light, Dark. Dracula (MIT): Dark. Nord (MIT): Dark. Kanagawa (MIT): Wave, Lotus. Everforest (MIT): Light, Dark. Flexoki (MIT): Light, Dark. GitHub (MIT): Light, Dark. Ayu (MIT): Mirage. Every third-party scheme ships with its licence text and its source address and SHA-256; the iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import covers them. These schemes are one code colour-scheme catalog that serves the editor and the terminal (D30, amending D15 and D21): each of the 34 schemes carries the terminal palette and the editor's 17 syntax tokens. Each catalog scheme's 17 editor syntax colours are authored to 4.5:1 for every syntax token, comments included, against the scheme's background (7:1 throughout on PM High Contrast Light and Dark), and the editor and the terminal both draw the catalog values as they are; an imported scheme takes its editor syntax colours from its ANSI 16 by a fixed map. Each surface's scheme choice defaults to "Follow look" — the terminal's "Follow look" per-look scheme above, the editor's per-look syntax colours (F3-426, F3-639) — and each surface keeps its own scheme choice. The shared Customize presentation, its two entry points, scope memory, live previews, quick sets, trials and docking rule are F3-650's; the editor's field behavior is F3-651's. No surface keeps a separate scheme catalog (DR-068). "Switch with light and dark", on by default, swaps a chosen scheme for its family's other appearance when the app changes between light and dark. A minimum-contrast floor applies per cell to the text colour against its cell background by moving OKLab lightness only, keeping hue and chroma: default 4.5:1, with Off, 3:1, 4.5:1 and the existing higher 7:1 choice for program output only under F3-654; block elements, powerline and sextant glyphs are exempt, because they are shapes that meet their neighbours, and a selection uses the scheme's selection text colour. Phosphor schemes (PM Phosphor Green and PM Phosphor Amber) map colours outside their 16 (the 256-colour cube and truecolor), and any colour a program sets (OSC 4, 10, 11 and 12), onto the phosphor by brightness, so a program's `38;5;196` never paints red on a green tube; the scheme's own 16 stay as authored. Import reads iTerm2 `.itermcolors`, Windows Terminal JSON (one scheme, or a settings file's list of schemes), kitty `.conf`, Ghostty themes, Alacritty TOML and its legacy YAML, base16 and base24 YAML, and Xresources; input is capped at 256 KB, nothing in a file is evaluated, and every error message is fixed and never echoes the file. The fields and their defaults: scheme (Follow look, or a scheme); Switch with light and dark (on); minimum contrast (4.5:1); font (Follow look, JetBrains Mono, Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or the system monospace; F3-644); font size and line height (the face's defaults, F3-644); weight (400); letter spacing (0); ligatures (on); bold as bright (off); cursor shape (Follow look, block, bar or underline); cursor blink (on); cursor trail (Follow look, off, soft, glow, phosphor or trace); background (Follow look, theme surface, solid colour, gradient or image) with its colour, its gradient or image from Plans/terminal_background_catalog.json, or a custom image; image dim (Auto, the least dim needed for readable text) and image blur (0 px, baked once into the image and never a backdrop blur); opacity (Glass); padding (0 px by default, the vertical padding 60 % of the selected horizontal padding); effects (Follow look, off or custom) with the effect fields of F3-643; inactive dimming; smooth scrolling; bell (Follow look or off, F3-643); sticky header (on); copy on select (off); and Sixtyfour's scan and bleed axes. Cell geometry: a cell is a whole number of device pixels, its width round((advance + letter spacing) x device pixel ratio) and its height round(font size in px x line height x device pixel ratio), never less than 90 % of the font's ascent plus descent, with the baseline centred; the padding is painted in the cell background, so the remainder smaller than a cell never shows as a stripe. The Customize screen (F3-650) (More, Appearance...) previews every change live on the terminal and writes either This terminal (the tab's override) or All terminals (Everywhere through the same Settings transaction over SSYS-051’s rows); This terminal commits with `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same model and origin-target transaction at offered Everywhere/Computer/Project levels. Everywhere, Computer and Project layers are Settings values and the tab's override lives in the terminal tab's serialized state; a custom background image is kept as SP-331 says. There is one model: the look's defaults, the Customize screen and Settings read and write it, and no second terminal theme or font store exists (DR-068). The Retro scheme choice also colours Retro's editor syntax: Phosphor Green or Amber, with Amber turning the Retro editor amber. Retro syntax stays monochrome, using brightness and weight in dark and the black and red ribbon in light. This choice is stored once in the terminal's appearance model; the editor reads it and keeps no copy (F3-639, F3-647). The Customize screen’s All terminals is enabled and writes Everywhere through the same Settings transaction; it affects following terminals and explains any masking Computer, Project or tab own value. q-035 is resolved in live canon. Hovering a scheme previews it on this terminal only after the pointer rests on that row for 110 ms; arrow keys preview at once, with a 110 ms wait while a key repeats, so passing over rows or scrolling them beneath a stationary pointer never flashes through the schemes. Hover previews a scheme exactly as named, regardless of light/dark pairing. Choosing a scheme of the opposite appearance keeps that scheme and turns pairing off in the chosen scope, with a visible explanation. Scheme hints read the catalog's actual Light/Dark appearance. Font Rendering offers Auto (renderer default), Crisp (whole device-pixel text placement with hard pixel edges, as a terminal with anti-aliasing off) and Smooth (unhinted outlines); unsupported capabilities are disclosed, not silently mislabeled. Sixtyfour Scanlines and Bleed are static face-axis choices, not a native-only promise. Off and 3:1 remain valid program-output choices and are not rewritten on read. The Everywhere store is admitted by SSYS-002/059; Computer and Project own values are independent sparse levels and tab overrides retain SP-331 ownership. Plans/terminal_background_catalog.json is the one finite catalog of 64 designs, in Tonal, Wash, Pattern, Scene, Glass, Retro, Mark and Moving categories. Tonal/Wash ids use the gradient field, other design ids use the image field; defaults are fade and hills. Existing dusk/dawn/deep/paper gradients and hills/grid/paper image values retain their meaning through the catalog's explicit compatibility map. Every design is offered in every look; Suggested for <look> is a suggestion, never a filter, and Show includes All. The catalog includes plain Clear, Frosted, Tinted and Reeded glass and plain Phosphor glow, Tube glass, Aperture grille and Static. The Lens refracts the currently selected shared wallpaper print through F3-653/DR-073, or the scheme's light where no wallpaper shows, never a page-computed background or independent backdrop blur. Designs use the current scheme and remain visibly distinct while respecting the selected output contrast floor; low-headroom light schemes use a lighter-than-ground version rather than veiling different choices into an identical plain surface. Strength is 0–1, default 1; pattern Size is Fine/Medium/Coarse, default Medium; Motion is Off/Gentle/Lively, default Gentle and active only for moving designs under F3-643; a custom picture offers Cover/Contain/Tile/Centre, default Cover, and desaturation 0–1, default 0.5. Auto dim is not an explicit zero; an explicit dim never defeats the readability floor. Look's own and Solid colour always appear in Plain. Theme surface appears separately only when it differs from Look's own (Friendly in the landed design); an existing saved Theme surface remains valid and selects Look's own where their drawing coincides. F3-643 owns the independent bezel and CRT fields; F3-650 owns saved presets. Amended 2026-10-16 (DL-213, terminal rounds 4 and 5): every choice a field offers draws visibly apart from every other in every look, an inheritance choice (Follow look, Auto, the style's or face's own) aside. A custom picture is prepared at its own size, at most 1920 x 1200, so Tile and Centre differ for a small picture; Blur is a custom picture's own and the built-in designs take none; on a scheme with no contrast to spare (Glass light's Tokyo Night Day) the picture is veiled in white, or in black under light text, and shows as a pale print at the same text contrast, rather than being covered by the scheme's ground; under a dim of 85 % it offers full colour or grey only, and under 90 % Dim stays at 90 %, Blur offers 0 or 12 px and desaturation is not offered, the screen saying why in one line. Pattern Size applies to every Pattern design but Paper, whose fibre looks alike at any scale: on Waves it is the swell and on Scanline field the pitch. Lively is a motion of its own, not only a faster Gentle: Drifting aurora's curtains sweep twice as far, lean and pulse; Lava climbs further and swells; Running rain runs four times as fast and a run clears a pale pane's fog. Solid colour with no colour picked is the scheme's ground a visible step away from its text, so it always shows and only gains contrast. Bold as bright takes a more intense colour where a scheme's bright colour is within a small step of its normal one (on NieR's two-tone schemes, toward the text). In NieR Mode the YoRHa scheme of the other mode keeps its own colours. Glass Opacity in Glass light is offered only over a wallpaper, where its stops differ. The Glass light uploaded-picture case the options audit found wholly hidden is closed by the veil (40 cases, lowest text contrast 4.78:1 in the concept); that is concept evidence, not native certification. Plans/terminal_background_catalog.schema.json validates the catalog's closed finite-data shape; scripts/pm7-canon-check.py checks unique ids, choices and defaults against the Settings rows. Amended 2026-10-17 (DL-222): a design or scheme already previewed by hover stays shown through the pick's frame, and the preview ends only with the write, so the old ground is never drawn between the preview and the pick. Amended 2026-10-17 (DL-228): Switch with light and dark swaps by an explicit pair: Catppuccin Frappé and Macchiato go light to Latte, and Latte goes dark to Mocha; Tokyo Night Night and Storm go light to Day, and Day goes dark to Storm; Rosé Pine Moon and Main go light to Dawn, and Dawn goes dark to Main; Kanagawa Wave and Lotus pair; PM YoRHa Parchment and Ink pair, as do the PM High Contrast schemes; the other families swap within the family; Phosphor Green and Amber go light to PM Paper Teletype, and going dark from Paper Teletype returns to the phosphor last chosen, Green when none was (PM-ORIGINALS section 4; the concept always returns Green, which is not adopted). Dracula, Nord, Ayu Mirage and every imported scheme have no sibling and stay as chosen. With a PM High Contrast scheme the program-output floor is 7:1 unless the person set a floor in some layer. The floor holds as drawn: the look's own ground (Friendly's stage) and Retro's scanlines and glow raise each cell's target by what they take, so every word meets the chosen floor on screen. PM YoRHa Parchment and Ink map colours outside their 16, and program-set colours, onto the ink-parchment line by brightness, as the phosphor schemes do; in NieR Mode the YoRHa scheme of the current mode takes its colours from NieR's token tables, its catalog values being the fallback. A scheme change, previewed or chosen, crosses the terminal in the look's motion from the chosen tile (Basic fades, Friendly and Glass grow, Retro steps, NieR wipes only with its part, and Glass changes the tint and lays only the text over), the terminal's text never moving; under Reduced Motion it is a short cross-fade and on battery saver it is immediate (ACD-475). Background designs preview on hover after the same 110 ms rest, in Suggested and in Show, and revert on leaving or Escape, as schemes do (CS-102). Choose a picture takes PNG, JPEG or WebP under 4 MB and says "Choose a picture under 4 MB", "There is no room to keep that picture on this computer" or "That picture could not be read"; a picture is kept once by its content hash (SP-331). An import needs a background and a foreground; missing ANSI 0-7 take the xterm defaults and missing 8-15 copy the normal colours, with a warning; light or dark is read from the background; a Windows Terminal settings file with several schemes imports the first and names the others in a warning; an import with the same name replaces the earlier one; an imported scheme has no sibling and is then chosen in the current scope by a separate write. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project.
 gui_related: true
 gui_classification_reason: >-
   Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and
@@ -48880,46 +47682,40 @@ split_recommended: false
 depends_on: [DL-183, F3-640, F3-431, DR-068, SSYS-051, SP-331]
 unblocks: [F3-643, F3-644, UCC-201, ATS-076]
 acceptance_criteria:
-- Every field resolves tab override, then project default, then app default, then the look's default,
-  and an unset field falls through.
-- Each look's Follow look scheme is the one listed for its light and dark variant, and Glass draws its
-  scheme at 70 % and 74 % opacity with no backdrop blur of the terminal's own.
-- Exactly the 34 schemes listed ship, each third-party scheme with its licence and source record, and
-  the iTerm2-Color-Schemes collection and Modus are not bundled.
-- The program-output minimum defaults to 4.5:1, offers Off, 3:1, 4.5:1 and 7:1, changes only OKLab lightness
-  when enabled, and leaves block, powerline and sextant glyphs alone; interface text still consumes F3-654.
-- Under PM Phosphor Green or Amber, a 256-colour or truecolor colour and a colour a program sets with
-  OSC 4, 10, 11 or 12 draw on the phosphor by brightness, and the scheme's own 16 colours draw as authored.
-- Import accepts the seven formats listed, refuses input over 256 KB, evaluates nothing and shows fixed
-  errors that never echo the file.
-- Every field changes the terminal at once, from Customize and from Settings, and no terminal appearance
-  setting shows a restart badge.
-- Cells are whole device pixels by the geometry rule, and no stripe shows between the last cell and the
-  padding.
-- The Customize screen’s All terminals is enabled and writes the project default row of SSYS-051 through
-  the same Settings transaction Settings uses, so it changes every terminal while this Project is open;
-  its hover tag says in this project; no surface writes an app-wide value until q-035 admits one.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build
-  tasks are created by this unit.
-- The editor and terminal list the same catalog, each curated scheme carries terminal and syntax colours,
-  both scheme choices default to Follow look and remain separate, and both menus open the same Customize
-  component (F3-650).
-- Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor
-  Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor
-  stores no copy.
-- Every catalog scheme's 17 editor syntax colours meet 4.5:1 for every syntax token, comments included,
-  against its background (7:1 throughout on PM High Contrast Light and Dark), an imported scheme's editor
-  syntax colours come from its ANSI 16 by the fixed map, and the editor opens F3-650/F3-651's full Customize
-  screen.
-- A fresh terminal has zero padding and the one catalog supplies all background choices without per-look
-  exclusions.
-- All 64 designs are reachable in every look, shared with Settings; compatibility ids resolve through
-  the same catalog and Theme surface aliases only visually where identical.
-- Lens follows wallpaper changes and keeps text readable; distinct designs remain distinct on light and
-  dark schemes.
+- Every field resolves tab override, then project default, then app default, then the look's default, and an unset
+  field falls through.
+- Each look's Follow look scheme is the one listed for its light and dark variant, and Glass draws its scheme at
+  70 % and 74 % opacity with no backdrop blur of the terminal's own.
+- Exactly the 34 schemes listed ship, each third-party scheme with its licence and source record, and the iTerm2-Color-Schemes
+  collection and Modus are not bundled.
+- The program-output minimum defaults to 4.5:1, offers Off, 3:1, 4.5:1 and 7:1, changes only OKLab lightness when
+  enabled, and leaves block, powerline and sextant glyphs alone; interface text still consumes F3-654.
+- Under PM Phosphor Green or Amber, a 256-colour or truecolor colour and a colour a program sets with OSC 4, 10,
+  11 or 12 draw on the phosphor by brightness, and the scheme's own 16 colours draw as authored.
+- Import accepts the seven formats listed, refuses input over 256 KB, evaluates nothing and shows fixed errors that
+  never echo the file.
+- Every field changes the terminal at once, from Customize and from Settings, and no terminal appearance setting
+  shows a restart badge.
+- Cells are whole device pixels by the geometry rule, and no stripe shows between the last cell and the padding.
+- Current level/scope/write presentation follows SSYS-002/059, F3-670 and SP-348; old q-035 and universal inheritance/no-app-write
+  bans are superseded. Detached copies remain independent of their source Project. Exact owner/trust/permission/currentness
+  rules remain.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
+- The editor and terminal list the same catalog, each curated scheme carries terminal and syntax colours, both scheme
+  choices default to Follow look and remain separate, and both menus open the same Customize component (F3-650).
+- Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or
+  Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy.
+- Every catalog scheme's 17 editor syntax colours meet 4.5:1 for every syntax token, comments included, against
+  its background (7:1 throughout on PM High Contrast Light and Dark), an imported scheme's editor syntax colours
+  come from its ANSI 16 by the fixed map, and the editor opens F3-650/F3-651's full Customize screen.
+- A fresh terminal has zero padding and the one catalog supplies all background choices without per-look exclusions.
+- All 64 designs are reachable in every look, shared with Settings; compatibility ids resolve through the same catalog
+  and Theme surface aliases only visually where identical.
+- Lens follows wallpaper changes and keeps text readable; distinct designs remain distinct on light and dark schemes.
 - Every offered choice of every field draws apart from every other in all ten looks, inheritance choices aside;
-  Paper offers no Size; a custom picture stays visible as a pale print on a scheme with no contrast to spare,
-  at the selected text contrast; Picture Desaturation defaults to 0.5; the built-in designs offer no Blur.
+  Paper offers no Size; a custom picture stays visible as a pale print on a scheme with no contrast to spare, at
+  the selected text contrast; Picture Desaturation defaults to 0.5; the built-in designs offer no Blur.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -48944,50 +47740,40 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
   (D15)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
-  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept
-  lineage only)
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md,
   SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md,
-  SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage
-  only)
-- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256
-  1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0 (approved campaign source lineage;
-  not native implementation evidence)
+  SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
+  (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/CONTRAST-CLARIFICATION-20261014.md, SHA-256
-  1c5654b46b6ed160a34466c9df083681cc179815b658c0acce593698680b8493 (decision/source lineage; not native
-  implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/CONTRAST-CLARIFICATION-20261014.md, SHA-256 1c5654b46b6ed160a34466c9df083681cc179815b658c0acce593698680b8493
+  (decision/source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
   (decision/source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
-  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
-  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md, SHA-256
+  4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round2--CANON-PROPOSALS.md,
-  SHA-256 809ba3f1959a9349500fd6f3682650d348d38f0f1776f727f461202c60d36080 (source lineage; not native
-  certification)
+  SHA-256 809ba3f1959a9349500fd6f3682650d348d38f0f1776f727f461202c60d36080 (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--CANON-PROPOSALS.md,
-  SHA-256 4a4b91f257467e76ec6d43e37a04a81cf5f9dee515242177f0d08db04483700d (source lineage; not native
-  certification)
+  SHA-256 4a4b91f257467e76ec6d43e37a04a81cf5f9dee515242177f0d08db04483700d (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--home-redesign--src--terminal--js--42-appearance.js,
-  SHA-256 60379cc762cb98e4fbc4d6fb0a44751cbc7447da3c1e9ff4a04589c8186fefc9 (source lineage; not native
-  certification)
+  SHA-256 60379cc762cb98e4fbc4d6fb0a44751cbc7447da3c1e9ff4a04589c8186fefc9 (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--home-redesign--src--terminal--js--43-grounds.js,
-  SHA-256 617315678ff086bf94d334774384cbe93997d2afcbd753c048644ca5cae77b11 (source lineage; not native
-  certification)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-terminal-options-audit--NOTES.md,
-  SHA-256 7cb5f1b3977e3923b4773260376626ac56827754ea663519a023b510065fc5ff (source lineage; not native
-  certification)
+  SHA-256 617315678ff086bf94d334774384cbe93997d2afcbd753c048644ca5cae77b11 (source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-terminal-options-audit--NOTES.md, SHA-256
+  7cb5f1b3977e3923b4773260376626ac56827754ea663519a023b510065fc5ff (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round4--CANON-PROPOSALS.md,
-  SHA-256 6be6e2e0743fe3af41ba338d508573eab7d0c60e42ee7517cd18bb77ee35ade7 (source lineage; not native
-  certification)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round5--NOTES.md,
-  SHA-256 77c878854cf0c02b0612ce422a5f68797b3646f6d2aee2b316059d35be342541 (source lineage; not native
-  certification)
+  SHA-256 6be6e2e0743fe3af41ba338d508573eab7d0c60e42ee7517cd18bb77ee35ade7 (source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round5--NOTES.md, SHA-256 77c878854cf0c02b0612ce422a5f68797b3646f6d2aee2b316059d35be342541
+  (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--home-redesign--src--terminal--js--43-grounds.js,
-  SHA-256 1dcede78aa98198b87661a64d6012c1ef420a1ec5573b9cccd48cb143b226b05 (round-5 head f1042f7d3e; source
-  lineage; not native certification)
+  SHA-256 1dcede78aa98198b87661a64d6012c1ef420a1ec5573b9cccd48cb143b226b05 (round-5 head f1042f7d3e; source lineage;
+  not native certification)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F08,A-F09,C-F11,B-F13
 preserved_exact_tokens:
   - "Follow look"
   - "Switch with light and dark"
@@ -49617,99 +48403,8 @@ plan_unit_id: F3-650
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The editor and terminal share one Customize presentation and the code scheme catalog of F3-642.
-  Their More menu's Appearance... and Settings > Editor & Terminal > Editor look or Terminal look >
-  Open Customize reach the corresponding screen. The menu defaults to This editor or This terminal
-  and remembers the scope last chosen for that tab; Settings opens All editors or All terminals for
-  that visit only and never overwrites the tab's remembered scope. All means the open Project,
-  disclosed as in this project; a tab's own overrides remain above it and the screen explains when
-  they mask an All change. SSYS-002 forbids a persistent write without a Project. The screen has a
-  live preview rendered by the real editor or terminal renderer, a change meter, quick sets, Try it
-  actions and grouped controls. It sits beside the real surface without covering it and frames the
-  live target. One rule decides docking on both screens: the preview follows scrolling only when the
-  real editor or terminal is not visible beside the screen, including narrow or maximized layouts.
-  From Settings, the terminal screen routes to Home beside the real target and the editor screen opens
-  over Settings itself, Settings kept beneath, with no detour to Home (amended 2026-10-16, DL-217, the
-  editor lane); an editor's More menu still opens it beside the real editor. Origin in Settings alone does
-  not force docking. Opening the screen never starts a shell, runs a command or changes a file. Without a
-  suitable target the All scope remains useful through the isolated renderer preview, and This is
-  unavailable with a reason. Close and Escape undo uncommitted previews, keep committed choices and
-  return focus to the invoking control. Quick sets change only their named fields through the
-  selected scope's writer, as one atomic change. Plans/appearance_quick_sets.json is the single
-  exact field/value patch registry for Calm, Easy reading, Old monitor (terminal) and Show structure
-  (editor), plus the exact reset field sets. This scope clears only the registered overrides; All
-  uses SSYS-009 restore_defaults over that same exact set. A set patch never resets an unmentioned
-  token map, indentation, autosave or behavior value. The look's own is a reset, not a set patch.
-  Old monitor remains an explicit opt-in to F3-643's CRT and housing. Try it moves the sample
-  cursor/caret, rings the sample bell or types and visits a sample problem; Step back shows, on the sample only, how
-  this terminal or editor looks when you are not in it (the scope's inactive dimming), held about 1.6 s, then returns,
-  and turning Dim terminals I'm not in on plays it once; it is not an undo and never touches the real buffer or session
-  (amended 2026-10-17, DL-228; it read: Step back restores the sample). The editor groups are Colors, Text, Caret, Lines &
-  guides, Motion & effects and Behavior. Every selector consumes F3-438; neither Customize screen
-  defines another fitting or highlight grammar. Scope, search, scrolling, sample trials and hover
-  are view-local; committed fields and reset/quick sets use UCC-204's writers. Schemes and fonts
-  have truthful names, Light/Dark hints and supported capabilities. Dense Glass controls use
-  F3-652's readable menu material. Each look draws the screen with its own material and motion.
-  Reduced Motion shows end states and explains which movement it calms. While the screen is open,
-  Tab and Shift+Tab wrap within it; arrows choose within one-of-several groups, except the scheme tiles, where arrows preview and Enter or Space
-  keeps the scheme; Up and Down move by a row of tiles; each tile group is one tab stop on its chosen tile; Escape
-  first ends an active preview and a second Escape closes the screen and returns focus, while naming a preset Escape
-  cancels only the name (amended 2026-10-17, DL-228). Its layout remains usable down to 360 px, including beside-target and narrow
-  states. Scheme-hover intent is deliberately surface-specific: terminal F3-642 waits 110 ms and
-  editor F3-651 waits 160 ms; keyboard and cancellation use those owners. Jared approved saving
-  terminal looks as user presets on 2026-10-14. This is distinct from the shipped fixed quick sets.
-  Save this look captures the selected scope's committed choices above the look layer, including
-  inherited Project choices for This terminal, never a hover trial or renderer sample. A preset
-  keeps a stable id, name and sparse appearance fields, with a tiny truthful terminal preview. Save
-  and Rename collapse whitespace, use My look for an empty name, and disambiguate names
-  case-insensitively with numeric suffixes; the base name input is limited to 40 characters. The
-  personal library retains at most 40 newest-first entries; saving past that cap drops the oldest.
-  Rename preserves the id, Delete leaves already configured terminals unchanged, and Undo restores
-  that entry and its list position within the cap. Enter confirms naming and Escape cancels naming
-  without closing Customize. Applying a saved preset replaces the selected scope's appearance field
-  set atomically: use its stored values and clear every unmentioned tab override for This; for All
-  use the inventory defaults for unmentioned Project fields in the same set transaction. Existing
-  inheritance still applies to cleared tab fields; a preset is not a permanent linked theme. A
-  missing preset or invalid field is refused without a partial change. SP-331 owns the
-  computer-local library beside imported schemes, independent of Project; UCC-204/CS-102 own its
-  local save/rename/delete/Undo actions and existing scope apply routes. The library is not a
-  Settings row, an app-wide default layer or a new scheme catalog; import/export of preset libraries
-  is not introduced. A group’s Reset control clears only that group’s registered field set;
-  whole-scope reset and The look’s own use the separately registered full set. Both scopes adapt
-  those exact sets through the existing writers. A save that fails storage/readback shows its
-  failure and creates no apparent saved entry. SP-331 owns missing-image/scheme refusal and library
-  backup/Undo reachability. Amended 2026-10-16 (DL-213, terminal rounds 4 and 5): the terminal
-  screen's sliders offer stops, each measured to draw apart from its neighbours in every look, and a
-  value stored between two stops still shows as itself: letter spacing and line height move one
-  device pixel of cell at a time; Size's Smaller and Bigger go to the next whole pixel whose cell is
-  drawn a different number of device pixels, ending at 8 and 32; Strength 35, 65 and 100 %;
-  desaturation full colour, half and grey; Blur 0, 3, 6, 12 and 24 px; Grain 0, 0.035, 0.075 and
-  0.12; Curvature steps of 0.02; Bezel width and Reflection as F3-643 lists. Settings rows keep their
-  own ranges (SSYS-051). Ligatures is not offered while letters are spaced: it shows Needs letter
-  spacing 0 and returns at spacing 0. A field shows only where it draws (SSYS-051's visibility
-  amendment lists the Settings side).
-  Amended 2026-10-17 (DL-222): Terminal Customize, and the editor's Customize sheet, are prepared at idle
-  under ACD-475 so a click is answered by the frame it paints and the screen comes in on the next frame
-  already drawn. If preparation is not finished, what remains is finished after the click's frame and
-  before the screen is revealed. Preparation does not change the screen's or the bezel's look (F3-643).
-  A pick on either screen shows its new state on the control in the click's frame; the write follows
-  (ACD-475). An open that fails or shows nothing is reported as an error, not only a toast. Toast words
-  are unchanged and no new command is added.
-  Amended 2026-10-17 (DL-230, Jared): while the editor's Customize sheet is opening under a resting pointer, a press
-  or wheel that arrives before the pointer has moved reaches neither the sheet nor the page beneath, so
-  the second press of a double-click on the opener is not taken as a choice in the sheet. The sheet is
-  live once the pointer moves, the entrance ends, or about 500 ms after it opens. Keyboard and
-  assistive-technology use is unaffected.
-  Amended 2026-10-17 (DL-228): the editor's screen also has Import a scheme... ("Adds a colour scheme from a
-  file to the catalog the editor and the terminal share"): it adds to F3-642's one shared catalog through the
-  existing cmd.terminal.appearance.import_scheme, so an imported scheme appears on both screens; it announces
-  "Imported <name>" and reports "Could not import that scheme: <reason>" in F3-642's fixed wording. A choice
-  whose meaning is motion (caret blink, caret movement, trail) shows it as a small moving picture on its tile,
-  playing only while that tile is hovered or focused, never at idle, in the look's own motion (stepped in
-  NieR) and still under Reduced Motion; each choice keeps its plain second line ("On and off", "A fade", "From
-  its middle", "Never blinks"; "Jumps", "A quick glide", "A slower glide"; "A short fade", "A bright streak",
-  "An afterglow", "A thin ink line").
+canonical_text: |-
+  The editor and terminal share one Customize presentation and the code scheme catalog of F3-642. Their More menu's Appearance... and Settings > Editor & Terminal > Editor look or Terminal look > Open Customize reach the corresponding screen. The menu defaults to This editor or This terminal and remembers the scope last chosen for that tab; Settings opens All editors or All terminals for that visit only and never overwrites the tab's remembered scope. All editors or All terminals means Everywhere, explicitly disclosed; a tab's own overrides remain above it and the screen explains when they mask an All change. SSYS-002/059 admits offered app levels without a Project; exact writer and target checks still apply. The screen has a live preview rendered by the real editor or terminal renderer, a change meter, quick sets, Try it actions and grouped controls. It sits beside the real surface without covering it and frames the live target. One rule decides docking on both screens: the preview follows scrolling only when the real editor or terminal is not visible beside the screen, including narrow or maximized layouts. From Settings, the terminal screen routes to Home beside the real target and the editor screen opens over Settings itself, Settings kept beneath, with no detour to Home (amended 2026-10-16, DL-217, the editor lane); an editor's More menu still opens it beside the real editor. Origin in Settings alone does not force docking. Opening the screen never starts a shell, runs a command or changes a file. Without a suitable target the All scope remains useful through the isolated renderer preview, and This is unavailable with a reason. Close and Escape undo uncommitted previews, keep committed choices and return focus to the invoking control. Quick sets change only their named fields through the selected scope's writer, as one atomic change. Plans/appearance_quick_sets.json is the single exact field/value patch registry for Calm, Easy reading, Old monitor (terminal) and Show structure (editor), plus the exact reset field sets. This scope clears only the registered overrides; All uses SSYS-009 restore_defaults over that same exact set. A set patch never resets an unmentioned token map, indentation, autosave or behavior value. The look's own is a reset, not a set patch. Old monitor remains an explicit opt-in to F3-643's CRT and housing. Try it moves the sample cursor/caret, rings the sample bell or types and visits a sample problem; Step back shows, on the sample only, how this terminal or editor looks when you are not in it (the scope's inactive dimming), held about 1.6 s, then returns, and turning Dim terminals I'm not in on plays it once; it is not an undo and never touches the real buffer or session (amended 2026-10-17, DL-228; it read: Step back restores the sample). The editor groups are Colors, Text, Caret, Lines & guides, Motion & effects and Behavior. Every selector consumes F3-438; neither Customize screen defines another fitting or highlight grammar. Scope, search, scrolling, sample trials and hover are view-local; committed fields and reset/quick sets use UCC-204's writers. Schemes and fonts have truthful names, Light/Dark hints and supported capabilities. Dense Glass controls use F3-652's readable menu material. Each look draws the screen with its own material and motion. Reduced Motion shows end states and explains which movement it calms. While the screen is open, Tab and Shift+Tab wrap within it; arrows choose within one-of-several groups, except the scheme tiles, where arrows preview and Enter or Space keeps the scheme; Up and Down move by a row of tiles; each tile group is one tab stop on its chosen tile; Escape first ends an active preview and a second Escape closes the screen and returns focus, while naming a preset Escape cancels only the name (amended 2026-10-17, DL-228). Its layout remains usable down to 360 px, including beside-target and narrow states. Scheme-hover intent is deliberately surface-specific: terminal F3-642 waits 110 ms and editor F3-651 waits 160 ms; keyboard and cancellation use those owners. Jared approved saving terminal looks as user presets on 2026-10-14. This is distinct from the shipped fixed quick sets. Save this look captures the selected scope's committed choices above the look layer, including inherited Project choices for This terminal, never a hover trial or renderer sample. A preset keeps a stable id, name and sparse appearance fields, with a tiny truthful terminal preview. Save and Rename collapse whitespace, use My look for an empty name, and disambiguate names case-insensitively with numeric suffixes; the base name input is limited to 40 characters. The personal library retains at most 40 newest-first entries; saving past that cap drops the oldest. Rename preserves the id, Delete leaves already configured terminals unchanged, and Undo restores that entry and its list position within the cap. Enter confirms naming and Escape cancels naming without closing Customize. Applying a saved preset replaces the selected scope's appearance field set atomically: use its stored values and clear every unmentioned tab override for This; for All use the registered inventory defaults for unmentioned fields at the selected Everywhere level in the same set transaction. Existing inheritance still applies to cleared tab fields; a preset is not a permanent linked theme. A missing preset or invalid field is refused without a partial change. SP-331 owns the computer-local library beside imported schemes, independent of Project; UCC-204/CS-102 own its local save/rename/delete/Undo actions and existing scope apply routes. The library is not a Settings row, an app-wide default layer or a new scheme catalog; import/export of preset libraries is not introduced. A group’s Reset control clears only that group’s registered field set; whole-scope reset and The look’s own use the separately registered full set. Both scopes adapt those exact sets through the existing writers. A save that fails storage/readback shows its failure and creates no apparent saved entry. SP-331 owns missing-image/scheme refusal and library backup/Undo reachability. Amended 2026-10-16 (DL-213, terminal rounds 4 and 5): the terminal screen's sliders offer stops, each measured to draw apart from its neighbours in every look, and a value stored between two stops still shows as itself: letter spacing and line height move one device pixel of cell at a time; Size's Smaller and Bigger go to the next whole pixel whose cell is drawn a different number of device pixels, ending at 8 and 32; Strength 35, 65 and 100 %; desaturation full colour, half and grey; Blur 0, 3, 6, 12 and 24 px; Grain 0, 0.035, 0.075 and 0.12; Curvature steps of 0.02; Bezel width and Reflection as F3-643 lists. Settings rows keep their own ranges (SSYS-051). Ligatures is not offered while letters are spaced: it shows Needs letter spacing 0 and returns at spacing 0. A field shows only where it draws (SSYS-051's visibility amendment lists the Settings side). Amended 2026-10-17 (DL-222): Terminal Customize, and the editor's Customize sheet, are prepared at idle under ACD-475 so a click is answered by the frame it paints and the screen comes in on the next frame already drawn. If preparation is not finished, what remains is finished after the click's frame and before the screen is revealed. Preparation does not change the screen's or the bezel's look (F3-643). A pick on either screen shows its new state on the control in the click's frame; the write follows (ACD-475). An open that fails or shows nothing is reported as an error, not only a toast. Toast words are unchanged and no new command is added. Amended 2026-10-17 (DL-230, Jared): while the editor's Customize sheet is opening under a resting pointer, a press or wheel that arrives before the pointer has moved reaches neither the sheet nor the page beneath, so the second press of a double-click on the opener is not taken as a choice in the sheet. The sheet is live once the pointer moves, the entrance ends, or about 500 ms after it opens. Keyboard and assistive-technology use is unaffected. Amended 2026-10-17 (DL-228): the editor's screen also has Import a scheme... ("Adds a colour scheme from a file to the catalog the editor and the terminal share"): it adds to F3-642's one shared catalog through the existing cmd.terminal.appearance.import_scheme, so an imported scheme appears on both screens; it announces "Imported <name>" and reports "Could not import that scheme: <reason>" in F3-642's fixed wording. A choice whose meaning is motion (caret blink, caret movement, trail) shows it as a small moving picture on its tile, playing only while that tile is hovered or focused, never at idle, in the look's own motion (stepped in NieR) and still under Reduced Motion; each choice keeps its plain second line ("On and off", "A fade", "From its middle", "Never blinks"; "Jumps", "A quick glide", "A slower glide"; "A short fade", "A bright streak", "An afterglow", "A thin ink line"). Preview samples, quick sets, reset field sets, preset libraries, scope memory, delayed editor opening and every existing appearance/motion rule remain. All commits Everywhere; any narrower edit explicitly chooses its exact level. The screen names masked outcomes and writer failure truthfully. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project.
 gui_related: true
 gui_classification_reason: The editor and terminal Customize screens.
 split_recommended: false
@@ -49748,9 +48443,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256
-  1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0 (approved campaign source lineage;
-  not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
+  (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
 - Plans/FinalGUISpec.md#F3-642
@@ -49764,27 +48458,25 @@ source_lineage:
   (decision/source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/CUSTOMIZE-RESET-GROUPS.md, SHA-256 f875b1dfdfe5e81386358fb5d92463fbfaeccb85bb186ef50ab3bcd5309b7753
   (decision/source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
-  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
-  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md, SHA-256
+  4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--home-redesign--src--terminal--js--42-appearance.js,
-  SHA-256 60379cc762cb98e4fbc4d6fb0a44751cbc7447da3c1e9ff4a04589c8186fefc9 (source lineage; not native
-  certification)
+  SHA-256 60379cc762cb98e4fbc4d6fb0a44751cbc7447da3c1e9ff4a04589c8186fefc9 (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--home-redesign--src--terminal--js--77-customize.js,
-  SHA-256 688b8a4ec7d55b6f40ddc6ce2687b851778a75500590e4b6d63b72f5d74ae6e0 (source lineage; not native
-  certification)
+  SHA-256 688b8a4ec7d55b6f40ddc6ce2687b851778a75500590e4b6d63b72f5d74ae6e0 (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/COORDINATOR-PRESET-CUSTODY-1016001056-4c95.md,
-  SHA-256 ad3b14eebf173550efe88a594b4a869588e3175e7e1277120e86405753bc7f3f (source lineage; not native
-  certification)
+  SHA-256 ad3b14eebf173550efe88a594b4a869588e3175e7e1277120e86405753bc7f3f (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--pm7-motion-editor--NOTES.md,
-  SHA-256 a9d113635287031b45c99d01df04710b80b6812f2a6f00838ec57462b3f448e5 (editor lane, head d6647a2fc1
-  landed unchanged on main a0f844455c (L1), B6; source lineage)
+  SHA-256 a9d113635287031b45c99d01df04710b80b6812f2a6f00838ec57462b3f448e5 (editor lane, head d6647a2fc1 landed
+  unchanged on main a0f844455c (L1), B6; source lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--home-redesign--src--panels--kinds--11-editor-customize.js,
-  SHA-256 7bd2cb58747e1d064ae91a82763d76d948262c64bc1a939a1123efce27ab7701 (main 6a3ee2fe90; a failed
-  Customize open is reported, and the opening pass-through, proposed then and kept by Jared on 2026-10-17 (DL-230); source lineage; not native certification)
-- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
-  SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (editor reopen and Terminal
-  Customize prepared at idle; decision lineage)
+  SHA-256 7bd2cb58747e1d064ae91a82763d76d948262c64bc1a939a1123efce27ab7701 (main 6a3ee2fe90; a failed Customize
+  open is reported, and the opening pass-through, proposed then and kept by Jared on 2026-10-17 (DL-230); source
+  lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md, SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece
+  (editor reopen and Terminal Customize prepared at idle; decision lineage)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F08,A-F09,C-F11,B-F13
 preserved_exact_tokens:
 - This editor
 - All editors
@@ -49808,56 +48500,8 @@ plan_unit_id: F3-651
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Each editor appearance field resolves from this tab's appearance override, then the open Project's
-  code.editing rows, then Follow look. All editors and Settings write the same rows (SSYS-052); This
-  editor writes through cmd.editor.appearance.set. SP-333 owns storage. The 17 token kinds are kw,
-  fn, ty, var, prop, str, num, esc, com, op, pun, mac, tag, attr, head, link and code. Token Colors
-  maps <scheme key>/<kind> to #rrggbb; a catalog scheme uses its resolved id after light/dark
-  pairing and Follow look uses look:<look>-<mode>. A tab's map overlays the Project map token by
-  token; clearing a tab entry reveals the Project entry and clearing that entry reveals the scheme.
-  Colors > Token colours offers the scheme's kinds, hue, saturation, lightness and hex, with
-  labelled numeric/text equivalents to color dragging. The stored requested color remains available
-  for editing; drawing adjusts lightness with hue retained to the selected 4.5:1 or 7:1 floor and
-  explains any adjustment. The floor also covers Follow look and dimmed inactive editors, line
-  numbers, diff marks and bracket-pair colors on every ground: the code background, changed-row
-  tint, current line and focused or blurred selections over them. Line numbers stay quieter through
-  size rather than sub-floor color. Scheme hover after 160 ms rest, or keyboard selection, previews
-  without transition on the sample and real editor; leaving or Escape restores the committed scheme.
-  A commit uses Basic fade, Friendly bloom from the tile, Glass glide, Retro steps or NieR wipe,
-  with continuous readable code even on slow frames. Follow look consumes the shared cursor/caret
-  voices in F3-643. Editor movement is instant in Basic and Retro, gliding in Friendly and Glass,
-  and instant with an eight-step jump treatment in NieR. Snappy movement lasts 80 ms and Gliding 150
-  ms; typing and undo land immediately. A trail marks only a non-pointer jump of at least three rows
-  or 24 columns, such as find, Go to line, changes or page navigation, and is clipped to the visible
-  area. Typing and clicks make none. Reduced Motion suppresses blink, glide, trails, smooth
-  scrolling and line reveal; still guides, scanlines and glow retain their state. Lines Arrive When
-  a File Opens continues across resize and redraw instead of restarting or vanishing. Indentation
-  reads applicable .editorconfig first, otherwise the file's dominant step of 2, 4 or 8 and its
-  spaces/tabs while detection is on; absent a file choice, Tab Size and Indent With supply defaults.
-  With detection off, Tab Size and Indent With govern every file regardless of its existing
-  indentation. Guides, active guide, Tab, Shift+Tab, Backspace in leading whitespace and Enter after
-  an opener share that unit. Real tabs remain tabs and display to the next tab stop, including
-  pasted tabs; Show Spaces marks tabs with an arrow. Indentation... in More names the file's unit
-  and provenance and opens these choices. Wrap Long Lines applies to ordinary files and inline diff,
-  never side-by-side diff; the chosen column is bounded by the viewport, breaks prefer a space after
-  one third of the width, continuation indent is capped at one third, and vertical movement follows
-  visual rows. Problem Highlighting draws the file's Problems entries as severity-filtered wavy
-  underlines with minimap marks and a message/source card after Hover Tip Delay. Automatic save uses
-  the chosen pause (500 ms or 1 s), focus exit or tab hide, never saves untitled or read-only
-  buffers, clears the dirty mark and announces saved without a toast. While Customize has focus
-  beside a visible editor, that target still draws its caret and current-line treatment so those
-  choices remain visible. Choosing a current-line treatment clears the isolated sample selection
-  that would hide it. Smooth scrolling Try it goes to the sample's last line and back, gliding for
-  On and jumping for Off; it ends cleanly and never scrolls a real file as a trial. Rust and
-  JavaScript samples visibly exercise Variables, Properties and Escapes, and copying sample tabs
-  preserves tab characters. The live editor remains subject to its ordinary selection and focus
-  ownership.
-  Amended 2026-10-17 (DL-228): the editor's More menu checks Word wrap, Minimap and Sticky scroll write the
-  scope their value comes from: this editor's override when the tab keeps its own choice
-  (cmd.editor.appearance.set), otherwise the All editors Project row through cmd.settings.transaction.preview
-  then apply, so a quick toggle never silently creates or overwrites a tab override
-  (Plans/pm7_control_bindings.json editor.more.*).
+canonical_text: |-
+  Each editor appearance field resolves from its tab override, then applicable Project/Computer/Everywhere code.editing own rows, then Follow look; No project omits Project. SSYS-059 supplies the one source trace. All editors and Settings write the same rows (SSYS-052); This editor writes through cmd.editor.appearance.set. SP-333 owns storage. The 17 token kinds are kw, fn, ty, var, prop, str, num, esc, com, op, pun, mac, tag, attr, head, link and code. Token Colors maps <scheme key>/<kind> to #rrggbb; a catalog scheme uses its resolved id after light/dark pairing and Follow look uses look:<look>-<mode>. A tab's map overlays the Project map token by token; clearing a tab entry reveals the Project entry and clearing that entry reveals the scheme. Colors > Token colours offers the scheme's kinds, hue, saturation, lightness and hex, with labelled numeric/text equivalents to color dragging. The stored requested color remains available for editing; drawing adjusts lightness with hue retained to the selected 4.5:1 or 7:1 floor and explains any adjustment. The floor also covers Follow look and dimmed inactive editors, line numbers, diff marks and bracket-pair colors on every ground: the code background, changed-row tint, current line and focused or blurred selections over them. Line numbers stay quieter through size rather than sub-floor color. Scheme hover after 160 ms rest, or keyboard selection, previews without transition on the sample and real editor; leaving or Escape restores the committed scheme. A commit uses Basic fade, Friendly bloom from the tile, Glass glide, Retro steps or NieR wipe, with continuous readable code even on slow frames. Follow look consumes the shared cursor/caret voices in F3-643. Editor movement is instant in Basic and Retro, gliding in Friendly and Glass, and instant with an eight-step jump treatment in NieR. Snappy movement lasts 80 ms and Gliding 150 ms; typing and undo land immediately. A trail marks only a non-pointer jump of at least three rows or 24 columns, such as find, Go to line, changes or page navigation, and is clipped to the visible area. Typing and clicks make none. Reduced Motion suppresses blink, glide, trails, smooth scrolling and line reveal; still guides, scanlines and glow retain their state. Lines Arrive When a File Opens continues across resize and redraw instead of restarting or vanishing. Indentation reads applicable .editorconfig first, otherwise the file's dominant step of 2, 4 or 8 and its spaces/tabs while detection is on; absent a file choice, Tab Size and Indent With supply defaults. With detection off, Tab Size and Indent With govern every file regardless of its existing indentation. Guides, active guide, Tab, Shift+Tab, Backspace in leading whitespace and Enter after an opener share that unit. Real tabs remain tabs and display to the next tab stop, including pasted tabs; Show Spaces marks tabs with an arrow. Indentation... in More names the file's unit and provenance and opens these choices. Wrap Long Lines applies to ordinary files and inline diff, never side-by-side diff; the chosen column is bounded by the viewport, breaks prefer a space after one third of the width, continuation indent is capped at one third, and vertical movement follows visual rows. Problem Highlighting draws the file's Problems entries as severity-filtered wavy underlines with minimap marks and a message/source card after Hover Tip Delay. Automatic save uses the chosen pause (500 ms or 1 s), focus exit or tab hide, never saves untitled or read-only buffers, clears the dirty mark and announces saved without a toast. While Customize has focus beside a visible editor, that target still draws its caret and current-line treatment so those choices remain visible. Choosing a current-line treatment clears the isolated sample selection that would hide it. Smooth scrolling Try it goes to the sample's last line and back, gliding for On and jumping for Off; it ends cleanly and never scrolls a real file as a trial. Rust and JavaScript samples visibly exercise Variables, Properties and Escapes, and copying sample tabs preserves tab characters. The live editor remains subject to its ordinary selection and focus ownership. Amended 2026-10-17 (DL-228): the editor's More menu checks Word wrap, Minimap and Sticky scroll write the scope their value comes from: this editor's override when the tab keeps its own choice (cmd.editor.appearance.set), otherwise the exact origin level row through cmd.settings.transaction.preview then apply, so a quick toggle never silently creates or overwrites a tab override (Plans/pm7_control_bindings.json editor.more.*). The existing token-by-token tab overlay is preserved; the base settings map is the resolver’s effective map. This does not invent a new field-merge algorithm for Models or manager things. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project.
 gui_related: true
 gui_classification_reason: Editor appearance, token colors, caret and indentation.
 split_recommended: false
@@ -49890,9 +48534,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/EDITOR-PROPOSAL-20261014-LANDING.md,
-  SHA-256 aa15b3ba9605fb8efcf36486f3a3978af011e90d33096f463f7b21510c414ed4 (landing source recheck; approved
-  direction, not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/EDITOR-PROPOSAL-20261014-LANDING.md, SHA-256 aa15b3ba9605fb8efcf36486f3a3978af011e90d33096f463f7b21510c414ed4
+  (landing source recheck; approved direction, not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
 - Plans/FinalGUISpec.md#F3-639
@@ -49900,12 +48543,12 @@ source_lineage:
 - Plans/Settings_System.md#SSYS-052
 - Plans/storage-plan.md#SP-333
 - Plans/UI_Command_Catalog.md#UCC-204
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-editor-customizer--NOTES.md,
-  SHA-256 fa7c61fc1d449161225fc0399bae2843c41855853e91bf3f442380432edb17d6 (source lineage; not native
-  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-editor-customizer--NOTES.md, SHA-256
+  fa7c61fc1d449161225fc0399bae2843c41855853e91bf3f442380432edb17d6 (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-editor-customizer--PROPOSAL-canon.md,
-  SHA-256 05acff6232e20f4d1f480400708c64d915b51237c1a4ce9789c5364a98829f79 (source lineage; not native
-  certification)
+  SHA-256 05acff6232e20f4d1f480400708c64d915b51237c1a4ce9789c5364a98829f79 (source lineage; not native certification)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F08,A-F09,C-F11,B-F13
 preserved_exact_tokens:
 - Token Colors
 - 4.5:1
@@ -50134,71 +48777,8 @@ plan_unit_id: F3-653
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Wallpaper is one Project choice for every look, not one stored choice per theme. Settings > App &
-  Input > Theme & colors places its gallery immediately after Light or dark. Look's own comes first,
-  followed by families in the shared catalog's order; thumbnails have names, checked state and full
-  accessible names. It is one radiogroup whose one tab stop is the chosen tile: Left and Right move through
-  every tile, Up and Down move to the nearest tile in the next row as drawn, Home and End reach the ends,
-  and the arrows choose as they move (selection follows focus); Space or Enter also chooses. The tile an
-  arrow reaches becomes the checked choice and is written through the same transaction as a pointer pick,
-  the most recent accepted change winning (SSYS-054); preparation of its print begins after the next frame
-  and a short pause after the last arrow step (the concept's 160 ms), so tiles passed over are not
-  prepared. Pointer and keyboard write the same value. Amended 2026-10-17 (DL-230, Jared): arrows choose
-  as they move; this replaces the earlier proposal that arrows only move and Space selects.
-  Five columns reduce to two where needed,
-  with the look's control corners and no animated tiles. Basic offers Blueprint, Contour, Folds,
-  Sheets and Arcs; Friendly offers Dot Wave, Channels, Bubbles, Hills and Soft Stripes, each with
-  its dot pattern; Retro offers Horizon, Peaks, Circuit, Dither and Stars; Jared withdrew NieR’s
-  Archive, Signal, Fragments, Hatch and Flora on 2026-10-14. The approved replacement family is the
-  NieR customizer’s six ink scenes: city (City Ruins), bunker (The Bunker), desert (Desert), forest
-  (Forest Castle), park (Amusement Park) and flooded (Flooded City), selectable from every look.
-  None becomes a family default. Their Dark and Light prints and thumbnails are packaged from the
-  same six scene drawings; Plans/wallpaper_catalog.json names all 29 admitted wallpapers. The six
-  scenes retain no family default. Glass's catalog includes Ribbons, Prism, Orbs, Aurora, Dunes,
-  Bloom, Pool and Facets. Every item has a Dark and Light print selected by effective mode and every
-  item is selectable in every look. Look's own means Ribbons in Glass and the existing ground in
-  Basic, Friendly and Retro; in NieR it restores the selected ink-scene background. An explicit
-  gallery choice replaces the currently displayed background without erasing the NieR background
-  preference. Jared’s same-day follow-up requires the most recent accepted change to win from either
-  control: selecting a gallery wallpaper sets general.visual.wallpaper; selecting a NieR background
-  resets that shared choice to look so the chosen NieR scene shows. A committed choice of Follow the
-  page or Parchment is a NieR background change and resets the shared wallpaper the same way. A preview
-  does not. SSYS-054 owns the one-writer
-  transaction; SP-333 owns persistence. Wallpapers show around opaque panels in the other looks;
-  Usage and Settings Home may use the approved light veil. Glass optics derive from the same chosen
-  print and change with it: a wallpaper change crossfades the old print and its full frost into the
-  new print and its frost together, never switching the frost once partway through or showing a
-  print under another print's frost (Jared, 2026-10-16, DL-216). The gallery's final space is present in Settings' first
-  frame; thumbnail loading never displaces following rows. Missing/stale stored catalog ids display
-  Look's own with a clear fallback, never a broken image. The Project's committed wallpaper applies
-  with its look before first paint. Prints and thumbnails are shared packaged assets, not
-  per-surface embedded copies. SSYS-054 owns the setting and SP-333 its storage boundary; DR-073
-  owns catalog reuse. W1 through W4 remain approved except for the withdrawn NieR print set; W5
-  retired Mesh/Depth/Minimal at the combined Glass/wallpaper publication on 2026-10-15; those
-  choices are compatibility lineage only. Friendly's content ground extends its dot pattern through
-  Settings, Usage, rail panels and the chat transcript, moving with content rather than as a second
-  fixed overlay.
-  Amended 2026-10-16 (DL-217, the frost crossfade lane): every shown frosted sheet crossfades its frost
-  from the old print to the new one in step with the print's fade, under the sheet's content; under
-  Reduced Motion, on a look change and without a GPU the print and its frost swap at once.
-  Amended 2026-10-17 (DL-223): Jared's later choice, option (c), "fade is fine" (2026-10-16), replaces
-  the together-only crossfade when the new frost is not ready. A prepared pick still fades the print and
-  its frost together in one step. A pick whose frost is not ready starts the print's fade as soon as the
-  print is decoded; the sheets keep the old frost during that fade, then crossfade to the new frost once
-  it is ready. No frame is blank. While that fade has not committed, a newer choice fades from the print
-  currently fading. A look or mode change that changes the print ends it at once; one that keeps the same
-  print lets it finish. Reduced Motion, a print change that a look change causes, and no GPU keep the immediate swap (amended 2026-10-17, review r1). The setting
-  still writes at the pick (SSYS-009, SSYS-054); only the frost drawing lags. Consumers of the selected
-  print, the terminal Lens included, follow when the frost commits (DR-073).
-  Amended 2026-10-17 (DL-228): Look's own carries a one-line note saying what the current look shows ("<Look>
-  shows <default> until you choose another." or "<Look> keeps its own background until you choose one."), and
-  a chosen wallpaper's note says it shows in every look, in its light or dark print, Home and Usage showing
-  the most of it; Look's own's thumbnail is the look's default print or a picture of its own ground. Each tile
-  shows its description in its hover tag, and its accessible name adds its family. The row shows Settings'
-  Changed mark while a wallpaper is chosen, and choosing Look's own clears it. A NieR scene chosen here looks
-  exactly as NieR Mode's own background draws it, faint ink on parchment with the paper fade at the top, and
-  its thumbnail is drawn in full ink, like the customizer's tiles.
+canonical_text: |-
+  Wallpaper is one resolved Settings choice for every look, not one stored choice per theme. Settings > App & Input > Theme & colors places its gallery immediately after Light or dark. Look's own comes first, followed by families in the shared catalog's order; thumbnails have names, checked state and full accessible names. It is one radiogroup whose one tab stop is the chosen tile: Left and Right move through every tile, Up and Down move to the nearest tile in the next row as drawn, Home and End reach the ends, and the arrows choose as they move (selection follows focus); Space or Enter also chooses. The tile an arrow reaches becomes the checked choice and is written through the same transaction as a pointer pick, the most recent accepted change winning (SSYS-054); preparation of its print begins after the next frame and a short pause after the last arrow step (the concept's 160 ms), so tiles passed over are not prepared. Pointer and keyboard write the same value. Amended 2026-10-17 (DL-230, Jared): arrows choose as they move; this replaces the earlier proposal that arrows only move and Space selects. Five columns reduce to two where needed, with the look's control corners and no animated tiles. Basic offers Blueprint, Contour, Folds, Sheets and Arcs; Friendly offers Dot Wave, Channels, Bubbles, Hills and Soft Stripes, each with its dot pattern; Retro offers Horizon, Peaks, Circuit, Dither and Stars; Jared withdrew NieR’s Archive, Signal, Fragments, Hatch and Flora on 2026-10-14. The approved replacement family is the NieR customizer’s six ink scenes: city (City Ruins), bunker (The Bunker), desert (Desert), forest (Forest Castle), park (Amusement Park) and flooded (Flooded City), selectable from every look. None becomes a family default. Their Dark and Light prints and thumbnails are packaged from the same six scene drawings; Plans/wallpaper_catalog.json names all 29 admitted wallpapers. The six scenes retain no family default. Glass's catalog includes Ribbons, Prism, Orbs, Aurora, Dunes, Bloom, Pool and Facets. Every item has a Dark and Light print selected by effective mode and every item is selectable in every look. Look's own means Ribbons in Glass and the existing ground in Basic, Friendly and Retro; in NieR it restores the selected ink-scene background. An explicit gallery choice replaces the currently displayed background without erasing the NieR background preference. Jared’s same-day follow-up requires the most recent accepted change to win from either control: selecting a gallery wallpaper sets general.visual.wallpaper; selecting a NieR background resets that shared choice to look so the chosen NieR scene shows. A committed choice of Follow the page or Parchment is a NieR background change and resets the shared wallpaper the same way. A preview does not. SSYS-054 owns the one-writer transaction; SP-333 owns persistence. Wallpapers show around opaque panels in the other looks; Usage and Settings Home may use the approved light veil. Glass optics derive from the same chosen print and change with it: a wallpaper change crossfades the old print and its full frost into the new print and its frost together, never switching the frost once partway through or showing a print under another print's frost (Jared, 2026-10-16, DL-216). The gallery's final space is present in Settings' first frame; thumbnail loading never displaces following rows. Missing/stale stored catalog ids display Look's own with a clear fallback, never a broken image. The Project's committed wallpaper applies with its look before first paint. Prints and thumbnails are shared packaged assets, not per-surface embedded copies. SSYS-054 owns the setting and SP-333 its storage boundary; DR-073 owns catalog reuse. W1 through W4 remain approved except for the withdrawn NieR print set; W5 retired Mesh/Depth/Minimal at the combined Glass/wallpaper publication on 2026-10-15; those choices are compatibility lineage only. Friendly's content ground extends its dot pattern through Settings, Usage, rail panels and the chat transcript, moving with content rather than as a second fixed overlay. Amended 2026-10-16 (DL-217, the frost crossfade lane): every shown frosted sheet crossfades its frost from the old print to the new one in step with the print's fade, under the sheet's content; under Reduced Motion, on a look change and without a GPU the print and its frost swap at once. Amended 2026-10-17 (DL-223): Jared's later choice, option (c), "fade is fine" (2026-10-16), replaces the together-only crossfade when the new frost is not ready. A prepared pick still fades the print and its frost together in one step. A pick whose frost is not ready starts the print's fade as soon as the print is decoded; the sheets keep the old frost during that fade, then crossfade to the new frost once it is ready. No frame is blank. While that fade has not committed, a newer choice fades from the print currently fading. A look or mode change that changes the print ends it at once; one that keeps the same print lets it finish. Reduced Motion, a print change that a look change causes, and no GPU keep the immediate swap (amended 2026-10-17, review r1). The setting still writes at the pick (SSYS-009, SSYS-054); only the frost drawing lags. Consumers of the selected print, the terminal Lens included, follow when the frost commits (DR-073). Amended 2026-10-17 (DL-228): Look's own carries a one-line note saying what the current look shows ("<Look> shows <default> until you choose another." or "<Look> keeps its own background until you choose one."), and a chosen wallpaper's note says it shows in every look, in its light or dark print, Home and Usage showing the most of it; Look's own's thumbnail is the look's default print or a picture of its own ground. Each tile shows its description in its hover tag, and its accessible name adds its family. The row shows Settings' Changed mark while a wallpaper is chosen, and choosing Look's own clears it. A NieR scene chosen here looks exactly as NieR Mode's own background draws it, faint ink on parchment with the paper fade at the top, and its thumbnail is drawn in full ink, like the customizer's tiles. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project.
 gui_related: true
 gui_classification_reason: One wallpaper gallery for every look.
 split_recommended: false
@@ -50245,30 +48825,27 @@ source_lineage:
 - Plans/FinalGUISpec.md#F3-652
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
   (decision/source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md,
-  SHA-256 56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816 (decision/source lineage; not
-  native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-CONTRACT-201d602f7d.md,
-  SHA-256 6550b3e5d31dbeca5e9d5cf11f7c06db13f37e189da270ac25e6504a5ec4a3da (decision/source lineage; publication
-  remains held where specified)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--LANDING.md,
-  SHA-256 4585c89ab98c4ee6c88f0683ac8d00244725047fe2637fe657371ec42cff17bd (source lineage; not native
-  certification)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--wallpapers--opus-5.5--CONTRACT.md,
-  SHA-256 6550b3e5d31dbeca5e9d5cf11f7c06db13f37e189da270ac25e6504a5ec4a3da (source lineage; not native
-  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md, SHA-256 56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816
+  (decision/source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-CONTRACT-201d602f7d.md, SHA-256
+  6550b3e5d31dbeca5e9d5cf11f7c06db13f37e189da270ac25e6504a5ec4a3da (decision/source lineage; publication remains
+  held where specified)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--LANDING.md, SHA-256 4585c89ab98c4ee6c88f0683ac8d00244725047fe2637fe657371ec42cff17bd
+  (source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--wallpapers--opus-5.5--CONTRACT.md, SHA-256
+  6550b3e5d31dbeca5e9d5cf11f7c06db13f37e189da270ac25e6504a5ec4a3da (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
-  SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of
-  2026-10-16 ~12:10Z; decision lineage)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-frost-crossfade--NOTES.md,
-  SHA-256 a90acd28ecc0d3930fa26091b69a55ff3f484a78c150a501a4784c388b3e7d2f (frost crossfade lane
-  10ba7d6427 with seam c17316f6cf, landed on main 2b5ed6092d (L2); source lineage)
+  SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of 2026-10-16 ~12:10Z;
+  decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-frost-crossfade--NOTES.md, SHA-256 a90acd28ecc0d3930fa26091b69a55ff3f484a78c150a501a4784c388b3e7d2f
+  (frost crossfade lane 10ba7d6427 with seam c17316f6cf, landed on main 2b5ed6092d (L2); source lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2b5ed6092d--Concepts--liquid-glass--opus-5.5--CONTRACT.md,
-  SHA-256 eccaf9ec55718c72256e45a0b92575688f7305b6b79c1dd954868de05f095d24 (main 2b5ed6092d after L2, the
-  frost crossfade; source lineage; not native certification)
-- /mnt/Cursor/share/puppet-master/2026-10-16-motion-fixes/pm7-liquid-glass/F6-NOTES.md,
-  SHA-256 86b0f12a17d3eab6becf2410e1c5950a6c619066c8a6d683ba57328a9fef7899 (Jared approved option (c),
-  fade is fine, 2026-10-16; decision lineage)
+  SHA-256 eccaf9ec55718c72256e45a0b92575688f7305b6b79c1dd954868de05f095d24 (main 2b5ed6092d after L2, the frost
+  crossfade; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-motion-fixes/pm7-liquid-glass/F6-NOTES.md, SHA-256 86b0f12a17d3eab6becf2410e1c5950a6c619066c8a6d683ba57328a9fef7899
+  (Jared approved option (c), fade is fine, 2026-10-16; decision lineage)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F08,A-F09,C-F11,B-F13
 preserved_exact_tokens:
 - Look's own
 - Ribbons
@@ -50716,31 +49293,8 @@ plan_unit_id: F3-659
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'The Home chat column presents the 5.6 Pro conversation surface (DL-232). F3-637 still owns width, History,
-  Keep open, pop-out and the narrow ladder; F3-634/F3-635 still own every opened tab. ACD-504 binds the hosted conversation,
-  and ACD-500/501/502 keep the routing, command card and presentation requirements. The host''s look settings reach the
-  chat, its app modals and its hosted tab bodies in Basic, Friendly, Glass and Retro light/dark, in NieR Light/Dark and
-  under Reduced Motion. The chat uses the shared NieR type and existing parts, with no scene, ground, editor or reboot
-  layer of its own. The shared questionnaire controls style Ask Card and Grill Me alike; no pill, emoji or coloured side
-  stripe is admitted (F3-648). Narrow Crew/Room shelf headers, run plates, sticky run-view headers and helper sheets
-  must remain readable without overlaps or clipping at 400-519 px and at the recorded 480 px plate case. Fixes alter
-  styling and layout, preserving the accepted DL-218 behavior and its tests. The host hover controller owns tags, the
-  tab strip owns close and active state, and overlays sit in the host stacking order below the Guided Tour and hover
-  tags. The existing Guided Tour''s teaching surface remains while the hosted chat is hidden during that tour; PWIZ-036
-  records the already accepted later redo. SSYS-055 owns preference placement and binding. This is the product presentation
-  contract. Its header options expose Keep History open, the Keep open row and Pop out / Dock back; History pin uses
-  the existing local action, and only a never-saved project layout reads the Settings History default. Amended 2026-10-23
-  (DL-233): pinned History is drawn at F3-637''s 240 px and the column grows by the drawn width, a dragged width included.
-  Re-measured in Basic dark, a 1920 px window''s column grows from 600 to 681 px when History is pinned (its pane from
-  599 to 680 px) while the centre budget holds C at 960 px, so the messages are 440 px; at 2400 px with width_px 759
-  the column grows from 759 to 999 px and the messages keep their 758 px. These are example measurements, not other width
-  defaults. Host appearance, NieR parts, container sizing and tour isolation use their shared owners. QA round 2, Jared
-  2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout, 900 px and below folds chat to its existing 32
-  px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress
-  the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible must not expose
-  a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than
-  a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail rules
-  remain. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
+canonical_text: |-
+  The Home chat column presents the 5.6 Pro conversation surface (DL-232). F3-637 still owns width, History, Keep open, pop-out and the narrow ladder; F3-634/F3-635 still own every opened tab. ACD-504 binds the hosted conversation, and ACD-500/501/502 keep the routing, command card and presentation requirements. The host's look settings reach the chat, its app modals and its hosted tab bodies in Basic, Friendly, Glass and Retro light/dark, in NieR Light/Dark and under Reduced Motion. The chat uses the shared NieR type and existing parts, with no scene, ground, editor or reboot layer of its own. The shared questionnaire controls style Ask Card and Grill Me alike; no pill, emoji or coloured side stripe is admitted (F3-648). Narrow Crew/Room shelf headers, run plates, sticky run-view headers and helper sheets must remain readable without overlaps or clipping at 400-519 px and at the recorded 480 px plate case. Fixes alter styling and layout, preserving the accepted DL-218 behavior and its tests. The host hover controller owns tags, the tab strip owns close and active state, and overlays sit in the host stacking order below the Guided Tour and hover tags. The existing Guided Tour's teaching surface remains while the hosted chat is hidden during that tour; PWIZ-036 records the already accepted later redo. SSYS-055 owns preference placement and binding. This is the product presentation contract. Its header options expose Keep History open, the Keep open row and Pop out / Dock back; History pin uses the existing local action, and only a never-saved layout in the actual app or Project namespace reads the resolved Settings History default. Amended 2026-10-23 (DL-233): pinned History is drawn at F3-637's 240 px and the column grows by the drawn width, a dragged width included. Re-measured in Basic dark, a 1920 px window's column grows from 600 to 681 px when History is pinned (its pane from 599 to 680 px) while the centre budget holds C at 960 px, so the messages are 440 px; at 2400 px with width_px 759 the column grows from 759 to 999 px and the messages keep their 758 px. These are example measurements, not other width defaults. Host appearance, NieR parts, container sizing and tour isolation use their shared owners. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout, 900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible must not expose a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail rules remain. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project.
 gui_related: true
 gui_classification_reason: Defines the hosted chat surface, all-look presentation and narrow layout acceptance.
 split_recommended: false
@@ -50777,11 +49331,18 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4, D7, D8, D9, D26, D27, D28)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-20-wonderer-grill-me-concept/PORT-CARRY-OVER.md, SHA-256 67195793eeda6a463b5e2da60e7ae294ae62ef435a4a89e56fcd3e25587884fa (accepted layout and styling repairs)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
+- Plans/Decision_Log.md#DL-185
+- /mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D3, D4, D7, D8, D9, D26, D27, D28)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b
+  (concept integration lineage, not native API authority)
+- /mnt/Cursor/share/puppet-master/2026-10-20-wonderer-grill-me-concept/PORT-CARRY-OVER.md, SHA-256 67195793eeda6a463b5e2da60e7ae294ae62ef435a4a89e56fcd3e25587884fa
+  (accepted layout and styling repairs)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md,
+  SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated
+  against concept source; not native or final visual verification)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F08,A-F09,C-F11,B-F13
 preserved_exact_tokens:
 - Keep open
 negative_constraints:
@@ -50934,30 +49495,8 @@ plan_unit_id: F3-661
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'B1–B7; DL-236. A Tab is the only product project-box design: 28 px tab height, shared type/resting ink,
-  PMG folder, drawn chevron, hairline between the box and page tabs. Name truncates; density folds to folder. The visible
-  label remains the bare Project name; path/branch and full name are in the hover tag and two-line menu rows with monogram,
-  shared status mark and state words. Chosen row and its tile use Basic tinted chip, Friendly mint plate, Glass clear
-  lens, Retro reverse video, NieR ink bar. Opening the menu may show the box’s chosen chip beside the selected page’s
-  chip (F3-652 exception B4). One row renderer serves onboarding-created and existing Projects. Projects view stays primary;
-  this secondary menu opens with ui.project_switcher.open and Ctrl+Shift+P. Pick dispatches cmd.project.switch_active_tab(project_id);
-  Ctrl/Cmd+Enter dispatches cmd.project.open_in_new_workspace_tab(project_id); All projects navigates to Projects. Menu
-  closure restores focus. Badge reads the shared work and dirty-buffer owners: waiting > blocked > working > change-modified
-  > idle, preserving other states in the accessible description. Never conflate blocked and needs-you. A native layout
-  observer resynchronizes the lens and tab ink after layout and before paint, honoring resize-drag pause/defer rules,
-  without lazySync’s 140 ms delay or synthetic resize. Zero painted frames show a displaced chip at ~1390 px or full
-  width, including long-name picks and folds. NieR’s cover reveals an already-correct chip; its input guard ends with
-  the cover (B7), with any other failure documented. Shared hover engine and --pm-switch-* materials own hover/selection;
-  Retro/NieR chevron steps, Reduced Motion is instant. Live status comes only from its current owner projection. B2 visible
-  menu heading is Projects, with Ctrl Shift P shown. Page-tab height remains 28 px inside the 40 px title bar (46 px
-  Glass); the heading does not replace the bare Project label. B5, PM7 Step4, 2026-10-30: Unsaved changes means a Home
-  tab has dirty/unsaved buffers in the active Project. Home autosaves layout; a layout change alone never raises this
-  badge. PMW.unsaved/PMW.noteUnsaved and pm7.home.unsaved provide the concept’s buffer-owner observation to PM_WORK.project;
-  waiting > blocked > working > change-modified > idle remains the priority. The accessible words are Unsaved changes,
-  never Unsaved layout. The joined code exposes PM_PROJECT_BOX row/add/select/state/states/refresh/open/close/log and
-  PM_TB_DENSITY apply/schedule; these adapters keep the declared cmd.project.* and ui.project_switcher.* identities.
-  PM_LG.syncScope synchronizes the selected lens before paint. pm7.project.command and pm7.project.ui_action are concept
-  dispatch logs, not new persisted product events.'
+canonical_text: |-
+  B1–B7; DL-236. A Tab is the only product project-box design: 28 px tab height, shared type/resting ink, PMG folder, drawn chevron, hairline between the box and page tabs. Name truncates; density folds to folder. For a Project the visible label remains its bare name; the fixed app entry is No project. The visible Project label remains the bare Project name; path/branch and full name are in the hover tag and two-line menu rows with monogram, shared status mark and state words. Chosen row and its tile use Basic tinted chip, Friendly mint plate, Glass clear lens, Retro reverse video, NieR ink bar. Opening the menu may show the box’s chosen chip beside the selected page’s chip (F3-652 exception B4). One row renderer serves onboarding-created and existing Projects. Projects view stays primary; this secondary menu opens with ui.project_switcher.open and Ctrl+Shift+P. Pick dispatches cmd.project.switch_active_tab(project_id); Ctrl/Cmd+Enter dispatches cmd.project.open_in_new_workspace_tab(project_id); All projects navigates to Projects. Menu closure restores focus. Badge reads the shared work and dirty-buffer owners: waiting > blocked > working > change-modified > idle, preserving other states in the accessible description. Never conflate blocked and needs-you. A native layout observer resynchronizes the lens and tab ink after layout and before paint, honoring resize-drag pause/defer rules, without lazySync’s 140 ms delay or synthetic resize. Zero painted frames show a displaced chip at ~1390 px or full width, including long-name picks and folds. NieR’s cover reveals an already-correct chip; its input guard ends with the cover (B7), with any other failure documented. Shared hover engine and --pm-switch-* materials own hover/selection; Retro/NieR chevron steps, Reduced Motion is instant. Live status comes only from its current owner projection. B2 visible menu heading is Projects, with Ctrl Shift P shown. Page-tab height remains 28 px inside the 40 px title bar (46 px Glass); the heading does not replace the bare Project label. B5, PM7 Step4, 2026-10-30: Unsaved changes means a Home tab has dirty/unsaved buffers in the active Project or the actual app workspace for No project. Home autosaves layout; a layout change alone never raises this badge. PMW.unsaved/PMW.noteUnsaved and pm7.home.unsaved provide the concept’s buffer-owner observation to PM_WORK.project; waiting > blocked > working > change-modified > idle remains the priority. The accessible words are Unsaved changes, never Unsaved layout. The joined code exposes PM_PROJECT_BOX row/add/select/state/states/refresh/open/close/log and PM_TB_DENSITY apply/schedule; these adapters keep the declared cmd.project.* and ui.project_switcher.* identities. PM_LG.syncScope synchronizes the selected lens before paint. pm7.project.command and pm7.project.ui_action are concept dispatch logs, not new persisted product events. The No project row uses the same switch/open-new-tab primaries with target_kind=no_project and null Project; the app workspace/tab ID is real, never a scratch Project. Keep all chip/cover/frame/focus rules and current owner status precedence; disclose the work Computer on phone/web and in the chat Where line.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -50994,6 +49533,8 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/onboarding/opus-5.5-pip/README.md
 - Concepts/project-picker-concepts/opus-5.5/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F11,E-F02
 preserved_exact_tokens:
 - cmd.project.switch_active_tab
 - cmd.project.open_in_new_workspace_tab
@@ -51017,44 +49558,8 @@ plan_unit_id: F3-662
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'X2, RM1, L1–L8; DL-237. One loader owner serves every indeterminate wait: pages, panels, splash, buttons,
-  sign-ins/checks, chat thinking, project refresh, Planning Wizard reads, Orchestrator waits, Compacting, answer preparation/submission,
-  Usage refresh, browser navigation, onboarding and Settings managers. Busy-tab content waiting opts in; item/tab state
-  remains status vocabulary, with Q11’s working-agent row-loader exception. Preserve skeletons where layout is known
-  (F3-172) and measured determinate bars; terminal program output and decoration are not application loaders. No reduced-motion
-  30 percent stub may imply measured progress. The one opt-in/class contract sizes from em/baseline. Think represents
-  chat thinking, Swing is the default, Hop is a short wait ending successfully. Friendly springs at 1.8 s, Glass glides
-  2.6 s, Basic eases 1.7 s, Retro samples eight frames/1.2 s, scaled by Animation speed on one shared clock. String endpoints
-  remain connected. Pause offscreen, hidden, idle and during body.pm-resizing; defer idle work until PM_DRAGEND. No motion
-  below 12 px. Reduced Motion keeps only control opacity breath and blink as wait-feedback exception, never travel; needs-you
-  remains louder. NieR always routes to Diamond loaders or its existing disabled-part fallback, never animated Pip. Loader
-  and Orbit hand off: one visible Pip per reply, with no duplicate or empty frame. Drawing is decorative aria-hidden;
-  the host has aria-busy or role=status and a meaningful accessible wait label, announced once rather than by every Pip.
-  No loader preference or switch. The first-paint owner reads the Project look without another theme copy. All 35 inventoried
-  sites and the missing Settings/tab busy states consume this owner; the loader rollout report records each site. L8
-  B (Jared 2026-10-30): this build removes menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat
-  menus.js, Usage PMU.menu and Home PMW.menu delegate to it with no private animation implementation. L1 reference sizes,
-  amended by accepted review L-2 (PM7 Step4, 2026-10-30): splash 128 px, Working row 18 px, chat thinking placeholder
-  16 px, busy button 14 px, content-wait tab 14 px and panel 40 px. Busy buttons retain their existing height and baseline;
-  the former 16 px button/18 px thinking defaults are superseded. The shared em/baseline contract fits each host; the
-  <12 px still gate and item-state st-working distinction continue to apply. L4/L5 and review L-1, PM7 Step4, 2026-10-30:
-  every tier, including 12–18 px micro loaders, uses Swing ×1, Think ×1.15 and Hop ×0.78 of its family base period; there
-  is no micro-tier ×0.85 exception. Pixel frame delays are exact fractions of the resulting period, with no blank frame.
-  The joined owner is PM_PIP_LOADER (html/mount/busy/refresh/motion/hold/held/clock/stats), backed by PMLogo.period and
-  PMLogo.clock; opt-in data-pip-loader, data-pip-px and pml-ld, with owner-written data-pml-run/data-pml-redraw/--pml-k.
-  Home uses PMW.loader/frames.button{busy}, Settings PM51.btn/bound.action{busy}/waitOn/waiting, chat its kept wait slots
-  and Terminal pmt-card-ld. The terminal’s one running command card and transcript Working head are wait hosts; terminal
-  gutter/item-state marks remain shared status glyphs. Host aria-busy/status and one-Pip thinking/Orbit handoff still
-  apply. L4/W5-14, PM7 Step4 audit: PMLogo.MOTION is the sole family motion token row (dur, amp, wave and label), read
-  by PMLogo.period/clock and the shared loader; it is not a per-view timing table. Think/Hop multipliers use the kit’s
-  two-decimal period rounding at every tier. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on
-  screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the shared
-  document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows,
-  drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board
-  consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption:
-  a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip; running
-  NieR process marks move in their existing material language. The 2200 ms category-head breath remains distinct and
-  below needs-you priority. No polling loop, command, event, setting, state or extra loader owner is added.'
+canonical_text: |-
+  X2, RM1, L1–L8; DL-237. One loader owner serves every indeterminate wait: pages, panels, splash, buttons, sign-ins/checks, chat thinking, project refresh, Planning Wizard reads, Orchestrator waits, Compacting, answer preparation/submission, Usage refresh, browser navigation, onboarding and Settings managers. Busy-tab content waiting opts in; item/tab state remains status vocabulary, with Q11’s working-agent row-loader exception. Preserve skeletons where layout is known (F3-172) and measured determinate bars; terminal program output and decoration are not application loaders. No reduced-motion 30 percent stub may imply measured progress. The one opt-in/class contract sizes from em/baseline. Think represents chat thinking, Swing is the default, Hop is a short wait ending successfully. Friendly springs at 1.8 s, Glass glides 2.6 s, Basic eases 1.7 s, Retro samples eight frames/1.2 s, scaled by Animation speed on one shared clock. String endpoints remain connected. Pause offscreen, hidden, idle and during body.pm-resizing; defer idle work until PM_DRAGEND. No motion below 12 px. Reduced Motion keeps only control opacity breath and blink as wait-feedback exception, never travel; needs-you remains louder. NieR always routes to Diamond loaders or its existing disabled-part fallback, never animated Pip. Loader and Orbit hand off: one visible Pip per reply, with no duplicate or empty frame. Drawing is decorative aria-hidden; the host has aria-busy or role=status and a meaningful accessible wait label, announced once rather than by every Pip. No loader preference or switch. The first-paint owner reads the exact app or Project resolved look without another theme copy. All 35 inventoried sites and the missing Settings/tab busy states consume this owner; the loader rollout report records each site. L8 B (Jared 2026-10-30): this build removes menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it with no private animation implementation. L1 reference sizes, amended by accepted review L-2 (PM7 Step4, 2026-10-30): splash 128 px, Working row 18 px, chat thinking placeholder 16 px, busy button 14 px, content-wait tab 14 px and panel 40 px. Busy buttons retain their existing height and baseline; the former 16 px button/18 px thinking defaults are superseded. The shared em/baseline contract fits each host; the <12 px still gate and item-state st-working distinction continue to apply. L4/L5 and review L-1, PM7 Step4, 2026-10-30: every tier, including 12–18 px micro loaders, uses Swing ×1, Think ×1.15 and Hop ×0.78 of its family base period; there is no micro-tier ×0.85 exception. Pixel frame delays are exact fractions of the resulting period, with no blank frame. The joined owner is PM_PIP_LOADER (html/mount/busy/refresh/motion/hold/held/clock/stats), backed by PMLogo.period and PMLogo.clock; opt-in data-pip-loader, data-pip-px and pml-ld, with owner-written data-pml-run/data-pml-redraw/--pml-k. Home uses PMW.loader/frames.button{busy}, Settings PM51.btn/bound.action{busy}/waitOn/waiting, chat its kept wait slots and Terminal pmt-card-ld. The terminal’s one running command card and transcript Working head are wait hosts; terminal gutter/item-state marks remain shared status glyphs. Host aria-busy/status and one-Pip thinking/Orbit handoff still apply. L4/W5-14, PM7 Step4 audit: PMLogo.MOTION is the sole family motion token row (dur, amp, wave and label), read by PMLogo.period/clock and the shared loader; it is not a per-view timing table. Think/Hop multipliers use the kit’s two-decimal period rounding at every tier. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner is added. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -51091,7 +49596,9 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
-- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F04,A-F08,A-F09,C-F11,B-F13
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -51111,190 +49618,26 @@ plan_unit_id: F3-663
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit drawings on every real onboarding route
-  (about 44 screens), including Connect, Server, Restore, NAS, online copy, existing folder/repository, Like, Protect,
-  AI-all/none/free, Later, begin subchoices, kept-in sheet, recovery/FileSafe/backup, resumed/returning banners and Adjust
-  NieR. Preserve PWIZ-021’s real stage graphs and journey-specific chapter counts; narrow <760 px and short <520 px use
-  the real layout. Basic is first, first run Basic Dark. Away is new-Server only and recommended; Later skips AI; Creating
-  goes to Protect with backup; AI has no Back and Continue needs a Ready account or explicit skip. Ready’s Tour/help
-  work. The Tour itself is unchanged (O11); Pod 042 remains its NieR narrator. One bounded shared solver makes Pip/props
-  pendulums and joins strings eye-to-eye; world/idle life pauses offscreen, hidden, in low-resource mode and during drags.
-  Theme tokens supply materials. Friendly is a felt world with vinyl Pip; Glass uses Ribbons, glass floor/reflection,
-  ripples; Basic has dot grid/ruler/protractor/plumb; Retro Dark is the existing CRT with grain, persistence, rolling
-  bar and <3 percent flicker at 20 fps; Retro Light is green-bar printer paper without bezel at 10 fps, rail included;
-  NieR is a HUD with hovering eyed/visored Pip, QUEST UPDATED and two slipping bands, never black frames. O2 A (Jared
-  2026-10-30): match the approved concept; implementation technique is the implementer’s choice. Preserve solved strings,
-  world materials, bounded shared life and hidden/offscreen/drag pause behavior; an optimization must preserve the concept
-  in recorded frame-by-frame A/B. No per-page physics clock. Welcome sleeps until real pointer travel or key arrival.
-  Watch follows 420 ms stable dwell, stays ≥900 ms and holds 600 ms after leave; preview highlights the choice without
-  committing. Choosing is happy through the whole line; field typing is wonder; work think; owner errors oops with warning
-  and a recovery cheer. Wink occurs once at Ready sign-off, never random. Face transitions close eyes/brows on the eye
-  line and mouth at its centre then open beyond full in ~0.2 s, with no opacity crossfade or two faces together; Retro
-  steps. Gaze keeps the last known pointer position; thinking dots/squares and sleep never track. A bubble reserves its
-  whole line then types at the voice pace, coalescing faster changes; decorative bubble is aria-hidden, headings/choices
-  convey meaning. Every choice/field/option (about 203, not only the concept’s 23) has a right-edge ? with beginner-safe
-  words. ui.onboarding.open_details/toggle_choice_explanation owns the single shared explanatory note with aria-controls/aria-describedby
-  (DL-260). It is Friendly stitched note, Glass frosted, Basic dashed annotation, Retro Dark terminal box, Retro Light
-  NOTE, NieR TIPS on every page; narrow puts it under its exact choice. One at a time; filled/ringed open ?, chosen NieR
-  ink stops before ?. Close by ? again, Esc, close or navigation and restore focus. Long notes lift Pip and move its
-  bubble without clipping. Radio circles align with or without Recommended. Props: laptop/phone/server, page/folder/restore,
-  adaptive name sign (one large line then 2–3 lines then ellipsis), vault/cloud/backup, house/globe, review clipboard,
-  Creating blocks, AI orbs, Ready charms/crew; expanded routes add NAS, key, identity card, QR/code, Recovery Kit, lock,
-  settings copy, forge services and free models. Blocks slow into place level, squash on touchdown, give below, unhook
-  strings and rest on floor; each follows its owner phase. O12 B (Jared 2026-10-30): Continue and Ready wait for the
-  last block to land as well as the owner phases to finish; Reduced Motion places every block instantly. Empty, long
-  or taken names, wrong or expired pairing, NAS, credential and Creating failures use their real owner validation and
-  recoverable errors. The Cursor route uses its admitted API-key owner and current credential validation, with API key
-  for Cursor / Check key labels; no OpenAI-compatible capability is inferred. Six original sound kits (Retro split) retain
-  the approved music/no re-key. Eight-bar tunes follow chapter I/IV/V/vi/high-I and motif grows to Ready; no hum/drone,
-  near-unison beating, gated buzz, moaning selection or deep NieR thump. Voice/music live synthesis passes the one Notifications
-  & Sounds player/gesture gate/master general.interaction.sound-effects and header speaker, with recipe/source/licence/version
-  metadata in the existing sound tools/library. Setup voice/music are Pip parts, app chirps default off; Reduced Motion
-  never mutes. O6 (Jared 2026-10-30): look-tile hover changes neither sound nor theme; click or keyboard activation changes
-  the theme. Preserve Sound on — click to mute and Sound off — click to turn on. No local mute store; first run is factory
-  parts plus session sound preview, rerun reads the Project. Reduced Motion stops all swing/travel/flicker/trails and
-  places props instantly; state faces remain meaningful. Ready hands strings to the existing first Tour callout without
-  a Tour redesign. O9 chapter rail: one taut string between screw eyes, a bead for each chapter of the actual route,
-  Pip required at the current chapter and the line dipping under its weight. Walked string uses the accent, finished
-  beads are filled with check marks inside. Activating a finished bead requests the existing safe Back/jump route, never
-  commits a new choice or skips an owner gate. Pip travels on each look’s spring and settles on its strings; Retro steps
-  at its world rate, NieR glides on a rigid track. Under Reduced Motion the current Pip and finished-bead indications
-  appear immediately in their settled positions with accessible current/chapter names, no travel. O1/O2/O3 world choreography:
-  Friendly has stitched hills and chapter glow, felt clouds on threads, drifting crumbs, dark fireflies or light paper
-  butterflies; celebrations are stars/hearts, chapter change a Pip hop. Glass has moving caustics, rising bubbles and
-  floor ripples, glint/bubble celebrations and a chapter light sweep. Basic’s protractor reads the swing in degrees,
-  with a plumb line and marker riding the ruler; celebration is a corner check badge plus spreading ring, chapter change
-  a small hop. Retro Dark has phosphor graticule and approaching vector terrain, pixel/[ OK ] celebration and a chapter
-  degauss. Retro Light has tractor-feed margins, halftone props, red/blue detail and a print head on the line being printed;
-  celebrations print small symbols/paper chads, chapter change feeds a page. NieR has decoding unit header, scanner ring/motes/data
-  column/scan line, coordinate readout and target brackets that lock with a turning marker and elbow-labelled leader;
-  confirmations use locked target/squares and // CONFIRMED, chapter change QUEST UPDATED and two slipping bands without
-  black frames. NieR cursor square slides in, chosen fill stops before ?, and a screen wipes behind an ink bar. No extra
-  wink; only the Ready sign-off winks once. Retro window lifecycle: Dark powers on as line-then-picture and closes to
-  a line and dot, using VT323 and the existing PM Phosphor Green CRT effects; Light feeds paper on open and tears it
-  off on close, IBM Plex Mono/PM Paper Teletype, no bezel. Both show chapter status, Welcome boot text and a typed scene
-  command such as pip lower laptop phone --preview. Dark refreshes at 20 fps with <3 percent flicker/persistence; Light
-  and its rail at 10 fps. Reduced Motion bypasses these travels/trails/flicker and uses settled readable states. All
-  life shares O2’s bounded clock, hidden/offscreen/drag/low-resource gating; filter changes require recorded A/B preservation.
-  O3/O4 six kit/voice materials: Friendly uses marimba/kalimba/music-box/woodblock/felt, warm bouncy babble and music-box
-  lullaby over soft kalimba; Glass glass bells/wine-glass/water/air, breathy shimmer and a slow open glass arpeggio;
-  Basic clean sines/soft clicks, polite chirps and a sparse question-and-answer tune; Retro Dark chip beeps/relay/static/degauss,
-  text blips and square lead with triangle bass; Retro Light key clacks/platen ratchet/carriage-return/margin bell/motor/celesta,
-  struck notes with a key tick and a clockwork celesta tune; NieR original soft menu ticks/two-tone confirms/glitch grains/soft
-  pad/glockenspiel, flat stepped Pod-like bleeps and a slow A-minor bell line. The AI power arpeggio is a sixteen-step
-  phrase in the same chapter chord. The root/offset table is F3-599, not a new sound registry. Shared sound/gesture/mute
-  rules and banned hum/buzz/beat/thump remain; Reduced Motion never mutes, and look-hover remains silent. O7 deliberate
-  Ask Pip: activating a choice’s ? previews that choice on the same settled stage, directs Pip’s glance/reaction toward
-  its note and types the answer, with the idea cue through the one gesture-gated/master-controlled player. It does not
-  choose/commit the option or replay the stage entrance. This is distinct from O6’s silent look hover; reserve the full
-  note/bubble layout first, preserve the existing heading/choice semantics and focus return. O12’s landing wait is presentation
-  completion only: it neither dispatches owner work nor manufactures a completed phase. Other choices and recovery controls
-  remain responsive during Creating. O6/O10/O12, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64):
-  silent look hover includes the Pip voice and NieR cursor tick; click/keyboard selection may speak its selected line.
-  Ready’s existing ui.onboarding.finish tour intent draws Pip’s connected lift before opening the first Tour callout,
-  using the reference approximately 560 ms scaled by Animation speed and 0 under Reduced Motion. One current handoff
-  guard ignores a second press and settles exactly once (DL-260). Pip and its line lift on the connected strings toward
-  the window from which the first callout appears. This is the Ready handoff, not a redesign of the deferred Tour. Creating
-  blocks cue once at touchdown through F3-599, finished chapter beads carry their check in every look, and the resume
-  chip’s hover tag includes its existing tip. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu
-  (foundations source confirmation 1030182542-5544). QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q4/Q10: there
-  is one progress string. Chapter beads sit on and follow that string’s sag, with chapter names below Pip’s feet; Pip
-  replaces the current bead and the current bead occupies no extra width. A highlight surrounds the name without covering
-  Pip. The speech tail is cut from the bubble’s own fill/border as one silhouette, never a separate visible diamond;
-  NieR keeps its no-tail treatment. Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in the current
-  look. Remove duplicate explanation-only disclosures (What is a Server?, the Connect proxy explanation, and What does
-  Puppet Master read? on Choose a key); put their information in the shared option tips. Keep functional sections: More
-  about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik selector; identity fingerprints
-  and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating system’s shared-folder keychain;
-  Puppet Master stores no password. The SSH add-key password remains a separate one-use protected flow; never reuse its
-  never-saved hint for SMB. DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global
-  general.interaction.mode through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert,
-  and default ELI5. Both bars reflect the same effective state. Every opened onboarding question tip and prose help section
-  has useful Plain English and technical versions, including FileSafe, service differences, storage, remote access and
-  AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt
-  data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a
-  chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5 is a compatibility
-  local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor tour_narration_only
-  tag is retired. Q1 B, Jared 2026-10-31: the shared Pip voice, say and vocals everywhere Pip speaks, sends 0.35 after
-  trim and pan into its look’s room; Glass uses 0.30 and NieR 0.16. Each look uses its one per-look kit room, registered
-  before the first shared voice in every host, with no stacked rooms. These restore the old voice’s own sends. Loudness
-  remains within approximately 0.4 dB. The existing preference, gesture and sound owner still gates playback. DL-259
-  QA2 coverage, Jared 2026-10-31: question-tip buttons show per-look hover and keyboard-focus feedback and never overlap
-  selectors. The progress beads and Pip share one rail/string; Pip replaces the current bead and the current label remains
-  on its own line without covering Pip. Speech bubbles have one continuous fill/border silhouette and joined tail, never
-  an exposed diamond; NieR keeps no tail. These are presentation changes to existing controls and stage state, with no
-  new action, setting or validation rule. DL-259 QA2 M5, 2026-10-31: the explanatory note uses the settled, untransformed
-  stage bounds in both Plain English and Expert. Long notes stay within the available stage room and scroll their own
-  text when needed, including in short windows and NieR. The note is labelled as Pip’s and has no separate decorative
-  tail. This is the option-help note, distinct from the spoken bubble’s single-silhouette tail rule. DL-259 QA2 M6, 2026-10-31:
-  ordinary resting slot props remain visibly clear of the stage floor and edge. Creating’s stacked blocks retain their
-  intentional floor contact. The clearance is a presentation invariant, not a new owner phase or completion signal. DL-259
-  FO-5, 2026-10-31: a choice’s question control stays visible, readable and reachable when its card is selected, hovered
-  or keyboard-focused in every family. NieR’s selected/cursor ink stops before the help region or uses contrasting inverse
-  ink there, without hiding the question, radio or selected state. DL-259 FO-9 final, 2026-10-31: Creating’s blocks and
-  progress consume the same verified owner-phase projection as its checklist (PWIZ-021). An incomplete or unclear GitHub
-  result cannot produce completed blocks for unproven phases; settled phases keep their corresponding blocks through
-  recheck/resume. Later accepted owner results may settle the rest. O12’s final landing condition and instant Reduced
-  Motion settlement remain additional to real owner completion. DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance
-  is count-neutral: ask for the access details without claiming a fixed number of fields. The selected Backup destination
-  family, auth method and credential mode determine the actual required fields and validation through their existing
-  owner. Changing the line never omits a required credential, locator, region or temporary-session value and never turns
-  incomplete access into an available Connect action. DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase,
-  rather than six words or another fixed word count. The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the
-  Backup owner still defines and verifies the real protected recovery material and its exact source/target binding. The
-  wording admits no new phrase format, key derivation, unlock proof or weaker secret-handling rule. DL-271 FO-14, 2026-10-31:
-  long tokens in an opened question note wrap within its available width, so their full text is readable without horizontal
-  scrolling. Keep vertical scrolling when the note exceeds its available height. This applies to Plain English and Expert,
-  including NieR, and visual wrapping preserves the exact token for copying; it adds no second note renderer or per-family
-  content version.
+canonical_text: |-
+  O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit drawings on every real onboarding route (about 44 screens), including Connect, Server, Restore, NAS, online copy, existing folder/repository, Like, Protect, AI-all/none/free, Later, begin subchoices, kept-in sheet, recovery/FileSafe/backup, resumed/returning banners and Adjust NieR. Preserve PWIZ-021’s real stage graphs and journey-specific chapter counts; narrow <760 px and short <520 px use the real layout. Basic is first, first run Basic Dark. Away is new-Server only and recommended; Project Later still offers AI in explicit app scope; explicit AI Skip remains available; Creating goes to Protect with backup; AI has no Back and Continue needs a Ready account or explicit skip. Ready’s Tour/help work. The Tour itself is unchanged (O11); Pod 042 remains its NieR narrator. One bounded shared solver makes Pip/props pendulums and joins strings eye-to-eye; world/idle life pauses offscreen, hidden, in low-resource mode and during drags. Theme tokens supply materials. Friendly is a felt world with vinyl Pip; Glass uses Ribbons, glass floor/reflection, ripples; Basic has dot grid/ruler/protractor/plumb; Retro Dark is the existing CRT with grain, persistence, rolling bar and <3 percent flicker at 20 fps; Retro Light is green-bar printer paper without bezel at 10 fps, rail included; NieR is a HUD with hovering eyed/visored Pip, QUEST UPDATED and two slipping bands, never black frames. O2 A (Jared 2026-10-30): match the approved concept; implementation technique is the implementer’s choice. Preserve solved strings, world materials, bounded shared life and hidden/offscreen/drag pause behavior; an optimization must preserve the concept in recorded frame-by-frame A/B. No per-page physics clock. Welcome sleeps until real pointer travel or key arrival. Watch follows 420 ms stable dwell, stays ≥900 ms and holds 600 ms after leave; preview highlights the choice without committing. Choosing is happy through the whole line; field typing is wonder; work think; owner errors oops with warning and a recovery cheer. Wink occurs once at Ready sign-off, never random. Face transitions close eyes/brows on the eye line and mouth at its centre then open beyond full in ~0.2 s, with no opacity crossfade or two faces together; Retro steps. Gaze keeps the last known pointer position; thinking dots/squares and sleep never track. A bubble reserves its whole line then types at the voice pace, coalescing faster changes; decorative bubble is aria-hidden, headings/choices convey meaning. Every choice/field/option (about 203, not only the concept’s 23) has a right-edge ? with beginner-safe words. ui.onboarding.open_details/toggle_choice_explanation owns the single shared explanatory note with aria-controls/aria-describedby (DL-260). It is Friendly stitched note, Glass frosted, Basic dashed annotation, Retro Dark terminal box, Retro Light NOTE, NieR TIPS on every page; narrow puts it under its exact choice. One at a time; filled/ringed open ?, chosen NieR ink stops before ?. Close by ? again, Esc, close or navigation and restore focus. Long notes lift Pip and move its bubble without clipping. Radio circles align with or without Recommended. Props: laptop/phone/server, page/folder/restore, adaptive name sign (one large line then 2–3 lines then ellipsis), vault/cloud/backup, house/globe, review clipboard, Creating blocks, AI orbs, Ready charms/crew; expanded routes add NAS, key, identity card, QR/code, Recovery Kit, lock, settings copy, forge services and free models. Blocks slow into place level, squash on touchdown, give below, unhook strings and rest on floor; each follows its owner phase. O12 B (Jared 2026-10-30): Continue and Ready wait for the last block to land as well as the owner phases to finish; Reduced Motion places every block instantly. Empty, long or taken names, wrong or expired pairing, NAS, credential and Creating failures use their real owner validation and recoverable errors. The Cursor route uses its admitted API-key owner and current credential validation, with API key for Cursor / Check key labels; no OpenAI-compatible capability is inferred. Six original sound kits (Retro split) retain the approved music/no re-key. Eight-bar tunes follow chapter I/IV/V/vi/high-I and motif grows to Ready; no hum/drone, near-unison beating, gated buzz, moaning selection or deep NieR thump. Voice/music live synthesis passes the one Notifications & Sounds player/gesture gate/master general.interaction.sound-effects and header speaker, with recipe/source/licence/version metadata in the existing sound tools/library. Setup voice/music are Pip parts, app chirps default off; Reduced Motion never mutes. O6 (Jared 2026-10-30): look-tile hover changes neither sound nor theme; click or keyboard activation changes the theme. Preserve Sound on — click to mute and Sound off — click to turn on. No local mute store; first run is factory parts plus session sound preview, rerun reads the Project. Reduced Motion stops all swing/travel/flicker/trails and places props instantly; state faces remain meaningful. Ready hands strings to the existing first Tour callout without a Tour redesign. O9 chapter rail: one taut string between screw eyes, a bead for each chapter of the actual route, Pip required at the current chapter and the line dipping under its weight. Walked string uses the accent, finished beads are filled with check marks inside. Activating a finished bead requests the existing safe Back/jump route, never commits a new choice or skips an owner gate. Pip travels on each look’s spring and settles on its strings; Retro steps at its world rate, NieR glides on a rigid track. Under Reduced Motion the current Pip and finished-bead indications appear immediately in their settled positions with accessible current/chapter names, no travel. O1/O2/O3 world choreography: Friendly has stitched hills and chapter glow, felt clouds on threads, drifting crumbs, dark fireflies or light paper butterflies; celebrations are stars/hearts, chapter change a Pip hop. Glass has moving caustics, rising bubbles and floor ripples, glint/bubble celebrations and a chapter light sweep. Basic’s protractor reads the swing in degrees, with a plumb line and marker riding the ruler; celebration is a corner check badge plus spreading ring, chapter change a small hop. Retro Dark has phosphor graticule and approaching vector terrain, pixel/[ OK ] celebration and a chapter degauss. Retro Light has tractor-feed margins, halftone props, red/blue detail and a print head on the line being printed; celebrations print small symbols/paper chads, chapter change feeds a page. NieR has decoding unit header, scanner ring/motes/data column/scan line, coordinate readout and target brackets that lock with a turning marker and elbow-labelled leader; confirmations use locked target/squares and // CONFIRMED, chapter change QUEST UPDATED and two slipping bands without black frames. NieR cursor square slides in, chosen fill stops before ?, and a screen wipes behind an ink bar. No extra wink; only the Ready sign-off winks once. Retro window lifecycle: Dark powers on as line-then-picture and closes to a line and dot, using VT323 and the existing PM Phosphor Green CRT effects; Light feeds paper on open and tears it off on close, IBM Plex Mono/PM Paper Teletype, no bezel. Both show chapter status, Welcome boot text and a typed scene command such as pip lower laptop phone --preview. Dark refreshes at 20 fps with <3 percent flicker/persistence; Light and its rail at 10 fps. Reduced Motion bypasses these travels/trails/flicker and uses settled readable states. All life shares O2’s bounded clock, hidden/offscreen/drag/low-resource gating; filter changes require recorded A/B preservation. O3/O4 six kit/voice materials: Friendly uses marimba/kalimba/music-box/woodblock/felt, warm bouncy babble and music-box lullaby over soft kalimba; Glass glass bells/wine-glass/water/air, breathy shimmer and a slow open glass arpeggio; Basic clean sines/soft clicks, polite chirps and a sparse question-and-answer tune; Retro Dark chip beeps/relay/static/degauss, text blips and square lead with triangle bass; Retro Light key clacks/platen ratchet/carriage-return/margin bell/motor/celesta, struck notes with a key tick and a clockwork celesta tune; NieR original soft menu ticks/two-tone confirms/glitch grains/soft pad/glockenspiel, flat stepped Pod-like bleeps and a slow A-minor bell line. The AI power arpeggio is a sixteen-step phrase in the same chapter chord. The root/offset table is F3-599, not a new sound registry. Shared sound/gesture/mute rules and banned hum/buzz/beat/thump remain; Reduced Motion never mutes, and look-hover remains silent. O7 deliberate Ask Pip: activating a choice’s ? previews that choice on the same settled stage, directs Pip’s glance/reaction toward its note and types the answer, with the idea cue through the one gesture-gated/master-controlled player. It does not choose/commit the option or replay the stage entrance. This is distinct from O6’s silent look hover; reserve the full note/bubble layout first, preserve the existing heading/choice semantics and focus return. O12’s landing wait is presentation completion only: it neither dispatches owner work nor manufactures a completed phase. Other choices and recovery controls remain responsive during Creating. O6/O10/O12, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): silent look hover includes the Pip voice and NieR cursor tick; click/keyboard selection may speak its selected line. Ready’s existing ui.onboarding.finish tour intent draws Pip’s connected lift before opening the first Tour callout, using the reference approximately 560 ms scaled by Animation speed and 0 under Reduced Motion. One current handoff guard ignores a second press and settles exactly once (DL-260). Pip and its line lift on the connected strings toward the window from which the first callout appears. This is the Ready handoff, not a redesign of the deferred Tour. Creating blocks cue once at touchdown through F3-599, finished chapter beads carry their check in every look, and the resume chip’s hover tag includes its existing tip. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation 1030182542-5544). QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q4/Q10: there is one progress string. Chapter beads sit on and follow that string’s sag, with chapter names below Pip’s feet; Pip replaces the current bead and the current bead occupies no extra width. A highlight surrounds the name without covering Pip. The speech tail is cut from the bubble’s own fill/border as one silhouette, never a separate visible diamond; NieR keeps its no-tail treatment. Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in the current look. Remove duplicate explanation-only disclosures (What is a Server?, the Connect proxy explanation, and What does Puppet Master read? on Choose a key); put their information in the shared option tips. Keep functional sections: More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use protected flow; never reuse its never-saved hint for SMB. DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect the same effective state. Every opened onboarding question tip and prose help section has useful Plain English and technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. Q1 B, Jared 2026-10-31: the shared Pip voice, say and vocals everywhere Pip speaks, sends 0.35 after trim and pan into its look’s room; Glass uses 0.30 and NieR 0.16. Each look uses its one per-look kit room, registered before the first shared voice in every host, with no stacked rooms. These restore the old voice’s own sends. Loudness remains within approximately 0.4 dB. The existing preference, gesture and sound owner still gates playback. DL-259 QA2 coverage, Jared 2026-10-31: question-tip buttons show per-look hover and keyboard-focus feedback and never overlap selectors. The progress beads and Pip share one rail/string; Pip replaces the current bead and the current label remains on its own line without covering Pip. Speech bubbles have one continuous fill/border silhouette and joined tail, never an exposed diamond; NieR keeps no tail. These are presentation changes to existing controls and stage state, with no new action, setting or validation rule. DL-259 QA2 M5, 2026-10-31: the explanatory note uses the settled, untransformed stage bounds in both Plain English and Expert. Long notes stay within the available stage room and scroll their own text when needed, including in short windows and NieR. The note is labelled as Pip’s and has no separate decorative tail. This is the option-help note, distinct from the spoken bubble’s single-silhouette tail rule. DL-259 QA2 M6, 2026-10-31: ordinary resting slot props remain visibly clear of the stage floor and edge. Creating’s stacked blocks retain their intentional floor contact. The clearance is a presentation invariant, not a new owner phase or completion signal. DL-259 FO-5, 2026-10-31: a choice’s question control stays visible, readable and reachable when its card is selected, hovered or keyboard-focused in every family. NieR’s selected/cursor ink stops before the help region or uses contrasting inverse ink there, without hiding the question, radio or selected state. DL-259 FO-9 final, 2026-10-31: Creating’s blocks and progress consume the same verified owner-phase projection as its checklist (PWIZ-021). An incomplete or unclear GitHub result cannot produce completed blocks for unproven phases; settled phases keep their corresponding blocks through recheck/resume. Later accepted owner results may settle the rest. O12’s final landing condition and instant Reduced Motion settlement remain additional to real owner completion. DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance is count-neutral: ask for the access details without claiming a fixed number of fields. The selected Backup destination family, auth method and credential mode determine the actual required fields and validation through their existing owner. Changing the line never omits a required credential, locator, region or temporary-session value and never turns incomplete access into an available Connect action. DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase, rather than six words or another fixed word count. The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the Backup owner still defines and verifies the real protected recovery material and its exact source/target binding. The wording admits no new phrase format, key derivation, unlock proof or weaker secret-handling rule. DL-271 FO-14, 2026-10-31: long tokens in an opened question note wrap within its available width, so their full text is readable without horizontal scrolling. Keep vertical scrolling when the note exceeds its available height. This applies to Plain English and Expert, including NieR, and visual wrapping preserves the exact token for copying; it adds no second note renderer or per-family content version.
 
+  DL-272 RV-19, 2026-11-01: A refused Approve action tells the person to compare the identity words and tick their match confirmation. Its reason stays readable with the confirmation brought into view; keyboard and pointer receive the same reason without granting trust.
 
-  DL-272 RV-19, 2026-11-01: A refused Approve action tells the person to compare the identity words and tick their match
-  confirmation. Its reason stays readable with the confirmation brought into view; keyboard and pointer receive the same
-  reason without granting trust.
+  DL-272 RV6-RV11-PIP-SUCCESS, 2026-11-01: Pip’s success feedback requires a corresponding operation or owner answer that succeeded after the fault, the same field put right, or the refused action becoming valid, with no fault still shown. Moving on, skipping, cancelling or choosing another way is not success. A field/control must remain corrected when typing settles; an unrelated or earlier success cannot clear a later fault.
 
+  DL-272 FO-15, 2026-11-01: The guide’s stage stays fixed within its allocated layout: focus, keyboard navigation, hover and help cannot scroll or displace that stage or its scene. Only intended form/help regions scroll; layout changes still respond to real window resizing and the existing narrow/short layouts.
 
-  DL-272 RV6-RV11-PIP-SUCCESS, 2026-11-01: Pip’s success feedback requires a corresponding operation or owner answer
-  that succeeded after the fault, the same field put right, or the refused action becoming valid, with no fault still
-  shown. Moving on, skipping, cancelling or choosing another way is not success. A field/control must remain corrected
-  when typing settles; an unrelated or earlier success cannot clear a later fault.
+  DL-272 P70-RADIO-RING, 2026-11-01: An unselected radio/check ring remains distinguishable on its actual card surface in every family and Light/Dark variant, with the existing non-text accessibility requirements. Selected and focused states remain distinct.
 
+  DL-272 P32-REFUSED-FIELD, 2026-11-01: A refused field has a readable invalid edge in every look, including a prefixed/wrapped field, without hiding keyboard focus or relying on its colour alone for the reason.
 
-  DL-272 FO-15, 2026-11-01: The guide’s stage stays fixed within its allocated layout: focus, keyboard navigation, hover
-  and help cannot scroll or displace that stage or its scene. Only intended form/help regions scroll; layout changes
-  still respond to real window resizing and the existing narrow/short layouts.
+  DL-272 P28-WARNING-BANNER, 2026-11-01: A warning banner remains visually identifiable and its warning text/icon readable against the actual surface in every look, including Glass. It retains its textual reason and existing contrast/accessibility rules.
 
+  DL-272 FO-16, 2026-11-01: Choosing another option in the same choice ends the previous option’s refusal feedback and lets Pip use the new option’s own line, without a cheer. The rejected option remains unavailable for its original reason; choosing something else neither repairs nor authorizes it. The current selection still receives its own validation and refusal, if any.
 
-  DL-272 P70-RADIO-RING, 2026-11-01: An unselected radio/check ring remains distinguishable on its actual card surface
-  in every family and Light/Dark variant, with the existing non-text accessibility requirements. Selected and focused
-  states remain distinct.
+  DL-272 FO-18, 2026-11-01: When neither an AI account nor a Free Models route is usable, the Almost ready state has no celebration in any family or Light/Dark variant: no confetti, crew cheer, wink, bow or celebratory sound. Apply this eligibility check before any family-specific Ready moment. Skipping both AI routes is not success and does not make planning available; a usable free route still counts as AI.
 
-
-  DL-272 P32-REFUSED-FIELD, 2026-11-01: A refused field has a readable invalid edge in every look, including a prefixed/wrapped
-  field, without hiding keyboard focus or relying on its colour alone for the reason.
-
-
-  DL-272 P28-WARNING-BANNER, 2026-11-01: A warning banner remains visually identifiable and its warning text/icon readable
-  against the actual surface in every look, including Glass. It retains its textual reason and existing contrast/accessibility
-  rules.
-
-
-  DL-272 FO-16, 2026-11-01: Choosing another option in the same choice ends the previous option’s refusal
-  feedback and lets Pip use the new option’s own line, without a cheer. The rejected option remains
-  unavailable for its original reason; choosing something else neither repairs nor authorizes it. The current
-  selection still receives its own validation and refusal, if any.
-
-
-  DL-272 FO-18, 2026-11-01: When neither an AI account nor a Free Models route is usable, the Almost ready
-  state has no celebration in any family or Light/Dark variant: no confetti, crew cheer, wink, bow or
-  celebratory sound. Apply this eligibility check before any family-specific Ready moment. Skipping both AI
-  routes is not success and does not make planning available; a usable free route still counts as AI.
-
-
-  DL-272 FO-19, 2026-11-01: Long values wrap within their detail pane without clipping or a horizontal reading
-  scroll. A fingerprint can break after its algorithm label so the hash stays whole on its own line. Display
-  wrapping preserves the exact value compared, confirmed or copied. Initial and changed-fingerprint screens
-  use the same rule in every look; identity comparison and explicit trust confirmation remain required.'
+  DL-272 FO-19, 2026-11-01: Long values wrap within their detail pane without clipping or a horizontal reading scroll. A fingerprint can break after its algorithm label so the hash stays whole on its own line. Display wrapping preserves the exact value compared, confirmed or copied. Initial and changed-fingerprint screens use the same rule in every look; identity comparison and explicit trust confirmation remain required. Current SSYS-059/065 scope classification supersedes universal no-Project look/sound write wording: claimed app levels can persist, only pre-claim preview remains ephemeral. Project Later still sets up AI on the named Computer and lands in No project; explicit Skip AI remains valid. Re-entry reads the exact resolved app/Project look, without a private reader/store. Preserve PM7’s current service admission, FO-22 valid-answer Back/Review, all art/solver/Pip/Glass/motion/audio and calm Almost ready rules; new native availability is not inferred.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -51422,27 +49765,29 @@ source_lineage:
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
-- 'DL-260 implementation lineage only: pm7ob-explainer, handOff(), O55.finish({tour:true}) and the joined adapter are
-  concept source spellings; production uses the existing typed action and shared note/stage owners.'
+- 'DL-260 implementation lineage only: pm7ob-explainer, handOff(), O55.finish({tour:true}) and the joined adapter
+  are concept source spellings; production uses the existing typed action and shared note/stage owners.'
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — Pattern review long-note and prop fixes
   (QA2 M5/M6). Six layout units is source geometry only; settled/untransformed measurement and internal note scrolling
   preserve product readability.
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
-  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
-  report FO-9 final.'
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1;
+  fields report FO-9 final.'
 - 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
-  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
-  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
-  refusal.'
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host,
+  seeded situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional
+  weak-key refusal.'
 - 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
-  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
-  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
-  refusal.'
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host,
+  seeded situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional
+  weak-key refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
 - PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
   Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
   are source lineage only.
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F09,C-F02,C-F11,E-F07,E-F08
 preserved_exact_tokens:
 - ui.onboarding.open_details
 - Sound on — click to mute
@@ -51467,95 +49812,8 @@ plan_unit_id: F3-664
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  D1–D14, G4/G8–G10, X1; DL-240–DL-255. The two status-bar controls open one platform-wide projection at Agents
-  or Processes; Resources is its third tab, not a CPU/RAM bar indicator. Every Assistant thread, Orchestrator,
-  Planning Wizard, PRD Builder, Scout, agent/subagent, process and scheduled run is in scope, with explicit
-  Project/server/environment identity. Questions leads Agents, each question/agent listed once and counted in
-  its owning surface group; Needs input leads Processes, running processes grouped under their starting agent,
-  then Scheduled, Finished this session and collapsed read-only System services linking System status. Agent
-  processes links select that owner’s process filter. Shared F3-477 ordering/row anatomy/freshness match the
-  Agents deep rail and Home board; stale is one explicit strip, never healthy zeros. Subagents remain in their
-  own chat domain and appear here as process owners, not duplicate process work. Resources replaces the old Task
-  manager layout: sortable CPU/memory/ports table and inspector grouped by server/environment for the current
-  Project plus shared computer/services (Q12), never one assumed machine. SIR-054 defines subordinate
-  ProcessFacts and per-server samples. Sample only while Resources is open and visible, stop on close/hidden;
-  unknown/stale is labelled. Agents/Processes/Resources are tabs only: no Side by side, no Home panel tab
-  (deferred), no panel keyboard-shortcut/OS badge rollout in this build. Desktop Pop out moves the same
-  view/state into one window; no second runtime, and unsupported clients show their reason. Floating panel, quit
-  dialog and exit animations use DR-067’s overlay owner and near-opaque Glass menu plate. Stop per item and Stop
-  all (thread/platform target list) use cmd.work.stop and D8 process-group semantics; restart/input/completion
-  routing use UCC-210. Questions and process input remain separate counts over one needs-you set. G6 Clear
-  finished is offered only on Processes and hides this view’s finished process/scheduled rows, never agents or
-  owner records. Lost follows reconciliation, warning; Stopping uses pending until observed exit, Stopped
-  skipped, Scheduled pending, Done complete, Failed failed with exit N. Live category glyphs robot/processes use
-  the shared 2200 ms beat below needs-you, Reduced Motion lit/still; Q11 live rows animate under
-  visibility/clock gates; individual agents use the shared loader. Design narrow and NieR readouts without
-  hiding meaning; accessibility retains full words even in Numbers. G4/G8/D14 Resources tab head reuses gauge
-  (no third new category glyph). While selected, visible and receiving current live samples, it shares the
-  subtle 2200 ms category breath below needs-you; its internal drawing remains still. No active subscription,
-  stale/unavailable data, hidden/offscreen/drag state or Reduced Motion uses a travelling loop; retain the lit
-  recognizable rest pose and full freshness words. Resource rows remain still. Opening/closing visibility
-  starts/stops only this tab’s host sampling subscription. D5/D6 repeat activation: clicking the status item
-  whose tab is already open closes the panel through ui.work_panel.close and returns focus to that status item.
-  Clicking the other item selects its tab in the same panel without a close/reopen; first activation opens its
-  own tab. Keyboard activation is identical. Popped-out routing follows the same one-view identity and returns
-  focus on close. D6: the popped-out desktop panel is one draggable, user-sized window preserving
-  Project/tab/filter selection; it is a view of the same projection, not another runtime. Closing restores focus
-  to its originating status item. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay
-  popover, reached from the existing status-bar System status item and the Processes System services link.
-  ui.system_status.open and ui.system_status.close are typed local visibility actions, with
-  statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner links
-  use the existing ui.settings.route.open action and system_status.service.open_settings binding, selecting
-  code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
-  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or
-  controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass
-  plate; unavailable owner navigation says why. The joined concept owner is PM7_WORK_UI in src/js/48-work.js:
-  open/close/toggle/tab/isOpen, detail/tail/patchTicks, confirmThread/confirmPlatform, quit and paintBar;
-  #pm7-work owns the three tabs and #pm7-work-dialog the reviewed Stop/Quit list. PM_WORK remains the only
-  projection. Concept view IDs platform and thread:<id> map to the invoking view, not a new persistence key.
-  Counts.finished/failed describe the Processes list, while finishedAgents belongs to Agents. Environment
-  headings count all displayed state groups. Resource samples re-sort under the selected column, deferring row
-  movement while the pointer/focus is in the table. These concept APIs/fixtures do not certify native handlers
-  or windows. G4/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): Resources has
-  Time after State; [data-work-time] uses the shared clock and the Time sort compares startedAt with stable
-  title ties. Sample immediately on subscription and every 2 s only while open/visible; unknown/stale remains
-  explicit. Narrow Resources keeps the omitted Time/Port/Started by facts reachable in the inspector and
-  accessible description. PM7_WORK_UI.list/agentGroup/agentSummary supply the rail and Home Agents consumers per
-  DR-078. Panel drags use body.pm-resizing and release/pointercancel notifies PM_DRAGEND so shared motion
-  resumes once. Per-kind completion defaults stay DL-248’s agent for scripts/tests/builds and user for
-  server/db/watcher; Quiet remains an explicit choice. D7/D8/D13, PM7 companion review fix1, 2026-10-30 (Astra
-  A2/A3): work.open_owner is ui.work_panel.select with an owner-row value, owner_id, destination
-  agents|subagents, invoking view and focus; Subagents also binds its exact thread_id. It never opens a
-  transcript. Actual Open thread uses cmd.chat.open_thread for the item’s bound Assistant thread; actual Open
-  surface is ui.work_panel.open_surface, a local navigation request to the resolved owner surface with work
-  identity and focus, unavailable if that owner cannot be reached. Copy command is ui.work_panel.copy_command, a
-  local clipboard request over the selected current command; clipboard refusal cannot report success. Open port
-  reuses cmd.browser.open_workspace_preview with a server/environment-authoritative URL and CV-360 placement,
-  never an assumed client localhost. A scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the
-  exact schedule identity/revision and owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses
-  cmd.terminal.rerun for a new invocation through the terminal owner, with an explicit new-session request when
-  needed; Restart keeps cmd.work.restart for restartable live server/db/watcher work. Concept W.restart/W.stop
-  adapters do not replace those native owner routes. Q11 B, Jared 2026-10-30: only live Work rows animate,
-  capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running process
-  marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled
-  rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses.
-  The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification
-  1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7
-  part/fallback rules, never animated Pip; running NieR process marks move in their existing material language.
-  The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command,
-  event, setting, state or extra loader owner is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18:
-  Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are
-  shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that
-  nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s
-  work as its own. Shared machines show only environments with running work. Metadata/freshness is available on
-  tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity
-  and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or
-  service-control authority. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel,
-  System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque
-  plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu
-  tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing
-  material. This is consumer treatment, no global Glass token change or extra backdrop-filter.
+canonical_text: |-
+  D1–D14, G4/G8–G10, X1; DL-240–DL-255. The two status-bar controls open one platform-wide projection at Agents or Processes; Resources is its third tab, not a CPU/RAM bar indicator. Every Assistant thread, Orchestrator, Planning Wizard, PRD Builder, Scout, agent/subagent, process and scheduled run is in scope, with explicit Project/server/environment identity. Questions leads Agents, each question/agent listed once and counted in its owning surface group; Needs input leads Processes, running processes grouped under their starting agent, then Scheduled, Finished this session and collapsed read-only System services linking System status. Agent processes links select that owner’s process filter. Shared F3-477 ordering/row anatomy/freshness match the Agents deep rail and Home board; stale is one explicit strip, never healthy zeros. Subagents remain in their own chat domain and appear here as process owners, not duplicate process work. Resources replaces the old Task manager layout: sortable CPU/memory/ports table and inspector grouped by server/environment for the current Project plus shared computer/services (Q12), never one assumed machine. SIR-054 defines subordinate ProcessFacts and per-server samples. Sample only while Resources is open and visible, stop on close/hidden; unknown/stale is labelled. Agents/Processes/Resources are tabs only: no Side by side, no Home panel tab (deferred), no panel keyboard-shortcut/OS badge rollout in this build. Desktop Pop out moves the same view/state into one window; no second runtime, and unsupported clients show their reason. Floating panel, quit dialog and exit animations use DR-067’s overlay owner and near-opaque Glass menu plate. Stop per item and Stop all (thread/platform target list) use cmd.work.stop and D8 process-group semantics; restart/input/completion routing use UCC-210. Questions and process input remain separate counts over one needs-you set. G6 Clear finished is offered only on Processes and hides this view’s finished process/scheduled rows, never agents or owner records. Lost follows reconciliation, warning; Stopping uses pending until observed exit, Stopped skipped, Scheduled pending, Done complete, Failed failed with exit N. Live category glyphs robot/processes use the shared 2200 ms beat below needs-you, Reduced Motion lit/still; Q11 live rows animate under visibility/clock gates; individual agents use the shared loader. Design narrow and NieR readouts without hiding meaning; accessibility retains full words even in Numbers. G4/G8/D14 Resources tab head reuses gauge (no third new category glyph). While selected, visible and receiving current live samples, it shares the subtle 2200 ms category breath below needs-you; its internal drawing remains still. No active subscription, stale/unavailable data, hidden/offscreen/drag state or Reduced Motion uses a travelling loop; retain the lit recognizable rest pose and full freshness words. Resource rows remain still. Opening/closing visibility starts/stops only this tab’s host sampling subscription. D5/D6 repeat activation: clicking the status item whose tab is already open closes the panel through ui.work_panel.close and returns focus to that status item. Clicking the other item selects its tab in the same panel without a close/reopen; first activation opens its own tab. Keyboard activation is identical. Popped-out routing follows the same one-view identity and returns focus on close. D6: the popped-out desktop panel is one draggable, user-sized window preserving Project/tab/filter selection; it is a view of the same projection, not another runtime. Closing restores focus to its originating status item. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay popover, reached from the existing status-bar System status item and the Processes System services link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner links use the existing ui.settings.route.open action and system_status.service.open_settings binding, selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass plate; unavailable owner navigation says why. The joined concept owner is PM7_WORK_UI in src/js/48-work.js: open/close/toggle/tab/isOpen, detail/tail/patchTicks, confirmThread/confirmPlatform, quit and paintBar; #pm7-work owns the three tabs and #pm7-work-dialog the reviewed Stop/Quit list. PM_WORK remains the only projection. Concept view IDs platform and thread:<id> map to the invoking view, not a new persistence key. Counts.finished/failed describe the Processes list, while finishedAgents belongs to Agents. Environment headings count all displayed state groups. Resource samples re-sort under the selected column, deferring row movement while the pointer/focus is in the table. These concept APIs/fixtures do not certify native handlers or windows. G4/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): Resources has Time after State; [data-work-time] uses the shared clock and the Time sort compares startedAt with stable title ties. Sample immediately on subscription and every 2 s only while open/visible; unknown/stale remains explicit. Narrow Resources keeps the omitted Time/Port/Started by facts reachable in the inspector and accessible description. PM7_WORK_UI.list/agentGroup/agentSummary supply the rail and Home Agents consumers per DR-078. Panel drags use body.pm-resizing and release/pointercancel notifies PM_DRAGEND so shared motion resumes once. Per-kind completion defaults stay DL-248’s agent for scripts/tests/builds and user for server/db/watcher; Quiet remains an explicit choice. D7/D8/D13, PM7 companion review fix1, 2026-10-30 (Astra A2/A3): work.open_owner is ui.work_panel.select with an owner-row value, owner_id, destination agents|subagents, invoking view and focus; Subagents also binds its exact thread_id. It never opens a transcript. Actual Open thread uses cmd.chat.open_thread for the item’s bound Assistant thread; actual Open surface is ui.work_panel.open_surface, a local navigation request to the resolved owner surface with work identity and focus, unavailable if that owner cannot be reached. Copy command is ui.work_panel.copy_command, a local clipboard request over the selected current command; clipboard refusal cannot report success. Open port reuses cmd.browser.open_workspace_preview with a server/environment-authoritative URL and CV-360 placement, never an assumed client localhost. A scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the exact schedule identity/revision and owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new invocation through the terminal owner, with an explicit new-session request when needed; Restart keeps cmd.work.restart for restartable live server/db/watcher work. Concept W.restart/W.stop adapters do not replace those native owner routes. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -51596,6 +49854,8 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/background-activity/opus-5.5/README.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -51615,19 +49875,8 @@ plan_unit_id: F3-665
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'D10, DL-249. With live work, quitting opens a focus-contained dialog with Keep everything running on
-  the server selected by default. Stop selected work exposes the exact target list, each untickable, excluding system
-  services. ui.work_quit.select/cancel change only the draft; cmd.work.quit confirms a generation-bound choice. Keep-running
-  closes only the client; selected-stop delegates the reviewed identities to cmd.work.stop and observes exit before claiming
-  completion, exposing failures/stale targets. Cancel/Esc restores the opener without work mutation. Closing a window
-  under minimize-to-tray retains its existing tray behavior. No silent kill, quit preference row or duplicated work owner.
-  D8/D10/G8, PM7 final GUI alignment f99ad183d2, 2026-10-30 (F3-4): the shared Stop/Quit list checkbox distinguishes
-  checked fill/tick from an empty unchecked box in every look, including Glass’s translucent input skin. Keyboard focus
-  and disabled state remain clear; Retro/NieR keep square geometry. These are the existing work.quit.select_target and
-  ui.work_quit.select draft controls, with unchanged target identity and owner confirmation semantics. No toast-placement
-  or G2 width decision is inferred from this visual fix. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Escape
-  closes the active System status or Stop/Quit dialog regardless of keyboard focus position. The enclosing panel yields
-  Escape to its child first; restore exact invoking focus and keep the same reviewed target/availability contracts.'
+canonical_text: |-
+  D10, DL-249. With live work, quitting opens a focus-contained dialog with Keep everything running on the server selected by default. Stop selected work exposes the exact target list, each untickable, excluding system services. ui.work_quit.select/cancel change only the draft; cmd.work.quit confirms a generation-bound choice. Keep-running closes only the client; selected-stop delegates the reviewed identities to cmd.work.stop and observes exit before claiming completion, exposing failures/stale targets. Cancel/Esc restores the opener without work mutation. Closing a window under minimize-to-tray retains its existing tray behavior. No silent kill, quit preference row or duplicated work owner. D8/D10/G8, PM7 final GUI alignment f99ad183d2, 2026-10-30 (F3-4): the shared Stop/Quit list checkbox distinguishes checked fill/tick from an empty unchecked box in every look, including Glass’s translucent input skin. Keyboard focus and disabled state remain clear; Retro/NieR keep square geometry. These are the existing work.quit.select_target and ui.work_quit.select draft controls, with unchanged target identity and owner confirmation semantics. No toast-placement or G2 width decision is inferred from this visual fix. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Escape closes the active System status or Stop/Quit dialog regardless of keyboard focus position. The enclosing panel yields Escape to its child first; restore exact invoking focus and keep the same reviewed target/availability contracts. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -51662,6 +49911,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -51683,27 +49934,8 @@ plan_unit_id: F3-666
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The record inspector is the in-app way to read one stored record, in place of any always-on JSON or JSONL
-  mirror file (SP-339, DL-270). It is read-only. It opens as a `record` tab with the id `inspect:<record_ref>`
-  (F3-635), placed by F3-634, through the existing `cmd.storage.open_value`; it adds no Activity Bar occupant,
-  window, command family, event or schema. It is reached only from a labelled expert control on the storage page that
-  `cmd.settings.open_storage_retention` opens (F3-457), whose `storage.value.open` production row already wires
-  `cmd.storage.open_value`. Another surface, such as a Ledger row, an audit inspector row or a Raw view, may add
-  an entry only together with its own production wiring row; until then it offers none. No sentence of chat, onboarding or Doctor text links to it. It shows the record's family and kind in the
-  owner's words, its time and place in the record order, and its decoded fields under the owner's typed field
-  names; it never shows encoded bytes as text. A payload reference (SP-337) shows its size and kind and a
-  bounded preview, and the whole body loads only when the person asks; an image or other binary payload shows
-  as media or as its size, never as base64 or hex. The inspector reads the record as of the high-water mark that
-  `cmd.storage.open_value` captured and says so. In viewer mode (`storage_read_only`) it still opens, from the
-  frozen snapshot. It applies the same redaction profile, permission and FileSafe checks as `pm inspect`, and
-  shows `redaction_status` and the permissioned-unavailable state in place of withheld content (F3-418). It may
-  copy the record it shows, already decoded and redacted, as JSON, under FileSafe's rules; bulk export stays with
-  `pm export`, and the inspector has no export control of its own. `pm db dump`, `pm inspect`, `pm tail` and
-  `pm export` are command-line entry points to the same read paths, not separate dispatchers and not `cmd.*`
-  commands, and the inspector's help line names `pm inspect` and `pm tail`. It has no edit, delete, repair,
-  replay or re-dispatch control. The Technical-details rule of F3-617 is unchanged: the inspector is an expert
-  surface, never part of a plain chat surface's text.
+canonical_text: |-
+  The record inspector is the in-app way to read one stored record, in place of any always-on JSON or JSONL mirror file (SP-339, DL-270). It is read-only. It opens as a `record` tab with the id `inspect:<record_ref>` (F3-635), placed by F3-634, through the existing `cmd.storage.open_value`; it adds no Activity Bar occupant, window, command family, event or schema. It is reached only from a labelled expert control on the storage page that `cmd.settings.open_storage_retention` opens (F3-457), whose `storage.value.open` production row already wires `cmd.storage.open_value`. Another surface, such as a Ledger row, an audit inspector row or a Raw view, may add an entry only together with its own production wiring row; until then it offers none. No sentence of chat, onboarding or Doctor text links to it. It shows the record's family and kind in the owner's words, its time and place in the record order, and its decoded fields under the owner's typed field names; it never shows encoded bytes as text. A payload reference (SP-337) shows its size and kind and a bounded preview, and the whole body loads only when the person asks; an image or other binary payload shows as media or as its size, never as base64 or hex. The inspector reads the record as of the high-water mark that `cmd.storage.open_value` captured and says so. In viewer mode (`storage_read_only`) it still opens, from the frozen snapshot. It applies the same redaction profile, permission and FileSafe checks as `pm inspect`, and shows `redaction_status` and the permissioned-unavailable state in place of withheld content (F3-418). It may copy the record it shows, already decoded and redacted, as JSON, under FileSafe's rules; bulk export stays with `pm export`, and the inspector has no export control of its own. `pm db dump`, `pm inspect`, `pm tail` and `pm export` are command-line entry points to the same read paths, not separate dispatchers and not `cmd.*` commands, and the inspector's help line names `pm inspect` and `pm tail`. It has no edit, delete, repair, replay or re-dispatch control. The Technical-details rule of F3-617 is unchanged: the inspector is an expert surface, never part of a plain chat surface's text. App records retain the same read-only, as-of, redaction and entry-point limits. Permission/grant/History navigation goes to its existing owner detail; it does not invent a new inspector entry from ordinary chat text. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines the visible in-app surface that replaces readable JSON and JSONL mirror files.
 split_recommended: false
@@ -51728,8 +49960,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-270"
-  - "Plans/storage-plan.md#SP-339"
+- Plans/Decision_Log.md#DL-270
+- Plans/storage-plan.md#SP-339
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
   - "inspect:"
   - "cmd.storage.open_value"
@@ -51757,27 +49991,8 @@ plan_unit_id: F3-667
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  A focused thread opens from its render pages and never from its events (SP-338, ACD-242, DL-270). The chat
-  reads `thread_head`, the hot tail and the newest sealed 50-item page, paints each item from its display
-  header (role, kind, time, short summary, collapsed-section summaries, attachment and payload references), and
-  loads a full body only when its section is expanded or scrolled to. This holds for the docked chat, the
-  floating window and wizard-embedded instances alike, since they are one component (F3-420). Load-older paging
-  is mandatory, not optional. Scrolling near the top of the loaded items loads the next older 50-item page by
-  itself, and above the oldest loaded item the stream also shows one plain-text row, `Load 50 older`, as the
-  fallback, with no pill, emoji or side stripe (F3-648); the row is reachable by keyboard and its accessible name
-  carries the number of items it will add. Both the scroll and the row fetch the page through
-  `cmd.chat.load_older` (UCC-212), one request for one page, and the row is absent once the first item of the
-  thread is loaded. When a page arrives the item at the reading position stays where it was. Jump-to-latest and
-  its unseen count (F3-368) are unaffected and return to the hot tail. A jump to a message, search hit, anchor or
-  Context link that lies in a page not yet loaded resolves the target's page from `thread_head`'s page index and
-  loads a bounded window of pages around it, then lands on it (F3-103); it never pages through the history in
-  between and never replays events. Sequential load-older is for adjacent scrolling (SP-338). When an older page cannot be read,
-  the row names the owner reason and offers Retry. Render pages are a derived family, so a page that is rebuilding
-  or stale shows `projection_freshness = refreshing | stale` in the grammar of section 15.6, and the thread's
-  canonical history is never described as lost. Under Reduced Motion the page arrives without an animated slide.
-  This unit states what the person sees; storage-plan SP-338 and SP-344 own the numbers: for a 100k-event thread
-  the first page is shown within 150 ms at p95, warm or cold, reading at most 2 MiB.
+canonical_text: |-
+  A focused thread opens from its render pages and never from its events (SP-338, ACD-242, DL-270). The chat reads `thread_head`, the hot tail and the newest sealed 50-item page, paints each item from its display header (role, kind, time, short summary, collapsed-section summaries, attachment and payload references), and loads a full body only when its section is expanded or scrolled to. This holds for the docked chat, the floating window and wizard-embedded instances alike, since they are one component (F3-420). Load-older paging is mandatory, not optional. Scrolling near the top of the loaded items loads the next older 50-item page by itself, and above the oldest loaded item the stream also shows one plain-text row, `Load 50 older`, as the fallback, with no pill, emoji or side stripe (F3-648); the row is reachable by keyboard and its accessible name carries the number of items it will add. Both the scroll and the row fetch the page through `cmd.chat.load_older` (UCC-212), one request for one page, and the row is absent once the first item of the thread is loaded. When a page arrives the item at the reading position stays where it was. Jump-to-latest and its unseen count (F3-368) are unaffected and return to the hot tail. A jump to a message, search hit, anchor or Context link that lies in a page not yet loaded resolves the target's page from `thread_head`'s page index and loads a bounded window of pages around it, then lands on it (F3-103); it never pages through the history in between and never replays events. Sequential load-older is for adjacent scrolling (SP-338). When an older page cannot be read, the row names the owner reason and offers Retry. Render pages are a derived family, so a page that is rebuilding or stale shows `projection_freshness = refreshing | stale` in the grammar of section 15.6, and the thread's canonical history is never described as lost. Under Reduced Motion the page arrives without an animated slide. This unit states what the person sees; storage-plan SP-338 and SP-344 own the numbers: for a 100k-event thread the first page is shown within 150 ms at p95, warm or cold, reading at most 2 MiB. App render pages and load-older cursors bind Server/app/thread/generation; conversion publishes destination pages once, source history stays sealed, and historical pages never become execution authority. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines the visible open path, the load-older control and its interaction with scroll and jump behavior.
 split_recommended: false
@@ -51802,9 +50017,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-270"
-  - "Plans/storage-plan.md#SP-338"
-  - "Plans/assistant-chat-design.md#ACD-242"
+- Plans/Decision_Log.md#DL-270
+- Plans/storage-plan.md#SP-338
+- Plans/assistant-chat-design.md#ACD-242
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,C-F10,C-F11,B-F06,B-F09,B-F10,B-F11
 preserved_exact_tokens:
   - "thread_head"
   - "50-item"
@@ -51821,3 +50038,527 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-338, ContractName:Plans/assistant-chat-design.md#ACD-242
+
+
+### F3-668 - Split Projects Library And Project Details
+
+```yaml
+plan_unit_id: F3-668
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Projects is the shared quiet library/detail surface over PJCT-012’s single registry and owner project_summary. Cards/rows are semantic articles with labelled Open, Details and More; name, named Computer, full-path hover/copy and state words are accessible without colour. New Project is the primary entry. The title-bar switcher remains secondary and has the fixed No project row. The list distinguishes empty, filtered empty, archived, removed, missing folder, inaccessible and not-answering Computers; stale/partial sources never become healthy, zero or none. Owner attention selects one primary status and retains secondary reasons in Details, using the existing waiting > blocked > working > modified > idle projection where applicable; never conflate blocked and needs-you.
+  Safe shows local history, optional online copy and the last complete backup separately. Last verified means the Backup owner’s newest Structure verified-or-higher result with its level; show a newer failed/unverified attempt beside it without replacing last-good. Details routes to actual Source Control, Backup, Settings and location/move owners. Rename changes display metadata only. Locate/Update location revalidates an already-moved source; Move performs the PSB content transaction. Archive pauses its Backup schedule and protects last-good; unarchive restores eligibility without starting work. Remove is list-only; Delete data is separate protected Storage work. Import from another app remains visible as not here yet, with no dispatch.
+  Use existing spacing, picker, hover, overlay, loader, status and focus primitives in all ten looks, narrow windows and Reduced Motion. No Projects-specific runtime/health engine, invented counts or old header template is introduced.
+gui_related: true
+gui_classification_reason: Defines visible controls, layout, accessible states and exact returns.
+depends_on:
+- F3-661
+- PJCT-012
+- BRS-032
+- BRS-033
+unblocks: []
+acceptance_criteria:
+- Every listed/filtered/recovery state uses current owner truth and exact target/return.
+- Open/Details/More are keyboard accessible with full-path access and truthful backup facts.
+- Remove, archive, rename and Delete data retain distinct effects.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F02
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F08
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F09
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F11
+preserved_exact_tokens:
+- New Project
+- Open
+- Details
+- More
+- No project
+- not here yet
+- Standard
+negative_constraints:
+- No demo API/state, fake health/zero counts or import handler.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### F3-669 - One New Project Guided Surface
+
+```yaml
+plan_unit_id: F3-669
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  New Project, onboarding First Project and Make a project from this chat render PJCT-009’s same reviewed draft engine; PWIZ-037 owns valid sections, Edit/Back and fresh Review. The launcher accepts a link, folder or address and offers six equal entry ways: new, folder, online, another device/storage, restore and from-chat. Ways are presentations, not extra registry kinds or generic clone commands. One guided page has a live review, clearly labelled section Edit and a named final action. Changing way/source/Computer invalidates abandoned fields, reach/access proofs, selected backend/source and old Review; Back visits only steps valid for current answers, preserving PM7 FO-22.
+  Where work runs and where files sit are distinct. Show the named Computer, complete path, backing device/NAS/share and available space from the owner. Folder names keep spaces. The selected Computer’s Projects folder is the Computer-only setting, not a hardcoded Documents destination. Read-only inspection on local/Server/SSH/PM/SMB/NFS/mounted routes reports history/backend, branch/bookmark, dirty state, remotes/online identity, submodules/LFS/hooks, duplicate registered-copy and partial/not-looked facts. A discovered origin is evidence only: Link it, Leave it unlinked and Make a new online copy require their exact chosen authority. Duplicate copies suggest Open [project] on [Computer] without blocking.
+  Git and Jujutsu are equal local history choices; a fresh form may initially choose Git, existing history wins, and supported content inspection can explain a Git suggestion. No setup object-format picker or no-history option. Online-copy fields use FGI-023’s offered service/profile/privacy/admission and real create/recovery chain. GitHub/GHES Contribute shows original/fork/upstream/head/base with the native branch/bookmark; elsewhere use the team-project Make a change to offer branch default, with Work on it directly one tap away. Just copy it remains a separate acquisition choice.
+  Start with uses Project-owned Starters/My starters; Saved setups/Your usual settings is detached own-value/thing/account configuration with Advanced exact selection, Keep them fixed and Notifications & limits. Reach, installation and destination AI readiness are distinct; keys/logins/pairings never travel. README/ignore/licence live once in online-copy Advanced; the ignore default remains its setting. Backup shows destination before sign-in, safe test/Use existing, inclusion and daily schedule, Standard retention with Advanced real counts/timezone/time and human Recovery Kit save/check. Optional Later is honest.
+  Creating advances only from owner phase receipts. Unknown remote effects reconcile before retry; retained Continue/Open/Delete recovery names exact prerequisites and never repeats settled work. Listed Project commit precedes chat cutover. Later still sets up AI on the named Computer and returns to No project; Almost ready remains calm without usable AI. No preview, animation or transport success implies Project registration, source binding, backup verification or native availability.
+  SSH host trust and public-key installation render SRV-018/RAS-017 through cmd.server.ssh.trust and cmd.server.ssh.public_key.install. Preview shows the exact captured host/account/key and currentness; protected apply belongs to the person on the initiating active Client. Return preserves the setup draft and exact owner result, including changed-key refusal, stale state, unknown effect or handler_unavailable. No concept alias, Client pairing, key copy or setup animation grants this authority; secret input stays with the protected auth broker.
+gui_related: true
+gui_classification_reason: Defines visible controls, layout, accessible states and exact returns.
+depends_on:
+- PJCT-009
+- PJCT-010
+- PJCT-011
+- PWIZ-037
+- SRV-018
+- RAS-017
+- SCS-025
+- F3-520
+unblocks: []
+acceptance_criteria:
+- All six entry ways share one current draft/Review and exact owner commit.
+- Inspection never links or mutates by discovery; paths/privacy/native backend remain explicit.
+- Backup/copy/recovery/Later are truthful and preserve current PM7 admission and auth fences.
+- SSH setup uses SRV-018 preview and protected human apply, retaining the exact draft and owner result on refusal or return.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F01
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F03
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F04
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F05
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F07
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F08
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F09
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F03
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F04
+- Plans/Server_System.md#SRV-018
+- Plans/Remote_Access_System.md#RAS-017
+preserved_exact_tokens:
+- New Project
+- Your usual settings
+- Starters
+- My starters
+- Saved setups
+- Notifications & limits
+- Standard
+- FO-22
+- cmd.server.ssh.trust
+- cmd.server.ssh.public_key.install
+negative_constraints:
+- No second setup engine, generic create/clone, hardcoded concept payload, silent backend substitution or credentials
+  transfer.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### F3-670 - Settings Levels Rows Details And Managers
+
+```yaml
+plan_unit_id: F3-670
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Render one pm.settings_effective_value.v1 from SSYS-002/059 for the exact user/Computer/Host/Device/Project/thing/thread/run context. Default → Everywhere → Computer → Project → existing owner levels is the ordinary chain, Managed remains above; screen rows use Device, not Computer. The atomic look pair uses offered Everywhere/Device/Project levels; Reduce motion combines OS OR Everywhere/Device/Project and has no Computer rung. More-careful safety and Computer-ceiling exceptions remain explicit. Requested/effective and owner Reason stay visible. Computer means the Server doing work plus the actual Host where tools/paths matter; Device is the client in front of the person, Execution Environment remains its finer runtime context.
+  A factory difference shows Changed plus a 1px outline around the control; an outline or colour alone carries no meaning. No side stripe, status pill or default noise. The trailing origin word (Everywhere, named Computer or Project) opens Details; quiet all-default rows say Details. Show where each setting comes from starts Off and shows origin without rewriting values. Changed is effective-versus-factory, Varies is different elsewhere, and Set here means an own value, so those marks remain independent.
+  The 350px Details panel retains shared drawer reflow/material and a visible labelled Close. It starts Used everywhere, except …, then exact context/requested/effective/Reason, offered level groups, Where it applies, up to six differences with the rest disclosed, searchable Set for choices with reasons, Choosing here changes, existing help/choices, and the last three Recent changes with exact Undo/Set it back. Change view freezes target context. Disabled/managed/offline/stale/conflict/limited-device states retain readable reasons, keyboard reachability, focus, Escape and live outcome notes. No missing writer is a saved result.
+  Human row edits write where the value comes from and show one note naming actor/place plus narrow Only for [Project/Computer] retarget/Undo. Agents follow SSYS-065’s narrowest authorized target and D mode rules; these are not the same targeting policy. Search offers Changed, Set here, Varies, Per computer and Per project; Differences/Compare and Reset choose their actual target. Multi-Computer outcomes are done/not_reached/refused with no offline queue. Joining setups has accepted 30-day Undo; ordinary change Undo keeps its owner policy.
+  All 38 managers retain exact keys/owners. A thing has home, reach, declared project switches and whole Project versions by stable ID, independent of ordinary rows and Computer installation/readiness. Every project reach includes No project only for a library thing; Project-owned or external read-only things keep their restrictions. Source/version trust and protected built-ins remain. Settings orchestrates contributed owner transactions and never writes owner records itself. Saved setups and Starters are separate children of the existing route, no 39th manager. Hosted controls, Usage, Customize and first paint use the same resolver/transaction/wording. All chats/All terminals/All editors writes Everywhere; narrower origins/overrides and masking are shown. q-035 is resolved in current canon.
+gui_related: true
+gui_classification_reason: Defines visible controls, layout, accessible states and exact returns.
+depends_on:
+- SSYS-002
+- SSYS-059
+- SSYS-060
+- SSYS-061
+- SSYS-062
+- SSYS-063
+- SSYS-065
+unblocks: []
+acceptance_criteria:
+- Origin/Changed/Varies/requested/effective are from one result and stay independent.
+- Panel keyboard/narrow-host/Close/focus/Undo and masked outcomes are truthful.
+- Five Settings primaries and all 38 manager owners are preserved.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F01
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F02
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F03
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F04
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F08
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F09
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F10
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F01
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F02
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F03
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F13
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F02
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F07
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F05
+preserved_exact_tokens:
+- Changed
+- Varies
+- Details
+- 1px
+- 350px
+- Where it applies
+- Choosing here changes
+- Recent changes
+- Everywhere
+- Computer
+- Device
+- Show where each setting comes from
+- q-035
+- Notifications & limits
+negative_constraints:
+- No inheritance ban, no-Project blanket write ban, private setting writer or credential/index spill.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Settings_System.md#SSYS-002
+
+
+### F3-671 - No Project Chat Coverage Conversion And Undo
+
+```yaml
+plan_unit_id: F3-671
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  No project is a real application chat with null Project, fixed title-bar row and CV-365 scope. The New split button, Where chooser and Here/All chats list show the work Computer; phone/web always names it. Choose place before the first message; the first user message mints the durable thread identity. Pre-message saved files use a draft identity adopted once. The visible <home>/Puppet Master Chats/<unique title> folder is created at first saved file/command, never for talking or internal Plan records, and Rename leaves it where it is. Folder open does not mkdir; deleting it needs an explicitly chosen checkbox, off by default. Work Computer is fixed after the first message. Continue elsewhere creates a linked new chat; unavailable Computers stay listed as not answering, without auto-archive, auto-claim or failover.
+  Ask/Agent/Debug, file/terminal/browser tools, Goals, all existing collaboration kinds/Crew Auto, Plan/Deep Plan and scheduled messages/tasks are available with real roots/capabilities/permission. Only Planning Wizard, PRD Builder and Orchestrator have the workflow Needs a project gate. An action intrinsically targeting a Project still requires its actual target. Teach omits Project and uses the existing public_safe Everywhere tier, without a Computer memory corpus. Notebook, memory, history and permitted roots remain bound to their actual thread/parent; an opaque ID or Crew membership is no cross-thread read grant.
+  Every chat can explicitly list/read permitted other Projects via projects.*. Metadata listing is distinct from content consent. Show requested/looked_in/not_looked_in(reason)/partial(missing range) coverage, including empty/filtered results, in the one quiet expandable formatter. Never silently search current focus or merge ambient indexes/notebooks/private memory. Request preview uses ui.thread.request.preview or ui.thread.spawn.preview and Send uses the existing cmd.thread.request/spawn owner, not a new chat transport. From another chat/Open/Reply/Accept/Decline shows exact sender/receiver/request. Receiving Off refuses; unseen Regular Ask me can read/answer only until accepted; receiver YOLO uses its own authority. Three automatic round trips then user extension, one-day offline expiry and stable per-thread ordering. Source reads/outward exposure follow D, no sender mode escalates a receiver.
+  Stage-3 computer use consumes T-186's closed computer.screen, computer.pointer and computer.keys tool census and PS-145 admission. It starts off until task-bound per-chat/per-app permission names the actual Computer/apps and separately admits disclosure of scrubbed screen pictures to the named AI service; YOLO cannot supply that disclosure or expand the app set. Show Using the screen of [Computer] with a labelled Stop throughout the session. Stop and two Esc presses call the same cmd.computer_use.stop owner for the exact chat/session/Computer/controller generation, fence queued input and release only that session's controller. Protected sign-in/password/secret surfaces stay excluded and images remain transient, outside chat image history. Details and app selection are typed local actions; actual input uses the Tools owner. Missing desktop, DAE-safe path, schema/registry/native-adapter/ActiveToolNamespaceReceipt joins or current authority shows unavailable before capture or input, with the exact originating strip/return and no inferred computer.* EventRecord.
+  Make a project from this chat and Move this chat into a project are equal choices, neither preselected. Show the plain statement naming target/Computer/files/moved/stayed work, a live current preview and a final button naming the action. Existing Project defaults to separate Git branch/worktree or admitted JJ change/bookmark and a picked folder; direct main is Advanced and never a YOLO default. Same files skip, Different offers draft/keep-both; block unsaved overwrite and do no history graft. New Project must be listed before cutover. Regular apply is the person; guarded YOLO apply records task, explicit destination, current preview and fresh destination authority without clicking a human button. Ambiguous convert this still asks its destination.
+  Copy/check precedes cutover. Keep thread ID and full destination-owned conversation with original lineage; seal the source for Undo. Fence active Goal/Crew/Plan work, claims and timers, and use N25 linked destination records or a separately complete owner rebind; ordinary immutable records are never retargeted. A current move manifest accounts for files, history/payloads, notebook/memory, work associations, schedules, To-Dos/artifacts, indexes, permissions and layouts. Paused cross-Computer work exposes Resume/Cancel with both Servers, never hidden offline queueing or two live histories. Divider, PM Notify and report show moved/stayed/held/failed, exact target and owner Undo.
+  Undo ends at first new work or seven days, compares actual eligible unchanged effects and needs both Servers across Computers. It never deletes a remote repo/branch/backup or modified work, clears Stop, resumes source work automatically or purges independently retained Goal/Plan/Crew/schedule/permission evidence. Sealed conversation cleanup follows its deletion/holds policy after eligibility ends; a restored old app copy checks lineage before becoming live. FileSafe, trust, secrets, capabilities, receiver ceilings and real destination admission remain.
+gui_related: true
+gui_classification_reason: Defines visible controls, layout, accessible states and exact returns.
+depends_on:
+- ACD-508
+- ACD-509
+- ACD-510
+- ACD-511
+- CV-365
+- CV-367
+- T-186
+- PS-145
+unblocks: []
+acceptance_criteria:
+- True null scope, lazy folder, fixed Computer and offline list are visible and scoped.
+- Read coverage/requests respect source and receiver authority with bounded loops.
+- Both conversions/paused recovery/report/Undo account for every CV-367 family and preserve one writer.
+- Screen use remains off until admitted; the strip Stop and double Esc fence only the named session, with unavailable joins and protected prompts refused before capture/input.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F02
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F03
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F04
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F05
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F10
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F11
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F04
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F05
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F07
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F08
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F09
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F10
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F11
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F12
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F13
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F05
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F07
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F07
+preserved_exact_tokens:
+- No project
+- Where
+- Here
+- All chats
+- Make a project from this chat
+- Move this chat into a project
+- seven days
+- Undo
+- From another chat
+- Needs a project
+- computer.screen
+- computer.pointer
+- computer.keys
+- cmd.computer_use.stop
+- ActiveToolNamespaceReceipt
+- Using the screen of [Computer]
+- Stop
+negative_constraints:
+- No hidden Project, auto-archive, implicit root, cross-thread memory merge or duplicated effect.
+- No protected auth capture, retained screen image history or cross-session controller release.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### F3-672 - Application Goal Crew Activity And Shared Work
+
+```yaml
+plan_unit_id: F3-672
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  No-project Goals retain the concise eleven-field objective and four states, ordinary create-only-on-request, direct Save versus approved proposal and exact owner currentness. Activity exposes Goal text/history, editor Save, pause/resume/cancel, blocked reason, exact Plan/run links and receipt truth in app or Project scope. No title/child tree/budget/verifier selectors or synthetic Named Plan are reintroduced. Cancellation is receipt plus removal from active display, not a fifth state; unavailable source/custody/handler never becomes completion.
+  Crew and the other existing collaboration kinds use their same configure/start/stop/messages/participant transcript protocols in app scope. Crew Auto explicitly commits app_thread_configuration at revision 1 from resolver defaults; override-only checks and Project configuration are distinct. Team, requested/effective account/model/Persona/tool ceilings and read-only/blind/quorum/round rules stay owner-controlled. Board messages and participants use the one coordinator and exact app Server/thread/crew/run/root, with 16 KiB inline and payload refs, never a shared null board or a second store.
+  Home/Agents/Processes/History/PM Notify and attention show genuine app work and named Computer through the existing shared projection; no-project Crew/Goal is not an Orchestrator build card. Keep one re-seated Assistant node, at most three dock items, owner-only Goal/To-Do controls and all current busy/loader/freshness/accessibility rules. Stop targets actual owner identities/epochs and observes settlement before reporting stopped. Conversion previews linked destination Goal/Crew records and safely fences source work; copied histories or checkpoints are never destination authority.
+gui_related: true
+gui_classification_reason: Defines visible controls, layout, accessible states and exact returns.
+depends_on:
+- GRS-086
+- GRS-087
+- CWR-045
+- OSI-440
+- F3-664
+- CV-366
+- SP-351
+unblocks: []
+acceptance_criteria:
+- App Goal and all existing collaboration kinds render exact owner lifecycle/authority and Stop truth.
+- Same-path/different-Host and different-thread board/notebook content remains isolated.
+- Conversion keeps historical binding and exact new destination admission.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F07
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F10
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F11
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F07
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F13
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F01
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F07
+preserved_exact_tokens:
+- project_id=null
+- active|paused|blocked|completed
+- Crew Auto
+- 16 KiB
+- BLAKE3
+- one Assistant node
+negative_constraints:
+- No app Orchestrator/WorkNode/certification, duplicate board or revived retired Goal writer.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### F3-673 - Build Grant Review Targets Stop And Undo
+
+```yaml
+plan_unit_id: F3-673
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  YOLO can perform task-authorized ordinary push/publish without another yes, preserving PS-146 guards. Full permission profile is not YOLO. Y1’s force-with-lease is only for a branch PM created for this work, never main/default/protected; ordinary prune/delete/discard/Kubernetes risky actions keep their asks absent exact approved grant authority.
+  The person’s exact Plan approval can approve PS-147’s Project build grant once. Review names repositories it may create/push, registry names/privacy, CI operations and deployment containers/namespaces, exact allowed operations/targets, exclusions, permission/currentness and Stop/revocation. Listed pre-existing resources do not become cleanup-owned. Only verified grant-created stable UID/generation may be removed within its explicit operation list; same name is insufficient and child namespace operations must be enumerated. Agents may preview, never issue, expand, renew or un-revoke their own grant. Secrets, paid signups, protected auth/trust/durable Always and external admin remain separate human decisions.
+  What the build did reads existing ObservableWork/History: every remote action, target, authority source, attempted/pending/succeeded/blocked/failed/unknown result and genuine owner receipt. Show No safe Undo when true, label compensation honestly, and offer only owner-admitted eligible Undo. Reuse run Stop and its exact target list/epoch; no grant start/stop engine or parallel action log. Mode, actual human decision and approved grant authority are visibly distinct; automation never opens a fake human-confirm modal or serializes human_confirmed=true. Stale/offline/unknown projection does not authorize another effect. Children and cross-chat requests remain within their own parent/receiving ceilings; an app Goal/Crew cannot inherit another Project’s grant.
+gui_related: true
+gui_classification_reason: Defines visible controls, layout, accessible states and exact returns.
+depends_on:
+- PS-146
+- PS-147
+- PS-148
+- HITL-038
+- CRAU-104
+unblocks: []
+acceptance_criteria:
+- Review/list/Stop/Undo bind exact Project/Plan/run/target and actual human/mode/grant source.
+- No agent self-issuance or same-name cleanup; changed target/Stop/revoke blocks final dispatch.
+- Remote outcomes remain truthful and link existing owner receipts.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F01
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F03
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F04
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F07
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F11
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F04
+preserved_exact_tokens:
+- What the build did
+- No safe Undo
+- authority_kind
+- BuildGrant
+- CreatedResourceManifest
+- force-with-lease
+negative_constraints:
+- No build.* event inferred, second work log, blanket destructive grant or fabricated human approval.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### F3-674 - App Plan Deep Plan Scheduled Tasks And Pause
+
+```yaml
+plan_unit_id: F3-674
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Plan and Deep Plan are available in No project with all six existing strategies. Cards/tabs show the exact approved revision/hash, read-only historical versions, Revise/export/Details, evidence-based To-Dos and the same four-label Build control. Build, Build With Crew, explicit Build As Goal and Build At use APR-073/074’s real app roots/Computer/permission and source/cancel graph; no fake repository, Named Plan or WorkNode. Deep Plan’s ledger/scoped bundle is an Assistant artifact profile, never runtime editing of product Plans. Send To Planning Wizard stays Project-first through explicit conversion/selection and fresh exact revision handoff; only Wizard/PRD/Orchestrator have the workflow gate.
+  Schedule Message’s sheet/cards freeze their actual text, attachments, destination and runtime/model/account; edit/cancel and user Send now return the exact occurrence/result. Build At is one atomic schedule_build/window write for the exact Plan version/hash/topology/team; no duplicate execution_window.create. Revised Plans show Schedule needs update and require a new explicit binding. Scheduled messages, Assistant Plan, Crew, Goal and agent tasks share SQR’s named-Server timer, windows, IANA/DST, grace/missed policy, quota and Stop checks. The app Computer remains named through client close/offline/restart; no client timer, silent fallback, backlog burst or latest-Plan substitution.
+  Schedule Manager’s four existing tabs show actual app and Project targets and their truthful History/attention/occurrence states. Pause all automations for No project on [Computer] uses the independent Server-owned application pause in CV-368/SP-352; Project pause remains its own operational state. Neither is Settings or an Everywhere seed. Show Paused by you at [time], exact epoch/owner unavailable reason and Turn back on only for an authorized user. Automatic tasks, YOLO, Goal/Crew continuation and quota resume cannot clear either latch; idempotent setting changes nothing and only transition to paused advances that scope epoch. Missing custody says unavailable, never off. Direct-user action exceptions retain every other gate.
+  Conversion fences pending schedules and active source work before cutover, holds/invalidate old bindings with a reason and explicitly previews exact mapped target/text/time and fresh destination consent/Stop. It never sends from a sealed source or dispatches an occurrence twice. Linked destination Plan/Goal/Crew records preserve historical sources and the one-current-Plan thread slot; old app pause and destination Project pause both constrain re-admission. Native/handler/evidence absence is shown honestly.
+gui_related: true
+gui_classification_reason: Defines visible controls, layout, accessible states and exact returns.
+depends_on:
+- APR-073
+- APR-074
+- SQR-019
+- SQR-020
+- CV-368
+- SP-352
+unblocks: []
+acceptance_criteria:
+- Positive app Plan/schedule cases preserve exact revision/target, one scheduler and same counterpart limits.
+- App pause is visibly separate, user-only and missing-custody fail-closed.
+- Conversion/Stop/timer races have explicit paused or refused outcomes without duplicate dispatch.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F08
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F09
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F10
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F11
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F13
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F01
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F05
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F07
+preserved_exact_tokens:
+- Plan
+- Deep Plan
+- Build With Crew
+- Build At
+- Schedule needs update
+- user_stop_epoch
+- application_automation_paused
+- app_automation_pause_unavailable
+- Turn back on
+negative_constraints:
+- No blanket no-Project Plan/schedule ban, app Wizard/PRD/Orchestrator or automatic clear/resume.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md#CV-365

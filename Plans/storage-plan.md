@@ -326,6 +326,8 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Binary
 
 #### Remote non-Git project regex-index cache layout
 
+The Project layouts in this section are preserved. Admitted app roots/indexes use SP-349’s actual Server/Host/root scope and one app builder slot; no absent Project/worktree is resolved as main.
+
 | Path (relative to app data root) | Purpose |
 |----------------------------------|---------|
 | `.puppet-master/cache/r/{hash8}/` | Remote project cache root |
@@ -1651,7 +1653,7 @@ The `thread_state:{thread_id}:worktree_binding` and `worktree_binding_reverse:{w
 
 For `chat.thread_worktree_pr_failed`, `phase` is the exact enum `push | api`: use `push` for git push failure and `api` for PR API failure. The three pre-merge test events are `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_pre_merge_test_passed`, and `chat.thread_worktree_pre_merge_test_failed`; the ADDITIVE family shorthand `chat.thread_worktree_pre_merge_test_started/passed/failed` expands only to those three event types. Projectors store these events with the same canonical envelope as other chat events, and safe-point creation records for worktree-bound execution include worktree snapshot fields (`worktree_id`, `worktree_path`, `branch_name`, `HEAD_sha`) before mutation-capable merge or test operations continue.
 
-`run.background_enqueued` remains part of the existing run-event family and may carry optional `worktree_path` and `branch_name` fields when background work is enqueued from a bound thread. Consumers treat absent fields as main-project context rather than inventing worktree context.
+`run.background_enqueued` remains part of the existing run-event family and may carry optional `worktree_path` and `branch_name` fields when background work is enqueued from a bound thread. Consumers require captured explicit scope and real root/Host; absent worktree fields never select main-Project or app scope. Current app dispatch uses explicit CV-365 scope and actual Host/root; missing worktree is not a main-Project fallback and does not infer app scope. An actual Project-bound root may be used only from its authenticated captured binding.
 
 ---
 
@@ -2317,6 +2319,7 @@ Safe points and restore points use distinct storage key prefixes:
 |------|-----------|-------|
 | Safe point | `sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}` | Runtime-internal, scoped to run/node/attempt |
 | Restore point | `rp:{project_id}:{restore_point_id}` | User-facing, scoped to project |
+| App restore point | `restore_point_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}` | User-facing application sibling under SP-349; no overlap with rp: or sp: |
 
 These namespaces MUST NOT overlap. Queries for safe points MUST use the `sp:` prefix; queries for restore points MUST use the `rp:` prefix.
 
@@ -3251,20 +3254,8 @@ plan_unit_id: SP-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Storage uses one app data root for core stores and for project-scoped runtime state, which plan text writes as
-  managed .puppet-master paths when inherently project-local and which resolves under the data root as below.
-  Amended 2026-10-31 (DL-270): the root and every store directory follow SP-345: inside a directory ending
-  .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux. Project-local stores, including
-  regex_index, are not exempt: they sit under that app data root keyed by project_id, and PM never writes a
-  .noindex directory or any other marker into a user's project folder. The data root is ~/Library/Application
-  Support/puppet-master.noindex/ on macOS, %LOCALAPPDATA%/puppet-master/ (Local AppData, which does not roam) on
-  Windows and $XDG_DATA_HOME/puppet-master/ (default ~/.local/share/puppet-master/) on Linux. Project-scoped
-  stores live under <data root>/projects/<project_id>/: a plan path written .puppet-master/project/state/<x>
-  resolves to <data root>/projects/<project_id>/state/<x>, and .puppet-master/cache/<x> to <data
-  root>/projects/<project_id>/cache/<x>. .puppet-master/state/ in a project holds no store, mirror or backup and
-  stays reserved (SP-339, SP-345). Every other .puppet-master/ path names a project file that people or Git use
-  and stays in the project folder.
+canonical_text: |-
+  Storage uses one app data root for core stores and for project-scoped runtime state, which plan text writes as managed .puppet-master paths when inherently project-local and which resolves under the data root as below. Amended 2026-10-31 (DL-270): the root and every store directory follow SP-345: inside a directory ending .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux. Project-local stores, including regex_index, are not exempt: they sit under that app data root keyed by project_id, and PM never writes a .noindex directory or any other marker into a user's project folder. The data root is ~/Library/Application Support/puppet-master.noindex/ on macOS, %LOCALAPPDATA%/puppet-master/ (Local AppData, which does not roam) on Windows and $XDG_DATA_HOME/puppet-master/ (default ~/.local/share/puppet-master/) on Linux. Project-scoped stores live under <data root>/projects/<project_id>/: a plan path written .puppet-master/project/state/<x> resolves to <data root>/projects/<project_id>/state/<x>, and .puppet-master/cache/<x> to <data root>/projects/<project_id>/cache/<x>. .puppet-master/state/ in a project holds no store, mirror or backup and stays reserved (SP-339, SP-345). Every other .puppet-master/ path names a project file that people or Git use and stays in the project folder. Application records live beneath the same SP-345 app-data-root and canonical/derived store engines, partitioned by the actual owning Server. The visible chat folder is user content outside PM data and is created lazily on that work Host. SP-349 freezes app keys; no scratch Project, new storage engine or JSON mirror.
 gui_related: false
 gui_classification_reason: "This unit preserves backend file layout and storage root requirements."
 split_recommended: false
@@ -3290,8 +3281,10 @@ node_compile_hint:
   mode: app_data_root_core_store_layout
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0032"
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0033"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0032
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0033
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - "~/.puppet-master/"
 - "$XDG_DATA_HOME/puppet-master/"
@@ -3525,7 +3518,8 @@ plan_unit_id: SP-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Local, remote Git, and remote non-Git regex-index layouts preserve generation snapshot paths, remote cache roots, manifest mappings, hash8 short paths, and Windows longPathAware mitigation."
+canonical_text: |-
+  Local, remote Git, and remote non-Git regex-index layouts preserve generation snapshot paths, remote cache roots, manifest mappings, hash8 short paths, and Windows longPathAware mitigation. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: "This unit preserves backend cache layout and platform compatibility requirements."
 split_recommended: false
@@ -3554,10 +3548,12 @@ node_compile_hint:
   mode: local_remote_regex_layout_windows_path_compatibility
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0034"
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0035"
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0036"
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0037"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0034
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0035
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0036
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0037
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - ".puppet-master/project/state/regex_index/"
 - "frequency_table.bin"
@@ -4239,7 +4235,8 @@ plan_unit_id: SP-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Concern is a first-class durable record distinct from findings, annotations, blocked episodes, and graph patch requests, with lifecycle, lineage, severity/category/status, governance metadata, resolution_kind, and separate projection/linkage layers."
+canonical_text: |-
+  Concern is a first-class durable record distinct from findings, annotations, blocked episodes, and graph patch requests, with lifecycle, lineage, severity/category/status, governance metadata, resolution_kind, and separate projection/linkage layers. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: "This unit preserves backend concern record lifecycle and storage separation requirements."
 split_recommended: false
@@ -4265,7 +4262,9 @@ node_compile_hint:
   mode: concern_record_lifecycle_canon
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0049"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0049
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - "Concern"
 - "first-class durable record"
@@ -4563,7 +4562,8 @@ plan_unit_id: SP-037
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Artifacts are indexed by artifact ID, export manifests bind artifact collections to deliverables, and route/open linkage records active route args and open contracts during execution."
+canonical_text: |-
+  Artifacts are indexed by artifact ID, export manifests bind artifact collections to deliverables, and route/open linkage records active route args and open contracts during execution. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound.
 gui_related: false
 gui_classification_reason: "This unit preserves backend artifact index, export manifest, and route/open linkage requirements."
 split_recommended: false
@@ -4589,7 +4589,9 @@ node_compile_hint:
   mode: artifact_index_route_linkage_baseline
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0055"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0055
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 preserved_exact_tokens:
 - "artifact ID"
 - "run"
@@ -4770,7 +4772,8 @@ plan_unit_id: SP-041
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Storage owns one shared record envelope and required runtime/storage families for attempts, blocked projections, concerns, worktrees, lanes, project summaries, attention items, account pressure, and account switch events."
+canonical_text: |-
+  Storage owns one shared record envelope and required runtime/storage families for attempts, blocked projections, concerns, worktrees, lanes, project summaries, attention items, account pressure, and account switch events. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. Runtime-linked app records use real thread/run/attempt/root identity; optional node/worktree fields never manufacture a WorkNode.
 gui_related: false
 gui_classification_reason: "This unit preserves backend runtime/storage record family requirements."
 split_recommended: false
@@ -4797,7 +4800,9 @@ node_compile_hint:
   mode: runtime_storage_record_families
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0059"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0059
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - "shared record envelope"
 - "attempt_record.v1:{project_id}:{node_id}:{attempt_number}"
@@ -4835,7 +4840,8 @@ plan_unit_id: SP-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Project/runtime redb keys include artifact indices, projector checkpoints, attempt and blocked records, concern records, project summary/attention items, worktree/lane records and projections, thread state bindings, and account pressure/switch events."
+canonical_text: |-
+  Project/runtime redb keys include artifact indices, projector checkpoints, attempt and blocked records, concern records, project summary/attention items, worktree/lane records and projections, thread state bindings, and account pressure/switch events. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: "This unit preserves backend project/runtime redb key requirements."
 split_recommended: false
@@ -4861,7 +4867,9 @@ node_compile_hint:
   mode: project_runtime_redb_keys
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0060"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0060
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - "artifacts_index.v1:{project_id}:{artifact_id}"
 - "artifacts_project_state.v1:{project_id}"
@@ -5017,7 +5025,8 @@ plan_unit_id: SP-045
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Project attention records do not collapse attention into orchestrator status; storage preserves severity meanings, family-local lifecycle states, projection freshness/health lineage, execution ownership migration, and worktree durable-key boundaries."
+canonical_text: |-
+  Project attention records do not collapse attention into orchestrator status; storage preserves severity meanings, family-local lifecycle states, projection freshness/health lineage, execution ownership migration, and worktree durable-key boundaries. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: "This unit preserves user-visible project attention and execution ownership state."
 split_recommended: true
@@ -5044,7 +5053,9 @@ node_compile_hint:
   mode: project_attention_execution_reconciliation
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0063"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0063
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - "orchestrator status"
 - "idle/running/paused"
@@ -5626,7 +5637,8 @@ plan_unit_id: SP-055
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Owner-reconciled redb keys include artifact/projector checkpoint, worktree, lane, thread binding, reverse binding, and orchestrator project state families."
+canonical_text: |-
+  Owner-reconciled redb keys include artifact/projector checkpoint, worktree, lane, thread binding, reverse binding, and orchestrator project state families. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound.
 gui_related: false
 gui_classification_reason: "This unit preserves backend owner-reconciled redb key requirements."
 split_recommended: false
@@ -5652,7 +5664,9 @@ node_compile_hint:
   mode: required_redb_keys_owner_reconciliation
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0073"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0073
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 preserved_exact_tokens:
 - "artifacts_index.v1:{project_id}:{artifact_id}"
 - "artifacts_project_state.v1:{project_id}"
@@ -6283,7 +6297,8 @@ plan_unit_id: SP-067
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Cross-surface panel state is per-project and panel-specific across Source Control, GitHub Actions, Docker Manager, Kubernetes, hidden-subview policy, and Unraid navigation while canonical cmd.docker.* command aliases win when legacy and new keys coexist.
+canonical_text: |-
+  Cross-surface panel state is per-project and panel-specific across Source Control, GitHub Actions, Docker Manager, Kubernetes, hidden-subview policy, and Unraid navigation while canonical cmd.docker.* command aliases win when legacy and new keys coexist. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible panel state, subviews, filters, focus, and navigation.
 split_recommended: false
@@ -6310,6 +6325,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - source_control.project_state.{project_id}
 - github_actions.project_state.{project_id}
@@ -6550,7 +6567,8 @@ plan_unit_id: SP-072
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Assistant worktree settings are additive project-level redb config keys and do not replace Branching, File Manager, or Source Control panel-state keys.
+canonical_text: |-
+  Assistant worktree preference rows use SSYS-059’s offered levels and SP-348’s sparse Settings storage. A shared default is a value, not PM Project worktree execution authority: cmd.chat.worktree.* and cmd.git.worktree.* still require their real bound Project/backend/root/lease. Branching, File Manager and Source Control panel/runtime records keep their distinct owners and keys.
 gui_related: false
 gui_classification_reason: This unit preserves backend project-level configuration keys.
 split_recommended: false
@@ -6577,6 +6595,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F12
 preserved_exact_tokens:
 - config:project:{pid}:branching.assistant_auto_worktree
 - config:project:{pid}:branching.assistant_worktree_cleanup_default
@@ -6831,7 +6851,8 @@ plan_unit_id: SP-077
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Per-surface search, filter, and focus inheritance is storage-backed per project; deep links record visible context filter chips or isolated focus markers so inherited context can be cleared without erasing saved project filters.
+canonical_text: |-
+  Per-surface search, filter, and focus inheritance is storage-backed per project; deep links record visible context filter chips or isolated focus markers so inherited context can be cleared without erasing saved project filters. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible context filter chips, focus mode, and per-surface filter state.
 split_recommended: false
@@ -6858,6 +6879,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - /search
 - filter
@@ -6881,7 +6904,8 @@ plan_unit_id: SP-078
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'File/editor search write-state is host-aware: persisted search state may reopen visible local, remote, diff, or editor-buffer queries, but write-capable actions bind to the owning project, host, repo/worktree, and recover-unsaved buffer context.'
+canonical_text: |-
+  File/editor search write-state is host-aware: persisted search state may reopen visible local, remote, diff, or editor-buffer queries, but write-capable actions bind to the owning project, host, repo/worktree, and recover-unsaved buffer context. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. An app write binds its actual Host/absolute root/file and independent permission, never a read grant into another Project.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible search state and write-authority recovery behavior.
 split_recommended: false
@@ -6908,6 +6932,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - /search/write-state
 - Local tree search
@@ -7322,7 +7348,8 @@ plan_unit_id: SP-086
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: File command receipt payloads store exact workspace-node intent and typed payload vocabulary before UI localization for cmd.file.* operations, root_kind, target_dir, image_viewer, diff_review, workspace_preview, and detached_preview.
+canonical_text: |-
+  File command receipt payloads store exact workspace-node intent and typed payload vocabulary before UI localization for cmd.file.* operations, root_kind, target_dir, image_viewer, diff_review, workspace_preview, and detached_preview. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend command-ref and receipt payload vocabulary.
 split_recommended: false
@@ -7349,6 +7376,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - cmd.file.*
 - cmd.file.new_file { project_id, parent_path }
@@ -7655,7 +7684,8 @@ plan_unit_id: SP-092
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Core runtime storage includes attempt, blocked, artifact, lane, worktree, concern, project, attention, provider account, entitlement, server profile, pressure, and account-switch record families with their exact v1 key templates. Amended 2026-10-31 (DL-270): each family listed here, and in SP-042, also declares in the storage registry (SP-340) a maximum value size of at most 16 KiB, whether it lives in the canonical or the derived redb file, and a disk budget. Values are MessagePack or typed fields, never JSON text (SP-339); larger values go to the payload store (SP-337). Changing a shipped family's encoding follows the SP-099 versioning rule."
+canonical_text: |-
+  Core runtime storage includes attempt, blocked, artifact, lane, worktree, concern, project, attention, provider account, entitlement, server profile, pressure, and account-switch record families with their exact v1 key templates. Amended 2026-10-31 (DL-270): each family listed here, and in SP-042, also declares in the storage registry (SP-340) a maximum value size of at most 16 KiB, whether it lives in the canonical or the derived redb file, and a disk budget. Values are MessagePack or typed fields, never JSON text (SP-339); larger values go to the payload store (SP-337). Changing a shipped family's encoding follows the SP-099 versioning rule. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend runtime/project/provider key families.
 split_recommended: false
@@ -7682,6 +7712,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - attempt_record.v1:{project_id}:{node_id}:{attempt_number}
 - blocked_projection.v1:{project_id}:{node_id}
@@ -7713,8 +7745,8 @@ plan_unit_id: SP-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Terminal and dev-session record families preserve workspace tab, section, tab, pane, leaf-pane, workgroup, panel, session, command-block, and dev-session identity without collapsing terminal restore into one bottom-panel blob. Amended 2026-10-09 (DL-181): the workspace, section, tab, pane, leaf-pane, workgroup and editor-terminal-panel families are read-only migration inputs; terminal placement lives in the v2 Home record (SP-330) and session, command-block and dev-session records stay current (SP-332). The no-single-blob rule stands.
+canonical_text: |-
+  Terminal and dev-session record families preserve workspace tab, section, tab, pane, leaf-pane, workgroup, panel, session, command-block, and dev-session identity without collapsing terminal restore into one bottom-panel blob. Amended 2026-10-09 (DL-181): the workspace, section, tab, pane, leaf-pane, workgroup and editor-terminal-panel families are read-only migration inputs; terminal placement lives in the v2 Home record (SP-330) and session, command-block and dev-session records stay current (SP-332). The no-single-blob rule stands. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible terminal layout continuity plus dev-session restoration identities.
 split_recommended: true
@@ -7743,6 +7775,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - terminal_workspace_state.v1:{project_id}:{workspace_tab_id}
 - terminal_section_record.v1:{project_id}:{terminal_section_id}
@@ -7820,7 +7854,8 @@ plan_unit_id: SP-095
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Debug, GitHub Actions, bundle/note/revision/composer, preview, browser session, and browser profile state families remain durable storage families with exact v1 key templates.
+canonical_text: |-
+  Debug, GitHub Actions, bundle/note/revision/composer, preview, browser session, and browser profile state families remain durable storage families with exact v1 key templates. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. Ordinary app browser/debug/document artifacts require supported actual targets; GHA and Project bundle/approval engines remain Project-only.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible debug, GHA panel, bundle review, preview, and browser state families.
 split_recommended: true
@@ -7847,6 +7882,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - debug_investigation_record.v1:{project_id}:{investigation_id}
 - gha_panel_state.v1:{project_id}
@@ -7923,7 +7960,8 @@ plan_unit_id: SP-097
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Debug investigation records persist target binding and instrumentation_manifest lineage, but arbitrary external targets may store evidence and suggestions only and must not become durable workspace mutation authority without workspace binding.
+canonical_text: |-
+  Debug investigation records persist target binding and instrumentation_manifest lineage, but arbitrary external targets may store evidence and suggestions only and must not become durable workspace mutation authority without workspace binding. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend debug instrumentation lineage and authority boundaries.
 split_recommended: false
@@ -7950,6 +7988,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - debug_investigation_record.v1:{project_id}:{investigation_id}
 - instrumentation_manifest[]
@@ -8626,7 +8666,8 @@ plan_unit_id: SP-109
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Legacy browser_state single-blob shapes are retired; preview, browser session, and browser profile persistence split runtime capability, permission tier, profile scope, restore policy, visible session class, viewport, scroll, zoom, dev tools, cookies, localStorage, and saveChanges writeback state.
+canonical_text: |-
+  Legacy browser_state single-blob shapes are retired; preview, browser session, and browser profile persistence split runtime capability, permission tier, profile scope, restore policy, visible session class, viewport, scroll, zoom, dev tools, cookies, localStorage, and saveChanges writeback state. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible preview/browser session state and profile persistence.
 split_recommended: false
@@ -8653,6 +8694,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - browser_state.v1
 - browser_state:v1
@@ -8697,7 +8740,8 @@ plan_unit_id: SP-110
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Runtime artifact index storage defines artifacts_project_state.v1 and projector.checkpoint.runtime_artifacts with artifact identity refs, projection_freshness, and projection_health for runtime artifact projection authority.
+canonical_text: |-
+  Runtime artifact index storage defines artifacts_project_state.v1 and projector.checkpoint.runtime_artifacts with artifact identity refs, projection_freshness, and projection_health for runtime artifact projection authority. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend runtime artifact index and projector checkpoint records.
 split_recommended: false
@@ -8724,6 +8768,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - runtime artifact index
 - artifacts_project_state.v1:{project_id}
@@ -8871,7 +8917,8 @@ plan_unit_id: SP-113
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Runtime-linked record families carry required identity and attribution fields from project/run/node/attempt through provider/model/account/runtime health, pressure, instruction, skill, reason, transport, account-switch, provider-attempt, and usage references.
+canonical_text: |-
+  Runtime-linked record families carry required identity and attribution fields from project/run/node/attempt through provider/model/account/runtime health, pressure, instruction, skill, reason, transport, account-switch, provider-attempt, and usage references. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend runtime-linked identity and attribution fields.
 split_recommended: true
@@ -8898,6 +8945,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - project_id
 - run_id
@@ -9383,7 +9432,8 @@ plan_unit_id: SP-121
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Runtime-artifact indexing, durable worktree/lane identity, projection state, and projector checkpoints are storage-owned families with required artifact, repo, path, branch, and baseline fields rather than panel-owned leftovers.
+canonical_text: |-
+  Runtime-artifact indexing, durable worktree/lane identity, projection state, and projector checkpoints are storage-owned families with required artifact, repo, path, branch, and baseline fields rather than panel-owned leftovers. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend storage ownership for runtime artifact, worktree, lane, and projector checkpoint families.
 split_recommended: false
@@ -9410,6 +9460,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0078
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - artifact_type
 - repo_id
@@ -9503,8 +9555,8 @@ plan_unit_id: SP-123
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Terminal project, section, and tab records preserve project settings, restore flags, dock state/zone, detached bounds, tab order, labels, active state, layout_style, and review_only state. Amended 2026-10-09 (DL-181): the terminal_sections and terminal_tabs records, with dock_state, dock_zone, detached_window_bounds and layout_style, are read-only migration inputs (SP-332); a terminal tab's place, order, label and active state live in the v2 Home record (SP-330); the project restore flag and settings reference remain, and review_only becomes part of the terminal tab's serialized state.
+canonical_text: |-
+  Terminal project, section, and tab records preserve project settings, restore flags, dock state/zone, detached bounds, tab order, labels, active state, layout_style, and review_only state. Amended 2026-10-09 (DL-181): the terminal_sections and terminal_tabs records, with dock_state, dock_zone, detached_window_bounds and layout_style, are read-only migration inputs (SP-332); a terminal tab's place, order, label and active state live in the v2 Home record (SP-330); the project restore flag and settings reference remain, and review_only becomes part of the terminal tab's serialized state. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible terminal project, section, tab, layout, and detached-window state.
 split_recommended: false
@@ -9534,6 +9586,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - terminal_project_state
 - project_id
@@ -9756,7 +9810,8 @@ plan_unit_id: SP-127
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'Terminal GUI persistence settings are separate from live PTY state: storage owns durable keys and migration behavior, FinalGUISpec owns Settings > Terminal GUI grouping, theming discoverability, shortcuts, and labels, and terminal terminology cross-refs stay explicit. Amended 2026-10-09 (DL-183): terminal appearance is stored as SP-331 says (the app and project defaults as SSYS-051''s Settings rows, one shared value per field until an app-wide store is admitted, and the per-tab override inside the terminal tab''s state); terminal layout and restore placement belong to the panel system (SP-330), not the Terminal settings; a terminal tab is a panel tab of kind terminal.'
+canonical_text: |-
+  Terminal GUI persistence settings are separate from live PTY state: storage owns durable keys and migration behavior, FinalGUISpec owns Settings > Terminal GUI grouping, theming discoverability, shortcuts, and labels, and terminal terminology cross-refs stay explicit. Amended 2026-10-09 (DL-183): terminal appearance is stored as SP-331 says (the app and project defaults as SSYS-051's Settings rows, one shared value per field until an app-wide store is admitted, and the per-tab override inside the terminal tab's state); terminal layout and restore placement belong to the panel system (SP-330), not the Terminal settings; a terminal tab is a panel tab of kind terminal. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible Terminal GUI settings grouping, theming discoverability, shortcuts, labels, and storage-backed settings.
 split_recommended: false
@@ -9785,6 +9840,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Terminal GUI
 - /persistence/settings
@@ -10248,7 +10305,8 @@ plan_unit_id: SP-135
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Live storage-managed collections must declare TTL, max-cardinality, or both; bounded-collections canon is satisfied when owner sections name family, bound type/source, and retention/eviction notes for active maps, auth caches, LSP maps, queues, event records, safe points, temp artifacts, and stale rewrite remnants. Amended 2026-10-31 (DL-270): detailed usage.event records carry the ai.usage.usage-retention window (90 days by default) and no count cap, and the daily usage totals per account, provider and model are exempt from TTL and cardinality bounds because they are kept whatever that setting says (SP-341, UF-108). Their size is controlled by the cold tier and per-group disk budgets, not by count eviction."
+canonical_text: |-
+  Live storage-managed collections must declare TTL, max-cardinality, or both; bounded-collections canon is satisfied when owner sections name family, bound type/source, and retention/eviction notes for active maps, auth caches, LSP maps, queues, event records, safe points, temp artifacts, and stale rewrite remnants. Amended 2026-10-31 (DL-270): detailed usage.event records carry the ai.usage.usage-retention window (90 days by default) and no count cap, and the daily usage totals per account, provider and model are exempt from TTL and cardinality bounds because they are kept whatever that setting says (SP-341, UF-108). Their size is controlled by the cold tier and per-group disk budgets, not by count eviction. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend bounded collection retention contracts.
 split_recommended: false
@@ -10275,6 +10333,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0085
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - TTL
 - /max-cardinality
@@ -10313,7 +10373,8 @@ plan_unit_id: SP-136
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Regex-index projector rules require byte-level u8 extraction without Unicode decoding, shared build-thread-pool concurrency with one project build slot and FIFO queueing, and platform mmap deletion/open semantics using memmap2 share_mode(0x7) on Windows and inode-by-fd safety on Linux/macOS.
+canonical_text: |-
+  Regex-index projector rules require byte-level u8 extraction without Unicode decoding, shared build-thread-pool concurrency with one project build slot and FIFO queueing, and platform mmap deletion/open semantics using memmap2 share_mode(0x7) on Windows and inode-by-fd safety on Linux/macOS. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend regex-index byte, concurrency, and mmap file-handle contracts.
 split_recommended: false
@@ -10340,6 +10401,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0086
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Regex-index indexing model byte contract
 - MUST NOT decode content to Unicode
@@ -10680,7 +10743,8 @@ plan_unit_id: SP-142
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Assistant worktree events use underscore canonical names, normalize dot-form aliases before projection, bind to thread/worktree redb projection keys and worktree records, and keep background enqueue fields optional without inventing worktree context.
+canonical_text: |-
+  Assistant worktree events use underscore canonical names, normalize dot-form aliases before projection, bind to thread/worktree redb projection keys and worktree records, and keep background enqueue fields optional without inventing worktree context. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend assistant worktree event naming and projection key ownership.
 split_recommended: false
@@ -10707,6 +10771,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0088
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - chat.thread_created
 - chat.thread_archived
@@ -10724,7 +10790,7 @@ preserved_exact_tokens:
 - worktree_path
 - branch_name
 negative_constraints:
-- Absent worktree fields on run.background_enqueued are treated as main-project context rather than inventing worktree context.
+- Absent worktree fields never infer main-Project or app scope; dispatch requires captured explicit scope and actual root/Host. Only an authenticated Project-bound context may use its actual main root.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -11179,7 +11245,8 @@ plan_unit_id: SP-150
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Shared runtime identity storage preserves requested/effective persona, account binding, operational identity, effective account/provider/project fields, and required account/auth vocabulary for requested account, execution role, credential, login, and auth realm.
+canonical_text: |-
+  Shared runtime identity storage preserves requested/effective persona, account binding, operational identity, effective account/provider/project fields, and required account/auth vocabulary for requested account, execution role, credential, login, and auth realm. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend shared runtime identity field vocabulary.
 split_recommended: false
@@ -11206,6 +11273,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0091
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - requested_persona
 - effective_persona
@@ -12377,7 +12446,8 @@ plan_unit_id: SP-169
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'Unsaved editor recovery is required MVP live shared-buffer storage: checklist delivery cannot downgrade it to later, recovery starts on first dirty buffer capture, ends only on save/discard/resolution, and multi-view editor surfaces share recovery, restore, and redo lineage.'
+canonical_text: |-
+  Unsaved editor recovery is required MVP live shared-buffer storage: checklist delivery cannot downgrade it to later, recovery starts on first dirty buffer capture, ends only on save/discard/resolution, and multi-view editor surfaces share recovery, restore, and redo lineage. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible unsaved editor recovery, banner, restore, and conflict lifecycle.
 split_recommended: false
@@ -12404,6 +12474,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0097
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Unsaved editor recovery
 - live shared-buffer storage contract
@@ -12441,7 +12513,8 @@ plan_unit_id: SP-170
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Editor recovery stores editor_state.v1:{project_id}:{file_path_hash}, cursor, scroll, selection ranges, undo stack reference, unsaved changes flag, and session-restore/conflict-handling behavior that reloads state before focus and shows diffs on disk changes.
+canonical_text: |-
+  Editor recovery stores editor_state.v1:{project_id}:{file_path_hash}, cursor, scroll, selection ranges, undo stack reference, unsaved changes flag, and session-restore/conflict-handling behavior that reloads state before focus and shows diffs on disk changes. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible editor state restoration and conflict resolution behavior.
 split_recommended: false
@@ -12468,6 +12541,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0097
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - editor_state.v1:{project_id}:{file_path_hash}
 - cursor position
@@ -12604,7 +12679,8 @@ plan_unit_id: SP-173
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'Search state and Source Control state keep separate projection families: search_projection stores query intent/results/filter/scope, sc_projection stores repo projections, compare origins, review context, branch/diff/staging/commit draft, and editor markers consume rather than own those projections.'
+canonical_text: |-
+  Search state and Source Control state keep separate projection families: search_projection stores query intent/results/filter/scope, sc_projection stores repo projections, compare origins, review context, branch/diff/staging/commit draft, and editor markers consume rather than own those projections. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible Search and Source Control projection separation and editor marker consumption.
 split_recommended: false
@@ -12631,6 +12707,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0099
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Search state
 - text query intent
@@ -12671,7 +12749,8 @@ plan_unit_id: SP-174
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Source Control review and conflict persistence stores compare targets, review filters, generated-file visibility, review comments/notes, stale target downgrade refs, conflict presentation settings, and command resolution events without persisting conflict content.
+canonical_text: |-
+  Source Control review and conflict persistence stores compare targets, review filters, generated-file visibility, review comments/notes, stale target downgrade refs, conflict presentation settings, and command resolution events without persisting conflict content. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible Source Control review/conflict filters, compare state, and command outcomes.
 split_recommended: false
@@ -12698,6 +12777,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0099
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - sc_projection.v1:{project_id}
 - last compare target
@@ -12742,7 +12823,8 @@ plan_unit_id: SP-175
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: GitHub Actions to-code correlation persistence stores project state and receipt projections for run/job/step focus, log focus, diff targets, failing-file hints, heuristic toggles, confidence thresholds, related diffs/worktrees, and evidence-labeled log-to-file candidates.
+canonical_text: |-
+  GitHub Actions to-code correlation persistence stores project state and receipt projections for run/job/step focus, log focus, diff targets, failing-file hints, heuristic toggles, confidence thresholds, related diffs/worktrees, and evidence-labeled log-to-file candidates. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves visible GitHub Actions to-code focus, related-diff/worktree pivots, and uncertainty labels.
 split_recommended: false
@@ -12769,6 +12851,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0099
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - github_actions.project_state.{project_id}
 - receipt projections
@@ -12929,7 +13013,8 @@ plan_unit_id: SP-178
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: LSP server state persists under lsp_server_state.v1:{host_id}:{server_id}:{root_hash} with server config, capabilities snapshot, last known status, restart count, recovery path, and persisted restart counts for stable budget enforcement and degraded-state disclosure.
+canonical_text: |-
+  LSP server state persists under lsp_server_state.v1:{host_id}:{server_id}:{root_hash} with server config, capabilities snapshot, last known status, restart count, recovery path, and persisted restart counts for stable budget enforcement and degraded-state disclosure. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. Existing Host/server/root-hash LSP keys already separate actual roots; app readers must preserve those domains rather than filling a missing Project.
 gui_related: false
 gui_classification_reason: This unit preserves backend LSP server state keys, recovery, and restart count persistence.
 split_recommended: false
@@ -12956,6 +13041,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0100
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - lsp_server_state.v1:{host_id}:{server_id}:{root_hash}
 - server config
@@ -13173,7 +13260,8 @@ plan_unit_id: SP-182
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Compaction and backup/restore enhancements preserve sequence order, exclude the active segment from frozen removal and policy inputs while carrying its authenticated bytes unchanged under SP-295, keep replay/projector correctness intact, snapshot canonical stores at one shared boundary, validate checksums before restore, and rebuild Tantivy and other disposable projections instead of treating them as authoritative. Amended 2026-10-31 (DL-270): backup follows BRS-031: a brief capture barrier (at most 250 ms at p99) records one consistent point; sealed segments and payload packs copy in the background; redb copies from a read snapshot; derived families are not backed up; no writer lock is held while copying; one backup-status record shows the newest backup at Structure verified or higher and what a restore from it would lose. There is no JSONL projection to rebuild (SP-339). SP-335's segment repack is the only rewrite of sealed bytes."
+canonical_text: |-
+  Compaction and backup/restore enhancements preserve sequence order, exclude the active segment from frozen removal and policy inputs while carrying its authenticated bytes unchanged under SP-295, keep replay/projector correctness intact, snapshot canonical stores at one shared boundary, validate checksums before restore, and rebuild Tantivy and other disposable projections instead of treating them as authoritative. Amended 2026-10-31 (DL-270): backup follows BRS-031: a brief capture barrier (at most 250 ms at p99) records one consistent point; sealed segments and payload packs copy in the background; redb copies from a read snapshot; derived families are not backed up; no writer lock is held while copying; one backup-status record shows the newest backup at Structure verified or higher and what a restore from it would lose. There is no JSONL projection to rebuild (SP-339). SP-335's segment repack is the only rewrite of sealed bytes. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend compaction and backup/restore authority rules.
 split_recommended: false
@@ -13200,6 +13288,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0102
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Compaction
 - '## 7. Backup, restore, compaction, and optional storage enhancements'
@@ -13233,7 +13323,8 @@ plan_unit_id: SP-183
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Enhancement coverage preserves export from seglog and redb through pm export (JSONL or JSON on request, plus optional pm export --sqlite) and pm db dump (SP-339, SP-342), embedded redb read-replica non-applicability, per-project seglog default behavior, event schema registry ownership, and optional streaming projector correctness boundaries."
+canonical_text: |-
+  Enhancement coverage preserves export from seglog and redb through pm export (JSONL or JSON on request, plus optional pm export --sqlite) and pm db dump (SP-339, SP-342), embedded redb read-replica non-applicability, per-project seglog default behavior, event schema registry ownership, and optional streaming projector correctness boundaries. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: This unit preserves backend enhancement routing and owner boundaries.
 split_recommended: false
@@ -13260,6 +13351,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0102
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Export
 - thread or run history
@@ -13504,7 +13597,8 @@ plan_unit_id: SP-187
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Startup order resolves app data root, probes durable-store safety including unsafe-filesystem/NFS posture, derives lock-path, acquires pm.lock before writers, enters read-only mode if held, opens stores and projectors in order, and routes fallback metadata to safe local storage while preserving logical-root lineage and diagnostics.
+canonical_text: |-
+  Startup order resolves app data root, probes durable-store safety including unsafe-filesystem/NFS posture, derives lock-path, acquires pm.lock before writers, enters read-only mode if held, opens stores and projectors in order, and routes fallback metadata to safe local storage while preserving logical-root lineage and diagnostics. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible startup diagnostics/read-only posture and backend lock/fallback order.
 split_recommended: true
@@ -13531,6 +13625,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0106
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Startup order
 - app data root
@@ -13690,7 +13786,8 @@ plan_unit_id: SP-190
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Concurrency rules keep seglog a single-writer stream, regex-index publication single-writer per project with ArcSwap reader snapshots, and compatibility prompt/session files such as kv.json or prompt-history.jsonl protected against last-write-wins overwrite unless migrated or locked with lineage and conflict evidence.
+canonical_text: |-
+  Concurrency rules keep seglog a single-writer stream, regex-index publication single-writer per project with ArcSwap reader snapshots, and compatibility prompt/session files such as kv.json or prompt-history.jsonl protected against last-write-wins overwrite unless migrated or locked with lineage and conflict evidence. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. The app index has one Server-wide builder/publication slot; source thread/roots/current generation remain explicit, and conversion stops its old live publication.
 gui_related: false
 gui_classification_reason: This unit preserves backend single-writer and compatibility prompt/session state protection.
 split_recommended: false
@@ -13717,6 +13814,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0106
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Concurrency and single-writer rules
 - Seglog remains a single-writer stream
@@ -14183,7 +14282,8 @@ plan_unit_id: SP-198
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Scheduler runtime redb projections preserve scheduler_pass, blocked_projection, remediation, and safe_point key patterns, while blocked_projection run-scoped keys are superseded by canonical blocked_projection.v1:{project_id}:{node_id} values with blocked reason, family, approval scope, and allowed actions.
+canonical_text: |-
+  Scheduler runtime redb projections preserve scheduler_pass, blocked_projection, remediation, and safe_point key patterns, while blocked_projection run-scoped keys are superseded by canonical blocked_projection.v1:{project_id}:{node_id} values with blocked reason, family, approval scope, and allowed actions. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. Node-based scheduler/blocked keys remain Project-only; app task/approval/Stop records use their actual app counterparts without fictitious node IDs.
 gui_related: false
 gui_classification_reason: This unit preserves backend scheduler runtime redb projection keys and supersession notes.
 split_recommended: true
@@ -14210,6 +14310,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0113
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - scheduler_pass.{run_id}.{scheduler_pass_id}
 - blocked_projection.{run_id}.{node_id}.{blocked_sequence}
@@ -14655,7 +14757,8 @@ plan_unit_id: SP-206
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Permission snapshot storage binds durable permission_snapshot_record keys to immutable attempt_record.permission_snapshot_id references while Permissions_System owns schema/enums/surfaces; storage may cache query fields but must not redefine nested snapshot schema locally.
+canonical_text: |-
+  Permission snapshot storage binds durable permission_snapshot_record keys to immutable attempt_record.permission_snapshot_id references while Permissions_System owns schema/enums/surfaces; storage may cache query fields but must not redefine nested snapshot schema locally. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound. App permission snapshot/grant physical bindings are SP-353; nested permission schema remains Permissions-owned.
 gui_related: false
 gui_classification_reason: This unit preserves backend permission snapshot storage binding and owner boundary.
 split_recommended: true
@@ -14683,6 +14786,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0122
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0123
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 preserved_exact_tokens:
 - Permission Snapshot Storage and Safe-Point Namespace Addendum
 - Permission snapshot storage
@@ -14721,7 +14826,8 @@ plan_unit_id: SP-207
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Safe points and restore points use distinct prefixes, with sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id} for runtime-internal run/node/attempt scope and rp:{project_id}:{restore_point_id} for user-facing project scope; namespaces and queries must not overlap.
+canonical_text: |-
+  Safe points and restore points use distinct prefixes, with sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id} for runtime-internal run/node/attempt scope and rp:{project_id}:{restore_point_id} for user-facing project scope; namespaces and queries must not overlap. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. The sole app restore key is restore_point_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}; it is distinct from the unchanged rp:{project_id}:{restore_point_id} and every sp: runtime key. Proposed rp:app and restore_point_record.v2:app spellings are not aliases.
 gui_related: false
 gui_classification_reason: This unit preserves backend safe-point versus restore-point namespace separation.
 split_recommended: false
@@ -14748,6 +14854,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0124
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Safe-point vs restore-point namespace separation
 - Safe point
@@ -14830,7 +14938,8 @@ plan_unit_id: SP-209
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Web content cache persistence consumes the linked owner contract, preserving two-phase lookup, state vocabulary, per-project 500 MB cache sizing, action skip/read-time behavior, PM-cache precedence, Firecrawl latency-only role, and diff-reuse audit states.
+canonical_text: |-
+  Web content cache persistence consumes the linked owner contract, preserving two-phase lookup, state vocabulary, per-project 500 MB cache sizing, action skip/read-time behavior, PM-cache precedence, Firecrawl latency-only role, and diff-reuse audit states. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App web cache is one bucket per owning Server shared by all its no-project chats, using the same 500 MB default, TTL/LRU and web.fetch.cache-size resolver, never 500 MB per chat.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible web cache routing/cache-state behavior.
 split_recommended: true
@@ -14857,6 +14966,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0126
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - Web content caching persistence
 - linked owner contract
@@ -14892,7 +15003,8 @@ plan_unit_id: SP-210
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Web cache entries store cache_key, normalized URL, formats, adapter_id, content hash/ref pointer, metadata, fetched/expires/access fields, 500 MB budget, TTL, LRU, per-project/per-operation scope, cache key ordering, and change detection persistence without inlining cached content.
+canonical_text: |-
+  Web cache entries store cache_key, normalized URL, formats, adapter_id, content hash/ref pointer, metadata, fetched/expires/access fields, 500 MB budget, TTL, LRU, per-project/per-operation scope, cache key ordering, and change detection persistence without inlining cached content. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App web cache is one bucket per owning Server shared by all its no-project chats, using the same 500 MB default, TTL/LRU and web.fetch.cache-size resolver, never 500 MB per chat.
 gui_related: false
 gui_classification_reason: This unit preserves backend web cache entry schema, budget, and eviction fields.
 split_recommended: true
@@ -14919,6 +15031,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0126
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - 'cache_key: string'
 - hash of (url, formats, adapter_id)
@@ -15191,82 +15305,27 @@ plan_unit_id: SP-214
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'storage-plan owns persistence, replay, and projection boundaries for Goal Runtime durable state,
-  append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence
-  refs, goal_revision/expected_goal_revision, and retention anchors. Canonical persisted goal events registered
-  by Contracts_V0 are goal.created, goal.scheduled, goal.progressed, goal.tool_check_recorded, goal.updated, goal.replanned,
-  goal.child_status_changed, goal.evidence_captured, goal.verification_decided, goal.receipt_recorded, goal.completed,
-  goal.degraded, goal.stopped, goal.blocked, goal.cancelled, plus Orchestrator GoalRun events goal_run.started,
-  goal_run.replanned, goal_run.blocked, goal_run.certified, goal_run.cancelled, and goal_run.stopped. Storage persists
-  them in an append-only goal_event_log and rebuilds disposable projections goal_state.v1:{project_id}:{goal_id},
-  goal_receipt.v1:{project_id}:{receipt_id}, goal_blocked_projection.v1:{project_id}:{goal_id}, goal_child_index.v1:{project_id}:{parent_goal_id},
-  goal_evidence_index.v1:{project_id}:{goal_id}, and goal_run_projection.v1:{project_id}:{goal_run_id}. Goal_Runtime_System
-  owns behavior semantics; Contracts_V0 owns event-name and payload-minimum registration.
+canonical_text: |-
+  storage-plan owns persistence, replay, and projection boundaries for Goal Runtime durable state, append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence refs, goal_revision/expected_goal_revision, and retention anchors. Canonical persisted goal events registered by Contracts_V0 are goal.created, goal.scheduled, goal.progressed, goal.tool_check_recorded, goal.updated, goal.replanned, goal.child_status_changed, goal.evidence_captured, goal.verification_decided, goal.receipt_recorded, goal.completed, goal.degraded, goal.stopped, goal.blocked, goal.cancelled, plus Orchestrator GoalRun events goal_run.started, goal_run.replanned, goal_run.blocked, goal_run.certified, goal_run.cancelled, and goal_run.stopped. Storage persists them in an append-only goal_event_log and rebuilds disposable projections goal_state.v1:{project_id}:{goal_id}, goal_receipt.v1:{project_id}:{receipt_id}, goal_blocked_projection.v1:{project_id}:{goal_id}, goal_child_index.v1:{project_id}:{parent_goal_id}, goal_evidence_index.v1:{project_id}:{goal_id}, and goal_run_projection.v1:{project_id}:{goal_run_id}. Goal_Runtime_System owns behavior semantics; Contracts_V0 owns event-name and payload-minimum registration.
 
+  For exactly goal.degraded, GRS-061/CV-335 override current-write or Goal-state reconstruction implications: its schema/event custody remains historical, and SP-277 owns bounded read-only inspection with no family projection or checkpoint write. Existing other-row qualifications remain unchanged.
 
-  For exactly goal.degraded, GRS-061/CV-335 override current-write or Goal-state reconstruction implications: its
-  schema/event custody remains historical, and SP-277 owns bounded read-only inspection with no family projection
-  or checkpoint write. Existing other-row qualifications remain unchanged.
+  For exactly goal.scheduled, GRS-062/CV-336 override current-writer and Goal-state reconstruction implications: SP-280 interprets retained historical source with no family projection or scheduling effect. Existing child-status, degraded and other-row qualifications and canonical receipt/recovery fences remain unchanged.
 
+  For exactly goal.child_status_changed, GRS-060/CV-334 forbid current writes and child-state reconstruction. SP-271 defines only bounded historical inspection without a family projection or checkpoint write; schema registration does not restore retired child topology.
 
-  For exactly goal.scheduled, GRS-062/CV-336 override current-writer and Goal-state reconstruction implications:
-  SP-280 interprets retained historical source with no family projection or scheduling effect. Existing child-status,
-  degraded and other-row qualifications and canonical receipt/recovery fences remain unchanged.
+  For the exact goal_receipt physical family, GRS-042 and SP-235 supersede the older disposable-receipt wording above: generic v1 and SP-289 Standard v2 are canonical non-rebuildable receipt authority. SP-289 adds only explicit same-family original certification custody; event and Goal-body producer integration remain separate.
 
+  For exactly goal.created, CV-341/GRS-066 and SP-294 select active content-free v3 original creation integration while retaining the whole v2 resource as historical decoding. The new command family is canonical non-rebuildable original authority; this prerequisite neither materializes an event projector/checkpoint nor permits body reconstruction from the event. The current creation consumer mapping in GRS-064 supplies Activity/body/history from its existing canonical readers; the original SP-287/SP-294 transaction already owns their durable state. The older deferred goal_state/child/evidence/GoalRun projector inventory is not an active-v3 creation reducer or checkpoint assignment. This exact current-route mapping does not settle other Goal/GoalRun families or authorize historical reconstruction.
+  For exactly goal.progressed, GRS-069/CV-343 independently supersede current-write and Goal-state/progress/child/evidence projection implications above. SP-300 assigns this exact family only storage.goal_progressed_history_read.v1@1.0.0 ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
 
-  For exactly goal.child_status_changed, GRS-060/CV-334 forbid current writes and child-state reconstruction. SP-271
-  defines only bounded historical inspection without a family projection or checkpoint write; schema registration
-  does not restore retired child topology.
+  For exactly goal.replanned, GRS-070/CV-344 independently supersede current-write and Goal-state/progress/child/evidence projection implications above. SP-301 assigns this exact family only storage.goal_replanned_history_read.v1@1.0.0 ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
 
+  For exactly goal.stopped, GRS-071/CV-345 independently supersede current-write and Goal-state/progress/child/evidence projection implications above. SP-302 assigns this exact family only storage.goal_stopped_history_read.v1@1.0.0 ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
 
-  For the exact goal_receipt physical family, GRS-042 and SP-235 supersede the older disposable-receipt wording
-  above: generic v1 and SP-289 Standard v2 are canonical non-rebuildable receipt authority. SP-289 adds only explicit
-  same-family original certification custody; event and Goal-body producer integration remain separate.
+  For exactly goal.verification_decided, GRS-072/CV-346 independently supersede current-write and Goal-state/progress/child/evidence projection implications above. SP-303 assigns this exact family only storage.goal_verification_decided_history_read.v1@1.0.0 ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
 
-
-  For exactly goal.created, CV-341/GRS-066 and SP-294 select active content-free v3 original creation integration
-  while retaining the whole v2 resource as historical decoding. The new command family is canonical non-rebuildable
-  original authority; this prerequisite neither materializes an event projector/checkpoint nor permits body reconstruction
-  from the event. The current creation consumer mapping in GRS-064 supplies Activity/body/history from its existing
-  canonical readers; the original SP-287/SP-294 transaction already owns their durable state. The older deferred
-  goal_state/child/evidence/GoalRun projector inventory is not an active-v3 creation reducer or checkpoint assignment.
-  This exact current-route mapping does not settle other Goal/GoalRun families or authorize historical reconstruction.
-
-  For exactly goal.progressed, GRS-069/CV-343 independently supersede current-write and Goal-state/progress/child/evidence
-  projection implications above. SP-300 assigns this exact family only storage.goal_progressed_history_read.v1@1.0.0
-  ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source
-  proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
-
-
-  For exactly goal.replanned, GRS-070/CV-344 independently supersede current-write and Goal-state/progress/child/evidence
-  projection implications above. SP-301 assigns this exact family only storage.goal_replanned_history_read.v1@1.0.0
-  ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source
-  proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
-
-
-  For exactly goal.stopped, GRS-071/CV-345 independently supersede current-write and Goal-state/progress/child/evidence
-  projection implications above. SP-302 assigns this exact family only storage.goal_stopped_history_read.v1@1.0.0
-  ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source
-  proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
-
-
-  For exactly goal.verification_decided, GRS-072/CV-346 independently supersede current-write and Goal-state/progress/child/evidence
-  projection implications above. SP-303 assigns this exact family only storage.goal_verification_decided_history_read.v1@1.0.0
-  ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source
-  proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
-
-
-  For exactly goal_run.certified, GRS-084 selects the active v3 payload and coordinator identity EventRecord root,
-  and GRS-085 governs the mandatory started/cancelled/certified per-Workflow-run prefix projection that carries
-  the durable GoalRun projection role of this unit (with D-R20) for that family. SP-316 owns its compact original
-  authority families and v7 wrapper routes, and SP-317 owns its projection and checkpoint families. The goal_run_projection.v1
-  inventory above is not its reducer or checkpoint. That family applies only to a genuine fresh pm.executor.workflow_source.all_writers.v7
-  birth and pm.goal_run_certified.producer_source.v2 prepare.v2 binding; earlier native-v6 and producer-v1 source
-  editions keep their original closed scope, no existing birth is enrolled or cast, and whole-v2 certified rows
-  keep their historical interpretation. The event family registry keeps this unit as the payload_owner_doc route
-  for that family; this paragraph, added 2026-09-24, points the route at those owners and changes no payload, schema,
-  registry row, admission or behavior. goal_run.started and goal_run.cancelled v3 keep their registry owners GRS-079
-  with SP-311 and GRS-080 with SP-312.'
+  For exactly goal_run.certified, GRS-084 selects the active v3 payload and coordinator identity EventRecord root, and GRS-085 governs the mandatory started/cancelled/certified per-Workflow-run prefix projection that carries the durable GoalRun projection role of this unit (with D-R20) for that family. SP-316 owns its compact original authority families and v7 wrapper routes, and SP-317 owns its projection and checkpoint families. The goal_run_projection.v1 inventory above is not its reducer or checkpoint. That family applies only to a genuine fresh pm.executor.workflow_source.all_writers.v7 birth and pm.goal_run_certified.producer_source.v2 prepare.v2 binding; earlier native-v6 and producer-v1 source editions keep their original closed scope, no existing birth is enrolled or cast, and whole-v2 certified rows keep their historical interpretation. The event family registry keeps this unit as the payload_owner_doc route for that family; this paragraph, added 2026-09-24, points the route at those owners and changes no payload, schema, registry row, admission or behavior. goal_run.started and goal_run.cancelled v3 keep their registry owners GRS-079 with SP-311 and GRS-080 with SP-312. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound. Unqualified legacy Goal family lists are constrained by CV-366’s per-family active/historical/Project-only disposition and canonical non-rebuildable body/receipt custody.
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual
   presentation.
@@ -15323,6 +15382,8 @@ source_lineage:
 - pldg-20260616-001-goal-runtime-system:atom-0107
 - pldg-20260616-001-goal-runtime-system:atom-0109
 - pldg-20260616-001-goal-runtime-system:atom-0110
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 preserved_exact_tokens:
 - durable state
 - append-only goal event log
@@ -15576,8 +15637,8 @@ plan_unit_id: SP-217
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  storage-plan owns DiscoveryIndex persistence, cache identity, lifecycle state, and frecency/history boundaries for native DiscoveryService. Discovery indexes are scoped per project, worktree, and remote identity, with separate canonical_path_identity, identity_scope, display_path, normalization_profile, case_sensitivity, symlink_policy, cache_schema_version, ranking_policy_version, policy_hash, ignore_hash, identity_hash, source_manifest_generation, source_index_generation, and remote_identity when applicable. Warm, reindex, teardown, progress, health, stale, fallback, disabled, unsupported, over_budget, and backpressure states are persisted or projected without merging unrelated projects. Frecency/query/open history is on-device, user-scoped, and project/worktree-local by default; reset/disable controls stop future ranking use for the selected identity without deleting durable redacted discovery receipts by default.
+canonical_text: |-
+  storage-plan owns DiscoveryIndex persistence, cache identity, lifecycle state, and frecency/history boundaries for native DiscoveryService. Discovery indexes are scoped per project, worktree, and remote identity, with separate canonical_path_identity, identity_scope, display_path, normalization_profile, case_sensitivity, symlink_policy, cache_schema_version, ranking_policy_version, policy_hash, ignore_hash, identity_hash, source_manifest_generation, source_index_generation, and remote_identity when applicable. Warm, reindex, teardown, progress, health, stale, fallback, disabled, unsupported, over_budget, and backpressure states are persisted or projected without merging unrelated projects. Frecency/query/open history is on-device, user-scoped, and project/worktree-local by default; reset/disable controls stop future ranking use for the selected identity without deleting durable redacted discovery receipts by default. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. Explicit cross-Project T-185 queries merge bounded allowed results with coverage only; physical indexes/private history never merge.
 gui_related: true
 gui_classification_reason: This includes user-visible reset/disable behavior, display_path identity, freshness/fallback projection, and GUI score explanations.
 depends_on: [PDS-003, PDS-005, SP-016, SP-017, SP-020, SP-188, SP-206, T-160]
@@ -15596,20 +15657,22 @@ context_scope: discovery_storage
 implementation_surfaces: [Plans/storage-plan.md, future DiscoveryIndex, future Runtime Artifacts receipt store]
 node_compile_hint: {mode: discovery_index_persistence, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - pldg-20260622-001-fff:atom-0023
-  - pldg-20260622-001-fff:atom-0024
-  - pldg-20260622-001-fff:atom-0040
-  - pldg-20260622-001-fff:atom-0042
-  - pldg-20260622-001-fff:atom-0053
-  - pldg-20260622-001-fff:atom-0062
-  - pldg-20260622-001-fff:atom-0078
-  - pldg-20260622-001-fff:atom-0081
-  - pldg-20260622-001-fff:atom-0082
-  - pldg-20260622-001-fff:atom-0083
-  - pldg-20260622-001-fff:atom-0086
-  - pldg-20260622-001-fff:atom-0089
-  - pldg-20260622-001-fff:state/precision_contract.json#cache_identity_contract_required_fields
-  - pldg-20260622-001-fff:state/implementation_gap_defaults.json
+- pldg-20260622-001-fff:atom-0023
+- pldg-20260622-001-fff:atom-0024
+- pldg-20260622-001-fff:atom-0040
+- pldg-20260622-001-fff:atom-0042
+- pldg-20260622-001-fff:atom-0053
+- pldg-20260622-001-fff:atom-0062
+- pldg-20260622-001-fff:atom-0078
+- pldg-20260622-001-fff:atom-0081
+- pldg-20260622-001-fff:atom-0082
+- pldg-20260622-001-fff:atom-0083
+- pldg-20260622-001-fff:atom-0086
+- pldg-20260622-001-fff:atom-0089
+- pldg-20260622-001-fff:state/precision_contract.json#cache_identity_contract_required_fields
+- pldg-20260622-001-fff:state/implementation_gap_defaults.json
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids: [atom-0023, atom-0024, atom-0040, atom-0042, atom-0053, atom-0062, atom-0078, atom-0081, atom-0082, atom-0083, atom-0086, atom-0089]
 preserved_exact_tokens: ["DiscoveryIndex", "canonical_path_identity", "identity_scope", "display_path", "normalization_profile", "case_sensitivity", "symlink_policy", "cache_schema_version", "ranking_policy_version", "policy_hash", "ignore_hash", "identity_hash", "source_manifest_generation", "source_index_generation", "project-local frecency", "reset/disable", "durable redacted discovery receipts"]
 negative_constraints:
@@ -15626,8 +15689,8 @@ plan_unit_id: SP-218
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Remote/cache/SSH discovery uses a local DiscoveryService plus SSH remote manifest adapter for MVP. The adapter uses Git-tracked file manifests such as git ls-files when available, or an allowed remote directory walk only inside the authorized remote project root, then normalizes, policy-filters, annotates, and indexes remote entries locally. Cache/index keys derive from normalized remote identity hashes including project_id, remote_kind, host alias or host fingerprint, user/account alias, remote_root, repo_id when available, branch/worktree ref, and index_generation, and must not include secrets or merge unrelated local paths. Exact verification for SSH results reads through the authorized remote identity/path or a provenance-equivalent remote cache entry; it must not verify an unrelated local checkout as if it were the SSH result.
+canonical_text: |-
+  Remote/cache/SSH discovery uses a local DiscoveryService plus SSH remote manifest adapter for MVP. The adapter uses Git-tracked file manifests such as git ls-files when available, or an allowed remote directory walk only inside the authorized remote project root, then normalizes, policy-filters, annotates, and indexes remote entries locally. Cache/index keys derive from normalized remote identity hashes including project_id, remote_kind, host alias or host fingerprint, user/account alias, remote_root, repo_id when available, branch/worktree ref, and index_generation, and must not include secrets or merge unrelated local paths. Exact verification for SSH results reads through the authorized remote identity/path or a provenance-equivalent remote cache entry; it must not verify an unrelated local checkout as if it were the SSH result. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound.
 gui_related: false
 gui_classification_reason: This defines remote cache and SSH manifest persistence/verification authority, not GUI presentation.
 depends_on: [SP-217, W-074, F2-191, PS-118]
@@ -15646,15 +15709,17 @@ context_scope: remote_ssh_discovery_storage
 implementation_surfaces: [Plans/storage-plan.md, future SSH remote manifest adapter, future DiscoveryIndex]
 node_compile_hint: {mode: remote_manifest_cache_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - pldg-20260622-001-fff:atom-0054
-  - pldg-20260622-001-fff:atom-0061
-  - pldg-20260622-001-fff:atom-0069
-  - pldg-20260622-001-fff:atom-0070
-  - pldg-20260622-001-fff:atom-0079
-  - pldg-20260622-001-fff:atom-0083
-  - pldg-20260622-001-fff:atom-0085
-  - pldg-20260622-001-fff:atom-0091
-  - pldg-20260622-001-fff:state/precision_contract.json#ssh_topology
+- pldg-20260622-001-fff:atom-0054
+- pldg-20260622-001-fff:atom-0061
+- pldg-20260622-001-fff:atom-0069
+- pldg-20260622-001-fff:atom-0070
+- pldg-20260622-001-fff:atom-0079
+- pldg-20260622-001-fff:atom-0083
+- pldg-20260622-001-fff:atom-0085
+- pldg-20260622-001-fff:atom-0091
+- pldg-20260622-001-fff:state/precision_contract.json#ssh_topology
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 source_atom_ids: [atom-0054, atom-0061, atom-0069, atom-0070, atom-0079, atom-0083, atom-0085, atom-0091]
 preserved_exact_tokens: ["local DiscoveryService plus SSH remote manifest adapter", "git ls-files", "authorized remote project root", "remote_identity", "host_alias_or_host_fingerprint", "credential_handle_ref without secret material", "remote_cache", "ssh_manifest", "no silent local substitution"]
 negative_constraints:
@@ -15676,12 +15741,8 @@ plan_unit_id: SP-219
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: History uses a project-scoped unified read projection for wizard documents, Orchestrator runs, artifacts,
-  evidence, source lineage, package manifests, retention/archive state, and currentness/action availability. The
-  projection is not the mutable authority; it preserves stable refs to immutable source records and is rebuildable
-  from wizard save/approval, run lifecycle, artifact/evidence write, archive/unarchive, lineage, and manifest events.
-  Stale, corrupt, incomplete, or out-of-sync projection state is detected and surfaced; rebuild never rewrites immutable
-  source history or approved/final outputs.
+canonical_text: |-
+  History uses a project-scoped unified read projection for wizard documents, Orchestrator runs, artifacts, evidence, source lineage, package manifests, retention/archive state, and currentness/action availability. The projection is not the mutable authority; it preserves stable refs to immutable source records and is rebuildable from wizard save/approval, run lifecycle, artifact/evidence write, archive/unarchive, lineage, and manifest events. Stale, corrupt, incomplete, or out-of-sync projection state is detected and surfaced; rebuild never rewrites immutable source history or approved/final outputs. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App History reads actual app sources, while explicit cross-Project results use T-185 coverage. Neither result projection grants remote action authority or recategorizes old Usage.
 gui_related: false
 gui_classification_reason: Projection storage, rebuild, and identity rules are storage/read-model behavior; GUI
   consumers are separate.
@@ -15737,6 +15798,8 @@ source_lineage:
 - chat:history-source-index-answer
 - chat:history-projection-lifecycle-answer
 - chat:history-degraded-mode-answer
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids:
 - atom-0008
 - atom-0009
@@ -15997,15 +16060,8 @@ plan_unit_id: SP-221
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Inline visualizer v2 persists source fragment, title/type/version, render config, approved bridge metadata,
-  PM-managed state outputs, visible fallback or error state, and replay/re-render lineage scoped by project, thread,
-  message, and visualizer artifact. Reload re-renders from source/config when practical; screenshot or snapshot
-  fallback is stored only when re-render is impractical. PM-managed bridge state uses the namespace
-  `visualizer_state.v1:{project_id}:{thread_id}:{message_id}:{visualizer_artifact_id}`, stores only
-  JSON-serializable values under quota, records the bridge method and schema version that wrote the state, and exposes
-  replay, export, and purge boundaries. Runtime heap, same-origin storage, raw parent localStorage, secrets, and
-  diagnostic payload leaks are never persistence sources.
+canonical_text: |-
+  Inline visualizer v2 persists source fragment, title/type/version, render config, approved bridge metadata, PM-managed state outputs, visible fallback or error state, and replay/re-render lineage scoped by project, thread, message, and visualizer artifact. Reload re-renders from source/config when practical; screenshot or snapshot fallback is stored only when re-render is impractical. PM-managed bridge state uses the namespace `visualizer_state.v1:{project_id}:{thread_id}:{message_id}:{visualizer_artifact_id}`, stores only JSON-serializable values under quota, records the bridge method and schema version that wrote the state, and exposes replay, export, and purge boundaries. Runtime heap, same-origin storage, raw parent localStorage, secrets, and diagnostic payload leaks are never persistence sources. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: Defines durable visualizer record scope and replay storage behavior; visible rendering is owned by GUI and Assistant Chat.
 depends_on: [ACD-427, CV-300]
@@ -16029,9 +16085,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-persistence-reload-security
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0060
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0088
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-persistence-reload-security
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0060
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0088
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids: [atom-0060, atom-0088]
 preserved_exact_tokens:
   - "source fragment"
@@ -16060,20 +16118,8 @@ plan_unit_id: SP-222
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Notification storage separates non-secret settings, destination definitions, sound mappings, sound asset manifests,
-  uploaded/imported sound blobs, and delivery attempt receipts. Record keys include `notification_settings.v1:global`,
-  project-scoped settings, `notification_destination.v1:{scope}:{destination_id}`,
-  `notification_sound_mapping.v1:{scope}:{event_category}`, and `sound_asset_manifest.v1:{scope}:{sound_id}`.
-  Destination records include provider_kind, scope, enabled state, display_name, event_category allowlist, quiet/focus
-  policy, rate_limit_profile, idempotency profile, last_test_receipt_ref, and provider-specific profile payloads for
-  Slack, Discord, generic webhook, ntfy, Pushover, and Telegram as defined by CV-298. Webhook and push tokens are stored
-  only as OS credential references; receipts store redacted request and response digests, provider kind, destination id,
-  event id, event category, status class, HTTP status, provider request/message id when available, retry count, next
-  retry time, redaction profile, idempotency key, and secret refs only. Built-in sound manifests include sound_id,
-  built_in/user_uploaded/imported source_kind, display_name, source_url_or_package_ref, license_ref, attribution,
-  version, format, duration_ms, loudness_normalization, sha256, disabled/hidden state, and default event_category
-  mappings.
+canonical_text: |-
+  Notification storage separates non-secret settings, destination definitions, sound mappings, sound asset manifests, uploaded/imported sound blobs, and delivery attempt receipts. Record keys include `notification_settings.v1:global`, project-scoped settings, `notification_destination.v1:{scope}:{destination_id}`, `notification_sound_mapping.v1:{scope}:{event_category}`, and `sound_asset_manifest.v1:{scope}:{sound_id}`. Destination records include provider_kind, scope, enabled state, display_name, event_category allowlist, quiet/focus policy, rate_limit_profile, idempotency profile, last_test_receipt_ref, and provider-specific profile payloads for Slack, Discord, generic webhook, ntfy, Pushover, and Telegram as defined by CV-298. Webhook and push tokens are stored only as OS credential references; receipts store redacted request and response digests, provider kind, destination id, event id, event category, status class, HTTP status, provider request/message id when available, retry count, next retry time, redaction profile, idempotency key, and secret refs only. Built-in sound manifests include sound_id, built_in/user_uploaded/imported source_kind, display_name, source_url_or_package_ref, license_ref, attribution, version, format, duration_ms, loudness_normalization, sha256, disabled/hidden state, and default event_category mappings. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: false
 gui_classification_reason: Defines durable settings, credential references, sound assets, and delivery receipt records; GUI renders them elsewhere.
 depends_on: [CV-298, PS-124]
@@ -16099,17 +16145,19 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-destination-record-schema
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-retry-rate-receipt-contract
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-global-project-overrides
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-catalog-default-mappings
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-upload-asset-lifecycle
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0061
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0063
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0064
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0065
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0066
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0067
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-destination-record-schema
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-retry-rate-receipt-contract
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-global-project-overrides
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-catalog-default-mappings
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-upload-asset-lifecycle
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0061
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0063
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0064
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0065
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0066
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0067
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids: [atom-0061, atom-0063, atom-0064, atom-0065, atom-0066, atom-0067]
 preserved_exact_tokens:
   - "notification_settings.v1:global"
@@ -16831,15 +16879,8 @@ plan_unit_id: SP-232
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  storage-plan owns the storage boundary for active-agent coordination canon: coordination EventRecords in seglog,
-  authoritative redb projections for agent/file/operation/snapshot read models, a coordination projector checkpoint, and
-  optional debug/export mirror metadata. `project_state`, `active-agents.json`, `agent-messages.json`, and
-  `.puppet-master/state/*.json` paths are compatibility/debug/export surfaces only and must not own runtime coordination
-  truth. Amended 2026-10-31 (DL-270, SP-339): `active-agents.json`, `agent-messages.json` and the
-  `.puppet-master/state/*.json` files are retired as live files. Coordination state is read through `pm db dump`,
-  `pm inspect`, `pm tail` and `pm export`; only `pm export` writes JSON, on request, and it emits no event, so
-  `coordination.debug_mirror_exported` is retired (SP-339).
+canonical_text: |-
+  storage-plan owns the storage boundary for active-agent coordination canon: coordination EventRecords in seglog, authoritative redb projections for agent/file/operation/snapshot read models, a coordination projector checkpoint, and optional debug/export mirror metadata. `project_state`, `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` paths are compatibility/debug/export surfaces only and must not own runtime coordination truth. Amended 2026-10-31 (DL-270, SP-339): `active-agents.json`, `agent-messages.json` and the `.puppet-master/state/*.json` files are retired as live files. Coordination state is read through `pm db dump`, `pm inspect`, `pm tail` and `pm export`; only `pm export` writes JSON, on request, and it emits no event, so `coordination.debug_mirror_exported` is retired (SP-339). The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app agent/file/operation/snapshot/board/checkpoint keys include Server/crew/run/root identity. The same coordinator is the sole appender; read tokens/checkpoint coverage and 16 KiB/BLAKE3 bounds apply. No second crew database or live active-agents.json.
 gui_related: false
 gui_classification_reason: This unit defines backend storage records and mirror/export boundaries, not GUI presentation.
 depends_on: [SP-230, SP-231, CV-309, OSI-432]
@@ -16869,8 +16910,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - fablereport.md
-  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6
+- fablereport.md
+- Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids: []
 preserved_exact_tokens:
   - "active-agents.json"
@@ -18231,19 +18274,8 @@ plan_unit_id: SP-244
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  The project-scoped persistence key family for classical debug state is registered as: launch profile
-  records under pm.debug.launch_profiles:v1 (project-scoped, survives restart, forward-only migration;
-  field schema owned by Plans/FinalGUISpec.md F3-489 and consumed by reference - this unit owns only
-  keys, lifetimes, and migration rules and never restates fields); breakpoint records under
-  pm.debug.breakpoints:v1 (project-scoped; records keyed by stable breakpoint id carrying
-  file/line/type/condition/hit-count/log-message/enabled - the breakpoint record truth that F3-488's
-  gutter and shelf renderers sync from, referenced); watch expressions under pm.debug.watches:v1
-  (project-scoped ordered list of expression strings); shelf collapse state follows the F3-475
-  side-panel persistence key discipline (referenced, not restated); runtime session state (paused
-  data, console scrollback) is never persisted - session-ephemeral per F3-483 (referenced); debug
-  session records link into the existing dev_session_record.v1 identity family (referenced) via
-  dap_session_id.
+canonical_text: |-
+  The project-scoped persistence key family for classical debug state is registered as: launch profile records under pm.debug.launch_profiles:v1 (project-scoped, survives restart, forward-only migration; field schema owned by Plans/FinalGUISpec.md F3-489 and consumed by reference - this unit owns only keys, lifetimes, and migration rules and never restates fields); breakpoint records under pm.debug.breakpoints:v1 (project-scoped; records keyed by stable breakpoint id carrying file/line/type/condition/hit-count/log-message/enabled - the breakpoint record truth that F3-488's gutter and shelf renderers sync from, referenced); watch expressions under pm.debug.watches:v1 (project-scoped ordered list of expression strings); shelf collapse state follows the F3-475 side-panel persistence key discipline (referenced, not restated); runtime session state (paused data, console scrollback) is never persisted - session-ephemeral per F3-483 (referenced); debug session records link into the existing dev_session_record.v1 identity family (referenced) via dap_session_id. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: Launch profiles, breakpoints, and watch expressions persist the state of user-visible Debug & Run panel shelves and gutter renderers.
 split_recommended: false
@@ -18267,8 +18299,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - user-decision:2026-07-27-run-debug-revival
-  - Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-496; referenced)
+- user-decision:2026-07-27-run-debug-revival
+- Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-496; referenced)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens: [pm.debug.launch_profiles:v1, pm.debug.breakpoints:v1, pm.debug.watches:v1]
 negative_constraints:
   - Do not restate F3-489 launch-profile fields; the schema is consumed by reference only.
@@ -18474,30 +18508,8 @@ plan_unit_id: SP-248
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  The current Usage workspace persists exactly nine current-value-only view/layout families: active `room`,
-  disclosure `detail`, date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget
-  `hidden` state, per-room settled widget `layout`, per-room widget `order`, and the Live / Paused choice `live`
-  (2026-10-09, Plans/Decision_Log.md#DL-177, Plans/usage-feature.md#UF-095), a view-only preference that is Live
-  by default, decides only whether arriving projection updates are shown at once or held, and is never a Settings
-  value. These are configuration/view records with no event history and no Settings-owned policy values. The layout family persists only through
-  `widget_layout:v1:usage` and the existing typed widget commands after a settled commit; pointer move,
-  held-resize preview, configuration preview, ghost, placeholder, animation state, and per-frame drafts never
-  write storage. A vanished room, scope, widget, or unsupported geometry migrates or evicts to its documented
-  current safe default. The U11 keys `u11:disclosure`, `u11:scope`, `u11:range`, `u11:settingsView`,
-  `u11:parked`, `u11:seeded`, `pmw:<pageId>`, and `pm.theme`, together with the PMConcept7 key family
-  `pm7:usage:v10:*`, are prototype/import lineage only and are not canonical key names. The redesigned
-  concept stores its prototype envelope under the product's own layout key name `widget_layout:v1:usage`, which
-  stays this family's canonical key; only the envelope's schema id `pm.usage.widget_layout.v1` and the concept's
-  Live key `pm7:usage:live:v1` are demo-only, noncanonical prototype lineage, and that schema id is not a product
-  schema. When that envelope is absent the concept considers
-  the prior `pm7:usage:prototype:workspace:v12` envelope once, else the v11 envelope, as a one-time import source,
-  and it considers the v10 family only through the bounded legacy import when no valid envelope is admitted.
-  None of these prototype keys, schema ids or prior envelopes becomes a canonical product store or continuing
-  dual-read source.
-  Amended 2026-10-17 (DL-228): the `more` family is retired: the redesigned rail of rooms scrolls and keeps no
-  overflow surface (UF-093, UF-095), so a stored `more` value is read once and ignored, and the remaining
-  eight families persist as above.
+canonical_text: |-
+  The current Usage workspace persists exactly nine current-value-only view/layout families: active `room`, disclosure `detail`, date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget `hidden` state, per-room settled widget `layout`, per-room widget `order`, and the Live / Paused choice `live` (2026-10-09, Plans/Decision_Log.md#DL-177, Plans/usage-feature.md#UF-095), a view-only preference that is Live by default, decides only whether arriving projection updates are shown at once or held, and is never a Settings value. These are configuration/view records with no event history and no Settings-owned policy values. The layout family persists only through `widget_layout:v1:usage` and the existing typed widget commands after a settled commit; pointer move, held-resize preview, configuration preview, ghost, placeholder, animation state, and per-frame drafts never write storage. A vanished room, scope, widget, or unsupported geometry migrates or evicts to its documented current safe default. The U11 keys `u11:disclosure`, `u11:scope`, `u11:range`, `u11:settingsView`, `u11:parked`, `u11:seeded`, `pmw:<pageId>`, and `pm.theme`, together with the PMConcept7 key family `pm7:usage:v10:*`, are prototype/import lineage only and are not canonical key names. The redesigned concept stores its prototype envelope under the product's own layout key name `widget_layout:v1:usage`, which stays this family's canonical key; only the envelope's schema id `pm.usage.widget_layout.v1` and the concept's Live key `pm7:usage:live:v1` are demo-only, noncanonical prototype lineage, and that schema id is not a product schema. When that envelope is absent the concept considers the prior `pm7:usage:prototype:workspace:v12` envelope once, else the v11 envelope, as a one-time import source, and it considers the v10 family only through the bounded legacy import when no valid envelope is admitted. None of these prototype keys, schema ids or prior envelopes becomes a canonical product store or continuing dual-read source. Amended 2026-10-17 (DL-228): the `more` family is retired: the redesigned rail of rooms scrolls and keeps no overflow surface (UF-093, UF-095), so a stored `more` value is read once and ignored, and the remaining eight families persist as above. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: These records decide what the Usage page shows on reopen, including disclosure level, scope, range, and widget layout.
 depends_on: [SP-222, UF-092, WS-016]
@@ -18531,13 +18543,16 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
-  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
-  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
-  - "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html (superseded prototype/import lineage)"
-  - Concepts/usage-concepts/QwenUsageConcept/u11-widgets.js
-  - "Concepts/usage-redesign/src/js/40-board.js and src/js/15-film.js (the redesigned concept's layout envelope and remembered Live choice; source-lineage-only)"
-  - Plans/Decision_Log.md#DL-177
+- Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)
+- Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)
+- Concepts/PMConcept7.html (look-and-behaviour reference only)
+- Concepts/usage-concepts/QwenUsageConcept/u11-prism.html (superseded prototype/import lineage)
+- Concepts/usage-concepts/QwenUsageConcept/u11-widgets.js
+- Concepts/usage-redesign/src/js/40-board.js and src/js/15-film.js (the redesigned concept's layout envelope and
+  remembered Live choice; source-lineage-only)
+- Plans/Decision_Log.md#DL-177
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
   - room
   - detail
@@ -18594,36 +18609,8 @@ plan_unit_id: SP-249
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  The sole widget-layout schema family uses separate host namespaces `widget_layout:v1:usage` and
-  `widget_layout:v1:dashboard`. Usage records are scoped to the exact `usage` host and `room_id`; Dashboard
-  records are scoped by Dashboard host. The named public Usage record is `UsageWidgetLayoutRecord`; it serializes exactly the
-  WS-020-owned required fields `layout_schema_version`, `default_set_version`, `host_id`, `room_id`, `widget_id`,
-  `visible`, `order_index`, `slot_id`, `geometry_id`, `semantic_tier_id`, `preset_id`, `configuration_refs`, and
-  `committed_revision` needed for deterministic restore. It forbids preview
-  rectangles, pointers or pointer coordinates, ghosts, placeholders, animation state, and drafts or per-frame
-  drafts. Migration validates identities and
-  maps retired geometry to supported current sizes before admission; an unversioned, incompatible, corrupt, or
-  unmappable layout is quarantined or reset to the corrected current default and cannot silently override it.
-  Existing `cmd.widget.*` commit paths are the only mutation seam; storage is written once after a successful
-  settled commit and cancellation writes nothing.
-  Amended 2026-10-10 (DL-186): dashboard boards keep their envelopes per project under
-  `widget_layout:v1:<project_id>:<board_id>` (family `dashboard_board_layout`; host `home.dashboard`, `room_id` the
-  board id; the envelope also keeps the board's view, a non-default `set_id` and a custom dashboard's name), set an
-  unreadable envelope aside under `:quarantine`, adopt an unscoped `widget_layout:v1:<board_id>` once and remove it,
-  and forget a custom board's key, quarantine copy and name when it is deleted or leaves the reopen list unopened.
-  The old `widget_layout:v1:dashboard` converts into no board and is never written again. Presets are per user
-  under `widget_presets:v1` (family `widget_presets`), saved, renamed and deleted by typed local actions; applying
-  one is `cmd.widget.reset_layout` with `set_id` `user:<preset_id>`. View, preset and board-forgetting writes are
-  not `cmd.widget.*` commits and take no receipt or event; every widget change on a board still is one.
-  Board contents are scoped per project and per board; custom dashboard names are kept per project, with
-  whitespace collapsed, trimmed to at most 80 characters and made unique against that project's dashboards
-  and the built-ins by suffixes 2, 3 and so on. An empty or default Dashboard <n> name removes its stored
-  entry. A project switch saves the old project's boards and rebinds every mounted board whose tab is
-  retained, including hidden boards, then reloads that project's custom names. No concept-only custom-name
-  storage key is admitted by this rule.
-  Amended 2026-10-31 (DL-270): a redb value is at most 16 KiB (SP-340), so a widget-layout record larger than that
-  keeps its one record and holds the oversized layout body by payload reference (SP-337).
+canonical_text: |-
+  The sole widget-layout schema family uses separate host namespaces `widget_layout:v1:usage` and `widget_layout:v1:dashboard`. Usage records are scoped to the exact `usage` host and `room_id`; Dashboard records are scoped by Dashboard host. The named public Usage record is `UsageWidgetLayoutRecord`; it serializes exactly the WS-020-owned required fields `layout_schema_version`, `default_set_version`, `host_id`, `room_id`, `widget_id`, `visible`, `order_index`, `slot_id`, `geometry_id`, `semantic_tier_id`, `preset_id`, `configuration_refs`, and `committed_revision` needed for deterministic restore. It forbids preview rectangles, pointers or pointer coordinates, ghosts, placeholders, animation state, and drafts or per-frame drafts. Migration validates identities and maps retired geometry to supported current sizes before admission; an unversioned, incompatible, corrupt, or unmappable layout is quarantined or reset to the corrected current default and cannot silently override it. Existing `cmd.widget.*` commit paths are the only mutation seam; storage is written once after a successful settled commit and cancellation writes nothing. Amended 2026-10-10 (DL-186): dashboard boards keep their envelopes per project under `widget_layout:v1:<project_id>:<board_id>` (family `dashboard_board_layout`; host `home.dashboard`, `room_id` the board id; the envelope also keeps the board's view, a non-default `set_id` and a custom dashboard's name), set an unreadable envelope aside under `:quarantine`, adopt an unscoped `widget_layout:v1:<board_id>` once and remove it, and forget a custom board's key, quarantine copy and name when it is deleted or leaves the reopen list unopened. The old `widget_layout:v1:dashboard` converts into no board and is never written again. Presets are per user under `widget_presets:v1` (family `widget_presets`), saved, renamed and deleted by typed local actions; applying one is `cmd.widget.reset_layout` with `set_id` `user:<preset_id>`. View, preset and board-forgetting writes are not `cmd.widget.*` commits and take no receipt or event; every widget change on a board still is one. Board contents are scoped per project and per board; custom dashboard names are kept per project, with whitespace collapsed, trimmed to at most 80 characters and made unique against that project's dashboards and the built-ins by suffixes 2, 3 and so on. An empty or default Dashboard <n> name removes its stored entry. A project switch saves the old project's boards and rebinds every mounted board whose tab is retained, including hidden boards, then reloads that project's custom names. No concept-only custom-name storage key is admitted by this rule. Amended 2026-10-31 (DL-270): a redb value is at most 16 KiB (SP-340), so a widget-layout record larger than that keeps its one record and holds the oversized layout body by payload reference (SP-337). The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. No project boards have one Server/app namespace; presets stay per person. Named-layout board snapshots apply only to the exact saved scope and Server/Project, so app null is never a wildcard. Conversion loads the destination Project boards without merging app boards.
 gui_related: true
 gui_classification_reason: The persisted record determines restored visible widget order, geometry, semantic content tier, and safe default fallback.
 depends_on: [SP-248, WS-009, WS-020, UF-095, DL-186]
@@ -18658,15 +18645,24 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
-  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
-  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
-  - "Plans/Decision_Log.md#DL-186"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P4, P5, P6; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1; the panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e)"
-  - "Concepts/home-redesign/CONTRACT.md at c4e32ec0b7, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9 (section 3.1, the Dashboard kind's keys, adoption, names and forgetting; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
+- Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)
+- Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)
+- Concepts/PMConcept7.html (look-and-behaviour reference only)
+- Plans/Decision_Log.md#DL-186
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md,
+  SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P4, P5, P6; Jared's answers relayed
+  by the planning thread, pm-mail 1010191613-9ce1; the panels thread's build facts, pm-mail 1010221905-e13e and
+  1010223444-a10e)
+- Concepts/home-redesign/CONTRACT.md at c4e32ec0b7, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9
+  (section 3.1, the Dashboard kind's keys, adoption, names and forgetting; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
   - widget_layout:v1:usage
   - widget_layout:v1:dashboard
@@ -18856,29 +18852,8 @@ plan_unit_id: SP-252
 unit_type: migration_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'The existing onboarding_state family uses onboarding_state.v3:{onboarding_session_id} for pm.product_onboarding.session.v2,
-  with the exact closed owner schema deterministically bundled by scripts/pm-onboarding-contracts.py. The session stores
-  the bounded typed setup_draft choices once, plus exact draft/queued/reviewed refs, revisions and canonical hash, current
-  dependency-path state, actual Project commit binding, provider/free-model progress, owner refs and continuation. Return
-  contexts/snapshots keep refs rather than duplicate draft bodies. Eleven-stage/deferred-Project/six-stage paths consume
-  the Onboarding owner, and no Project or broad provider effect is inferred from draft persistence. v2 session-key/v1
-  values and older Project/global keys are coordinator-only migration inputs. Unresolved drafts are unconfirmed; already
-  committed rows resume provider setup only after exact owner-result/receipt validation. Migration emits the sole durable
-  Storage migration receipt, reports exact disposition/stage/path/committed-resume counts with a hashed per-row manifest,
-  and never replays owner work. Domain reconciliation remains separately pending physical admission. No physical family,
-  retention policy, native store, readiness or recovery certification is added. The session''s optional look_choice is
-  merged per ui.onboarding.choose_look request, replacing only fields the request sets; absent or null fields mean nothing
-  chosen yet, and a resume repaints that stored choice, NieR Mode included, with null fields falling back to F3-520''s
-  start rule; look_choice is never a Settings value. Q22, Jared 2026-10-30 (DL-257): the optional closed session look_choice
-  admits family nier and the retained parts/background, with no independent nier_mode field. When reading an earlier
-  session choice, the existing onboarding migration consumes a true nier_mode as family nier in its stored light/dark
-  mode, removes that legacy field and preserves parts/background; false/null leaves the selected family unchanged. Conversion
-  precedes validation of the current shape and is idempotent. Settings performs the separate retired general.visual.nier-mode
-  load migration under SSYS-043, including Auto resolution. No physical family, key, policy or new migration writer is
-  added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H5: the onboarding owner holds one original inert-state
-  basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes;
-  it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only
-  the modal’s own holds, preserves pre-existing inert nodes and restores focus/input.'
+canonical_text: |-
+  The existing onboarding_state family uses onboarding_state.v3:{onboarding_session_id} for pm.product_onboarding.session.v2, with the exact closed owner schema deterministically bundled by scripts/pm-onboarding-contracts.py. The session stores the bounded typed setup_draft choices once, plus exact draft/queued/reviewed refs, revisions and canonical hash, current dependency-path state, actual Project commit binding, provider/free-model progress, owner refs and continuation. Return contexts/snapshots keep refs rather than duplicate draft bodies. Eleven-stage/deferred-Project/six-stage paths consume the Onboarding owner, and no effect is inferred from draft persistence. N15 explicitly admits app-scoped provider/free-model setup after Later under its own current Computer/auth binding, without a Project commit; other Project-bound setup still requires the actual commit. v2 session-key/v1 values and older Project/global keys are coordinator-only migration inputs. Unresolved drafts are unconfirmed; already committed rows resume provider setup only after exact owner-result/receipt validation. Migration emits the sole durable Storage migration receipt, reports exact disposition/stage/path/committed-resume counts with a hashed per-row manifest, and never replays owner work. Domain reconciliation remains separately pending physical admission. No physical family, retention policy, native store, readiness or recovery certification is added. The session's optional look_choice is merged per ui.onboarding.choose_look request, replacing only fields the request sets; absent or null fields mean nothing chosen yet, and a resume repaints that stored choice, NieR Mode included, with null fields falling back to F3-520's start rule; look_choice is never a Settings value. Q22, Jared 2026-10-30 (DL-257): the optional closed session look_choice admits family nier and the retained parts/background, with no independent nier_mode field. When reading an earlier session choice, the existing onboarding migration consumes a true nier_mode as family nier in its stored light/dark mode, removes that legacy field and preserves parts/background; false/null leaves the selected family unchanged. Conversion precedes validation of the current shape and is idempotent. Settings performs the separate retired general.visual.nier-mode load migration under SSYS-043, including Auto resolution. No physical family, key, policy or new migration writer is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. Pre-Project new-project/setup drafts stay session/recovery keyed, never wizard_state:v1 with empty Project. Existing exact session v2 remains its reader; a deliberately versioned setup_consumer=onboarding|new_project|chat_conversion successor binds the shared PJCT-009 draft. look_choice is draft state only; a classified durable Settings choice commits through SSYS-059/065, not a private finish/close writer.
 gui_related: true
 gui_classification_reason: The migrated stage/session determines the simple Product Onboarding screen and safe resume
   point shown to the user.
@@ -18961,6 +18936,8 @@ source_lineage:
 - source_report:register-fullthread.md#R-063
 - source_report:wave3-lane2.md#S0098
 - source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/02_PROJECT_DRAFT_COPY_AND_COMMIT.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F02,E-F07,E-F11,A-F09
 negative_constraints:
 - Do not silently reinterpret v1 or four/five/seven/nine-stage predecessor values as current v2 writes.
 - Do not infer review, committed Project, provider readiness or effect replay from persisted UI state.
@@ -19135,40 +19112,8 @@ plan_unit_id: SP-254
 unit_type: storage_security_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: '`Plans/storage_value_registry.json` registers the September 1 Forge, Backup v2, and Go tsnet contract
-  groups as public durable metadata or explicit nonpersisted transport without claiming physical materialization. Backup
-  v2 retains destination/repository/policy/run/manifest, capture-barrier and phase-journal refs, schedule occurrence
-  and outbox refs, retention/browse/health, RecoverySet public, no-store Recovery Kit delivery-session metadata, migration,
-  restore, and receipt records while snapshot/repository/export bytes remain in Backup-owned external custody and raw
-  Recovery Key/Kit/session payloads never persist. StorageMigrationCoordinator performs the explicit v1-to-v2 disposition
-  without manufacturing a key, source closure, verification, runtime, or provider readiness; Backup''s `pm.backup_restore_system.recovery_set_public.v2`
-  is never Storage boot recovery `recovery_set_id`. Forge retains provider-instance, repository-binding, independent
-  automation-binding/shell, provider-native object, currentness, and receipt refs without duplicating PAT/OAuth/SSH/private-CA/credential
-  content; canonical shell state uses `repository_automation.project_state.{project_id}` and reads the two GitHub predecessor
-  keys only through an idempotent fail-closed migration. Remote Access retains PM-owned connector/Server identity, configuration,
-  generations, version/build/protocol facts, redacted authorization-operation metadata, route/health/migration/receipt
-  refs, and an opaque `secure_state_ref`; connector IPC, protected URLs, raw tsnet state, tailnet identity, and node/auth/
-  pre-auth/IPC keys are nonpersisted or external to ordinary redb/seglog. The registered transforms cover public requests,
-  results, errors, availability, receipts, and health/currentness projections and reject key/token/code, protected/browser,
-  private path/host, unsafe SCM configuration, and capture content. All three domains remain receipt-only and Event Authority
-  silent with `runtime_evidence=false`. DL-259, Jared 2026-10-31: D7 B supersedes the former no-per-Client-node restriction.
-  Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale connection and sign in once
-  through the shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned Go tsnet
-  helper is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native Client
-  installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and Server
-  endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references
-  prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only
-  to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private
-  listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable
-  connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale
-  connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It
-  cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. D6 A: the
-  human signs in on the initiating active device while the AI/tool runs on the selected execution host. Official tool
-  sign-ins and private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s secure
-  credential store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment
-  references, never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating
-  Client/session/generation and execution host. Changing account, host or route invalidates stale validation; another
-  account of the same provider has a distinct identity.'
+canonical_text: |-
+  `Plans/storage_value_registry.json` registers the September 1 Forge, Backup v2, and Go tsnet contract groups as public durable metadata or explicit nonpersisted transport without claiming physical materialization. Backup v2 retains destination/repository/policy/run/manifest, capture-barrier and phase-journal refs, schedule occurrence and outbox refs, retention/browse/health, RecoverySet public, no-store Recovery Kit delivery-session metadata, migration, restore, and receipt records while snapshot/repository/export bytes remain in Backup-owned external custody and raw Recovery Key/Kit/session payloads never persist. StorageMigrationCoordinator performs the explicit v1-to-v2 disposition without manufacturing a key, source closure, verification, runtime, or provider readiness; Backup's `pm.backup_restore_system.recovery_set_public.v2` is never Storage boot recovery `recovery_set_id`. Forge retains provider-instance, repository-binding, independent automation-binding/shell, provider-native object, currentness, and receipt refs without duplicating PAT/OAuth/SSH/private-CA/credential content; canonical shell state uses `repository_automation.project_state.{project_id}` and reads the two GitHub predecessor keys only through an idempotent fail-closed migration. Remote Access retains PM-owned connector/Server identity, configuration, generations, version/build/protocol facts, redacted authorization-operation metadata, route/health/migration/receipt refs, and an opaque `secure_state_ref`; connector IPC, protected URLs, raw tsnet state, tailnet identity, and node/auth/ pre-auth/IPC keys are nonpersisted or external to ordinary redb/seglog. The registered transforms cover public requests, results, errors, availability, receipts, and health/currentness projections and reject key/token/code, protected/browser, private path/host, unsafe SCM configuration, and capture content. All three domains remain receipt-only and Event Authority silent with `runtime_evidence=false`. DL-259, Jared 2026-10-31: D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or route invalidates stale validation; another account of the same provider has a distinct identity. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound. Backup app/converted history manifests include independent canonical task/schedule custody and lineage under BRS-033, with no native certification or new receipt family.
 gui_related: false
 gui_classification_reason: The unit defines storage custody, migration, redaction, and event-admission boundaries rather than visible presentation.
 depends_on: [SP-251, SP-253, BRS-012, BRS-016, FGI-012, RAS-015]
@@ -19230,10 +19175,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_backup_reconciliation.md
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_backup_reconciliation.md
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 preserved_exact_tokens:
   - pm.backup_restore_system.recovery_set_public.v2
   - recovery_set_id
@@ -19574,8 +19521,8 @@ plan_unit_id: SP-259
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Storage admits the one compaction-completion family using the exact bindings, logical seglog commit point, scoped idempotency, redb projection/checkpoint transaction, custody and indefinite content-free retention specified above.
+canonical_text: |-
+  Storage admits the one compaction-completion family using the exact bindings, logical seglog commit point, scoped idempotency, redb projection/checkpoint transaction, custody and indefinite content-free retention specified above. The exact existing Project edition remains. SP-349/351/352/353 and CV-365/366 add only the approved app counterpart with actual Server/thread/Host/root and versioned source/writer/read/backup/retention, never an empty/sentinel Project or ambient index merge. Project-native SCM/PRD/Wizard/Orchestrator/WorkNode data stays Project-bound. App compaction requires exact canonical source/branch/head/deletion/lease/checkpoint proof in its new version; no event-source reconstruction.
 gui_related: false
 gui_classification_reason: This unit defines persisted-event contracts and owner boundaries.
 depends_on: []
@@ -19597,8 +19544,10 @@ node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-039
-  - Plans/Decision_Log.md#DL-040
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-040
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F01,C-F05,C-F06,C-F10,D-F06,E-F11
 negative_constraints:
   - No runtime, buildability, independent-validator clearance, governance seal, WorkNodes, or NodeSeeds follows from this contract.
 owner_hints:
@@ -20666,15 +20615,8 @@ plan_unit_id: SP-274
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage supplies canonical content-free custody of the original create-restore-point command
-  identity, typed owner result, authenticated shared-runtime outcome, original UI response and synced
-  append receipt. Pending custody commits atomically with the point and creation intent; terminal custody
-  commits atomically with the committed creation marker. Original command replay survives lawful point
-  retirement without creating current point availability or accessing retired content. SP-285 separates
-  initial genuine source capture from later authenticated immutable retained-row resolution; disposed
-  raw SIR/transaction inputs are not reacquired. Combined available-created result inspection requires
-  original_create_result_custody, never passive_creation.
-  SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication, authenticating the original complete event and actual v2 receipt custody before the complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+canonical_text: |-
+  Storage supplies canonical content-free custody of the original create-restore-point command identity, typed owner result, authenticated shared-runtime outcome, original UI response and synced append receipt. Pending custody commits atomically with the point and creation intent; terminal custody commits atomically with the committed creation marker. Original command replay survives lawful point retirement without creating current point availability or accessing retired content. SP-285 separates initial genuine source capture from later authenticated immutable retained-row resolution; disposed raw SIR/transaction inputs are not reacquired. Combined available-created result inspection requires original_create_result_custody, never passive_creation. SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication, authenticating the original complete event and actual v2 receipt custody before the complete owner-local guard; no dependent resolver intervenes before atomic terminal publication. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App restore lifecycle has its own complete original create/expiry/delete/source/checkpoint/result wrappers under CV-366, the same shared 2,048 app bucket, 7,776,000-second reference-release threshold and every current hold; immutable historical Project source predicates stay exact.
 gui_related: false
 gui_classification_reason: This unit defines durable authority, authenticated custody and replay, with
   no visual presentation contract.
@@ -20730,6 +20672,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-045
 - Plans/UI_Command_Catalog.md#UCC-164
 - Plans/Contracts_V0.md#CV-333
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - cmd.chat.create_restore_point
 - RP-AUTHORITY-INDEFINITE
@@ -22458,18 +22402,8 @@ plan_unit_id: SP-287
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Store exactly five canonical Goal body/history/origin/control/receipt families as closed
-  schema_id/schema_version/record wrappers with independent physical and semantic byte domains.
-  GRS-064 owns exact inner meaning and shared owner.goal.body.mutation@1.0.0 acceptance;
-  Storage authenticates physical origin and supplies atomic whole-preimage custody, exact
-  reader admission, coherent mandatory backup and explicit schema/codec migration.
-  Four content families follow DL-047's bound-thread lifetime, immediate deletion hide and
-  24-hour/30-day purge limits under valid holds. Original content-free receipts remain independently
-  auditable without retaining or rebuilding purged text. Detailed Goal body storage custody
-  governs terminal fences, restore/tombstone replay and activation; sibling events remain separate.
-  SP-304/GRS-073 select current control v2 in the same physical family/key, with independent
-  cancellation_pending and complete retained v1 decoding; the other four wrappers remain exact.
+canonical_text: |-
+  Store exactly five canonical Goal body/history/origin/control/receipt families as closed schema_id/schema_version/record wrappers with independent physical and semantic byte domains. GRS-064 owns exact inner meaning and shared owner.goal.body.mutation@1.0.0 acceptance; Storage authenticates physical origin and supplies atomic whole-preimage custody, exact reader admission, coherent mandatory backup and explicit schema/codec migration. Four content families follow DL-047's bound-thread lifetime, immediate deletion hide and 24-hour/30-day purge limits under valid holds. Original content-free receipts remain independently auditable without retaining or rebuilding purged text. Detailed Goal body storage custody governs terminal fences, restore/tombstone replay and activation; sibling events remain separate. SP-304/GRS-073 select current control v2 in the same physical family/key, with independent cancellation_pending and complete retained v1 decoding; the other four wrappers remain exact. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app Goal body/start/update/cancel/association operations require genuine original app source and retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation identity; N25 uses linked new birth.
 gui_related: false
 gui_classification_reason: Defines physical storage, transaction, retention and recovery contracts; Goal presentation is owned by GRS-064.
 depends_on: [SP-231, SP-235, SP-237, SP-239, GRS-064, DL-045, DL-047]
@@ -22499,10 +22433,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/storage-plan.md#SP-231
-  - Plans/Goal_Runtime_System.md#GRS-064
-  - Plans/Decision_Log.md#DL-045
-  - Plans/Decision_Log.md#DL-047
+- Plans/storage-plan.md#SP-231
+- Plans/Goal_Runtime_System.md#GRS-064
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
   - No sixth family, semantic field/version exception, new lifecycle, generic authority service or receipt-based content reconstruction.
   - No automatic Goal event adoption/depth, certification exception, native proof, WorkNode, NodeSeed, readiness or governance seal.
@@ -22893,13 +22829,8 @@ plan_unit_id: SP-275
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage executes the existing expiry predicate through status-only E1, original barrier
-  append E2 and complete receipt/result E3. New E1 uses SP-285 retained-created admission and full fresh expiry gates;
-  later passive native reads explicitly adopt SP-285 retained_custody with complete current SP-278 source
-  and no disposed original or nested creation controls; later holds preserve terminal custody. Checkpoint
-  refresh preserves current holds and generation history. Independent retirement uses SP-269 v2 custody
-  and coordinated codec admission without changing retained v1.
-  SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication, authenticating the original complete event and actual v2 receipt custody before the complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+canonical_text: |-
+  Storage executes the existing expiry predicate through status-only E1, original barrier append E2 and complete receipt/result E3. New E1 uses SP-285 retained-created admission and full fresh expiry gates; later passive native reads explicitly adopt SP-285 retained_custody with complete current SP-278 source and no disposed original or nested creation controls; later holds preserve terminal custody. Checkpoint refresh preserves current holds and generation history. Independent retirement uses SP-269 v2 custody and coordinated codec admission without changing retained v1. SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication, authenticating the original complete event and actual v2 receipt custody before the complete owner-local guard; no dependent resolver intervenes before atomic terminal publication. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App restore lifecycle has its own complete original create/expiry/delete/source/checkpoint/result wrappers under CV-366, the same shared 2,048 app bucket, 7,776,000-second reference-release threshold and every current hold; immutable historical Project source predicates stay exact.
 gui_related: false
 gui_classification_reason: Defines backend custody, source validation and owner-result authority.
 split_recommended: false
@@ -22954,6 +22885,8 @@ source_lineage:
 - RSE-N01
 - RSE-N02
 - RSE-N03
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 ```
 
 ## Restore-point original admission and retained-custody read phases
@@ -23048,15 +22981,8 @@ plan_unit_id: SP-285
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage defines two separately installed transient retained-custody readers for already-admitted
-  native restore creation and expired/deleted custody. Complete original creation and fresh lifecycle controls
-  apply at their respective original boundaries; ordinary later reads authenticate exact immutable retained canonical
-  rows and full current source without disposed original controls. All current callers adopt the exact
-  passive types explicitly. Current registration/install/migration/backup/origin/access/quarantine/row/source
-  facts remain bound through final disclosure. Physical retirement additionally rechecks fresh complete
-  release/selection/all protecting refs in the same lease, followed by Storage revalidation and the unchanged
-  atomic summary gate. Pending recovery explicitly installs the SP-286 original full-value resolver at terminal staging and final publication, using the same actual v2 receipt owner.
-  New lifecycle B1/E1 consumes admitted retained creation under its exact purpose and fresh gates; installed pending recovery authenticates direct actual rows/source/token and derives complete terminal afterimages before dependent helpers, preserving original receipt custody without disposed original controls.
+canonical_text: |-
+  Storage defines two separately installed transient retained-custody readers for already-admitted native restore creation and expired/deleted custody. Complete original creation and fresh lifecycle controls apply at their respective original boundaries; ordinary later reads authenticate exact immutable retained canonical rows and full current source without disposed original controls. All current callers adopt the exact passive types explicitly. Current registration/install/migration/backup/origin/access/quarantine/row/source facts remain bound through final disclosure. Physical retirement additionally rechecks fresh complete release/selection/all protecting refs in the same lease, followed by Storage revalidation and the unchanged atomic summary gate. Pending recovery explicitly installs the SP-286 original full-value resolver at terminal staging and final publication, using the same actual v2 receipt owner. New lifecycle B1/E1 consumes admitted retained creation under its exact purpose and fresh gates; installed pending recovery authenticates direct actual rows/source/token and derives complete terminal afterimages before dependent helpers, preserving original receipt custody without disposed original controls. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App restore lifecycle has its own complete original create/expiry/delete/source/checkpoint/result wrappers under CV-366, the same shared 2,048 app bucket, 7,776,000-second reference-release threshold and every current hold; immutable historical Project source predicates stay exact.
 gui_related: false
 gui_classification_reason: Defines Storage custody/read phase and owner verification contracts; existing
   Chat and Runtime Artifacts units own presentation.
@@ -23117,6 +23043,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
 - storage.first_append_receipt.resolve_full_value.v1
 - owner.storage.restore_point_lifecycle_from_retained_creation@1.0.0
@@ -24174,10 +24102,8 @@ plan_unit_id: SP-294
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Original Goal start authenticates source validity and complete original expectations before joining
-  five existing body values and one content-free command row. Actual original shared publication and first receipt
-  precede immutable command-result settlement; preserved earlier effects, exact retained audit and qualified installed-role/backup
-  boundaries remain explicit.
+canonical_text: |-
+  Original Goal start authenticates source validity and complete original expectations before joining five existing body values and one content-free command row. Actual original shared publication and first receipt precede immutable command-result settlement; preserved earlier effects, exact retained audit and qualified installed-role/backup boundaries remain explicit. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app Goal body/start/update/cancel/association operations require genuine original app source and retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation identity; N25 uses linked new birth.
 gui_related: false
 gui_classification_reason: Defines original internal command/source/body/event/result and retained audit authority
   without a visual surface.
@@ -24222,6 +24148,8 @@ node_compile_hint:
 source_lineage:
 - reports/event-authority-20260911/step-08-goal-start-validation.md
 - Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
 - Do not infer original authority from unchanged invalid values, selected helper results, hashes, schema registration
   or installed-role declarations.
@@ -24708,12 +24636,8 @@ plan_unit_id: SP-299
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: The existing Goal objective update joins independently accepted original source, original
-  shared body reservation/commit, immutable update progress, genuine shared event/first-receipt custody
-  and original SIR terminal members through their exact participating owners; four physical families preserve
-  distinct content and audit lifetimes. Named current Activity/body/history, selected-event observation,
-  audit/input and immutable replay consumers use their own complete original sources and final disclosure
-  boundaries without a new event-derived Goal projector or checkpoint.
+canonical_text: |-
+  The existing Goal objective update joins independently accepted original source, original shared body reservation/commit, immutable update progress, genuine shared event/first-receipt custody and original SIR terminal members through their exact participating owners; four physical families preserve distinct content and audit lifetimes. Named current Activity/body/history, selected-event observation, audit/input and immutable replay consumers use their own complete original sources and final disclosure boundaries without a new event-derived Goal projector or checkpoint. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app Goal body/start/update/cancel/association operations require genuine original app source and retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation identity; N25 uses linked new birth.
 gui_related: false
 gui_classification_reason: Defines existing-command source, event, storage and result publication without
   a new visual surface.
@@ -24764,6 +24688,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
 - Plans/Goal_Runtime_System.md#GRS-064
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
 - Do not infer accepted source or native atomicity from a schema, copied owner map, result-shaped value
   or fixture.
@@ -25193,11 +25119,8 @@ plan_unit_id: SP-304
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Own the seven new canonical cancellation/Stop/audit families and the current version of the
-  existing Goal body control. Original source, Stop, receipt, independently owned disposition, append, control
-  and SIR terminal stages preserve exact original identities, immutable progress and whole preimages. Current
-  passive event inspection has no durable effect or checkpoint; current body/Activity is read from canonical
-  control.
+canonical_text: |-
+  Own the seven new canonical cancellation/Stop/audit families and the current version of the existing Goal body control. Original source, Stop, receipt, independently owned disposition, append, control and SIR terminal stages preserve exact original identities, immutable progress and whole preimages. Current passive event inspection has no durable effect or checkpoint; current body/Activity is read from canonical control. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app Goal body/start/update/cancel/association operations require genuine original app source and retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation identity; N25 uses linked new birth.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -25239,6 +25162,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-039
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
 - No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
 - No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
@@ -25371,11 +25296,8 @@ plan_unit_id: SP-305
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Own nine exact execution writer-domain/binding/origin/selection/assignment families, complete
-  arbitrary-precision local bytes and current versus retained source reads. Genuine acknowledged original SIR
-  source precedes the original append owner's exclusive assignment reservation. Full original finite EventRecord/SIR/MessagePack
-  domain proof precedes Stop, while consumed reservations yield to actual original append evidence for later
-  control and terminal publication.
+canonical_text: |-
+  Own nine exact execution writer-domain/binding/origin/selection/assignment families, complete arbitrary-precision local bytes and current versus retained source reads. Genuine acknowledged original SIR source precedes the original append owner's exclusive assignment reservation. Full original finite EventRecord/SIR/MessagePack domain proof precedes Stop, while consumed reservations yield to actual original append evidence for later control and terminal publication. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app Goal body/start/update/cancel/association operations require genuine original app source and retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation identity; N25 uses linked new birth.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -25416,6 +25338,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-039
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
 - No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
 - No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
@@ -25594,11 +25518,8 @@ plan_unit_id: SP-306
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Original Plan cancellation physical custody and existing class assignments. Exactly ten
-  canonical non-rebuildable original families use complete source/wrapper schemas, exact keys, whole-value
-  hashes and mandatory coherent backup. DL-138 gives the existing execution_schedule family a versioned
-  pm.execution.schedule.v2 logical value with persisted grace_seconds under its unchanged physical key; v1
-  reads use an explicit migration and preserve original audit lineage.
+canonical_text: |-
+  Original Plan cancellation physical custody and existing class assignments. Exactly ten canonical non-rebuildable original families use complete source/wrapper schemas, exact keys, whole-value hashes and mandatory coherent backup. DL-138 gives the existing execution_schedule family a versioned pm.execution.schedule.v2 logical value with persisted grace_seconds under its unchanged physical key; v1 reads use an explicit migration and preserve original audit lineage. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-352 adopts app Assistant Plan/run/cancel/schedule/consent/occurrence wrappers as a coherent independent source graph; original PlanRun’s logical field count and run_completion_anchor semantics remain. A moved transcript is not a new approval, accepted source or completion.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -25635,7 +25556,10 @@ source_lineage:
 - Plans/Decision_Log.md#DL-039
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
-- "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 7"
+- Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md
+  sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 7
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens: [pm.execution.schedule.v2, grace_seconds, execution_schedule.v1]
 negative_constraints:
 - No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
@@ -25707,9 +25631,8 @@ plan_unit_id: SP-307
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Original run completion anchor and runtime-only retirement. run_completion_anchor is immutable
-  physical-wrapper metadata created only by actual first completed/cancelled native Run settlement; the
-  15 logical PlanRun fields remain unchanged.
+canonical_text: |-
+  Original run completion anchor and runtime-only retirement. run_completion_anchor is immutable physical-wrapper metadata created only by actual first completed/cancelled native Run settlement; the 15 logical PlanRun fields remain unchanged. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-352 adopts app Assistant Plan/run/cancel/schedule/consent/occurrence wrappers as a coherent independent source graph; original PlanRun’s logical field count and run_completion_anchor semantics remain. A moved transcript is not a new approval, accepted source or completion.
 gui_related: false
 gui_classification_reason: Defines original owner, schema, storage or verification contracts.
 split_recommended: false
@@ -25747,6 +25670,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-039
 - Plans/Decision_Log.md#DL-045
 - Plans/Decision_Log.md#DL-047
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
 - No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
 - No native field redaction, numeric coercion, new retention policy, full runtime archive or automatic
@@ -26306,7 +26231,8 @@ plan_unit_id: SP-311
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Complete original started-v3 source and bounded consumer ownership; native execution remains unproved.
+canonical_text: |-
+  Complete original started-v3 source and bounded consumer ownership; native execution remains unproved. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. The Project started/cancelled-v3 source resources remain strict. Ordinary app GoalRun start/cancel uses the separately frozen application sources and reader/checkpoint graph; no Project Workflow/native-v7/certified source enrollment or fabricated certification follows.
 gui_related: false
 gui_classification_reason: Defines original runtime source, custody, replay and retention contracts without a visual surface.
 split_recommended: false
@@ -26343,6 +26269,8 @@ source_lineage:
 - Plans/Executor_Protocol.md#EP-118
 - Plans/storage-plan.md#SP-309
 - Plans/Backup_Restore_System.md#BRS-025
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids: []
 ```
 
@@ -26468,7 +26396,8 @@ plan_unit_id: SP-312
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Complete positive original cancelled-v3 source consumer and bounded versioned projector ownership; native execution remains unproved.
+canonical_text: |-
+  Complete positive original cancelled-v3 source consumer and bounded versioned projector ownership; native execution remains unproved. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. The Project started/cancelled-v3 source resources remain strict. Ordinary app GoalRun start/cancel uses the separately frozen application sources and reader/checkpoint graph; no Project Workflow/native-v7/certified source enrollment or fabricated certification follows.
 gui_related: false
 gui_classification_reason: Original runtime custody and derived source currentness contract without visual presentation.
 split_recommended: false
@@ -26509,6 +26438,8 @@ source_lineage:
 - Plans/Executor_Protocol.md#EP-118
 - Plans/storage-plan.md#SP-309
 - Plans/Backup_Restore_System.md#BRS-025
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 source_atom_ids: []
 ```
 
@@ -27332,24 +27263,8 @@ plan_unit_id: SP-320
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Newly authored Storage owner contract under DL-045 for the seven coordination agent families.
-  storage.coordination_append.v1@1.0.0 is the only append admission and storage.coordination_projector.v1@1.0.0 the
-  only direct event consumer; five versioned readers (scheduler, agent_coordinator, prompt_context, mirror_export and
-  inspection) read projections only after checking checkpoint coverage. The kept key
-  projector.checkpoint.coordination:{project_id} holds pm.storage_value.coordination_projector_checkpoint.v1@1.0.0,
-  with schema, projector identity and version, admitted event types, SP-278's nine-field durable read token
-  (DL-076), examined bounds, an inclusive cursor, filter completeness, state, health and same-key generation
-  custody. Projection rows and the checkpoint advance in one redb transaction under prior-value compare-and-swap.
-  agent_revision advances by exactly 1; the idempotency key is
-  coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, with the recovery epoch its
-  event ID uses; the event ID is evt_coordination_ plus a SHA-256 over RFC 8785 identity strings; stale writes return
-  coordination_conflict. The transition table admits registration first and exactly one terminal event, releases
-  claims at the terminal event and makes replay after it a no-op. The append path adopts SP-286/CV-339
-  storage.first_append_receipt.resolve.v2. Custody keeps refs, hashes, IDs and bounded text, with an exact path_hash
-  recipe. RP-COORDINATION-180D binds its run_completion anchor to the Run's terminal canonical record and keeps
-  records of unresolved Runs unexpired. Replay, recovery, admission growth and per-family withdrawal are fenced and
-  rebuild from seglog. Nothing is admitted.
+canonical_text: |-
+  Newly authored Storage owner contract under DL-045 for the seven coordination agent families. storage.coordination_append.v1@1.0.0 is the only append admission and storage.coordination_projector.v1@1.0.0 the only direct event consumer; five versioned readers (scheduler, agent_coordinator, prompt_context, mirror_export and inspection) read projections only after checking checkpoint coverage. The kept key projector.checkpoint.coordination:{project_id} holds pm.storage_value.coordination_projector_checkpoint.v1@1.0.0, with schema, projector identity and version, admitted event types, SP-278's nine-field durable read token (DL-076), examined bounds, an inclusive cursor, filter completeness, state, health and same-key generation custody. Projection rows and the checkpoint advance in one redb transaction under prior-value compare-and-swap. agent_revision advances by exactly 1; the idempotency key is coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, with the recovery epoch its event ID uses; the event ID is evt_coordination_ plus a SHA-256 over RFC 8785 identity strings; stale writes return coordination_conflict. The transition table admits registration first and exactly one terminal event, releases claims at the terminal event and makes replay after it a no-op. The append path adopts SP-286/CV-339 storage.first_append_receipt.resolve.v2. Custody keeps refs, hashes, IDs and bounded text, with an exact path_hash recipe. RP-COORDINATION-180D binds its run_completion anchor to the Run's terminal canonical record and keeps records of unresolved Runs unexpired. Replay, recovery, admission growth and per-family withdrawal are fenced and rebuild from seglog. Nothing is admitted. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app agent/file/operation/snapshot/board/checkpoint keys include Server/crew/run/root identity. The same coordinator is the sole appender; read tokens/checkpoint coverage and 16 KiB/BLAKE3 bounds apply. No second crew database or live active-agents.json.
 gui_related: false
 gui_classification_reason: Defines backend persistence, identity, replay and checkpoint authority, not presentation.
 depends_on: [DL-045, DL-076, SP-232, SP-278, SP-286, CV-339, OSI-438, CV-353]
@@ -27379,7 +27294,15 @@ reasoning_tier: high
 context_scope: coordination_event_persistence_seven_families
 implementation_surfaces: [Plans/storage-plan.md, Plans/storage_value_registry.json, Plans/Contracts_V0.md, Plans/orchestrator-subagent-integration.md]
 node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Decision_Log.md#DL-045, Plans/Decision_Log.md#DL-076, Plans/storage-plan.md#SP-232, Plans/storage-plan.md#SP-278, Plans/storage-plan.md#SP-286, reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md]
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-076
+- Plans/storage-plan.md#SP-232
+- Plans/storage-plan.md#SP-278
+- Plans/storage-plan.md#SP-286
+- reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens: [storage.coordination_append.v1, storage.coordination_projector.v1, projector.checkpoint.coordination, RP-COORDINATION-180D, RP-PROJECTION-3GEN, coordination_conflict, coordination_unchanged]
 negative_constraints:
   - No event admission, registry row, retention policy change, sibling binding reuse, runtime capability or native proof.
@@ -27412,27 +27335,8 @@ plan_unit_id: SP-321
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  The `Plans/storage_value_registry.json#/contract_family_dispositions` row
-  `scd.project.recovery_context.v1` classifies `pm.project.creation_recovery_context.v1`,
-  machine-bound by `Plans/project_system_contracts.schema.json#/$defs/project_creation_recovery_context`,
-  as `durable` with `physical_family_status` = `physical_family_registration_pending`.
-  The declared key shape is `project_creation_recovery_context.v1:{recovery_id}`, looked up by
-  recovery identity and by the original command instance and idempotency key; the value retains the
-  immutable original terminal result ref and digest, the Forge create result and receipt refs with the
-  verified repository binding, the reviewed draft binding, the settled effects with their result/receipt
-  refs, the remaining effects, the composition revision and hash, and the one-active-resume claim. One
-  atomic compare-and-swap claim admits a single active resume with a fresh claim generation bound to the
-  winning attempt identity; a second Client presenting a new attempt for the same recovery is rejected or
-  coalesced, never admitted alongside; child-effect execution and result adoption are fenced by claim
-  generation and attempt identity; and a crash restarts into the retained recovery and reconciles any
-  in-flight child effect through its owner before retrying it. Retention holds the context until the
-  creation reaches a terminal Project outcome — listed registration or owner-confirmed abandonment after
-  Forge-side reconciliation — and only then, with all references released, is the row eligible for cleanup;
-  restart lookup always returns the retained recovery and never fabricates a new one. A durable-pending row
-  cannot be written, restored, advertised as materialized, or used to enable a dependent command. No
-  storage writer, adapter, EventRecord family, or receipt family is admitted, and the
-  `cmd.project.resume_creation` and `cmd.forge.repository.delete` rows keep `handler_unavailable`.
+canonical_text: |-
+  The `Plans/storage_value_registry.json#/contract_family_dispositions` row `scd.project.recovery_context.v1` classifies `pm.project.creation_recovery_context.v1`, machine-bound by `Plans/project_system_contracts.schema.json#/$defs/project_creation_recovery_context`, as `durable` with `physical_family_status` = `physical_family_registration_pending`. The declared key shape is `project_creation_recovery_context.v1:{recovery_id}`, looked up by recovery identity and by the original command instance and idempotency key; the value retains the immutable original terminal result ref and digest, the tagged remote_effect_origin=create|fork and exact nested Forge result/receipt refs with the verified repository binding, the reviewed draft binding, the settled effects with their result/receipt refs, the remaining effects, the composition revision and hash, and the one-active-resume claim. One atomic compare-and-swap claim admits a single active resume with a fresh claim generation bound to the winning attempt identity; a second Client presenting a new attempt for the same recovery is rejected or coalesced, never admitted alongside; child-effect execution and result adoption are fenced by claim generation and attempt identity; and a crash restarts into the retained recovery and reconciles any in-flight child effect through its owner before retrying it. Retention holds the context until the creation reaches a terminal Project outcome — listed registration or owner-confirmed abandonment after Forge-side reconciliation — and only then, with all references released, is the row eligible for cleanup; restart lookup always returns the retained recovery and never fabricates a new one. A durable-pending row cannot be written, restored, advertised as materialized, or used to enable a dependent command. No storage writer, adapter, EventRecord family, or receipt family is admitted, and the `cmd.project.resume_creation` and `cmd.forge.repository.delete` rows keep `handler_unavailable`. The versioned PJCT-010 recovery composition covers each admitted non-GitHub create chain and GitHub/GHES contribution fork chain. It retains application intake, original request/result digest, reviewed draft, source preparation/native clone-or-bind, any explicitly selected publication, Settings, reserved real Project identity, settled/remaining effect sets and registry readback. Fork results are never create results; failed_before_effect carries no remote identity, unknown permits reconcile only and verified_created gates retained recovery actions. Original-key replay is read-only; a fresh fenced resume does no settled effect twice. No new physical receipt family, half-listed Project or speculative remote cleanup is introduced.
 gui_related: false
 gui_classification_reason: This PlanUnit governs storage and contract custody rather than presentation.
 depends_on: [SP-251]
@@ -27455,7 +27359,12 @@ reasoning_tier: high
 context_scope: project_creation_recovery_durable_custody
 implementation_surfaces: [Plans/storage-plan.md, Plans/storage_value_registry.json, Plans/Project_System.md]
 node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Project_System.md#PJCT-007, Plans/Project_System.md#3.1.1-generic-remote-create-local-failure-recovery-composition, source_report:reports/packet-integration-completion-20260926/project-recovery.md]
+source_lineage:
+- Plans/Project_System.md#PJCT-007
+- Plans/Project_System.md#3.1.1-generic-remote-create-local-failure-recovery-composition
+- source_report:reports/packet-integration-completion-20260926/project-recovery.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; E-F01,E-F11,C-F04
 preserved_exact_tokens: [scd.project.recovery_context.v1, pm.project.creation_recovery_context.v1, "project_creation_recovery_context.v1:{recovery_id}", physical_family_registration_pending]
 negative_constraints:
   - No families-row registration, storage writer, adapter, restore path, EventRecord family, receipt family, runtime capability, or native proof.
@@ -27542,18 +27451,8 @@ plan_unit_id: SP-323
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Storage binds SQR-018's pm.runtime.project_automation_pause.v1 to the project_automation_pause family,
-  exact key project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)}, and closed
-  pm.storage_value.project_automation_pause.v1 wrapper (DL-138). It is original project manual-stop
-  authority under existing RP-AUTHORITY-INDEFINITE@1.0.0, not Settings. Genuine project birth creates
-  the off record under proven never-born custody; missing later custody is unavailable. Only an authorized
-  user change uses whole-value compare-and-swap; setting paused true advances user_stop_epoch exactly once,
-  an idempotent reset does not advance it, and setting false never clears per-run stops. The scheduler checks
-  current project state and epoch before automatic dispatch; missing state blocks dispatch. Backup and restore
-  preserve the newer latch and epoch. The static schema/registry row proves no native writer. The candidate
-  runtime.automation_pause_changed emits no EventRecord and reports missing_event_registration until its own
-  Event Authority admission under DL-093.
+canonical_text: |-
+  Storage binds SQR-018's pm.runtime.project_automation_pause.v1 to the project_automation_pause family, exact key project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)}, and closed pm.storage_value.project_automation_pause.v1 wrapper (DL-138). It is original project manual-stop authority under existing RP-AUTHORITY-INDEFINITE@1.0.0, not Settings. Genuine project birth creates the off record under proven never-born custody; missing later custody is unavailable. Only an authorized user change uses whole-value compare-and-swap; setting paused true advances user_stop_epoch exactly once, an idempotent reset does not advance it, and setting false never clears per-run stops. The scheduler checks current project state and epoch before automatic dispatch; missing state blocks dispatch. Backup and restore preserve the newer latch and epoch. The static schema/registry row proves no native writer. The candidate runtime.automation_pause_changed emits no EventRecord and reports missing_event_registration until its own Event Authority admission under DL-093. This exact Project record, key, schema, birth evidence, no-op behavior and epoch remain unchanged. SQR-020/CV-368/SP-352 add the independent Server-owned application pause, never a Settings value. Both latches/epochs participate in conversion and later dispatch; source or target missing custody refuses, and no conversion/automatic task clears either.
 gui_related: false
 gui_classification_reason: Defines original project stop storage and admission authority, not presentation.
 depends_on: [SQR-018]
@@ -27572,9 +27471,12 @@ context_scope: project_automation_pause_original_custody
 implementation_surfaces: [Plans/storage-plan.md, Plans/storage_value_registry.json, Plans/Scheduling_and_Quota_Resume.md]
 node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false, runtime_enabled: false}
 source_lineage:
-  - Plans/Scheduling_and_Quota_Resume.md#SQR-018
-  - "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 9"
-  - Plans/storage-plan.md#SP-306
+- Plans/Scheduling_and_Quota_Resume.md#SQR-018
+- Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md
+  sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 9
+- Plans/storage-plan.md#SP-306
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens: [pm.runtime.project_automation_pause.v1, "project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)}", pm.storage_value.project_automation_pause.v1, RP-AUTHORITY-INDEFINITE, user_stop_epoch, runtime.automation_pause_changed, missing_event_registration]
 negative_constraints:
   - No Settings value, invented automatic clear, missing-as-off default, alternate physical key, or new retention policy.
@@ -27640,63 +27542,8 @@ plan_unit_id: SP-330
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'The Home layout of a project and workspace tab is one record, pm.home_workspace_layout.v2 2.0.0 (Plans/home_workspace_layout_v2.schema.json),
-  under home_workspace_layout.v2:{project_id}:{workspace_tab_id} in family home_workspace_layout_v2 with RP-CONFIG-CURRENT;
-  it is the only Home layout authority (DL-180). It holds the panel split tree, the tab records, a view-state block,
-  the chat column, the user''s saved named layouts, a closed-tab stack of at most 20, revision, updated_at and a migration
-  stamp, and never buffers, sessions, scrollback, browser history, chat messages, credentials or a dashboard''s widget
-  layout, which each board keeps per project under widget_layout:v1:<project_id>:<board_id> (WS-030, SP-249). Narrow,
-  overlay, menu, hover and drag state is never written. Every committed structural change validates, writes, reads back,
-  then advances revision by one, publishes one result and receipt and appends one workspace.layout_changed (CV-361);
-  failure rolls back with rolled_back=true and no event; a reveal-only open is no_change, and a reveal into a collapsed
-  panel is one panel_expanded. View state, the chat column''s shown and history_pinned, and a terminal tab''s ref moving
-  to a new session are written with the record without a revision advance, receipt or event. The first read without a
-  v2 record converts the v1 record, else the Home part of layout:v1, through the StorageMigrationCoordinator by the conversion
-  table of this section: editor panels become panels holding their editor tabs, the dashboard a panel with dashboard:home,
-  each terminal section a bottom-row panel whose workgroup panes become terminal tabs bound to their existing sessions,
-  a docked or floating chat returns to the fixed column (a popped-out chat starts in its column after restart), floating
-  surfaces dock, an editor panel''s inactive browser session becomes a background browser tab there, and a hidden surface
-  that holds anything becomes a collapsed panel. The source stays read-only and is never reset; an unreadable source
-  yields the default Home layout, the old record kept and a notice. The concept''s pm.home.panels keys are lineage only.
-  The chat column''s popped_out is current-run state; after a restart the chat starts in its column (F3-504, F3-637).
-  Amended 2026-10-17 (DL-230, Jared): the user''s saved named layouts belong to the person across projects and live in
-  one per-person record, home_named_layouts:v1 in family home_named_layouts, not in this record; the dashboard boards
-  inside a layout stay per project: each saved layout records the project it was saved in, and outside that project its
-  boards, a null board included, are skipped. The first read copies every project''s v2 named_layouts in once, two layouts
-  with one name both kept and the later one numbered, and named_layouts becomes a read-only legacy field. cmd.workspace_layout.save_named
-  writes the layout to the per-person record and, as before, advances this record''s revision by one with its receipt
-  and its one workspace.layout_changed (named_layout_saved, CV-361); this record keeps no copy of the layout. Amended
-  2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width_px, history_pinned, shown and
-  keep_open (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id to the board''s
-  envelope or null), capped at 64 KB (65,536 bytes) of canonical JSON; a bigger save keeps the layout, writes boards_skipped_bytes
-  instead and says so; applying it writes each included board back to its key only when the saved envelope belongs to
-  the current project (null removes), skips another project''s envelope, and leaves a custom board not held by the applied
-  layout unchanged with no event of its own; a layout saved before applies as it did (D10 P6, lead ruling F3). The old
-  Dashboard layout widget_layout:v1:dashboard is converted into no board (P1). The Debug Console is one tab, debug-console,
-  whose chosen session sub-tab is view state in its state (D33, lead ruling F6), and a terminal tab''s notification mute
-  is that tab''s state (D38, lead ruling F5); both are written like view state. A named layout''s boards never name agents,
-  which stores nothing (lead ruling F7). The chat column also keeps keep_open, the narrow-window pin ui.chat_column.keep_open
-  sets (UCC-203), off while absent; it is the person''s choice, not a narrow-window state, and is written like view state.
-  The chat_column fields width_px, history_pinned and keep_open default to null, false and false; width_px is the message
-  area''s width, rounded to an integer of at least 400 px without a fixed upper cap (G3), an undersized finite value
-  stored at the minimum bound and null the window''s default. They are layout values, never Settings values. A changed
-  width is one cmd.workspace_layout.resize_surface { surface: ''chat'', width } structural commit, with one receipt,
-  one layout event and a new revision; a changed drag commits once on release, Escape or no movement commits nothing,
-  and double-click resets with width null. Both pins are view state with no receipt, event or revision; their typed actions
-  ui.chat_column.pin_history and ui.chat_column.keep_open accept the named boolean and toggle when it is absent. A named
-  layout and Restore home layout keep all three; a project switch loads that project''s own chat column, or the defaults.
-  Once at boot, the former chat.width (finite, rounded and clamped), chat.history value pinned and chat.pinOpen true
-  are carried into this project''s layout and every other project''s saved layout only where the corresponding field
-  is still at its default. Existing non-default values survive. The old keys are dropped only after this project''s layout
-  is written, never while an unreadable record waits to be set aside; old defaults null, flyout and false are just dropped.
-  Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer width ≥400
-  or null for default and dynamically clamp rendering to current centre/page floors. Keep History pin/user width and
-  narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the constrained fallback. G1 B,
-  Jared 2026-10-30: Activity Detail’s restored Pin/unpin is session-only view state. It survives thread switches while
-  the data follows the selected thread; unpinned detail closes on a switch. It adds no persisted field, Settings row,
-  receipt or event; history_pinned remains solely History’s saved pin. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18:
-  Amended 2026-10-31 (DL-270): a redb value is at most 16 KiB (SP-340), so a layout record larger than that is split
-  per key or stored by reference, as the storage registry records.'
+canonical_text: |-
+  The Home layout of a project and workspace tab is one record, pm.home_workspace_layout.v2 2.0.0 (Plans/home_workspace_layout_v2.schema.json), under home_workspace_layout.v2:{project_id}:{workspace_tab_id} in family home_workspace_layout_v2 with RP-CONFIG-CURRENT; it is the only Home layout authority (DL-180). It holds the panel split tree, the tab records, a view-state block, the chat column, the user's saved named layouts, a closed-tab stack of at most 20, revision, updated_at and a migration stamp, and never buffers, sessions, scrollback, browser history, chat messages, credentials or a dashboard's widget layout, which each board keeps per project under widget_layout:v1:<project_id>:<board_id> (WS-030, SP-249). Narrow, overlay, menu, hover and drag state is never written. Every committed structural change validates, writes, reads back, then advances revision by one, publishes one result and receipt and appends one workspace.layout_changed (CV-361); failure rolls back with rolled_back=true and no event; a reveal-only open is no_change, and a reveal into a collapsed panel is one panel_expanded. View state, the chat column's shown and history_pinned, and a terminal tab's ref moving to a new session are written with the record without a revision advance, receipt or event. The first read without a v2 record converts the v1 record, else the Home part of layout:v1, through the StorageMigrationCoordinator by the conversion table of this section: editor panels become panels holding their editor tabs, the dashboard a panel with dashboard:home, each terminal section a bottom-row panel whose workgroup panes become terminal tabs bound to their existing sessions, a docked or floating chat returns to the fixed column (a popped-out chat starts in its column after restart), floating surfaces dock, an editor panel's inactive browser session becomes a background browser tab there, and a hidden surface that holds anything becomes a collapsed panel. The source stays read-only and is never reset; an unreadable source yields the default Home layout, the old record kept and a notice. The concept's pm.home.panels keys are lineage only. The chat column's popped_out is current-run state; after a restart the chat starts in its column (F3-504, F3-637). Amended 2026-10-17 (DL-230, Jared): the user's saved named layouts belong to the person across projects and live in one per-person record, home_named_layouts:v1 in family home_named_layouts, not in this record; the dashboard boards inside a layout stay per project: each saved layout records the project it was saved in, and outside that project its boards, a null board included, are skipped. The first read copies every project's v2 named_layouts in once, two layouts with one name both kept and the later one numbered, and named_layouts becomes a read-only legacy field. cmd.workspace_layout.save_named writes the layout to the per-person record and, as before, advances this record's revision by one with its receipt and its one workspace.layout_changed (named_layout_saved, CV-361); this record keeps no copy of the layout. Amended 2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width_px, history_pinned, shown and keep_open (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id to the board's envelope or null), capped at 64 KB (65,536 bytes) of canonical JSON; a bigger save keeps the layout, writes boards_skipped_bytes instead and says so; applying it writes each included board back to its key only when the saved envelope belongs to the current project (null removes), skips another project's envelope, and leaves a custom board not held by the applied layout unchanged with no event of its own; a layout saved before applies as it did (D10 P6, lead ruling F3). The old Dashboard layout widget_layout:v1:dashboard is converted into no board (P1). The Debug Console is one tab, debug-console, whose chosen session sub-tab is view state in its state (D33, lead ruling F6), and a terminal tab's notification mute is that tab's state (D38, lead ruling F5); both are written like view state. A named layout's boards never name agents, which stores nothing (lead ruling F7). The chat column also keeps keep_open, the narrow-window pin ui.chat_column.keep_open sets (UCC-203), off while absent; it is the person's choice, not a narrow-window state, and is written like view state. The chat_column fields width_px, history_pinned and keep_open default to null, false and false; width_px is the message area's width, rounded to an integer of at least 400 px without a fixed upper cap (G3), an undersized finite value stored at the minimum bound and null the window's default. They are layout values, never Settings values. A changed width is one cmd.workspace_layout.resize_surface { surface: 'chat', width } structural commit, with one receipt, one layout event and a new revision; a changed drag commits once on release, Escape or no movement commits nothing, and double-click resets with width null. Both pins are view state with no receipt, event or revision; their typed actions ui.chat_column.pin_history and ui.chat_column.keep_open accept the named boolean and toggle when it is absent. A named layout and Restore home layout keep all three; a project switch loads that project's own chat column, or the defaults. Once at boot, the former chat.width (finite, rounded and clamped), chat.history value pinned and chat.pinOpen true are carried into this project's layout and every other project's saved layout only where the corresponding field is still at its default. Existing non-default values survive. The old keys are dropped only after this project's layout is written, never while an unreadable record waits to be set aside; old defaults null, flyout and false are just dropped. Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer width ≥400 or null for default and dynamically clamp rendering to current centre/page floors. Keep History pin/user width and narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the constrained fallback. G1 B, Jared 2026-10-30: Activity Detail’s restored Pin/unpin is session-only view state. It survives thread switches while the data follows the selected thread; unpinned detail closes on a switch. It adds no persisted field, Settings row, receipt or event; history_pinned remains solely History’s saved pin. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Amended 2026-10-31 (DL-270): a redb value is at most 16 KiB (SP-340), so a layout record larger than that is split per key or stored by reference, as the storage registry records. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. App Home layout is a separate application sibling with the same invariants and 16 KiB/64 KB payload limits; original Project v2 records and migration ordering stay exact. App named-layout board snapshots apply only back into their exact saved app Server, never to every null context or any Project.
 gui_related: true
 gui_classification_reason: The persisted record decides the visible panels, tabs, chat column and what survives an upgrade.
 split_recommended: false
@@ -27758,22 +27605,39 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D2, D3, D10)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 2, 3 and 12; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (layout model, named layouts, the 16 KB cap; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7: the reopen stack holds 20)"
-  - "Plans/storage-plan.md#SP-245"
-  - "Plans/Decision_Log.md#DL-186"
-  - "Plans/Decision_Log.md#DL-187"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D38)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P6; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the Debug Console's one tab and its folded ids; concept lineage only)"
-  - "Concepts/home-redesign/src/panels/js/04-settings.js at c4e32ec0b7, SHA-256 07bdcadf218484acbd1be0c290911707fd21f06aa777e213d2f9f9e121ec5e8a (chat.pinOpen, kept beside the chat width and History choice; concept lineage only)"
-  - "Concepts/home-redesign/src/panels/js/14-layouts.js at c4e32ec0b7, SHA-256 50a4cd1600bcb921430b5f96c1719bdea60703b6815722fa699cbb8cfe2e061a (the 64 KB board snapshot of a named layout and the skipped size; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D1, D2, D3, D10)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 2, 3 and 12; concept lineage
+  only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
+  SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (layout model, named layouts, the 16
+  KB cap; concept lineage only)
+- '/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7: the reopen stack holds 20)'
+- Plans/storage-plan.md#SP-245
+- Plans/Decision_Log.md#DL-186
+- Plans/Decision_Log.md#DL-187
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D38)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md,
+  SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P6; Jared's answers relayed by the
+  planning thread, pm-mail 1010191613-9ce1)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md,
+  SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the Debug Console's one tab and its
+  folded ids; concept lineage only)
+- Concepts/home-redesign/src/panels/js/04-settings.js at c4e32ec0b7, SHA-256 07bdcadf218484acbd1be0c290911707fd21f06aa777e213d2f9f9e121ec5e8a
+  (chat.pinOpen, kept beside the chat width and History choice; concept lineage only)
+- Concepts/home-redesign/src/panels/js/14-layouts.js at c4e32ec0b7, SHA-256 50a4cd1600bcb921430b5f96c1719bdea60703b6815722fa699cbb8cfe2e061a
+  (the 64 KB board snapshot of a named layout and the skipped size; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
   - "pm.home_workspace_layout.v2"
   - "home_workspace_layout.v2:{project_id}:{workspace_tab_id}"
@@ -27843,89 +27707,20 @@ plan_unit_id: SP-331
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  The terminal's appearance resolves field by field from the look's defaults, which are never
-  stored, then the app default, the project default and the tab override (DL-183, F3-642, DR-068).
-  Until an app-wide Settings store is admitted (SSYS-028), the app default and the project default
-  share one stored value per field: the Settings rows of SSYS-051, held like every Settings value in
-  the open Project's settings snapshot (pm.project_settings_snapshot.v1, Settings custody
-  scd.settings.durable.v1) and written only through Settings transactions, so All terminals reaches
-  the open Project's terminals only and no project field falls through to a separate app value. The
-  per-tab override lives inside the terminal tab's serialized state in the v2 Home record (SP-330),
-  within its 16 KB. Each stored value holds only the fields set there; an unset field falls through
-  to the next value down. When an app-wide store is admitted the app default becomes its own stored
-  level beneath the project default. Every field applies live and nothing stored carries a restart
-  flag. An imported scheme is stored as its parsed colour table, never the file. A custom background
-  image is stored once in the SP-337 payload store (BLAKE3 id, reference count) and referenced by the
-  layer, SP-222's pattern supplying only the manifest and scope fields (Amended 2026-10-31, DL-270); dim and blur are fields applied when drawing; an asset with no layer or
-  retained preset reference is deleted. Images an app or project layer references are backed up with
-  Settings; an image only a tab override references follows the Home record, is not backed up, and
-  when missing the tab falls through to the next layer. This replaces SP-122's
-  terminal_font.v1:global and terminal_color.v1:global. The editor's scheme choice is stored as
-  SSYS-050's code.editing.color-scheme row beside the terminal's scheme row, in the same Project
-  settings snapshot through Settings transactions. The code colour-scheme catalog is built in and
-  never stored; each surface stores only its own choice. The Customize screen’s All terminals is
-  enabled and writes the project default row of SSYS-051 through the same Settings transaction
-  Settings uses, so it changes every terminal while this Project is open; its hover tag says in this
-  project; no surface writes an app-wide value until q-035 admits one. The two Customize screens
-  share F3-650's scope/preview rules. SP-333 adds the editor's per-tab appearance and wallpaper
-  binding without changing this terminal model or creating a fifth stored layer. The reusable
-  terminal preset library is computer-local per user, under terminal_appearance_presets:v1 (logical
-  family terminal_appearance_presets; Plans/terminal_appearance_presets.schema.json). It is beside
-  the imported-scheme library, not in a Project or an appearance inheritance layer. The versioned
-  envelope keeps at most 40 newest-first entries with stable id, normalized name, saved time and
-  sparse canonical appearance fields. Store asset references and parsed scheme references only,
-  never image bytes, terminal output or original import files. A preset reference keeps its custom
-  image alive under SP-222 even when no current terminal uses it; deletion releases only
-  unreferenced assets. ui.terminal.preset.save, rename, delete and undo are typed local library
-  mutations with atomic write/readback, no UICommand receipt or domain event; a failure leaves the
-  prior library and current appearance intact. Undo is available for the most recent deletion in the
-  open Customize session and restores the same entry/position. Apply reads a snapshot and uses the
-  existing This/All writers, with no ongoing link to the preset. Missing/corrupt library data is
-  disclosed and quarantined rather than being used as a Settings default. The logical contract does
-  not claim an installed physical family: storage_value_registry.json records its native custody as
-  deferred. The concept key pm.home.terminal:v1:presets is source lineage only, not a native
-  migration key. Backup/export follows the eventual admitted local-library custody, never implicit
-  Project backup or sync. The local preset library's ownership is this unit and its explicit
-  storage_value_registry family, not an inference from the imported-scheme sentence. Preset and
-  open-session Undo references participate in image reachability, so a deleted preset remains
-  recoverable while Undo is offered. The eventual coherent local-library backup includes the assets
-  it references; this remains distinct from Project Settings backup. A missing imported-scheme id or
-  image reference is retained and disclosed in the library, with Look's own used only for its
-  illustrative preview; Apply refuses that unresolved reference without replacing any current
-  fields. Storage-full or write/readback failure reports failure and preserves the prior library.
-  The 40-character base-name rule is deliberately terminal-specific; it does not change
-  widget-preset naming.
-  Amended 2026-10-17 (DL-228): a custom background picture is PNG, JPEG or WebP under 4 MB (F3-642), kept once
-  by its content hash; besides the pictures a layer or a retained preset references, the four most recently
-  chosen stay so they can be picked again, and an older picture with no reference is deleted.
+canonical_text: |-
+  The terminal's appearance resolves field by field from the look's defaults, which are never stored, then the app default, the project default and the tab override (DL-183, F3-642, DR-068). SSYS-002/059 now admits sparse Everywhere, Computer and Project own levels under SP-348. Each field falls through from the tab override to applicable Project, Computer, Everywhere and the look’s bundled defaults; No project omits Project. All terminals writes Everywhere through the same Settings transaction and names any narrower masking value. The previous shared app/Project-value workaround and q-035 hold are retired. The per-tab override lives inside the terminal tab's serialized state in the v2 Home record (SP-330), within its 16 KB. Each stored value holds only the fields set there; an unset field falls through to the next value down. The Everywhere record is a distinct stored level and Computer values are independent sparse overrides. Every field applies live and nothing stored carries a restart flag. An imported scheme is stored as its parsed colour table, never the file. A custom background image is stored once in the SP-337 payload store (BLAKE3 id, reference count) and referenced by the layer, SP-222's pattern supplying only the manifest and scope fields (Amended 2026-10-31, DL-270); dim and blur are fields applied when drawing; an asset with no layer or retained preset reference is deleted. Images an app or project layer references are backed up with Settings; an image only a tab override references follows the Home record, is not backed up, and when missing the tab falls through to the next layer. This replaces SP-122's terminal_font.v1:global and terminal_color.v1:global. The editor's scheme choice is stored as SSYS-050's code.editing.color-scheme row beside the terminal's scheme row, at its selected offered level through Settings transactions. The code colour-scheme catalog is built in and never stored; each surface stores only its own choice. The Customize screen’s All terminals targets Everywhere; a narrower target must be explicitly selected and its exact origin shown. The two Customize screens share F3-650's scope/preview rules. SP-333 adds the editor's per-tab appearance and wallpaper binding without changing this terminal model or creating a fifth stored layer. The reusable terminal preset library is computer-local per user, under terminal_appearance_presets:v1 (logical family terminal_appearance_presets; Plans/terminal_appearance_presets.schema.json). It is beside the imported-scheme library, not in a Project or an appearance inheritance layer. The versioned envelope keeps at most 40 newest-first entries with stable id, normalized name, saved time and sparse canonical appearance fields. Store asset references and parsed scheme references only, never image bytes, terminal output or original import files. A preset reference keeps its custom image alive under SP-222 even when no current terminal uses it; deletion releases only unreferenced assets. ui.terminal.preset.save, rename, delete and undo are typed local library mutations with atomic write/readback, no UICommand receipt or domain event; a failure leaves the prior library and current appearance intact. Undo is available for the most recent deletion in the open Customize session and restores the same entry/position. Apply reads a snapshot and uses the existing This/All writers, with no ongoing link to the preset. Missing/corrupt library data is disclosed and quarantined rather than being used as a Settings default. The logical contract does not claim an installed physical family: storage_value_registry.json records its native custody as deferred. The concept key pm.home.terminal:v1:presets is source lineage only, not a native migration key. Backup/export follows the eventual admitted local-library custody, never implicit Project backup or sync. The local preset library's ownership is this unit and its explicit storage_value_registry family, not an inference from the imported-scheme sentence. Preset and open-session Undo references participate in image reachability, so a deleted preset remains recoverable while Undo is offered. The eventual coherent local-library backup includes the assets it references; this remains distinct from Project Settings backup. A missing imported-scheme id or image reference is retained and disclosed in the library, with Look's own used only for its illustrative preview; Apply refuses that unresolved reference without replacing any current fields. Storage-full or write/readback failure reports failure and preserves the prior library. The 40-character base-name rule is deliberately terminal-specific; it does not change widget-preset naming. Amended 2026-10-17 (DL-228): a custom background picture is PNG, JPEG or WebP under 4 MB (F3-642), kept once by its content hash; besides the pictures a layer or a retained preset references, the four most recently chosen stay so they can be picked again, and an older picture with no reference is deleted. Full Server Backup includes Everywhere/Computer canonical level records and referenced assets; Project Backup includes Project own values/assets. Device preferences use their own Client writer. Computer-local terminal preset custody stays deferred and does not become a synchronized Settings default.
 gui_related: true
 gui_classification_reason: Decides where each terminal look choice is kept and what survives a move, a reopen and a restore.
 split_recommended: false
 depends_on: [DL-183, DR-068, SSYS-051, SSYS-028, SP-330, SP-222]
 unblocks: []
 acceptance_criteria:
-- The app and project defaults are stored only as SSYS-051's Settings rows in the Project's settings snapshot,
-  as one shared value per field until an app-wide store is admitted (SSYS-028); the tab override only
-  in the tab's state; the look's defaults are not stored.
-- A stored value holds only the fields set in it; clearing a tab override field shows the Settings value,
-  and clearing a Settings field shows the look's default.
-- Moving, collapsing or reopening a terminal tab keeps its override; Settings and the Customize screen’s
-  All terminals write the project layer through the same Settings transaction.
-- No appearance value is stored with a restart flag.
-- A background image is stored once by content hash and referenced, never inlined in a settings row or
-  tab state; an unreferenced image is deleted.
-- Backup includes images the app or project layer references and excludes images only a tab override references.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build
-  tasks are created by this unit.
-- The editor scheme choice is a Settings row stored beside the terminal scheme choice in the same way,
-  and the built-in catalog itself is never stored.
-- The same user sees one computer-local library across Projects; switching Project never relocates it
-  or applies it automatically.
-- Library mutations return truthful readback or failure; applying a preset reuses the appearance/Settings
-  writers and preserves their Project, revision, permission and 16 KB tab-state bounds.
-- The logical preset schema rejects unknown fields and inline/path image values; original native readback
-  must additionally resolve each opaque reference against the owned asset manifest.
+- Sparse appearance levels resolve once with app omitting Project and All terminals targeting Everywhere.
+- Existing per-tab state, imports, preset limits/trust, image reachability and deferred local-library admission
+  remain.
+- Current level/scope/write presentation follows SSYS-002/059, F3-670 and SP-348; old q-035 and universal inheritance/no-app-write
+  bans are superseded. Detached copies remain independent of their source Project. Exact owner/trust/permission/currentness
+  rules remain.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27949,22 +27744,21 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
   (D15)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
-  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 6, the appearance
-  model; concept lineage only)
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 6, the appearance model; concept
+  lineage only)
 - Plans/storage-plan.md#SP-222
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
-  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
-  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md, SHA-256
+  4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--home-redesign--src--terminal--js--42-appearance.js,
-  SHA-256 60379cc762cb98e4fbc4d6fb0a44751cbc7447da3c1e9ff4a04589c8186fefc9 (source lineage; not native
-  certification)
+  SHA-256 60379cc762cb98e4fbc4d6fb0a44751cbc7447da3c1e9ff4a04589c8186fefc9 (source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/COORDINATOR-PRESET-CUSTODY-1016001056-4c95.md,
-  SHA-256 ad3b14eebf173550efe88a594b4a869588e3175e7e1277120e86405753bc7f3f (source lineage; not native
-  certification)
+  SHA-256 ad3b14eebf173550efe88a594b4a869588e3175e7e1277120e86405753bc7f3f (source lineage; not native certification)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,A-F09,B-F03,C-F11
 preserved_exact_tokens:
   - "scd.settings.durable.v1"
   - "pm.project_settings_snapshot.v1"
@@ -28035,47 +27829,8 @@ plan_unit_id: SP-332
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Terminal storage follows one session per tab (DL-181, SMPFS-180). terminal_session_record moves to value
-  pm.storage_value.terminal_session_record.v2 at its unchanged key: the required terminal_leaf_pane_id becomes an
-  optional panel_tab_id, the id of the terminal tab that shows the session (or last showed it, once ended) or null, never
-  derived from the session's own id, so a session survives every view change and a tab keeps its id when Restart
-  or a restore gives it a new session, with a
-  coordinator-only conversion and the v1 value schema kept under $defs.legacy_v1. terminal_workspace_state,
-  terminal_section_record, terminal_workgroup_record and editor_terminal_panel_state, and with them
-  terminal_tab_record, terminal_pane_record and terminal_leaf_pane_record, are read-only migration inputs read once
-  by SP-330. SP-122's nine prose-only keys map to terminal_session_record, the v2 Home record, terminal_command_block,
-  Settings, the Project's Settings, cwd_ref, saved scrollback and SP-331. Saved scrollback is the terminal restore
-  record's transcript chunks (SP-125), not a new store: the main screen's retained lines (at most the 10,000-line
-  scrollback plus the screen), styles, links, command records with by and anchored image placements, never the
-  transient_only alternate screen, typed line, selections or find highlights; 64 MiB per terminal tab for text
-  and images, images as PNG with one record per frame written once; text never gives way to images, images drop oldest
-  first and leave a placeholder record naming them; written 1.5 s after output settles, at most every 5 s while
-  streaming and when the page hides; Clear scrollback empties it at the next save; kept for a closed tab while the
-  20-tab stack can reopen it and at most 7 days; a 5 s load budget; one copy per terminal tab, keyed by project
-  and tab id whichever session wrote it, each save replacing the tab's previous copy, so after Restart or a restore
-  the new session's first save takes the copy over and a restored or reopened tab loads the copy under its own tab
-  id. Saved images follow saved scrollback's storage, retention and exclusion rules. Saved scrollback is excluded
-  from backups, exports and sync and holds the output as shown apart from the secret replacements below, which command blocks reach only by
-  transcript_ref; its physical family registration is an open item. SP-047's no-transcript rule covers the privileged-session evidence store, not terminal
-  scrollback. No storage family holds an agent's terminal write grant (CV-362).
-  Amended 2026-10-10 (DL-187): before a copy is written, well-known secret formats are replaced in it (vendor API
-  keys sk-..., AKIA..., ghp_..., github_pat_..., glpat-..., xox?-..., AIza..., Stripe sk_live_...; bearer tokens and
-  JWTs; KEY=value assignments whose name says key, secret, token or password; a private-key block's body), cell for
-  cell in place with the label [API key · not saved] (or token, secret, private key) and blank cells, or • when the
-  secret is shorter; a private key keeps its BEGIN and END lines; command lines and link targets the same; the live
-  screen keeps the original, and a restored tab's notice ends "N secrets were left out of the saved copy." (D36).
-  Every terminal's saved copy together is capped at 512 MiB, fixed and not a setting, with 64 MiB per terminal tab
-  kept: past it the saved copies of terminals not running now (closed tabs, other projects), least recently saved
-  first, are deleted until a full per-terminal quota fits, and then the terminal being saved keeps fewer images,
-  with an index of bytes and save times keeping the total (D37, lead ruling F4); the total is reached by that order,
-  not held as a hard ceiling, and what a save does when running terminals' text alone passes it is open. The scrub
-  question is answered; the physical registration, now with the total's index, stays open. A terminal tab's notification mute is its
-  state in the v2 Home record (D38, SP-330).
-  Amended 2026-10-17 (DL-228): the scrub floor also covers AWS session keys (ASIA...), GitHub's gho_, ghu_,
-  ghs_ and ghr_ tokens, Anthropic and OpenAI project keys (sk-ant-..., sk-proj-...), Stripe test and
-  restricted keys (sk_test_..., rk_live_..., rk_test_...), "Token <value>" authorization headers and names
-  containing PASSWD; a secret split by a soft wrap is still found and replaced.
+canonical_text: |-
+  Terminal storage follows one session per tab (DL-181, SMPFS-180). terminal_session_record moves to value pm.storage_value.terminal_session_record.v2 at its unchanged key: the required terminal_leaf_pane_id becomes an optional panel_tab_id, the id of the terminal tab that shows the session (or last showed it, once ended) or null, never derived from the session's own id, so a session survives every view change and a tab keeps its id when Restart or a restore gives it a new session, with a coordinator-only conversion and the v1 value schema kept under $defs.legacy_v1. terminal_workspace_state, terminal_section_record, terminal_workgroup_record and editor_terminal_panel_state, and with them terminal_tab_record, terminal_pane_record and terminal_leaf_pane_record, are read-only migration inputs read once by SP-330. SP-122's nine prose-only keys map to terminal_session_record, the v2 Home record, terminal_command_block, Settings, the Project's Settings, cwd_ref, saved scrollback and SP-331. Saved scrollback is the terminal restore record's transcript chunks (SP-125), not a new store: the main screen's retained lines (at most the 10,000-line scrollback plus the screen), styles, links, command records with by and anchored image placements, never the transient_only alternate screen, typed line, selections or find highlights; 64 MiB per terminal tab for text and images, images as PNG with one record per frame written once; text never gives way to images, images drop oldest first and leave a placeholder record naming them; written 1.5 s after output settles, at most every 5 s while streaming and when the page hides; Clear scrollback empties it at the next save; kept for a closed tab while the 20-tab stack can reopen it and at most 7 days; a 5 s load budget; one copy per terminal tab, keyed by project and tab id whichever session wrote it, each save replacing the tab's previous copy, so after Restart or a restore the new session's first save takes the copy over and a restored or reopened tab loads the copy under its own tab id. Saved images follow saved scrollback's storage, retention and exclusion rules. Saved scrollback is excluded from backups, exports and sync and holds the output as shown apart from the secret replacements below, which command blocks reach only by transcript_ref; its physical family registration is an open item. SP-047's no-transcript rule covers the privileged-session evidence store, not terminal scrollback. No storage family holds an agent's terminal write grant (CV-362). Amended 2026-10-10 (DL-187): before a copy is written, well-known secret formats are replaced in it (vendor API keys sk-..., AKIA..., ghp_..., github_pat_..., glpat-..., xox?-..., AIza..., Stripe sk_live_...; bearer tokens and JWTs; KEY=value assignments whose name says key, secret, token or password; a private-key block's body), cell for cell in place with the label [API key · not saved] (or token, secret, private key) and blank cells, or • when the secret is shorter; a private key keeps its BEGIN and END lines; command lines and link targets the same; the live screen keeps the original, and a restored tab's notice ends "N secrets were left out of the saved copy." (D36). Every terminal's saved copy together is capped at 512 MiB, fixed and not a setting, with 64 MiB per terminal tab kept: past it the saved copies of terminals not running now (closed tabs, other projects), least recently saved first, are deleted until a full per-terminal quota fits, and then the terminal being saved keeps fewer images, with an index of bytes and save times keeping the total (D37, lead ruling F4); the total is reached by that order, not held as a hard ceiling, and what a save does when running terminals' text alone passes it is open. The scrub question is answered; the physical registration, now with the total's index, stays open. A terminal tab's notification mute is its state in the v2 Home record (D38, SP-330). Amended 2026-10-17 (DL-228): the scrub floor also covers AWS session keys (ASIA...), GitHub's gho_, ghu_, ghs_ and ghr_ tokens, Anthropic and OpenAI project keys (sk-ant-..., sk-proj-...), Stripe test and restricted keys (sk_test_..., rk_live_..., rk_test_...), "Token <value>" authorization headers and names containing PASSWD; a secret split by a soft wrap is still found and replaced. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: Decides what a terminal tab keeps across moves, restarts and reopen, and what its restored scrollback shows.
 split_recommended: false
@@ -28110,15 +27865,23 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-181"
-  - "Plans/Decision_Log.md#DL-182"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D11, D14)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7, saved scrollback; concept lineage only)"
-  - "Plans/storage-plan.md#SP-122"
-  - "Plans/storage-plan.md#SP-125"
-  - "Plans/Decision_Log.md#DL-187"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D36, D37, D38)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 7: the secret formats, labels and notice, and the total cap's trimming order; concept lineage only)"
+- Plans/Decision_Log.md#DL-181
+- Plans/Decision_Log.md#DL-182
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D11, D14)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7, saved scrollback; concept
+  lineage only)
+- Plans/storage-plan.md#SP-122
+- Plans/storage-plan.md#SP-125
+- Plans/Decision_Log.md#DL-187
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D36, D37, D38)
+- '/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md,
+  SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 7: the secret formats, labels
+  and notice, and the total cap''s trimming order; concept lineage only)'
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
   - "pm.storage_value.terminal_session_record.v2"
   - "512 MiB"
@@ -28158,49 +27921,24 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Decision_Log.md#DL-182, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181, ContractName:Plans/storage-plan.md#SP-125, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/Contracts_V0.md#CV-362, SchemaID:pm.storage_value.terminal_session_record.v2
 
-### SP-333 - Editor Appearance And Wallpaper Remain Project-Owned
+### SP-333 - Editor Appearance And Wallpaper Settings Levels
 
 ```yaml
 plan_unit_id: SP-333
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  Editor appearance overrides are optional appearance fields inside the existing editor tab state of
-  SP-330, within its 16 KB serialized-state bound; no new physical family or buffer copy is created.
-  Absent fields fall through to the Project code.editing rows and then F3-651's defaults. The
-  token-colors map is keyed by scheme/kind and overlays the Project map per entry; null in a field
-  patch clears that override, never copies all effective defaults into the tab. A tab-scoped
-  appearance command returns a bounded receipt and saves/readbacks this nonstructural state without
-  a layout revision advance or workspace.layout_changed event. All editors and All terminals write
-  only the Project Settings snapshot through SSYS-009; no compatibility editor/terminal key
-  authorizes app-global or no-Project persistence. The customizer's remembered tab scope is view
-  state separate from the appearance fields; entering from Settings is temporary and does not
-  overwrite it. No preview, sample, dock position or hover color is stored. Wallpaper is the same
-  Project Settings snapshot's general.visual.wallpaper value; assets are immutable packaged catalog
-  assets, not copied into settings. For the migration admitted by the 2026-10-15 publication, an old
-  concept wallpaper preference may seed the current Project only when its canonical value is absent
-  and its id is valid; an explicit Project choice wins and no other Project is modified. Old
-  glass_background_mode:v1 and Mesh/Depth/Minimal do not map to images; they retire to look when no
-  new choice exists. Legacy keys are cleared only after successful owner write/readback, never
-  before, and no-Project rendering performs no migration write. Import remains SP-331's parsed
-  scheme/asset custody; this unit adds no secret, session, event family or governance authority.
-  SSYS-054’s most-recent-change rule uses the existing Project transaction revision as its order: a
-  NieR background edit commits its background value and wallpaper=look together; a later gallery
-  edit commits the chosen wallpaper id. The existing NieR background preference is retained beneath
-  an explicit gallery choice. No timestamp record, extra inheritance layer or second wallpaper store
-  is created.
+canonical_text: |-
+  Editor appearance overrides are optional appearance fields inside the existing editor tab state of SP-330, within its 16 KB serialized-state bound; no new physical family or buffer copy is created. Absent fields fall through to SSYS-059’s effective code.editing result for the actual Project/Computer/Everywhere context and then F3-651’s defaults. The token-colors map is keyed by scheme/kind and overlays the effective base map per entry; null in a field patch clears that override, never copies all effective defaults into the tab. A tab-scoped appearance command returns a bounded receipt and saves/readbacks this nonstructural state without a layout revision advance or workspace.layout_changed event. All editors and All terminals target Everywhere through the same Settings transactions; explicitly chosen narrower edits use their exact offered level. Compatibility editor/terminal keys authorize no independent writer. The customizer's remembered tab scope is view state separate from the appearance fields; entering from Settings is temporary and does not overwrite it. No preview, sample, dock position or hover color is stored. Wallpaper is the same resolver-owned general.visual.wallpaper value at its offered level; assets are immutable packaged catalog assets, not copied into settings. For the migration admitted by the 2026-10-15 publication, an old concept wallpaper preference may seed the current Project only when its canonical value is absent and its id is valid; an explicit Project choice wins and no other Project is modified. Old glass_background_mode:v1 and Mesh/Depth/Minimal do not map to images; they retire to look when no new choice exists. Legacy keys are cleared only after successful owner write/readback, never before, and no-Project rendering performs no migration write. Import remains SP-331's parsed scheme/asset custody; this unit adds no secret, session, event family or governance authority. SSYS-054’s most-recent-change rule uses the actual level/setting transaction revision as its order: a NieR background edit commits its background value and wallpaper=look together; a later gallery edit commits the chosen wallpaper id. The existing NieR background preference is retained beneath an explicit gallery choice. No timestamp record, extra inheritance layer or second wallpaper store is created. The older concept preference migration remains explicit and Project-targeted only; it never seeds Everywhere/Computer from discovered concept data. SP-348 owns current level custody. App tab appearance uses SP-349 without another buffer or wallpaper store.
 gui_related: true
-gui_classification_reason: Editor appearance and wallpaper remain Project-owned.
+gui_classification_reason: Storage binding across offered Settings levels; visible presentation remains FinalGUISpec-owned.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Tab override/reset and reload preserve sparse fields and token fallthrough inside 16 KB; an over-bound mutation
-  refuses without losing prior state.
-- An appearance update emits no structural layout event and never changes another Project.
-- Migration preserves an explicit Project choice, does not fan out an old key, and clears legacy data only after verified
-  write.
+- One resolver/transaction owns level values; tab map overlay and reset semantics remain.
+- No-Project app writes require the actual offered level/writer, not a Project.
+- Wallpaper/currentness and old explicitly admitted concept migration preserve source and readback.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -28224,11 +27962,13 @@ source_lineage:
 - Plans/Settings_System.md#SSYS-009
 - Plans/FinalGUISpec.md#F3-651
 - Plans/Settings_System.md#SSYS-054
-- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md, SHA-256
-  56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816 (decision/source lineage; not native implementation
-  evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md, SHA-256 56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816
+  (decision/source lineage; not native implementation evidence)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,A-F09,C-F11
 preserved_exact_tokens: []
-negative_constraints: []
+negative_constraints:
+- No theme/wallpaper shadow store, implicit concept migration, second writer or stale Project-only ban.
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -28501,25 +28241,8 @@ plan_unit_id: SP-337
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  DL-270 card 3. An EventRecord carries at most 16 KiB of inline body. Larger tool output, file reads, images and
-  other payloads go to a content-addressed payload store, and the record carries a reference: BLAKE3 id, byte size
-  and media type. Base64 payloads are decoded to binary at ingest, and a base64 body inline in a record is an
-  admission error. Payloads live in append-only pack files, not one file per payload. Identical payloads are
-  stored once and reference-counted; garbage collection honours retention holds, legal holds and backups. Forks,
-  summaries and conversation compaction point at the parent's records and payloads instead of copying them, and
-  moving a thread to another project or scope re-points its references and writes a lineage record, without
-  copying stored events or payloads or rewriting their history. A payload's bytes and index entry are durable
-  before any record that references it is acknowledged: the group either syncs the pack first or carries the new
-  bytes in its own segment frames and moves them into packs at seal, so a crash never leaves a reference to
-  missing bytes, and pack bytes no durable record references are dropped once no hold applies. Deleting content
-  releases its references at once, and payload bytes that no live record or hold still references are physically
-  removed within the deleting owner's deadline, 24 hours for a deleted thread, by rewriting the packs that hold
-  them; a removal that fails is disclosed and retried. Text payloads are compressed with zstd level 3;
-  already-compressed media is stored as is. Content-defined chunking is used only for large files that change and
-  for safe-point snapshots. This sets SP-227's ManagedOutputRef cap at 16 KiB. Evidence: images were 1.4 GB, 46%
-  of one T3 Code user's database within a week; six Codex subagent files reached 62.8 GB, 97.8% of it repeated
-  records; base64 was 53-67% of session bytes in this machine's samples.
+canonical_text: |-
+  DL-270 card 3. An EventRecord carries at most 16 KiB of inline body. Larger tool output, file reads, images and other payloads go to a content-addressed payload store, and the record carries a reference: BLAKE3 id, byte size and media type. Base64 payloads are decoded to binary at ingest, and a base64 body inline in a record is an admission error. Payloads live in append-only pack files, not one file per payload. Identical payloads are stored once and reference-counted; garbage collection honours retention holds, legal holds and backups. Forks, summaries and conversation compaction keep parent record/payload references. Approved N13 chat conversion is the precise exception to the former universal no-event-copy move rule: preserve immutable source events/results/Usage, seal the source conversation for Undo, and materialize full destination-owned conversation records with explicit origin lineage. Same-store records share payload refs; cross-Server transfer verifies exact payload bytes before cutover. A destination copy is not a new execution, billing event or rewritten historical source. Independent Goal/Plan/Crew/schedule/permission custody follows its own source/hold/backup rules beyond chat Undo expiry. A payload's bytes and index entry are durable before any record that references it is acknowledged: the group either syncs the pack first or carries the new bytes in its own segment frames and moves them into packs at seal, so a crash never leaves a reference to missing bytes, and pack bytes no durable record references are dropped once no hold applies. Deleting content releases its references at once, and payload bytes that no live record or hold still references are physically removed within the deleting owner's deadline, 24 hours for a deleted thread, by rewriting the packs that hold them; a removal that fails is disclosed and retried. Text payloads are compressed with zstd level 3; already-compressed media is stored as is. Content-defined chunking is used only for large files that change and for safe-point snapshots. This sets SP-227's ManagedOutputRef cap at 16 KiB. Evidence: images were 1.4 GB, 46% of one T3 Code user's database within a week; six Codex subagent files reached 62.8 GB, 97.8% of it repeated records; base64 was 53-67% of session bytes in this machine's samples.
 gui_related: false
 gui_classification_reason: "Defines payload storage and references; no visible surface."
 split_recommended: false
@@ -28546,11 +28269,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/opus/REPORT.md, SHA-256 0af8522bf4ff4d5deb44346305c7e93d6c0aeb0dcf03905f6e008980cb562155 (base64 share of session bytes)"
+- Plans/Decision_Log.md#DL-270
+- /mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4
+  (decision packet)
+- /mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c
+  (card text and options)
+- /mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637
+  (Jared's answers)
+- /mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/opus/REPORT.md, SHA-256 0af8522bf4ff4d5deb44346305c7e93d6c0aeb0dcf03905f6e008980cb562155
+  (base64 share of session bytes)
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; C-F04,D-F06,E-F11
 preserved_exact_tokens:
   - "16 KiB"
   - "BLAKE3"
@@ -28701,28 +28430,8 @@ plan_unit_id: SP-340
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  DL-270 card 6. Every redb family declares a maximum value size, at most 16 KiB; larger values go to the payload
-  store (SP-337). Canonical, non-rebuildable families and derived, rebuildable families live in two separate redb
-  files, so the derived file can be deleted and rebuilt without touching canonical state. Each database sets an
-  explicit cache size and opens with quick repair on. New stores are created atomically (SP-336). Store compaction
-  runs under the maintenance lease when fragmentation telemetry, file bytes against live bytes, passes a
-  threshold, and only while PM is idle. redb's compact() needs exclusive access, so it never runs on a busy store:
-  a derived file is rebuilt instead, and a canonical file is compacted by copying its live records into a new file
-  that is swapped in during a brief pause within SP-342's limits. Families that keep a whole document under one
-  key, such as settings:v1 and config:v1, split it into per-key rows or store it by reference; the storage
-  registry's storage_profile records which. Each storage family has a disk budget. Budgets, the fragmentation
-  threshold and cache sizes are fixed owner values, shown read-only, not settings. Storage health (F3-457) shows
-  usage, budget, reclaimable bytes and the last store compaction, with a verified reclaim action that sends the
-  existing cmd.storage.compaction.request with the current retention policy reference. Derived families are held
-  within their budgets by eviction and rebuild. Canonical budgets are advisory: a canonical family at or over its
-  budget raises a notice and offers reclaim within one maintenance cycle, and PM never refuses a write or prunes
-  canonical history because of a budget. Daily usage totals are a canonical family (UF-108). The storage
-  registry's storage_profile holds the values: each family's redb file, storage group and value limit, and twelve
-  storage groups with advisory canonical and hard derived budgets. Measured: 128-130 of 301 redb families stored
-  JSON text; redb held 1-8 KiB values at 1.56 times their size; deleting half a store returned no space until
-  compact(); compacting a 3 GB store took 21.7 s with 328 MB of RAM and no extra disk, against 109.6 s for SQLite
-  VACUUM, whose disk use peaked at 4.71 GB, 1.5 times the database.
+canonical_text: |-
+  DL-270 card 6. Every redb family declares a maximum value size, at most 16 KiB; larger values go to the payload store (SP-337). Canonical, non-rebuildable families and derived, rebuildable families live in two separate redb files, so the derived file can be deleted and rebuilt without touching canonical state. Each database sets an explicit cache size and opens with quick repair on. New stores are created atomically (SP-336). Store compaction runs under the maintenance lease when fragmentation telemetry, file bytes against live bytes, passes a threshold, and only while PM is idle. redb's compact() needs exclusive access, so it never runs on a busy store: a derived file is rebuilt instead, and a canonical file is compacted by copying its live records into a new file that is swapped in during a brief pause within SP-342's limits. Families that keep a whole document under one key, such as settings:v1 and config:v1, split it into per-key rows or store it by reference; the storage registry's storage_profile records which. Each storage family has a disk budget. Budgets, the fragmentation threshold and cache sizes are fixed owner values, shown read-only, not settings. Storage health (F3-457) shows usage, budget, reclaimable bytes and the last store compaction, with a verified reclaim action that sends the existing cmd.storage.compaction.request with the current retention policy reference. Derived families are held within their budgets by eviction and rebuild. Canonical budgets are advisory: a canonical family at or over its budget raises a notice and offers reclaim within one maintenance cycle, and PM never refuses a write or prunes canonical history because of a budget. Daily usage totals are a canonical family (UF-108). The storage registry's storage_profile holds the values: each family's redb file, storage group and value limit, and twelve storage groups with advisory canonical and hard derived budgets. Measured: 128-130 of 301 redb families stored JSON text; redb held 1-8 KiB values at 1.56 times their size; deleting half a store returned no space until compact(); compacting a 3 GB store took 21.7 s with 328 MB of RAM and no extra disk, against 109.6 s for SQLite VACUUM, whose disk use peaked at 4.71 GB, 1.5 times the database. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: "Storage health shows usage, budgets, reclaimable bytes and a reclaim action."
 split_recommended: false
@@ -28747,12 +28456,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/vm-media-REPORT.md, SHA-256 bb27abc69a8204a6598ffea1bad173c490836d9cc6a16ca4d0b60deb7c5666bd"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/vm-crash-REPORT.md, SHA-256 8b0b9d24c5351baf9fb19f4c64ea4ea44f6483a22b3afe3e424c9c307a83c0cd"
+- Plans/Decision_Log.md#DL-270
+- /mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4
+  (decision packet)
+- /mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c
+  (card text and options)
+- /mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637
+  (Jared's answers)
+- /mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/vm-media-REPORT.md, SHA-256 bb27abc69a8204a6598ffea1bad173c490836d9cc6a16ca4d0b60deb7c5666bd
+- /mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/vm-crash-REPORT.md, SHA-256 8b0b9d24c5351baf9fb19f4c64ea4ea44f6483a22b3afe3e424c9c307a83c0cd
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
+  /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens:
   - "compact()"
   - "cmd.storage.compaction.request"
@@ -29213,3 +28927,550 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-026, ContractName:Plans/storage-plan.md#SP-236, ContractName:Plans/assistant-chat-design.md#ACD-242, ContractName:Plans/usage-feature.md#UF-108, ContractName:Plans/Backup_Restore_System.md#BRS-031, ContractName:Plans/Remote_Access_System.md#RAS-016
+
+
+### SP-348 - Sparse Settings Levels Writers History And Join Custody
+
+```yaml
+plan_unit_id: SP-348
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  SSYS-002/059/060 own semantics. This unit alone freezes physical Settings level keys: config:everywhere; config:computer:server:{hex(server_id)}; config:computer:execution_host:{hex(execution_host_id)}; config:device:{hex(client_id)}; config:project:{hex(project_id)}. Hex is lowercase complete UTF-8 identity; tagged Server/Execution Host domains never collide. Level keys identify sparse own values, not an Execution Environment level. The Everywhere writer is the explicitly chosen settings home; Server/Host Computer levels have their exact owning connection/writer; Device uses its actual Client without a fake writer_server_id; Project own values remain its Vault. Stored paths are values tied to actual Host, never route/identity authority.
+  Per-setting canonical values use settings_own.v1:{hex(level_key)}:{hex(setting_id)}, family settings_own, with selected own value, source, actor/time, setting_revision, inventory/version, owner validation and immutable operation/result refs. A level head settings_level_head.v1:{hex(level_key)} contains writer/role generation, level revision and bounded payload refs for revision/index metadata, not a second value store. Per-setting CAS detects same-setting races while independent edits remain possible; theme_pair commits both halves together at one writer. Defaults stay bundled, own values to-default remain distinguishable from absence. General settings:v1/config:v1 whole-document keys are historical read/coordinator inputs, never simultaneous live writers; preserve SP-340 per-setting/section split and at most 16 KiB values.
+  pm.settings_level_snapshot.v1, pm.project_settings_snapshot.v2, pm.settings_effective_value.v1 and pm.settings_differences_index.v1 are exact logical contracts at Settings_System; snapshots are point-in-time sparse reads over canonical rows with identical value/source/revision key sets and immutable hashes, not a second mutable writer. Larger manifests/maps use SP-337 refs. Differences, follower mirrors and client caches are redacted bounded read-only derived records with source revision/as-of/last verified freshness; absence/offline/index staleness never becomes write success. Secret/key/profile/pairing/memory/notebook bodies are excluded from values, caches, event/index/preview/history/export. Normal Settings history keeps its current owner retention; no new invented duration. One multi-Computer operation reports done/not_reached/refused and queues nothing.
+  Settings-home role/trust generation and move/join custody are canonical exact Server/Settings owner records. Only verified copy/readback with old-writer fence can switch the home role once; home loss elects nobody, stale-copy acknowledgement cannot prove fencing. Join operation uses settings_join.v1:{hex(home_server_id)}:{hex(join_id)} and immutable preimages/difference/choice/result manifest under the settings home. The accepted Undo window is 30 days, plus independent references/holds; inverse checks current setting/owner revisions and reports changed-since exclusions. Ordinary change Undo remains under its owner policy. No join copies executable trust, installation, credentials or another Project’s records as authority.
+  settings.layer.changed is application-only if admitted, carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. Legacy settings.updated is not inferred as an alias and stays owner_contract_missing until separately resolved. Full Server Backup includes home/Everywhere/Computer canonical values/history/join and referenced assets; Project Backup includes only Project own values/assets and converted canonical records. Device writer/caches preserve their own policy. Registry entries must bind exact schemas/encoding/retention/disk budgets/writer/backup before production; no native availability follows from this prose.
+gui_related: false
+gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
+depends_on:
+- SSYS-059
+- SSYS-060
+- SP-340
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Tagged level keys and exact one writer/role distinguish Server/Host/Device/Project.
+- Sparse row/head/snapshot/mirror/index storage has one value authority and same-key revision maps.
+- Join Undo/backup/retention is explicit and contains no secrets or offline writes.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F01
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F03
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F08
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F02
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F03
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F02
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F05
+preserved_exact_tokens:
+- config:everywhere
+- config:computer:server:{hex(server_id)}
+- config:computer:execution_host:{hex(execution_host_id)}
+- config:device:{hex(client_id)}
+- config:project:{hex(project_id)}
+- pm.settings_level_snapshot.v1
+- pm.project_settings_snapshot.v2
+- pm.settings_differences_index.v1
+- settings.layer.changed
+- 30 days
+negative_constraints:
+- No global/Project collapsed snapshot, live JSON mirror, automatic failover or credential/content export.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### SP-349 - App Chat Root Everyday Runtime Recovery And UI Custody
+
+```yaml
+plan_unit_id: SP-349
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Application work uses the same seglog, two redb files, payload packs, render pages/index engines and storage lock/maintenance/backup owners as Project counterparts, under SP-345’s app-data root and actual Server. App scope is not a Project Vault and holds no project_home_server_id before conversion. The attached table is the exclusive physical app key map for ordinary chat/root/recovery/UI/notebook/browser/runtime records; version/schema/source selection is CV-366. Raw missing Project interpolation, main-root fallback, per-thread infinite app buckets and new live JSON are forbidden. Source/context authority uses exact Host/Environment/roots, not the configured display path alone.
+  Place/folder records bind actual Server/Host/Environment and canonical path identity/currentness, draft_id before first message and thread_id thereafter. Concurrent first save/command adopts one folder exactly once. Visible chat folders live outside PM data in the Computer’s configured no-project chat root; no talk-only folder, rename relocation or implicit delete. Disconnected chat metadata remains named/read-only; continuation needs the real current writer. Request/outbox continuity remains the existing thread owner; facade preview is local and does not create its own storage family. Client close does not stop the Server’s admitted work.
+  One app Server-wide counterpart bucket per family supplies the same limits, budget/TTL/retention/holds and backup classification as the Project bucket, not a reset per chat. Restore points share one 2,048 cap with the exact 7,776,000-second reference-release threshold, oldest eligible pressure and every descendant/application/preserve/legal/source/rollback/maintenance/backup hold; states/results remain available|expired|deleted|corrupt and branched|refused|failed. Web cache shares the 500 MB default with owner TTL/LRU. No other numeric cap is invented. Families whose counterpart has no hard cap retain that explicit disposition plus mandatory disk budget; unknown policy cannot be treated as unlimited. A table token owner_*_counterpart is a required F-d resolution to the existing named policy/anchor, never a new policy ID or a production registration.
+  One app index builder/publication slot and source token/checkpoint domain preserve exact Server/thread/root/generation. Source read, compaction, restore/revert and FileSafe use actual absolute Host/root and all canonical source/currentness/permission/writer/Stop/recovery gates; replay rebuilds only derived views, never canonical authority. App notebook keeps its five existing parent kinds and 16 KiB inline/64 KiB request, 512-token/2 KiB capsule, 1,024-token/4 KiB combined injection limits. Memory stays thread-private with 350-token capsule and existing verification/evidence; public_safe taught rules remain distinct. Cross-read grants never authorize notebook/private-memory access.
+  Browser creation/reset, Eval, terminal and layout adopt their whole app CV-366 source graphs or remain unavailable. Protected auth is not app browser automation, capture, restore or export content. Live PTY/process/kernel/controller/ports remain on original Computer through conversion; future sessions re-resolve. App Home/panels/boards use exact Server/app/workspace keys, named layouts/presets stay per person, board snapshots match saved scope/Server only, and converted Project UI loads independently. Canonical app records/held payloads join coherent Full Server Backup, derived pages/indexes rebuild; counterpart source/dedupe/rollback/retention and deletion deadlines remain. Chat Undo expiry cannot purge independently retained notebook/checkpoint/task/audit authority.
+gui_related: false
+gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
+depends_on:
+- CV-365
+- CV-366
+- SP-337
+- SP-340
+- SP-338
+- SP-345
+unblocks: []
+acceptance_criteria:
+- Every admitted app row uses its exact key/schema/source/writer/read/backup/retention disposition.
+- App buckets match counterpart bounds; held canonical source never evicts as a cache.
+- No root/Host/thread aliasing, canonical reconstruction or unsupported native-source fallback.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F04
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F07
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F08
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F09
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F10
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F11
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F12
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F02
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F05
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F10
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F11
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F11
+preserved_exact_tokens:
+- scope_partition=app
+- restore_point_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}
+- 2,048
+- 7,776,000 seconds
+- 500 MB
+- 16 KiB
+- BLAKE3
+negative_constraints:
+- No fake Project/Vault, empty key, second engine/board/database, private-memory merge or per-chat cache reset.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+**SP-349 exact application physical rows**
+
+Every application key begins with its distinct versioned family prefix and actual `hex(storage_instance_id):hex(server_id)`; hex is lowercase encoding of the complete UTF-8 scalar identity, without normalization or truncation. This is separate from EventRecord’s unchanged `app` partition and `project~` encoding. Logical record references use CV-366 selected roots. The closed physical wrapper requires schema_id, schema_version=1.0.0, storage_instance_id, server_id, scope=WorkflowScopeV2(application), record; key/value/record scope and identities must agree. The physical wrapper schema_id for family `f_application` is `pm.storage_value.f.application.v1`, at `Plans/application_workflow_contracts.schema.json#/$defs/<PascalCase(f)>StorageApplicationV1`. No extra fields or self-hash are stored. Canonical rows use the canonical redb file, derived rows the derived redb file. All use CV-366’s app MessagePack physical codec, at most 16 KiB per value with larger content in SP-337 payload refs. Missing mandatory policy/disk-budget/writer/source/backup registration leaves a family unavailable; it never inherits unlimited space.
+
+| Existing counterpart / new app family | Exact key_shape | Retention and custody |
+|---|---|---|
+| `chat_place` → `chat_place_application` | `chat_place.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}` | canonical; `RP-GOAL-THREAD-LIFETIME` |
+| `chat_draft_place` → `chat_draft_place_application` | `chat_draft_place.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(client_id)}:{hex(draft_id)}` | canonical draft, adopted once; owner draft lifetime; `owner_draft_lifetime` |
+| `chat_folder_binding` → `chat_folder_binding_application` | `chat_folder_binding.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}` | canonical; no talk-only folder; `RP-GOAL-THREAD-LIFETIME` |
+| `thread_head` → `thread_head_application` | `thread_head.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}` | canonical head/source refs; renderer pages derived; `owner_thread_lifetime` |
+| `chat_render_page` → `chat_render_page_application` | `chat_render_page.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(generation)}:{hex(page_id)}` | derived 50-item page; rebuilding is not lost history; `RP-PROJECTION-3GEN` |
+| `thread_detail` → `thread_detail_application` | `thread_detail.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(generation)}` | derived; logical detail identity app:thread:generation; `RP-PROJECTION-3GEN` |
+| `thread_attempt_record` → `thread_attempt_record_application` | `thread_attempt_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(run_id)}:{hex(attempt_id)}` | canonical actual attempt, no node fabricated; `RP-RUNTIME-365D` |
+| `thread_blocked_record` → `thread_blocked_record_application` | `thread_blocked_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(run_id)}:{hex(blocked_identity)}` | canonical permission/blocked source plus derived views; `RP-AUTHORITY-INDEFINITE` |
+| `requested_effective_runtime` → `requested_effective_runtime_application` | `requested_effective_runtime.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(snapshot_id)}:{snapshot_sha256}` | canonical immutable run activation; `RP-AUTHORITY-INDEFINITE` |
+| `runtime_artifact_index` → `runtime_artifact_index_application` | `runtime_artifact_index.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(artifact_id)}` | derived index; artifact body follows original owner; `RP-PROJECTION-3GEN` |
+| `todo_work_binding` → `todo_work_binding_application` | `todo_work_binding.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(todo_list_id)}:{hex(binding_id)}` | canonical exact owner binding; `RP-AUTHORITY-INDEFINITE` |
+| `restore_point_record` → `restore_point_record_application` | `restore_point_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}` | canonical; shared Server app 2,048 bucket; `RP-RESTOREPOINT-90D-AFTER-RELEASE` |
+| `restore_point_creation_commit` → `restore_point_creation_commit_application` | `restore_point_creation_commit.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}` | canonical source/append settlement; `RP-RESTOREPOINT-90D-AFTER-RELEASE` |
+| `restore_point_create_result` → `restore_point_create_result_application` | `restore_point_create_result.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(command_instance_id)}` | canonical original result survives lawful point purge; `RP-AUTHORITY-INDEFINITE` |
+| `restore_point_expiry_commit` → `restore_point_expiry_commit_application` | `restore_point_expiry_commit.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}` | canonical original lifecycle; `RP-RESTOREPOINT-90D-AFTER-RELEASE` |
+| `restore_point_deletion_commit` → `restore_point_deletion_commit_application` | `restore_point_deletion_commit.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}` | canonical original lifecycle; `RP-RESTOREPOINT-90D-AFTER-RELEASE` |
+| `restore_point_delete_result` → `restore_point_delete_result_application` | `restore_point_delete_result.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(command_instance_id)}` | canonical original result; `RP-AUTHORITY-INDEFINITE` |
+| `restore_point_retention_summary` → `restore_point_retention_summary_application` | `restore_point_retention_summary.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}` | canonical independent retirement authority; `RP-RESTOREPOINT-90D-AFTER-RELEASE` |
+| `restore_point_created_checkpoint` → `restore_point_created_checkpoint_application` | `restore_point_created_checkpoint.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(consumer_id)}` | derived atomic projection/checkpoint; `RP-PROJECTION-3GEN` |
+| `restore_point_expired_checkpoint` → `restore_point_expired_checkpoint_application` | `restore_point_expired_checkpoint.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(consumer_id)}` | derived atomic projection/checkpoint; `RP-PROJECTION-3GEN` |
+| `restore_point_deleted_checkpoint` → `restore_point_deleted_checkpoint_application` | `restore_point_deleted_checkpoint.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(consumer_id)}` | derived atomic projection/checkpoint; `RP-PROJECTION-3GEN` |
+| `context_compaction` → `context_compaction_application` | `context_compaction.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(operation_id)}` | canonical exact completion/source/replay; `owner_compaction_counterpart` |
+| `safe_point` → `safe_point_application` | `safe_point.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(run_id)}:{hex(attempt_id)}:{hex(safe_point_id)}` | canonical real absolute Host/root identity, distinct sp:/rp:; `owner_safe_point_counterpart` |
+| `working_notebook_record` → `working_notebook_record_application` | `working_notebook_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(notebook_id)}` | canonical actual admitted parent only; `RP-AUTHORITY-INDEFINITE` |
+| `working_notebook_entry_record` → `working_notebook_entry_record_application` | `working_notebook_entry_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(notebook_id)}:{hex(entry_id)}` | canonical original revisions/restrictions; `RP-AUTHORITY-INDEFINITE` |
+| `notebook_checkpoint_record` → `notebook_checkpoint_record_application` | `notebook_checkpoint_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(notebook_id)}:{hex(checkpoint_id)}` | canonical checkpoint under independent holds; `RP-AUTHORITY-INDEFINITE` |
+| `assistant_memory` → `assistant_memory_application` | `assistant_memory.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(memory_id)}` | canonical per-thread; no app shared corpus; `owner_memory_counterpart` |
+| `home_workspace_layout` → `home_workspace_layout_application` | `home_workspace_layout.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(workspace_tab_id)}` | canonical app layout; same invariant/custody split; `RP-CONFIG-CURRENT` |
+| `widget_layout` → `widget_layout_application` | `widget_layout.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(board_id)}` | canonical app board; never merged into Project; `RP-CONFIG-CURRENT` |
+| `panel_state` → `panel_state_application` | `panel_state.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(panel_kind)}:{hex(workspace_tab_id)}` | current UI value; no runtime authority; `RP-CONFIG-CURRENT` |
+| `editor_workspace_state` → `editor_workspace_state_application` | `editor_workspace_state.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(workspace_tab_id)}` | canonical workspace tabs, no unsaved body; `owner_editor_counterpart` |
+| `editor_state` → `editor_state_application` | `editor_state.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(execution_host_id)}:{file_identity_sha256}` | canonical unsaved recovery, no reset-to-empty; `owner_editor_counterpart` |
+| `filetree_state` → `filetree_state_application` | `filetree_state.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(root_id)}` | current app picker/tree UI; `RP-CONFIG-CURRENT` |
+| `discovery_index` → `discovery_index_application` | `discovery_index.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(root_id)}:{hex(index_generation)}` | derived actual Host/root; one app builder slot; `owner_index_counterpart` |
+| `web_cache` → `web_cache_application` | `web_cache.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{cache_key_sha256}` | derived cache one Server-wide 500 MB default bucket; `owner_web_cache_ttl_lru` |
+| `terminal_session_record` → `terminal_session_record_application` | `terminal_session_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(terminal_session_id)}` | canonical session stays original Computer; `RP-TERMINAL-SESSION-90D` |
+| `terminal_command_block` → `terminal_command_block_application` | `terminal_command_block.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(terminal_session_id)}:{hex(command_block_id)}` | canonical observed command source; no live PTY migration; `owner_terminal_counterpart` |
+| `browser_workspace` → `browser_workspace_application` | `browser_workspace.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(profile_id)}:{hex(workspace_id)}` | canonical normal browser; protected auth excluded; `owner_browser_counterpart` |
+| `browser_session` → `browser_session_application` | `browser_session.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(profile_id)}:{hex(session_id)}` | canonical actual controller/session; `owner_browser_counterpart` |
+| `browser_workspace_created_index_checkpoint` → `browser_workspace_created_index_checkpoint_application` | `browser_workspace_created_index_checkpoint.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(consumer_id)}` | derived app exact source/append/index; `RP-PROJECTION-3GEN` |
+| `browser_workspace_reset_index_checkpoint` → `browser_workspace_reset_index_checkpoint_application` | `browser_workspace_reset_index_checkpoint.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(consumer_id)}` | derived app exact reset/read; `RP-PROJECTION-3GEN` |
+| `eval_session` → `eval_session_application` | `eval_session.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(run_id)}:{hex(session_id)}` | canonical actual root/session; no shared kernel; `owner_eval_counterpart` |
+| `visualizer_state` → `visualizer_state_application` | `visualizer_state.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(message_id)}:{hex(visualizer_id)}` | canonical owner state/output refs; existing trust; `owner_visualizer_counterpart` |
+| `application_history_projection` → `application_history_projection_application` | `application_history_projection.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(generation)}` | derived owner result view, no authority; `RP-PROJECTION-3GEN` |
+| `application_attention_projection` → `application_attention_projection_application` | `application_attention_projection.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(generation)}` | derived exact work refs/freshness; `RP-PROJECTION-3GEN` |
+
+
+### SP-350 - Conversion Cutover Sealed Source Undo And Payload Custody
+
+```yaml
+plan_unit_id: SP-350
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  CV-367 owns the exhaustive semantic manifest; this unit owns its durable operation and writer custody. Canonical family chat_move_operation uses chat_move_operation.v1:{hex(storage_instance_id)}:{hex(source_server_id)}:{hex(conversion_id)}. chat_move_manifest.v1 at the same identity plus {manifest_sha256} retains the immutable selected preview/source-target/owner/permission/currentness/family map in payload refs within 16 KiB. chat_move_cutover.v1 at conversion identity keeps exact source/destination writer claim generations, verified-copy boundary, committed target identity and one cutover outcome. chat_move_lineage.v1:{hex(storage_instance_id)}:{hex(thread_id)}:{hex(conversion_id)} preserves immutable source/destination binding, record map and inverse/retention/tombstone pointers. Sealed source content stays in its original canonical store, never reencoded as another Project event or a live JSON history.
+  Create/check owner reservations and transfer exact selected content, including independently held payloads, before acquiring/finalizing cutover under current source/destination writer and backup/maintenance fences. Destination new Project is listed before moving its chat; destination adoption is one generation-bound publication and source live index/writer is fenced. Two physical stores may retain verified copies but never two writable thread histories. Every source/destination validates its own actual claim and refuses stale delayed work. Unknown/partial copy, owner/Stop or receipt state is paused/recovery_required; Resume/Cancel revalidate both Servers and never repeat a settled owner effect or speculate deletion. Same-store payload refs share; cross-store verified copies retain exact bytes/hash/ref lineage and all independent holds.
+  Goal/Plan/Crew linked births, notebook Vault adoption, permission snapshots, timer target replacements and destination indexes use their owner subtransactions with exact result refs; conversion writes no domain body or certification itself. Pending source schedules are explicitly held/invalidated and future targets re-admitted; source occurrences and accepted audit remain. New destination records preserve original source link, not forged original operation or completion. Layout/board state is loaded from the chosen Project, never merged from app. Auth/profile/credentials/routes and Stop grants do not transfer.
+  Undo basis is chat_move_undo.v1:{hex(storage_instance_id)}:{hex(source_server_id)}:{hex(conversion_id)} with created-at deadline, first-new-work fence, exact inverse preimages and owner refs. It lasts until first new work or seven days. Same-store CAS or cross-Server verified inverse needs current actual targets and both Servers; it affects only unchanged eligible effects, uses list-only Remove for a newly created Project, and never deletes remote repository/branch/backup or modified work. Do not clear source/destination pause/run latches or auto-resume on Undo. Sealed conversation content follows its existing purge/24-hour deletion deadline once released; independent canonical Goal/Plan/Crew/notebook/permission/schedule/receipt/hold/payload custody remains until its own anchor/reference policy permits deletion. Backup restores lineage/tombstone/cutover coherently and refuses activation of an obsolete source. Operation/result/replay audit is canonical non-rebuildable under existing RP-AUTHORITY-INDEFINITE; no new generic receipt engine is introduced.
+gui_related: false
+gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
+depends_on:
+- CV-367
+- SP-349
+- SP-337
+- SP-321
+unblocks: []
+acceptance_criteria:
+- Operation/manifest/cutover/lineage/inverse have exact bounded canonical custody and one writer.
+- Failure/restart/resume/cancel/Undo preserve settled effects, original source and target authority.
+- Backups and retention avoid dual-live restoration or early independent authority purge.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F04
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F07
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F08
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F09
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F07
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F09
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F11
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F01
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F11
+preserved_exact_tokens:
+- chat_move_operation.v1
+- chat_move_manifest.v1
+- chat_move_cutover.v1
+- chat_move_lineage.v1
+- chat_move_undo.v1
+- seven days
+- thread_id
+negative_constraints:
+- No event rewrite, duplicated billing, two live source/destination writers, automatic resume or destructive Undo.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### SP-351 - Application Goal Crew Coordination Source And Backup Custody
+
+```yaml
+plan_unit_id: SP-351
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  The attached rows are app siblings in the existing canonical/derived engines, not a second Goal store, coordination database or message board. GRS-086/CWR-045/OSI-440 own semantics and CV-366 freezes exact logical/source/method/hash selections. Preserve every Project family/key/source resource and original semantic/physical byte domain unchanged. App bodies retain exactly eleven fields with project_id required null; scope and Server/Host/roots are in the wrapper/context. Objective revision/origin/control/receipt remain separately typed and keep original exact scalar/text bounds and independent content/audit lifetimes. New app Goal currentness uses the CV-366 goal_body_currentness domain, never a Project hash with app substituted for project_id.
+  Original Goal start joins independently accepted app intent, original source, canonical body/origin/control and content-free command custody, actual append/first receipt and SIR original terminal result. Update joins original direct Save or approved complete agent proposal, shared app body reservation/commit, progress, event/receipt and immutable terminal audit; Cancel latches real host Stop first, retains source/Stop/partial effects and hidden control, then its actual content-free fact and original result. Each family’s role/current versus retained reader follows CV-366, never event-derived objective or late recapture. Every live writer/read/cancel/backup/restore/retention edge adopts its app graph together or is unavailable. Historical-only and Project Workflow/certified graphs remain closed; ordinary app dispatch never invents WorkNode evidence. A canonical completion receipt is non-rebuildable and cannot be reconstructed from events or a disposable projection.
+  Crew definition/config/team/run/participant/transcript/messages/questions/artifacts and exact requested/effective snapshots use the existing four protocols and parent ceilings. App Crew Auto is a real thread configuration with revision1, separate from Project commit or thread override-only check. Application coordination uses one sole coordinator/appender, seven actual agent families only when admitted, exact AgentMessage app definition at both canonical producer/consumer sites, 16 KiB inline and BLAKE3 refs. Agent/file/operation/snapshot/board/checkpoint keys preserve actual Server/thread/crew/run/root/Host. Read tokens/checkpoints are from their full original source and current publication, never copied authority or JSON files. Same path on another Host/root/crew does not alias.
+  App Goal bodies/history/origin/control keep RP-GOAL-THREAD-LIFETIME; immutable command/update/cancel/association/permission/receipt audit keeps RP-AUTHORITY-INDEFINITE, matching original rows. Coordination events keep RP-COORDINATION-180D and derived views/checkpoints RP-PROJECTION-3GEN with complete source holds/coverage. The app bound is one Server counterpart bucket, not one per chat. No new numeric Goal/Crew cap is invented; existing explicit none plus disk budget/refuse policy remains. Full Server Backup captures canonical body/control/accepted source/Stop/receipt/association/coordination parent records and referenced payloads coherently under BRS-033, with actual app source/native replay obligations; derived projections rebuild from genuine sources only. Restore never clears a newer Stop or revives a source fenced by conversion. Linked destination records and fresh admission follow CV-367/SP-350; ordinary mutation cannot change immutable bindings or run scope. Canonical source/receipt/held payload lifetime does not end with chat Undo.
+gui_related: false
+gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
+depends_on:
+- CV-366
+- CV-367
+- SP-287
+- SP-294
+- SP-299
+- SP-304
+- SP-305
+- SP-320
+unblocks: []
+acceptance_criteria:
+- All app source/body/control/append/result/read/coordination/backup edges use exact new editions or unavailable
+  disposition.
+- Original Project/historical/certified graph remains unchanged and ordinary bindings immutable.
+- Canonical task/audit and Stop survive moves, restore and chat Undo expiry with counterpart limits.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F07
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F10
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-F07
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F11
+preserved_exact_tokens:
+- GoalRecordApplicationV1
+- project_id=null
+- owner.goal.body.mutation.application@1.0.0
+- RP-GOAL-THREAD-LIFETIME
+- RP-AUTHORITY-INDEFINITE
+- 16 KiB
+- BLAKE3
+negative_constraints:
+- No Goal reconstruction from events, copied source/certification/checkpoint authority, second board or live JSON.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+**SP-351 exact application physical rows**
+
+Every application key begins with its distinct versioned family prefix and actual `hex(storage_instance_id):hex(server_id)`; hex is lowercase encoding of the complete UTF-8 scalar identity, without normalization or truncation. This is separate from EventRecord’s unchanged `app` partition and `project~` encoding. Logical record references use CV-366 selected roots. The closed physical wrapper requires schema_id, schema_version=1.0.0, storage_instance_id, server_id, scope=WorkflowScopeV2(application), record; key/value/record scope and identities must agree. The physical wrapper schema_id for family `f_application` is `pm.storage_value.f.application.v1`, at `Plans/application_workflow_contracts.schema.json#/$defs/<PascalCase(f)>StorageApplicationV1`. No extra fields or self-hash are stored. Canonical rows use the canonical redb file, derived rows the derived redb file. All use CV-366’s app MessagePack physical codec, at most 16 KiB per value with larger content in SP-337 payload refs. Missing mandatory policy/disk-budget/writer/source/backup registration leaves a family unavailable; it never inherits unlimited space.
+
+| Existing counterpart / new app family | Exact key_shape | Retention and custody |
+|---|---|---|
+| `goal_body_record` → `goal_body_record_application` | `goal_body_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}` | canonical; `RP-GOAL-THREAD-LIFETIME` |
+| `goal_objective_revision` → `goal_objective_revision_application` | `goal_objective_revision.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{revision_decimal}` | canonical; `RP-GOAL-THREAD-LIFETIME` |
+| `goal_objective_origin` → `goal_objective_origin_application` | `goal_objective_origin.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}` | canonical; `RP-GOAL-THREAD-LIFETIME` |
+| `goal_body_control` → `goal_body_control_application` | `goal_body_control.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}` | canonical; `RP-GOAL-THREAD-LIFETIME` |
+| `goal_body_mutation_receipt` → `goal_body_mutation_receipt_application` | `goal_body_mutation_receipt.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_start_command_custody` → `goal_start_command_custody_application` | `goal_start_command_custody.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_update_source_audit` → `goal_update_source_audit_application` | `goal_update_source_audit.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_update_input_content` → `goal_update_input_content_application` | `goal_update_input_content.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-GOAL-THREAD-LIFETIME` |
+| `goal_update_progress` → `goal_update_progress_application` | `goal_update_progress.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_update_terminal_audit` → `goal_update_terminal_audit_application` | `goal_update_terminal_audit.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_cancel_source_audit` → `goal_cancel_source_audit_application` | `goal_cancel_source_audit.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_host_stop_control` → `goal_host_stop_control_application` | `goal_host_stop_control.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}` | canonical; `RP-GOAL-THREAD-LIFETIME` |
+| `goal_cancel_stop_receipt` → `goal_cancel_stop_receipt_application` | `goal_cancel_stop_receipt.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_cancel_receipt` → `goal_cancel_receipt_application` | `goal_cancel_receipt.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_cancel_progress` → `goal_cancel_progress_application` | `goal_cancel_progress.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_cancel_control_publication` → `goal_cancel_control_publication_application` | `goal_cancel_control_publication.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_cancel_terminal_audit` → `goal_cancel_terminal_audit_application` | `goal_cancel_terminal_audit.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_execution_writer_domain` → `goal_execution_writer_domain_application` | `goal_execution_writer_domain.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_execution_writer_domain_head` → `goal_execution_writer_domain_head_application` | `goal_execution_writer_domain_head.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_execution_binding_revision` → `goal_execution_binding_revision_application` | `goal_execution_binding_revision.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(binding_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_execution_binding_origin` → `goal_execution_binding_origin_application` | `goal_execution_binding_origin.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(binding_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_plan_binding` → `goal_plan_binding_application` | `goal_plan_binding.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(binding_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_execution_binding_control` → `goal_execution_binding_control_application` | `goal_execution_binding_control.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(binding_id)}` | canonical; `RP-GOAL-THREAD-LIFETIME` |
+| `goal_execution_binding_pending_resolution` → `goal_execution_binding_pending_resolution_application` | `goal_execution_binding_pending_resolution.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_cancel_binding_selection` → `goal_cancel_binding_selection_application` | `goal_cancel_binding_selection.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_cancel_assignment_audit` → `goal_cancel_assignment_audit_application` | `goal_cancel_assignment_audit.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_receipt` → `goal_receipt_application` | `goal_receipt.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `goal_runtime_lineage_record` → `goal_runtime_lineage_record_application` | `goal_runtime_lineage_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `collaboration_definition` → `collaboration_definition_application` | `collaboration_definition.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(definition_id)}` | canonical; `RP-CONFIG-CURRENT` |
+| `collaboration_run` → `collaboration_run_application` | `collaboration_run.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(collaboration_run_id)}` | canonical; `RP-RUNTIME-365D` |
+| `collaboration_participant` → `collaboration_participant_application` | `collaboration_participant.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}` | canonical; `RP-RUNTIME-365D` |
+| `collaboration_transcript` → `collaboration_transcript_application` | `collaboration_transcript.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}:{hex(item_id)}` | canonical; `RP-RUNTIME-365D` |
+| `crew_auto` → `crew_auto_application` | `crew_auto.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}` | canonical; `RP-CONFIG-CURRENT` |
+| `crew_board_message` → `crew_board_message_application` | `crew_board_message.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(message_id)}` | canonical; `RP-COORDINATION-180D` |
+| `coordination_agent` → `coordination_agent_application` | `coordination_agent.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(agent_id)}` | derived; `RP-PROJECTION-3GEN` |
+| `coordination_file` → `coordination_file_application` | `coordination_file.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(execution_host_id)}:{root_identity_sha256}:{path_identity_sha256}` | derived; `RP-PROJECTION-3GEN` |
+| `coordination_operation` → `coordination_operation_application` | `coordination_operation.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(operation_id)}` | derived; `RP-PROJECTION-3GEN` |
+| `coordination_snapshot` → `coordination_snapshot_application` | `coordination_snapshot.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(publication_id)}` | derived; `RP-PROJECTION-3GEN` |
+| `coordination_checkpoint` → `coordination_checkpoint_application` | `coordination_checkpoint.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(consumer_id)}` | derived; `RP-PROJECTION-3GEN` |
+| `goal_run_started_projection` → `goal_run_started_projection_application` | `goal_run_started_projection.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(run_id)}` | derived; `RP-PROJECTION-3GEN` |
+| `goal_run_started_checkpoint` → `goal_run_started_checkpoint_application` | `goal_run_started_checkpoint.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(consumer_id)}` | canonical; `RP-PROJECTION-3GEN` |
+| `goal_run_started_cancelled_projection` → `goal_run_started_cancelled_projection_application` | `goal_run_started_cancelled_projection.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(run_id)}` | derived; `RP-PROJECTION-3GEN` |
+| `goal_run_started_cancelled_checkpoint` → `goal_run_started_cancelled_checkpoint_application` | `goal_run_started_cancelled_checkpoint.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(consumer_id)}` | canonical; `RP-PROJECTION-3GEN` |
+
+
+### SP-352 - Application Plan Schedule Cancel And Pause Physical Editions
+
+```yaml
+plan_unit_id: SP-352
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  APR-073/074, PLS-024/PDS-023 and SQR-019/020 own logical app Plan/Deep Plan/scheduling. The attached exact physical app rows cover aggregate/immutable revisions/current-thread slot, PlanRun/adherence/To-Dos/ledger/bundle, schedule/message/window/consent/occurrence and original cancellation/result/retirement source. CV-366/368 freeze selected logical/source/hash versions, not a nullable rewrite of SP-306/307’s exact original Project ten-family/cancel/anchor graph. The app PlanRun’s own logical semantics/field count and real original run_completion_anchor are preserved; an app wrapper never mints a completion from history. Exact approved Plan ID/version/hash/steps, actual app Computer/roots/runtime/permission/Goal/Crew/source and schedule frozen targets remain bound throughout original dispatch/cancel/result/replay/read/backup. DeepPlan profile assistant_deep_plan is not the EventRecord scope. No product Plans/NamedPlan/WorkNode/Orchestrator records are created.
+  One current unfinished Plan slot per retained thread is checked across original/destination binding through the conversion lineage, not separately per new key. schedule_build writes exact version/hash/topology/team and window together with no run/provider attempt yet. Timers, occurrence dedupe and quota consent stay on the named owning Server across Client close and Project switching. Hold/invalidate source authority during conversion and explicitly re-admit each exact replacement under fresh consent/task+scope Stop/pause/permission/writer/source/currentness; never latest substitution, backlog or double occurrence. Original Project keys/hash/replay remain exact. RP-AUTHORITY-INDEFINITE audit/source rows and RP-RUNTIME-365D runs retain original anchors/holds; app scopes use the same Server-wide counterpart capacities, not a new numeric schedule/Plan cap or per-chat bucket. Full Server Backup includes canonical graph and payloads coherently; converted destination records join Project Backup. Source accepted Plan/schedule/cancel audit survives chat Undo expiry.
+  The independent app pause family is application_automation_pause. Its exact key is application_automation_pause.v1:{hex(storage_instance_id)}:{hex(server_id)}, schema_id pm.storage_value.application_automation_pause.v1 version1.0.0, physical codec pm.application.physical_messagepack.v1. The closed wrapper requires schema_id/schema_version/storage_instance_id/server_id/scope=WorkflowScopeV2(application)/record=CV-368 ApplicationAutomationPauseRecord, with exact key/Server/null Project joins and at most 16 KiB. It uses existing RP-AUTHORITY-INDEFINITE@1.0.0 and canonical redb, one record for every app automation on that Server. Project_automation_pause and its original physical key/value stay unchanged. App pause is never Settings/Everywhere or a missing-as-off migration.
+  Fresh application authority birth may create revision0/epoch0/off only with genuine never-born proof bound to the actual storage instance/Server birth operation and current writer lease. Already initialized, missing/corrupt/unsupported custody is app_automation_pause_unavailable; restore from coherent mandatory backup preserves any newer latch/epoch rather than resetting it. User desired-value changes use internal whole-value CAS and original operation/result custody. Only transition false→true advances user_stop_epoch once with the value and actor/time/revision; idempotent same-value and true→false do not advance, and false clears no task latch. No automatic actor or YOLO clears it. Every eligibility check captures the target’s own and this app scope epoch and rechecks them under the final owner fence. Conversion checks source app and destination Project pause/Stop, never resumes/clears either. runtime.automation_pause_changed remains non-emitting with missing_event_registration until complete family-specific adoption. The pause write/result and event are separate obligations; no source-built off state or fake EventRecord is admitted.
+gui_related: false
+gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
+depends_on:
+- CV-368
+- SP-306
+- SP-307
+- SP-323
+- SP-350
+unblocks: []
+acceptance_criteria:
+- App Plan/schedule/cancel/current-slot storage keeps complete source and exact targets with counterpart retention.
+- Pause physical birth/key/wrapper/CAS/epochs/read/backup/refusal are coherent and separate from Project.
+- Stop/conversion/timer/restore races cannot double-run or clear a newer latch.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F08
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F09
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F10
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-F08
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F11
+preserved_exact_tokens:
+- application_automation_pause
+- application_automation_pause.v1:{hex(storage_instance_id)}:{hex(server_id)}
+- pm.storage_value.application_automation_pause.v1
+- RP-AUTHORITY-INDEFINITE
+- user_stop_epoch
+- app_automation_pause_unavailable
+negative_constraints:
+- No Settings seed, fake Project/thread for Server-wide pause, missing-as-off, source recapture or automatic resume.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+**SP-352 exact application physical rows**
+
+Every application key begins with its distinct versioned family prefix and actual `hex(storage_instance_id):hex(server_id)`; hex is lowercase encoding of the complete UTF-8 scalar identity, without normalization or truncation. This is separate from EventRecord’s unchanged `app` partition and `project~` encoding. Logical record references use CV-366 selected roots. The closed physical wrapper requires schema_id, schema_version=1.0.0, storage_instance_id, server_id, scope=WorkflowScopeV2(application), record; key/value/record scope and identities must agree. The physical wrapper schema_id for family `f_application` is `pm.storage_value.f.application.v1`, at `Plans/application_workflow_contracts.schema.json#/$defs/<PascalCase(f)>StorageApplicationV1`. No extra fields or self-hash are stored. Canonical rows use the canonical redb file, derived rows the derived redb file. All use CV-366’s app MessagePack physical codec, at most 16 KiB per value with larger content in SP-337 payload refs. Missing mandatory policy/disk-budget/writer/source/backup registration leaves a family unavailable; it never inherits unlimited space.
+
+| Existing counterpart / new app family | Exact key_shape | Retention and custody |
+|---|---|---|
+| `assistant_plan_record` → `assistant_plan_record_application` | `assistant_plan_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(assistant_plan_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `assistant_plan_document_revision` → `assistant_plan_document_revision_application` | `assistant_plan_document_revision.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(assistant_plan_id)}:{revision_decimal}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `assistant_plan_current_slot` → `assistant_plan_current_slot_application` | `assistant_plan_current_slot.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `assistant_plan_run` → `assistant_plan_run_application` | `assistant_plan_run.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(assistant_plan_id)}:{hex(plan_run_id)}` | canonical; `RP-RUNTIME-365D` |
+| `assistant_plan_adherence` → `assistant_plan_adherence_application` | `assistant_plan_adherence.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(plan_run_id)}:{hex(step_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `assistant_deep_plan_ledger` → `assistant_deep_plan_ledger_application` | `assistant_deep_plan_ledger.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(assistant_plan_id)}:{hex(ledger_session_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `assistant_deep_plan_bundle` → `assistant_deep_plan_bundle_application` | `assistant_deep_plan_bundle.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(assistant_plan_id)}:{plan_revision_decimal}:{bundle_sha256}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `execution_schedule` → `execution_schedule_application` | `execution_schedule.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(schedule_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `scheduled_message` → `scheduled_message_application` | `scheduled_message.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(scheduled_message_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `quota_resume_consent` → `quota_resume_consent_application` | `quota_resume_consent.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(run_id)}:{hex(provider_id)}:{hex(account_id)}:{hex(consent_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `execution_schedule_run_binding` → `execution_schedule_run_binding_application` | `execution_schedule_run_binding.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(schedule_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `execution_occurrence` → `execution_occurrence_application` | `execution_occurrence.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(schedule_id)}:{hex(occurrence_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `schedule_quota_cancel_effect` → `schedule_quota_cancel_effect_application` | `schedule_quota_cancel_effect.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(plan_run_id)}:{hex(cancellation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `assistant_plan_cancel_result` → `assistant_plan_cancel_result_application` | `assistant_plan_cancel_result.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(plan_run_id)}:{hex(cancellation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+| `assistant_plan_run_retirement` → `assistant_plan_run_retirement_application` | `assistant_plan_run_retirement.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(plan_run_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
+
+
+### SP-353 - Permission And Project Build Authority Durable Bindings
+
+```yaml
+plan_unit_id: SP-353
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Permissions PS-144–148 and HITL-038 own meaning; storage owns only durable key/wrapper/encoding/CAS/retention/source/backup joins. Original permission_snapshot_record.v1:{project_id}:{snapshot_id} and all original-permission-snapshot/cancellation/Goal source resources remain byte/hash exact. App snapshot family permission_snapshot_record_application uses permission_snapshot_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(snapshot_id)} and pm.storage_value.permission_snapshot_record.application.v1 1.0.0 referencing CV-366 ApplicationPermissionSnapshot. App tool approval source/result is chat_tool_approval_application at chat_tool_approval.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(request_id)}, selected ChatToolApprovalApplicationV1; it never null-fills an Orchestrator node/blocked_sequence record. Canonical records use CV-366’s app wrapper/codec and exact operation/currentness; RP-AUTHORITY-INDEFINITE protects immutable audit and owner holds. Existing permission evidence, actual root/Host/target/Stop and source account/ceiling remain required; no current Settings rebuild of history.
+  Project BuildGrant is a canonical Permissions record, family build_grant, key build_grant.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(grant_id)}, value pm.storage_value.build_grant.v1 1.0.0. created_resource_manifest uses created_resource_manifest.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(grant_id)} and pm.storage_value.created_resource_manifest.v1; grant_revocation uses grant_revocation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(grant_id)}:{revision_decimal} and pm.storage_value.grant_revocation.v1. All wrappers close to schema/version/storage_instance_id/project_id/record with selected PS-147/automation_authority_contracts logical refs and existing Project physical codec, never a new JSON action log. Grant absent/revision CAS, exact Plan/version/hash/run/task/targets/permission/revocation/Stop and verified created UID/generation must match. Immutable action results remain the actual existing run/owner/ObservableWork/History receipt families; manifests keep refs, not duplicate outcomes or an invented build.* stream.
+  Computer permission rules use permission_rule.computer.v1:{hex(storage_instance_id)}:{computer_domain}:{hex(computer_id)}:{hex(rule_id)}, computer_domain=server|execution_host with exact owner-tagged identity; user rule source config/YAML is compatibility/export only, never a second live writer. Everywhere path patterns remain forbidden. Repository-origin acceptance/trust and Always are separate human authority with exact source/revision/target, not copied Settings or mode. Grant/rule/snapshot tables use the same 16 KiB cap and SP-337 refs for large manifests, RP-AUTHORITY-INDEFINITE plus independent recovery/source/Stop holds and coherent Project Backup or Full Server app backup. Restore grants/rules as historical evidence until fresh current admission; restored stale/revoked grants cannot dispatch. Cutover and chat Undo expiry neither transfer nor purge these independent authorities. Missing/dedupe/custody/integrity/recovery failures stay zero-effect unavailable; approval/grant cannot clear Storage/FileSafe holds.
+gui_related: false
+gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
+depends_on:
+- CV-365
+- CV-366
+- PS-144
+- PS-145
+- PS-147
+- PS-148
+- SP-340
+unblocks: []
+acceptance_criteria:
+- App permission/source/tool approval and Project grant/manifest/revocation have one exact canonical writer/key/retention/backup.
+- Restore/conversion preserves old evidence without transferring authority or clearing Stop/holds.
+- Action list reads existing receipts and no new live JSON/event engine.
+validation_surfaces:
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+risk_class: scope_authority_and_custody_drift
+reasoning_tier: high
+context_scope: projects_refresh_application_workflows
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F01
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F02
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F03
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F04
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F05
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F04
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F06
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-F09
+preserved_exact_tokens:
+- ApplicationPermissionSnapshot
+- BuildGrant
+- CreatedResourceManifest
+- permission_snapshot_record.v1:{project_id}:{snapshot_id}
+- permission_snapshot_record.application.v1
+- build_grant.v1
+- created_resource_manifest.v1
+- grant_revocation.v1
+- RP-AUTHORITY-INDEFINITE
+negative_constraints:
+- No agent self-grant, forged human approval, duplicated action log, null Project sentinel or early evidence purge.
+- Acceptance does not prove native handlers, Event Authority admission, durability, readiness or governance certification.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
