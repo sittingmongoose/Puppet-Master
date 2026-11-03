@@ -956,9 +956,13 @@ export const tests = {
       /* (on to the folder step, where a folder is picked, then on to Review) */
       await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900); await throughNas(A); await onToReview(A, nameOn);
       if ((await A.snap()).screen !== 'review') { bad.push('never reached Review: on ' + (await A.snap()).screen); return; }
+      const applies = await A.frame().evaluate(() => O55.ui.onBranch('nas-pmpair')); if (!applies) bad.push('at Review the pairing step does not apply to the paired Puppet Master NAS');
       const first = await walkBack(A, [], bad, '20 PM NAS first'); const w = await keepOn(A); if (w[w.length - 1] !== 'review') { bad.push('never back to Review: ' + w.join(' > ')); return; }
       const second = await walkBack(A, [], bad, '20 PM NAS second');
-      for (const [n, seq] of [['first', first], ['second', second]]) { if (!seq.includes('nas-pmpair')) bad.push(`the ${n} Back run leaves out pairing (${seq.join(' > ')})`); const ssh = seq.filter((x) => ['nas-identity', 'nas-key', 'nas-signin', 'nas-install'].includes(x)); if (ssh.length) bad.push(`the ${n} Back run shows SSH steps ${ssh.join(', ')} for a paired NAS`); } });
+      /* (pairing applies to this NAS, though Back, like an install or a sign-in, does not revisit a completed verification
+         step: lead 1103172509) */
+      if (JSON.stringify(first) !== JSON.stringify(second)) bad.push(`the second Back run differs: ${first.join(' > ')} then ${second.join(' > ')}`);
+      for (const [n, seq] of [['first', first], ['second', second]]) { const ssh = seq.filter((x) => ['nas-identity', 'nas-key', 'nas-signin', 'nas-install'].includes(x)); if (ssh.length) bad.push(`the ${n} Back run shows SSH steps ${ssh.join(', ')} for a paired NAS`); } });
     /* Sol R4 on bd646e7e6d: the same host and the default port typed at the NAS step, then Continue: nothing changed, so
        nothing of the Home NAS is cleared */
     await flow(t, '20 the same NAS host and port typed, then Continue', async (A, bad) => { await toNasProject(A); await A.screen('review'); const start = await A.frame().evaluate(SNAP20);
