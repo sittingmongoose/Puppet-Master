@@ -127,7 +127,7 @@
       let ok = false, reason = T('missing.storage');
       if (m === 'ssh') {
         const pBad = n.manual && n.port != null && n.port !== '' && !portOk(n.port);
-        ok = n.manual ? !pBad && S.env.devices.some((x) => x.address === String(n.addr || '').trim()) : !!(d && (d.ssh || d.pm));
+        ok = n.manual ? !pBad && S.env.devices.some((x) => sameHost(x.address, n.addr)) : !!(d && (d.ssh || d.pm));
         if (n.manual) reason = pBad ? T('nas.find.portBad') : F.nonEmpty(n.addr) ? T('nas.find.noAnswer', { addr: String(n.addr).trim() }) : T('nas.find.addressLabel');
         else if (d && !d.ssh && !d.pm) reason = T('nas.find.offTitle', { name: d.name });
         else if (!d) reason = T('nas.find.choose');
@@ -165,7 +165,7 @@
       next(S) {
         const n = N(S), m = n.method || 'ssh';
         /* Continue commits the device: picked or typed, another one takes the same way and starts from nothing (Astra AST-D5) */
-        if (m === 'ssh' && n.manual) { const d = S.env.devices.find((x) => x.address === String(n.addr || '').trim()); delete n.choice; target(S, d && d.id); }
+        if (m === 'ssh' && n.manual) { const d = S.env.devices.find((x) => sameHost(x.address, n.addr)); delete n.choice; target(S, d && d.id); }
         else if (m === 'ssh' && n.choice) { const c = n.choice; delete n.choice; target(S, c.id); n.fromConfig = c.cfg; if (c.cfg) { n.user = c.user || ''; n.key = c.key; } }
         S.save();
         O55.ui.go(m === 'ssh' ? entry(S) : { smb: 'nas-smb', nfs: 'nas-nfs', mounted: 'nas-mounted' }[m]);
@@ -176,7 +176,10 @@
       const was = addrKnown(S, N(S).addr);
       N(S).addr = v; S.save(); O55.ui.refresh();
       if (!was && addrKnown(S, v)) O55.sound.play('found', SND.found); /* the typed address answers: Continue wakes up */
-    }, port(S, v) { const n = N(S), p = String(v).replace(/[^0-9]/g, '').slice(0, 5), had = !n.port || portOk(n.port); if (p !== n.port) Object.assign(n, { port: p, trusted: false, installed: false, opKey: null }); S.save(); if (had !== (!p || portOk(p))) O55.ui.refresh(); } }
+    }, port(S, v) { const n = N(S), p = String(v).replace(/[^0-9]/g, '').slice(0, 5), had = !n.port || portOk(n.port);
+      /* (what the port means is compared, not its text: 22 typed for a device reached on 22 changes nothing, Sol R4) */
+      const was = sshPort(S); if (String(p) && portOk(p) && +p !== was) remember(S); /* (the endpoint left keeps what was settled for it) */
+      n.port = p; if (sshPort(S) !== was) Object.assign(n, { trusted: false, installed: false, opKey: null }); S.save(); if (had !== (!p || portOk(p))) O55.ui.refresh(); } }
   });
 
   /* ------------------------------------------------------------------ is this your device? (identity before trust) */
@@ -244,6 +247,11 @@
      knows it. A change to any of them is another connection: key tests and an added key belong to the profile they ran
      for. The profile id is opaque and goes into the references the draft keeps. */
   const portOk = (v) => /^\d{1,5}$/.test(String(v)) && +v >= 1 && +v <= 65535;
+  /* a shared folder's check belongs to the share, account and domain it checked: one of them changed or taken back, the
+     check no longer counts (Muse delta3: Back took the typed account back and Use stayed on) */
+  const smbKey = (n, sh) => 'smb:' + (n.share === 'manual' ? sh.path : n.share) + '|' + String(n.user || '').trim().toLowerCase() + '|' + String(n.domain || '').trim().toLowerCase();
+  /* a host as typed and as known, compared by meaning: trimmed and in any case */
+  const sameHost = (a, b) => !!String(b || '').trim() && String(a || '').trim().toLowerCase() === String(b || '').trim().toLowerCase();
   const sshPort = (S) => { const n = N(S), d = dev(S); return n.manual && portOk(n.port) ? +n.port : (d && d.port) || 22; };
   /* the account: one named in SSH settings or typed; otherwise ssh's own default, the name of the account on the
      computer that connects (known for this computer, not for a Server) */
@@ -610,6 +618,8 @@
   };
   def('nas-pmpair', {
     seed: (S) => seedNas(S, 'nas-pmpair'),
+    /* (a code typed and not checked goes with Back) */
+    discard(S) { if (!N(S).paired) pairCodes.delete(tryId(S)); },
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => { const n = N(S), st = F.state(S, pairKey(S)); return { id: 'nas', beat: n.paired ? 'paired' : 'pair', params: sceneParams(S, { seed: (pmOf(S) || {}).seed, words: words((pmOf(S) || {}).seed || ''), method: n.pairing || 'approval', waiting: !!(st && st.state === 'running') }) }; },
     eyebrow: () => T('nas.pmpair.eyebrow'),
@@ -760,7 +770,7 @@
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'smb' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.smb.eyebrow'), title: () => T('nas.smb.title'), lead: (S) => T('nas.smb.leadOn', { where: machine(S) }),
     body(S) {
-      const n = N(S), sh = shareOf(S) || {}, key = 'smb:' + (n.share === 'manual' ? sh.path : n.share);
+      const n = N(S), sh = shareOf(S) || {}, key = smbKey(n, sh);
       let out = `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>`;
       out += C.field({ bind: 'user', label: T('nas.smb.user'), value: n.user || '', autocomplete: 'username' });
       const st = F.state(S, key), refused = !!(st && st.state === 'failed' && st.code === 'wrong_password');
@@ -772,12 +782,12 @@
       if (st) out += F.phases(S, key, ['mount', 'read'], { mount: T('nas.smb.phases.mount'), read: T('nas.smb.phases.read') });
       return out;
     },
-    foot(S) { const n = N(S), sh = shareOf(S) || {}, st = F.state(S, 'smb:' + (n.share === 'manual' ? sh.path : n.share)); if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'use' } }; return { primary: { label: T('nas.smb.check'), do: 'check', disabled: !shareOf(S) || !F.nonEmpty(n.user) || !n.pwTyped, reason: T(shareOf(S) ? 'nas.smb.needBoth' : 'missing.storage') } }; },
+    foot(S) { const n = N(S), sh = shareOf(S) || {}, st = F.state(S, smbKey(n, sh)); if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'use' } }; return { primary: { label: T('nas.smb.check'), do: 'check', disabled: !shareOf(S) || !F.nonEmpty(n.user) || !n.pwTyped, reason: T(shareOf(S) ? 'nas.smb.needBoth' : 'missing.storage') } }; },
     do: {
       check(S) {
         const n = N(S), sh = shareOf(S); if (!sh) return;
         const i = S.root.querySelector('#o55f-pw'), pwv = i ? i.value : ''; if (i) i.value = ''; n.pwTyped = false; O55.sound.play('tap');
-        const key = 'smb:' + (n.share === 'manual' ? sh.path : n.share);
+        const key = smbKey(n, sh);
         /* situation smbWrong: the share refuses the first password, as it would a mistyped one (and the demo's wrong one) */
         const f = S.env.failures || {}, wrong = !!f.smb_password_once || pwv === (O55.fixtures.DEMO || {}).wrongPassword; if (f.smb_password_once) f.smb_password_once = false;
         F.reset(S, key);
@@ -828,9 +838,12 @@
   function remember(S) {
     const n = S.sess.nas, d = n && dev(S); if (!d) return;
     const all = S.sess.nasFacts = S.sess.nasFacts || {}, r = Object.assign({}, all[d.id]);
-    if (trustOk(S)) { r.host = hostId(S); r.hostKey = d.hostKey; }
+    /* (each endpoint's trust is its own: a device reached on 22 and on 2222 keeps both, Astra delta3; a record from before
+       kept one host) */
+    r.hosts = Object.assign({}, r.hosts, r.host ? { [r.host]: r.hostKey || d.hostKey } : {}); delete r.host; delete r.hostKey;
+    if (trustOk(S)) r.hosts[hostId(S)] = d.hostKey;
     if (keyOk(S) && sshUser(S)) { r.keys = Array.from(new Set((r.keys || []).concat([sshUser(S) + ':' + n.key]))); if (n.key === 'k-pm') r.kpm = true; }
-    if (r.host || r.keys) all[d.id] = r;
+    if (Object.keys(r.hosts).length || r.keys) all[d.id] = r;
   }
   /* the device shown as chosen on the device step: the one picked there, before Continue commits it, or the one committed */
   const picked = (S) => { const n = N(S); return n.choice ? S.env.devices.find((x) => x.id === n.choice.id) || null : dev(S); };
@@ -848,11 +861,21 @@
     Object.entries(S.sess.nasFacts || {}).forEach(([id, r]) => {
       const d = S.env.devices.find((x) => x.id === id); if (!d) return;
       if (r.host) knownHosts(S)[r.host] = r.hostKey || d.hostKey;
+      Object.entries(r.hosts || {}).forEach(([h, k]) => { knownHosts(S)[h] = k || d.hostKey; });
       (r.keys || []).forEach((k) => { if (!d.authorized.includes(k)) d.authorized.push(k); });
       if (r.kpm && !keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
     });
     const n = S.sess.nas; if (!n || !n.device) return;
     const d = S.env.devices.find((x) => x.id === n.device); if (!d) return;
+    /* (a record from before trust and install were stamped (07db, e9b and others): its own trust and install are bound to
+       its committed device, port, account and key when the record agrees with itself (the profile it names, or the
+       profile its plan's NAS references name, is this device's), Astra delta3; a record that disagrees, such as another
+       device that inherited them, is judged unstamped below) */
+    if ((n.trusted && n.trustedFor === undefined) || (n.installed && !n.viaPm && n.installedFor === undefined)) {
+      const pid = profileId(S), d0 = md(S), refs = (d0.source_access_authorization_refs || []).concat(d0.preflight_result_refs || [], [d0.project_source_ref || '', d0.storage_location || '']);
+      const agrees = n.profile ? n.profile === pid : !refs.some((r) => /sshp:/.test(r) && r.indexOf(pid) < 0);
+      if (agrees) { if (n.trusted && n.trustedFor === undefined) n.trustedFor = hostId(S); if (n.installed && !n.viaPm && n.installedFor === undefined && n.key) n.installedFor = keyFor(S); }
+    }
     /* (a trust or an install that does not describe this device, port and account is not this device's: it is dropped,
        never applied to it) */
     if (n.trusted && !trustOk(S)) Object.assign(n, { trusted: false, trustedFor: undefined, installed: n.viaPm ? n.installed : false, installedFor: undefined });

@@ -370,6 +370,8 @@ const INVAR = () => { const S = O55.S, d = S.sess.drafts.main, n = S.sess.nas ||
   const nasRefs = (d.source_access_authorization_refs || []).filter((r) => /^(ssh-key|pairing):/.test(r)).concat((d.preflight_result_refs || []).filter((r) => /^preflight:(ssh|paired-source):/.test(r)));
   const nasSource = d.project_mode === 'existing_local' && d.project_transport !== 'local', nasFiles = d.storage_mode === 'network_location';
   if (!nasFiles && d.storage_location) out.push('files place ' + d.storage_location + ' with files on ' + d.storage_mode);
+  /* (a files place on the NAS over SSH names the current NAS profile, its device, account and endpoint: Astra delta3) */
+  if (nasFiles && /^ssh:/.test(d.storage_location || '') && (n.purpose === 'storage') && (!n.profile || d.storage_location.indexOf('ssh:' + n.profile) !== 0)) out.push('files place ' + d.storage_location + ' not on the current NAS profile ' + (n.profile || '(none)'));
   if (d.server_mode === 'this_device' && (d.server_ref || d.server_trust_confirmed)) out.push('a Server ' + (d.server_ref || '(trusted)') + ' on This computer');
   if (!/^existing_/.test(d.project_mode) && d.project_source_ref) out.push('source ' + d.project_source_ref + ' for a ' + d.project_mode + ' Project');
   if (d.project_mode !== 'restore' && d.backup_source_ref) out.push('backup ' + d.backup_source_ref + ' for a ' + d.project_mode + ' Project');
@@ -416,10 +418,10 @@ const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.ma
     nas: [n.device || null, n.method || null, n.share || null, n.volume || null, n.at || null, n.profile || null, !!n.trusted, !!n.installed, n.choice ? n.choice.id : null],
     restore: [r.source || null, r.kit || null, r.cloud || null, r.device || null, r.pick || null, r.reachedFor || null], online: [ol.forge || null, ol.variant || null, ol.wanted === undefined ? null : !!ol.wanted],
     backup: [b.dest || null, b.sub || null], ui: [u.where || null, u.whereAt || null, u.begin || null, u.beginSub || null],
-    server: [(S.sess.server || {}).kind || null], signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
+    server: (() => { const v = S.sess.server || {}; return [v.kind || null, v.target || null, !!v.manual, v.addr || '', v.platform || null, v.name || '', !!v.selfConfirmed]; })(), signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
     nasPick: [n.key || null, n.user || '', n.userEdit || false] }; };
 /* the steps whose own work is a check, a sign-in, a pairing, an install or a Server's setup (60-ui-core's NO_TXN): no pick */
-const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'nas-pmpair', 'r-unlock', 'r-preview', 's-wait', 's-confirm', 's-ready', 'c-review', 'c-pair', 'c-ready']; /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
+const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'r-preview', 's-ready', 'c-pair', 'c-ready']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
 /* Back from Review to Welcome, and on every step on the way another value picked (or typed) first: Back must take the
    pick back, so the answers after it are those the step was reached with (lead: every picker, not only Review's Edit
    links: the restore source and place, the NAS device, method and folder, the service, the computer kind, the files
@@ -787,6 +789,16 @@ export const tests = {
       await resumeHere(A, saved); await A.screen('review'); await goNew(A);
       const seq = await walkBackContinuing(A, [{ on: 'review|name|safe', x: 'recipe-app' }], bad, '16 07db folder', (A) => A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return d.project_source_ref || /recipe-app/.test(d.local_location) ? 'brought the old folder back' : null; }));
       if (seq.includes('ex-folder')) bad.push('16 07db folder: Back reached the abandoned folder step: ' + seq.join(' > ')); });
+    /* Astra delta3: an actual 07db or e9b record of a Home NAS over SSH, resumed unchanged, keeps its source and access,
+       and Back walks its key and folder steps */
+    for (const k of ['07db', 'e9b'])
+      await flow(t, `16 ${k} Home NAS over SSH record resumed unchanged (Astra delta3)`, async (A, bad) => { const saved = await onOld(A, pages[k], toNasProject), rec = JSON.parse(saved), d0 = rec.drafts.main;
+        if (!/^ssh:/.test(d0.project_source_ref || '')) bad.push(`16 ${k} NAS: the old page wrote no SSH source: ${d0.project_source_ref}`);
+        await resumeHere(A, saved); await A.screen('review');
+        const d1 = await A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return { src: d.project_source_ref, auth: d.source_access_authorization_refs.slice().sort() }; });
+        if (d1.src !== d0.project_source_ref || JSON.stringify(d1.auth) !== JSON.stringify((d0.source_access_authorization_refs || []).slice().sort())) bad.push(`16 ${k} NAS: resumed, the source or access changed: ${JSON.stringify({ was: [d0.project_source_ref, d0.source_access_authorization_refs], now: d1 })}`);
+        const seq = await walkBack(A, [], bad, `16 ${k} NAS`), miss = ['nas-key', 'nas-folder'].filter((x) => !seq.includes(x));
+        if (miss.length) bad.push(`16 ${k} NAS: Back skipped ${miss.join(', ')} (${seq.join(' > ')})`); });
     await flow(t, '16 07db hosted Gitea pick resumed (AST-1)', async (A, bad) => { const saved = await onOld(A, pages['07db'], async (A) => { await A.toSafe('Notes'); await A.click('online', undefined, 'online-service'); await pickSvc(A, 'gitea'); await A.sleep(300);
         if (await A.has('variant', 'gitea_cloud')) await A.click('variant', 'gitea_cloud'); else bad.push('16: the 07db page offered no hosted Gitea kind'); });
       await resumeHere(A, saved); await A.screen('online-service'); await emptyPicker(A, bad, '16 07db hosted Gitea'); });
@@ -886,6 +898,31 @@ export const tests = {
       const f1 = await A.frame().evaluate(FACTS);
       const made = [...f1.host.filter((h) => !f0.host.includes(h)).map((h) => 'known host ' + h), ...f1.auth.filter((k) => !f0.auth.includes(k)).map((k) => 'authorization ' + k)];
       if (made.length) bad.push('AST-D5: resume invented settled facts for a device never trusted or installed: ' + made.join(', ')); });
+    /* Sol R4 on bd646e7e6d: the same host and the default port typed at the NAS step, then Continue: nothing changed, so
+       nothing of the Home NAS is cleared */
+    await flow(t, '20 the same NAS host and port typed, then Continue', async (A, bad) => { await toNasProject(A); await A.screen('review'); const start = await A.frame().evaluate(SNAP20);
+      await editBeginTo(A); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+      const host = await A.frame().evaluate(() => (O55.S.env.devices.find((x) => x.id === 'nas-home') || {}).address);
+      await A.click('manualOn'); await A.sleep(300); await A.fill('o55f-addr', ' ' + String(host).toUpperCase() + ' '); await A.fill('o55f-port', '22'); await A.sleep(400);
+      const w = await keepOn(A); if (w[w.length - 1] !== 'review') { bad.push('never back to Review: ' + w.join(' > ')); return; }
+      const end = await A.frame().evaluate(SNAP20), dk = Object.keys(Object.assign({}, start.draft, end.draft)).filter((k) => JSON.stringify(start.draft[k]) !== JSON.stringify(end.draft[k]));
+      if (dk.length) bad.push('the same host and port typed changed the draft: ' + dk.map((k) => k + ' ' + JSON.stringify(start.draft[k]).slice(0, 60) + ' > ' + JSON.stringify(end.draft[k]).slice(0, 60)).join('; ')); });
+    /* Astra delta3: a Home NAS trusted on port 22, then on 2222, then the page loaded again: both endpoints stay trusted
+       (settled facts are kept per device, endpoint and account) */
+    await flow(t, '20 one NAS trusted on two ports keeps both after a reload', async (A, bad) => { await toNasProject(A); await A.screen('review');
+      const host = await A.frame().evaluate(() => (O55.S.env.devices.find((x) => x.id === 'nas-home') || {}).address);
+      await editBeginTo(A); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+      await A.click('manualOn'); await A.sleep(300); await A.fill('o55f-addr', host); await A.fill('o55f-port', '2222'); await A.sleep(400); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900);
+      if ((await A.snap()).screen === 'nas-identity' && await A.has('trust')) { await A.click('trust'); await A.sleep(900); } else bad.push('port 2222 did not ask to trust its host: on ' + (await A.snap()).screen);
+      const HOSTS = () => Object.keys(O55.S.env.here.knownHosts || {});
+      await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(900);
+      const saved = await A.frame().evaluate(() => JSON.stringify(O55.store.get('onboarding', null)));
+      await A.reopen();
+      if (A.sandboxed()) { await A.frame().locator('[data-o55-do="close"]').first().click({ timeout: 5000 }).catch(() => {}); await A.sleep(900);
+        await A.frame().evaluate((s) => { O55.store.set('onboarding', JSON.parse(s)); if (O55.boot && O55.boot.chip) O55.boot.chip(); }, saved); }
+      await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 15000 }); await A.sleep(1500);
+      const hosts = await A.frame().evaluate(HOSTS), want = [host, host + ':2222'].filter((h) => !hosts.includes(h));
+      if (want.length) bad.push('after the reload these endpoints are no longer trusted: ' + want.join(', ') + ' (known: ' + hosts.join(', ') + ')'); });
     /* Muse delta minor 4: a drive reached for another service is not this place reached */
     await flow(t, '20 Muse minor 4 a restore place reached for another service', async (A, bad) => {
       const r = await A.frame().evaluate(() => { const S = O55.S; S.sess.ui.beganAs = 'restore'; S.sess.restore = { scope: 'project', source: 'cloud', cloud: 'gdrive', reachedFor: 'cloud:dropbox' };
@@ -985,7 +1022,12 @@ export const tests = {
       ['the token typed on online-signin', async (A) => { await A.toSafe('Notes'); await A.click('online', undefined, 'online-service'); await pickSvc(A, 'gitea'); await A.sleep(300);
           if (await A.has('variant', 'gitea_self_managed')) await A.click('variant', 'gitea_self_managed'); await A.fill('o55f-address', GITEA); await A.sleep(300); await A.click('next', undefined, 'online-signin'); },
         async (A) => { const f = (await A.snap()).fields.find((x) => /token/i.test(x.id)); if (!f) { if (await A.has('useToken')) await A.click('useToken'); } const g = (await A.snap()).fields.find((x) => /token/i.test(x.id)); if (!g) return null; await A.fill(g.id, 'ghp_typed_but_not_continued'); return 'typed ' + g.id; }],
-      ['the Server kind on s-kind', async (A) => { await A.click('pick', 'server'); await A.click('next', undefined, 's-kind'); await A.sleep(600); }, async (A) => pickOther(A)]
+      ['the Server kind on s-kind', async (A) => { await A.click('pick', 'server'); await A.click('next', undefined, 's-kind'); await A.sleep(600); }, async (A) => pickOther(A)],
+      /* (Sol R4 on bd646e7e6d: the Server found and the address typed on s-wait survived Back) */
+      ['the Server found on s-wait', async (A) => { await A.click('pick', 'server'); await A.click('next', undefined, 's-kind'); await pressOn(A); await A.sleep(600); await A.screen('s-wait'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="pm:new"]'), null, 8000); },
+        async (A) => { await A.click('pick', 'pm:new'); return 'picked pick:pm:new'; }],
+      ['the address typed on s-wait', async (A) => { await A.click('pick', 'server'); await A.click('next', undefined, 's-kind'); await pressOn(A); await A.sleep(600); await A.screen('s-wait'); },
+        async (A) => { if (await A.has('manualOn')) { await A.click('manualOn'); await A.sleep(300); } const f = (await A.snap()).fields.find((x) => /addr/i.test(x.id)); if (!f) return null; await A.fill(f.id, 'truenas.local'); return 'typed ' + f.id; }]
     ];
     for (const [what, reach, act] of VERIFY)
       await flow(t, `21 verification step: ${what}, then Back`, async (A, bad) => { await reach(A); const at = (await A.snap()).screen, a0 = await A.frame().evaluate(ANSWERS), f0 = await A.frame().evaluate(SEL);
@@ -997,7 +1039,20 @@ export const tests = {
         if (JSON.stringify(mid) === JSON.stringify(a0)) t.log(`21 ${what}: ${did} changed nothing in the session even before Back`);
         await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900);
         if ((await A.snap()).screen === at) { const f1 = await A.frame().evaluate(SEL); if (JSON.stringify(f0) !== JSON.stringify(f1)) bad.push(`${what}: ${at} reached again shows ${JSON.stringify(f1).slice(0, 220)}, not ${JSON.stringify(f0).slice(0, 220)}`); }
+        else bad.push(`${what}: Continue after Back did not reach ${at} again (on ${(await A.snap()).screen}), so its fields were not judged`); /* (Astra delta3: a walk ending elsewhere passed) */
         t.log(`21 ${what}: ${did} on ${at}, Back`); });
+    /* Muse delta3: a shared folder's check passed for a typed account, then Back: the account is taken back, and the
+       check no longer counts (Use is not on for an empty account) */
+    await flow(t, '21 a shared folder checked for a typed account, then Back', async (A, bad) => { await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.click('method', 'smb'); await A.sleep(400);
+      const sh = (await A.snap()).buttons.find((b) => b.action === 'share'); await A.click('share', sh.arg); await A.sleep(300); await pressOn(A); await A.sleep(900); await A.screen('nas-smb');
+      await A.fill('o55f-user', 'jared'); if (await A.frame().locator('#o55f-pw').count()) await A.fill('o55f-pw', 'correct horse'); await A.sleep(300);
+      await A.waitEnabled((await A.snap()).primary ? (await A.snap()).primary.action : 'check').catch(() => {}); await pressOn(A);
+      await A.waitFor(() => O55.S.sess.screen !== 'nas-smb' || Object.entries(O55.S.sess.ops || {}).some(([k, v]) => /^smb:/.test(k) && v.state === 'done'), null, 8000).catch(() => {}); await A.sleep(500);
+      if ((await A.snap()).screen !== 'nas-smb') { bad.push('the check moved on from nas-smb by itself'); return; }
+      await pressBack(A); await A.sleep(800); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900); await A.screen('nas-smb');
+      const st = await A.snap(), user = (st.fields.find((x) => x.id === 'o55f-user') || {}).value || '';
+      if (user === '' && st.primary && st.primary.action === 'use' && st.primary.on !== false) bad.push('after Back the account is empty, yet Use is still on: the check counts for an account taken back');
+      t.log('21 SMB check, Back: user=' + JSON.stringify(user) + ', primary ' + JSON.stringify(st.primary)); });
     /* a record whose stored Begins-as pick disagrees with its plan (constructed or older): Begins as shows the plan's
        beginning, and Continue there keeps it (lead 1103074359; Sol reader-b's K9a case 6) */
     await flow(t, '21 a record whose Begins-as pick disagrees with its plan', async (A, bad) => { await toRepoProject(A); await A.screen('review');
@@ -1026,6 +1081,60 @@ export const tests = {
       t.log('21 D1 film: picked ' + media + ', shown ' + JSON.stringify(shown.on) + ', then on ' + (await A.snap()).screen);
       const out = await A.frame().evaluate(() => { const n = O55.S.sess.nas || {}, d = O55.S.sess.drafts.main; return { device: n.device, profile: n.profile || null, src: d.project_source_ref, auth: d.source_access_authorization_refs.filter((r) => /^(ssh-key|pairing):/.test(r)), pre: d.preflight_result_refs.filter((r) => /^preflight:(ssh|paired)/.test(r)) }; });
       if (out.device !== media || out.profile || out.src || out.auth.length || out.pre.length) bad.push('D1 film: after Continue the plan keeps the Home NAS: ' + JSON.stringify(out)); });
+  },
+  /* the lead's rule 3 clarification (1103092929): a pick may show as a live preview while its screen is open, but every
+     way of leaving without Continue restores the answers the screen was reached with, and nothing commits or acts on it:
+     Close, reload and Resume (then Back), a look switch (then Back), and a Studio jump; on Safe's history, the NAS way in
+     and the Computer */
+  async 'row 22 · leaving a screen without Continue by Close, reload and Resume, by a look switch, or by a Studio jump never commits its pick: Safe history, NAS way in, Computer (lead rule 3 clarification 1103092929)'(t) {
+    const EDITS = [
+      ['Safe history Jujutsu', async (A) => { await A.toSafe('Notes'); await toReview(A); }, async (A) => { await A.click('edit', 'safe', 'safe'); }, async (A) => { await A.click('backend', 'jujutsu'); },
+        () => O55.S.sess.drafts.main.history_backend, (snap) => snap.drafts.main.history_backend, 'git', 'safe'],
+      ['NAS way in SMB', toNasProject, async (A) => { await editBeginTo(A); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000); },
+        async (A) => { await A.click('method', 'smb'); }, () => (O55.S.sess.nas || {}).method || 'ssh', (snap) => (snap.nas || {}).method || 'ssh', 'ssh', 'nas-find'],
+      ['Computer a Server', async (A) => { await A.toSafe('Notes'); await toReview(A); }, async (A) => { await A.click('edit', 'where', 'where'); }, async (A) => { await A.click('pick', 'server'); },
+        () => O55.S.sess.ui.where || 'this', (snap) => (snap.ui || {}).where || 'this', 'this', 'where']
+    ];
+    for (const [what, est, open, pick, readFn, snapFn, committed, at] of EDITS) {
+      const read = (A) => A.frame().evaluate(readFn);
+      /* Close, then the page loaded again, then Resume: the saved record carries the answers the screen was reached with;
+         resumed, the pick is still only pending, and Back restores the committed answer */
+      await flow(t, `22 ${what}: Close, reload, Resume, then Back`, async (A, bad) => { await est(A); await A.screen('review'); const start = await A.frame().evaluate(SNAP20);
+        await open(A); await A.screen(at); await pick(A); await A.sleep(400);
+        await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(900);
+        const saved = await A.frame().evaluate(() => JSON.stringify(O55.store.get('onboarding', null))), rec = JSON.parse(saved);
+        const kept = rec.txn && rec.txn.snap ? await A.frame().evaluate(`(${snapFn.toString()})(${JSON.stringify(rec.txn.snap)})`) : null;
+        if (!rec.txn || rec.txn.screen !== at || kept !== committed) bad.push(`${what}: the saved record does not carry the answers ${at} was reached with (txn ${rec.txn ? rec.txn.screen : 'none'}, kept ${JSON.stringify(kept)})`);
+        await A.reopen();
+        if (A.sandboxed()) { await A.frame().locator('[data-o55-do="close"]').first().click({ timeout: 5000 }).catch(() => {}); await A.sleep(900);
+          await A.frame().evaluate((s) => { O55.store.set('onboarding', JSON.parse(s)); if (O55.boot && O55.boot.chip) O55.boot.chip(); }, saved); }
+        await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 15000 }); await A.sleep(1500);
+        const back = (await A.snap()).screen; for (let i = 0; i < 2 && (await A.snap()).screen === back; i++) { await pressBack(A); await A.sleep(800); }
+        const after = await read(A); if (after !== committed) bad.push(`${what}: resumed on ${back}, then Back: the answer is ${JSON.stringify(after)}, not the committed ${JSON.stringify(committed)}`);
+        const w = await keepOn(A); if (w[w.length - 1] !== 'review') { bad.push(`${what}: never back to Review: ${w.join(' > ')}`); return; }
+        const end = await A.frame().evaluate(SNAP20), dk = Object.keys(Object.assign({}, start.draft, end.draft)).filter((k) => JSON.stringify(start.draft[k]) !== JSON.stringify(end.draft[k]));
+        if (dk.length) bad.push(`${what}: after Resume and Back, on to Review: the draft changed ${dk.join(', ')}`);
+        const rk = [...new Set([...start.rows, ...end.rows])].filter((r) => !start.rows.includes(r) || !end.rows.includes(r)); if (rk.length) bad.push(`${what}: Review's rows changed: ${rk.join(' | ')}`);
+        t.log(`22 ${what}: resumed on ${back}; record kept ${JSON.stringify(kept)}`); });
+      /* a look switch while the pick is pending: the pick stays only pending, Back restores the committed answer, and the
+         look chosen stays the plan's look */
+      await flow(t, `22 ${what}: a look switch, then Back`, async (A, bad) => { await est(A); await A.screen('review');
+        await open(A); await A.screen(at); await pick(A); await A.sleep(400);
+        await A.frame().evaluate(() => O55.ui.applyLook('basic', 'dark')); await A.sleep(1500);
+        if ((await A.snap()).screen !== at) bad.push(`${what}: the look switch left ${at} for ${(await A.snap()).screen}`);
+        for (let i = 0; i < 2 && (await A.snap()).screen === at; i++) { await pressBack(A); await A.sleep(800); }
+        const after = await read(A), look = await A.frame().evaluate(() => [O55.S.sess.drafts.main.theme_family, O55.S.sess.drafts.main.theme_mode]);
+        if (after !== committed) bad.push(`${what}: after a look switch and Back the answer is ${JSON.stringify(after)}, not ${JSON.stringify(committed)}`);
+        if (look[1] !== 'dark') bad.push(`${what}: Back took the look switch back too: the plan's look is ${look.join(' ')}`); });
+      /* a Studio jump while the pick is pending starts afresh at the screen chosen: nothing of the pending pick is in it */
+      await flow(t, `22 ${what}: a Studio jump`, async (A, bad) => { await est(A); await A.screen('review');
+        await open(A); await A.screen(at); await pick(A); await A.sleep(400);
+        const ok = await A.frame().evaluate(() => !!(O55.studio && O55.studio.onboarding && O55.studio.onboarding.screen)); if (!ok) { bad.push('no Studio jump on this page'); return; }
+        await A.frame().evaluate(() => O55.studio.onboarding.screen('review')); await A.sleep(1800);
+        const after = await read(A); if (after !== committed && !(at === 'where' && after === 'this')) bad.push(`${what}: after a Studio jump the session holds the pending ${JSON.stringify(after)}`);
+        const stored = await A.frame().evaluate(() => { const r = O55.store.get('onboarding', null); return r ? [r.drafts && r.drafts.main && r.drafts.main.history_backend, r.nas && r.nas.method, r.ui && r.ui.where] : null; });
+        if (stored && ((at === 'safe' && stored[0] === 'jujutsu') || (at === 'nas-find' && stored[1] === 'smb') || (at === 'where' && stored[2] === 'server'))) bad.push(`${what}: the stored record after a Studio jump carries the pending pick ${JSON.stringify(stored)}`); });
+    }
   },
   /* the Computer kind switched from Review, each way, then the whole Back run from Review to Welcome: no repeat, every
      screen applies, no step of the old Computer answer (Sol's Basic Light 6sr at 9b9: Where, Review again, then the old

@@ -888,19 +888,45 @@
      forgeAccounts, a device's authorization and known host in the fixture world and the settled NAS facts, bound to the
      device, port, account and key) */
   const TXN_KEYS = ['drafts', 'active', 'nas', 'restore', 'online', 'backup', 'folder', 'folderInfo', 'like', 'ui', 'azureProjects', 'connect', 'signin', 'server'];
+  /* Steps whose own work is a verification or an operation keep its result; what the person picks or types on them is
+     still taken back (INPUTS, plus a screen's own discard for a value held outside the session). Each one, and why (the
+     lead's audit of 1103-R4):
+     - welcome: no answer. look: the look is the window's own, applied live and kept (a look switch is never undone).
+     - nas-identity: its only actions are trusting the host, which goes on, or stopping. nas-install, r-preview: their
+       actions are operations (install, retry, apply the restore); a step's Back never undoes an operation.
+     - s-confirm: the Server's name, the self-match confirmation and the code typed are inputs; its claims are facts.
+     - c-review: the pairing way picked is an input; the request it starts is an operation. c-pair: the code typed is an
+       input (its own discard); the pairing is a fact. c-ready: the Project picked to open is an input.
+     - nas-pmpair: the pairing way and the code typed are inputs; the pairing is a fact. r-unlock: the phrase typed is
+       an input (the field keeps no value; its typed flag is restored); the unlock is a fact.
+     - s-ready, review, creating, protect, away-setup, ai, ai-all, ai-none, free, ready: Review's Create and the steps
+       after it act only on committed answers, and once the plan is created Back is off (canBack) */
   const NO_TXN = new Set(['welcome', 'look', 'nas-identity', 'nas-install', 'nas-pmpair', 'r-unlock', 'r-preview',
-    's-wait', 's-confirm', 's-ready', 'c-review', 'c-pair', 'c-ready', 'review', 'creating', 'protect', 'away-setup', 'ai', 'ai-all', 'ai-none', 'free', 'ready']);
+    's-confirm', 's-ready', 'c-review', 'c-pair', 'c-ready', 'review', 'creating', 'protect', 'away-setup', 'ai', 'ai-all', 'ai-none', 'free', 'ready']);
+  const INPUTS = { 's-confirm': [['server', 'name'], ['server', 'selfConfirmed'], ['server', 'codeEdited']], 'c-ready': [['connect', 'openProject']],
+    'c-review': [['drafts', 'connect', 'connection_pairing']], 'nas-pmpair': [['nas', 'pairing']], 'r-unlock': [['restore', 'typed'], ['restore', 'bad']] };
+  const getAt = (path) => path.reduce((o, k) => (o == null ? undefined : o[k]), S.sess);
   const copyOf = (v) => (v === undefined ? undefined : JSON.parse(JSON.stringify(v)));
   function txnOpen(id) {
     if (!S.sess) return;
-    if (NO_TXN.has(id)) { S.sess.txn = null; return; }
+    if (NO_TXN.has(id)) { S.sess.txn = INPUTS[id] ? { screen: id, inputs: INPUTS[id].map((p) => [p, copyOf(getAt(p))]) } : null; return; }
     const snap = {}; TXN_KEYS.forEach((k) => { snap[k] = copyOf(S.sess[k]); });
     S.sess.txn = { screen: id, snap };
   }
   function txnDiscard() {
     const t = S.sess && S.sess.txn;
-    if (!t || t.screen !== S.sess.screen || !t.snap) return false;
+    if (!t || t.screen !== S.sess.screen) return false;
+    const def = SCREENS.defs[t.screen];
+    if (def && def.discard) { try { def.discard(S); } catch (_) {} } /* (a value typed and held outside the session) */
+    if (t.inputs) {
+      t.inputs.forEach(([path, v]) => { const o = path.slice(0, -1).reduce((x, k) => (x == null ? undefined : x[k]), S.sess), k = path[path.length - 1]; if (o && typeof o === 'object') { if (v === undefined) delete o[k]; else o[k] = copyOf(v); } });
+      S.sess.txn = null; return true;
+    }
+    if (!t.snap) return false;
+    /* (the look is the window's own: a look switch made while the screen was open stays, Sol R4 minor) */
+    const look = S.sess.drafts && S.sess.drafts.main ? [S.sess.drafts.main.theme_family, S.sess.drafts.main.theme_mode] : null;
     TXN_KEYS.forEach((k) => { if (t.snap[k] === undefined) delete S.sess[k]; else S.sess[k] = copyOf(t.snap[k]); });
+    if (look && S.sess.drafts) Object.values(S.sess.drafts).forEach((d) => { if (d && typeof d === 'object') { d.theme_family = look[0]; d.theme_mode = look[1]; } });
     S.sess.txn = null;
     return true;
   }

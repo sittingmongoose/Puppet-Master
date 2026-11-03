@@ -246,6 +246,8 @@
 
   /* ------------------------------------------------------------------ S2: name it and confirm (the Server preflow's commit) */
   def('s-confirm', {
+    /* (a code typed and not used goes with Back: it is held outside the session, 60-ui-core's INPUTS) */
+    discard(S) { const u = unclaimed(S); if (u && !S.sess.server.claimed) setupCodes.delete(u.id); },
     chapter: 'computer', stage: 'server_storage_client',
     scene: (S) => ({ id: 'where', beat: 'server' }),
     eyebrow: () => T('server.confirm.eyebrow'),

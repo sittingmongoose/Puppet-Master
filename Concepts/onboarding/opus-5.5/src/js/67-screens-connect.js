@@ -384,6 +384,8 @@
   }
   def('c-pair', {
     seed: (S) => seedConnect(S, 1),
+    /* (a code typed and not checked goes with Back) */
+    discard(S) { const r = runOf(S); if (r && !paired(S)) typed.delete(r.id); },
     chapter: 'computer', stage: 'automatic_preparation',
     scene: () => ({ id: 'where', beat: 'connect' }),
     eyebrow: () => T('connect.pair.eyebrow'),
