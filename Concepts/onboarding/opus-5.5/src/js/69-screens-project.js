@@ -55,10 +55,13 @@
      picker choosing nothing; picking the same kind again starts empty with Continue off. Settled work outside the plan
      stays (a sign-in already made, a key already installed on the NAS, a host already trusted). */
   function resetBeginning(S, d, was) {
+    /* (only the abandoned beginning's own references go: a files place on the NAS keeps its own, Muse delta minor 1) */
+    const nasRef = (r) => /^(ssh-key|pairing):|^preflight:(ssh|paired-source):/.test(r), mine = (r) => /^preflight:folder:/.test(r) || (was === 'existing:device' && nasRef(r)) || (was === 'existing:online' && !nasRef(r) && !/^preflight:/.test(r));
     O55.draft.set(d, Object.assign({ project_mode: 'new', project_transport: 'local', local_location_mode: 'automatic', local_location: '', project_source_ref: '', backup_source_ref: '', backup_transport: 'local',
-      preflight_result_refs: [], source_access_authorization_refs: [] }, S.sess.ui.nameTouched ? {} : { project_name: '' }));
+      preflight_result_refs: (d.preflight_result_refs || []).filter((r) => !mine(r)), source_access_authorization_refs: (d.source_access_authorization_refs || []).filter((r) => !mine(r)) }, S.sess.ui.nameTouched ? {} : { project_name: '' }));
     S.sess.folderInfo = null; S.sess.folder = null;
     Object.keys(S.sess.ops || {}).forEach((k) => { if (/^(folder|mounted|smb|nfs):/.test(k)) F.reset(S, k); });
+    if (S.sess.nas && O55.nas && O55.nas.remember) O55.nas.remember(S); /* (its settled host and keys stay, 70) */
     if (S.sess.nas) { if (S.sess.nas.purpose === 'source' || was === 'existing:device') S.sess.nas = null; else { delete S.sess.nas.at; delete S.sess.nas.folderLabel; } }
     if (S.sess.backup && S.sess.backup.fromRestore) { S.sess.backup.dest = null; S.sess.backup.fromRestore = false; }
     S.sess.restore = null;
@@ -119,14 +122,18 @@
         const d = md(S), sel = choiceOf(S), sub = S.sess.ui.beginSub;
         /* switching how the Project begins drops what the abandoned beginning filled in */
         const began = sel === 'existing' ? 'existing:' + sub : sel;
-        if (S.sess.ui.beganAs && S.sess.ui.beganAs !== began) resetBeginning(S, d, S.sess.ui.beganAs);
+        /* (the same beginning chosen again keeps everything it holds: an unchanged answer clears nothing) */
+        const kept = S.sess.ui.beganAs === began;
+        if (S.sess.ui.beganAs && !kept) resetBeginning(S, d, S.sess.ui.beganAs);
         S.sess.ui.beganAs = began;
         const clearOnline = d.project_mode === 'existing_online' ? { online_mode: 'none', repository_ref: '' } : {};
         if (sel === 'new') { O55.draft.set(d, Object.assign({ project_mode: 'new', project_transport: 'local', project_source_ref: '', source_more: false }, clearOnline)); S.save(); return O55.ui.go('name'); }
-        if (sel === 'restore') { S.sess.restore = { scope: 'project' }; S.save(); return O55.ui.go('r-source'); }
+        /* (Restore kept as it was keeps its source, place and pick: an unchanged answer clears nothing, Sol FO22-N1) */
+        if (sel === 'restore') { if (!(kept && S.sess.restore && S.sess.restore.scope === 'project')) S.sess.restore = { scope: 'project' }; S.save(); return O55.ui.go('r-source'); }
         if (sub === 'folder') { O55.draft.set(d, Object.assign({ project_mode: 'existing_local', project_transport: 'local', source_more: true }, clearOnline)); S.save(); return O55.ui.go('ex-folder'); }
         if (sub === 'online') { O55.draft.set(d, { project_mode: 'existing_online', online_mode: 'existing', source_more: true }); S.sess.online = Object.assign(S.sess.online || {}, { purpose: 'source' }); S.save(); return O55.ui.go('online-service'); }
-        O55.draft.set(d, Object.assign({ project_mode: 'existing_local', project_transport: 'ssh', source_more: true }, clearOnline));
+        /* (a NAS source kept keeps its way in: a shared folder or a mounted volume is not turned back into SSH) */
+        O55.draft.set(d, Object.assign({ project_mode: 'existing_local', project_transport: kept && d.project_transport && d.project_transport !== 'local' ? d.project_transport : 'ssh', source_more: true }, clearOnline));
         S.sess.nas = Object.assign(S.sess.nas || {}, { purpose: 'source' }); S.save();
         return O55.ui.go('nas-find');
       }
@@ -275,7 +282,7 @@
       loc(S, v) {
         const d = md(S);
         /* (files on the NAS given up: its device, folder and checks go with it, as a beginning's do) */
-        if (v !== 'network' && d.storage_mode === 'network_location' && S.sess.nas && S.sess.nas.purpose === 'storage') { S.sess.nas = null; Object.keys(S.sess.ops || {}).forEach((k) => { if (/^(mounted|smb|nfs):/.test(k)) F.reset(S, k); }); }
+        if (v !== 'network' && d.storage_mode === 'network_location' && S.sess.nas && S.sess.nas.purpose === 'storage') { if (O55.nas && O55.nas.remember) O55.nas.remember(S); S.sess.nas = null; Object.keys(S.sess.ops || {}).forEach((k) => { if (/^(mounted|smb|nfs):/.test(k)) F.reset(S, k); }); }
         if (v === 'auto') O55.draft.set(d, { local_location_mode: 'automatic', local_location: '', storage_mode: 'this_device' });
         if (v === 'custom') O55.draft.set(d, { local_location_mode: 'custom', local_location: d.local_location || '~/Documents/' + (d.project_name || 'Project'), storage_mode: 'this_device' });
         if (v === 'network') { S.sess.ui.sheet = null; S.sess.nas = Object.assign(S.sess.nas || {}, { purpose: 'storage' }); O55.draft.set(d, { storage_mode: 'network_location', storage_transport: 'ssh' }); S.save(); return O55.ui.go('nas-find'); }

@@ -804,16 +804,25 @@
     opts = opts || {};
     if (!SCREENS.defs[id]) { console.warn('O55: unknown screen', id); return; }
     const from = SCREENS.defs[S.sess.screen];
+    /* a step Review's Edit opened is left by going on from it (or away by the rail), not by entering a step inside it */
+    const rt = S.sess.ui && S.sess.ui.returnTo;
+    if (rt && rt.from === S.sess.screen && id !== rt.from && id !== rt.screen && !(O55.branch && O55.branch.within && O55.branch.within(id, S) === rt.from)) rt.left = true;
+    const path = opts.path || (rt && rt.screen === id && !opts.fromHistory && Array.isArray(rt.path) ? rt.path : null), editFrom = opts.editFrom || (rt && rt.from);
     if (from && from.leave) from.leave(S);
-    if (S.sess.ui.openedAt && S.sess.ui.openedAt !== id) delete S.sess.ui.openedAt;
-    if (O55.branch) O55.branch.reconcile(S);
+    /* (a walk on from a step a jump opened carries what it picks there: nothing is reconciled until it reaches a step its
+       answers lead to, Demo Studio's Open at one screen and its click-walk, FO-17) */
+    const walking = !!S.openedAt && S.openedAt === S.sess.screen;
+    if (S.openedAt && S.openedAt !== id) delete S.openedAt;
+    if (O55.branch && !walking) O55.branch.reconcile(S);
     prune();
     if (!opts.replace && S.sess.screen !== id && !opts.noHistory) S.sess.history.push(S.sess.screen);
-    if (opts.noHistory && !opts.fromHistory && O55.branch && !O55.branch.applies(id, S)) S.sess.ui.openedAt = id;
+    if (!opts.fromHistory && O55.branch && !O55.branch.applies(id, S)) S.openedAt = id;
     S.resumedShownOn = null;
     if (S.tip) { S.tip = null; skin('tip', null); }
     stopHover(); hv.want = null; S.pipHover = null; S.pipTyping = null;
-    S.sess.screen = id; S.save();
+    S.sess.screen = id;
+    if (path) { S.sess.history = (opts.exact ? path.slice() : rejoin(S.sess.history, path, editFrom, opts.editThen || id)).filter((x) => x !== id && SCREENS.defs[x]); prune(); }
+    S.save();
     const def = SCREENS.defs[id];
     if (def.enter && onBranch(id)) def.enter(S, opts);
     /* the music follows the journey: the chapter's chord, and how far along the person is (the first forward sound
@@ -829,6 +838,14 @@
     flushOpen();
     const def = SCREENS.defs[S.sess.screen];
     if (def && def.onBack && def.onBack(S) === false) return;
+    /* on a step Review's Edit opened, before going on from it, Back returns to Review, which Back then leaves for the steps
+       before it in the order they were walked (lead's Back ruling 1103011909, rule 2) */
+    const rt = S.sess.ui && S.sess.ui.returnTo;
+    if (rt && rt.screen && rt.screen !== S.sess.screen && rt.from === S.sess.screen && !rt.left && SCREENS.defs[rt.screen] && onBranch(rt.screen)) {
+      const raw = S.sess.history || [], at = raw.lastIndexOf(rt.screen);
+      const path = Array.isArray(rt.path) ? rt.path : at >= 0 ? raw.slice(0, at) : null;
+      if (path) return go(rt.screen, { dir: 'back', noHistory: true, fromHistory: true, path, exact: true });
+    }
     prune();
     let prev = S.sess.history.pop();
     /* (never back to the screen you are on: a resumed step that gave way to it, an entry a skipped step hid) */
@@ -840,11 +857,12 @@
      (canon FO-22: Back visits only steps that remain valid for the current choices, and going on never reinstates an
      abandoned branch, its source or its authorization). Whether a step applies is a pure function of the person's current
      answers, declared per step in 76-branch.js (O55.branch); nothing is recorded at navigation time, so a history from any
-     build, a Review Edit or a jump is judged alike. The one exception is a tool's straight jump (Demo Studio's Open at one
-     screen, a ?o55=screen= link, a check's noHistory jump to a step its answers do not lead to): that step applies while it
-     is the screen on show, never once left, and never to Back or a resumed session. */
+     build, a Review Edit or a jump is judged alike. The one exception is a step reached by a jump forward that its answers
+     do not lead to (Demo Studio's Open at one screen and its click-walk on from there, a ?o55=screen= link, a scenario's
+     direct go): that step applies while it is the screen on show, never once left, and never to Back or a resumed
+     session. */
   function onBranch(id) {
-    if (S.sess && S.sess.ui && S.sess.ui.openedAt === id && S.sess.screen === id) return true;
+    if (S.sess && S.openedAt === id && S.sess.screen === id) return true;
     return !O55.branch || O55.branch.applies(id, S);
   }
   /* a step that does not apply is never shown: what would show it (a history entry, a resumed session, a redraw after its
@@ -857,12 +875,35 @@
     S.sess.screen = to || 'welcome';
   }
 
-  /* the history keeps only the active branch, and no entry for the screen you are on (a resumed screen that gave way) */
+  /* the history keeps only the active branch, as a simple path: a step reached again cuts the path back to it, so a run of
+     Back presses never shows a screen twice nor loops (final-onb FO22-Later: Review > Begin > Review after Later; Sol's Glass
+     Ar Review > Safe > Review > Safe), and holds no entry for the screen on show. A step reached again after only the steps
+     inside it (Safe after its online copy's steps) keeps them: its earlier entry goes instead (76-branch.js within) */
   function prune() {
-    const out = [];
-    (S.sess.history || []).forEach((id) => { if (onBranch(id) && out[out.length - 1] !== id) out.push(id); });
-    while (out.length && out[out.length - 1] === S.sess.screen) out.pop();
+    const out = [], inside = (tail, id) => tail.length > 0 && !!O55.branch && !!O55.branch.within && tail.every((x) => O55.branch.within(x, S) === id);
+    (S.sess.history || []).forEach((id) => {
+      if (!onBranch(id)) return;
+      const at = out.indexOf(id);
+      if (at < 0) out.push(id);
+      else if (inside(out.slice(at + 1), id)) { out.splice(at, 1); out.push(id); }
+      else out.length = at + 1;
+    });
+    const here = out.indexOf(S.sess.screen);
+    if (here >= 0) { if (inside(out.slice(here + 1), S.sess.screen)) out.splice(here, 1); else out.length = here; }
     S.sess.history = out;
+  }
+  /* Review reached again from a step its Edit opened (from), by going on toward a later step (then, where Review's Edit
+     comes straight back): the walk since the Edit replaces the old path's part from that step up to then, keeping in their
+     places the old part's steps it passed over (a completed Server's setup, Safe's online copy), and the old path goes on
+     from then; prune() then drops what no longer applies. So Back from Review walks the current steps in forward order, and
+     an Edit kept unchanged leaves the path exactly as it was */
+  function rejoin(walked, path, from, then) {
+    const f = walked.indexOf(from), pf = path.indexOf(from);
+    if (f < 0 || pf < 0) { let k = -1; walked.forEach((x) => { const i = path.indexOf(x); if (i > k) k = i; }); return walked.concat(path.slice(k + 1).filter((x) => walked.indexOf(x) < 0)); }
+    const pt = path.indexOf(then), seg = path.slice(pf, pt > pf ? pt : path.length), head = walked.slice(0, f), out = walked.slice(f);
+    let prev = -1;
+    seg.forEach((x) => { const i = out.indexOf(x); if (i >= 0) prev = i; else if (head.indexOf(x) < 0) { out.splice(prev + 1, 0, x); prev++; } });
+    return head.concat(out, (pt > pf ? path.slice(pt) : []).filter((x) => head.indexOf(x) < 0 && out.indexOf(x) < 0));
   }
 
   /* the waits' loaders (L6) start once they are on the page (the loader owner, PM_PIP_LOADER) */
@@ -1163,7 +1204,7 @@
     /* facts the person established earlier (a trusted device, an installed key) are re-applied to the fixture world */
     (O55.onOpen || []).forEach((fn) => { try { fn(S); } catch (_) {} });
     S.sess.status = 'active';
-    if (opts.screen && SCREENS.defs[opts.screen]) { S.sess.screen = opts.screen; S.sess.ui.openedAt = opts.screen; }
+    if (opts.screen && SCREENS.defs[opts.screen]) { S.sess.screen = opts.screen; S.openedAt = opts.screen; } else delete S.openedAt;
     if (!SCREENS.defs[S.sess.screen]) S.sess.screen = 'welcome';
     if (!opts.screen && O55.branch) O55.branch.reconcile(S);
     settleBranch(); prune();

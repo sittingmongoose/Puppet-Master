@@ -290,9 +290,15 @@
      accounts recorded for retired servers go, an unfinished commit starts again from Review, and a screen of the old
      service's own steps gives way to choosing the service */
   O55.onOpen = (O55.onOpen || []).concat([(S) => {
-    /* a session saved before Safe's copy answer existed wanted a copy if it was choosing one: on its picker or steps, or
-       with a service picked there (76-branch.js reads the answer; once set, it is the person's) */
-    const olm = OL(S); if (olm.wanted === undefined) olm.wanted = olm.purpose === 'copy' && (olm.forge != null || ['online-service', 'online-signin', 'online-details'].includes(S.sess && S.sess.screen));
+    /* a session saved before Safe's copy answer existed wanted a copy if it was saved choosing one (on the picker or its
+       steps) or had one in its plan (76-branch.js reads the answer; once set, it is the person's) */
+    const olm = OL(S);
+    if (olm.wanted === undefined) {
+      const mid = olm.purpose === 'copy' && ['online-service', 'online-signin', 'online-details'].includes(S.sess && S.sess.screen);
+      olm.wanted = mid || md(S).online_mode === 'new';
+      /* (saved elsewhere with no copy, as after Not now: a card left on the picker is not a choice, Muse delta Major 1) */
+      if (!olm.wanted && md(S).online_mode === 'none' && olm.purpose === 'copy') { olm.forge = null; olm.variant = null; }
+    }
     const drafts = (S.sess && S.sess.drafts) || {};
     Object.keys(drafts).forEach((k) => { if (drafts[k] && typeof drafts[k] === 'object') O55.draft.normalize(drafts[k]); });
     /* the session's own state is checked whatever the draft holds (a card picked and closed before Continue) */

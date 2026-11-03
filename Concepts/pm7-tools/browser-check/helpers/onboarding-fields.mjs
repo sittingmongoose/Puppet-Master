@@ -42,6 +42,9 @@ export function onboardingApp(t) {
         await t.check(`look ${look.join(' ')} applied`, th.chosen === look[0] && th.mode === look[1], JSON.stringify(th));
         await click(t, 'next', undefined, 'where');
       },
+      /* the page loaded again as the person would (no fresh start): a session closed before is offered with Resume */
+      async reopen(t) { f = await t.app.open({ onboarding: true, query: 'o55scenario=fresh', sandbox, settleMs: 1500 }); await sleep(800); },
+      sandboxed: () => sandbox,
       click, fill, type, snap: () => snap(), screen: (t, id) => screen(id), sleep: (t, ms) => sleep(ms),
       frame: () => f,
       async has(t, action, arg) { let sel = `${LAYER} [data-o55-do="${action}"]`; if (arg !== undefined) sel += `[data-arg=${JSON.stringify(String(arg))}]`; return (await f.locator(sel).filter({ visible: true }).count()) > 0; },

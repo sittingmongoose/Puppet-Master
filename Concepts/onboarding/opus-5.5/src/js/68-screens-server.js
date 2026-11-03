@@ -524,7 +524,7 @@
         });
       },
       newCode(S) { newInvite(S); O55.ui.refresh(); O55.sound.play('reveal'); }, /* rotates the invite only: trusted devices stay paired; a new code and QR are drawn */
-      restore(S) { S.sess.restore = { scope: 'server' }; S.save(); O55.ui.go('r-source'); },
+      restore(S) { if (!(S.sess.restore && S.sess.restore.scope === 'server')) S.sess.restore = { scope: 'server' }; S.save(); O55.ui.go('r-source'); }, /* (kept as it was: nothing cleared) */
       next(S) { S.sess.active = 'main'; S.save(); O55.ui.go('begin'); }
     },
     skipOnBack: () => false
@@ -661,6 +661,7 @@
         /* a backup on a NAS is reached over SSH like every other NAS: its identity is shown before it is trusted and
            a key is set up (the SSH steps), then the restore continues; a cloud account needs its sign-in first */
         if (place === 'nas' && !reached(S)) {
+          if (O55.nas && O55.nas.remember) O55.nas.remember(S); /* (a host trusted and keys installed before stay, 70) */
           S.sess.nas = { purpose: 'backup', method: 'ssh', device: r.device, trusted: false, installed: false, key: null };
           S.save(); return O55.ui.go(O55.nas.entry(S)); /* a NAS running Puppet Master pairs instead (PWIZ-029) */
         }

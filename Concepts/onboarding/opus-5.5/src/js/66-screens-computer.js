@@ -70,10 +70,15 @@
         /* This computer: whatever an abandoned Server path set (its reference, trust, access route) is cleared */
         if (v === 'this') { S.sess.active = 'main'; O55.draft.set(S.sess.drafts.main, { server_mode: 'this_device', server_ref: '', server_trust_confirmed: false, server_connection_mode: 'discover', storage_mode: 'this_device', storage_location: '', remote_mode: 'none', remote_more: false, tailscale_control: null, headscale_url: '', remote_endpoint: '', proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null }); S.save(); return O55.ui.go('begin'); }
         if (v === 'connect') { S.sess.active = 'connect'; S.save(); return O55.ui.go('c-route'); }
-        S.sess.active = 'main'; O55.draft.set(S.sess.drafts.main, { server_mode: 'new_server', storage_mode: 'with_server' }); S.save();
+        /* A new Server replacing another computer answer (an existing Server connected to, or This computer): the plan names
+           no Server and no trust until this new Server's own setup completes; the old pairing stays where it was (Sol FO22-N3).
+           The new Server chosen again keeps everything it holds. */
+        const was = S.sess.drafts.main.server_mode;
+        S.sess.active = 'main'; O55.draft.set(S.sess.drafts.main, Object.assign({ server_mode: 'new_server', storage_mode: 'with_server' }, was === 'new_server' ? {} : { server_ref: '', server_trust_confirmed: false, server_connection_mode: 'discover', remote_endpoint: '', proxy_hostname: '', headscale_url: '' })); S.save();
         return O55.ui.go('s-kind');
       },
-      restoreAll(S) { S.sess.restore = { scope: 'full' }; S.save(); O55.ui.go('r-source'); }
+      /* (the same restore chosen again keeps what it holds: an unchanged answer clears nothing) */
+      restoreAll(S) { if (!(S.sess.restore && S.sess.restore.scope === 'full')) S.sess.restore = { scope: 'full' }; S.save(); O55.ui.go('r-source'); }
     }
   });
 })();
