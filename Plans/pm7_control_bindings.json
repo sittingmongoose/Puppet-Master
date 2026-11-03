@@ -6144,7 +6144,7 @@
       "action_ids": [],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Explicit non-preselected durable scope; omit Project without actual target, reject Everywhere path rules. Draft selection grants no authority; use exact Permissions owner on final commit. Preserve staged entry/exit no-click gates and no queued dispatch.",
+      "payload": "Explicit non-preselected durable scope; omit Project without actual target, reject Everywhere path rules. Draft selection grants no authority; use exact Permissions owner on final commit. F3-1, Jared 2026-10-30: when this producer is a staged card, body/action/dismiss clicks are inactive during entry or exit on every page (Usage included), with no queued dispatch or late reactivation of a leaving card; Reduced Motion settles instantly. Inbox/bell controls retain their existing availability.",
       "no_production_reason": "Draft choice only; choosing a scope alone grants no permission and writes no setting."
     },
     {
