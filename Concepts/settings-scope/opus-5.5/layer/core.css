@@ -163,8 +163,9 @@ html[data-lg="on"][data-theme^="glass"] #panel-settings .psx-guide[data-lg-surfa
 #panel-settings .psx-board { container-type: inline-size; container-name: psx-board; }
 #panel-settings .psx-board .psx-h { margin: 4px 0 8px; }
 #panel-settings .psx-board .psx-h + .psx-board-grid + .psx-h { margin-top: 18px; }
-#panel-settings .psx-board-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-#panel-settings .psx-board-grid[data-kind="chg"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+/* each specimen keeps a real row's geometry (label, control and end word on one line), so the board shows the same
+   crowding and outline as the page; two options side by side when there is room, else one under the other */
+#panel-settings .psx-board-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
 #panel-settings .psx-board-col { min-width: 0; display: flex; flex-direction: column; border: 1px solid var(--k3-line); border-radius: 10px; background: color-mix(in srgb, var(--k3-bg-1) 55%, transparent); overflow: hidden; }
 html[data-theme^="retro"] #panel-settings .psx-board-col, html[data-o55-nier="on"] #panel-settings .psx-board-col { border-radius: 0; }
 #panel-settings .psx-board-head { padding: 10px 12px 8px; border-bottom: 1px solid var(--k3-line); }
@@ -174,21 +175,28 @@ html[data-theme^="retro"] #panel-settings .psx-board-col, html[data-o55-nier="on
 #panel-settings .psx-board-head .psx-tb { margin-left: -8px; }
 #panel-settings .psx-board-rows { padding: 0 12px 6px; }
 #panel-settings .psx-board-rows .setting-list { border: 0; background: none; box-shadow: none; padding: 0; }
-#panel-settings .psx-board-rows .setting-row.o55-row { grid-template-columns: minmax(0, 1fr) auto; row-gap: 8px; padding: 10px 0; }
-#panel-settings .psx-board-rows .setting-row.o55-row > .setting-control { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; max-width: none; }
-#panel-settings .psx-board-rows .setting-row.o55-row > .o55-about { grid-column: 2; grid-row: 1; align-self: start; }
-#panel-settings .psx-board-rows .setting-row.o55-row .pm51-dd-trigger { min-width: 0; width: 100%; max-width: 100%; }
-#panel-settings .psx-board-rows .setting-row.o55-row .pm51-dd { width: 100%; }
+#panel-settings .psx-board-rows .setting-row.o55-row { grid-template-columns: minmax(0, 1fr) auto auto; column-gap: 12px; }
+#panel-settings .psx-board-rows .setting-row.o55-row .pm51-dd-trigger { min-width: 0; max-width: 200px; }
+#panel-settings .psx-board-rows .setting-row.o55-row > .setting-control { min-width: 0; }
 #panel-settings .psx-board-rows[data-cell-chg="outline"] .setting-row.is-changed > .setting-control :is(.pm51-dd-trigger, .o55-num, .text-control) { border-color: var(--psx-out); }
 #panel-settings .psx-board-rows[data-cell-chg="outline"] .setting-row.is-changed > .setting-control .toggle { outline: 1px solid color-mix(in srgb, var(--k3-accent) 55%, transparent); outline-offset: 2px; }
 #panel-settings .psx-board-rows[data-cell-chg="frame"] .setting-row.o55-row.is-changed { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-accent) 45%, transparent); background: color-mix(in srgb, var(--k3-accent) 4%, transparent); border-radius: 8px; border-top-color: transparent; padding-left: 8px; padding-right: 6px; }
 html[data-theme^="retro"] #panel-settings .psx-board-rows[data-cell-chg="frame"] .setting-row.o55-row.is-changed, html[data-o55-nier="on"] #panel-settings .psx-board-rows[data-cell-chg="frame"] .setting-row.o55-row.is-changed { border-radius: 0; }
-@container psx-board (min-width: 1100px) {
-  #panel-settings .psx-board-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@container psx-board (min-width: 1000px) {
+  #panel-settings .psx-board-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@container psx-board (max-width: 900px) {
-  #panel-settings .psx-board-grid[data-kind="chg"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@container psx-board (max-width: 520px) {
-  #panel-settings .psx-board-grid, #panel-settings .psx-board-grid[data-kind="chg"] { grid-template-columns: minmax(0, 1fr); }
-}
+
+/* ---- fix pass 2026-11-03 --------------------------------------------------------------------------------------- */
+/* the note's live region: in the page, read by screen readers, never drawn */
+#panel-settings .psx-live { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+/* YOLO: the line on a yes-point YOLO still asks for, and the run mode in the head line */
+#panel-settings .psx-yolo { margin: 0 0 12px; padding: 8px 10px; border: 1px solid var(--k3-line); border-radius: 8px; background: color-mix(in srgb, var(--k3-bg-1) 55%, transparent); }
+html[data-theme^="retro"] #panel-settings .psx-yolo, html[data-o55-nier="on"] #panel-settings .psx-yolo { border-radius: 0; }
+#panel-settings .psx-err { display: flex; gap: 6px; align-items: flex-start; font-size: 12px; line-height: 16px; color: var(--k3-text-1); }
+#panel-settings .psx-input[aria-invalid="true"] { border-color: color-mix(in srgb, var(--k3-amber, #d99a2b) 70%, var(--k3-line)); }
+/* first start: Settings is a preview, every control reads as unavailable */
+html[data-psx-first] #panel-settings .setting-row.o55-row > .setting-control { opacity: .55; }
+#panel-settings .psx-first-card { margin: 0 0 14px; padding: 12px 14px; }
+/* the approvals moment: one line per action, its answer in Regular and in YOLO */
+#panel-settings .psx-ask .psx-li { grid-template-columns: minmax(0, 1fr) auto; }
+#panel-settings .psx-ask code { font: 600 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--k3-text-1); }

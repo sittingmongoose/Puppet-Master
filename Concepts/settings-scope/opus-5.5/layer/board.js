@@ -16,13 +16,13 @@
   const S = PSX.S;
   const CHEV = '<svg class="psx-chev" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const END_OPTS = [
-    ['origin', 'A · Origin word', 'Recommended. One labelled spot answers “where is this set?” and opens the panel.', 'Weak: the word changes from row to row.'],
+    ['origin', 'A · Origin word', 'Decided (S5 A). One labelled spot answers “where is this set?” and opens the panel.', 'Weak: the word changes from row to row.'],
     ['mark', 'B · Second mark', 'Matches the Changed mark.', 'Weak: two marks crowd a short title at narrow widths.'],
     ['line', 'C · Sentence line', 'Says where without opening anything.', 'Weak: one more line on every row that differs.'],
     ['more', 'D · More menu', 'Jared’s “…”, with its word: fast for experts.', 'Weak: it hides the state until opened.']
   ];
   const CHG_OPTS = [
-    ['outline', 'A · Word and outline', 'Recommended. The word, and the control’s own border in the accent.', 'Weak: two signals per changed row.'],
+    ['outline', 'A · Word and outline', 'Decided (S6 A). The word, and the control’s own border in the accent.', 'Weak: two signals per changed row.'],
     ['word', 'B · Word only', 'Already built, made readable at 11.5px.', 'Weak: nothing to scan for on a long page.'],
     ['frame', 'C · Framed row', 'Easy to spot while scrolling.', 'Weak: a page of changed rows reads like a page of cards.']
   ];
@@ -70,12 +70,15 @@
     return `<div class="psx-board-grid" data-kind="${kind}">${opts.map(([v, name, good, weak]) => {
       const end = kind === 'end' ? v : 'origin', chg = kind === 'chg' ? v : 'outline';
       const cur = kind === 'end' ? S.opt.end === v : S.opt.changed === v;
-      return `<section class="psx-board-col" aria-label="${esc(name)}"><header class="psx-board-head"><div class="psx-board-name">${esc(name)}${cur ? ` <span class="psx-st" data-st="complete">${mark('complete')}<span>Showing now</span></span>` : ''}</div><p class="psx-board-good">${esc(good)}</p><p class="psx-board-weak">${esc(weak)}</p><button type="button" class="psx-tb" data-use="${kind}:${v}"${cur ? ' aria-disabled="true"' : ''}>${cur ? 'In use on the page' : 'Use this on the page'}</button></header><div class="psx-board-rows" data-cell-end="${end}" data-cell-chg="${chg}" inert><div class="setting-list">${sps.map((sp) => rowHtml(sp, end, chg)).join('')}</div></div></section>`;
+      // the specimens are pictures (inert); what each shows is said in words for a screen reader
+      const said = sps.map((sp) => { const word = end === 'origin' ? sp.word : end === 'more' ? 'More' : 'Details'; return `${sp.label}${sp.changed ? ', Changed' + (chg === 'outline' ? ' with an outline on its control' : chg === 'frame' ? ' with a frame round the row' : '') : ''}${end === 'mark' && sp.mark2 ? ', then ' + sp.mark2 : ''}${end === 'line' && sp.sentence ? ', with the line ' + sp.sentence : ''}, ending in ${word}`; }).join('. ');
+      const did = `psx-said-${kind}-${v}`;
+      return `<section class="psx-board-col" aria-label="${esc(name)}" aria-describedby="${did}"><p id="${did}" hidden>${esc(said)}.</p><header class="psx-board-head"><div class="psx-board-name">${esc(name)}${cur ? ` <span class="psx-st" data-st="complete">${mark('complete')}<span>Showing now</span></span>` : ''}</div><p class="psx-board-good">${esc(good)}</p><p class="psx-board-weak">${esc(weak)}</p><button type="button" class="psx-tb" data-use="${kind}:${v}"${cur ? ' aria-disabled="true"' : ''}>${cur ? 'In use on the page' : 'Use this on the page'}</button></header><div class="psx-board-rows" data-cell-end="${end}" data-cell-chg="${chg}" inert><div class="setting-list">${sps.map((sp) => rowHtml(sp, end, chg)).join('')}</div></div></section>`;
     }).join('')}</div>`;
   }
   function open() {
     if (PSX.board.sheet && PSX.board.sheet.back.isConnected) { PSX.board.draw(); return PSX.board.sheet; }
-    const s = PSX.sheet({ id: 'board', size: 'board', cls: 'psx-board-sheet', kicker: 'Compare', title: 'How a row says where its value comes from', sub: 'The same four rows in each option. Specimens use example values.', body: '<div class="psx-board"></div>', actions: [{ spacer: true }, { label: 'Close', primary: true, run: (x) => x.close() }] });
+    const s = PSX.sheet({ id: 'board', size: 'board', cls: 'psx-board-sheet', kicker: 'Compare options', title: 'How a row says where its value comes from', sub: 'Decided: A and A (Jared, 2026-11-03). The others stay here to compare, on the same four rows; specimens use example values.', body: '<div class="psx-board"></div>', actions: [{ spacer: true }, { label: 'Close', primary: true, run: (x) => x.close() }] });
     PSX.board.sheet = s;
     PSX.board.draw();
     return s;

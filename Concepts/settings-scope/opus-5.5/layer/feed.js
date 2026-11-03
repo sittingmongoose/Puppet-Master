@@ -28,18 +28,63 @@
      nothing you see changes. Rows that belong to one thing (scope only account, provider, persona or run) stay the
      engine's per-thing rows; credentials, the wallpaper and the glass transparency are never fed. */
   const SKIP = /^(general\.visual\.(wallpaper|glass-background-mode|glass-transparency|chat-layout-mode|basic-color-scheme|theme-mode))$/;
-  const CRED = /(api-key|token|credentials|auth$|remote-headers|password|secret)/;
+  /* credentials never join the ladder: keys, tokens, passwords, secrets, sign-in headers. A token budget, a token
+     colour or "cache with OAuth" is not a credential (fix pass: the old pattern dropped ten such rows) */
+  const CRED = /(api-key|apikey|access-token|auth-token|refresh-token|bearer|credentials?$|credential-|password|passphrase|secret|remote-headers|private-key|(^|[.-])token$|(^|[.-])auth$)/;
+  /* the rows the reviews named, classified by hand (fix pass 2026-11-03); the heuristic after it is for the rest. The
+     reviewed classification of all 1010 rows is still a Plans task: PSX.classReport() prints what this concept did */
+  const REVIEWED = {
+    device: ['general.interaction.minimize-to-tray', 'general.interaction.notification-method', 'general.interaction.tray-notifications', 'general.interaction.show-tooltips', 'general.interaction.auto-follow', 'general.interaction.unread-marker',
+      'extensions.commands.keyboard-layout', 'extensions.commands.text-editing-keys', 'extensions.commands.variant-cycling-key', 'code.terminal.shortcuts', 'code.terminal.font-size', 'code.terminal.font-rendering',
+      'code.editing.font-size', 'code.editing.line-height', 'code.terminal.copy-on-select', 'code.terminal.right-click-paste', 'code.terminal.bell'],
+    project: ['code.execution.build-context', 'safety.protection.custom-patterns-path'],
+    thing: ['system.mcp.remote-url', 'system.mcp.transport', 'system.mcp.server-scope', 'system.mcp.server-enabled', 'system.mcp.tool-toggle', 'extensions.commands.command-scope', 'extensions.commands.command-mode',
+      'extensions.commands.command-model', 'extensions.commands.command-persona', 'extensions.commands.command-permissions', 'ai.accounts.gcp-project-id', 'safety.rules.rule-editor', 'safety.rules.per-tool-permissions',
+      'safety.protection.web-tool-permissions'],
+    computerOnly: ['system.advanced.auto-update', 'system.advanced.update-frequency', 'system.advanced.release-channel', 'system.advanced.catalog-updates'],
+    ceiling: ['branching.subagents.provider-concurrency-cap', 'memory.assembly.memory-capsule-budget']
+  };
+  /* a safety answer's careful order, most careful first, from its choices; a row whose order can't be told keeps the
+     computer's own when both are set (the conservative fallback of 1.4) */
+  function carefulOrder(s, id) {
+    if (id === 'safety.approvals.auto-continue') return [false, true];
+    const o = Array.isArray(s.options) ? s.options.map((x) => (x && typeof x === 'object' ? (x.value != null ? x.value : x.id) : x)) : [];
+    if (!o.length) return [];
+    const rank = (v) => (/deny|block|never|off|none|read/i.test(String(v)) ? 0 : /ask|prompt|confirm|plan|review/i.test(String(v)) ? 1 : /allow|always|auto|full|yes/i.test(String(v)) ? 2 : -1);
+    if (o.some((v) => rank(v) < 0)) return [];
+    return o.slice().sort((a, b) => rank(a) - rank(b));
+  }
   function classify(ref, s) {
     const id = ref.id, sc = ref.scope || [];
+    if (REVIEWED.thing.includes(id)) return null;
     if (sc.length && sc.every((x) => ['account', 'provider', 'persona', 'run'].includes(x))) return null;
+    if ((sc.includes('account') || sc.includes('persona')) && !sc.includes('global')) return null;   // a field of one thing
+    if (REVIEWED.device.includes(id)) return { may: ['device'], screen: true, reviewed: true };
+    if (REVIEWED.project.includes(id)) return { home: 'project', reason: 'about_this_project', reviewed: true };
+    if (REVIEWED.computerOnly.includes(id)) return { may: ['computer'], reviewed: true };
+    if (REVIEWED.ceiling.includes(id)) return { may: ['computer', 'project'], combine: 'computer_ceiling', reviewed: true };
     if (/^(general\.interaction\.scope-labels|ai\.usage\.usage-retention)$/.test(id)) return { home: 'everywhere', reason: 'same_for_you' };
     if (/(project-rules|compose-file|dockerfile|^web\.index\.|worktree-base-dir|artifacts-location|project-instructions|repo-url|remote-url)/.test(id)) return { home: 'project', reason: 'about_this_project' };
     if (/(proxy|\.port$|-port$|bind-address|listen-)/.test(id)) return { home: 'computer', host: true, reason: 'about_the_network' };
     if (/(gpu|vram|cpu-cores|memory-limit-mb|hardware)/.test(id)) return { home: 'computer', host: true, reason: 'about_hardware' };
     if (s.control === 'path' || /(cli-path|binary-path|-binary$|executable|terminal\.shell$|launch-config|docker-host|socket-path)/.test(id)) return { home: 'computer', host: true, reason: /(dir|folder|location)$/.test(id) && !/cli|binary/.test(id) ? 'names_a_folder' : 'names_a_program' };
     if (/^general\.visual\./.test(id) || /^general\.interaction\.(sound|submit-key|haptic)/.test(id) || /^general\.startup\.window/.test(id) || /(keyboard-shortcuts|font-family|ui-scale|zoom-level)/.test(id)) return { may: ['device'], screen: true };
+    // a safety row: the more careful of a computer's and a project's own (1.4)
+    if (/^safety\./.test(id) && !Array.isArray(s.value) && (typeof s.value !== 'object' || s.value === null)) return { may: ['computer', 'project'], combine: 'more_careful', careful: carefulOrder(s, id), safety: true };
     return { may: ['computer', 'project'] };
   }
+  PSX.classReport = () => {
+    const out = { adopted: 0, reviewed: 0, byRule: {}, safety: [], ceiling: [], device: [], project: [], computer: [] };
+    Object.keys(DEF).forEach((id) => {
+      const d = DEF[id]; if (!d.adopted) return;
+      out.adopted++; if (d.reviewed) out.reviewed++;
+      const k = d.home ? 'home:' + d.home : (d.may || []).join('+') + (d.combine ? ' ' + d.combine : '');
+      out.byRule[k] = (out.byRule[k] || 0) + 1;
+      if (d.safety) out.safety.push(id); if (d.combine === 'computer_ceiling') out.ceiling.push(id);
+      if (d.screen) out.device.push(id); if (d.home === 'project') out.project.push(id); if (d.home === 'computer') out.computer.push(id);
+    });
+    return out;
+  };
   const SEED = {};
   PSX.reseedAdopted = () => { Object.keys(SEED).forEach((id) => { const x = SEED[id]; PSX.putAt(PSX.W, x.level, x.key, id, x.value); }); };
   function adopt(id, everywhereValue) {
@@ -47,7 +92,7 @@
     if (SKIP.test(id) || CRED.test(id)) return false;
     const s = W.PM51 && W.PM51.setting ? W.PM51.setting(id) : null; if (!s) return false;
     const ref = (PSX.REF || {})[id] || { id, scope: [] };
-    if (ref.credential_ref_only) return false;
+    if (ref.credential_ref_only || s.credentialRefOnly) return false;
     const rule = classify(ref, s); if (!rule) return false;
     DEF[id] = Object.assign({ adopted: true }, rule);
     DEFAULTS[id] = clone(s.value);
@@ -245,49 +290,50 @@
       push(); return;
     }
     if (PSX.moments && PSX.moments.intercept && PSX.moments.intercept(id, nv, ov, before) === true) return;
-    if (S.firstStart) { revert(); PSX.note({ title: 'Set up Puppet Master on this computer first.', body: 'Nothing can be kept until a computer is set up, so Settings is a preview.', mark: 'info', kind: 'refused' }); return; }
-    const device = PSX.DEVICES[c.device];
-    let tg = targetFor(id, before, ctx, src);
+    const tg = targetFor(id, before, ctx, src);
     if (!tg) { revert(); return; }
-    // a Member's device changes only its own screen settings (7.10)
-    if (device && device.limited && tg.level !== 'device') {
+    const writes = [{ level: tg.level, key: tg.key, id, value: nv }];
+    // the one admission (guard.js): first start, the device in use, the level, the value, the writer, pairing
+    const a = PSX.guard.admit(writes);
+    if (!a.clear) {
       revert();
-      PSX.note({ title: 'Not saved', body: PSX.REASONS.limited_device[0], mark: 'info', kind: 'refused' });
-      return;
-    }
-    // the writer must be answering; nothing is queued (7.5)
-    const wr = PSX.writer(tg.level, tg.key);
-    if (wr && !PSX.answering(wr)) {
-      revert();
-      if (tg.level === 'everywhere') {
-        const def = DEF[id], acts = [];
-        if (def.may && def.may.includes('computer')) acts.push({ label: 'Just this computer for now', primary: true, run: () => commit(id, nv, ov, { level: 'computer', key: c.on }, { offline: true }) });
-        else if (def.may && def.may.includes('device')) acts.push({ label: 'Just this screen for now', primary: true, run: () => commit(id, nv, ov, { level: 'device', key: c.device }, { offline: true }) });
-        acts.push({ label: 'Change it when Home NAS is back', hover: 'Nothing is saved or queued now. Change it again once Home NAS answers.', run: () => {} });
-        PSX.note({ title: 'Not changed everywhere', body: 'Home NAS keeps your settings and isn’t answering. Nothing was saved or queued.', mark: 'offline', actions: acts, kind: 'offline', ms: 9000 });
-      } else if (tg.level === 'computer') {
-        PSX.note({ title: 'Not saved', body: `${placeName('computer', wr)} isn’t answering. Its own settings can be changed when it’s back.`, mark: 'offline', kind: 'offline' });
-      } else {
-        PSX.note({ title: 'Not saved', body: `${projectName(tg.key)}’s settings can be changed when ${placeName('computer', wr)} answers.`, mark: 'offline', kind: 'offline' });
-      }
+      const m = a.missed[0];
+      if (m.kind === 'first') PSX.note({ title: 'Set up Puppet Master on this computer first.', body: 'Nothing can be kept until a computer is set up, so Settings is a preview.', mark: 'info', kind: 'refused' });
+      else if (m.kind === 'offline' && tg.level === 'everywhere') offlineEverywhere(id, nv, ov, c);
+      else if (m.kind === 'offline') PSX.note({ title: 'Not saved', body: tg.level === 'project' ? `${projectName(tg.key)}’s settings can be changed when ${placeName('computer', m.wr)} answers. Nothing was queued.` : `${placeName('computer', m.wr)} isn’t answering. Its own settings can be changed when it’s back. Nothing was queued.`, mark: 'offline', kind: 'offline' });
+      else PSX.note({ title: 'Not saved', body: m.text + '.', mark: 'info', kind: 'refused' });
       return;
     }
     // an Everywhere change is checked against every context that follows it (1.7), and safety rows are previewed
     if (tg.level === 'everywhere' && PSX.check) {
       const blocked = PSX.check.everywhere(id, nv);
       if (blocked) { revert(); PSX.check.refuse(id, nv, ov, blocked); return; }
-      if (DEF[id].safety) { revert(); PSX.check.preview(id, nv, ov, () => commit(id, nv, ov, tg)); return; }
     }
+    if (PSX.check && PSX.check.needs(id, writes)) { revert(); PSX.check.preview(id, writes, (o) => commit(id, nv, ov, tg, { src, yolo: o && o.yolo }), { narrow: c.project && tg.level === 'everywhere' ? { level: 'project', key: c.project } : null }); return; }
     commit(id, nv, ov, tg, { src });
   }
+  /* the settings home isn't answering: nothing is saved or queued; a change for now is offered only where it reaches
+     this context and its computer answers (the work computer, or this screen) */
+  function offlineEverywhere(id, nv, ov, c) {
+    const def = DEF[id], acts = [], home = PSX.homeName();
+    let body = `${home} keeps your settings and isn’t answering. Nothing was saved or queued.`;
+    if (def.screen && (def.may || []).includes('device')) {
+      if (c.device === S.actor) acts.push({ label: 'Just this screen for now', primary: true, run: () => commit(id, nv, ov, { level: 'device', key: c.device }, { offline: true }) });
+    } else if ((def.may || []).includes('computer')) {
+      if (PSX.answering(c.on)) acts.push({ label: c.on === 'here' ? 'Just this computer for now' : `Just ${placeName('computer', c.on)} for now`, primary: true, run: () => commit(id, nv, ov, { level: 'computer', key: c.on }, { offline: true }) });
+      else body += ` ${c.project || 'This chat'} works on ${placeName('computer', c.on)}, which isn’t answering either, so nothing can change for it now.`;
+    }
+    acts.push({ label: `Change it when ${home} is back`, hover: `Nothing is saved or queued now. Change it again once ${home} answers.`, run: () => {} });
+    PSX.note({ title: 'Not changed everywhere', body, mark: 'offline', actions: acts, kind: 'offline', ms: 9000 });
+  }
 
-  /* write the world, add History, re-feed, and say where it went */
+  /* write the world, add History, re-feed, and say where it went: through the one write path (guard.js) */
   function commit(id, nv, ov, tg, o) {
     o = o || {};
-    const ctx = S.ctx, c = PSX.ctxFull(ctx);
-    const tx = PSX.apply([{ level: tg.level, key: tg.key, id, value: nv }], { by: o.by || 'you', offline: !!o.offline });
-    if (o.offline) PSX.W.awayWrites = (PSX.W.awayWrites || []).concat([{ id, value: nv, tx: tx.id }]);
-    push();
+    const tx = PSX.write([{ level: tg.level, key: tg.key, id, value: nv }], { by: o.by || 'you', offline: !!o.offline, yolo: !!o.yolo });
+    if (!tx) { revert(); return null; }
+    // a change made while the settings home is away remembers exactly where it went, for the back-online review
+    if (o.offline) PSX.W.awayWrites = (PSX.W.awayWrites || []).concat([{ id, value: nv, level: tg.level, key: tg.key, tx: tx.id }]);
     consumeToast(id);
     if (o.quiet) return tx;
     sayWhere(id, tg, tx, o);
@@ -314,7 +360,8 @@
     } else if (tg.level === 'project') title = `Saved for ${tg.key}.`;
     else if (tg.level === 'device') title = tg.key === c.device ? 'Saved for this screen.' : `Saved for ${placeName('device', tg.key)}.`;
     else title = `Saved for ${placeName(tg.level, tg.key)}.`;
-    if (o.offline) body = 'Just this computer for now. When Home NAS is back you can make it everywhere.';
+    if (o.offline) body = `Just ${tg.level === 'device' ? 'this screen' : placeName(tg.level, tg.key)} for now. When ${PSX.homeName()} is back you can make it everywhere.`;
+    if (o.yolo) body = (body ? body + ' ' : '') + 'YOLO didn’t ask for a yes.';
     if (o.by === 'assistant') title = `The assistant set ${label(id)} to ${vt(id, after.asked !== undefined ? after.asked : after.value)} ${tg.level === 'project' ? 'for ' + tg.key : 'everywhere'}.`;
     const first = !S.tipShown;
     if (first) { S.tipShown = true; PSX.store.save({ tipShown: true }); }
@@ -325,13 +372,21 @@
     const w = PSX.W;
     const x = tx.writes[0], back = tx.undo[0].value;
     if (!same(PSX.getAt(w, x.level, x.key, x.id), x.value)) { PSX.note({ title: 'Already changed again', body: 'It was changed after that note, so nothing moved.', mark: 'info' }); return; }
-    const t2 = PSX.apply([{ level: 'everywhere', key: null, id, value: back }, { level: tg.level, key: tg.key, id, value: x.value }], { batch: 'only-for', text: `${label(id)}: only for ${placeName(tg.level, tg.key)}` });
+    const t2 = PSX.write([{ level: 'everywhere', key: null, id, value: back }, { level: tg.level, key: tg.key, id, value: x.value }], { batch: 'only-for', text: `${label(id)}: only for ${placeName(tg.level, tg.key)}` });
+    if (!t2) return;
     PSX.undoMerge = null;
-    push();
     const where = tg.level === 'device' ? 'this screen' : placeName(tg.level, tg.key);
     PSX.note({ title: `Saved for ${where}.`, body: `Everywhere else keeps ${vt(id, back === undefined ? DEFAULTS[id] : back)}.`, actions: [{ label: 'Undo', run: () => undoTx(t2.id, id) }], kind: 'saved' });
   }
+  /* Undo is a write too: what it puts back is admitted first (the computer must answer; nothing is queued), and a batch's
+     finished parts are undone with it */
   function undoTx(txId, id) {
+    const tx = PSX.W.batches[txId];
+    if (!tx || tx.undone) { PSX.note({ title: 'Nothing to undo', body: 'That change was already undone.', mark: 'info' }); return; }
+    const all = [tx].concat((tx.links || []).map((l) => PSX.W.batches[l]).filter((x) => x && !x.undone));
+    const inverse = []; all.forEach((t) => t.undo.forEach((u) => inverse.push(u)));
+    const a = PSX.guard.admit(inverse);
+    if (!a.clear) { const m = a.missed[0]; PSX.note({ title: 'Not undone', body: `${m.text}, so nothing was put back and nothing was queued. Undo again once it can be.`, mark: m.kind === 'offline' ? 'offline' : 'info', kind: 'refused' }); return; }
     const r = PSX.undo(txId);
     push();
     if (!r.ok) { PSX.note({ title: 'Nothing to undo', body: 'That change was already undone.', mark: 'info' }); return; }

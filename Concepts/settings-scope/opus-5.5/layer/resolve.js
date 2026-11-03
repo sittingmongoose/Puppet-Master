@@ -36,7 +36,7 @@
   }
   /* who writes a level, and whether it is answering (7.1: one writer per level; Everywhere is the settings home's) */
   function writer(level, key) {
-    if (level === 'everywhere') return w0().home || 'homenas';
+    if (level === 'everywhere') return PSX.home();
     if (level === 'computer') return HOSTS[key] ? HOSTS[key].parent : key;
     if (level === 'project') { const p = PSX.projectById(key); return p ? p.home : 'here'; }
     if (level === 'device') return null;   // a device writes its own screen values
@@ -48,6 +48,8 @@
 
   function resolve(id, c, world) {
     const w = world || PSX.W;
+    // the theme pair's second half resolves with its first: both halves always come from one level
+    if (id === 'general.visual.theme-mode' && !DEF[id]) { const t = resolve('general.visual.theme', c, world); return t && Object.assign({}, t, { id, value: themePair(t.value)['general.visual.theme-mode'], pairOf: 'general.visual.theme' }); }
     const def = DEF[id]; if (!def) return null;
     const ctx = PSX.ctxFull(c);
     const dflt = DEFAULTS[id];
@@ -81,8 +83,15 @@
     if (place) { const bag = w[place.level][place.key]; steps.push(Object.assign(place, { has: has(bag, id), value: clone(bag ? bag[id] : undefined) })); }
     let proj = null;
     if (off.project && ctx.project) { const bag = w.project[ctx.project]; proj = { level: 'project', key: ctx.project, has: has(bag, id), value: clone(bag ? bag[id] : undefined) }; steps.push(proj); }
+    // owner rungs (MA-073): an AI service's own value beats the project and everywhere, for that service's work. With a
+    // service in the context it decides; without one the shared value is the row's, and the services' own are listed
+    if (def.owner) {
+      out.owners = [];
+      Object.keys(w.provider || {}).forEach((key) => { if (has(w.provider[key], id)) out.owners.push({ level: 'provider', key, value: clone(w.provider[key][id]) }); });
+      if (ctx.provider && has(w.provider[ctx.provider], id)) steps.push({ level: 'provider', key: ctx.provider, has: true, value: clone(w.provider[ctx.provider][id]) });
+    }
     out.chain = out.chain.concat(steps);
-    if (def.owner) Object.keys(w.provider || {}).forEach((key) => { if (has(w.provider[key], id)) out.chain.push({ level: 'provider', key, has: true, value: w.provider[key][id], rung: true }); });
+    if (def.owner && !ctx.provider) out.owners.forEach((o) => out.chain.push(Object.assign({ has: true, rung: true }, o)));
 
     const top = steps.filter((s) => s.has).pop();
     if (top) { out.value = clone(top.value); out.from = { level: top.level, key: top.key }; }
@@ -105,10 +114,11 @@
       out.found = f === undefined ? undefined : f;
       if (f === null && !place.has) out.missing = true;
     }
-    const shown = out.asked !== undefined ? out.asked : out.value;
-    out.changed = !same(shown, dflt);
+    // Changed follows the value in use here, not the asked one (SETTINGS-PROPOSAL 2.2): 4 asked under a limit of 3 is
+    // a change, 6 asked under a limit of 4 when the default is 4 is not
+    out.changed = !same(out.value, dflt);
     // the level that decides here, and whether it is this context's own
-    out.here = out.from.level === 'project' || out.from.level === 'computer' || out.from.level === 'device';
+    out.here = out.from.level === 'project' || out.from.level === 'computer' || out.from.level === 'device' || out.from.level === 'provider';
     return out;
   }
 
@@ -141,6 +151,13 @@
     t(14, 'Rules for this project, No project', () => { const r = resolve('memory.assembly.project-rules', ctx('none'), fresh()); return { ok: r.notOffered === 'about_this_project' && !r.offered.everywhere, got: `notOffered ${r.notOffered}` }; });
     t(15, 'Explain technical terms, No project on Home NAS', () => { const r = resolve('general.interaction.eli5-default', ctx('none', { on: 'homenas' }), fresh()); return { ok: r.value === true && r.from.level === 'everywhere', got: `${r.value} from ${r.from.level}` }; });
     t(16, 'Wait for a server, harbor; then clear harbor’s own', () => { const w = fresh(); const a = resolve('system.mcp.timeout', ctx('harbor'), w); delete w.project.harbor['system.mcp.timeout']; const b = resolve('system.mcp.timeout', ctx('harbor'), w); return { ok: a.value === 60000 && b.value === 30000 && b.from.level === 'default', got: `${a.value}, then ${b.value}` }; });
+    // fix pass: the owner rung, Changed under a limit, the adopted rows' safety and limit rules
+    t(17, 'Switch when this much is left, harbor, for Claude’s work', () => { const r = resolve('ai.accounts.hard-switch-level', ctx('harbor', { provider: 'claude' }), fresh()); return { ok: r.value === 15 && r.from.level === 'provider' && r.from.key === 'claude', got: `${r.value} from ${r.from.level} ${r.from.key}` }; });
+    t(18, 'Switch when this much is left, harbor, shared value', () => { const r = resolve('ai.accounts.hard-switch-level', ctx('harbor'), fresh()); return { ok: r.value === 10 && r.owners.length === 1 && r.varies.some((v) => v.level === 'provider'), got: `${r.value}, owners ${r.owners.map((o) => o.key + ' ' + o.value)}` }; });
+    t(19, 'Helpers at once, tastebook asks 4 under This computer’s 3', () => { const w = fresh(); w.project.tastebook['branching.subagents.max-parallel'] = 4; const r = resolve('branching.subagents.max-parallel', ctx('tastebook'), w); return { ok: r.value === 3 && r.changed === true, got: `${r.value}, changed ${r.changed}` }; });
+    t(20, 'Helpers at once, tastebook asks 6 under a limit of 4', () => { const w = fresh(); w.computer.here['branching.subagents.max-parallel'] = 4; const r = resolve('branching.subagents.max-parallel', ctx('tastebook'), w); return { ok: r.value === 4 && r.asked === 6 && r.changed === false, got: `${r.value}, asked ${r.asked}, changed ${r.changed}` }; });
+    t(21, 'Default answer for new tools: This computer Deny, harbor Allow', () => { if (!DEF['safety.rules.default-tool-permission']) return { ok: false, got: 'not adopted' }; const w = fresh(); w.computer.here['safety.rules.default-tool-permission'] = 'deny'; w.project.harbor['safety.rules.default-tool-permission'] = 'allow'; const r = resolve('safety.rules.default-tool-permission', ctx('harbor'), w); return { ok: r.value === 'deny' && r.combine === 'more_careful', got: `${r.value}, ${r.combine}` }; });
+    t(22, 'Simultaneous requests per AI provider: This computer 2, harbor 7', () => { if (!DEF['branching.subagents.provider-concurrency-cap']) return { ok: false, got: 'not adopted' }; const w = fresh(); w.computer.here['branching.subagents.provider-concurrency-cap'] = 2; w.project.harbor['branching.subagents.provider-concurrency-cap'] = 7; const r = resolve('branching.subagents.provider-concurrency-cap', ctx('harbor'), w); return { ok: r.value === 2 && !!r.ceiling, got: `${r.value}, ${r.combine}` }; });
     if (!quiet) results.forEach((r) => console.log(`[psx selfTest] ${r.ok ? 'PASS' : 'FAIL'} ${r.n}. ${r.name}: ${r.got}`));
     return { pass: results.filter((r) => r.ok).length, fail: results.filter((r) => !r.ok).length, results };
   }

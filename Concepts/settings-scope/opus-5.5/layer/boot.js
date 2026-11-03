@@ -14,7 +14,7 @@
 
   /* ------------------------------------------------------------------ messages to index.html */
   function report(type) {
-    const state = { opt: Object.assign({}, S.opt), ctx: Object.assign({}, S.ctx, { homenas: PSX.W.up.homenas !== false }), look: look(), moment: S.moment, motion: !!S.osReduced };
+    const state = { opt: Object.assign({}, S.opt), ctx: Object.assign({}, S.ctx, { homenas: PSX.W.up.homenas !== false, studio: PSX.W.up.studio !== false, actor: S.actor }), look: look(), moment: S.moment, motion: !!S.osReduced, runMode: S.runMode };
     PSX.lastReport = { type, state };
     if (W.parent !== W) { try { W.parent.postMessage({ source: 'psx', type, state }, '*'); } catch (e) { /* no parent */ } }
   }
@@ -60,14 +60,15 @@
     PSX.panel.rerender();
     report('state');
   }
-  function reset() {
+  /* a fresh demo: the world, the defaults, the computers and the device in use, every sheet, drawer and menu closed.
+     The look, the strip's options and the run mode are the reviewer's and stay */
+  function reset(o) {
     PSX.closeSheets(); PSX.hideNote();
     if (PSX.moments && PSX.moments.reset) PSX.moments.reset();
     PSX.freshWorld();
-    PSX.adopted = 0;
-    Object.keys(PSX.DEF).forEach((id) => { if (PSX.DEF[id].adopted) { /* adopted rows keep their rule; their values start again from the engine */ } });
     S.ctx = { project: 'tastebook', device: 'here', on: null };
-    S.targets = {}; S.firstStart = false; S.viewAs = false; S.moment = null;
+    S.actor = 'here';
+    S.targets = {}; S.firstStart = false; S.viewAs = false; if (!(o && o.keepMoment)) S.moment = null;
     if (PSX.reseedAdopted) PSX.reseedAdopted();
     PSX.feed.full();
     PSX.rows.refreshAll();
@@ -80,9 +81,11 @@
     if (m.cmd === 'ctx') {
       const p = {};
       if (m.project !== undefined) { p.project = m.project; S.viewAs = false; }
-      if (m.device !== undefined) p.device = m.device;
+      // the strip's You're using is the device in use: it sets both what you see and what you may change
+      if (m.device !== undefined) { p.device = m.device; S.actor = m.device; }
       if (m.on !== undefined) p.on = m.on || null;
       if (m.homenas !== undefined) { if (PSX.moments) PSX.moments.homenas(m.homenas === 'up' || m.homenas === true); else PSX.W.up.homenas = m.homenas === 'up' || m.homenas === true; }
+      if (m.studio !== undefined && PSX.moments) PSX.moments.studio(m.studio === 'up' || m.studio === true);
       if (Object.keys(p).length) PSX.setCtx(p); else { PSX.feed.push(); PSX.emit('redraw'); report('state'); }
       return;
     }
@@ -96,6 +99,10 @@
       report('state'); return;
     }
     if (m.cmd === 'reset') { reset(); return; }
+    // Regular or YOLO: what every yes-point does (guard.js PSX.confirm)
+    if (m.cmd === 'runmode') { S.runMode = m.mode === 'yolo' ? 'yolo' : 'regular'; PSX.store.save({ runMode: S.runMode }); PSX.rows.refreshAll(); PSX.emit('redraw'); if (PSX.approvals) PSX.approvals.draw(); report('state'); return; }
+    // the strip's Compare options: the alternatives (and their keys) are there only while it is open
+    if (m.cmd === 'compare') { S.keys = !!m.open; report('state'); return; }
     if (m.cmd === 'selftest') { report('selftest'); return; }
   }
   PSX.command = command;
@@ -104,8 +111,10 @@
     if (!m || m.source !== 'psx-host' || ev.source !== W.parent) return;
     command(m).catch((e) => console.error('[psx]', e));
   });
-  // keys, outside text fields and sheets: 1 to 4 pick the end-of-row option, 0 Today, C opens Compare
+  // keys, outside text fields and sheets, while the strip's Compare options is open: 1 to 4 pick the end-of-row option,
+  // 0 Today, C opens Compare. Closed (and in the app file alone) they do nothing, so the decided design stays put
   D.addEventListener('keydown', (e) => {
+    if (!S.keys) return;
     if (e.ctrlKey || e.metaKey || e.altKey || e.defaultPrevented || PSX.topSheet()) return;
     const t = e.target, tag = (t && t.tagName) || '';
     if (/input|select|textarea/i.test(tag) || (t && t.isContentEditable)) return;
@@ -149,6 +158,8 @@
         if (hc['ctx.project']) S.ctx.project = hc['ctx.project'];
         if (hc['ctx.device']) S.ctx.device = hc['ctx.device'];
         if (hc.homenas === 'down') PSX.W.up.homenas = false;
+        if (hc.runmode === 'yolo' || hc.runmode === 'regular') S.runMode = hc.runmode;
+        if (hc.keys === '1') S.keys = true;
       }
       // open on Settings › AI & Providers › Models
       try { W.PM12_KIMI.navigate('ai', 'providers'); } catch (e) { /* ignore */ }
