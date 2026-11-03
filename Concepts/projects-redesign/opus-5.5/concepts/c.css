@@ -657,3 +657,54 @@ html[data-theme^="friendly"] #pjxc :is(.pjxc-pastefield, .pjxc-more, .pjxc-libem
 /* ------------------------------------------------------------------ the title bar's notes while this page shows (c.js placeNotes) */
 body[data-pjxc-page] #rsStage { translate: var(--pjxc-rs-x, 0px) var(--pjxc-rs-y, 0px); }
 body[data-pjxc-page] #rsStage, body[data-pjxc-page] #rsStage .rs-card { pointer-events: none !important; }
+
+/* ------------------------------------------------------------------ Split v2: the guided page, in-place forms, protect
+   The guided sections and their parts are np.css's; here only how they sit in this concept's cards and plates. */
+#pjxc .pjxc-stepsin { padding: 6px 14px 14px; }
+#pjxc .pjxc-stepsin > .pjx-np-sec:first-child { margin-top: 2px; }
+#pjxc .pjxc-commit .pjx-np-forksays { padding: 2px 0 0; }
+#pjxc .pjxc-commit .pjx-np-discwrap { padding-top: 6px; border-top: 1px dashed var(--pmu-rule); }
+#pjxc .pjxc-review .pjx-np-discwrap[data-disc-kind="review"] { padding-top: 4px; }
+#pjxc .pjxc-review .pjxc-rrows dt { color: var(--pmu-ink-2); }
+html[data-pjx] #pjxc .pjxc-review .pjxc-go[aria-disabled="true"] { opacity: .62; }
+/* an in-place form: its plate is outlined as the one being edited (a whole 1 px outline, never a side bar) */
+html[data-pjx] #pjxc .pjxc-plate.pmu-card[data-inplace] { border-color: color-mix(in srgb, var(--accent-primary) 50%, var(--pmu-rule)); grid-column: 1 / -1; }
+html[data-lg="on"][data-theme^="glass"][data-pjx] #pjxc .pjxc-plate.pmu-card[data-inplace] { border-color: transparent; }
+#pjxc .pjxc-form { display: flex; flex-direction: column; gap: 12px; min-width: 0; container: pjxcsec / inline-size; }
+html[data-pjx] #pjxc .pjxc-protectplate.pmu-card[data-tone="attention"] { border-color: color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-warn)) 50%, var(--pmu-rule)); }
+html[data-lg="on"][data-theme^="glass"][data-pjx] #pjxc .pjxc-protectplate.pmu-card[data-tone] { border-color: transparent; }
+#pjxc .pjxc-flash-acc { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; }
+/* the chooser's two equal tiles, nothing chosen until you click */
+.pjx-np-chooser { display: flex; flex-direction: column; gap: 12px; }
+.pjx-np-chooser .pjx-np-tiles { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.pjx-np-chooser .pjx-np-tiles .pjx-choice { align-items: start; min-height: 96px; }
+.pjx-np-chooser .pjx-choice-sub { white-space: normal; }
+/* the plates' text buttons wrap in a row of many actions */
+html[data-pjx] #pjxc .pjxc-plate .pjxc-foot .pjxc-bchev { margin-right: -2px; }
+@container pjxcpage (max-width: 599.98px) {
+  #pjxc .pjxc-stepsin { padding: 4px 10px 12px; }
+}
+
+/* a notice's words and actions always sit in its text column (the mark spans the first rows only) */
+#pjxc .pjx-notice > :not(.pjx-notice-mark) { grid-column: 2; }
+/* a machine's line: its mark beside words that wrap, and the action after them */
+#pjxc .pjxc-gdev { display: grid; grid-template-columns: 13px auto auto auto; justify-content: start; align-items: start; column-gap: 6px; }
+#pjxc .pjxc-gdev > .pjx-st-mark { margin-top: 1.5px; }
+#pjxc .pjxc-gdev .pjx-link[data-c-key^="dev:add"] { grid-column: 2 / -1; padding-left: 0; }
+/* the Review's main button keeps its whole name, on two lines if it must */
+html[data-pjx] #pjxc .pjxc-review .pjxc-commit .pmw-act { height: auto; min-height: 36px; padding-top: 6px; padding-bottom: 6px; white-space: normal; }
+html[data-pjx] #pjxc .pjxc-review .pjxc-commit .pmw-act .pjxc-blabel { white-space: normal; text-align: center; overflow: visible; }
+/* a mid-width pane gives the page a little more room */
+@container pjx (max-width: 999.98px) { html[data-pjx] #pjxc.pmu-shell { --pjxc-libw: 256px; } }
+/* Friendly rounds every button into a capsule: a segment keeps the look's soft corner instead (no pills) */
+html[data-theme^="friendly"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-seg { border-radius: 10px; }
+html[data-theme^="friendly"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-seg-btn { border-radius: 7px !important; }
+#pjxc .pjxc-making { padding: 10px 16px; border-bottom: 1px solid var(--pmu-rule-2); font-weight: 600; }
+/* a place or a name in a fact's value wraps inside it rather than pushing the plate wider (the backup place, a fork) */
+html[data-pjx] #pjxc .pjxc-facts .pmu-factv .pjxc-code { white-space: normal; overflow-wrap: anywhere; word-break: break-word; }
+html[data-pjx] #pjxc .pjxc-facts .pmu-factv { min-width: 0; }
+/* the narrowest pane: the head's place and state wrap ("Home NAS · over Puppet Master") */
+@container pjx (max-width: 420px) {
+  #pjxc .pjxc-place { white-space: normal; align-items: flex-start; }
+  #pjxc .pjxc-headst, #pjxc .pjxc-headst .pjx-st-word { white-space: normal; min-width: 0; }
+}

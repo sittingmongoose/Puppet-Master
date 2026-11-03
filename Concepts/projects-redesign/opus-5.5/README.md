@@ -10,6 +10,41 @@ onboarding wizard without its theatrics; account for every way a project can be 
 control. The review behind these concepts (Opus 5.5, GPT-6 Astra, Muse Wonder Full) is in
 `/mnt/Cursor/share/puppet-master/2026-10-30-projects-refresh/`.
 
+## Split v2 (pass 2, 2026-11-02): the chosen concept
+
+Jared chose C: "I am leaning towards the Split option. Lets just focus on that for future passes." Split v2 keeps the
+library grouped by machine and the chosen Project's own page, and rebuilds New Project as a **guided page**: one section
+open at a time, finished sections folded to their answer with Change, a live Review beside them, and sections that are a
+pure function of the answers (an abandoned answer never comes back, FO-22). The spec is
+`/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/BUILD-SPEC-split-v2.md`; the copy step follows
+`SETTINGS-PROPOSAL.md` 5.1 to 5.4 and 5.7, and the chat entry point `NOPROJECT-PROPOSAL.md` 7 (pending Jared's
+no-project decisions). The build report is `BUILD-REPORT-split-v2.md` in the same folder.
+
+What v2 adds, in Jared's words' order:
+
+- **Copy settings with providers and sign-ins** (Start like another Project?): what makes the source different (its own
+  settings, its own things, its AI accounts), one honest readiness row per account on the computer that does the work
+  (reused there only when this Project chose it; checked first on another computer; keys never sent), and
+  **Advanced: choose what to copy** by kind, one setting at a time, thing by thing and account by account.
+- **A look inside before adding**, on every route (this computer, Home NAS, SSH, SMB, NFS, a connected drive): history,
+  branch, online copies and the original, unsaved changes, submodules, Git LFS, hooks, and a Project you already have.
+  A found online copy is **Link it** (sign in, then checked), **Leave it unlinked** or **Make a new one instead**.
+- **Where it lives**: the computer that does the work ("Computer", Jared's environment), where the files go (your
+  Projects folder, another folder, a network drive or NAS, or on the Server), the full path live, free space, and the
+  NAS rule over every route.
+- **Online copy, done properly** for GitHub, GitHub Enterprise, GitLab, Azure DevOps, Bitbucket, and Forgejo and Gitea on
+  your own server, with Advanced, and the plain answer to "Do Git and JJ work with all the source repositories?".
+- **Backups**: eight destinations with the exact place before any sign-in, what is included and when (Advanced), then
+  "Finish protecting your work" (sign in, test, Recovery Kit, check it, turn on) and a full Backup plate.
+- **Contribute** (fork, keep the original as upstream, start a branch) or **Just copy it**, for someone else's Project.
+- **Starter files explained**, apart from Saved setups, with the proposed Settings › New projects › Starters page.
+- **From a chat with no project**: "Make this a project…" asks new or existing with nothing chosen, says what happens,
+  then opens New Project filled in.
+
+New layer files: `layer/words.js` (every word), `layer/rules.js` (the service and backup rule tables), `layer/np.js` (the
+engine, no DOM), `layer/np-ui.js` (the section renderers, shared with the Project page's in-place forms) and
+`layer/np.css`. A and B are frozen: they keep pass 1's `layer/flow.js` and still load with no console errors.
+
 ## The concepts
 
 | | Concept | Idea |
@@ -43,11 +78,15 @@ differ only in layout and presentation:
 
 The strip under PMConcept7 is for reviewing and is not part of the design.
 
-- **Concept**: A, B, C, and Today (keys 1, 2, 3 and 0).
+- **Concept**: C · Split v2 and Today; A and B (pass 1, frozen) sit behind **More concepts** (keys 1, 2, 3 and 0 still work).
+  The strip opens on C.
 - **Look**: all ten, switched through PMConcept7's own theme menu.
 - **Projects**: the demo set, first run with none yet, or 40 projects.
 - **Window width**: full, 1280, 1024, 860 or 640 px.
 - **New Project**, **Folder missing**, **Setup didn't finish**: jump to those moments.
+- **More moments (C)**: From a chat, Contribute, Found online copy, Submodules and Git LFS, Jujutsu limits, Same online
+  copy as loom, Connect a new device, Backup setup, A fork (photo-sorter), Found not linked (legacy-app), Waiting for
+  Media NAS (garden-notes). Disabled for A, B and Today.
 - **Reset demo** puts every project back. **Reduced motion**.
 
 ## Open it
@@ -58,8 +97,8 @@ The strip under PMConcept7 is for reviewing and is not part of the design.
 
 ## How it reaches PMConcept7
 
-`index.html` adds, in order: `layer/core.css`, `layer/core.js`, `layer/flow.js`, `layer/parts.js`, each concept's CSS
-and JS, and `layer/boot.js`. The page and PMConcept7 talk only by `postMessage` (`{source: 'pjx-host', cmd}` in,
+`index.html` adds, in order: `layer/core.css`, `layer/np.css`, `layer/core.js`, `layer/words.js`, `layer/rules.js`,
+`layer/flow.js`, `layer/np.js`, `layer/parts.js`, `layer/np-ui.js`, each concept's CSS and JS, and `layer/boot.js`. The page and PMConcept7 talk only by `postMessage` (`{source: 'pjx-host', cmd}` in,
 `{source: 'pjx', type, state}` out), so the strip also works in a sandboxed preview.
 
 | File | What |
@@ -68,7 +107,12 @@ and JS, and `layer/boot.js`. The page and PMConcept7 talk only by `postMessage` 
 | `layer/flow.js` | `PJX.flow`: the New Project flow (ways in, steps, validation, review, the phases with their owner commands, commit and the failure path, link and path recognition). |
 | `layer/parts.js` | `PJX.parts`: the status slot, Safe line, attention notices, Find the folder, Continue setup, Remove, Delete data, Rename, the undo strip. |
 | `layer/core.css` | The mount, dialogs and the flow's parts. Everything else is Usage's and Home's own CSS: the concept root is `[data-pmu-host]` (Usage's rules are anchored on `:is(#panel-usage,[data-pmu-host])`) and `.pmw-scope` (Home's tokens and buttons). |
-| `concepts/a|b|c.*` | Each concept's layout. |
+| `layer/words.js` | `PJX.W` and `PJX.w(key, vars)`: every Split v2 word (np.* New Project, pg.* the Project page). |
+| `layer/rules.js` | `PJX.rules`: the services rule table (kinds, sign-in, owners, who can see it, name rules), the backup families with their access fields and checks, the branch, link and folder-name checks. |
+| `layer/np.js` | `PJX.np`: the Split v2 engine (no DOM): the draft, sections and their problems, `set()` with the FO-22 clearing, cached simulated owner results, the Review, the steps and the commit, `detect()`, `toPlan()`, and the settings adapter `PJX.np.SETTINGS`. |
+| `layer/np-ui.js` | `PJX.npui`: one renderer per guided section and the parts they share (the look inside, connect a device, sign in, the service cards, copy settings, backup, protect steps), also drawn inside the Project page's plates. |
+| `layer/np.css` | The guided sections and their parts, in Usage's and Home's material. |
+| `concepts/a|b|c.*` | Each concept's layout (C is Split v2). |
 
 ## What it would touch in Plans
 

@@ -90,43 +90,43 @@
   function demoProjects() {
     return [
       {
-        id: 'tastebook', name: 'tastebook', glyph: 'rocket', active: true, lifecycle: 'listed', order: 0,
+        id: 'tastebook', name: 'tastebook', glyph: 'rocket', active: true, lifecycle: 'listed', order: 0, runsOn: 'here',
         stack: ['SvelteKit', 'Rust · Axum', 'Postgres', 'Docker'],
         where: { kind: 'local', label: 'This computer', path: '~/Projects/tastebook' },
         opened: 'Active now', openedRank: 0,
         activity: { key: 'working', word: 'Run #47 · Working', text: 'Compiling the seam graph', at: 'just now', runs: 1 },
         history: { backend: 'git', branch: 'main', worktrees: 4, changed: 3 },
         online: { service: 'GitHub', repo: 'jared/tastebook', state: 'complete', ahead: 0, behind: 0, privacy: 'Only you' },
-        backup: { dest: 'Home NAS', schedule: 'Every night', last: '2 h ago', state: 'complete', size: '1.8 GB', versions: 31 },
+        backup: { dest: 'Home NAS', place: '/volume1/backups/puppet-master/tastebook on Home NAS', schedule: 'Every night', time: '3:00 AM', last: '2 h ago', state: 'complete', size: '1.8 GB', versions: 31, include: 'all', keep: 'standard', kit: { saved: 'Sep 14', checked: 'Oct 30' }, checked: 'Oct 30' },
         sync: { devices: 2, state: 'complete' },
         attention: []
       },
       {
-        id: 'harbor', name: 'harbor', glyph: 'ship', active: false, lifecycle: 'listed', order: 1,
+        id: 'harbor', name: 'harbor', glyph: 'ship', active: false, lifecycle: 'listed', order: 1, runsOn: 'here',
         stack: ['Next.js', 'Nest', 'Docker'],
         where: { kind: 'local', label: 'This computer', path: '~/Projects/harbor' },
         opened: '1 h ago', openedRank: 1,
         activity: { key: 'working', word: 'Working in the background', text: '2 agents running tests on lane api', at: '4 min ago', runs: 2 },
         history: { backend: 'git', branch: 'develop', worktrees: 2, changed: 0 },
         online: { service: 'GitLab', repo: 'acme/harbor', state: 'waiting', ahead: 1, behind: 0, privacy: 'Everyone in Acme', note: 'Sign-in expired' },
-        backup: { dest: 'Google Drive', schedule: 'Every day', last: 'Yesterday', state: 'complete', size: '640 MB', versions: 12 },
+        backup: { dest: 'Google Drive', place: 'Google Drive · jared@gmail.com · My Drive › Puppet Master', schedule: 'Every day', time: '11:00 PM', last: 'Yesterday', state: 'complete', size: '640 MB', versions: 12, include: 'all', keep: 'standard', kit: { saved: 'Aug 30', checked: 'Aug 30' }, checked: 'Oct 29' },
         sync: { devices: 2, state: 'complete' },
         attention: [{ code: 'signed_out', key: 'waiting', title: 'Sign in to GitLab again', text: 'Merge requests and pipelines need it. Sending changes over SSH still works; 1 change is ready to send.', actions: ['sign_in', 'details'] }]
       },
       {
-        id: 'loom', name: 'loom', glyph: 'layers', active: false, lifecycle: 'listed', order: 2,
+        id: 'loom', name: 'loom', glyph: 'layers', active: false, lifecycle: 'listed', order: 2, runsOn: 'here',
         stack: ['Rust', 'Slint'],
         where: { kind: 'local', label: 'This computer', path: '~/Projects/loom' },
         opened: 'Yesterday', openedRank: 2,
         activity: { key: 'idle', word: 'Idle', text: 'Run #12 finished · all checks passed', at: 'Yesterday', runs: 0 },
         history: { backend: 'jujutsu', branch: 'main', worktrees: 1, changed: 0 },
         online: { service: 'GitHub', repo: 'jared/loom', state: 'info', ahead: 2, behind: 0, privacy: 'Everyone', note: '2 changes not sent yet' },
-        backup: { dest: 'Home NAS', schedule: 'Every week', last: '3 days ago', state: 'complete', size: '210 MB', versions: 8 },
+        backup: { dest: 'Home NAS', place: '/volume1/backups/puppet-master/loom on Home NAS', schedule: 'Every week', time: '3:00 AM', last: '3 days ago', state: 'complete', size: '210 MB', versions: 8, include: 'all', keep: 'standard', kit: { saved: 'Sep 14', checked: 'Sep 14' }, checked: 'Oct 28' },
         sync: { devices: 1, state: 'complete' },
         attention: []
       },
       {
-        id: 'docs-site', name: 'docs-site', glyph: 'globe', active: false, lifecycle: 'listed', order: 3,
+        id: 'docs-site', name: 'docs-site', glyph: 'globe', active: false, lifecycle: 'listed', order: 3, runsOn: 'here',
         stack: ['Astro', 'TypeScript'],
         where: { kind: 'local', label: 'This computer', path: '~/Projects/docs-site' },
         opened: '2 days ago', openedRank: 3,
@@ -141,43 +141,43 @@
         ]
       },
       {
-        id: 'legacy-app', name: 'legacy-app', glyph: 'toolbox', active: false, lifecycle: 'listed', order: 4,
+        id: 'legacy-app', name: 'legacy-app', glyph: 'toolbox', active: false, lifecycle: 'listed', order: 4, runsOn: 'here',
         stack: ['Python', 'Docker'],
         where: { kind: 'local', label: 'This computer', path: '~/Work/legacy-app' },
         opened: '3 days ago', openedRank: 4,
         activity: { key: 'paused', word: 'Paused', text: 'Paused at safe point sp-12 · resume in the Orchestrator', at: '3 days ago', runs: 0 },
         history: { backend: 'git', branch: 'develop', worktrees: 2, changed: 7 },
-        online: { service: null, repo: null, state: 'off', ahead: 0, behind: 0 },
-        backup: { dest: 'Google Drive', schedule: 'Every day', last: '9 days ago', state: 'warning', size: '2.3 GB', versions: 20, note: 'Last 8 backups didn’t run' },
+        online: { service: null, repo: null, state: 'off', ahead: 0, behind: 0, found: { service: 'GitLab', repo: 'acme/legacy-app', remote: 'origin' } },
+        backup: { dest: 'Google Drive', place: 'Google Drive · jared@gmail.com · My Drive › Puppet Master', schedule: 'Every day', time: '11:00 PM', last: '9 days ago', state: 'warning', size: '2.3 GB', versions: 20, note: 'Last 8 backups didn’t run', include: 'all', keep: 'standard', kit: { saved: 'Aug 30', checked: null }, checked: 'Oct 21' },
         sync: { devices: 1, state: 'complete' },
         attention: [{ code: 'backup_overdue', key: 'warning', title: 'Backup is 9 days old', text: 'Daily backups to Google Drive stopped on Oct 21: the drive is full. Free space or choose another place.', actions: ['backup_now', 'backup_settings'] }]
       },
       {
-        id: 'experiment', name: 'experiment', glyph: 'telescope', active: false, lifecycle: 'listed', order: 5,
+        id: 'experiment', name: 'experiment', glyph: 'telescope', active: false, lifecycle: 'listed', order: 5, runsOn: 'here',
         stack: ['C#', '.NET'],
         where: { kind: 'local', label: 'This computer', path: '/old/path/experiment', missing: true },
         opened: '1 week ago', openedRank: 5,
         activity: { key: 'idle', word: 'Idle', text: 'No work since Oct 22', at: '1 week ago', runs: 0 },
         history: { backend: 'git', branch: 'main', worktrees: 1, changed: null },
         online: { service: 'GitHub', repo: 'jared/experiment', state: 'complete', ahead: 0, behind: 0, privacy: 'Only you', note: 'Last sent Oct 22' },
-        backup: { dest: 'Home NAS', schedule: 'Every night', last: '8 days ago', state: 'complete', size: '96 MB', versions: 14, note: 'Last backup before the folder went missing' },
+        backup: { dest: 'Home NAS', place: '/volume1/backups/puppet-master/experiment on Home NAS', schedule: 'Every night', time: '3:00 AM', last: '8 days ago', state: 'complete', size: '96 MB', versions: 14, note: 'Last backup before the folder went missing', include: 'all', keep: 'standard', kit: { saved: 'Sep 14', checked: 'Sep 14' }, checked: 'Oct 22' },
         sync: { devices: 1, state: 'complete' },
         attention: [{ code: 'folder_missing', key: 'blocked', title: 'Folder missing', text: 'Nothing is at /old/path/experiment any more. It may have been moved, renamed, or be on a drive that isn’t connected.', actions: ['repair'] }]
       },
       {
-        id: 'garden-notes', name: 'garden-notes', glyph: 'plant', active: false, lifecycle: 'listed', order: 6,
+        id: 'garden-notes', name: 'garden-notes', glyph: 'plant', active: false, lifecycle: 'listed', order: 6, runsOn: 'here',
         stack: ['Markdown'],
-        where: { kind: 'device', label: 'Home NAS', path: '/mnt/tank/projects/garden-notes', device: 'Home NAS', via: 'SSH' },
+        where: { kind: 'device', label: 'Media NAS', path: '/mnt/tank/projects/garden-notes', device: 'Media NAS', via: 'SSH' },
         opened: '2 weeks ago', openedRank: 6,
         activity: { key: 'idle', word: 'Idle', text: 'No work since Oct 16', at: '2 weeks ago', runs: 0 },
         history: { backend: 'git', branch: 'main', worktrees: 1, changed: 0 },
         online: { service: null, repo: null, state: 'off', ahead: 0, behind: 0 },
-        backup: { dest: 'OneDrive', schedule: 'Every week', last: '5 days ago', state: 'complete', size: '18 MB', versions: 6 },
+        backup: { dest: 'OneDrive', place: 'OneDrive · jared@outlook.com · Apps › Puppet Master', schedule: 'Every week', time: '2:00 AM', last: '5 days ago', state: 'complete', size: '18 MB', versions: 6, include: 'all', keep: 'standard', kit: { saved: 'Oct 2', checked: 'Oct 2' }, checked: 'Oct 27' },
         sync: { devices: 1, state: 'complete' },
-        attention: [{ code: 'device_offline', key: 'offline', title: 'Can’t reach Home NAS', text: 'This Project’s files live on Home NAS, which didn’t answer at 7:42 PM. Its backup on OneDrive is safe.', actions: ['retry', 'details'] }]
+        attention: [{ code: 'device_offline', key: 'offline', title: 'Can’t reach Media NAS', text: 'This Project’s files live on Media NAS, which didn’t answer at 7:42 PM. Its backup on OneDrive is safe.', actions: ['retry', 'details'] }]
       },
       {
-        id: 'recipe-app', name: 'recipe-app', glyph: 'seed', active: false, lifecycle: 'recovery', order: 7,
+        id: 'recipe-app', name: 'recipe-app', glyph: 'seed', active: false, lifecycle: 'recovery', order: 7, runsOn: 'here',
         stack: ['SvelteKit'],
         where: { kind: 'local', label: 'This computer', path: '~/Projects/recipe-app', pending: true },
         opened: 'Today, 6:10 PM', openedRank: 7,
@@ -193,7 +193,19 @@
         }
       },
       {
-        id: 'old-portfolio', name: 'old-portfolio', glyph: 'image', active: false, lifecycle: 'archived', order: 8,
+        id: 'photo-sorter', name: 'photo-sorter', glyph: 'image', active: false, lifecycle: 'listed', order: 8, runsOn: 'homenas',
+        stack: ['Python'],
+        where: { kind: 'device', label: 'Home NAS', path: '/volume1/projects/photo-sorter', device: 'Home NAS', via: 'Puppet Master' },
+        opened: '4 days ago', openedRank: 4.5,
+        activity: { key: 'idle', word: 'Idle', text: 'Run #6 finished · your change is on the branch my-change', at: '4 days ago', runs: 0 },
+        history: { backend: 'git', branch: 'main', worktrees: 1, changed: 3 },
+        online: { service: 'GitHub', repo: 'jared/photo-sorter', state: 'info', ahead: 0, behind: 0, privacy: 'Everyone', upstream: { service: 'GitHub', repo: 'openphoto/photo-sorter', behind: 4, branch: 'my-change', remote: 'upstream' }, note: '4 newer in the original' },
+        backup: { dest: 'Google Drive', place: 'Google Drive · jared@gmail.com · My Drive › Puppet Master', schedule: 'Every day', time: '2:00 AM', last: 'Today, 2:00 AM', state: 'complete', include: 'all', keep: 'standard', kit: { saved: 'Oct 2', checked: 'Oct 2' }, checked: 'Oct 30', versions: 21, size: '310 MB' },
+        sync: { devices: 2, state: 'complete' },
+        attention: [{ code: 'original_newer', key: 'info', title: '4 newer in the original', text: 'openphoto/photo-sorter has 4 changes your fork doesn’t have yet.', actions: ['get_original'] }]
+      },
+      {
+        id: 'old-portfolio', name: 'old-portfolio', glyph: 'image', active: false, lifecycle: 'archived', order: 9, runsOn: 'here',
         stack: ['HTML', 'CSS'],
         where: { kind: 'local', label: 'This computer', path: '~/Archive/old-portfolio' },
         opened: 'Aug 2', openedRank: 20, archivedAt: 'Archived Aug 12',
@@ -205,7 +217,7 @@
         attention: []
       },
       {
-        id: 'hackathon-2025', name: 'hackathon-2025', glyph: 'flame', active: false, lifecycle: 'archived', order: 9,
+        id: 'hackathon-2025', name: 'hackathon-2025', glyph: 'flame', active: false, lifecycle: 'archived', order: 10, runsOn: 'here',
         stack: ['Go', 'htmx'],
         where: { kind: 'local', label: 'This computer', path: '~/Archive/hackathon-2025' },
         opened: 'Jun 18', openedRank: 21, archivedAt: 'Archived Jun 20',
@@ -229,8 +241,8 @@
     words.forEach((w, i) => {
       const a = acts[i % acts.length];
       base.push({
-        id: w + '-' + (i + 1), name: w, glyph: glyphs[i % glyphs.length], active: false, lifecycle: i % 13 === 12 ? 'archived' : 'listed', order: 10 + i,
-        stack: stacks[i % stacks.length], where: { kind: i % 9 === 4 ? 'device' : 'local', label: i % 9 === 4 ? 'Home NAS' : 'This computer', path: (i % 9 === 4 ? '/mnt/tank/projects/' : '~/Projects/') + w, device: i % 9 === 4 ? 'Home NAS' : undefined, via: i % 9 === 4 ? 'SSH' : undefined },
+        id: w + '-' + (i + 1), name: w, glyph: glyphs[i % glyphs.length], active: false, lifecycle: i % 13 === 12 ? 'archived' : 'listed', order: 11 + i, runsOn: 'here',
+        stack: stacks[i % stacks.length], where: { kind: i % 9 === 4 ? 'device' : 'local', label: i % 9 === 4 ? 'Home NAS' : 'This computer', path: (i % 9 === 4 ? '/volume1/projects/' : '~/Projects/') + w, device: i % 9 === 4 ? 'Home NAS' : undefined, via: i % 9 === 4 ? 'SSH' : undefined },
         opened: (i + 3) + ' days ago', openedRank: 8 + i,
         activity: { key: a[0], word: a[1], text: a[2], at: (i + 3) + ' days ago', runs: a[0] === 'working' ? 1 : 0 },
         history: { backend: i % 5 === 2 ? 'jujutsu' : 'git', branch: 'main', worktrees: 1 + (i % 3), changed: i % 4 },
@@ -250,12 +262,13 @@
       { path: '~/Code/budget-tracker', name: 'budget-tracker', history: 'git', online: { service: 'GitHub', repo: 'jared/budget-tracker' }, stack: ['Python', 'Flask'] },
       { path: '~/Code/dotfiles', name: 'dotfiles', history: 'git', online: null, stack: ['Shell'] },
       { path: '~/Documents/recipe-ideas', name: 'recipe-ideas', history: null, online: null, stack: ['Markdown'] },
-      { path: '~/Desktop/garden notes', name: 'garden notes', history: null, online: null, stack: ['Markdown'] }
+      { path: '~/Desktop/garden notes', name: 'garden notes', history: null, online: null, stack: ['Markdown'] },
+      { path: '~/Code/game-jam', name: 'game-jam', history: 'git', online: { service: 'GitLab', repo: 'acme/game-jam' }, stack: ['C#', 'Godot'] }
     ],
     tree: {
       '~': ['Projects', 'Code', 'Documents', 'Desktop', 'Archive', 'Volumes'],
       '~/Projects': ['tastebook', 'harbor', 'loom', 'docs-site', 'experiment-2'],
-      '~/Code': ['budget-tracker', 'dotfiles', 'experiments'],
+      '~/Code': ['budget-tracker', 'dotfiles', 'experiments', 'game-jam', 'printer-tool'],
       '~/Code/experiments': ['experiment', 'scratch'],
       '~/Documents': ['recipe-ideas', 'Taxes 2025'],
       '~/Desktop': ['garden notes'],
@@ -269,10 +282,205 @@
       '~/Volumes/Backup Drive/experiment': { same: true, history: 'git', branch: 'main', changed: 0, note: 'Same history, 3 changes older than the online copy' },
       '~/Projects/experiment-2': { same: false, history: 'git', branch: 'main', note: 'A different project: its history doesn’t match jared/experiment' }
     },
+    /* devices you have connected (pass-1 fields first; v2 adds brand, model, ip, ssh, pm and the Server it is). Home NAS
+       answers and is the paired Puppet Master Server; Media NAS is the one that doesn't answer (garden-notes lives there) */
     devices: [
-      { id: 'nas', name: 'Home NAS', address: 'nas.local', user: 'jared', trusted: true, online: false, folders: ['/mnt/tank/projects/garden-notes', '/mnt/tank/projects/photo-sorter', '/mnt/tank/projects/home-automation'] },
-      { id: 'studio', name: 'Studio Mac', address: 'studio.local', user: 'jared', trusted: true, online: true, folders: ['~/Developer/lighting-rig', '~/Developer/midi-tools'] }
+      { id: 'nas', name: 'Home NAS', address: 'nas.local', user: 'jared', trusted: true, online: true, folders: ['/volume1/projects/photo-sorter', '/volume1/projects/home-automation', '/volume1/projects/old-experiments'],
+        brand: 'Synology DS923+', ip: '192.168.1.20', ssh: true, pm: true, server: 'homenas', glyph: 'server' },
+      { id: 'studio', name: 'Studio Mac', address: 'studio.local', user: 'jared', trusted: true, online: true, folders: ['~/Developer/lighting-rig', '~/Developer/midi-tools', '~/Developer/loom'],
+        brand: 'Mac mini', ip: '192.168.1.24', ssh: true, pm: false, glyph: 'desktop' },
+      { id: 'media', name: 'Media NAS', address: 'truenas.local', user: 'jared', trusted: true, online: false, folders: ['/mnt/tank/projects/garden-notes'],
+        brand: 'TrueNAS SCALE', ip: '192.168.1.31', ssh: true, pm: false, glyph: 'server' }
     ],
+    /* v2 [Demo only]: the computers that can do the work (This computer, and the connected Puppet Master Server) */
+    computers: [
+      { id: 'here', name: 'This computer', detail: 'Jared’s MacBook Pro', root: '~/Projects', rootFull: '/Users/jared/Projects', free: '212 GB', freeGB: 212, git: true, jj: false, glyph: 'desktop' },
+      { id: 'homenas', name: 'Home NAS', detail: 'Your Puppet Master server · Synology DS923+', root: '/volume1/projects', rootFull: '/volume1/projects', free: '3.1 TB', freeGB: 3100, git: true, jj: true, device: 'nas', server: true, glyph: 'server' }
+    ],
+    /* devices on the network this computer has never connected to */
+    found: [
+      { id: 'office', name: 'Office PC', address: 'office-pc.local', ip: '192.168.1.40', user: 'jared', brand: 'Windows 11', ssh: true, pm: false, glyph: 'desktop', online: true,
+        words: 'amber falcon river tulip', fingerprint: 'SHA256:7tQm2Lr9xVb4KpWc1Zs8NyHf3Ue6Ja0Dg5Ri2Ow7Ek', folders: ['~/work/invoice-tool'] }
+    ],
+    /* which devices each work computer can already reach with a key (trust and keys belong to the computer doing the work) */
+    reach: { here: ['nas', 'studio', 'media'], homenas: ['media'] },
+    sshKeys: {
+      here: [{ id: 'ed25519', name: '~/.ssh/id_ed25519', type: 'ed25519', where: 'agent' }, { id: 'rsa', name: '~/.ssh/id_rsa', type: 'rsa-1024', where: 'file', weak: true }],
+      homenas: [{ id: 'nas-ed25519', name: '~/.ssh/id_ed25519 on Home NAS', type: 'ed25519', where: 'file' }]
+    },
+    /* shared folders and drives this computer can see */
+    shares: [
+      { id: 'smb-nas', kind: 'smb', address: '//nas.local/projects', device: 'nas', free: '3.1 TB', freeGB: 3100, user: 'jared', password: 'correct horse', folders: ['/projects/family-photos-site', '/projects/home-automation'] },
+      { id: 'nfs-nas', kind: 'nfs', address: 'nas.local:/volume1/projects', device: 'nas', free: '3.1 TB', freeGB: 3100, allows: ['here', 'homenas'], folders: ['/volume1/projects/home-automation', '/volume1/projects/old-experiments'] }
+    ],
+    volumes: [
+      { id: 'vol-projects', path: '/Volumes/Projects', of: 'smb-nas', device: 'nas', label: 'Projects (a share of Home NAS)', free: '3.1 TB', freeGB: 3100, folders: ['/Volumes/Projects/family-photos-site', '/Volumes/Projects/home-automation'] },
+      { id: 'vol-backup', path: '/Volumes/Backup Drive', of: null, device: null, label: 'Backup Drive (a USB drive)', free: '0.9 GB', freeGB: 0.9, folders: ['/Volumes/Backup Drive/Puppet Master'] }
+    ],
+    /* what the look inside finds, by holder:path (the same files give the same result by any route) */
+    inspect: {
+      'here:~/Code/budget-tracker': { history: 'git', branch: 'main', online: { remote: 'origin', service: 'GitHub', repo: 'jared/budget-tracker' }, changed: 2, stack: ['Python', 'Flask'], size: '48 MB', sizeGB: 0.05 },
+      'here:~/Code/dotfiles': { history: 'git', branch: 'main', changed: 2, stack: ['Shell'], size: '1 MB', sizeGB: 0.001 },
+      'here:~/Documents/recipe-ideas': { history: null, stack: ['Markdown'], size: '300 KB', sizeGB: 0.0003 },
+      'here:~/Desktop/garden notes': { history: null, stack: ['Markdown'], size: '120 KB', sizeGB: 0.0001 },
+      'here:~/Code/game-jam': { history: 'git', branch: 'main', online: { remote: 'origin', service: 'GitLab', repo: 'acme/game-jam' }, changed: 0, submodules: ['engine', 'assets/fonts'], lfs: '1.2 GB', stack: ['C#', 'Godot'], size: '1.4 GB', sizeGB: 1.4 },
+      'here:~/Code/printer-tool': { history: null, stack: ['Python'], size: '2 MB', sizeGB: 0.002 },
+      'here:~/Projects/tastebook': { history: 'git', branch: 'main', online: { remote: 'origin', service: 'GitHub', repo: 'jared/tastebook' }, changed: 3, known: 'tastebook' },
+      'nas:/volume1/projects/photo-sorter': { history: 'git', branch: 'main', online: { remote: 'origin', service: 'GitHub', repo: 'jared/photo-sorter' }, original: { remote: 'upstream', service: 'GitHub', repo: 'openphoto/photo-sorter' }, changed: 3, known: 'photo-sorter' },
+      'nas:/volume1/projects/home-automation': { history: 'git', branch: 'main', online: { remote: 'origin', address: 'ssh://git@git.home.arpa/jared/home-automation.git', note: 'Forgejo on your own server' }, changed: 0, submodules: ['vendor/zigbee-lib'], hooks: ['pre-commit'], stack: ['Python', 'YAML'], size: '22 MB', sizeGB: 0.02 },
+      'nas:/volume1/projects/old-experiments': { history: null, stack: ['Mixed'], size: '410 MB', sizeGB: 0.4 },
+      'studio:~/Developer/lighting-rig': { history: 'jujutsu', branch: 'main', online: { remote: 'origin', service: 'GitHub', repo: 'jared/lighting-rig' }, changed: 1, stack: ['Rust'], size: '30 MB', sizeGB: 0.03 },
+      'studio:~/Developer/midi-tools': { history: 'git', branch: 'develop', changed: 0, stack: ['TypeScript'], size: '8 MB', sizeGB: 0.008 },
+      'studio:~/Developer/loom': { history: 'jujutsu', branch: 'main', online: { remote: 'origin', service: 'GitHub', repo: 'jared/loom' }, changed: 0, sameOnline: 'loom', stack: ['Rust', 'Slint'], size: '26 MB', sizeGB: 0.03 },
+      'office:~/work/invoice-tool': { history: 'git', branch: 'main', online: { remote: 'origin', service: 'Azure DevOps', repo: 'acme/Finance/invoice-tool' }, changed: 0, stack: ['C#', '.NET'], size: '64 MB', sizeGB: 0.06 },
+      'smb-nas:/projects/family-photos-site': { history: 'git', branch: 'main', changed: 0, lfs: '300 MB', stack: ['HTML'], size: '320 MB', sizeGB: 0.32 },
+      'smb-nas:/projects/home-automation': { alias: 'nas:/volume1/projects/home-automation' },
+      'vol-projects:/Volumes/Projects/family-photos-site': { alias: 'smb-nas:/projects/family-photos-site' },
+      'vol-projects:/Volumes/Projects/home-automation': { alias: 'nas:/volume1/projects/home-automation' },
+      'nfs-nas:/volume1/projects/home-automation': { alias: 'nas:/volume1/projects/home-automation' },
+      'nfs-nas:/volume1/projects/old-experiments': { alias: 'nas:/volume1/projects/old-experiments' },
+      'here:/System/Library': { fail: 'read' }
+    },
+    /* online services and your accounts there, per service and kind (rules.js keys) [Demo only] */
+    forges: {
+      'github.com': { signedIn: { here: { account: 'jared', method: 'browser' }, homenas: { account: 'jared', method: 'browser' } },
+        owners: [{ id: 'jared', label: 'jared', kind: 'personal' }, { id: 'acme', label: 'acme', kind: 'organization', enterprise: true }, { id: 'jared-labs', label: 'jared-labs', kind: 'organization' }],
+        taken: ['garden-planner', 'budget-tracker', 'slint-widgets', 'photo-sorter', 'tastebook', 'loom', 'docs-site', 'experiment', 'recipe-app'],
+        repos: [
+          { id: 'jared/budget-tracker', owner: 'jared', vis: 'Private', when: '2 days ago', stack: 'Python', size: '48 MB', sizeGB: 0.05, access: 'write' },
+          { id: 'jared/garden-planner', owner: 'jared', vis: 'Private', when: 'last week', stack: 'TypeScript', size: '12 MB', sizeGB: 0.01, access: 'write' },
+          { id: 'jared/slint-widgets', owner: 'jared', vis: 'Public', when: 'Oct 3', stack: 'Rust', size: '9 MB', sizeGB: 0.01, access: 'write' },
+          { id: 'jared/photo-sorter', owner: 'jared', vis: 'Public', when: 'today', stack: 'Python', size: '40 MB', sizeGB: 0.04, access: 'write', forkOf: 'openphoto/photo-sorter' },
+          { id: 'acme/harbor-mobile', owner: 'acme', vis: 'Internal', when: 'today', stack: 'Kotlin', size: '120 MB', sizeGB: 0.12, access: 'write', team: true },
+          { id: 'jared/rust-starter', owner: 'jared', vis: 'Private', when: 'Sep 2', stack: 'Rust', size: '1 MB', sizeGB: 0.001, access: 'write', template: true }
+        ] },
+      'ghe.server': { address: 'https://github.acme.test', signedIn: {}, owners: [{ id: 'acme-platform', label: 'acme-platform', kind: 'organization' }], taken: ['handbook'],
+        repos: [{ id: 'acme-platform/handbook', owner: 'acme-platform', vis: 'Internal', when: 'yesterday', stack: 'Markdown', size: '4 MB', sizeGB: 0.004, access: 'write', team: true }] },
+      'gitlab.com': { signedIn: { here: { account: 'jared@acme', method: 'browser', expired: true } },
+        owners: [{ id: 'jared', label: 'jared', kind: 'personal' }, { id: 'acme', label: 'acme', kind: 'group', cap: 'private' }, { id: 'acme/platform', label: 'acme / platform', kind: 'subgroup', cap: 'private' }],
+        taken: ['billing-service'],
+        repos: [
+          { id: 'acme/billing-service', owner: 'acme', vis: 'Private', when: 'yesterday', stack: 'Go', size: '30 MB', sizeGB: 0.03, access: 'write', team: true },
+          { id: 'acme/design-tokens', owner: 'acme', vis: 'Private', when: 'Sep 30', stack: 'JSON', size: '2 MB', sizeGB: 0.002, access: 'write', team: true },
+          { id: 'acme/game-jam', owner: 'acme', vis: 'Private', when: 'Oct 28', stack: 'C# · Godot', size: '1.4 GB', sizeGB: 1.4, access: 'write', team: true, submodules: ['engine', 'assets/fonts'], lfs: '1.2 GB' }
+        ] },
+      'gitlab.own': { address: 'https://git.platyr.test', signedIn: {}, owners: [{ id: 'jared', label: 'jared', kind: 'personal' }, { id: 'research', label: 'research', kind: 'group', cap: 'internal' }], taken: ['lab-notes'],
+        repos: [{ id: 'research/lab-notes', owner: 'research', vis: 'Internal', when: 'Oct 20', stack: 'Markdown', size: '3 MB', sizeGB: 0.003, access: 'write', team: true }] },
+      'azure.services': { signedIn: {}, owners: [{ id: 'acme', label: 'acme', kind: 'azOrg', projects: [{ id: 'Finance', label: 'Finance' }, { id: 'Mobile', label: 'Mobile' }, { id: 'Legacy', label: 'Legacy', tfvc: true }] }], taken: ['invoice-tool'],
+        repos: [{ id: 'acme/Finance/invoice-tool', owner: 'acme', project: 'Finance', vis: 'Team project', when: 'Oct 25', stack: 'C# · .NET', size: '64 MB', sizeGB: 0.06, access: 'write', team: true },
+          { id: 'acme/Legacy/ledger', owner: 'acme', project: 'Legacy', vis: 'Team project', when: '2019', stack: 'TFVC', access: 'write', tfvc: true }] },
+      'azure.server': { address: 'https://ado.acme.test', signedIn: {}, owners: [{ id: 'DefaultCollection', label: 'DefaultCollection', kind: 'collection', projects: [{ id: 'Intranet', label: 'Intranet' }] }], taken: [],
+        repos: [{ id: 'DefaultCollection/Intranet/runbooks', owner: 'DefaultCollection', project: 'Intranet', vis: 'Team project', when: 'Oct 1', stack: 'PowerShell', size: '2 MB', sizeGB: 0.002, access: 'write', team: true }] },
+      'bitbucket.cloud': { signedIn: {}, owners: [{ id: 'acme-team', label: 'acme-team', kind: 'workspace', projects: [{ id: 'WEB', label: 'WEB', key: 'WEB' }, { id: 'PRIV', label: 'PRIV', key: 'PRIV', private: true }] }], taken: ['garden-site'],
+        repos: [{ id: 'acme-team/garden-site', owner: 'acme-team', project: 'WEB', vis: 'Public', when: 'Oct 12', stack: 'Astro', size: '15 MB', sizeGB: 0.015, access: 'write', team: true }] },
+      'bitbucket.dc': { address: 'https://bitbucket.acme.test', signedIn: {}, owners: [{ id: 'OPS', label: 'OPS', kind: 'dcProject' }, { id: '~JARED', label: '~JARED', kind: 'dcProject', personal: true }], taken: [],
+        repos: [{ id: 'OPS/ops-scripts', owner: 'OPS', vis: 'Private', when: 'Oct 9', stack: 'Bash', size: '1 MB', sizeGB: 0.001, access: 'write', team: true }] },
+      'forgejo.own': { address: 'https://git.home.arpa', signedIn: { here: { account: 'jared', method: 'token' } }, owners: [{ id: 'jared', label: 'jared', kind: 'personal' }, { id: 'home', label: 'home', kind: 'organization', profile: 'public' }], taken: ['home-automation'],
+        repos: [{ id: 'jared/home-automation', owner: 'jared', vis: 'Private', when: 'Oct 30', stack: 'Python', size: '22 MB', sizeGB: 0.02, access: 'write' }] },
+      'gitea.own': { address: '', signedIn: {}, owners: [{ id: 'jared', label: 'jared', kind: 'personal' }], taken: [], repos: [] }
+    },
+    /* other people's Projects, for Contribute */
+    publicRepos: [
+      { id: 'maplecraft/plant-journal', svc: 'github.com', owner: 'maplecraft', vis: 'Everyone', access: 'read', desc: 'A plant care diary', when: '3 days ago', size: '18 MB', sizeGB: 0.018, stack: 'TypeScript' },
+      { id: 'openphoto/photo-sorter', svc: 'github.com', owner: 'openphoto', vis: 'Everyone', access: 'read', desc: 'Sorts photos by date and place', when: 'today', size: '40 MB', sizeGB: 0.04, fork: 'jared/photo-sorter', stack: 'Python' },
+      { id: 'godot-community/demo-games', svc: 'github.com', owner: 'godot-community', vis: 'Everyone', access: 'read', desc: 'Small games made with Godot', when: 'last week', size: '2.6 GB', sizeGB: 2.6, submodules: ['engine', 'addons/dialogue', 'addons/physics'], lfs: '2.1 GB', stack: 'GDScript' },
+      { id: 'acme/secret-sauce', svc: 'github.com', access: 'none' }
+    ],
+    /* backup destinations, for New Project and the Backup plate */
+    backupPlaces: {
+      local_nas: { state: 'key', existing: ['tastebook', 'loom', 'experiment', 'old-portfolio', 'recipe-app'] },
+      google_drive: { account: 'jared@gmail.com', existing: ['harbor', 'legacy-app', 'photo-sorter'] },
+      onedrive: { account: null, existing: [] }
+    },
+    /* AI accounts per computer [Demo only] (ready, none, expired, notInstalled) */
+    accounts: [
+      { id: 'claude', name: 'Claude', account: 'jared@example.com', kind: 'tool', tool: 'Claude Code', on: { here: 'ready', homenas: 'ready' } },
+      { id: 'codex', name: 'Codex', account: 'ChatGPT sign-in', kind: 'tool', tool: 'Codex', on: { here: 'ready', homenas: 'none' } },
+      { id: 'openrouter', name: 'OpenRouter', account: 'key', kind: 'key', on: { here: 'ready', homenas: 'none' } },
+      { id: 'copilot', name: 'Copilot', account: 'GitHub sign-in', kind: 'tool', tool: 'GitHub Copilot', on: { here: 'expired', homenas: 'notInstalled' } },
+      { id: 'firecrawl', name: 'Firecrawl', account: 'key', kind: 'key', on: { here: 'ready', homenas: 'none' } },
+      { id: 'tastebook-db', name: 'tastebook-db', account: 'sign-in header', kind: 'key', on: { here: 'ready', homenas: 'none' } }
+    ],
+    /* each Project's own settings (its differences from your usual settings), kinds by SSYS-007 selector id [Demo only] */
+    kinds: [
+      ['appearance_workspace', 'Look and layout'], ['assistant_chat', 'Assistant and chat'], ['providers_accounts_models_routing', 'AI accounts and models'],
+      ['planning_goal', 'Planning and Goals'], ['orchestrator_automation', 'Automation'], ['tools_integrations', 'Tools and connections'],
+      ['testing_browser_devices', 'Testing, browser and devices'], ['permissions_security', 'Permissions and safety'], ['memory_retention_history', 'Memory and history'],
+      ['notifications_usage_budgets', 'Notifications and limits']
+    ],
+    projectSettings: {
+      tastebook: {
+        uses: ['claude', 'codex', 'openrouter', 'firecrawl'], routing: 'Planning: Claude · Building: Codex',
+        own: [
+          ['appearance_workspace', 'general.visual.theme', 'Theme', 'Basic Dark', 'Retro Dark'],
+          ['providers_accounts_models_routing', 'ai.models.default-model', 'Everyday model', 'Claude Sonnet 4', 'Claude Opus 4'],
+          ['providers_accounts_models_routing', 'ai.models.worker-model', 'Everyday building', 'Default', 'Codex'],
+          ['providers_accounts_models_routing', 'ai.models.reasoning-effort', 'Thinking depth', 'Medium', 'High'],
+          ['planning_goal', 'planning.verification.goal-auto-resume', 'Pick up where it left off', 'On', 'Off'],
+          ['permissions_security', 'safety.approvals.auto-continue', 'After one OK, keep going', 'Off', 'On'],
+          ['permissions_security', 'safety.rules.permission-preset', 'Profile in use', 'Regular', 'Plan only'],
+          ['tools_integrations', 'branching.worktrees.auto-worktree-new-threads', 'Give each new chat its own workspace', 'Off', 'On'],
+          ['tools_integrations', 'branching.worktrees.default-branch', 'Main branch name', 'main', 'trunk'],
+          ['testing_browser_devices', 'planning.testing.cap-visible-browser', 'Show each browser step on screen', 'Automatic', 'On'],
+          ['testing_browser_devices', 'planning.testing.cap-simulator', 'Phone simulators', 'Automatic', 'On'],
+          ['memory_retention_history', 'memory.retention.history-retention', 'Chat history', 'All chats', 'Recent chats'],
+          ['memory_retention_history', 'memory.retention.subagent-access', 'Helper agents can read memories', 'Off', 'On']
+        ],
+        same: [
+          ['assistant_chat', 'assistant.chat.simple-explanations', 'Simple explanations', 'On'],
+          ['orchestrator_automation', 'orchestrator.parallel.max-helpers', 'Helpers at once', '4'],
+          ['notifications_usage_budgets', 'notifications.desktop.run-finished', 'Tell me when a run finishes', 'On']
+        ],
+        fromComputer: 3,
+        things: [{ id: 'recipe-tester', name: 'Recipe tester', kind: 'persona' }, { id: 'tastebook-db', name: 'tastebook-db', kind: 'mcp' }, { id: 'seed-recipes', name: '/seed-recipes', kind: 'command' }],
+        ownFiles: [{ id: 'instructions', label: 'Its instructions for the AI (AGENTS.md)' }, { id: 'build', label: 'Its build and test commands' }, { id: 'remote', label: 'Its online copy’s address (origin)' }]
+      },
+      harbor: {
+        uses: ['claude', 'copilot'], routing: 'Claude for everything',
+        own: [
+          ['appearance_workspace', 'general.visual.density', 'Spacing', 'Comfortable', 'Compact'],
+          ['permissions_security', 'safety.approvals.auto-continue', 'After one OK, keep going', 'Off', 'On'],
+          ['permissions_security', 'safety.rules.permission-preset', 'Profile in use', 'Regular', 'Careful'],
+          ['permissions_security', 'safety.network.allow-hosts', 'Websites it may reach', 'Ask each time', 'acme.test only'],
+          ['providers_accounts_models_routing', 'ai.models.default-model', 'Everyday model', 'Claude Sonnet 4', 'Claude Opus 4'],
+          ['providers_accounts_models_routing', 'ai.models.reasoning-effort', 'Thinking depth', 'Medium', 'High']
+        ],
+        same: [], fromComputer: 1,
+        things: [{ id: 'release-checklist', name: '/release-checklist', kind: 'command' }],
+        ownFiles: [{ id: 'instructions', label: 'Its instructions for the AI (AGENTS.md)' }, { id: 'remote', label: 'Its online copy’s address (origin)' }]
+      },
+      loom: {
+        uses: ['claude'], routing: 'Claude for everything',
+        own: [
+          ['appearance_workspace', 'general.visual.theme', 'Theme', 'Basic Dark', 'NieR Dark'],
+          ['memory_retention_history', 'memory.retention.history-retention', 'Chat history', 'All chats', 'Recent chats'],
+          ['testing_browser_devices', 'planning.testing.cap-visible-browser', 'Show each browser step on screen', 'Automatic', 'Off']
+        ],
+        same: [], fromComputer: 0, things: [], ownFiles: [{ id: 'build', label: 'Its build and test commands' }]
+      },
+      'docs-site': { uses: ['claude'], routing: 'Claude for everything', own: [], same: [], fromComputer: 0, things: [], ownFiles: [] }
+    },
+    /* starters: files a new Project begins with [Pending Jared] */
+    starters: [
+      { id: 'family-web', name: 'Family web page', kind: 'folder', from: '~/Starters/family-web-page', adds: '3 files: index.html, style.css, photos/' },
+      { id: 'rust-starter', name: 'Rust starter', kind: 'template', service: 'GitHub', project: 'jared/rust-starter', adds: 'A small Rust program with one test' }
+    ],
+    /* chats with no project [Depends: no-project] */
+    chats: [
+      { id: 'chat-printer', title: 'Fix the printer', slug: 'fix-printer', folder: '/Users/jared/Puppet Master Chats/fix-printer', files: 14, sample: 'print-labels.py, labels.csv, README.md and 11 more', runsOn: 'here',
+        workedIn: { path: '~/Code/printer-tool', changed: 6 }, outside: ['~/.config/cups/printers.conf', '/etc/hosts'], folders: ['~/Downloads'] }
+    ],
+    /* folders a device or share can browse, for the folder pickers [Demo only] */
+    trees: {
+      nas: { '/volume1': ['projects', 'backups'], '/volume1/projects': ['photo-sorter', 'home-automation', 'old-experiments'], '/volume1/backups': ['puppet-master'] },
+      studio: { '~': ['Developer', 'Documents'], '~/Developer': ['lighting-rig', 'midi-tools', 'loom'], '~/Documents': [] },
+      office: { '~': ['work', 'Documents'], '~/work': ['invoice-tool'], '~/Documents': [] },
+      media: { '/mnt/tank': ['projects'], '/mnt/tank/projects': ['garden-notes'] },
+      'smb-nas': { '/projects': ['family-photos-site', 'home-automation'] },
+      'nfs-nas': { '/volume1/projects': ['home-automation', 'old-experiments'] },
+      'vol-projects': { '/Volumes/Projects': ['family-photos-site', 'home-automation'] },
+      'vol-backup': { '/Volumes/Backup Drive': ['Puppet Master'] }
+    },
     services: [
       { id: 'github', name: 'GitHub', account: 'jared', connected: true },
       { id: 'gitlab', name: 'GitLab', account: 'jared@acme', connected: false },
@@ -294,10 +502,12 @@
       ]
     },
     backups: [
-      { id: 'nas', where: 'Home NAS', kind: 'nas', sub: 'Nightly backups of 4 Projects', projects: ['tastebook', 'loom', 'experiment', 'old-portfolio', 'photo-sorter'], latest: 'Today, 3:00 AM' },
-      { id: 'gdrive', where: 'Google Drive', kind: 'cloud', sub: 'Daily backups of 2 Projects', projects: ['harbor', 'legacy-app'], latest: 'Yesterday, 11:00 PM' },
-      { id: 'kit', where: 'A Recovery Kit file', kind: 'kit', sub: 'The file you saved when you set up backups', projects: [], latest: null },
-      { id: 'drive', where: 'A folder or a drive', kind: 'folder', sub: 'Or a drive you plugged in', projects: [], latest: null }
+      { id: 'nas', where: 'Home NAS', kind: 'nas', sub: 'Nightly backups of 4 Projects', projects: ['tastebook', 'loom', 'experiment', 'old-portfolio', 'photo-sorter'], latest: 'Today, 3:00 AM', locked: false,
+        lineage: { tastebook: ['GitHub', 'jared/tastebook'], loom: ['GitHub', 'jared/loom'], experiment: ['GitHub', 'jared/experiment'], 'old-portfolio': ['GitHub', 'jared/portfolio'], 'photo-sorter': ['GitHub', 'jared/photo-sorter'] } },
+      { id: 'gdrive', where: 'Google Drive', kind: 'cloud', sub: 'Daily backups of 2 Projects', projects: ['harbor', 'legacy-app'], latest: 'Yesterday, 11:00 PM', locked: false, lineage: { harbor: ['GitLab', 'acme/harbor'] } },
+      { id: 'kit', where: 'A Recovery Kit file', kind: 'kit', sub: 'The file you saved when you set up backups', projects: [], latest: null, file: 'Recovery Kit – Loom.pdf', in: 'Documents', points: 'nas' },
+      { id: 'drive', where: 'A folder or a drive', kind: 'folder', sub: 'Or a drive you plugged in', projects: ['recipe-ideas'], latest: 'Oct 3', path: '/Volumes/Backup Drive/Puppet Master', locked: true, phrase: 'river candle orbit maple quiet lantern' },
+      { id: 'b2', where: 'Backblaze B2 · old-backups', kind: 'bucket', sub: 'A storage bucket', projects: [], latest: null, locked: false, empty: true }
     ],
     templates: [
       { id: 'empty', glyph: 'folder', title: 'Empty folder', sub: 'Nothing in it yet. Plan it in the Planning Wizard.' },
@@ -311,15 +521,18 @@
   };
 
   /* ------------------------------------------------------------------ state, events */
-  const S = { opt: 'a', scenario: 'demo', world: null, mounted: null, root: null, ops: {} };
+  const S = { opt: 'c', scenario: 'demo', world: null, mounted: null, root: null, ops: {} };
   const listeners = {};
   const on = (ev, fn) => { (listeners[ev] = listeners[ev] || []).push(fn); return () => { listeners[ev] = listeners[ev].filter((f) => f !== fn); }; };
   const emit = (ev, data) => (listeners[ev] || []).slice().forEach((fn) => { try { fn(data); } catch (e) { console.error('[pjx]', ev, e); } });
 
   function freshWorld(scenario) {
-    ENV.devices.forEach((d) => { d.online = d.id !== 'nas'; });   // Reset demo puts Home NAS back to not answering
+    ENV.devices.forEach((d) => { d.online = d.id !== 'media'; });   // Reset demo puts Media NAS back to not answering
     const projects = scenario === 'first' ? [] : scenario === 'many' ? manyProjects() : demoProjects();
-    return { projects, removed: [], scenario };
+    /* facts about the person's world that New Project can change: a device trusted, a key added, a sign-in made, a fork
+       made. They live here, never in ENV, so Reset demo puts every one back (spec 4, 8 rule 4) */
+    const facts = { trusted: {}, signins: {}, expiredFixed: {}, forks: {}, backupSignins: {}, starters: null };
+    return { projects, removed: [], scenario, facts };
   }
   const all = () => S.world.projects;
   const get = (id) => S.world.projects.find((p) => p.id === id) || null;
@@ -354,7 +567,7 @@
     else {
       const k = o.state || 'complete';
       const tail = o.behind ? o.behind + ' newer online' : o.ahead ? o.ahead + ' to send' : o.note || 'Up to date';
-      online = { key: k, label: 'Online copy', word: o.service, text: o.service + ' · ' + o.repo + ' · ' + (o.note || tail), short: o.service + (o.behind ? ' · ' + o.behind + '↓' : o.ahead ? ' · ' + o.ahead + '↑' : ''), tail };
+      online = { key: k, label: 'Online copy', word: o.service, text: o.service + ' · ' + o.repo + (o.upstream ? ' · original ' + o.upstream.repo : '') + ' · ' + (o.note || tail), short: o.service + (o.behind ? ' · ' + o.behind + '↓' : o.ahead ? ' · ' + o.ahead + '↑' : ''), tail };
     }
     const b = p.backup || {};
     let backup;
@@ -363,6 +576,8 @@
       const op = S.ops[p.id];
       if (op && op.kind === 'backup' && !op.done) backup = { key: 'working', label: 'Backup', word: b.dest, text: 'Backing up to ' + b.dest + ' · ' + (op.phase || ''), short: 'Backing up…' };
       // the last complete backup is what shows; a failed or late newer attempt is said beside it, never instead (BRS §4.2)
+      // v2 states: setup (Not on yet), scheduled (on, the first one tonight), ready (manual, waiting for Back up now)
+      else if (/^(setup|scheduled|ready)$/.test(b.state)) backup = { key: { setup: 'waiting', scheduled: 'pending', ready: 'idle' }[b.state], label: 'Backup', word: b.dest, text: b.state === 'setup' ? 'Not on yet · finish setting up ' + b.dest : b.state === 'scheduled' ? b.dest + ' · on · the first one tonight at ' + (b.time || '2:00 AM') : b.dest + ' · ready · when you click Back up now', short: b.dest + (b.state === 'setup' ? ' · not on yet' : ''), last: null };
       else backup = { key: b.state || 'complete', label: 'Backup', word: b.dest, text: (b.last ? 'Backed up ' + b.last + ' to ' + b.dest : 'No complete backup yet · ' + b.dest) + (b.state === 'complete' && b.last ? ' · checked' : '') + (b.note ? ' · ' + b.note : b.schedule ? ' · ' + b.schedule.toLowerCase() : ''), short: b.dest + (b.last ? ' · ' + b.last : ''), last: b.last };
     }
     return { history, online, backup };
@@ -494,7 +709,7 @@
       const p = get(id); if (!p) return;
       if (p.lifecycle === 'archived') { toast(p.name + ' is archived', 'Unarchive it to open it.', 'info'); return; }
       if (p.where.missing) { emit('need-repair', { id }); return; }
-      if (p.attention.some((a) => a.code === 'device_offline')) { toast('Can’t open ' + p.name, 'Home NAS isn’t answering. Its files live there.', 'warn'); return; }
+      if (p.attention.some((a) => a.code === 'device_offline')) { toast('Can’t open ' + p.name, (p.where.device || 'The device') + ' isn’t answering. Its files live there.', 'warn'); return; }
       if (p.lifecycle === 'recovery') { emit('need-resume', { id }); return; }
       setActive(id);
       toast('Opened ' + p.name, p.activity && p.activity.key === 'working' ? 'Its work kept running.' : '', 'success');
@@ -631,7 +846,148 @@
     copyPath(id) { const p = get(id); if (!p) return; try { W.navigator.clipboard.writeText(p.where.path); } catch (e) { /* no clipboard */ } toast('Path copied', p.where.path, 'success'); },
     rename(id, name) { const p = get(id); if (!p || !name) return; p.name = name; emit('change', { why: 'rename', id }); toast('Renamed to ' + name, 'Only the name changed. Its folder and history are the same.', 'success'); },
     /* the project created by the New Project flow (flow.js calls this with the reviewed draft) */
-    add(p) { S.world.projects.push(p); emit('change', { why: 'add', id: p.id }); }
+    add(p) { S.world.projects.push(p); emit('change', { why: 'add', id: p.id }); },
+
+    /* ------------------------------------------------ v2: the Project page acts on everything New Project sets up (spec 10).
+       Each names its owner command; the world changes only after its simulated result. */
+    /* cmd.project.execution_host.select (SIR-026): only which computer does the work changes; the files never move */
+    async changeComputer(id, computer) {
+      const p = get(id); if (!p) return;
+      const c = ENV.computers.find((x) => x.id === computer); if (!c) return;
+      await run(id, 'computer', 'Changing which computer does the work', [{ label: 'Checking ' + c.name + ' can reach ' + p.where.path, ms: 700 }, { label: 'Handing the work to ' + c.name, ms: 600 }], () => { p.runsOn = computer; }, { cmd: 'cmd.project.execution_host.select' });
+      toast(c.name + ' does the work for ' + p.name + ' now', 'Its files didn’t move.', 'success');
+    },
+    /* cmd.project.move.start (PSB-005): Move owns taking a Project to another computer */
+    moveComputer(id) { const p = get(id); if (p) toast('Move ' + p.name, 'Opens Move to take ' + p.name + ' to another computer. Its files, history and settings go with it.', 'info'); },
+    /* cmd.source_control.repository.bind after the check (6.9.2); a folder with no link needs the add-remote Gap */
+    async linkOnline(id, o) {
+      const p = get(id); if (!p || !o) return;
+      await run(id, 'sync', 'Linking the online copy', [{ label: 'Checking ' + o.repo + ' is this Project', ms: 700 }, { label: 'Linking ' + o.repo + ' on ' + o.service, ms: 600 }], () => {
+        p.online = { service: o.service, repo: o.repo, state: 'complete', ahead: 0, behind: 0, privacy: o.privacy || 'Only you', note: 'Up to date' };
+      }, { cmd: 'cmd.source_control.repository.bind' });
+      toast(p.name + ' is linked to ' + o.service, o.repo + ' · getting and sending changes works here now.', 'success');
+    },
+    /* GitHub: cmd.project.new_github_repo; other services: cmd.forge.repository.create (Gap G1/G7), then the first send */
+    async addOnline(id, o) {
+      const p = get(id); if (!p || !o) return;
+      const jj = p.history && p.history.backend === 'jujutsu';
+      await run(id, 'sync', 'Making the online copy', [{ label: 'Making ' + o.repo + ' on ' + o.service, ms: 900 }, { label: 'Sending the first version', ms: 800 }], () => {
+        p.online = { service: o.service, repo: o.repo, state: 'complete', ahead: 0, behind: 0, privacy: o.privacy || 'Only you', note: 'Up to date' };
+      }, { cmd: o.service === 'GitHub' ? 'cmd.project.new_github_repo' : 'gap:cmd.forge.repository.create (per-forge Project hand-off)' });
+      toast('The online copy of ' + p.name + ' is ready', o.service + ' · ' + o.repo + (jj ? ' · sent with Jujutsu' : ''), 'success');
+    },
+    /* Gap (no fork sync): the concept chains fetch from the original, then bringing it into the main line */
+    async getOriginal(id) {
+      const p = get(id); if (!p || !p.online || !p.online.upstream) return;
+      const up = p.online.upstream, jj = p.history && p.history.backend === 'jujutsu', n = up.behind || 0;
+      await run(id, 'sync', 'Getting the latest from the original', [{ label: 'Asking ' + up.repo + ' for its changes', ms: 700 }, { label: 'Bringing in ' + n + ' change' + (n === 1 ? '' : 's'), ms: 900 }], () => {
+        up.behind = 0; p.online.note = 'Up to date with the original'; p.online.state = 'complete'; dropAttention(p, 'original_newer');
+      }, { cmd: 'gap:fork sync (' + (jj ? 'cmd.jujutsu.git.fetch + cmd.jujutsu.change.rebase' : 'cmd.source_control.remote.fetch + cmd.source_control.remote.sync') + ')' });
+      toast(p.name + ' has the original’s latest', up.repo + ' · ' + n + ' change' + (n === 1 ? '' : 's') + ' brought in. Your branch ' + (up.branch || 'my-change') + ' is as it was.', 'success');
+    },
+    /* cmd.forge.review.create: inside one Project it is canon; from a fork to its original it is a Gap */
+    offerChanges(id) {
+      const p = get(id); if (!p) return;
+      const up = p.online && p.online.upstream;
+      if (up) toast('Offer your changes', 'Opens Source Control to offer your changes to ' + up.repo + '. Puppet Master makes a pull request from ' + (up.branch || 'my-change') + ' on your fork.', 'info');
+      else toast('Offer your changes', 'Opens Source Control to offer ' + ((p.online && p.online.branch) || 'my-change') + ' to ' + String((p.online && p.online.repo) || '').split('/')[0] + '.', 'info');
+    },
+    /* cmd.forge.repository.fork, then the add-remote Gap for "upstream", then cmd.source_control.branch.create */
+    async contribute(id, o) {
+      const p = get(id); if (!p || !p.online) return;
+      const orig = p.online.repo, svc = p.online.service;
+      await run(id, 'sync', 'Making your fork', [{ label: 'Making your fork on ' + svc, ms: 900 }, { label: 'Linking the original as ' + (o.upstream || 'upstream'), ms: 500 }, { label: 'Starting your change’s branch ' + (o.branch || 'my-change'), ms: 500 }], () => {
+        S.world.facts.forks[orig] = o.fork;
+        p.online = { service: svc, repo: o.fork, state: 'complete', ahead: 0, behind: 0, privacy: 'Everyone', note: 'Up to date', upstream: { service: svc, repo: orig, behind: 0, branch: o.branch || 'my-change', remote: o.upstream || 'upstream' } };
+      }, { cmd: 'cmd.forge.repository.fork + gap:add remote' });
+      toast('Your fork ' + o.fork + ' is ready', 'The original stays linked as ' + (o.upstream || 'upstream') + '. Your change goes on ' + (o.branch || 'my-change') + '.', 'success');
+    },
+    /* the backup setup (6.10, 10.3): destination, then 6.12.3's steps run on the Project's page */
+    async setupBackupFull(id, plan, opts) {
+      const p = get(id); if (!p || !plan) return;
+      const add = opts && opts.add;
+      await run(id, 'backup', add ? 'Adding another place' : 'Setting up backups', [{ label: 'Saving the backup plan', ms: 500 }], () => {
+        const rec = { dest: plan.dest, place: plan.place, family: plan.family, include: plan.include || 'all', mode: plan.mode || 'daily', time: plan.time || '2:00 AM', keep: plan.keep || 'standard',
+          schedule: plan.mode === 'manual' ? 'When you click Back up now' : 'Every day', state: 'setup', last: null, versions: 0, kit: null,
+          setup: { steps: ['todo', 'todo', 'todo', 'todo', 'todo'], fail: !!plan.testFail, access: plan.access || null, open: true } };
+        if (add) { p.backup.more = (p.backup.more || []).concat([rec]); p.backup.setup = Object.assign({}, rec.setup, { target: p.backup.more.length - 1 }); }
+        else { p.backup = rec; dropAttention(p, 'not_backed_up'); }
+        dropAttention(p, 'backup_unfinished');
+      }, { cmd: 'cmd.backup.destination.add' });
+    },
+    /* one protect step (6.12.3), done only from its owner's simulated result (FO-9). i: 0 sign in / connect, 1 test,
+       2 save the Recovery Kit, 3 check it, 4 turn on. opts.bad: the demo failure for steps 1 and 3 */
+    async protectStep(id, i, opts) {
+      const p = get(id); if (!p || !p.backup || !p.backup.setup) return false;
+      const st = p.backup.setup, b = p.backup, tgt = st.target != null ? b.more[st.target] : b;
+      const where = tgt.dest;
+      const LAB = [[where === 'Home NAS' ? 'Connecting to ' + where : 'Signing in to ' + where, 'cmd.auth_profile.sign_in'], ['Running a quick test', 'cmd.backup.destination.test'], ['Saving your Recovery Kit', 'cmd.backup.recovery_key.export'], ['Checking the kit', 'cmd.backup.recovery_key.test'], [tgt.mode === 'manual' ? 'Saving the backup plan' : 'Turning on daily backups', 'cmd.backup.policy.update']];
+      const bad = (i === 1 && st.fail) || (i === 3 && opts && opts.bad);
+      st.steps[i] = 'working'; st.err = null; emit('change', { why: 'protect', id });
+      const ok = await run(id, 'protect', LAB[i][0], [{ label: LAB[i][0], ms: i === 0 ? 1100 : 700, fail: bad }], () => {
+        st.steps[i] = 'done';
+        if (i === 2) tgt.kit = { saved: 'Today', checked: null };
+        if (i === 3) tgt.kit = Object.assign({}, tgt.kit || {}, { checked: 'Today' });
+        if (i === 4) {
+          // the plate stays open to say "Backups are on", until its Done
+          tgt.state = tgt.mode === 'manual' ? 'ready' : 'scheduled'; st.done = true;
+          dropAttention(p, 'backup_unfinished');
+        }
+      }, { cmd: LAB[i][1] });
+      if (!ok) { st.steps[i] = 'failed'; st.err = i; if (i === 1) st.fail = false; emit('change', { why: 'protect', id }); }
+      return ok;
+    },
+    /* Do this later: the plate folds; the Project says "Backup isn't on yet" with Finish setting up */
+    protectLater(id) {
+      const p = get(id); if (!p || !p.backup || !p.backup.setup) return;
+      p.backup.setup.open = false;
+      if (!(p.attention || []).some((a) => a.code === 'backup_unfinished')) p.attention.push({ code: 'backup_unfinished', key: 'waiting', title: 'Backup isn’t on yet', text: 'Sign in to ' + p.backup.dest + ', then save your Recovery Kit.', actions: ['finish_backup'] });
+      emit('change', { why: 'protect', id });
+    },
+    protectOpen(id) { const p = get(id); if (p && p.backup && p.backup.setup) { p.backup.setup.open = true; emit('change', { why: 'protect', id }); } },
+    /* cmd.backup.destination.update + cmd.backup.policy.update */
+    async changeBackup(id, plan) {
+      const p = get(id); if (!p || !plan) return;
+      const moved = plan.dest !== p.backup.dest;
+      await run(id, 'backup', 'Saving the backup plan', [{ label: moved ? 'Checking ' + plan.dest : 'Saving when it runs and what it keeps', ms: 700 }], () => {
+        Object.assign(p.backup, { include: plan.include, mode: plan.mode, time: plan.time, keep: plan.keep, schedule: plan.mode === 'manual' ? 'When you click Back up now' : 'Every day' });
+        if (moved) Object.assign(p.backup, { dest: plan.dest, place: plan.place, family: plan.family, state: 'setup', setup: { steps: ['todo', 'todo', 'todo', 'todo', 'todo'], fail: false, open: true } });
+      }, { cmd: moved ? 'cmd.backup.destination.update' : 'cmd.backup.policy.update' });
+      toast('Backup plan saved for ' + p.name, moved ? 'Finish the new place’s sign-in and test on its page.' : (plan.mode === 'manual' ? 'Backs up when you click Back up now.' : 'Every day at ' + plan.time + '.'), 'success');
+    },
+    /* cmd.backup.recovery_key.test */
+    async checkKit(id, bad) {
+      const p = get(id); if (!p || !p.backup) return false;
+      const ok = await run(id, 'backup', 'Checking the Recovery Kit', [{ label: 'Opening the backup with the kit', ms: 800, fail: !!bad }], () => { p.backup.kit = Object.assign({}, p.backup.kit || { saved: 'Earlier' }, { checked: 'Today' }); }, { cmd: 'cmd.backup.recovery_key.test' });
+      toast(ok ? 'The kit opens ' + p.name + '’s backup' : 'That kit didn’t open the backup', ok ? 'Checked just now.' : 'Make sure it’s the kit you saved for this Project, then try again.', ok ? 'success' : 'warn');
+      return ok;
+    },
+    /* cmd.restore.preview, then cmd.restore.project_in_place: the safe point is the Restore owner's */
+    async restoreInPlace(id) {
+      const p = get(id); if (!p || !p.backup || !p.backup.last) return;
+      await run(id, 'restore', 'Putting it back as it was', [{ label: 'Making a safe point of what’s there now', ms: 700 }, { label: 'Getting the backup of ' + p.backup.last, ms: 900 }, { label: 'Putting the files back', ms: 800 }], () => {
+        p.history.changed = 0; p.activity = { key: 'idle', word: 'Idle', text: 'Put back as it was on ' + p.backup.last + ' · a safe point keeps what was there', at: 'just now' };
+      }, { cmd: 'cmd.restore.project_in_place' });
+      toast(p.name + ' is back as it was on ' + p.backup.last, 'What was there before is kept in a safe point.', 'success');
+    },
+    /* cmd.backup.test_restore */
+    async tryRestore(id) {
+      const p = get(id); if (!p || !p.backup || !p.backup.last) return;
+      await run(id, 'backup', 'Trying a restore', [{ label: 'Restoring it somewhere apart', ms: 900 }, { label: 'Checking every file', ms: 700 }, { label: 'Removing the trial copy', ms: 400 }], () => { p.backup.checked = 'Today'; }, { cmd: 'cmd.backup.test_restore' });
+      toast('The trial restore of ' + p.name + ' worked', 'Nothing changed. The backup of ' + p.backup.last + ' is checked.', 'success');
+    },
+    /* cmd.settings.open with a pm.settings_route_request.v1 naming the settings-transfer manager */
+    copySettingsInto(id) {
+      const p = get(id); if (!p) return;
+      toast('Copy settings into ' + p.name, 'Opens Settings Transfer to copy settings into ' + p.name + '. The choices there are the same as New Project’s.', 'info');
+      if (W.PM_PAGES) W.PM_PAGES.go('settings');
+    },
+    /* the copied settings from New Project, undone (SSYS-007 restore point) */
+    async undoCopied(id) {
+      const p = get(id); if (!p || !p.copied) return;
+      await run(id, 'settings', 'Undoing the copied settings', [{ label: 'Putting your usual settings back', ms: 600 }], () => { p.copied = null; }, { cmd: 'cmd.settings.transaction.apply (restore point)' });
+      toast('Copied settings undone', p.name + ' uses your usual settings.', 'success');
+    }
   };
 
   /* what each attention action is called and does: concepts draw buttons from this so the words match everywhere */
@@ -646,7 +1002,10 @@
     retry: { label: 'Try again', icon: 'refresh', run: (id) => ACT.retry(id) },
     resume: { label: 'Continue setup', icon: 'play', run: (id) => emit('need-resume', { id }) },
     open_online: { label: 'Open on GitHub', icon: 'globe', run: (id) => ACT.openOnline(id) },
-    remove: { label: 'Remove from list', icon: 'close', run: (id) => ACT.remove(id) }
+    remove: { label: 'Remove from list', icon: 'close', run: (id) => ACT.remove(id) },
+    /* v2 */
+    get_original: { label: 'Get the latest from the original', icon: 'download', run: (id) => ACT.getOriginal(id) },
+    finish_backup: { label: 'Finish setting up', icon: 'safe', run: (id) => emit('need-backup', { id, step: 'finish' }) }
   };
 
   /* the More menu every concept offers on a project: the same items in the same order, all labelled */
@@ -734,6 +1093,8 @@
       else if (name === 'missing') { const p = get('experiment'); if (p && p.where.missing) emit('need-repair', { id: 'experiment' }); else toast('The demo’s missing folder is already fixed', 'Reset the demo to see it again.', 'info'); }
       else if (name === 'unfinished') { const p = get('recipe-app'); if (p && p.recovery) emit('need-resume', { id: 'recipe-app' }); else toast('The demo’s unfinished setup is already done', 'Reset the demo to see it again.', 'info'); }
       else if (name === 'reset') { S.world = freshWorld(S.scenario); mount(S.mounted); }
+      // v2 moments (fromchat, contribute, foundonline, backupsetup, ...) belong to the concept that draws them (C)
+      else if (c.moment) c.moment(name);
     }, 60);
   }
 
@@ -745,10 +1106,20 @@
     const pick = async (sel) => { await open(); const b = D.querySelector(sel); if (b && b.getAttribute('aria-checked') !== 'true') { b.click(); await wait(160); } };
     const nierOn = () => !!(W.PM_NIER && W.PM_NIER.on && W.PM_NIER.on());
     const flipNier = async () => { await open(); const t = D.querySelector('#themeMenu [data-o55-nier-tt="toggle"]'); if (t) { t.click(); await wait(220); } };
-    if (!nier && nierOn()) await flipNier();
-    await pick(`#themeMenu .pm6-tt-family[data-family="${fam}"]`);
-    await pick(`#themeMenu .pm6-tt-mode[data-mode-value="${mode}"]`);
-    if (nier && !nierOn()) await flipNier();
+    // PMConcept7 now lists NieR as a family of its own in the theme menu (2026-11); older builds had a toggle
+    await open();
+    const nierFam = D.querySelector('#themeMenu .pm6-tt-family[data-family="nier"]');
+    if (nierFam) {
+      const famSel = `#themeMenu .pm6-tt-family[data-family="${nier ? 'nier' : fam}"]`;
+      if (!nier && nierOn()) { const b = D.querySelector(famSel); if (b) { b.click(); await wait(220); } if (nierOn() && W.PM_NIER && W.PM_NIER.set) { W.PM_NIER.set(false); await wait(220); } }
+      else await pick(famSel);
+      await pick(`#themeMenu .pm6-tt-mode[data-mode-value="${mode}"]`);
+    } else {
+      if (!nier && nierOn()) await flipNier();
+      await pick(`#themeMenu .pm6-tt-family[data-family="${fam}"]`);
+      await pick(`#themeMenu .pm6-tt-mode[data-mode-value="${mode}"]`);
+      if (nier && !nierOn()) await flipNier();
+    }
     D.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await wait(160);
     // Retro and NieR keep the menu open on Escape now and then: close it with its own button

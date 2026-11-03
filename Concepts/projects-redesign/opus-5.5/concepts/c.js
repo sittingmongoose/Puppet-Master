@@ -8,11 +8,15 @@
    says what the Project is doing, how it is kept safe (History, Online copy, Backup) and where it lives, and every
    problem is fixed on that page: the missing folder is found in place, an unfinished setup is finished in place.
 
-   New Project takes over the right page as a launcher: paste a link, a folder or an address (PJX.flow.detect recognises
-   it), or choose one of the five ways; then one page of the remaining questions beside a live Review. The questions,
-   their words and the creation itself are PJX.flow's; this file draws only the frame, the navigation and the creating,
-   success and failure screens. Leaving New Project never throws the answers away: the draft waits at the top of the
-   library ("Not made yet") until it is made or started over.
+   Split v2 (2026-11-02, Jared: "I am leaning towards the Split option. Lets just focus on that for future passes."):
+   New Project takes over the right page as a launcher: paste a link, a folder or an address (PJX.np.detect recognises
+   it), or choose one of the six ways; then one guided page beside a live Review. One section is open at a time,
+   finished sections fold to their answer with Change, and the sections are a pure function of the answers (PJX.np,
+   layer/np.js), so an abandoned answer never comes back. The sections and their parts are PJX.npui's (layer/np-ui.js);
+   this file draws the frame, the launcher, the Review card, creating, Done, "Finish protecting your work" and Didn't
+   finish. The Project page's plates reuse the same parts for their in-place forms (online copy, backup, which computer
+   does the work), so the page and New Project never disagree. Leaving New Project never throws the answers away: the
+   draft waits at the top of the library ("Not made yet") until it is made or started over.
 
    Built from Usage's own parts (.pmu-shell, .pmu-rail, .pmu-stagehead, .pmu-card plates with .pmu-facts, .pmu-textbtn)
    and Home's .pmw-act buttons, so every look draws it the way it draws Usage and Home. Nothing here is a second runtime:
@@ -23,13 +27,12 @@
   if (!PJX) return;
   const D = W.document;
   const { h, icon, mark, tip } = PJX;
+  const W_ = (k, v) => PJX.w(k, v);
   const parts = () => PJX.parts, flow = () => PJX.flow;
 
   /* Below this width of the Projects pane the library becomes a drawer behind a "Projects" button. c.css switches its
      layout at the same width (@container pjx (max-width: 739.98px)), so the two never disagree. */
   const NARROW = 740;
-  /* the words a way's final button uses, and the words while it runs */
-  const VERB = { new: ['Create', 'Creating'], folder: ['Add', 'Adding'], online: ['Copy', 'Copying'], device: ['Add', 'Adding'], restore: ['Restore', 'Restoring'] };
   /* the filters of the library (all labelled), and the orders */
   const SHOWS = [
     { id: 'all', label: 'All projects', icon: 'list' },
@@ -49,7 +52,7 @@
       q: '', show: 'all', order: 'recent', archivedOpen: false,
       narrow: false, drawer: false,
       s: null, view: 'launcher', commit: null, demoFail: false, pasteText: '',
-      repair: {}, repairOpen: {}, resume: {}, flash: {}, lastChoice: null
+      repair: {}, repairOpen: {}, resume: {}, flash: {}, lastChoice: null, inplace: {}
     };
   }
 
@@ -127,7 +130,8 @@
     if (!C || !a || a === D.body || !C.root.contains(a)) return null;
     const k = a.closest('[data-c-key]');
     if (k) return { sel: '[data-c-key="' + cssEsc(k.getAttribute('data-c-key')) + '"]' };
-    if (a.getAttribute('data-pjx-key')) return null;
+    // a text field keeps its focus and caret, wherever it was redrawn (np-ui's sections, the in-place forms)
+    if (a.getAttribute('data-pjx-key')) return { sel: '[data-pjx-key="' + cssEsc(a.getAttribute('data-pjx-key')) + '"]', caret: a.selectionStart != null ? [a.selectionStart, a.selectionEnd] : null, el: a.classList.contains('pjx-np-secret') ? a : null };
     const zone = a.closest('[data-step]');
     const z = zone ? '[data-step="' + cssEsc(zone.getAttribute('data-step')) + '"] ' : a.closest('.pjx-repair') ? '.pjx-repair ' : '';
     if (a.classList.contains('pjx-choice') && a.getAttribute('data-v')) return { sel: z + '.pjx-choice[data-v="' + cssEsc(a.getAttribute('data-v')) + '"]' };
@@ -141,7 +145,9 @@
     const a = D.activeElement;
     if (a && a !== D.body && C.root.contains(a)) return;
     let el = null;
+    if (k.el && k.el.isConnected) { try { k.el.focus({ preventScroll: true }); } catch (e) { /* gone */ } return; }
     if (k.sel) el = C.root.querySelector(k.sel);
+    if (el && k.caret) { try { el.focus({ preventScroll: true }); el.setSelectionRange(k.caret[0], k.caret[1]); } catch (e) { /* not a text field */ } return; }
     else if (k.seg) el = Array.from(C.root.querySelectorAll(k.z + '.pjx-seg[aria-label="' + cssEsc(k.seg) + '"] .pjx-seg-btn')).find((b) => b.textContent === k.text);
     else if (k.cls) el = Array.from(C.root.querySelectorAll(k.z + '.' + k.cls)).find((b) => b.textContent === k.text);
     else if (k.check) el = Array.from(C.root.querySelectorAll(k.z + 'label')).filter((l) => l.textContent === k.check).map((l) => l.querySelector('input'))[0];
@@ -240,7 +246,7 @@
     // the demo keeps a device's answer in each Project on it; a machine with nothing on it answers for itself
     const off = !trying && (down.length > 0 || (!items.length && !dev.online));
     const key = trying ? 'working' : off ? 'offline' : 'complete';
-    const words = trying ? 'Calling ' + dev.name + '…' : off ? 'Not answering' : dev.address + ' · connected';
+    const words = trying ? 'Calling ' + dev.name + '…' : off ? 'Not answering' : dev.address + (dev.pm ? ' · Puppet Master server · answering' : ' · connected');
     let action = null;
     if (off && down.length) action = act('Try again', { cls: 'pjx-link', key: 'dev:retry:' + dev.id, tip: 'Call ' + dev.name + ' again', run: () => down.forEach((p) => PJX.ACT.retry(p.id)) });
     else if (!trying && !off && !items.length) action = act('Add a project from it…', { cls: 'pjx-link', key: 'dev:add:' + dev.id, tip: 'New Project › Files on ' + dev.name, run: () => startNew({ way: 'device', device: dev.id }) });
@@ -263,23 +269,23 @@
   /* the New Project you left: it waits here, as it was, until it is made or started over */
   function draftWorth() {
     const s = C && C.s;
-    return !!(s && (s.draft.way || s.draft.nameTouched || (C.pasteText || '').trim() || C.commit));
+    return !!(s && (s.d.way || s.d.nameTouched || (C.pasteText || '').trim() || C.commit));
   }
   function draftRow() {
-    const s = C.s, d = s.draft, cm = C.commit, way = flow().WAYS.find((w) => w.id === d.way), verb = VERB[d.way] || VERB.new;
+    const s = C.s, d = s.d, cm = C.commit, way = PJX.np.WAYS.find((w) => w.id === d.way), verb = PJX.np.VERB[d.way] || PJX.np.VERB.new;
     const done = cm ? cm.states.filter((x) => x === 'complete').length : 0;
-    const key = cm && cm.running ? 'working' : cm && cm.error ? 'failed' : 'pending';
+    const key = cm && cm.running ? 'working' : cm && cm.fail ? 'failed' : 'pending';
     const line = cm && cm.running ? verb[1] + ' · step ' + Math.min(cm.list.length, done + 1) + ' of ' + cm.list.length
-      : cm && cm.error ? 'Didn’t finish · nothing was made' : way ? way.title : 'Not started yet';
+      : cm && cm.fail ? 'Didn’t finish · nothing was made' : way ? way.title : W_('np.draft.notStarted');
     const m = h('span.pjxc-row-mark', { html: listMark(key, 14), 'data-tone': parts().tone(key), 'aria-hidden': 'true' });
     tip(m, cm && cm.running ? 'Being made now' : 'Not made yet');
     const b = h('button.pjxc-row.is-draft', { type: 'button', 'data-c-key': 'row:draft', tabindex: '-1' },
       h('span.pjxc-row-ico', { html: icon(way ? way.glyph : 'folder-plus', 16), 'aria-hidden': 'true' }),
-      h('span.pjxc-row-text', null, h('span.pjxc-row-name', { text: (d.name || '').trim() || 'New project' }), h('span.pjxc-row-line', { 'data-tone': parts().tone(key), text: line })),
+      h('span.pjxc-row-text', null, h('span.pjxc-row-name', { text: String(PJX.np.nameOf(s) || '').trim() || 'New project' }), h('span.pjxc-row-line', { 'data-tone': parts().tone(key), text: line })),
       m);
-    tip(b, 'Back to your new Project', 'Your answers are as you left them');
+    tip(b, 'Back to your new Project', W_('np.draft.tip').replace(/^Back to your new Project · /, ''));
     b.addEventListener('click', () => startNew({}));
-    return group('draft', 'Not made yet', [s], { rowFn: () => b, noCount: true });
+    return group('draft', W_('np.draft.row'), [s], { rowFn: () => b, noCount: true });
   }
   function renderLib() {
     const E = C.els, g = grouped(), all = PJX.all().length;
@@ -415,8 +421,10 @@
      Archive and Remove from list. Keep it safe and Where it lives are on their plates, beside what they are about, so
      the menu stays short and nothing hides below its fold */
   function moreMenu(p, b) {
-    const like = { label: 'New project like this…', icon: 'folder-plus', meta: 'Its settings', run: () => PJX.emit('need-new', { like: p.id }) };
-    const groups = PJX.moreItems(p, [{ items: [like] }]).filter((g) => !/^(Keep it safe|Where it lives)$/.test(g.label || ''));
+    const like = { label: W_('pg.more.like'), icon: 'folder-plus', meta: W_('pg.more.likeSub'), run: () => PJX.emit('need-new', { like: p.id }) };
+    // the same choices as New Project's copy step, from the other side: this Project receives (10.5) [Depends: settings]
+    const copy = { label: W_('pg.more.copy'), icon: 'swap', meta: 'Settings Transfer', run: () => PJX.ACT.copySettingsInto(p.id) };
+    const groups = PJX.moreItems(p, [{ items: [like, copy] }]).filter((g) => !/^(Keep it safe|Where it lives)$/.test(g.label || ''));
     PJX.menu(b, groups, { label: 'More for ' + p.name });
   }
   function projectsBtn() {
@@ -443,7 +451,7 @@
     return s;
   }
   /* the ops that answer a notice: while one runs, the notice shows it working in place of its buttons */
-  const OP_FOR = { signed_out: ['signin'], device_offline: ['retry'], not_backed_up: ['backup'], backup_overdue: ['backup'] };
+  const OP_FOR = { signed_out: ['signin'], device_offline: ['retry'], not_backed_up: ['backup'], backup_overdue: ['backup'], original_newer: ['sync'], backup_unfinished: ['protect', 'backup'] };
   function noticeNode(p, att) {
     const n = parts().notice(p, att, { cls: 'pmu-textbtn' });
     n.querySelectorAll('.pjx-notice-acts button').forEach((b, i) => b.setAttribute('data-c-key', 'n:' + att.code + ':' + i));
@@ -453,12 +461,16 @@
   }
   function flashNode(p, fl) {
     const acts = [];
-    if (p.lifecycle === 'listed') acts.push(act('Open ' + p.name, { cls: 'pmu-textbtn', primary: true, icon: 'open', key: 'f:open', off: p.active ? 'It is the open project' : null, run: () => PJX.ACT.open(p.id) }));
-    if (fl.plan) acts.push(act('Plan it in the Planning Wizard', { cls: 'pmu-textbtn', icon: 'plan', key: 'f:plan', run: () => PJX.ACT.replan(p.id) }));
-    acts.push(act('Done', { cls: 'pmu-textbtn', key: 'f:done', run: () => { delete C.flash[p.id]; render(); focusTitle(); } }));
+    if (p.lifecycle === 'listed') acts.push(act(W_('np.done.open', { name: p.name }), { cls: 'pmu-textbtn', primary: true, icon: 'open', key: 'f:open', off: p.active ? 'It is the open project' : null, run: () => PJX.ACT.open(p.id) }));
+    if (fl.chat) acts.push(act(W_('np.done.undo'), { cls: 'pmu-textbtn', icon: 'reset', key: 'f:undochat', tip: 'Opens the no-project concept’s own statement of what Undo puts back', run: () => PJX.toast('Undo moving “' + fl.chat + '”', 'The no-project concept says first what Undo puts back: the chat returns to No project and its files to the chat folder. Pending your no-project decisions.', 'info') }));
+    if (fl.plan) acts.push(act(W_('np.done.plan'), { cls: 'pmu-textbtn', icon: 'plan', key: 'f:plan', run: () => PJX.ACT.replan(p.id) }));
+    if (fl.undoCopy && p.copied) acts.push(act(W_('np.done.undoCopy'), { cls: 'pmu-textbtn', icon: 'reset', key: 'f:undocopy', run: () => PJX.ACT.undoCopied(p.id) }));
+    acts.push(act(W_('np.done.ok'), { cls: 'pmu-textbtn', key: 'f:done', run: () => { delete C.flash[p.id]; render(); focusTitle(); } }));
+    const more = fl.accounts ? h('div.pjx-notice-text.pjxc-flash-acc', null, h('span', { text: (fl.accounts === 1 ? W_('np.done.accountsOne', { computer: fl.computer }) : W_('np.done.accounts', { n: fl.accounts, computer: fl.computer })) + ' ' }),
+      act(W_('np.done.accountsGo'), { cls: 'pjx-link', key: 'f:signin', run: () => { PJX.toast('Settings › Providers', 'Opens Providers with ' + fl.computer + ' chosen, so the sign-ins and keys are kept there.', 'info'); if (W.PM_PAGES) W.PM_PAGES.go('settings'); } })) : null;
     return h('div.pjx-notice.pjxc-flash', { 'data-tone': 'done', role: 'status' },
       h('span.pjx-notice-mark', { html: PJX.calm('complete', 16), 'aria-hidden': 'true' }),
-      h('div.pjx-notice-title', { text: fl.title }), h('div.pjx-notice-text', { text: fl.text }), h('div.pjx-notice-acts', null, ...acts));
+      h('div.pjx-notice-title', { text: fl.title }), h('div.pjx-notice-text', { text: fl.text }), more, h('div.pjx-notice-acts', null, ...acts));
   }
   /* Find the folder, in place (PJX.parts.repairBody): the same choices as the shared dialog, on the page that shows the
      problem. The body element is kept for the Project, because its folder check finishes later and redraws itself. */
@@ -540,6 +552,7 @@
     const el = slot('plate:' + key, () => h(o.tag || 'article', { class: ['pmu-card', 'pjxc-plate', o.cls], 'data-head': 'plate', 'data-plate': key, 'data-lg-surface': 'card', 'aria-labelledby': 'pjxc-pt-' + key }));
     const foot = o.footEl || (o.foot && o.foot.filter(Boolean).length ? h('div.pmu-cardfoot.pjxc-foot', null, ...o.foot.filter(Boolean)) : null);
     setAttr(el, 'data-tone', o.tone || null);
+    setAttr(el, 'data-inplace', o.inplace ? '' : null);
     fill(el,
       h('header.pmu-cardhead', null,
         // the lead is the plate's glyph, or a status mark when the plate itself is the state (creating, stopped)
@@ -550,18 +563,35 @@
       h('div.pmu-cardbody', null, ...(o.body || []).filter(Boolean), foot));
     return el;
   }
+  /* backup states, in one place: the plate's corner, the Safe strip and the library line agree */
+  function bkState(p) {
+    const b = p.backup || {}, op = opOf(p.id);
+    if (op && (op.kind === 'backup' || op.kind === 'protect')) return { key: 'working', word: op.label, short: op.label + '…' };
+    if (!b.dest) return { key: p.lifecycle === 'archived' ? 'off' : 'warning', word: W_('pg.bk.none'), short: W_('pg.bk.none') };
+    const offline = (p.attention || []).some((a) => a.code === 'device_offline');
+    if (offline) return { key: 'offline', word: W_('pg.bk.waiting', { device: p.where.device }), short: b.dest + ' · waiting' };
+    return ({
+      setup: { key: 'waiting', word: W_('pg.bk.notOn'), short: b.dest + ' · not on yet' },
+      scheduled: { key: 'pending', word: 'First one tonight', short: b.dest + ' · first one tonight' },
+      ready: { key: 'idle', word: 'Ready', short: b.dest + ' · ready' },
+      warning: { key: 'warning', word: W_('pg.bk.late'), short: b.dest + ' · ' + (b.last || 'late') },
+      failed: { key: 'failed', word: W_('pg.bk.failed'), short: b.dest + ' · failed' },
+      paused: { key: 'paused', word: W_('pg.bk.paused'), short: b.dest + ' · paused' },
+      pending: { key: 'pending', word: 'After setup', short: b.dest + ' · none yet' }
+    })[b.state] || { key: 'complete', word: W_('pg.bk.ok'), short: b.dest + (b.last ? ' · ' + b.last : '') };
+  }
   /* Kept safe at a glance: History · Online copy · Backup, each its mark, its name and a short word, and each a button to
      its own plate below (the same cells as the core's Safe line, PJX.parts.safeLine, made pressable) */
   function safeStrip(p) {
-    const s = PJX.safety(p), hist = p.history || {}, o = p.online || {}, b = p.backup || {}, op = opOf(p.id);
-    const syncing = op && (op.kind === 'sync' || op.kind === 'signin'), backing = op && op.kind === 'backup';
+    const s = PJX.safety(p), hist = p.history || {}, o = p.online || {}, op = opOf(p.id);
+    const syncing = op && (op.kind === 'sync' || op.kind === 'signin'), bk = bkState(p);
     const words = {
       // Jujutsu says bookmark (SCS-005, JJI-006)
       history: s.history.key === 'off' ? 'Not kept' : (hist.backend === 'jujutsu' ? 'Jujutsu · bookmark ' : 'Git · ') + hist.branch,
-      online: !o.service ? 'None' : syncing ? op.label + '…' : o.service + (o.state === 'waiting' ? ' · sign in again' : o.behind ? ' · ' + o.behind + ' newer' : o.ahead ? ' · ' + o.ahead + ' to send' : ' · up to date'),
-      backup: !b.dest ? (backing ? 'Setting up…' : 'Not set up') : backing ? 'Backing up…' : b.dest + (b.last ? ' · ' + b.last : ' · none yet')
+      online: !o.service ? (o.found ? 'Found, not linked' : 'None') : syncing ? op.label + '…' : o.service + (o.state === 'waiting' ? ' · sign in again' : o.upstream && o.upstream.behind ? ' · ' + o.upstream.behind + ' newer in the original' : o.behind ? ' · ' + o.behind + ' newer' : o.ahead ? ' · ' + o.ahead + ' to send' : o.readOnly ? ' · read only' : ' · up to date'),
+      backup: bk.short
     };
-    const keys = { history: s.history.key, online: syncing ? 'working' : s.online.key, backup: backing ? 'working' : !b.dest ? (p.lifecycle === 'archived' ? 'off' : 'warning') : s.backup.key };
+    const keys = { history: s.history.key, online: syncing ? 'working' : !o.service && o.found ? 'info' : s.online.key, backup: bk.key };
     const cell = (part, x) => {
       const c = h('button.pjx-safe-cell.pjxc-safecell', { type: 'button', 'data-tone': parts().tone(keys[part]), 'data-part': part, 'data-c-key': 'safe:' + part },
         h('span.pjx-st-mark', { html: listMark(keys[part], 14), 'aria-hidden': 'true' }),
@@ -590,7 +620,8 @@
         facts([
           a.runs ? { k: 'Runs going', v: String(a.runs) } : null,
           { k: 'Last opened', v: p.opened },
-          p.stack && p.stack.length ? { k: 'Built with', v: p.stack.join(' · ') } : null
+          p.stack && p.stack.length ? { k: 'Built with', v: p.stack.join(' · ') } : null,
+          p.copied ? { k: 'Settings', v: 'Like ' + p.copied.from + ': ' + PJX.np.plural(p.copied.settings, 'setting') + (p.copied.things ? ' and ' + PJX.np.plural(p.copied.things, 'thing') : '') } : null
         ])
       ],
       foot: [
@@ -603,6 +634,7 @@
     const s = PJX.safety(p).history, hist = p.history || {}, jj = hist.backend === 'jujutsu';
     const none = s.key === 'off';
     const changed = hist.changed == null ? (p.where.missing ? 'Unknown until it is found' : 'Unknown yet') : hist.changed ? hist.changed + ' unsaved' : 'None';
+    const lim = PJX.np.limits(hist);
     return plate('history', {
       icon: 'branch', title: 'History', sub: none ? 'Not kept' : (jj ? 'Jujutsu · bookmark ' : 'Git · ') + hist.branch,
       meta: none ? parts().st('off', 'Off') : null,
@@ -610,92 +642,228 @@
         { k: 'Kept with', v: jj ? 'Jujutsu' : 'Git' },
         { k: jj ? 'Bookmark' : 'Branch', v: hist.branch },
         { k: jj ? 'Workspaces' : 'Worktrees', v: String(hist.worktrees || 0) },
-        { k: 'Changes not saved', v: changed, tone: hist.changed ? 'warn' : null }
-      ])],
+        { k: 'Changes not saved', v: changed, tone: hist.changed ? 'warn' : null },
+        hist.submodules && hist.submodules.length ? { k: W_('pg.hi.subs'), v: hist.submodules.join(', ') } : null,
+        hist.lfs ? { k: W_('pg.hi.lfs'), v: W_('pg.hi.lfsVal', { size: hist.lfs }) } : null,
+        hist.hooks && hist.hooks.length ? { k: W_('pg.hi.hooks'), v: hist.hooks.join(', ') } : null,
+        hist.filesafe === false ? { k: 'FileSafe', v: 'Off' } : null
+      ]), jj && lim.length ? textLine(W_('np.ver.jjLimitsChosen', { effects: PJX.np.andList(lim.map((x) => W_('np.ver.eff.' + x))) }), 'is-hint') : null],
       foot: [none
         ? act('Turn on history…', { cls: 'pmu-textbtn', icon: 'branch', key: 'p:histon', run: () => route('History', 'Opens Source Control to start keeping versions of ' + p.name + '.') })
-        : act('Open history', { cls: 'pmu-textbtn', icon: 'history', key: 'p:hist', off: p.where.missing ? 'Find the folder first' : null, onOff: () => goToProblem(p), run: () => route('History of ' + p.name, 'Opens Source Control’s history, ' + (jj ? 'with its bookmarks and workspaces.' : 'with its branches and worktrees.')) })]
+        : act(W_('pg.hi.open'), { cls: 'pmu-textbtn', icon: 'history', key: 'p:hist', off: p.where.missing ? 'Find the folder first' : null, onOff: () => goToProblem(p), run: () => route('History of ' + p.name, 'Opens Source Control’s history, ' + (jj ? 'with its bookmarks and workspaces.' : 'with its branches and worktrees.')) })]
     });
   }
+
+  /* ------------------------------------------------------------------ forms in place: the same New Project parts, in a plate */
+  /* a session over an existing Project: the online copy or the backup section, with that Project's facts */
+  function formSession(p, kind) {
+    // the Project is already added: its folder, on the computer that does its work (files on Home NAS read as Home NAS's)
+    const fresh = PJX.np.start({ purpose: 'page', project: p.id, way: 'folder' });
+    const d = fresh.d;
+    d.runsOn = p.where.device === 'Home NAS' ? 'homenas' : p.runsOn || 'here'; d.name = p.name; d.nameTouched = true;
+    d.folder.path = p.where.path;
+    // the look is the Project's own facts: no second inspection
+    const info = { history: p.history.backend, branch: p.history.branch, changed: p.history.changed || 0, online: kind === 'link' && p.online.found ? { service: p.online.found.service, repo: p.online.found.repo, remote: p.online.found.remote } : null };
+    const tgt = PJX.np.lookTarget(fresh);
+    if (tgt) fresh.ops['look:' + d.runsOn + ':' + tgt.route + ':' + tgt.holder + ':' + tgt.path] = { state: 'done', result: info, target: tgt };
+    if (kind === 'link') d.online.mode = 'link_found';
+    if (kind === 'add') d.online.mode = 'make';
+    if (kind === 'backup-setup' || kind === 'backup-add') { d.backup.dest = 'gdrive'; d.folderName = p.name; d.folderNameTouched = true; }
+    if (kind === 'backup-change') {
+      const b = p.backup, fam = b.family || ({ 'Home NAS': 'local_nas', 'Google Drive': 'google_drive', OneDrive: 'onedrive' })[b.dest];
+      d.backup.dest = fam === 'local_nas' ? 'nas' : fam === 'google_drive' ? 'gdrive' : fam === 'onedrive' ? 'onedrive' : /aws|b2|s3/.test(fam || '') ? 'bucket' : 'server';
+      if (d.backup.dest === 'bucket' || d.backup.dest === 'server') d.backup.sub = fam;
+      Object.assign(d.backup, { include: b.include || 'all', mode: b.mode || (b.schedule && /click/i.test(b.schedule) ? 'manual' : 'daily'), time: b.time || '2:00 AM', keep: b.keep || 'standard' });
+      d.folderName = p.name; d.folderNameTouched = true;
+    }
+    fresh.on(() => { if (C) render(); });
+    return fresh;
+  }
+  function openForm(p, kind) {
+    C.inplace[p.id] = { kind, s: kind === 'computer' || kind === 'contribute' ? null : formSession(p, kind), sel: p.runsOn || 'here', fork: { owner: 'jared', branch: 'my-change', upstream: 'upstream' } };
+    render();
+    const plateKey = /^backup/.test(kind) ? 'backup' : kind === 'computer' ? 'where' : 'online';
+    reveal('[data-plate="' + plateKey + '"]', 'button, input');
+  }
+  function closeForm(p) { delete C.inplace[p.id]; render(); reveal('[data-plate]', null); }
+  function formFoot(p, saveLabel, ok, why, run) {
+    return h('div.pmu-cardfoot.pjxc-foot', null, h('span.pjx-grow'),
+      act(W_('pg.on.cancel'), { cls: 'pmu-textbtn', key: 'f:cancel', run: () => closeForm(p) }),
+      act(saveLabel, { cls: 'pmu-textbtn', primary: true, key: 'f:save', off: ok ? null : why, run: () => { run(); delete C.inplace[p.id]; render(); } }));
+  }
+  function npBody(s, fn) { const box = slot('form:' + s.id, () => h('div.pjxc-form')); PJX.npui.render(box, () => box.replaceChildren(fn(s))); return box; }
+
   function onlinePlate(p) {
-    const o = p.online || {}, op = opOf(p.id), syncing = op && (op.kind === 'sync' || op.kind === 'signin');
+    const o = p.online || {}, op = opOf(p.id), syncing = op && (op.kind === 'sync' || op.kind === 'signin'), ip = C.inplace[p.id];
+    if (ip && (ip.kind === 'add' || ip.kind === 'link')) {
+      const s = ip.s, pr = PJX.np.problem(s, 'online'), m = PJX.np.onlineMode(s);
+      const save = () => {
+        if (m === 'link_found' || m === 'link') { const t = PJX.np.linkTarget(s) || {}; PJX.ACT.linkOnline(p.id, { service: t.service || 'Git address', repo: t.project || t.address }); }
+        else { const rec = PJX.np.onlineRec(s), owner = PJX.np.ownerOf(s, rec), v = PJX.np.visOf(s, rec, owner, PJX.np.projectOf(s, owner)); PJX.ACT.addOnline(p.id, { service: PJX.rules.service(s.d.online.service).name, repo: owner.label.replace(/ \/ /g, '/') + '/' + PJX.np.onlineName(s), privacy: v.v ? v.v.title : 'Follows its project' }); }
+      };
+      return plate('online', { icon: 'cloud', title: ip.kind === 'link' ? W_('pg.on.link').replace('…', '') : W_('pg.on.add').replace('…', ''), sub: p.name, inplace: true,
+        body: [npBody(s, PJX.npui.secOnline)], footEl: formFoot(p, m === 'make' || m === 'instead' ? W_('pg.on.save.new') : W_('pg.on.save.link'), !pr, pr && pr.text, save) });
+    }
+    if (ip && ip.kind === 'contribute') {
+      const f = ip.fork, bp = PJX.rules.branchProblem(f.branch), up = f.upstream, upBad = !/^[A-Za-z0-9._-]+$/.test(up) || up === 'origin';
+      const U = PJX.npui;
+      const body = h('div.pjxc-form', null, U.line('info', W_('np.access.contributeSub', { service: o.service })),
+        U.group(W_('np.access.forkTo'), U.choices('pc:owner', [{ id: 'jared', glyph: 'user', title: W_('np.access.forkMine', { account: 'jared' }) }, { id: 'jared-labs', glyph: 'organisation', title: 'jared-labs', sub: 'Organization' }], f.owner, (v) => { f.owner = v; render(); }, { label: W_('np.access.forkTo') })),
+        U.field(W_('np.access.branch'), U.input('pc:branch', f.branch, 'my-change', (v) => { f.branch = v; render(); }), W_('np.access.branchHint'), bp ? bp : ''),
+        U.field(W_('np.fork.upstream'), U.input('pc:up', up, 'upstream', (v) => { f.upstream = v; render(); }), W_('np.fork.upstreamHint'), upBad ? W_('np.fork.upstreamBad') : ''),
+        U.line('info', W_('np.rv.forkSays', { fork: f.owner + '/' + String(o.repo).split('/').pop(), service: o.service })));
+      return plate('online', { icon: 'cloud', title: W_('np.access.contribute'), sub: o.repo, inplace: true, body: [body],
+        footEl: formFoot(p, W_('pg.on.save.fork'), !bp && !upBad, bp || W_('np.fork.upstreamBad'), () => PJX.ACT.contribute(p.id, { fork: f.owner + '/' + String(o.repo).split('/').pop(), branch: f.branch, upstream: f.upstream })) });
+    }
     if (!o.service) {
+      const found = o.found;
       return plate('online', {
-        icon: 'cloud', title: 'Online copy', sub: 'None',
-        meta: parts().st('off', 'None'),
-        body: [textLine('No online copy. Its history stays on ' + (p.where.kind === 'local' ? 'this computer' : p.where.label) + ' only.')],
-        foot: [act('Add an online copy…', { cls: 'pmu-textbtn', icon: 'cloud', key: 'p:addonline', run: () => route('Online copy', 'Opens Source Control’s publish flow for ' + p.name + '.') })]
+        icon: 'cloud', title: 'Online copy', sub: found ? W_('pg.on.found') : 'None',
+        meta: found ? parts().st('info', W_('pg.on.found')) : parts().st('off', 'None'),
+        body: [found ? facts([{ k: W_('pg.on.found'), v: W_('pg.on.foundValue', { service: found.service, project: found.repo }) }, { k: 'Link', v: found.remote || 'origin' }]) : textLine(W_('pg.on.noneLine', { where: p.where.kind === 'local' ? 'this computer' : p.where.label }))],
+        foot: [found ? act(W_('pg.on.link'), { cls: 'pmu-textbtn', primary: true, icon: 'link', key: 'p:linkonline', run: () => openForm(p, 'link') }) : null,
+          act(W_('pg.on.add'), { cls: 'pmu-textbtn', icon: 'cloud', key: 'p:addonline', run: () => openForm(p, 'add') })]
       });
     }
-    const waiting = o.state === 'waiting';
+    const waiting = o.state === 'waiting', up = o.upstream;
     const changes = o.behind ? o.behind + ' newer online' : o.ahead ? o.ahead + ' not sent yet' : 'Up to date';
+    const cornerKey = up && up.behind ? 'info' : o.state;
     return plate('online', {
       icon: 'cloud', title: 'Online copy', sub: o.service + ' · ' + o.repo,
-      meta: syncing ? parts().st('working', op.label) : cornerSays(o.state || 'complete') ? parts().st(o.state, waiting ? 'Sign in needed' : o.behind ? o.behind + ' newer' : o.ahead ? o.ahead + ' to send' : 'Up to date') : null,
+      meta: syncing ? parts().st('working', op.label) : cornerSays(cornerKey || 'complete') ? parts().st(cornerKey, waiting ? 'Sign in needed' : up && up.behind ? W_('pg.on.originalBehind', { n: up.behind }) : o.behind ? o.behind + ' newer' : o.ahead ? o.ahead + ' to send' : 'Up to date') : null,
       body: [syncing ? working(op) : null, facts([
         { k: 'Service', v: o.service },
         { k: 'Name', node: h('span.pjxc-code', { text: o.repo, 'data-pmh-tag': 'literal' }) },
+        up ? { k: W_('pg.on.original'), v: up.repo + (up.behind ? ' · ' + W_('pg.on.originalBehind', { n: up.behind }) : ''), tone: up.behind ? null : null } : null,
+        up ? { k: W_('pg.on.branch'), node: h('span.pjxc-code', { text: up.branch, 'data-pmh-tag': 'literal' }) } : o.branch ? { k: W_('pg.on.branch'), node: h('span.pjxc-code', { text: o.branch, 'data-pmh-tag': 'literal' }) } : null,
+        o.readOnly ? { k: 'Sending changes', v: W_('pg.on.readOnly', { project: o.repo }) } : null,
         o.privacy ? { k: 'Who can see it', v: o.privacy } : null,
         waiting ? { k: 'Sign-in', v: 'Expired · SSH still works', tone: 'warn' } : null,
         { k: 'Changes', v: changes }
       ])],
       foot: [
         waiting ? act('Sign in', { cls: 'pmu-textbtn', primary: true, icon: 'key', key: 'p:signin', off: syncing ? 'Signing in now' : null, run: () => PJX.ACT.signIn(p.id) }) : null,
-        o.behind ? act('Get the latest', { cls: 'pmu-textbtn', primary: true, icon: 'download', key: 'p:pull', off: syncing ? 'Working on it' : null, run: () => PJX.ACT.getLatest(p.id) }) : null,
+        up && up.behind ? act(W_('pg.on.getOriginal'), { cls: 'pmu-textbtn', primary: true, icon: 'download', key: 'p:getorig', off: syncing ? 'Working on it' : null, run: () => PJX.ACT.getOriginal(p.id) }) : null,
+        o.behind ? act('Get the latest', { cls: 'pmu-textbtn', primary: !(up && up.behind), icon: 'download', key: 'p:pull', off: syncing ? 'Working on it' : null, run: () => PJX.ACT.getLatest(p.id) }) : null,
         o.ahead && !waiting ? act('Send changes', { cls: 'pmu-textbtn', primary: true, icon: 'upload', key: 'p:push', off: syncing ? 'Working on it' : null, run: () => PJX.ACT.send(p.id) }) : null,
+        up || o.branch ? act(W_('pg.on.offer'), { cls: 'pmu-textbtn', icon: 'pull-request', key: 'p:offer', run: () => PJX.ACT.offerChanges(p.id) }) : null,
+        o.readOnly ? act(W_('pg.on.contribute'), { cls: 'pmu-textbtn', icon: 'pull-request', key: 'p:contribute', run: () => openForm(p, 'contribute') }) : null,
         act('Open on ' + o.service, { cls: 'pmu-textbtn', icon: 'globe', key: 'p:openonline', run: () => PJX.ACT.openOnline(p.id) })
       ]
     });
   }
+  const KEEP_WORDS = { standard: 'np.bk.keep.standard', more: 'np.bk.keep.more', fewer: 'np.bk.keep.fewer', custom: 'np.bk.keep.custom' };
   function backupPlate(p) {
-    const b = p.backup || {}, op = opOf(p.id), running = op && op.kind === 'backup';
+    const b = p.backup || {}, op = opOf(p.id), running = op && (op.kind === 'backup' || op.kind === 'protect'), ip = C.inplace[p.id];
+    if (ip && /^backup/.test(ip.kind)) {
+      const s = ip.s, pr = PJX.np.problem(s, 'backup');
+      const taken = ip.kind === 'backup-add' ? [b.dest].concat((b.more || []).map((x) => x.dest)) : [];
+      const plan = () => ({ dest: PJX.np.bkDestLabel(s), family: PJX.np.bkFamily(s), place: PJX.np.bkPlace(s), include: s.d.backup.include, mode: s.d.backup.mode, time: s.d.backup.time, keep: s.d.backup.keep, testFail: false, access: /bucket|server/.test(s.d.backup.dest) });
+      const label = ip.kind === 'backup-change' ? W_('pg.bk.save') : ip.kind === 'backup-add' ? W_('pg.bk.addPlace').replace('…', '') : W_('pg.bk.setup');
+      const run = () => { if (ip.kind === 'backup-change') PJX.ACT.changeBackup(p.id, plan()); else PJX.ACT.setupBackupFull(p.id, plan(), { add: ip.kind === 'backup-add' }); };
+      return plate('backup', { icon: 'safe', title: ip.kind === 'backup-add' ? W_('pg.bk.addPlace').replace('…', '') : ip.kind === 'backup-change' ? 'Change the backup' : W_('pg.bk.setup'), sub: ip.kind === 'backup-add' ? W_('pg.bk.addPlaceSub') : p.name, inplace: true,
+        body: [npBody(s, (x) => PJX.npui.secBackup(x, { noNone: true, taken }))], footEl: formFoot(p, label, !pr && s.d.backup.dest !== 'none', pr ? pr.text : 'Choose where backups go', run) });
+    }
     if (!b.dest) {
       return plate('backup', {
-        icon: 'safe', title: 'Backup', sub: running ? 'Setting up' : 'Not set up',
-        meta: running ? parts().st('working', op.label) : parts().st(p.lifecycle === 'archived' ? 'off' : 'warning', 'None'),
+        icon: 'safe', title: 'Backup', sub: running ? 'Setting up' : W_('pg.bk.none'),
+        meta: running ? parts().st('working', op.label) : parts().st(p.lifecycle === 'archived' ? 'off' : 'warning', W_('pg.bk.none')),
         body: running ? [working(op)] : [textLine('Not backed up. Its history and online copy keep its files, but nothing keeps its plans, chats and settings.')],
-        foot: running ? [] : [act('Set up backup', { cls: 'pmu-textbtn', primary: true, icon: 'safe', key: 'p:setupbk', run: () => PJX.ACT.setupBackup(p.id) }),
+        foot: running ? [] : [act(W_('pg.bk.setup'), { cls: 'pmu-textbtn', primary: true, icon: 'safe', key: 'p:setupbk', run: () => openForm(p, 'backup-setup') }),
           act('Restore as new…', { cls: 'pmu-textbtn', icon: 'history', key: 'p:restorenew', off: 'There is no backup of it yet' })]
       });
     }
-    const stateWord = running ? op.label : b.state === 'warning' ? 'Late' : b.state === 'pending' ? 'After setup' : b.state === 'paused' ? 'Paused' : b.last ? 'Checked' : 'Not yet';
+    const st0 = bkState(p), offline = st0.key === 'offline';
+    const kit = b.kit ? W_('pg.bk.kitVal', { saved: b.kit.saved, checked: b.kit.checked || 'not yet' }) : W_('pg.bk.kitNone');
+    const restoreMenu = (e, btnEl) => PJX.menu(btnEl, [{ label: W_('pg.bk.restore').replace('…', ''), items: [
+      { label: W_('pg.bk.restoreNew'), icon: 'folder-plus', meta: W_('pg.bk.restoreNewSub'), disabled: b.last ? null : 'There is no complete backup yet', run: () => startNew({ way: 'restore', from: p.id }) },
+      { label: W_('pg.bk.restoreHere'), icon: 'history', meta: W_('pg.bk.restoreHereSub'), disabled: b.last ? null : 'There is no complete backup yet', run: () => confirmRestoreHere(p) },
+      { label: W_('pg.bk.tryRestore'), icon: 'check', meta: W_('pg.bk.tryRestoreSub'), disabled: b.last ? null : 'There is no complete backup yet', run: () => PJX.ACT.tryRestore(p.id) }
+    ] }], { label: 'Restore ' + p.name });
     return plate('backup', {
       icon: 'safe', title: 'Backup', sub: b.dest + (b.schedule ? ' · ' + b.schedule.toLowerCase() : ''),
-      meta: running || cornerSays(b.state || 'complete') ? parts().st(running ? 'working' : b.state || 'complete', stateWord) : null,
-      body: [running ? working(op) : null, facts([
-        { k: 'Last complete backup', v: b.last ? b.last + (b.state === 'complete' ? ' · checked' : '') : 'None yet', tone: b.state === 'warning' ? 'warn' : null },
+      meta: running ? parts().st('working', op.label) : cornerSays(st0.key) || b.state === 'complete' && false ? parts().st(st0.key, st0.word) : null,
+      body: [running ? working(op) : null, offline ? textLine(W_('pg.bk.waitingLine', { device: p.where.device }), 'is-lead') : null, facts([
+        { k: W_('pg.bk.last'), v: b.last ? b.last + (b.state === 'complete' ? ' · checked' : '') : b.state === 'scheduled' ? 'None yet · the first one is tonight at ' + (b.time || '2:00 AM') : 'None yet', tone: b.state === 'warning' ? 'warn' : null },
         b.note ? { k: b.state === 'warning' ? 'Problem' : 'Note', v: b.note, tone: b.state === 'warning' ? 'warn' : null } : null,
-        { k: 'Where', v: b.dest },
-        { k: 'Versions kept', v: String(b.versions || 0) },
-        b.size ? { k: 'Size', v: b.size } : null
+        { k: W_('pg.bk.where'), node: h('span.pjxc-code', { text: b.place || b.dest, 'data-pmh-tag': 'literal' }) },
+        { k: W_('pg.bk.what'), v: W_(b.include === 'pm' ? 'np.bk.what.pm' : b.include === 'some' ? 'np.bk.what.some' : 'np.bk.what.all') },
+        { k: W_('pg.bk.whenK'), v: b.mode === 'manual' || /click/i.test(b.schedule || '') ? W_('np.bk.when.manual') : (b.schedule || 'Every day') + (b.time ? ' at ' + b.time : '') },
+        { k: W_('pg.bk.keeps'), v: W_(KEEP_WORDS[b.keep || 'standard']) },
+        { k: W_('pg.bk.kit'), v: kit, tone: b.kit && b.kit.checked ? null : 'warn' },
+        b.checked ? { k: W_('pg.bk.lastChecked'), v: W_('pg.bk.lastCheckedVal', { when: b.checked }) } : null,
+        b.more && b.more.length ? { k: W_('pg.bk.alsoTo'), v: b.more.map((x) => x.dest + (x.state === 'setup' ? ' (not on yet)' : '')).join(', ') } : null,
+        { k: W_('pg.bk.versions'), v: String(b.versions || 0) },
+        b.size ? { k: W_('pg.bk.size'), v: b.size } : null
       ])],
       foot: [
-        act('Back up now', { cls: 'pmu-textbtn', primary: b.state === 'warning', icon: 'upload', key: 'p:bknow', off: running ? 'Backing up now' : b.state === 'pending' ? 'Backups start after setup' : p.lifecycle === 'archived' ? 'Paused while archived' : p.where.missing ? 'Find the folder first' : null, onOff: () => goToProblem(p), run: () => PJX.ACT.backupNow(p.id) }),
-        act('Backup history', { cls: 'pmu-textbtn', icon: 'history', key: 'p:bkhist', run: () => PJX.ACT.backupHistory(p.id) }),
-        act('Restore as new…', { cls: 'pmu-textbtn', icon: 'folder-plus', key: 'p:restorenew', off: b.last ? null : 'There is no complete backup yet', run: () => startNew({ way: 'restore', from: p.id }) })
+        b.state === 'setup' ? act(W_('pg.bk.finish'), { cls: 'pmu-textbtn', primary: true, icon: 'safe', key: 'p:bkfinish', run: () => { PJX.ACT.protectOpen(p.id); reveal('[data-plate="protect"]', '.pjx-btn.is-primary'); } }) : null,
+        b.state !== 'setup' ? act(W_('pg.bk.now'), { cls: 'pmu-textbtn', primary: b.state === 'warning', icon: 'upload', key: 'p:bknow', off: running ? 'Backing up now' : b.state === 'pending' ? 'Backups start after setup' : p.lifecycle === 'archived' ? 'Paused while archived' : p.where.missing ? 'Find the folder first' : offline ? 'Waiting for ' + p.where.device : null, onOff: () => goToProblem(p), run: () => PJX.ACT.backupNow(p.id) }) : null,
+        act(W_('pg.bk.history'), { cls: 'pmu-textbtn', icon: 'history', key: 'p:bkhist', run: () => PJX.ACT.backupHistory(p.id) }),
+        act(W_('pg.bk.change'), { cls: 'pmu-textbtn', icon: 'settings', key: 'p:bkchange', off: running ? 'Working on it' : null, run: () => openForm(p, 'backup-change') }),
+        (() => { const r = act(W_('pg.bk.restore'), { cls: 'pmu-textbtn', icon: 'history', chev: true, key: 'p:bkrestore', run: restoreMenu }); r.setAttribute('aria-haspopup', 'menu'); return r; })(),
+        act(W_('pg.bk.kitCheck'), { cls: 'pmu-textbtn', icon: 'key', key: 'p:kit', off: b.kit ? null : 'Save the Recovery Kit first', run: () => checkKitDialog(p) }),
+        act(W_('pg.bk.addPlace'), { cls: 'pmu-textbtn', icon: 'plus', key: 'p:bkadd', off: running ? 'Working on it' : b.state === 'setup' ? 'Finish setting up this place first' : null, run: () => openForm(p, 'backup-add') })
       ]
     });
   }
+  /* Put this Project back as it was: preview first, then confirm; the safe point is the Restore owner's */
+  function confirmRestoreHere(p) {
+    const b = p.backup;
+    const dlg = PJX.dialog({ title: W_('pg.bk.restoreHere').replace('…', ''), kicker: p.name,
+      body: h('div', null, h('p.pjx-q-lead', { text: W_('pg.bk.restoreHereConfirm', { name: p.name, when: b.last }) }), PJX.flow.facts([{ key: 'info', text: W_('pg.bk.restoreHereSafe') }, { key: 'complete', text: 'Comes back: its files with their full history, and its plans, chats and settings as they were.' }, { key: 'info', text: 'Passwords and keys never come back from a backup.' }])),
+      actions: [{ spacer: true }, { label: 'Cancel', run: () => dlg.close('cancel') }, { label: 'Put it back', primary: true, run: () => { dlg.close('ok'); PJX.ACT.restoreInPlace(p.id); } }] });
+  }
+  /* Check Recovery Kit: the kit file is chosen, then the Backup owner opens the backup with it */
+  function checkKitDialog(p) {
+    const dlg = PJX.dialog({ title: 'Check ' + p.name + '’s Recovery Kit', kicker: 'Backup',
+      body: h('div', null, h('p.pjx-q-lead', { text: 'Puppet Master opens the backup with the kit and changes nothing. The kit is read once and not kept.' }),
+        PJX.flow.facts([{ key: 'complete', text: 'Found: “Recovery Kit – ' + p.name + '.pdf” in Documents' }]), PJX.npui.hint('Concept demo: “Try a different kit” is refused.', 'is-concept')),
+      actions: [{ label: 'Try a different kit', quiet: true, run: () => { dlg.close('bad'); PJX.ACT.checkKit(p.id, true); } }, { spacer: true }, { label: 'Cancel', run: () => dlg.close('cancel') }, { label: W_('np.prot.s4Go'), primary: true, run: () => { dlg.close('ok'); PJX.ACT.checkKit(p.id, false); } }] });
+  }
+  /* which computers can reach a Project's files (the demo's reach rule; canon names the check, spec 19 #11) */
+  function canReach(c, p) {
+    if (p.where.kind === 'local') return c === 'here';
+    const d0 = PJX.ENV.devices.find((x) => x.name === p.where.device);
+    if (!d0) return c === 'here';
+    if (d0.id === 'nas') return true;
+    return (PJX.ENV.reach[c] || []).indexOf(d0.id) >= 0;
+  }
   function wherePlate(p) {
-    const w = p.where, op = opOf(p.id), offline = (p.attention || []).some((a) => a.code === 'device_offline');
-    const moving = op && ['relocate', 'move', 'restore', 'retry'].indexOf(op.kind) >= 0;
-    const st = moving ? ['working', op.label] : w.missing ? ['blocked', 'Missing'] : offline ? ['offline', 'Not answering'] : w.pending ? ['pending', 'Not made yet'] : ['complete', 'Found'];
+    const w0 = p.where, op = opOf(p.id), offline = (p.attention || []).some((a) => a.code === 'device_offline'), ip = C.inplace[p.id];
+    const moving = op && ['relocate', 'move', 'restore', 'retry', 'computer'].indexOf(op.kind) >= 0;
+    const comp = PJX.np.comp(p.runsOn || 'here');
+    if (ip && ip.kind === 'computer') {
+      const U = PJX.npui;
+      const items = PJX.ENV.computers.map((c) => ({ id: c.id, title: c.name, sub: c.id === 'here' ? c.detail : W_('np.loc.serverSub'), off: canReach(c.id, p) ? null : W_('pg.wh.cant', { computer: c.name, path: w0.path }) }));
+      const body = h('div.pjxc-form', null, U.line('info', W_('pg.wh.changeLead')), U.group(W_('pg.wh.runsOn'), U.seg('pw:runs', items, ip.sel, (v) => { ip.sel = v; render(); }, W_('pg.wh.runsOn'))),
+        ...items.filter((x) => x.off).map((x) => U.line('off', x.off)));
+      return plate('where', { icon: 'server', title: W_('pg.wh.changeTitle'), sub: p.name, inplace: true, body: [body],
+        footEl: formFoot(p, W_('pg.wh.save'), ip.sel !== (p.runsOn || 'here') && canReach(ip.sel, p), ip.sel === (p.runsOn || 'here') ? 'It already does the work' : 'It can’t reach the files', () => PJX.ACT.changeComputer(p.id, ip.sel)) });
+    }
+    const st = moving ? ['working', op.label] : w0.missing ? ['blocked', 'Missing'] : offline ? ['offline', 'Not answering'] : w0.pending ? ['pending', 'Not made yet'] : ['complete', 'Found'];
     const devs = p.sync && p.sync.devices;
+    const devRec = PJX.ENV.devices.find((x) => x.name === w0.device);
+    const kept = w0.kind === 'local' ? 'This computer · ' + PJX.np.comp('here').free + ' free' : devRec && devRec.online === false ? w0.device + ' · not answering' : w0.device + (devRec && devRec.id === 'nas' ? ' · /volume1 · 3.1 TB free' : '');
+    const reached = w0.kind === 'local' ? W_('pg.wh.direct') : w0.via === 'Puppet Master' ? W_('pg.wh.pm', { device: w0.device }) : /SMB/.test(w0.via || '') ? W_('pg.wh.smb') : W_('pg.wh.ssh');
     return plate('where', {
-      icon: w.kind === 'local' ? 'desktop' : 'server', title: 'Where it lives', sub: w.label + (w.via ? ' · over ' + w.via : ''),
+      icon: w0.kind === 'local' ? 'desktop' : 'server', title: 'Where it lives', sub: w0.label + (w0.via ? ' · over ' + w0.via : ''),
       meta: cornerSays(st[0]) ? parts().st(st[0], st[1]) : null,
       body: [moving ? working(op) : null, facts([
-        { k: 'Device', v: w.device || 'This computer' },
-        { k: 'Folder', node: midPath(w.path), tone: w.missing ? 'crit' : null },
-        { k: 'Reached', v: w.kind === 'local' ? 'Directly' : 'Over a secure connection (' + (w.via || 'SSH') + ')' },
-        { k: 'Your devices', v: devs ? 'Seen on ' + devs + ' device' + (devs > 1 ? 's' : '') : 'Not shared yet' }
+        { k: W_('pg.wh.runsOn'), v: comp.name + (comp.id === 'here' ? ' (' + comp.detail + ')' : ' (your Puppet Master server)') },
+        { k: W_('pg.wh.folder'), node: midPath(w0.path), tone: w0.missing ? 'crit' : null },
+        { k: W_('pg.wh.keptOn'), v: kept, tone: offline ? 'warn' : null },
+        { k: W_('pg.wh.reached'), v: reached },
+        { k: W_('pg.wh.devices'), v: devs ? 'Seen on ' + devs + ' device' + (devs > 1 ? 's' : '') : 'Not shared yet' }
       ])],
       foot: [
-        w.missing
+        w0.missing
           ? act('Find the folder…', { cls: 'pmu-textbtn', primary: true, icon: 'folder-search', key: 'p:find', run: () => PJX.emit('need-repair', { id: p.id }) })
-          : act('Move or change folder…', { cls: 'pmu-textbtn', icon: 'move', key: 'p:move', off: w.pending ? 'Setup hasn’t made the folder yet' : moving ? 'Working on it' : null, run: () => PJX.emit('need-repair', { id: p.id, move: true }) }),
-        act('Show in file manager', { cls: 'pmu-textbtn', icon: 'folder', key: 'p:reveal', off: w.missing ? 'The folder is missing' : offline ? (w.device || 'The device') + ' isn’t answering' : w.pending ? 'Setup hasn’t made the folder yet' : null, run: () => PJX.ACT.reveal(p.id) }),
-        act('Copy path', { cls: 'pmu-textbtn', icon: 'copy', key: 'p:copy', run: () => PJX.ACT.copyPath(p.id) })
+          : act('Move or change folder…', { cls: 'pmu-textbtn', icon: 'move', key: 'p:move', off: w0.pending ? 'Setup hasn’t made the folder yet' : moving ? 'Working on it' : null, run: () => PJX.emit('need-repair', { id: p.id, move: true }) }),
+        act('Show in file manager', { cls: 'pmu-textbtn', icon: 'folder', key: 'p:reveal', off: w0.missing ? 'The folder is missing' : offline ? (w0.device || 'The device') + ' isn’t answering' : w0.pending ? 'Setup hasn’t made the folder yet' : null, run: () => PJX.ACT.reveal(p.id) }),
+        act('Copy path', { cls: 'pmu-textbtn', icon: 'copy', key: 'p:copy', run: () => PJX.ACT.copyPath(p.id) }),
+        act(W_('pg.wh.change'), { cls: 'pmu-textbtn', icon: 'server', key: 'p:computer', off: moving ? 'Working on it' : w0.missing ? 'Find the folder first' : null, run: () => openForm(p, 'computer') }),
+        act(W_('pg.wh.move'), { cls: 'pmu-textbtn', icon: 'move', key: 'p:movecomputer', run: () => PJX.ACT.moveComputer(p.id) })
       ]
     });
   }
@@ -708,6 +876,18 @@
       cls: 'pjxc-danger', icon: 'trash', title: 'Delete Puppet Master’s data', sub: 'Not the same as Remove from list',
       body: [textLine(it.say)],
       foot: [h('span.pjx-grow'), act(it.label, { cls: 'pmu-textbtn', danger: true, icon: 'trash', key: 'p:delete', off: it.disabled || null, run: it.run })]
+    });
+  }
+  /* "Finish protecting your work": the backup's steps, in onboarding's order, on the new Project's page (6.12.3) */
+  function protectPlate(p) {
+    const b = p.backup, stp = b.setup, tgt = stp.target != null ? b.more[stp.target] : b;
+    const done = stp.steps.filter((x) => x === 'done').length;
+    return plate('protect', {
+      cls: 'pjxc-protectplate', icon: 'safe', tone: stp.done ? null : 'attention', title: W_('np.prot.title'), sub: tgt.dest + ' · ' + (stp.done ? 'done' : 'step ' + Math.min(5, done + 1) + ' of 5'),
+      meta: opOf(p.id) && opOf(p.id).kind === 'protect' ? parts().st('working', opOf(p.id).label) : null,
+      body: [PJX.npui.protectSteps(p)],
+      foot: stp.done ? [h('span.pjx-grow'), act(W_('np.done.ok'), { cls: 'pmu-textbtn', key: 'prot:ok', run: () => { stp.open = false; render(); } })]
+        : [act(W_('np.prot.later'), { cls: 'pmu-textbtn', quiet: true, key: 'prot:later', run: () => PJX.ACT.protectLater(p.id) })]
     });
   }
 
@@ -727,9 +907,11 @@
     const items = [];
     let n = 0;
     if (C.flash[p.id]) items.push(bandBox(n++, flashNode(p, C.flash[p.id]), 'done'));
+    const protect = p.backup && p.backup.setup && p.backup.setup.open;
+    if (protect) items.push(protectPlate(p));
     if (p.where.missing || C.repairOpen[p.id]) items.push(repairPlate(p));
     if (p.recovery) items.push(resumePlate(p));
-    (p.attention || []).filter((a) => a.code !== 'folder_missing' && a.code !== 'setup_unfinished')
+    (p.attention || []).filter((a) => a.code !== 'folder_missing' && a.code !== 'setup_unfinished' && !(protect && a.code === 'backup_unfinished'))
       .slice().sort((a, b) => PJX.STATUS[a.key].rank - PJX.STATUS[b.key].rank)
       .forEach((a) => items.push(bandBox(n++, noticeNode(p, a), parts().tone(a.key))));
     syncChildren(band, items);
@@ -742,16 +924,19 @@
   }
 
   /* ------------------------------------------------------------------ New Project: the launcher */
+  const NPS = () => PJX.np;
+  const wayOf = (id) => NPS().WAYS.find((x) => x.id === id) || null;
+  const verbOf = (way) => NPS().VERB[way] || NPS().VERB.new;
   /* New Project with nothing asked of it goes back to the draft you left, exactly as it was. A request for a particular
-     beginning (a way, "like this", a pasted link, Restore as new) starts a fresh one, and asks first when that would clear
-     answers you gave. */
+     beginning (a way, "like this", a pasted link, Restore as new, a chat) starts a fresh one, and asks first when that
+     would clear answers you gave. */
   function startNew(opts, quiet) {
     opts = opts || {};
-    const explicit = !!(opts.way || opts.like || opts.text || opts.from || opts.device);
+    const explicit = !!(opts.way || opts.like || opts.text || opts.from || opts.device || opts.chat || opts.folder);
     if (C.s && !opts.fresh) {
       if (!explicit || (C.commit && C.commit.running)) {
         resumeDraft(quiet);
-        if (explicit) PJX.toast('One new Project at a time', (C.s.draft.name || 'Your new Project') + ' is being set up now. Start the next one when it is ready.', 'info');
+        if (explicit) PJX.toast(W_('np.oneAtATime.title'), W_('np.oneAtATime.text', { name: NPS().nameOf(C.s) || 'Your new Project' }), 'info');
         return;
       }
       if (draftWorth()) { confirmFresh(opts); return; }
@@ -759,26 +944,31 @@
     if (C.mode !== 'new') C.prevSel = C.sel;
     C.mode = 'new'; C.commit = null; C.drawer = false; C.swap = true;
     const like = opts.like && PJX.get(opts.like) ? opts.like : null;
-    let s;
-    if (opts.text) s = flow().start({ text: opts.text, like });
-    else if (opts.way) s = flow().start({ way: opts.way, like });
-    else s = flow().start({ like });
-    // Restore as new… from a Project's own Backup plate: its backup is already chosen and unlocked
-    if (opts.from && opts.way === 'restore') {
-      const p = PJX.get(opts.from), src = p && PJX.ENV.backups.find((b) => b.where === p.backup.dest);
-      if (src) { s.draft.backupFrom = src.id; s.draft.unlocked = src.id === 'nas' || src.id === 'gdrive'; if (src.projects.indexOf(p.id) >= 0) { s.draft.restorePick = p.id; s.draft.name = p.id + '-restored'; } }
-    }
-    // "Add a project from it…" on a machine in the library: that machine is already chosen
-    if (opts.device && s.draft.way === 'device' && PJX.ENV.devices.some((d) => d.id === opts.device)) s.draft.device = opts.device;
+    const s = NPS().start({ way: opts.way, text: opts.text, like, device: opts.device, from: opts.from, chat: opts.chat, folder: opts.folder });
     C.s = s;
-    C.view = s.draft.way ? 'steps' : 'launcher';
+    C.view = s.d.way ? 'steps' : 'launcher';
     C.pasteText = opts.text || '';
     if (C.els.paste) C.els.paste.value = C.pasteText;
-    s.on(() => { if (C && C.s === s) render(); });
+    s.on(() => { if (C && C.s === s) { soon(); sayLook(s); } });
     if (C.els.scroll) C.els.scroll.scrollTop = 0;
     if (quiet) return;
     render();
     focusNew();
+  }
+  /* one sentence when the look inside finishes (spec 15): "Looked inside budget-tracker: Git on main, linked to GitHub
+     jared/budget-tracker, 2 changes not saved." */
+  function sayLook(s) {
+    const o = NPS().look(s); if (!o || o.state !== 'done' || !o.target) return;
+    const key = o.target.holder + ':' + o.target.path; if (s.ui.saidLook === key) return;
+    s.ui.saidLook = key;
+    const i = o.result, bits = [];
+    bits.push(i.history ? (i.history === 'jujutsu' ? 'Jujutsu' : 'Git') + ' on ' + i.branch : 'no saved versions yet');
+    if (i.online) bits.push('linked to ' + (i.online.service ? i.online.service + ' ' + i.online.repo : i.online.address));
+    if (i.changed) bits.push(i.changed + ' change' + (i.changed > 1 ? 's' : '') + ' not saved');
+    if (i.submodules && i.submodules.length) bits.push(i.submodules.length + ' submodules');
+    if (i.lfs) bits.push('Git LFS');
+    if (i.known) bits.push('already a Project');
+    announce(W_('np.look.said', { folder: String(o.target.path).split('/').pop(), facts: bits.join(', ') }));
   }
   function resumeDraft(quiet) {
     if (C.mode !== 'new') C.prevSel = C.sel;
@@ -788,29 +978,27 @@
     render();
     focusNew();
   }
-  /* where the keyboard lands in New Project: the paste field on the launcher, else the first question still open */
+  /* where the keyboard lands in New Project: the paste field on the launcher, else the open section's first field */
   function focusNew() {
     later(() => {
       if (!C || C.mode !== 'new') return;
       if (C.view === 'launcher') { C.els.paste.focus({ preventScroll: true }); return; }
-      const pr = C.s && firstProblem(C.s);
-      const zone = (pr && C.els.steps.querySelector('[data-step="' + cssEsc(pr.step) + '"]')) || C.els.steps;
-      const f = zone.querySelector('input:not([type="checkbox"]), .pjx-choice.is-on, .pjx-choice:not(.is-off)');
+      const sec = C.els.steps.querySelector('.pjx-np-sec[data-state="open"]');
+      const f = sec ? sec.querySelector('.pjx-np-body input:not([type="checkbox"]), .pjx-np-body .pjx-choice.is-on, .pjx-np-body .pjx-choice:not(.is-off), .pjx-np-body button') : C.root.querySelector('[data-c-key="rv:go"]');
       if (f) f.focus({ preventScroll: true });
-      if (pr && zone !== C.els.steps) reveal('.pjxc-stepsin [data-step="' + cssEsc(pr.step) + '"]');
+      if (sec) reveal('.pjxc-stepsin [data-step="' + cssEsc(sec.getAttribute('data-step')) + '"]');
     }, 40);
   }
   /* a different beginning would clear the answers in the draft: say what goes, and let the person keep it */
   function confirmFresh(opts) {
-    const d = C.s.draft, way = flow().WAYS.find((w) => w.id === d.way);
-    const what = [(d.name || '').trim(), way ? way.title : null].filter(Boolean).join(' · ') || 'the link you pasted';
+    const d = C.s.d, way = wayOf(d.way);
+    const what = [(NPS().nameOf(C.s) || '').trim(), way ? way.title : null].filter(Boolean).join(' · ') || 'the link you pasted';
     const dlg = PJX.dialog({
-      title: 'Start a different new Project?', kicker: 'New Project',
-      body: h('div', null,
-        h('p.pjx-q-lead', { text: 'Your unfinished new Project (' + what + ') is cleared. Nothing was made from it, so nothing else changes.' })),
+      title: W_('np.fresh.title'), kicker: W_('np.head.title'),
+      body: h('div', null, h('p.pjx-q-lead', { text: W_('np.fresh.lead', { what }) })),
       actions: [{ spacer: true },
-        { label: 'Keep my draft', run: () => { dlg.close('keep'); resumeDraft(); } },
-        { label: 'Start the new one', primary: true, run: () => { dlg.close('ok'); startNew(Object.assign({}, opts, { fresh: true })); } }]
+        { label: W_('np.fresh.keep'), run: () => { dlg.close('keep'); resumeDraft(); } },
+        { label: W_('np.fresh.go'), primary: true, run: () => { dlg.close('ok'); startNew(Object.assign({}, opts, { fresh: true })); } }]
     });
   }
   /* Start over: the draft goes, the launcher comes back empty */
@@ -830,31 +1018,45 @@
     render();
     later(() => C.els.newBtn.offsetParent ? C.els.newBtn.focus() : focusTitle(), 0);
   }
+  /* a way card: the same way goes back to its page; another way asks first when it would clear answers (6.0) */
   function chooseWay(id) {
     const s = C.s; if (!s) return;
-    flow().chooseWay(s, id, true);
-    C.view = 'steps'; C.swap = true; C.els.scroll.scrollTop = 0;
-    render();
-    later(() => { const f = C.els.steps.querySelector('input:not([type="checkbox"]), .pjx-choice:not(.is-off)'); if (f) f.focus({ preventScroll: true }); }, 40);
+    const go = () => {
+      NPS().chooseWay(s, id, true);
+      if (id === 'chat' && !s.d.chat.id) s.d.chat.id = (PJX.ENV.chats[0] || {}).id;
+      C.view = 'steps'; C.swap = true; C.els.scroll.scrollTop = 0;
+      render(); focusNew();
+    };
+    if (s.d.way && s.d.way !== id) {
+      const loss = NPS().wayLoss(s);
+      if (loss.length) {
+        const dlg = PJX.dialog({ title: W_('np.begins.anotherConfirm.title'), kicker: W_('np.head.title'),
+          body: h('div', null, h('p.pjx-q-lead', { text: W_('np.begins.anotherConfirm.lead', { way: wayOf(s.d.way).title, list: NPS().andList(loss) }) })),
+          actions: [{ spacer: true }, { label: W_('np.begins.anotherConfirm.keep'), run: () => { dlg.close('keep'); C.view = 'steps'; render(); } }, { label: W_('np.begins.anotherConfirm.go'), primary: true, run: () => { dlg.close('ok'); go(); } }] });
+        return;
+      }
+    }
+    go();
   }
   function fromText() {
-    const t = C.pasteText.trim(), d = flow().detect(t); if (!d) return;
-    const like = C.s && C.s.draft.like;
+    const t = C.pasteText.trim(), d = NPS().detect(t); if (!d) return;
+    const like = C.s && C.s.d.like.source !== 'usual' ? C.s.d.like.source : null;
     startNew({ text: t, like });
   }
   function renderHeadNew() {
-    const E = C.els, s = C.s, empty = !PJX.all().length, way = s && flow().WAYS.find((w) => w.id === s.draft.way);
+    const E = C.els, s = C.s, empty = !PJX.all().length, way = s && wayOf(s.d.way);
     const steps = C.view === 'steps' && way;
     const running = C.commit && C.commit.running;
-    const back = steps && !running ? act('Back', { icon: 'chevron-left', key: 'h:back', tip: 'All the ways to begin', run: () => { C.view = 'launcher'; C.swap = true; render(); later(() => { const b = C.root.querySelector('[data-c-key="way:' + s.draft.way + '"]'); if (b) b.focus(); }, 30); } }) : null;
+    const back = steps && !running ? act(W_('np.page.allWays'), { icon: 'chevron-left', key: 'h:back', tip: W_('np.page.allWays.tip'), run: () => { C.view = 'launcher'; C.swap = true; render(); later(() => { const b = C.root.querySelector('[data-c-key="way:' + s.d.way + '"]'); if (b) b.focus(); }, 30); } }) : null;
     // Close keeps the answers: the draft waits at the top of the library (Start over, in the questions, clears them)
-    const cancel = empty ? null : act('Close', { icon: 'close', key: 'h:cancel', tip: running ? 'Back to your Projects · setup keeps going and the list shows it · Esc' : 'Back to your Projects · your answers are kept · Esc', run: () => closeNew() });
+    const cancel = empty ? null : act(W_('np.close'), { icon: 'close', key: 'h:cancel', tip: running ? W_('np.close.tipRunning') : W_('np.close.tip'), run: () => closeNew() });
     // on a very narrow pane Close keeps only its close mark (a universal), named for the screen reader and its hover label
-    if (cancel) { cancel.setAttribute('aria-label', 'Close'); cancel.classList.add('pjxc-can-shrink'); }
+    if (cancel) { cancel.setAttribute('aria-label', W_('np.close')); cancel.classList.add('pjxc-can-shrink'); }
     if (C.narrow) { fill(E.head, projectsBtn(), h('span.pjx-grow'), back, cancel); return; }
-    const title = empty ? 'Your first Project' : 'New Project';
-    const sub = steps ? way.title + ' · ' + way.sub : empty ? flow().STEPS.way.lead(s) : 'Five ways in. Nothing is made until you review it.';
-    fill(E.head, 
+    const nm = s && steps ? String(NPS().nameOf(s) || '').trim() : '';
+    const title = empty && !steps ? W_('np.head.titleFirst') : nm || W_('np.page.title');
+    const sub = steps ? W_('np.page.sub', { way: way.title, verb: s.d.way === 'chat' ? W_('np.rv.goChat') : verbOf(s.d.way)[0] }) : empty ? W_('np.head.subFirst') : W_('np.head.sub');
+    fill(E.head,
       h('div.pjxc-headmain', null, h('span.pjxc-headico', { html: icon(steps ? way.glyph : 'folder-plus', 22), 'aria-hidden': 'true' }),
         h('div.pjxc-titles', null, h('h2.pjxc-title', { tabindex: '-1', text: title }), h('div.pjxc-headline', null, h('span.pjxc-headsub', { text: sub })))),
       h('div.pmu-headctl.pjxc-acts', null, back, cancel));
@@ -864,7 +1066,7 @@
     const E = C.els, s = C.s;
     const card = slot('new:paste', () => h('section.pmu-card.pjxc-paste', { 'data-lg-surface': 'card', 'aria-label': 'Paste to begin' }));
     if (!E.paste) {
-      E.paste = h('input.pjxc-paste-in', { type: 'text', autocomplete: 'off', spellcheck: 'false', 'data-c-key': 'paste', placeholder: 'Paste a link, a folder or an address — or choose how to begin', 'aria-label': 'Paste a link, a folder or an address', 'aria-describedby': 'pjxc-detect' });
+      E.paste = h('input.pjxc-paste-in', { type: 'text', autocomplete: 'off', spellcheck: 'false', 'data-c-key': 'paste', placeholder: W_('np.paste.ph'), 'aria-label': W_('np.paste.aria'), 'aria-describedby': 'pjxc-detect' });
       E.paste.addEventListener('input', () => { C.pasteText = E.paste.value; paintDetect(); });
       E.paste.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') { e.preventDefault(); fromText(); }
@@ -874,37 +1076,35 @@
       E.detect = h('div.pjxc-detect', { id: 'pjxc-detect', role: 'status' });
     }
     if (D.activeElement !== E.paste) E.paste.value = C.pasteText;
-    // a narrow pane cannot show the whole invitation in the field: it goes above it, and the field keeps a short hint
-    // (Retro's and NieR's mono faces are wider: there the field says the first half and the head says the rest)
-    setAttr(E.paste, 'placeholder', C.narrow ? 'A link, a folder or an address' : PJX.stepped() ? 'Paste a link, a folder or an address' : 'Paste a link, a folder or an address — or choose how to begin');
+    setAttr(E.paste, 'placeholder', C.narrow ? W_('np.paste.phNarrow') : PJX.stepped() ? W_('np.paste.phStepped') : W_('np.paste.ph'));
     const empty = !PJX.all().length;
-    const like = s && s.draft.like && PJX.get(s.draft.like);
+    const like = s && s.d.like.source !== 'usual' && PJX.get(s.d.like.source);
     syncChildren(card, [
-      C.narrow ? h('h2.pjxc-title.pjxc-title-in', { tabindex: '-1', text: empty ? 'Your first Project' : 'New Project' }) : null,
-      C.narrow && !empty ? h('p.pjxc-welcome', { text: 'Paste a link, a folder or an address — or choose how to begin.' }) : null,
-      empty ? h('p.pjxc-welcome', { text: 'Welcome. Bring in work you already have, from this computer, another one or online, or start something new. You see everything before anything is made.' }) : null,
+      C.narrow ? h('h2.pjxc-title.pjxc-title-in', { tabindex: '-1', text: empty ? W_('np.head.titleFirst') : W_('np.head.title') }) : null,
+      C.narrow && !empty ? h('p.pjxc-welcome', { text: W_('np.paste.ph') + '.' }) : null,
+      empty ? h('p.pjxc-welcome', { text: W_('np.paste.welcome') }) : null,
       E.pasteField, E.detect,
-      like ? h('p.pjxc-likenote', null, h('span', { html: icon('swap', 13), 'aria-hidden': 'true' }), h('span', { text: 'Starts with ' + like.name + '’s settings. You can change that on the next page.' })) : null
+      like ? h('p.pjxc-likenote', null, h('span', { html: icon('swap', 13), 'aria-hidden': 'true' }), h('span', { text: W_('np.paste.likeNote', { project: like.name }) })) : null
     ]);
     paintDetect();
     return card;
   }
-  /* live recognition under the paste field (PJX.flow.detect) */
+  /* live recognition under the paste field (PJX.np.detect) */
   function paintDetect() {
-    const E = C.els, t = C.pasteText.trim(), d = t ? flow().detect(t) : null;
+    const E = C.els, t = C.pasteText.trim(), d = t ? NPS().detect(t) : null;
     if (d) {
-      const way = flow().WAYS.find((w) => w.id === d.way);
-      const go = act('Continue', { primary: true, icon: 'arrow-right', key: 'paste:go', run: () => fromText() });
+      const way = wayOf(d.way);
+      const go = act(W_('np.paste.go'), { primary: true, icon: 'arrow-right', key: 'paste:go', run: () => fromText() });
       fill(E.detect, h('span.pjx-st-mark', { html: PJX.calm('complete', 14), 'aria-hidden': 'true' }),
         h('span.pjxc-detect-text', null, h('b', { text: d.say }), way ? h('span', { text: way.title }) : null), go);
       E.detect.setAttribute('data-state', 'found');
     } else if (t) {
       fill(E.detect, h('span.pjx-st-mark', { html: PJX.calm('info', 14), 'aria-hidden': 'true' }),
-        h('span.pjxc-detect-text', null, h('b', { text: 'Not recognised yet' }), h('span', { text: 'Paste a link from GitHub, GitLab or Bitbucket, a Git address, a folder such as ~/Code/app, or an address such as you@nas.local:/path.' })));
+        h('span.pjxc-detect-text', null, h('b', { text: W_('np.detect.notYet') }), h('span', { text: W_('np.detect.notYetHelp') })));
       E.detect.setAttribute('data-state', 'unknown');
     } else {
-      const tries = ['https://github.com/jared/garden-planner', '~/Code/budget-tracker', 'jared@studio.local:~/Developer/lighting-rig'];
-      fill(E.detect, h('span.pjxc-detect-try', { text: 'Try' }), ...tries.map((x, i) => {
+      const tries = ['github.com/jared/garden-planner', 'github.com/maplecraft/plant-journal', '~/Code/game-jam', 'jared@studio.local:~/Developer/lighting-rig'];
+      fill(E.detect, h('span.pjxc-detect-try', { text: W_('np.paste.try') }), ...tries.map((x, i) => {
         const b = h('button.pjx-link.pjxc-try', { type: 'button', text: x, 'data-c-key': 'try:' + i, 'data-pmh-tag': 'literal' });
         b.addEventListener('click', () => { C.pasteText = x; E.paste.value = x; paintDetect(); E.paste.focus(); });
         return b;
@@ -914,12 +1114,14 @@
   }
   function wayCards() {
     const s = C.s, grid = slot('new:ways', () => h('div.pjxc-ways', { role: 'group', 'aria-label': 'How it begins' }));
-    const cards = flow().WAYS.map((w) => {
-      const b = slot('new:way:' + w.id, () => { const el = h('button.pmu-card.pjxc-way', { type: 'button', 'data-lg-surface': 'card', 'data-way': w.id, 'data-c-key': 'way:' + w.id }); el.addEventListener('click', () => chooseWay(w.id)); return el; });
-      b.setAttribute('aria-pressed', String(!!(s && s.draft.way === w.id)));
-      fill(b, h('span.pjxc-way-ico', { html: icon(w.glyph, 24), 'aria-hidden': 'true' }),
-        h('span.pjxc-way-text', null, h('span.pjxc-way-title', { text: w.title }), h('span.pjxc-way-sub', { text: w.sub })),
-        w.tag ? h('span.pjxc-way-tag', { text: w.tag }) : null,
+    const ways = NPS().WAYS.filter((x) => x.id !== 'chat' || (PJX.ENV.chats || []).length);
+    const cards = ways.map((x) => {
+      const b = slot('new:way:' + x.id, () => { const el = h('button.pmu-card.pjxc-way', { type: 'button', 'data-lg-surface': 'card', 'data-way': x.id, 'data-c-key': 'way:' + x.id }); el.addEventListener('click', () => chooseWay(x.id)); return el; });
+      b.setAttribute('aria-pressed', String(!!(s && s.d.way === x.id)));
+      const sub = x.id === 'folder' && NPS().serverOn() ? W_('np.way.folderSubServer', { server: 'Home NAS' }) : x.sub;
+      fill(b, h('span.pjxc-way-ico', { html: icon(x.glyph, 24), 'aria-hidden': 'true' }),
+        h('span.pjxc-way-text', null, h('span.pjxc-way-title', { text: x.title }), h('span.pjxc-way-sub', { text: sub })),
+        x.tag ? h('span.pjxc-way-tag', { text: x.tag }) : x.id === 'chat' ? h('span.pjxc-way-tag', { text: 'Concept · no-project' }) : null,
         h('span.pjxc-way-go', { html: icon('arrow-right', 16), 'aria-hidden': 'true' }));
       return b;
     });
@@ -928,57 +1130,52 @@
   }
   /* the way that is not here yet: one quiet line that says why and offers what works instead */
   function importLine() {
-    const m = flow().MORE[0], el = slot('new:more', () => h('div.pjxc-more'));
-    fill(el, h('span.pjxc-more-ico', { html: icon(m.glyph, 16), 'aria-hidden': 'true' }),
-      h('span.pjxc-more-text', null, h('b', { text: m.title }), h('span', { text: m.sub })),
-      act('Add its folder instead', { cls: 'pjx-link', key: 'more:folder', run: () => chooseWay('folder') }));
+    const el = slot('new:more', () => h('div.pjxc-more'));
+    fill(el, h('span.pjxc-more-ico', { html: icon('download', 16), 'aria-hidden': 'true' }),
+      h('span.pjxc-more-text', null, h('b', { text: W_('np.import') }), h('span', { text: W_('np.importSub') })),
+      act(W_('np.importGo'), { cls: 'pjx-link', key: 'more:folder', run: () => chooseWay('folder') }));
     return el;
   }
 
-  /* ------------------------------------------------------------------ New Project: the questions beside a live Review */
-  function firstProblem(s) {
-    for (const id of s.steps()) { if (id === 'way' || id === 'review' || id === 'source') continue; const t = flow().problem(s, id); if (t) return { step: id, text: t }; }
-    return null;
+  /* ------------------------------------------------------------------ New Project: the guided page beside a live Review */
+  /* open a section and focus the field a problem names (a Review row's Change, the first-problem line, Continue) */
+  function goToSection(id, fieldKey) {
+    const s = C.s; if (!s) return;
+    if (C.commit && !C.commit.running) C.commit = null;
+    if (s.ui.open !== id) NPS().open(s, id); else render();
+    later(() => {
+      const sec = C.els.steps.querySelector('[data-step="' + cssEsc(id) + '"]'); if (!sec) return;
+      reveal('.pjxc-stepsin [data-step="' + cssEsc(id) + '"]');
+      const byKey = fieldKey ? sec.querySelector('[data-pjx-key="' + cssEsc(fieldKey) + '"], [data-c-key^="' + cssEsc(fieldKey) + '"], [data-np-group="' + cssEsc(fieldKey) + '"] .pjx-choice') : null;
+      const f = byKey || sec.querySelector('.pjx-np-body input:not([type="checkbox"]), .pjx-np-body .pjx-choice.is-on, .pjx-np-body .pjx-choice:not(.is-off), .pjx-np-body button');
+      if (f) f.focus({ preventScroll: true });
+    }, 60);
   }
-  function goToStep(step) { reveal('.pjxc-stepsin [data-step="' + cssEsc(step) + '"]', 'input:not([type="checkbox"]), .pjx-choice:not(.is-off), button'); }
   function stepsCard() {
-    const E = C.els, s = C.s, way = flow().WAYS.find((w) => w.id === s.draft.way) || {};
+    const E = C.els, s = C.s, way = wayOf(s.d.way) || {};
     const card = slot('new:steps', () => h('section.pmu-card.pjxc-steps', { 'data-lg-surface': 'card', 'aria-label': 'Questions' }));
     if (!E.steps) E.steps = h('div.pjxc-stepsin');
     const running = !!(C.commit && C.commit.running);
     const begins = h('div.pjxc-begins', null,
       h('span.pjxc-begins-ico', { html: icon(way.glyph || 'seed', 20), 'aria-hidden': 'true' }),
-      h('span.pjxc-begins-text', null, h('span.pjxc-cap', { text: 'Begins as' }), h('b', { text: way.title || '' })),
+      h('span.pjxc-begins-text', null, h('span.pjxc-cap', { text: W_('np.begins.cap') }), h('b', { text: way.title || '' })),
       h('span.pjxc-begins-acts', null,
-        act('Choose another way', { cls: 'pjx-link', key: 'steps:way', off: running ? 'Setup is running' : null, run: () => { C.view = 'launcher'; C.swap = true; render(); } }),
-        act('Start over', { cls: 'pjx-link', key: 'steps:over', off: running ? 'Setup is running' : null, tip: 'Clears every answer on this page', run: () => startOver() })));
-    syncChildren(card, [begins, E.steps]);
-    // the flow draws every remaining question as a section; text fields keep their caret (data-pjx-key)
+        act(W_('np.begins.another'), { cls: 'pjx-link', key: 'steps:way', off: running ? W_('np.begins.busy') : null, run: () => { C.view = 'launcher'; C.swap = true; render(); } }),
+        act(W_('np.begins.over'), { cls: 'pjx-link', key: 'steps:over', off: running ? W_('np.begins.busy') : null, tip: W_('np.begins.over.tip'), run: () => startOver() })));
+    // from a chat, the other choice is always in sight, whichever section is open (NOPROJECT 7.2)
+    const ch = s.d.way === 'chat' ? PJX.np.chatOf(s.d.chat.id) : null;
+    const making = ch ? h('div.pjxc-making', null, PJX.npui.line('info', W_('np.chat.making', { chat: ch.title }), { after: act(W_('np.chat.instead'), { cls: 'pjx-link', key: 'steps:instead', run: () => chooserExisting(ch) }) })) : null;
+    syncChildren(card, [begins, making, E.steps]);
     const sc = E.scroll.scrollTop;
-    flow().render(s, E.steps, { all: true });
+    PJX.npui.render(E.steps, () => PJX.npui.sections(s, E.steps, {
+      focusField: (id, f) => goToSection(id, f),
+      afterContinue: (next) => { if (next) goToSection(next); else later(() => { const g = C.root.querySelector('[data-c-key="rv:go"]'); if (g) g.focus({ preventScroll: true }); }, 60); },
+      onInstead: (c) => chooserExisting(c)
+    }));
     E.scroll.scrollTop = sc;
-    // "Name it" says where the files are once the source is chosen; before that its line would read "null" or
-    // "undefined · null" (flow.js has no guard for a source not chosen yet: see the report), so it waits
-    E.steps.querySelectorAll('.pjx-step-name .pjx-fact').forEach((f) => { const t = f.textContent.trim(); if (!t || /\bundefined\b|\bnull\b/.test(t)) f.hidden = true; });
     E.steps.inert = running;
     E.steps.toggleAttribute('data-busy', running);
     return card;
-  }
-  /* The live Review, read before anything is chosen: a value the flow leaves half-made ("A copy of", "Online ·", "—")
-     says "Not chosen yet" in the quiet ink, and the folder waits for the name it is made from, so the Review never
-     shows a fragment or a place nobody chose */
-  function reviewRows(s) {
-    const d = s.draft, named = !!(d.name || '').trim();
-    return flow().review(s).map((g) => ({ label: g.label, step: g.step, rows: g.rows.map(([k, v]) => {
-      const t = String(v == null ? '' : v).trim();
-      // a fragment (an older flow.js, or a value cut short) never shows
-      if (!t || /^—/.test(t) || /\s(of|from|on)$/.test(t) || /[·:]$/.test(t)) return [k, 'Not chosen yet', true];
-      // the flow's own placeholders read as placeholders: the quiet ink, not a bold value
-      const open = /not chosen yet/i.test(t) || (k === 'Name' && !named)
-        || (k === 'Files' && !named && !d.placeTouched && /^(new|online|restore)$/.test(d.way || ''))
-        || (k === 'Begins as' && d.way === 'online' && !d.repo);
-      return [k, k === 'Name' && !named ? 'Not chosen yet' : t, open];
-    }) }));
   }
   /* paths and names in a step's words keep together: a line breaks between words, never inside ~/Code/budget-tracker */
   function keepWhole(root, sel) {
@@ -990,69 +1187,65 @@
     return root;
   }
   function reviewCard() {
-    const s = C.s, cm = C.commit, d = s.draft, verb = VERB[d.way] || VERB.new;
-    const name = (d.name || '').trim();
-    let body = [], footEl = null, title = 'Review', sub = 'Nothing has been made yet', meta = null, lead = 'list', leadMark = null;
+    const s = C.s, cm = C.commit, d = s.d, verb = verbOf(d.way);
+    const name = String(NPS().nameOf(s) || '').trim();
+    let body = [], footEl = null, title = W_('np.rv.title'), sub = W_('np.rv.sub'), lead = 'list', leadMark = null;
     if (cm) {
       // the plate's subject is the Project being made; what is happening, and how far, is its second line
       const n = cm.list.length, done = cm.states.filter((x) => x === 'complete').length;
       leadMark = cm.running ? 'working' : 'failed'; lead = null;
-      title = cm.running ? (name || 'Your new Project') : 'It didn’t finish';
-      sub = cm.running ? verb[1] + ' · step ' + Math.min(n, done + 1) + ' of ' + n : name || 'Your new Project';
-      body = [keepWhole(flow().phaseList(cm.list, cm.states)), cm.running ? h('p.pjxc-steps-n.is-left', { text: 'Each step is checked before the next one starts.' }) : null];
-      if (!cm.running && cm.error) body.push(flow().facts([{ key: 'failed', text: cm.error }]));
-      if (!cm.running) footEl = h('div.pjxc-commit', null,
-        act('Try again', { primary: true, icon: 'refresh', key: 'rv:again', run: (e) => create(e.altKey || C.demoFail) }),
-        act('Change something', { key: 'rv:edit', run: () => { C.commit = null; render(); goToStep(s.draft.way === 'online' ? 'online' : 'name'); } }));
+      title = cm.running ? (name || 'Your new Project') : W_('np.fail.title');
+      sub = cm.running ? W_('np.ph.creating', { verb: verb[1], i: Math.min(n, done + 1), n }) : name || 'Your new Project';
+      body = [keepWhole(PJX.flow.phaseList(cm.list, cm.states)), cm.running ? h('p.pjxc-steps-n.is-left', { text: W_('np.ph.eachChecked') }) : null];
+      if (!cm.running && cm.fail) body.push(PJX.flow.facts([{ key: 'failed', text: cm.fail.text }]));
+      if (!cm.running && cm.fail && cm.fail.kind === 'taken') footEl = h('div.pjxc-commit', null,
+        act(W_('np.fail.rename', { service: cm.fail.service }), { primary: true, icon: 'edit', key: 'rv:rename', run: () => { C.commit = null; const nm = NPS().onlineName(s); s.d.online.name = nm; s.d.online.nameTouched = true; s.changed(); goToSection('online', 'oname'); } }),
+        act(W_('np.fail.skip'), { key: 'rv:skip', run: () => skipOnline() }));
+      else if (!cm.running) footEl = h('div.pjxc-commit', null,
+        act(W_('np.fail.again'), { primary: true, icon: 'refresh', key: 'rv:again', run: () => create() }),
+        act(W_('np.fail.change'), { key: 'rv:edit', run: () => { const sec = cm.fail && cm.fail.section; C.commit = null; render(); goToSection(sec || NPS().sections(s)[0]); } }));
     } else {
-      body = reviewRows(s).map((g) => {
-        const change = g.step ? act('Change', { cls: 'pjx-link', key: 'rv:ch:' + g.step, run: () => goToStep(g.step) }) : null;
-        const dl = h('dl.pjxc-rrows');
-        g.rows.forEach(([k, v, open]) => { dl.appendChild(h('dt', { text: k })); dl.appendChild(h('dd', { class: [open && 'is-open'], text: v })); });
-        keepWhole(dl, 'dd');
-        return h('section.pjxc-rgroup', null, h('div.pjxc-rghead', null, h('h4.pjxc-cap', { text: g.label }), change), dl);
-      });
-      const pr = firstProblem(s);
-      const phases = flow().phases(s);
-      const canFail = phases.some((x) => x.clone);
-      const go = act(verb[0] + (name ? ' ' + name : ''), { primary: true, key: 'rv:go', icon: d.way === 'restore' ? 'history' : d.way === 'online' ? 'download' : 'check',
-        off: pr ? pr.text : null, onOff: () => goToStep(pr.step), run: (e) => create(e.altKey || (canFail && C.demoFail)) });
-      go.classList.add('pjxc-go');
-      if (pr) go.setAttribute('aria-describedby', 'pjxc-why');
-      const demo = canFail ? h('label.pjx-check.pjxc-demo', null, h('input', { type: 'checkbox', checked: C.demoFail ? true : null }), h('span', { text: 'Concept demo: the network drops during setup' })) : null;
-      if (demo) demo.querySelector('input').addEventListener('change', (e) => { C.demoFail = e.target.checked; });
-      const why = pr ? h('button.pjxc-why', { type: 'button', id: 'pjxc-why', 'data-c-key': 'rv:why' }, h('span.pjx-st-mark', { html: PJX.calm('warning', 13), 'aria-hidden': 'true' }), h('span', { text: pr.text })) : null;
-      if (why) why.addEventListener('click', () => goToStep(pr.step));
-      footEl = h('div.pjxc-commit', null, why, go,
-        h('p.pjxc-steps-n', { text: phases.length + ' step' + (phases.length > 1 ? 's' : '') + ', each checked before the next' }), demo);
+      body = [PJX.npui.review(s, { change: (sec, f) => goToSection(sec, f) })];
+      keepWhole(body[0], 'dd');
+      footEl = PJX.npui.reviewFoot(s, { change: (sec, f) => goToSection(sec, f), create: () => create() });
     }
-    return plate('review', { tag: 'aside', cls: 'pjxc-review', icon: lead, mark: leadMark, title, sub, meta, body, footEl });
+    return plate('review', { tag: 'aside', cls: 'pjxc-review', icon: lead, mark: leadMark, title, sub, body, footEl });
   }
-  async function create(fail) {
+  /* Skip the online copy (6.12.4 B): asked first, then setup runs again without it */
+  function skipOnline() {
+    const dlg = PJX.dialog({ title: W_('np.fail.skip') + '?', body: h('div', null, h('p.pjx-q-lead', { text: W_('np.fail.skipConfirm') })),
+      actions: [{ spacer: true }, { label: 'Keep it', run: () => dlg.close('keep') }, { label: W_('np.fail.skip'), primary: true, run: () => { dlg.close('ok'); C.commit = null; NPS().set(C.s, 'online.mode', 'none'); create(); } }] });
+  }
+  async function create() {
     const s = C.s; if (!s || (C.commit && C.commit.running)) return;
-    const pr = firstProblem(s); if (pr) { goToStep(pr.step); return; }
-    const list = flow().phases(s);
-    C.commit = { list, states: list.map(() => 'pending'), running: true, error: null, sid: s.id };
+    const pr = NPS().firstProblem(s); if (pr) { goToSection(pr.section, pr.field); return; }
+    const list = NPS().phases(s), demo = Object.assign({}, s.ui.demo || {});
+    C.commit = { list, states: list.map(() => 'pending'), running: true, fail: null, sid: s.id };
     render();
     later(() => { const r = C.root.querySelector('.pjxc-review'); if (r) { r.setAttribute('tabindex', '-1'); r.focus({ preventScroll: true }); } }, 30);
-    announce((VERB[s.draft.way] || VERB.new)[1] + ' ' + s.draft.name);
-    const res = await flow().commit(s, { fail: !!fail, onPhase(i, l, st) { if (C && C.commit && C.commit.sid === s.id) { C.commit.states[i] = st; render(); } } });
+    const nm = NPS().nameOf(s);
+    announce(verbOf(s.d.way)[1] + ' ' + nm);
+    const res = await NPS().commit(s, { demo, onPhase(i, l, st) { if (C && C.commit && C.commit.sid === s.id) { C.commit.states[i] = st; render(); if (st === 'complete') announce(l[i].label + ' · done'); } } });
     if (!C) return;
     const mine = C.s === s, still = mine && C.mode === 'new';
     if (res.project) {
-      if (res.ok) C.flash[res.project.id] = { title: res.project.name + ' is ready', text: 'It’s in your Projects. Plan it in the Planning Wizard, or open it now.', plan: true };
+      const p = res.project;
+      if (res.ok) {
+        const chat = p.fromChat;
+        C.flash[p.id] = { title: chat ? W_('np.done.chat', { name: p.name, chat }) : W_('np.done.title', { name: p.name }), text: p.backup && p.backup.setup ? W_('np.done.textBk') : W_('np.done.text'), plan: true, accounts: p.needsSignin, computer: PJX.np.comp(p.runsOn).name, undoCopy: !!p.copied, chat };
+      }
       // the draft became a Project (or a Project whose setup can be continued): it is no longer a draft
       if (mine) { C.s = null; C.commit = null; C.pasteText = ''; if (C.els.paste) C.els.paste.value = ''; }
-      if (still) { C.mode = 'project'; C.sel = res.project.id; C.swap = true; C.els.scroll.scrollTop = 0; render(); focusTitle(); }
+      if (still) { C.mode = 'project'; C.sel = p.id; C.swap = true; C.els.scroll.scrollTop = 0; render(); focusTitle(); }
       else {
         // made while the person looked at another Project: say so where they are, and leave them there
         render();
-        PJX.toast(res.ok ? res.project.name + ' is ready' : 'Setup didn’t finish for ' + res.project.name, res.ok ? 'It’s in your Projects, on ' + res.project.where.label + '.' : 'Continue setup from its page. Nothing is made twice.', res.ok ? 'success' : 'warn');
+        PJX.toast(res.ok ? W_('np.done.title', { name: p.name }) : 'Setup didn’t finish for ' + p.name, res.ok ? W_('np.done.away', { name: p.name, computer: p.where.label }) : 'Continue setup from its page. Nothing is made twice.', res.ok ? 'success' : 'warn');
       }
-      announce(res.ok ? res.project.name + ' is ready' : 'Setup didn’t finish for ' + res.project.name);
+      announce(res.ok ? W_('np.done.title', { name: p.name }) : 'Setup didn’t finish for ' + p.name);
     } else if (mine) {
-      C.commit.running = false; C.commit.error = res.said || 'Setup didn’t finish.'; render();
-      announce('It didn’t finish. ' + C.commit.error);
+      C.commit.running = false; C.commit.fail = res.fail; render();
+      announce(W_('np.fail.title') + '. ' + (res.fail && res.fail.text));
     }
   }
   function renderNew() {
@@ -1060,7 +1253,7 @@
     if (!C.s) startNew({}, true);
     renderHeadNew();
     const kids = [];
-    if (C.view === 'launcher' || !C.s.draft.way) {
+    if (C.view === 'launcher' || !C.s.d.way) {
       C.view = 'launcher';
       kids.push(pasteCard(), wayCards(), importLine());
       E.body.setAttribute('data-view', 'launcher');
@@ -1072,6 +1265,29 @@
     }
     syncChildren(E.body, kids);
   }
+
+  /* ------------------------------------------------------------------ from a chat with no project [Depends: no-project] */
+  /* "Make this a project…": both choices in sight, nothing chosen until you click, and PM says what happens next */
+  function chooser(chatId) {
+    const c = (PJX.ENV.chats || []).find((x) => x.id === chatId) || (PJX.ENV.chats || [])[0]; if (!c) return;
+    let pick = null;
+    const body = h('div.pjx-np-chooser');
+    let dlg = null;
+    const paint = () => {
+      const U = PJX.npui;
+      body.replaceChildren(
+        h('p.pjx-q-lead', { text: W_('np.chooser.none') }),
+        U.choices('chooser', [{ id: 'new', glyph: 'folder-plus', title: W_('np.chooser.new'), sub: W_('np.chooser.newSub') }, { id: 'existing', glyph: 'move', title: W_('np.chooser.existing'), sub: W_('np.chooser.existingSub') }], pick, (v) => { pick = v; paint(); }, { label: W_('np.chooser.title', { chat: c.title }), cls: 'pjx-choices-grid pjx-np-tiles' }),
+        pick ? U.line('info', pick === 'new' ? W_('np.chooser.saysNew', { chat: c.title, n: c.files }) : W_('np.chooser.saysExisting')) : null,
+        U.hint(W_('np.chooser.pending'), 'is-concept'));
+      if (dlg) dlg.setActions([{ spacer: true }, { label: W_('np.chooser.cancel'), run: () => dlg.close('cancel') },
+        { label: pick === 'existing' ? W_('np.chooser.goExisting') : W_('np.chooser.goNew'), primary: true, disabled: pick ? null : 'Choose one first', run: () => { if (!pick) return; dlg.close('ok'); if (pick === 'new') startNew({ way: 'chat', chat: c.id }); else chooserExisting(c); } }]);
+      const f = body.querySelector('.pjx-choice[aria-checked="true"]'); if (f) f.focus({ preventScroll: true });
+    };
+    dlg = PJX.dialog({ title: W_('np.chooser.title', { chat: c.title }), kicker: W_('np.chooser.kicker'), body, wide: true });
+    paint();
+  }
+  function chooserExisting(c) { PJX.toast(W_('np.chat.instead'), W_('np.chat.insteadToast'), 'info'); void c; }
 
   /* ------------------------------------------------------------------ render */
   function render() {
@@ -1207,6 +1423,8 @@
     title: 'Split',
     mount(root) {
       C = fresh(root);
+      // a read-only handle for the verification scripts (the session and its state), never used by the page itself
+      PJX.split = { session: () => C && C.s, state: () => C, select: (id) => C && select(id), openForm: (id, kind) => { const p = PJX.get(id); if (C && p) openForm(p, kind); } };
       build(root);
       C.narrow = root.getBoundingClientRect().width > 0 && root.getBoundingClientRect().width < NARROW;
       if (W.ResizeObserver) {
@@ -1277,6 +1495,26 @@
       if (again && att) reveal(att.code === 'signed_out' ? '[data-plate="online"]' : att.code === 'device_offline' ? '[data-plate="where"]' : '[data-plate="now"]', '.pmu-textbtn');
     },
     openRepair(id) { return this.onRepair({ id }); },
+    /* the review strip's v2 moments (core act() hands them here) */
+    moment(name) {
+      if (!C) return;
+      const M = {
+        fromchat: () => chooser('chat-printer'),
+        contribute: () => startNew({ text: 'https://github.com/maplecraft/plant-journal', fresh: true }),
+        foundonline: () => startNew({ way: 'folder', folder: '~/Code/budget-tracker', fresh: true }),
+        samecopy: () => startNew({ text: 'jared@studio.local:~/Developer/loom', fresh: true }),
+        jjlimits: () => startNew({ text: 'https://github.com/godot-community/demo-games', fresh: true }),
+        gamejam: () => startNew({ way: 'folder', folder: '~/Code/game-jam', fresh: true }),
+        newdevice: () => startNew({ way: 'device', device: 'office', fresh: true }),
+        backupsetup: () => { const p = PJX.get('docs-site'); if (!p) return; select(p.id); if (!p.backup.dest) openForm(p, 'backup-setup'); else reveal('[data-plate="backup"]'); },
+        photosorter: () => { if (PJX.get('photo-sorter')) { select('photo-sorter', { focus: 'page' }); reveal('[data-plate="online"]'); } },
+        gardennotes: () => { if (PJX.get('garden-notes')) { select('garden-notes', { focus: 'page' }); reveal('[data-plate="backup"]'); } },
+        legacy: () => { if (PJX.get('legacy-app')) { select('legacy-app', { focus: 'page' }); reveal('[data-plate="online"]'); } }
+      };
+      if (M[name]) { if (C.s && !(C.commit && C.commit.running) && /contribute|foundonline|samecopy|jjlimits|gamejam|newdevice/.test(name)) { C.s = null; C.commit = null; } M[name](); }
+    },
+    /* Finish setting up a backup: the protect plate on the Project's page */
+    onBackup(e) { if (!C) return false; const p = PJX.get(e.id); if (!p) return false; select(p.id); PJX.ACT.protectOpen(p.id); reveal('[data-plate="protect"]', '.pjx-btn.is-primary'); return true; },
     /* Find the folder and Continue setup are shown on the Project's own page, not in a dialog */
     onRepair(e) {
       if (!C) return false;

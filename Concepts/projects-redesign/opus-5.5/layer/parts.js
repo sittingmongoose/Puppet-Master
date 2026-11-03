@@ -268,7 +268,9 @@
       PJX.on('need-delete', (e) => { if (PJX.S.mounted) confirmDelete(e.id); }),
       PJX.on('need-rename', (e) => { if (PJX.S.mounted) rename(e.id); }),
       PJX.on('need-new', (e) => { if (PJX.S.mounted && c.openNew) c.openNew(e || {}); }),
-      PJX.on('need-details', (e) => { if (PJX.S.mounted && c.openProject) c.openProject(e.id); })
+      PJX.on('need-details', (e) => { if (PJX.S.mounted && c.openProject) c.openProject(e.id); }),
+      // v2 (one guarded addition): Finish setting up a backup, for a concept that draws it (C); others ignore it
+      PJX.on('need-backup', (e) => { if (PJX.S.mounted && c.onBackup) c.onBackup(e); })
     ];
     return () => offs.forEach((f) => f());
   }
