@@ -1,8 +1,203 @@
 # Lane DS (stream E, batch 1): clearing the frozen seal check's blockers
 
-**Branch:** `plans/ea-b1-seal-blockers-20261104`, from `origin/main` `be4766513f`.
+**Branch:** `plans/ea-b1-seal-blockers-20261104`, from `origin/main` `be4766513f`. Review round 1 (DS-FIX1) is the first section below.
 **Worktree:** Nas1 `~/pm-worktrees/ea-ds`, kept for the lead. Second pass (DS-P2): VM sparse worktree `~/pm-worktrees/DS-p2` from `600575221d`, removed after the push.
 **Inputs:** `BRIEF-DRAFT.md`, `lanes/DS.md`, D1b's `BLOCKERS.md` and `DEPTH.jsonl`. Every D1b claim used here was re-checked on this branch.
+
+## Review round 1: findings and responses (DS-FIX1, VM, 2026-11-04)
+
+**Review:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DS-sol/REVIEW.md` (Sol, verdict NOT_READY at `a6665ac36c`). **Worktree:** VM sparse `~/pm-worktrees/DS-fix1` from `a6665ac36c`, removed after the push. No new ids were minted: SP-400 and SP-273 are amended in place.
+
+| Finding | Response | Commit |
+|---|---|---|
+| **DS-SOL-01** (blocking): Home4 had no route through SP-340's whole-value limit | **Fixed.** SP-400 now bounds the complete Home4 value and stores a larger one by reference. | `31cd37713c` |
+| **DS-SOL-02** (blocking): `blake3_id` accepted a trailing LF | **Fixed.** Exact 64-character ids, an ECMA-262 end-of-input guard on every pattern, negatives, a valid reference positive and a verified reference branch. | `31cd37713c` |
+| **DS-SOL-03** (blocking): terminal's consumer PASS exceeded the rubric | **Fixed.** Receipted update: ledger `OWNER_REQUIRED`, self-grade PARTIAL. | `78a7f8e824` |
+| **DS-SOL-04** (should fix): the second application record is post-dated | **Fixed**, and the same defect in the three first-pass records. Explicit correction record. | `2220b74e24` |
+| Layout producer and oracles, re-graded after the repair | **Still not PASS**, for a newly found reason (standing check 4): see the open item below. | `2b671a1605` |
+| The terminal question | **Stopped for Jared** (wording below). | none |
+
+### DS-SOL-01: the complete Home4 value (newly authored owner contract under DL-045)
+
+**What changed.**
+- `Plans/storage-plan.md` SP-400 prose, "The complete value and its reference form" (`:29514`-`:29520`), the unit's canonical text (`:29534`) and two new acceptance criteria. SP-340's limit (16,384 bytes for both families, read from the storage registry) bounds the complete canonical MessagePack value, never one field.
+- A value within the limit is stored inline. A larger one is written to the payload store as its exact canonical bytes, and its key holds a fixed-size reference (`stored_value_ref`): schema id and version, Storage instance, logical key, BLAKE3 id, byte size, media type `application/msgpack`, SHA-256. The decoded layouts, source bytes, event fields and SIR custody stay inside the referenced value.
+- **Resolution:** every reader verifies the object, BLAKE3, size, media type, SHA-256, canonical decoding, the Home4 schema and invariants, and the key and Storage instance before use. An unresolvable reference makes the value unavailable under SP-273's missing-or-corrupt fence.
+- **Custody:** SP-337's durability order, counting, GC and coherent backup, under the holding family's custody and retention (`RP-CONFIG-CURRENT` slot, `RP-AUTHORITY-INDEFINITE` receipt). No family, key, retention policy, hold, setting or user-visible behaviour is added.
+- SP-273's byte-capture paragraph has a dated amendment (`:21955`).
+- `Plans/home_layout_v2_slot_receipt.schema.json`: `$defs/stored_value_ref`, `blake3_id` and `sha256_hex`; `home4_value` accepts the reference; `$comment` adds I10 (whole-value bound) and I11 (reference resolution).
+
+**Search before authoring:** `reports/event-authority-20261104/ds-fix1-home4-value-reference-search.txt`.
+- SP-340 and SP-330 say a value over the limit is "split per key or stored by reference".
+- SP-337 defines the reference triple.
+- The EventRecord codec explicitly invents no overflow envelope.
+- `whole_document_keys` names only `settings:v1` and `config:v1`.
+- The two existing `value_ref` fields (settings chain, Browser program spill) are not redb value references.
+- No redb whole-value reference shape exists in `Plans/`, `scripts/` or `tests/`.
+
+**Why a whole-value reference, not per-field spills.** The review notes that moving source captures out cannot bound the decoded layout copies, and receipts grow with the event's unbounded `affected_tab_ids` too. One reference to the whole value bounds the slot and the receipt alike, and keeps SP-273's exact-byte custody intact.
+
+**Oracles.** `Plans/home_layout_v2_slot_receipt_fixtures.json` has 10 valid, 30 schema-negative and 33 joined-value-negative cases, plus a synthetic payload store of 5 objects.
+- **Boundaries:** a 16,384-byte slot inline; the same slot at 16,385 bytes by reference; that value inline rejected (I10); a reference to an honest 16,384-byte value rejected.
+- **The review's 25-tab slot:** 28,743 bytes by reference is valid; inline it is rejected (I10).
+- **Receipts:** one over the limit by reference is valid; inline it is rejected.
+- **A valid source `payload_ref`:** 16,385 bytes, beside 16,384 inline prior bytes, inside a referenced value.
+- **Resolution negatives:** missing, corrupt, resized, retyped, mis-hashed, non-canonical and Home3-versioned objects; foreign key and Storage instance; a resolved value that skips a revision; and the same five branches for the nested source reference.
+
+**Checker** (`scripts/pm_home_layout_v2_slot_receipt.py`):
+- measures the stored size against the registry;
+- verifies BLAKE3 in pure Python, matching the reference `blake3` library on 33 lengths up to 123,457 bytes;
+- strictly decodes canonical MessagePack;
+- resolves every reference;
+- registers each schema under its `$id` and its repository retrieval URI (as `application_workflow_source_graph.json` names it), never the network;
+- has `--self-test`, which shows it fails on a bad positive and a mis-declared case.
+
+**How to verify:**
+- `python3 scripts/pm_home_layout_v2_slot_receipt.py`: rc 0, counts 10/30/33, `ref_closure.unresolved` 0.
+- `python3 scripts/pm_home_layout_v2_slot_receipt.py --self-test`: rc 0.
+- The review's own `evidence/PROBES.py` against this tree: **rc 1**. Both counterexamples are now refused: the trailing-LF id by the schema and I11, the 28,743-byte slot by I10.
+
+### DS-SOL-02: exact identifiers
+
+**Schema.**
+- `blake3_id` and `sha256_hex` are pattern plus `minLength` and `maxLength` 64.
+- The source reference's `media_type` is an RFC 6838 type/subtype with no line break.
+- The readback key carries a no-line-break guard.
+
+**Checker.**
+- Every one of the 70 reachable patterns, including the Home3 patterns reused by `$ref`, is evaluated with ECMA-262 end-of-input semantics.
+- It fails on any unresolved `$ref` (standing check 9; 384 refs resolve).
+
+**Negatives.**
+- Source-reference ids: trailing LF (the review's exact probe), leading LF, upper case, 63 and 65 characters, non-hex.
+- Media type with a trailing LF.
+- `operation_digest` with a trailing LF: a plain Python validator accepts it; the ECMA guard refuses it.
+- The readback key and `original_owner_result_sha256` with a trailing LF.
+- `value_ref.blake3_id` and `value_sha256` with a trailing LF; `value_ref.blake3_id` in upper case.
+- `projector_replay_only` on slot and receipt event semantics (standing check 1).
+
+**Valid positives:** the reference cases above. The reference branch is now verified (resolution and I6/I11), not left to the inline tests.
+
+### DS-SOL-03: terminal's consumer cell
+
+**Change.** `ds-fix1-terminal-consumer-regrade.{json,md}` is a receipted update with before and after hashes and exact quotes at `2220b74e24`.
+- **Ledger:** `consumers_checkpoints` goes PASS → `OWNER_REQUIRED` (`LEDGER.jsonl:279`, `rows/ROW_terminal.workgroup_moved.json`).
+- **Self-grade:** the cell is PARTIAL, as the rubric's line 24 directs: "Where the owner itself says a facet is still open ... grade PARTIAL and quote it".
+- **Citations kept:** the reader, the `none_required` checkpoint, SP-278, "No consumer operates", and the three withdrawal quotes (SMPFS-170 `:12413`, `:12602`; SP-319 `:26912`).
+
+**What stays.** No consumer is invented or reactivated, and AUG-CP-TWM-001 is unchanged.
+
+**`provisional` stays false.** This is a judgement the re-review may reverse. DL-039's condition is that the consumer, projector and checkpoint be "cited from the Plans", and they are; the review accepted lifting it. What is open is an owner question, which the cell now records. Re-setting it to true would also bring back the validator's `individual_dispositions_provisional` failure.
+
+### DS-SOL-04: application times
+
+**The defect.** All four DS application records were post-dated against the commits that applied them, not only the one the review named.
+
+| Record | Recorded | Evidenced (commit) | Recorded later by |
+|---|---|---|---|
+| `ds-step5-august-ledger-application.json` | 18:30:00Z | 18:08:51Z (`55f68a717e`) | 1,269 s |
+| `ds-step6-compaction-ledger-note.json` | 18:45:00Z | 18:09:32Z (`ade1ee3d6c`) | 2,128 s |
+| `ds-step7-exclusions-application.json` | 18:50:00Z | 18:11:24Z (`43d1ab5555`) | 2,316 s |
+| `ds-p2-august-regrade-application.json` | 23:30:00Z | 19:11:41Z (`af9bff39ae`) | 15,499 s |
+
+**The correction.** `ds-fix1-application-time-correction.{json,md}` is the record.
+- The evidenced time is the application commit's time, an upper bound; the preceding commit bounds it below.
+- The mirrored timestamps are corrected in the five rows (layout, terminal, compaction and the two exclusions) and their census lines, each with a note.
+- The four original records are byte-unchanged. The correction's before hashes equal DS-P2's after hashes, so the chain continues.
+
+### Layout re-graded at the new head (standing check 4)
+
+**Result.** Producer and oracles stay non-PASS: ledger FAIL, self-grade PARTIAL, record `ds-fix1-layout-regrade.{json,md}`.
+
+**Cause.** A `workspace.layout_changed` 2.0.0 payload over 16 KiB has no append route:
+- CV-361's `affected_tab_ids` and the other affected arrays are unbounded, with no tab cap in the v2 layout, and SP-330 contemplates layouts over 16 KiB;
+- SP-273 fixes `payload_ref=null` for this family's new writes (`storage-plan.md:21851`);
+- the envelope's DL-270 prose replaces a body over 16 KiB with a BLAKE3 `payload_ref` (`Contracts_V0.md:1019`);
+- `Plans/event_record.schema.json` 2.0.0 still requires an object `payload` (`:116`) and types `payload_ref` as a nullable string (`:120`-`:121`).
+
+**Why it stays open here.** Settling the envelope's prose against its schema is the envelope owner's work, not this lane's. The family can adopt the route once it is consistent. Under the rubric the producer lacks that append boundary, and the oracles cannot test a boundary missing from the contract.
+
+### The terminal question (stopped for Jared)
+
+> **`terminal.workgroup_moved` was withdrawn on 2026-10-09 (DL-181, SMPFS-170's rule) and its producer never ran, so no move was ever recorded. Which rule should SP-319 and SMPFS-170 both state?**
+> - **A.** Keep compatibility only. Any recorded 1.0.0 event keeps its exact meaning, retention, write refusal and no-remint checks. Retire the dedicated passive reader's new-disclosure path, SP-319's original-move oracles and both read-result and custody companions, explicitly, in both owners.
+> - **B.** A, plus a passive reader that discloses recorded 1.0.0 events through a closed read-result (`verified_historical` | `unresolved_historical_validation` | `unavailable`) with reader oracles. Since no operation was ever admitted, an authentic event can only resolve to `unresolved_historical_validation`. The original-move oracles and the original result/custody companion become lineage.
+> - **C.** Keep SP-319's full literal list: the reader, the original result/custody companion and the original-move paired oracles, written for an operation that never existed.
+
+**The review's recommendation: A**, "explicitly approved and applied to both owners". Its reasons:
+- B would add a disclosure route that cannot be inferred from an "unresolved" result.
+- C keeps substantial tests for retired behaviour.
+- "Readability" should mean preserved compatibility interpretation, not permission for a new disclosure route.
+
+Until Jared answers, `consumers_checkpoints` and `positive_negative_oracles` stay non-PASS. With an answer, the owner edits, fixtures and checker are a short follow-up (ids SMPFS-300-309 or SP-401-409).
+
+### Family grades (self-grade; ledger in brackets)
+
+| Family | Before (`a6665ac36c`) | After (`2b671a1605`) | Not PASS after |
+|---|---|---|---|
+| `context.compaction.completed` | 12 | 12 | none |
+| `browser.workspace.created` | 12 | 12 | none |
+| `browser.workspace.reset` | 12 | 12 | none |
+| `workspace.layout_changed` | 12 [12] | **10 [10]** | producer, positive_negative_oracles (PARTIAL [FAIL]) |
+| `terminal.workgroup_moved` | 11 [11] | **10 [10]** | consumers_checkpoints (PARTIAL [OWNER_REQUIRED]), positive_negative_oracles (PARTIAL [FAIL]) |
+
+Status counts: 59 PASS / 1 PARTIAL before, **56 PASS / 4 PARTIAL** after. Every one of the 279 evidence quotes was re-checked at `2b671a1605`.
+
+### Frozen seal check (validator SHA-256 `190a86f2…`, unchanged, scratch copies)
+
+**Result.** rc 1 both times, `seal_prerequisites_met` false, **4 failures before and 4 after**.
+
+| Failure | Before (`a6665ac36c`) | After (`2b671a1605`) |
+|---|---|---|
+| `post_august_admission_incomplete` | DL-300 three, no record | unchanged |
+| `unexpected_august_set` | DL-300 three + the August pair | unchanged |
+| `registered_contract_depth_incomplete` | 1: terminal (oracles) | **2: terminal (consumers, oracles); layout (producer, oracles)** |
+| `fresh_census_denominator_not_closed` | present | present |
+
+**Receipts:** `drafts/DS/seal-fix1-before-a6665ac36c-receipt.json`, `seal-fix1-after-<head>-receipt.json`.
+
+### Standing checks across the families this branch prepares
+
+| Check | Layout (Home4, this lane) | Terminal | Compaction, Browser created, Browser reset (oracles outside this lane) |
+|---|---|---|---|
+| 1 `projector_replay_only` negative | **added** (slot and receipt) | no oracle (stopped) | **absent** from their fixtures and checkers |
+| 2 CV-366 app-scope keys | n/a (project_only) | n/a | n/a: compaction's one application case is a `project_only` rejection |
+| 3 `project~` partition | n/a: Home keys use no partition | n/a | Browser created fixtures use `project~` |
+| 4 bodies over 16 KiB | **Home4 values fixed**; **event body open** (above) | n/a | not re-audited |
+| 5 anchored patterns and trailing-LF negatives | **fixed** (exact lengths plus ECMA guard; 9 trailing-LF negatives) | n/a | **no trailing-LF negatives found**; not re-audited per pattern |
+| 6 retry body | Home4 compares SP-273's semantic fields only (unchanged) | n/a | not re-audited |
+| 7 checkpoint identities | n/a in Home4 fixtures | n/a | not re-audited |
+| 8 failure oracles reject success | the Home4 checker exits 1 on any failure; `--self-test` proves it | n/a | not re-audited |
+| 9 every `$ref` resolves | **checker fails on an unresolved `$ref`** (384 resolve) | n/a | not re-audited |
+
+These three families' oracle cells are not touched by the fixes and are not re-graded here (the review accepted 12/12). If the lead treats standing checks 1 and 5 as rubric requirements, their oracle cells would be PARTIAL. Step 4's admission repoints would then no longer hold. That is the lead's call; see the open items.
+
+### Checks (round 1, VM, exit codes; baseline worktree at `a6665ac36c` for comparison)
+
+| Check | `a6665ac36c` | Head |
+|---|---|---|
+| `pm-plan-index.py validate` / `pm-shard-plans.py --check` | 0 / 0 | 0 / 0 (`status: pass`, 7422 units; only storage-plan shards and the index regenerated) |
+| `pm_home_layout_v2_slot_receipt.py` / `--self-test` | 0 (5/12/14) / n/a | 0 (10/30/33) / 0 |
+| `pm-storage-profile-check.py` | 1 | 1, identical output (pre-existing missing profiles) |
+| `pm-plans-verify.py` json-syntax, lint-path-refs, lint-contractrefs | 1 / 1 / 1 | 1 / 1 / 1, identical output |
+| `pm-plans-verify.py` lint-banned-phrases | 0 | 0 |
+| `pm-plans-verify.py` validate-plan-graph | 1 | 1, same failures; only the Spec Lock `actual` hashes of `storage-plan.md` and its index files differ |
+| `pm-plans-verify.py` validate-browser-event-admission, validate-pm7-gui-fixtures, validate-projects-refresh-contracts | 0 / 0 / 0 | 0 / 0 / 0 |
+| PM7 GUI, shared runtime, projects refresh, Browser created / created v2 / reset / admission checkers | 0 each | 0 each |
+| unittest: Browser admission 38, created 65, reset 53, PM7 GUI 13 | OK | OK |
+| unittest: holding bucket / coordination events | 2 / 14 failures | the same 2 / 14 |
+| review `evidence/PROBES.py` | (0 at review) | **1**: both defects refused |
+| Frozen seal check | 1, 4 failures | 1, 4 failures |
+
+**Expected governance staleness for the reseal request:** the Spec Lock hash of `Plans/storage-plan.md` (again).
+
+### Open items added in round 1
+
+1. **Layout's event body over 16 KiB.** It has no append route, because the envelope's DL-270 prose and `event_record.schema.json` 2.0.0 disagree. This needs the envelope owner. The family then adopts the route: Home4 event semantics, the reader, and a big-event oracle.
+2. **Seal-family oracles and standing checks 1 and 5.** The compaction, Browser created and Browser reset oracles have no `projector_replay_only` and no trailing-LF negatives. They are outside this lane's paths; the lead decides whether this reopens their oracle cells and the step-4 repoints.
+3. **The Home3 schema's anchored patterns.** `Plans/home_layout_pending_receipt.schema.json` has 168 patterns, without length guards. The Home4 checker guards every pattern it reaches, but a plain Python validator of Home3 values still accepts a trailing LF. The Home3 schema is outside this lane.
+4. **Registering the 4.0.0 edges.** When they are registered, SP-340's "the storage registry's storage_profile records which" should also record the Home4 reference form. SP-400 changes no registry row now.
+5. **`individual-disposition/COVERAGE.json`.** It is still not regenerated, as in every DS step.
 
 ## Second pass (DS-P2, VM, 2026-11-04)
 
@@ -14,6 +209,8 @@ The first pass left the frozen seal check at 4 failures. Three depth cells on th
 | `workspace.layout_changed` oracles | **PASS.** The suite SP-273 pins is fixed against DL-076, re-frozen as v5 and repinned, with receipts. | `bef4342ecc` |
 | `terminal.workgroup_moved` oracles | **Stopped** with an owner question (below). Nothing was written for it. | none |
 | Both August rows re-graded | Receipted row update in the step-5 pattern: layout 12/12, terminal 11/12. | `af9bff39ae` |
+
+**Superseded in review round 1 (above):** the review rejected layout's producer and oracle PASS (DS-SOL-01/02) and terminal's consumer PASS (DS-SOL-03); round 1 repairs the Home4 contract and re-grades layout 10/12 and terminal 10/12.
 
 **Frozen seal check.** The validator was unchanged (SHA-256 `190a86f2…`) and ran on scratch copies.
 - **Before (`600575221d`):** 4 failures. The receipt equals the first pass's `43d1ab5555` receipt in every field but the time.
@@ -373,7 +570,8 @@ Records: `ds-step7-exclusions-application.json` and `.md`. Both rows become `REC
 ## Files
 
 - `reports/event-authority-20261104/DS.md`: this report.
-- `reports/event-authority-20261104/DS.selfgrade.json`: self-grade of the five touched families at `af9bff39ae`: compaction, created, reset and layout 12/12, terminal 11/12 (59 PASS, 1 PARTIAL).
+- `reports/event-authority-20261104/DS.selfgrade.json`: self-grade of the five touched families, re-graded in review round 1 at `2b671a1605`: compaction, created and reset 12/12, layout 10/12, terminal 10/12 (56 PASS, 4 PARTIAL). At `af9bff39ae` it said layout 12/12 and terminal 11/12; the review rejected both.
+- `reports/event-authority-20261104/ds-fix1-home4-value-reference-search.txt`, `ds-fix1-application-time-correction.{md,json}`, `ds-fix1-terminal-consumer-regrade.{md,json}`, `ds-fix1-layout-regrade.{md,json}` (review round 1)
 - `reports/event-authority-20261104/ds-p2-home4-binding-search.txt`, `ds-p2-layout-suite-refreeze.{md,json}`, `ds-p2-august-regrade-application.{md,json}` (second pass)
 - `reports/event-authority-20261104/depth-b1-seal-families.{json,md}`
 - `reports/event-authority-20261104/ds-step{5,6,7}-*.{json,md}`
