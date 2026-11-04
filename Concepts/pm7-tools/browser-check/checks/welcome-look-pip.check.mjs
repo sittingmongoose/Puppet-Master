@@ -46,9 +46,10 @@ function installSampler() {
 		const list = g.transform && g.transform.baseVal;
 		let m0 = null;
 		if (list && list.numberOfItems) { m0 = new DOMMatrix(); for (let i = 0; i < list.numberOfItems; i++) { const t = list.getItem(i).matrix; m0 = m0.multiply(new DOMMatrix([t.a, t.b, t.c, t.d, t.e, t.f])); } }
-		const P = g.parentNode && g.parentNode.getScreenCTM ? g.parentNode.getScreenCTM() : null;
-		if (!m0 || !P) return null;
-		const m = P.multiply(m0), b = g.getBBox();
+		const S = g.parentNode && g.parentNode.getScreenCTM ? g.parentNode.getScreenCTM() : null;
+		if (!m0 || !S) return null;
+		// (getScreenCTM gives an SVGMatrix, whose multiply takes only another SVGMatrix: both are DOMMatrix here)
+		const m = new DOMMatrix([S.a, S.b, S.c, S.d, S.e, S.f]).multiply(m0), b = g.getBBox();
 		const pts = [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]].map(([x, y]) => [m.a * x + m.c * y + m.e, m.b * x + m.d * y + m.f]);
 		return [r1(Math.min(...pts.map((p) => p[0]))), r1(Math.min(...pts.map((p) => p[1]))), r1(Math.max(...pts.map((p) => p[0]))), r1(Math.max(...pts.map((p) => p[1])))];
 	};
