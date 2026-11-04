@@ -92,8 +92,9 @@ def validate(contract, payload, context):
     return True
 
 def main():
+    from pm_executor_event_semantics import expand_fixture_literals
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
-    fixtures = json.loads((ROOT / 'Plans/executor_event_contract_fixtures.json').read_text())['cases']
+    fixtures = expand_fixture_literals(json.loads((ROOT / 'Plans/executor_event_contract_fixtures.json').read_text()))['cases']
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
     existing = {f['event_type'] for f in registry['families']}
     assert len(contracts) == 16 and len({c['event_type'] for c in contracts}) == 16

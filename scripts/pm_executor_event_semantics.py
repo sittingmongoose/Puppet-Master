@@ -28,6 +28,30 @@ def canonical(value):
     return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
 
 
+def expand_fixture_literals(value):
+    """Expand only local fixture authoring notation, before any validation.
+
+    Long boundary strings/hex bytes use explicit repetition to keep fixture files
+    reviewable. Direct capture/schema/append validators never expand user input.
+    """
+    if type(value) is dict:
+        if set(value) == {'fixture_text_parts'}:
+            parts = []
+            for part in value['fixture_text_parts']:
+                if type(part) is str:
+                    parts.append(part)
+                else:
+                    require(type(part) is dict and set(part) == {'text', 'repeat'}
+                            and type(part['text']) is str and type(part['repeat']) is int
+                            and part['repeat'] >= 0, 'fixture repetition syntax')
+                    parts.append(part['text'] * part['repeat'])
+            return ''.join(parts)
+        return {key: expand_fixture_literals(item) for key, item in value.items()}
+    if type(value) is list:
+        return [expand_fixture_literals(item) for item in value]
+    return value
+
+
 def digest(value):
     return hashlib.sha256(canonical(value).encode()).hexdigest()
 
@@ -462,7 +486,7 @@ def mutate(value, changes):
 
 def main():
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
-    families = json.loads((ROOT / 'Plans/executor_event_semantic_fixtures.json').read_text())['families']
+    families = expand_fixture_literals(json.loads((ROOT / 'Plans/executor_event_semantic_fixtures.json').read_text()))['families']
     failures, count, traces, score_cases, schema_cases = [], 0, 0, 0, 0
     require(set(families) == {c['event_type'] for c in contracts}, 'fixture family closure')
     for contract in contracts:
