@@ -13784,7 +13784,7 @@
         "terminal_state": "unknown_enum",
         "retry_count": 1,
         "runtime_snapshot_ref": "runtime_snapshot_ref-001",
-        "success": true
+        "failure_class": "verification_failed"
       },
       "context": {
         "admitted": true,
@@ -13835,7 +13835,7 @@
             "terminal_state": "unknown_enum",
             "retry_count": 1,
             "runtime_snapshot_ref": "runtime_snapshot_ref-001",
-            "success": true
+            "failure_class": "verification_failed"
           },
           "payload_ref": null,
           "storage_instance_id": "store-001"
@@ -13844,7 +13844,92 @@
         "payload_packs": {},
         "viewer": "viewer-001"
       },
-      "expected": "reject"
+      "expected": "reject",
+      "seed": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_id-001",
+          "event_sequence": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "node_id": "node_id-001",
+          "attempt_id": "attempt_id-001",
+          "replan_generation": 1,
+          "terminal_state": "failed",
+          "retry_count": 1,
+          "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+          "failure_class": "verification_failed"
+        },
+        "context": {
+          "admitted": true,
+          "current_project_id": "project_id-001",
+          "current_generation": 1,
+          "graph_locked": false,
+          "source_refs_valid": true,
+          "read_authorized": true,
+          "deletion_fenced": false,
+          "receipt_available": true,
+          "writer_withdrawn": false,
+          "predicate_valid": true,
+          "now_utc": "2026-11-04T12:00:00Z",
+          "backoff_until_utc": "2026-11-04T12:00:00Z",
+          "packaging_passed": true,
+          "expected_blocked_sequence": null,
+          "expected_attempt_id": "attempt_id-001",
+          "expected_parent_attempt_id": null,
+          "source_facts": {
+            "attempt_state": "active",
+            "work_reconciled": true
+          },
+          "source_bindings": {
+            "project_id": "project_id-001",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "runtime_snapshot_ref": "runtime_snapshot_ref-001"
+          },
+          "envelope": {
+            "project_id": "project_id-001",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "attempt_id": "attempt_id-001",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "payload": {
+              "schema_version": "1.0.0",
+              "project_id": "project_id-001",
+              "event_sequence": 1,
+              "ts": "2026-11-04T12:00:00Z",
+              "run_id": "run_id-001",
+              "thread_id": "thread_id-001",
+              "node_id": "node_id-001",
+              "attempt_id": "attempt_id-001",
+              "replan_generation": 1,
+              "terminal_state": "failed",
+              "retry_count": 1,
+              "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+              "failure_class": "verification_failed"
+            },
+            "payload_ref": null,
+            "storage_instance_id": "store-001"
+          },
+          "source_child_success": true,
+          "payload_packs": {},
+          "viewer": "viewer-001"
+        }
+      },
+      "defect_changes": [
+        {
+          "path": "payload/terminal_state",
+          "value": "unknown_enum"
+        },
+        {
+          "path": "context/envelope/payload/terminal_state",
+          "value": "unknown_enum"
+        }
+      ]
     },
     {
       "event_type": "attempt.completed",
@@ -17556,7 +17641,7 @@
         "expected_attempt_id": "attempt_id-001",
         "expected_parent_attempt_id": null,
         "source_facts": {
-          "node_state": "verified",
+          "node_state": "verify_pending",
           "verification_evidence_valid": true
         },
         "source_bindings": {
@@ -17591,7 +17676,85 @@
         "payload_packs": {},
         "viewer": "viewer-001"
       },
-      "expected": "reject"
+      "expected": "reject",
+      "seed": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_id-001",
+          "event_sequence": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "attempt_id": "attempt_id-001",
+          "replan_generation": 1,
+          "result_outcome": "failed",
+          "evidence_refs": [],
+          "artifact_refs": []
+        },
+        "context": {
+          "admitted": true,
+          "current_project_id": "project_id-001",
+          "current_generation": 1,
+          "graph_locked": false,
+          "source_refs_valid": true,
+          "read_authorized": true,
+          "deletion_fenced": false,
+          "receipt_available": true,
+          "writer_withdrawn": false,
+          "predicate_valid": true,
+          "now_utc": "2026-11-04T12:00:00Z",
+          "backoff_until_utc": "2026-11-04T12:00:00Z",
+          "packaging_passed": true,
+          "expected_blocked_sequence": null,
+          "expected_attempt_id": "attempt_id-001",
+          "expected_parent_attempt_id": null,
+          "source_facts": {
+            "node_state": "verify_pending",
+            "verification_evidence_valid": true
+          },
+          "source_bindings": {
+            "project_id": "project_id-001",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1
+          },
+          "envelope": {
+            "project_id": "project_id-001",
+            "run_id": "run_id-001",
+            "attempt_id": "attempt_id-001",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "payload": {
+              "schema_version": "1.0.0",
+              "project_id": "project_id-001",
+              "event_sequence": 1,
+              "ts": "2026-11-04T12:00:00Z",
+              "run_id": "run_id-001",
+              "node_id": "node_id-001",
+              "attempt_id": "attempt_id-001",
+              "replan_generation": 1,
+              "result_outcome": "failed",
+              "evidence_refs": [],
+              "artifact_refs": []
+            },
+            "payload_ref": null,
+            "storage_instance_id": "store-001"
+          },
+          "source_child_success": true,
+          "payload_packs": {},
+          "viewer": "viewer-001"
+        }
+      },
+      "defect_changes": [
+        {
+          "path": "payload/result_outcome",
+          "value": "unknown_enum"
+        },
+        {
+          "path": "context/envelope/payload/result_outcome",
+          "value": "unknown_enum"
+        }
+      ]
     },
     {
       "event_type": "node.completed",

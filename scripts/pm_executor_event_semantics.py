@@ -74,6 +74,33 @@ def validate_dependency_presence(dependency, field):
 
 def canonical(value):
     # Fixture domain is strings, booleans, null, safe integers, lists and objects.
+    validate_canonical_domain(value)
+    return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
+
+
+def validate_canonical_domain(value):
+    """Refuse float aliases before any identity, body or custody digest is made."""
+    if type(value) is dict:
+        validate_payload_map_keys(value)
+        for item in value.values():
+            validate_canonical_domain(item)
+    elif type(value) is list:
+        for item in value:
+            validate_canonical_domain(item)
+    else:
+        require(value is None or type(value) in (str, bool, int), 'canonical integer value domain')
+
+
+def same_value(left, right):
+    """Compare typed JSON values; Python's True == 1 cannot join source facts."""
+    return canonical(left) == canonical(right)
+
+
+def fixture_encoding(value):
+    """Exact test-input comparison, including deliberately invalid float inputs.
+
+    This is authoring notation only, never an identity or semantic digest codec.
+    """
     return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
 
 
@@ -300,6 +327,7 @@ def validate_capture(contract, payload, capture, *, historical=False):
     else:
         validate_append_policy(contract, capture['envelope']['replay_policy'])
     validate_payload_transport(payload, capture['envelope'], capture['payload_packs'], capture['viewer'])
+    validate_canonical_domain(capture)
     adapter = contract['semantic_adapter']
     require(capture['adapter'] == adapter['id'], 'adapter dispatch')
     require(capture['family'] == contract['event_type'], 'family dispatch')
@@ -310,7 +338,7 @@ def validate_capture(contract, payload, capture, *, historical=False):
     require(scope['storage_instance_id'] == capture['envelope']['storage_instance_id'], 'storage root')
     for field in ('project_id', 'run_id', 'thread_id', 'attempt_id'):
         if field in payload:
-            require(capture['envelope'].get(field) == payload[field], 'envelope ' + field)
+            require(same_value(capture['envelope'].get(field), payload[field]), 'envelope ' + field)
     records = capture['records']
     expected_slots = set(adapter['source_records'])
     if contract['event_type'] in ('node.blocked', 'node.unblocked'):
@@ -329,14 +357,14 @@ def validate_capture(contract, payload, capture, *, historical=False):
         require(record['owner'] == owner, 'source owner ' + slot)
         require(record['project_id'] == scope['project_id'], 'source Project ' + slot)
         require(record['storage_instance_id'] == scope['storage_instance_id'], 'source root ' + slot)
-        require(record['revision'] == capture['expected_revisions'][slot], 'source revision ' + slot)
+        require(same_value(record['revision'], capture['expected_revisions'][slot]), 'source revision ' + slot)
         require(record['sha256'] == digest(record['body']), 'source digest ' + slot)
         require(record['parents'] == {parent: records[parent]['ref'] for parent in adapter['parent_joins'][slot]}, 'source parents ' + slot)
     for field, path in adapter['joins'].items():
         if field in payload:
-            require(payload[field] == at(records, path), 'source join ' + field)
+            require(same_value(payload[field], at(records, path)), 'source join ' + field)
     original = source_observation(adapter, records)
-    require(original == payload, 'complete source observation/presence')
+    require(same_value(original, payload), 'complete source observation/presence')
     if contract['event_type'] == 'attempt.started':
         execution = records['execution']['body']
         account_relevant = (execution.get('requested_account_id') is not None
@@ -354,9 +382,9 @@ def validate_capture(contract, payload, capture, *, historical=False):
     transition = capture['transition']
     # Retain the mirror consistency check, but authenticate its complete field set
     # against the independently hashed source records above.
-    require(transition['observed_payload'] == original, 'conditional presence/original observation')
-    require(transition['event_sequence'] == payload['event_sequence'], 'reserved sequence')
-    require(transition['revision'] == records[adapter['transition_record']]['revision'], 'transition revision')
+    require(same_value(transition['observed_payload'], original), 'conditional presence/original observation')
+    require(same_value(transition['event_sequence'], payload['event_sequence']), 'reserved sequence')
+    require(same_value(transition['revision'], records[adapter['transition_record']]['revision']), 'transition revision')
     require(transition['before'] == records[adapter['transition_record']]['body']['state'], 'source predecessor')
     rules = [r for r in adapter['transitions']
              if transition['before'] == r['before']
@@ -364,42 +392,13 @@ def validate_capture(contract, payload, capture, *, historical=False):
     validate_transition_rules(rules)
     require(transition['after'] == rules[0]['after'], 'illegal successor')
     require(capture['post_state']['state'] == transition['after'], 'post-state')
-    require(capture['post_state']['revision'] == transition['revision'] + 1, 'post-state CAS')
-    require(capture['post_state']['event_sequence'] == payload['event_sequence'], 'post-state sequence')
+    require(same_value(capture['post_state']['revision'], transition['revision'] + 1), 'post-state CAS')
+    require(same_value(capture['post_state']['event_sequence'], payload['event_sequence']), 'post-state sequence')
     effects = adapter.get('effects_by_failure_class', {}).get(payload.get('failure_class'), adapter['effects'])
     require(capture['post_state']['effects'] == effects, 'post-state effects')
     for path, expected in adapter['requirements'].items():
         require(at(records, path) == expected, 'owner predicate ' + path)
-    for field, ref in capture['dependency_refs'].items():
-        dependency = capture['dependencies'].get(ref)
-        validate_dependency_presence(dependency, field)
-        require(payload.get(field) == ref, 'dependency payload ref ' + field)
-        require(dependency['project_id'] == payload['project_id'], 'dependency scope ' + field)
-        require(dependency['storage_instance_id'] == scope['storage_instance_id'], 'dependency root ' + field)
-        require(dependency['sha256'] == digest(dependency['body']), 'dependency hash ' + field)
-        require(dependency['deleted_at'] is None, 'deleted dependency ' + field)
-        require(capture['viewer'] in dependency['readers'], 'dependency authorization ' + field)
-        if field == 'execution_unit_context_ref':
-            # Shared dependency instances keep their existing owner validation.
-            # The DX whole-document gate owns the sixteen payloads and proof schema.
-            schema_validate('Plans/execution_unit_context.schema.json', dependency['body'],
-                            whole_schema_refs=False)
-        if field in ('runtime_snapshot_ref', 'execution_unit_context_ref'):
-            for key in ('project_id', 'run_id', 'thread_id', 'node_id', 'attempt_id'):
-                if key in dependency['body'] and key in payload:
-                    require(dependency['body'][key] == payload[key], 'runtime subject ' + key)
-            for key in adapter['context_join_fields']:
-                require(dependency['body'].get(key) == records['execution']['body'].get(key), 'runtime identity ' + key)
-    reference_fields = {k for k in payload if k.endswith('_ref') or k.endswith('_snapshot_id') or k == 'safe_point_id'}
-    require(set(capture['dependency_refs']) == reference_fields, 'complete dependency resolution')
-    for field in adapter['evidence_lists']:
-        for ref in payload.get(field, []):
-            dependency = capture['dependencies'].get(ref)
-            require(dependency is not None and dependency['project_id'] == payload['project_id']
-                    and dependency['storage_instance_id'] == scope['storage_instance_id']
-                    and dependency['sha256'] == digest(dependency['body'])
-                    and dependency['deleted_at'] is None and capture['viewer'] in dependency['readers'],
-                    'evidence list dependency ' + field)
+    validate_dependencies(contract, payload, capture)
     name = contract['event_type']
     if name == 'attempt.completed':
         require((payload['terminal_state'] == 'done') == payload.get('success', False), 'terminal outcome classification')
@@ -421,7 +420,7 @@ def validate_capture(contract, payload, capture, *, historical=False):
         require(payload['child_attempt_id'] == records['child_attempt']['body']['attempt_id'], 'child attempt record')
         require(payload['remediation_root_id'] == records['root']['body']['remediation_root_id'], 'remediation root record')
         require(lineage['generation'] <= lineage['ceiling'], 'remediation ceiling')
-        require(lineage['generation'] == lineage['remediation_generation'], 'normalized remediation generation')
+        require(same_value(lineage['generation'], lineage['remediation_generation']), 'normalized remediation generation')
         require(payload['remediation_generation'] <= lineage['ceiling'], 'joined remediation generation ceiling')
         if name == 'remediation.resolved' and payload['resolution'] == 'fixed':
             require(lineage['child_result'] == 'done', 'fixed without successful child')
@@ -460,6 +459,42 @@ def validate_capture(contract, payload, capture, *, historical=False):
     return True
 
 
+def validate_dependencies(contract, payload, capture):
+    """Verify complete owner-resolved bodies for the viewer of this read."""
+    adapter = contract['semantic_adapter']
+    records, scope = capture['records'], capture['scope']
+    for field, ref in capture['dependency_refs'].items():
+        dependency = capture['dependencies'].get(ref)
+        validate_dependency_presence(dependency, field)
+        require(payload.get(field) == ref, 'dependency payload ref ' + field)
+        require(dependency['project_id'] == payload['project_id'], 'dependency scope ' + field)
+        require(dependency['storage_instance_id'] == scope['storage_instance_id'], 'dependency root ' + field)
+        require(dependency['sha256'] == digest(dependency['body']), 'dependency hash ' + field)
+        require(dependency['deleted_at'] is None, 'deleted dependency ' + field)
+        require(capture['viewer'] in dependency['readers'], 'dependency authorization ' + field)
+        if field == 'execution_unit_context_ref':
+            # Shared dependency instances keep their existing owner validation.
+            # The DX whole-document gate owns the sixteen payloads and proof schema.
+            schema_validate('Plans/execution_unit_context.schema.json', dependency['body'],
+                            whole_schema_refs=False)
+        if field in ('runtime_snapshot_ref', 'execution_unit_context_ref'):
+            for key in ('project_id', 'run_id', 'thread_id', 'node_id', 'attempt_id'):
+                if key in dependency['body'] and key in payload:
+                    require(same_value(dependency['body'][key], payload[key]), 'runtime subject ' + key)
+            for key in adapter['context_join_fields']:
+                require(same_value(dependency['body'].get(key), records['execution']['body'].get(key)), 'runtime identity ' + key)
+    reference_fields = {k for k in payload if k.endswith('_ref') or k.endswith('_snapshot_id') or k == 'safe_point_id'}
+    require(set(capture['dependency_refs']) == reference_fields, 'complete dependency resolution')
+    for field in adapter['evidence_lists']:
+        for ref in payload.get(field, []):
+            dependency = capture['dependencies'].get(ref)
+            require(dependency is not None and dependency['project_id'] == payload['project_id']
+                    and dependency['storage_instance_id'] == scope['storage_instance_id']
+                    and dependency['sha256'] == digest(dependency['body'])
+                    and dependency['deleted_at'] is None and capture['viewer'] in dependency['readers'],
+                    'evidence list dependency ' + field)
+
+
 def validate_history(contract, payload, original, retained_source_sha256, disclosure):
     """Finite retained-source read oracle, independent of today's live lifecycle.
 
@@ -467,6 +502,10 @@ def validate_history(contract, payload, original, retained_source_sha256, disclo
     persisted event field or native admission proof. Original transition predicates
     use the original owner reads; disclosure uses current access/withdrawal fences.
     """
+    require(digest(original) == retained_source_sha256, 'retained original source custody')
+    # Authenticate the immutable original and its then-valid lifecycle first.
+    # The recorded viewer is evidence of original disclosure, never a current grant.
+    validate_capture(contract, payload, original['capture'], historical=True)
     require(disclosure['reader_active'], 'reader_withdrawn')
     require(disclosure['source_available'], 'source_unavailable')
     require(disclosure['event_deleted_at'] is None, 'event_deleted')
@@ -474,9 +513,12 @@ def validate_history(contract, payload, original, retained_source_sha256, disclo
     require(disclosure['project_id'] == payload['project_id'], 'history Project')
     require(disclosure['storage_instance_id'] == original['capture']['scope']['storage_instance_id'],
             'history Storage root')
-    require(digest(original) == retained_source_sha256, 'retained original source custody')
-    # Never substitute a present-day run/node/attempt/graph into this check.
-    validate_capture(contract, payload, original['capture'], historical=True)
+    # These are fresh owner read observations, separate from the pinned original.
+    current = {**original['capture'], 'viewer': disclosure['viewer'],
+               'payload_packs': disclosure['payload_packs'],
+               'dependencies': disclosure['dependencies']}
+    validate_payload_transport(payload, current['envelope'], current['payload_packs'], current['viewer'])
+    validate_dependencies(contract, payload, current)
     return {'result': 'history_only', 'effects': 0}
 
 
@@ -592,6 +634,23 @@ def run_helper_case(case):
     return operations[name]()
 
 
+def run_numeric_case(contract, baseline, case):
+    """Probe the declared fixture numeric domain before hashing or encoding."""
+    from pm_executor_event_contracts import identity
+    number = json.loads(case['spelling'])
+    payload = {**baseline['payload'], 'event_sequence': number}
+    boundary = case['boundary']
+    if boundary == 'identity':
+        return identity(contract, payload, 'store-001')
+    if boundary == 'digest':
+        return digest(payload)
+    if boundary == 'canonical':
+        return canonical({'nested': [number]})
+    if boundary == 'payload_bytes':
+        return payload_bytes(payload)
+    raise ValueError('unknown numeric boundary ' + boundary)
+
+
 def main():
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
     failures = check_lane_schemas(contracts)
@@ -611,19 +670,34 @@ def main():
             result, reason = 'reject', str(error)
         if result != case['expected'] or reason != case.get('reason'):
             failures.append(['helper', case['case'], result, reason])
-    count, traces, score_cases, schema_cases, ref_cases, history_cases = 0, 0, 0, 0, 0, 0
+    count, traces, score_cases, schema_cases, ref_cases, history_cases, numeric_cases = 0, 0, 0, 0, 0, 0, 0
     require(set(families) == {c['event_type'] for c in contracts}, 'fixture family closure')
     for contract in contracts:
         family = families[contract['event_type']]
         failures.extend(reference_cases(contract, ref_fixtures[contract['event_type']]))
         ref_cases += len(ref_fixtures[contract['event_type']])
+        for case in family.get('numeric_cases', []):
+            numeric_cases += 1
+            try:
+                actual = run_numeric_case(contract, family['baseline'], case)
+                result = 'accept'
+                # JSON -0 decodes to integer zero. It must have exactly the same
+                # identity/digest/bytes as 0, never a second spelling downstream.
+                canonical_spelling = str(json.loads(case['spelling']))
+                control = run_numeric_case(contract, family['baseline'],
+                                           {**case, 'spelling': canonical_spelling})
+                require(actual == control, 'numeric spelling canonical result')
+            except ValueError:
+                result = 'reject'
+            if result != case['expected']:
+                failures.append([contract['event_type'], case['case'], result])
         for case in family['cases']:
             count += 1
             specimen = mutate(family['baseline'], case['changes'])
             if 'seed_changes' in case:
                 seed = mutate(family['baseline'], case['seed_changes'])
                 validate_capture(contract, seed['payload'], seed['capture'])
-                require(canonical(mutate(seed, case['defect_changes'])) == canonical(specimen),
+                require(fixture_encoding(mutate(seed, case['defect_changes'])) == fixture_encoding(specimen),
                         'coherent negative seed ' + case['case'])
             try:
                 validate_capture(contract, specimen['payload'], specimen['capture'])
@@ -637,14 +711,22 @@ def main():
             original = mutate(family['baseline'], case['original_changes'])
             payload = copy.deepcopy(family['baseline']['payload'])
             payload.update(case['event_changes'])
+            if 'seed_disclosure' in case:
+                validate_history(contract, payload, original, case['retained_source_sha256'],
+                                 case['seed_disclosure'])
+                require(fixture_encoding(mutate(case['seed_disclosure'], case['disclosure_changes']))
+                        == fixture_encoding(case['disclosure']),
+                        'coherent disclosure seed ' + case['case'])
             try:
                 actual = validate_history(contract, payload, original,
                                           case.get('retained_source_sha256', family['retained_source_sha256']), case['disclosure'])
-                result = 'accept' if actual == {'result': 'history_only', 'effects': 0} else 'invalid_effects'
-            except (ValueError, KeyError, jsonschema.ValidationError):
-                result = 'reject'
+                result, reason = ('accept' if actual == {'result': 'history_only', 'effects': 0} else 'invalid_effects'), None
+            except (ValueError, KeyError, jsonschema.ValidationError) as error:
+                result, reason = 'reject', str(error)
             if result != case['expected']:
                 failures.append([contract['event_type'], case['case'], result])
+            if 'reason' in case and (reason is None or not reason.startswith(case['reason'])):
+                failures.append([contract['event_type'], case['case'], reason])
             # The same event must fail current-writer predicates using the later
             # live source; passing history cannot be an accidental ignored check.
             live = mutate(family['baseline'], case['live_changes'])
@@ -683,7 +765,7 @@ def main():
                 result = 'reject'
             if result != case['expected']:
                 failures.append([contract['event_type'], case['case'], result])
-    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'schema_reference_cases': ref_cases, 'historical_read_cases': history_cases, 'helper_cases': len(helper_cases), 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
+    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'schema_reference_cases': ref_cases, 'historical_read_cases': history_cases, 'numeric_boundary_cases': numeric_cases, 'helper_cases': len(helper_cases), 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)
 
 

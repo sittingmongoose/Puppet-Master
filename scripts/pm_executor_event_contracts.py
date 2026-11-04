@@ -11,19 +11,21 @@ from pm_executor_schema_refs import check_lane_schemas, reference_cases
 ROOT = Path(__file__).resolve().parents[1]
 
 def identity(contract, payload, storage_instance_id):
-    # These identity arrays contain strings and nonnegative integers only: compact
-    # UTF-8 JSON is RFC8785 for this restricted domain (no float or key ordering).
-    def canonical(value):
-        return json.dumps(value, ensure_ascii=False, separators=(',', ':'))
+    from pm_executor_event_semantics import canonical, require
+    # Identity values are exactly the owner's strings and nonnegative integers.
+    values = [payload[k] for k in contract['identity_fields']]
+    require(all(type(value) is str or (type(value) is int and value >= 0)
+                for value in values), 'identity string/nonnegative integer domain')
     inner = canonical([payload[k] for k in contract['identity_fields']])
     digest = lambda value: hashlib.sha256(value.encode('utf-8')).hexdigest()
     return ('executor:' + contract['event_type'] + ':v1:' + digest(inner),
             'evt_executor_' + digest(canonical([storage_instance_id, contract['event_type'], inner])))
 
 def validate(contract, payload, context):
-    from pm_executor_event_semantics import schema_validate, validate_append_policy, validate_payload_transport
+    from pm_executor_event_semantics import schema_validate, validate_append_policy, validate_payload_transport, validate_canonical_domain, same_value
     validate_append_policy(contract, context['envelope']['replay_policy'])
     validate_payload_transport(payload, context['envelope'], context['payload_packs'], context['viewer'])
+    validate_canonical_domain(context)
     schema_validate(contract['schema_ref'], payload)
     for field in ('admitted', 'source_refs_valid', 'read_authorized', 'receipt_available', 'predicate_valid'):
         if not context[field]:
@@ -32,11 +34,11 @@ def validate(contract, payload, context):
         raise ValueError('withdrawal/deletion fence')
     if payload['project_id'] != context['current_project_id']:
         raise ValueError('Project join')
-    if payload.get('replan_generation') != context['current_generation']:
+    if not same_value(payload.get('replan_generation'), context['current_generation']):
         raise ValueError('generation join')
     for p, c in [('attempt_id', 'expected_attempt_id'), ('blocked_sequence', 'expected_blocked_sequence'),
                  ('remediation_parent_attempt_id', 'expected_parent_attempt_id')]:
-        if p in payload and payload[p] != context[c]:
+        if p in payload and not same_value(payload[p], context[c]):
             raise ValueError(p + ' source join')
     name = contract['event_type']
     proof_schema = json.loads((ROOT / 'Plans/executor_event_source_proofs.schema.json').read_text())
@@ -44,10 +46,10 @@ def validate(contract, payload, context):
     jsonschema.Draft202012Validator(definition).validate(context['source_facts'])
     for key, value in payload.items():
         if key.endswith('_id') or key in ('blocked_sequence', 'remediation_generation', 'replan_generation', 'runtime_snapshot_ref'):
-            if context['source_bindings'].get(key) != value:
+            if not same_value(context['source_bindings'].get(key), value):
                 raise ValueError('canonical source binding: ' + key)
     for key in ('project_id', 'run_id', 'thread_id', 'attempt_id'):
-        if key in payload and context['envelope'].get(key) != payload[key]:
+        if key in payload and not same_value(context['envelope'].get(key), payload[key]):
             raise ValueError('envelope binding: ' + key)
     if name == 'node.completed':
         expected = 'verified' if payload['result_outcome'] == 'done' else 'verify_pending'
@@ -93,7 +95,7 @@ def validate(contract, payload, context):
     return True
 
 def main():
-    from pm_executor_event_semantics import expand_fixture_literals, mutate, canonical
+    from pm_executor_event_semantics import expand_fixture_literals, mutate, fixture_encoding
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
     existing = {f['event_type'] for f in registry['families']}
@@ -120,7 +122,7 @@ def main():
                 seed = case['seed']
                 validate(c, seed['payload'], seed['context'])
                 rebuilt = mutate(seed, case['defect_changes'])
-                assert canonical([rebuilt['payload'], rebuilt['context']]) == canonical([case['payload'], case['context']]), case['case']
+                assert fixture_encoding([rebuilt['payload'], rebuilt['context']]) == fixture_encoding([case['payload'], case['context']]), case['case']
             try:
                 validate(c, case['payload'], case['context'])
                 result = 'accept'
