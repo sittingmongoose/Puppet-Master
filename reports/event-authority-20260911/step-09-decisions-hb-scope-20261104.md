@@ -124,3 +124,51 @@ FX1 has no family admissions, new technical bindings, family self-grades or unre
 - `shard-check.json`: `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21`.
 - `index-validate.json`: `63dcb8015cdbc5b604ec78835033b9c95b41888da9514da3b388ed649393c0c5`.
 - `pins-and-quotes.json`: `b156f280186120bf437bdefe5f5b54768a4cda74dd60af6fbee5a585c08a5765`.
+
+## Review cycle 2
+
+**C2-01 — fixed by FX2, 2026-11-04.** Based on `bab8ccda769c07565961f02b8ae7882d19dc2a6d`, DL-400's prose and PlanUnit now explicitly supersede only the old separate-landing granularity, including DL-094's six-remaining-family condition and every derivative restatement of the cited rules. DL-094 was added to ContractRefs and `depends_on`. Separate family commits, full contracts, Decision Log entries, admission records with before/after registry revision and SHA-256, all twelve passing depth criteria, reviews, coordinator go and checkpoint bookkeeping remain required. Jared's three excerpts remain byte-exact. No new decision ID or family binding was authored; family grading remains not applicable before/after this decision-record repair, and no admission was performed.
+
+**Locations independently verified at the input head (line numbers below are input-head lines).**
+
+| Review location | Verified continuing wording |
+|---|---|
+| `Plans/Decision_Log.md:2169,2177,2182,9898,9951` | DL-094's one-family landing and six remaining families' own landings, in prose and PlanUnit. |
+| `Plans/Decision_Log.md:9474` | DL-087 PlanUnit, each collaborative family's own admission landing. |
+| `Plans/Automated_Testing_System.md:5421` | ATS-058, one family per landing. |
+| `Plans/orchestrator-subagent-integration.md:3807` | OSI-438 coordination authority, one family per landing. |
+| `Plans/storage-plan.md:27105` | SP-320 coordination persistence binding, one family per landing. |
+| `Plans/Contracts_V0.md:21669` | CV-332, separate complete owner/Storage review and landing. |
+| `Plans/storage-plan.md:19607` | SP-262, separate family landing. |
+| `Plans/coordination_event_admission.json:31` | `admission_rule`, own landing and one family per landing. |
+| `Plans/browser_event_admission.json:53` | `claim_boundary`, separate landing. |
+| `reports/event-authority-20260911/step8-9-progress-20260924.md:40` | Six remaining coordination admissions, one family per landing. |
+
+The review's historical repetitions in `step-09-batch2-card-answer-application-20260925.md:182`, `step-09-coordination-binding-search-20260925.md:293`, and `step-09-coordination-prep-20260925.md:12` were also verified and named in DL-400. All are under `reports/event-authority-20260911/`.
+
+**Additional locations beyond the review table.** These restatements were independently inspected and added to DL-400's coverage:
+
+- **Browser owners:** `Plans/Section15_MVP_Promoted_Features_Spec.md:948,9383` (event-family admission boundary; Browser Program migration coverage); `Plans/storage-plan.md:18097` (Known-37 retention assignment).
+- **Browser wiring:** all 15 repeated Browser command `acceptance_checks` in `Plans/Wiring_Matrix.production.json:15265,15356,15447,15538,15631,15722,15813,16076,16167,16248,16341,16432,17290,17381,17472` require a one-family landing.
+- **Coordination derivatives:** `Plans/Contracts_V0.md:3085` (CV-353 prose); `Plans/coordination_event_admission.schema.json:5` and `Plans/coordination_event_payloads.schema.json:5` (descriptions); `Plans/storage_value_registry.json:10847,10849` (coordination notes); `Plans/coordination_event_admission.json:32` (`claim_boundary`). These are qualified only as derivatives of the old landing rule; their quarantine, schema, depth and admission requirements stand.
+- **Historical procedure and responses:** `reports/event-authority-20260911/step-09-batch2-20260925.md:51,73`, `step-08-remaining-source-work-plan-20260924.md:33`, `step-09-binding-authority-question.md:15`, `step-10-validator-live-set-card-20260924.md:39,46,49`, and `decision-responses.jsonl:20,32,33,36`. Their answered-card sources and every derivative separate-landing restatement are expressly covered. Historical descriptions of completed individual landings remain historical facts.
+
+**Search scope.** Case-insensitive `rg` across root `Plans/*.md`, `Plans/*.json` (including schemas) and Event Authority reports, supplemented with one-per-landing and one-family-landing spellings; every other direct text file under `Plans/` was also searched. Generated mirrors and pipeline/source-lineage memory are not additional authority. The search included own/individual/separate landing formulations; unrelated GUI block landings, shared infrastructure landings and physical-record registration notes do not extend this decision's Event Authority scope.
+
+**Scope and fidelity.** A byte comparison removing only DL-400's prose and PlanUnit reproduces the input Decision Log exactly; DL-077, DL-093, DL-094 and their PlanUnits are unchanged. An initial helper caught two overbroad YAML-apostrophe substitutions outside DL-400; they were corrected before final regeneration, and the exact scope assertion then passed (exit 0). No owner document, admission JSON, historical report or card was edited. The only non-derived changes are DL-400 and this report. Currentness inputs were copied from the shared checkout; all 15 files SHA-256 matched. Only Decision Log shards and the global plan index were regenerated. The frozen validator was read, never edited.
+
+**Frozen pins and marker.** The unchanged validator's actual `decision_section_bytes` function was extracted with Python AST and executed. DL-077 remains `b93a7d768eb301b81ce0eaa38345f0f49ff9b3d74b76e721418d6d2dce2d67d4`; DL-094 remains `e8e2404f028e426c6e69572ab848eae668ea095baf7389b3ae21ba85f151587f`. The function successfully reads DL-400 beginning with `### DL-400:`. The validator SHA-256 remains `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20`. Parsed PlanUnit supersession equals the prose sentence bytes, DL-094 is in both required reference lists, and each preserved quote matches the primary answer evidence.
+
+**Open integration note.** The review's stale remote branch ID collision is unchanged and out of this repair's scope; the lander re-checks IDs at fetch. No landing, governance reseal, registry append or baseline refresh was attempted.
+
+**Final FX2 checks.** Shard generation **exit 0**; index generation **exit 0**; shard check **exit 0**, parsed `status=pass`; index validation **exit 0**, parsed top-level `status=pass` with zero failures; frozen pins/heading, quotes and exact non-DL-400 byte comparison **exit 0**; `git diff --check` **exit 0**. Both index JSONL files retain every other document's rows unchanged. Final diff scope: 21 allowed paths, comprising Decision Log, its 13 shard/index/manifest paths, six global plan-index files and this report.
+
+Evidence captures under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/B1/` (SHA-256):
+
+- `FX2-index-generate.json`: `218322d15b119b1c389959da33294cb551e6edd977f88731d556b5be1a136cdc`.
+- `FX2-index-validate.json`: `2cd16c781b2874cb0acbbea17c70975cbcf921ef12466e7dbb0aedb269e8b87e`.
+- `FX2-pins-and-quotes.json`: `4832d0f70cbc12893b79770fe12da861392959b92555afdc1aecaa761cafa623`.
+- `FX2-search-supplement.txt`: `73470c2a95f481c1b5c9f2ca8c6f472b7cecc365cd936e917ad4389de993fbcb`.
+- `FX2-search.txt`: `ab39b495d95303e3141f56fb35047ba61b2b8d9725ec21da9d9c064a00a9b249`.
+- `FX2-shard-check.json`: `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21`.
+- `FX2-shard-generate.json`: `48c09691cf1c0464d1276a594016813a0df26d1a721256cd653580869c58d3c4`.

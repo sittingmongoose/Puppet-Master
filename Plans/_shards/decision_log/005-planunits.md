@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4420-L14845
+Source lines: L4420-L14846
 
-Source SHA256: `fe4baa2bb5244c389eeb700475178d0b49fc7879632d68ca91d03ce6c03cae98`
+Source SHA256: `fd2f8100a04224caa4a4e56ae9ffa356563ea03154e36b925bacfb80e74e9d85`
 
 ---
 
@@ -20,7 +20,7 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: 'Jared answered on 2026-11-04, verbatim: "Do it all in 3 batches.  We will just have to check each change before it lands.  Which can be done in parallel immediately after the change lands.  Most of these changes and reviews can be done in parallel." Review answer, verbatim: "Review before and right after." Jared also said, as the premise-check rule: "Keep in mind, a lot of things have changed in canon since those August and sept events.  So some of those decisions might be very outdated."
 
 
-  The landing granularity is now three batches. This replaces the one-family-per-landing clause in Plans/Decision_Log.md#DL-045, the cadence answer recorded in Plans/Decision_Log.md#DL-046, the procedure condition in Plans/Decision_Log.md#DL-078, the individual-landing requirements in Plans/Decision_Log.md#DL-090 and Plans/Decision_Log.md#DL-091, the restatements in Plans/Decision_Log.md#DL-093 and Plans/Decision_Log.md#DL-096, and the Scope and outcomes, Per registration and Standing constraints of reports/event-authority-20260911/step-09-procedure-20260924.md. Those earlier entries and records remain historical text; their landing granularity is superseded here.
+  The landing granularity is now three batches. Only the old separate-landing granularity is superseded: the one-family-per-landing clause in Plans/Decision_Log.md#DL-045, the cadence answer in Plans/Decision_Log.md#DL-046, the procedure condition in Plans/Decision_Log.md#DL-078, the DL-087 PlanUnit admission-landing restatement, the individual-landing requirements in Plans/Decision_Log.md#DL-090 and Plans/Decision_Log.md#DL-091, the restatements in Plans/Decision_Log.md#DL-093 and Plans/Decision_Log.md#DL-096, and Plans/Decision_Log.md#DL-094 including its condition that the six remaining coordination families each have their own landing. This supersession includes the owner restatements in Plans/Automated_Testing_System.md#ATS-058, Plans/orchestrator-subagent-integration.md (Coordination event authority, OSI-438), Plans/storage-plan.md (Coordination event persistence binding, SP-320), Plans/Contracts_V0.md#CV-332 and Plans/storage-plan.md#SP-262; the admission restatements in Plans/coordination_event_admission.json admission_rule and Plans/browser_event_admission.json claim_boundary; and the Scope and outcomes, Per registration and Standing constraints of reports/event-authority-20260911/step-09-procedure-20260924.md and Next, in order of reports/event-authority-20260911/step8-9-progress-20260924.md. It also covers the Browser restatements in Plans/Section15_MVP_Promoted_Features_Spec.md (event-family admission boundary and Browser Program migration coverage), Plans/storage-plan.md (Known-37 retention assignment), and the Browser command acceptance_checks in Plans/Wiring_Matrix.production.json; the coordination derivatives in Plans/Contracts_V0.md#CV-353, Plans/coordination_event_admission.schema.json description, Plans/coordination_event_payloads.schema.json description, Plans/storage_value_registry.json coordination notes, and Plans/coordination_event_admission.json claim_boundary; and the historical restatements in reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.md, step-09-coordination-binding-search-20260925.md, step-09-coordination-prep-20260925.md, step-09-batch2-20260925.md, step-08-remaining-source-work-plan-20260924.md, step-09-binding-authority-question.md, step-10-validator-live-set-card-20260924.md and decision-responses.jsonl in that same directory, including their answered-card sources. Every derivative restatement of these cited separate-landing rules is covered; the earlier entries, owner text, admission records, reports and cards retain their historical bytes. Separate family commits, full contracts, Decision Log entries, admission records with registry revision and SHA-256 before and after each family commit, all twelve passing depth criteria, reviews, the coordinator''s landing go and checkpoint bookkeeping remain required.
 
 
   Coordinator''s reading, relayed to Jared on 2026-11-04: every family still has its own full contract, its own Decision Log entry, its own admission record (registry revision and SHA-256 before and after its own commit), its own depth assessment with all twelve criteria passing, and its own Sol 6.1 max then Astra max verdict. A batch lands only when its changes passed; a change that fails is pulled from the batch. Each batch is reviewed again right after it lands, against main. DL-039''s no bulk registration stands. The coordinator''s landing go and checkpoint bookkeeping remain required. This paragraph records the coordinator''s reading, not additional quoted words from Jared.
@@ -38,11 +38,12 @@ depends_on:
 - DL-090
 - DL-091
 - DL-093
+- DL-094
 - DL-096
 unblocks: []
 acceptance_criteria:
 - The three verbatim excerpts and source SHA-256 match the recorded answers of 2026-11-04.
-- Three batch landings supersede the cited earlier landing granularity while preserving separate family commits, contracts, decision entries, admission records, depth assessments and verdicts.
+- Three batch landings supersede only the old separate-landing granularity, including DL-094 remaining-family conditions and every derivative restatement of the cited rules, while preserving separate family commits, contracts, decision entries, admission records, all twelve passing depth criteria, reviews, coordinator go and checkpoint bookkeeping.
 - Each change receives Sol 6.1 max then Astra max review before landing; failed changes are pulled, and each batch is reviewed again right after landing against main.
 - DL-039 no bulk registration, all twelve depth criteria, coordinator go and checkpoint bookkeeping remain required.
 validation_surfaces:

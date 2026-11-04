@@ -29508,6 +29508,11 @@
     {
       "edge_type": "depends_on",
       "from": "DL-400",
+      "to": "DL-094"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-400",
       "to": "DL-096"
     },
     {
@@ -117291,7 +117296,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T17:45:21Z",
+  "generated_at_utc": "2026-11-04T18:36:24Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -147954,8 +147959,8 @@
       "source_location": {
         "heading": "DL-001 - Decision Log Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 10091,
-        "line": 10093,
+        "heading_line": 10092,
+        "line": 10094,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -147971,8 +147976,8 @@
       "source_location": {
         "heading": "DL-002 - Decision Log Human-Authored Ledger Boundary",
         "heading_level": 3,
-        "heading_line": 4486,
-        "line": 4488,
+        "heading_line": 4487,
+        "line": 4489,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -147988,8 +147993,8 @@
       "source_location": {
         "heading": "DL-003 - OpenCode Extraction Reference Aid Boundary",
         "heading_level": 3,
-        "heading_line": 4532,
-        "line": 4534,
+        "heading_line": 4533,
+        "line": 4535,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148005,8 +148010,8 @@
       "source_location": {
         "heading": "DL-004 - Extraction Section Number Drift Guard",
         "heading_level": 3,
-        "heading_line": 4573,
-        "line": 4575,
+        "heading_line": 4574,
+        "line": 4576,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148022,8 +148027,8 @@
       "source_location": {
         "heading": "DL-005 - Node Graph Execution Model",
         "heading_level": 3,
-        "heading_line": 4612,
-        "line": 4614,
+        "heading_line": 4613,
+        "line": 4615,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148039,8 +148044,8 @@
       "source_location": {
         "heading": "DL-006 - Governance Role Split",
         "heading_level": 3,
-        "heading_line": 4660,
-        "line": 4662,
+        "heading_line": 4661,
+        "line": 4663,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148056,8 +148061,8 @@
       "source_location": {
         "heading": "DL-007 - Completion Promotion Distinctions",
         "heading_level": 3,
-        "heading_line": 4706,
-        "line": 4708,
+        "heading_line": 4707,
+        "line": 4709,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148073,8 +148078,8 @@
       "source_location": {
         "heading": "DL-008 - Weak Integration First Class Scope",
         "heading_level": 3,
-        "heading_line": 4752,
-        "line": 4754,
+        "heading_line": 4753,
+        "line": 4755,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148090,8 +148095,8 @@
       "source_location": {
         "heading": "DL-009 - Corroboration Threshold Rule",
         "heading_level": 3,
-        "heading_line": 4797,
-        "line": 4799,
+        "heading_line": 4798,
+        "line": 4800,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148107,8 +148112,8 @@
       "source_location": {
         "heading": "DL-010 - Graph Patch Lineage Generation",
         "heading_level": 3,
-        "heading_line": 4841,
-        "line": 4843,
+        "heading_line": 4842,
+        "line": 4844,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148124,8 +148129,8 @@
       "source_location": {
         "heading": "DL-011 - Source Control Worktree First Boundary",
         "heading_level": 3,
-        "heading_line": 4886,
-        "line": 4888,
+        "heading_line": 4887,
+        "line": 4889,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148141,8 +148146,8 @@
       "source_location": {
         "heading": "DL-012 - Shared Runtime Identity Actor Scope",
         "heading_level": 3,
-        "heading_line": 4931,
-        "line": 4933,
+        "heading_line": 4932,
+        "line": 4934,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148158,8 +148163,8 @@
       "source_location": {
         "heading": "DL-013 - Blocked Approval Runtime Identity",
         "heading_level": 3,
-        "heading_line": 4981,
-        "line": 4983,
+        "heading_line": 4982,
+        "line": 4984,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148175,8 +148180,8 @@
       "source_location": {
         "heading": "DL-014 - Navigation Primitive Boundary",
         "heading_level": 3,
-        "heading_line": 5029,
-        "line": 5031,
+        "heading_line": 5030,
+        "line": 5032,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148192,8 +148197,8 @@
       "source_location": {
         "heading": "DL-015 - Debug Evidence Capture Hygiene",
         "heading_level": 3,
-        "heading_line": 5077,
-        "line": 5079,
+        "heading_line": 5078,
+        "line": 5080,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148209,8 +148214,8 @@
       "source_location": {
         "heading": "DL-016 - Provider Runtime Actor Envelope",
         "heading_level": 3,
-        "heading_line": 5130,
-        "line": 5132,
+        "heading_line": 5131,
+        "line": 5133,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148226,8 +148231,8 @@
       "source_location": {
         "heading": "DL-017 - Support Decision Drift Guard",
         "heading_level": 3,
-        "heading_line": 5186,
-        "line": 5188,
+        "heading_line": 5187,
+        "line": 5189,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148243,8 +148248,8 @@
       "source_location": {
         "heading": "DL-018 - Governance Label Copy Boundary",
         "heading_level": 3,
-        "heading_line": 5237,
-        "line": 5239,
+        "heading_line": 5238,
+        "line": 5240,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148260,8 +148265,8 @@
       "source_location": {
         "heading": "DL-019 - Graph Owned Governance Semantics",
         "heading_level": 3,
-        "heading_line": 5296,
-        "line": 5298,
+        "heading_line": 5297,
+        "line": 5299,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148277,8 +148282,8 @@
       "source_location": {
         "heading": "DL-020 - Seam Weak Integration UI Visibility",
         "heading_level": 3,
-        "heading_line": 5351,
-        "line": 5353,
+        "heading_line": 5352,
+        "line": 5354,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148294,8 +148299,8 @@
       "source_location": {
         "heading": "DL-021 - Reopen Revocation Weak Integration Policy",
         "heading_level": 3,
-        "heading_line": 5409,
-        "line": 5411,
+        "heading_line": 5410,
+        "line": 5412,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148311,8 +148316,8 @@
       "source_location": {
         "heading": "DL-022 - Approval Anchoring Evidence Governance",
         "heading_level": 3,
-        "heading_line": 5468,
-        "line": 5470,
+        "heading_line": 5469,
+        "line": 5471,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148328,8 +148333,8 @@
       "source_location": {
         "heading": "DL-023 - Blocked Episode Identity Migration",
         "heading_level": 3,
-        "heading_line": 5522,
-        "line": 5524,
+        "heading_line": 5523,
+        "line": 5525,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148345,8 +148350,8 @@
       "source_location": {
         "heading": "DL-024 - Corroboration Disagreement Outcome",
         "heading_level": 3,
-        "heading_line": 5578,
-        "line": 5580,
+        "heading_line": 5579,
+        "line": 5581,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148362,8 +148367,8 @@
       "source_location": {
         "heading": "DL-025 - Help Clusters Alias Limits",
         "heading_level": 3,
-        "heading_line": 5627,
-        "line": 5629,
+        "heading_line": 5628,
+        "line": 5630,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148379,8 +148384,8 @@
       "source_location": {
         "heading": "DL-026 - Lane Cleanup Retained Transition",
         "heading_level": 3,
-        "heading_line": 5688,
-        "line": 5690,
+        "heading_line": 5689,
+        "line": 5691,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148396,8 +148401,8 @@
       "source_location": {
         "heading": "DL-027 - Case L Bundle A Recovery And Migration Decisions",
         "heading_level": 3,
-        "heading_line": 5736,
-        "line": 5738,
+        "heading_line": 5737,
+        "line": 5739,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148413,8 +148418,8 @@
       "source_location": {
         "heading": "DL-028 - Case L Bundle B Seglog Durability Recovery Decisions",
         "heading_level": 3,
-        "heading_line": 5800,
-        "line": 5802,
+        "heading_line": 5801,
+        "line": 5803,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148430,8 +148435,8 @@
       "source_location": {
         "heading": "DL-029 - Case L Bundle C Retention Compaction Quarantine Decisions",
         "heading_level": 3,
-        "heading_line": 5881,
-        "line": 5883,
+        "heading_line": 5882,
+        "line": 5884,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148447,8 +148452,8 @@
       "source_location": {
         "heading": "DL-030 - Case L Bundle D Storage Root Lock And Fallback Decisions",
         "heading_level": 3,
-        "heading_line": 5958,
-        "line": 5960,
+        "heading_line": 5959,
+        "line": 5961,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148464,8 +148469,8 @@
       "source_location": {
         "heading": "DL-031 - Case L Bundle E EventRecord Scope And Replay Decisions",
         "heading_level": 3,
-        "heading_line": 6031,
-        "line": 6033,
+        "heading_line": 6032,
+        "line": 6034,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148481,8 +148486,8 @@
       "source_location": {
         "heading": "DL-032 - Case L Bundle F Restore Safe Point And Chat Decisions",
         "heading_level": 3,
-        "heading_line": 6095,
-        "line": 6097,
+        "heading_line": 6096,
+        "line": 6098,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148498,8 +148503,8 @@
       "source_location": {
         "heading": "DL-033 - Case L Supplemental Probe Packet Decisions",
         "heading_level": 3,
-        "heading_line": 6169,
-        "line": 6171,
+        "heading_line": 6170,
+        "line": 6172,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148515,8 +148520,8 @@
       "source_location": {
         "heading": "DL-034 - Case L Supplemental Kernel Depth Decisions",
         "heading_level": 3,
-        "heading_line": 6242,
-        "line": 6244,
+        "heading_line": 6243,
+        "line": 6245,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148532,8 +148537,8 @@
       "source_location": {
         "heading": "DL-035 - Terminal Research Decisions Own Engine And Accepted Proposals",
         "heading_level": 3,
-        "heading_line": 6323,
-        "line": 6325,
+        "heading_line": 6324,
+        "line": 6326,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148549,8 +148554,8 @@
       "source_location": {
         "heading": "DL-036 - Research Decision Packet Review Flow",
         "heading_level": 3,
-        "heading_line": 6404,
-        "line": 6406,
+        "heading_line": 6405,
+        "line": 6407,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148566,8 +148571,8 @@
       "source_location": {
         "heading": "DL-037 - Terminal Input Protection Persistence",
         "heading_level": 3,
-        "heading_line": 6472,
-        "line": 6474,
+        "heading_line": 6473,
+        "line": 6475,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148583,8 +148588,8 @@
       "source_location": {
         "heading": "DL-038 - Terminal Input Protection User And Agent Scope",
         "heading_level": 3,
-        "heading_line": 6519,
-        "line": 6521,
+        "heading_line": 6520,
+        "line": 6522,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148600,8 +148605,8 @@
       "source_location": {
         "heading": "DL-039 - Event Authority Owner Decisions August Sheet Answered",
         "heading_level": 3,
-        "heading_line": 6572,
-        "line": 6574,
+        "heading_line": 6573,
+        "line": 6575,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148617,8 +148622,8 @@
       "source_location": {
         "heading": "DL-043 - Jujutsu Research Decisions Forty Four Answers",
         "heading_level": 3,
-        "heading_line": 6650,
-        "line": 6652,
+        "heading_line": 6651,
+        "line": 6653,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148634,8 +148639,8 @@
       "source_location": {
         "heading": "DL-044 - Forge Review Wiring Vocabulary And Create Alias",
         "heading_level": 3,
-        "heading_line": 6720,
-        "line": 6722,
+        "heading_line": 6721,
+        "line": 6723,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148651,8 +148656,8 @@
       "source_location": {
         "heading": "DL-045 - Bounded Event Authority Technical Binding Definition Approval",
         "heading_level": 3,
-        "heading_line": 6809,
-        "line": 6811,
+        "heading_line": 6810,
+        "line": 6812,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148668,8 +148673,8 @@
       "source_location": {
         "heading": "DL-046 - Bounded Browser Technical Binding Authority And Individual Admission",
         "heading_level": 3,
-        "heading_line": 6864,
-        "line": 6866,
+        "heading_line": 6865,
+        "line": 6867,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148685,8 +148690,8 @@
       "source_location": {
         "heading": "DL-047 - Goal Objective And Revision Retention Follows Chat",
         "heading_level": 3,
-        "heading_line": 6914,
-        "line": 6916,
+        "heading_line": 6915,
+        "line": 6917,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148702,8 +148707,8 @@
       "source_location": {
         "heading": "DL-048 - Platform Decision Custody Reference Lifetime",
         "heading_level": 3,
-        "heading_line": 6985,
-        "line": 6987,
+        "heading_line": 6986,
+        "line": 6988,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148719,8 +148724,8 @@
       "source_location": {
         "heading": "DL-049 - Completed Compaction Detail Seven-Day Retention",
         "heading_level": 3,
-        "heading_line": 7048,
-        "line": 7050,
+        "heading_line": 7049,
+        "line": 7051,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148736,8 +148741,8 @@
       "source_location": {
         "heading": "DL-050 - Hosted Repo Requests Route By Selected Adapter",
         "heading_level": 3,
-        "heading_line": 7108,
-        "line": 7110,
+        "heading_line": 7109,
+        "line": 7111,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148753,8 +148758,8 @@
       "source_location": {
         "heading": "DL-051 - New Repository Object Format Picker Evidence Gated",
         "heading_level": 3,
-        "heading_line": 7183,
-        "line": 7185,
+        "heading_line": 7184,
+        "line": 7186,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148770,8 +148775,8 @@
       "source_location": {
         "heading": "DL-052 - Source Graph Parent Reference Bound Thirty Two With Fetch The Rest",
         "heading_level": 3,
-        "heading_line": 7255,
-        "line": 7257,
+        "heading_line": 7256,
+        "line": 7258,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148787,8 +148792,8 @@
       "source_location": {
         "heading": "DL-053 - Source Graph Node Reference Unique Within A Page",
         "heading_level": 3,
-        "heading_line": 7321,
-        "line": 7323,
+        "heading_line": 7322,
+        "line": 7324,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148804,8 +148809,8 @@
       "source_location": {
         "heading": "DL-054 - Parent List Truncates Only At The Bound And Expansion Echoes Currentness",
         "heading_level": 3,
-        "heading_line": 7382,
-        "line": 7384,
+        "heading_line": 7383,
+        "line": 7385,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148821,8 +148826,8 @@
       "source_location": {
         "heading": "DL-055 - Plan Layer Seal Is A Production Seal With Repository Gates At Landing",
         "heading_level": 3,
-        "heading_line": 7450,
-        "line": 7452,
+        "heading_line": 7451,
+        "line": 7453,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148838,8 +148843,8 @@
       "source_location": {
         "heading": "DL-056 - Conflict And Merge Editors Are Read Only Or Built In On A Jujutsu Workspace",
         "heading_level": 3,
-        "heading_line": 7537,
-        "line": 7539,
+        "heading_line": 7538,
+        "line": 7540,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148855,8 +148860,8 @@
       "source_location": {
         "heading": "DL-057 - A Bookmark Control Says Which Remotes It Touches Before It Touches Them",
         "heading_level": 3,
-        "heading_line": 7608,
-        "line": 7610,
+        "heading_line": 7609,
+        "line": 7611,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148872,8 +148877,8 @@
       "source_location": {
         "heading": "DL-058 - The Seven Shapes The Continuation 4 Corrections Take",
         "heading_level": 3,
-        "heading_line": 7683,
-        "line": 7685,
+        "heading_line": 7684,
+        "line": 7686,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148889,8 +148894,8 @@
       "source_location": {
         "heading": "DL-059 - Branch Policies Are Shown On A Pull Request And The Branch Read Is Deferred",
         "heading_level": 3,
-        "heading_line": 7769,
-        "line": 7771,
+        "heading_line": 7770,
+        "line": 7772,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148906,8 +148911,8 @@
       "source_location": {
         "heading": "DL-060 - An Azure Vote Is Bound To The Revision Puppet Master Observed",
         "heading_level": 3,
-        "heading_line": 7822,
-        "line": 7824,
+        "heading_line": 7823,
+        "line": 7825,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148923,8 +148928,8 @@
       "source_location": {
         "heading": "DL-061 - The Checks View Leads With Evaluations And Separates Unwatched Statuses",
         "heading_level": 3,
-        "heading_line": 7878,
-        "line": 7880,
+        "heading_line": 7879,
+        "line": 7881,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148940,8 +148945,8 @@
       "source_location": {
         "heading": "DL-062 - One Gate List With A Source Column And An Enforcement Column",
         "heading_level": 3,
-        "heading_line": 7934,
-        "line": 7936,
+        "heading_line": 7935,
+        "line": 7937,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148957,8 +148962,8 @@
       "source_location": {
         "heading": "DL-063 - The Merge Command Gains A Typed Strategy Field That Is Always Shown",
         "heading_level": 3,
-        "heading_line": 7992,
-        "line": 7994,
+        "heading_line": 7993,
+        "line": 7995,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148974,8 +148979,8 @@
       "source_location": {
         "heading": "DL-064 - A Requeue Command Disabled With A Typed Reason Where There Is No Equivalent",
         "heading_level": 3,
-        "heading_line": 8049,
-        "line": 8051,
+        "heading_line": 8050,
+        "line": 8052,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -148991,8 +148996,8 @@
       "source_location": {
         "heading": "DL-065 - A Provider Neutral Vote And Reviewer Carrier Bound The Way DL-060 Binds",
         "heading_level": 3,
-        "heading_line": 8106,
-        "line": 8108,
+        "heading_line": 8107,
+        "line": 8109,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149008,8 +149013,8 @@
       "source_location": {
         "heading": "DL-066 - Plan Seal Acceptance Is Bounded By One Review And One Repair Round",
         "heading_level": 3,
-        "heading_line": 8166,
-        "line": 8168,
+        "heading_line": 8167,
+        "line": 8169,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149025,8 +149030,8 @@
       "source_location": {
         "heading": "DL-067 - Landing Checks Report Only Failures New Since A Recorded Baseline",
         "heading_level": 3,
-        "heading_line": 8235,
-        "line": 8237,
+        "heading_line": 8236,
+        "line": 8238,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149042,8 +149047,8 @@
       "source_location": {
         "heading": "DL-068 - Quarantine Cleanup Keeps Only The Existing Audit Trail",
         "heading_level": 3,
-        "heading_line": 8321,
-        "line": 8323,
+        "heading_line": 8322,
+        "line": 8324,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149059,8 +149064,8 @@
       "source_location": {
         "heading": "DL-069 - SafePoint Summary Retention Clock Starts At First Durable Publication",
         "heading_level": 3,
-        "heading_line": 8375,
-        "line": 8377,
+        "heading_line": 8376,
+        "line": 8378,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149076,8 +149081,8 @@
       "source_location": {
         "heading": "DL-070 - Moving The Last Terminal Workgroup Leaves The Old Section Empty",
         "heading_level": 3,
-        "heading_line": 8424,
-        "line": 8426,
+        "heading_line": 8425,
+        "line": 8427,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149093,8 +149098,8 @@
       "source_location": {
         "heading": "DL-071 - Account Switch History Uses The Existing Switch Record",
         "heading_level": 3,
-        "heading_line": 8481,
-        "line": 8483,
+        "heading_line": 8482,
+        "line": 8484,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149110,8 +149115,8 @@
       "source_location": {
         "heading": "DL-072 - Continuation Suppression Diagnostic Stays Transient",
         "heading_level": 3,
-        "heading_line": 8530,
-        "line": 8532,
+        "heading_line": 8531,
+        "line": 8533,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149127,8 +149132,8 @@
       "source_location": {
         "heading": "DL-073 - Doctor Media Check Result Stays Check Output",
         "heading_level": 3,
-        "heading_line": 8575,
-        "line": 8577,
+        "heading_line": 8576,
+        "line": 8578,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149144,8 +149149,8 @@
       "source_location": {
         "heading": "DL-074 - Task Failure Is A Presentation Notification Over Child Run History",
         "heading_level": 3,
-        "heading_line": 8618,
-        "line": 8620,
+        "heading_line": 8619,
+        "line": 8621,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149161,8 +149166,8 @@
       "source_location": {
         "heading": "DL-075 - Runtime Artifact Event Histories Are Kept Indefinitely",
         "heading_level": 3,
-        "heading_line": 8666,
-        "line": 8668,
+        "heading_line": 8667,
+        "line": 8669,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149178,8 +149183,8 @@
       "source_location": {
         "heading": "DL-076 - Storage Wrapper Digest Recipe And Durable Read Token Without Snapshot Id",
         "heading_level": 3,
-        "heading_line": 8719,
-        "line": 8721,
+        "heading_line": 8720,
+        "line": 8722,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149195,8 +149200,8 @@
       "source_location": {
         "heading": "DL-077 - Seal Check Accepts Post-August Families Only Through Complete Admission Records",
         "heading_level": 3,
-        "heading_line": 8777,
-        "line": 8779,
+        "heading_line": 8778,
+        "line": 8780,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149212,8 +149217,8 @@
       "source_location": {
         "heading": "DL-078 - Step 9 Registration Moves The Approved Checkpoint Under A Standing Rule",
         "heading_level": 3,
-        "heading_line": 8837,
-        "line": 8839,
+        "heading_line": 8838,
+        "line": 8840,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149229,8 +149234,8 @@
       "source_location": {
         "heading": "DL-079 - Old Goal Record Events Become Read-Only History",
         "heading_level": 3,
-        "heading_line": 8898,
-        "line": 8900,
+        "heading_line": 8899,
+        "line": 8901,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149246,8 +149251,8 @@
       "source_location": {
         "heading": "DL-080 - Workflow Runs Get Current Blocked Replanned And Stopped Events",
         "heading_level": 3,
-        "heading_line": 8956,
-        "line": 8958,
+        "heading_line": 8957,
+        "line": 8959,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149263,8 +149268,8 @@
       "source_location": {
         "heading": "DL-081 - Workflow Runs May Finish With An Approved Verification Exception",
         "heading_level": 3,
-        "heading_line": 9019,
-        "line": 9021,
+        "heading_line": 9020,
+        "line": 9022,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149280,8 +149285,8 @@
       "source_location": {
         "heading": "DL-082 - Platform Capability Catalog Filling Deferred To Build Time",
         "heading_level": 3,
-        "heading_line": 9080,
-        "line": 9082,
+        "heading_line": 9081,
+        "line": 9083,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149297,8 +149302,8 @@
       "source_location": {
         "heading": "DL-083 - Application-Wide Records Count In One Application Bucket Under RP-OPERATIONAL-2555D",
         "heading_level": 3,
-        "heading_line": 9136,
-        "line": 9138,
+        "heading_line": 9137,
+        "line": 9139,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149314,8 +149319,8 @@
       "source_location": {
         "heading": "DL-084 - Subagent Child-Run History Is Kept As Long As Its Chat Exists",
         "heading_level": 3,
-        "heading_line": 9197,
-        "line": 9199,
+        "heading_line": 9198,
+        "line": 9200,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149331,8 +149336,8 @@
       "source_location": {
         "heading": "DL-085 - Crew Board Messages Are Kept With The Coordination Records After Leaving The Board",
         "heading_level": 3,
-        "heading_line": 9285,
-        "line": 9287,
+        "heading_line": 9286,
+        "line": 9288,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149348,8 +149353,8 @@
       "source_location": {
         "heading": "DL-086 - Three Orchestrator Diagnostics Are Kept One Year After The Run Finishes",
         "heading_level": 3,
-        "heading_line": 9350,
-        "line": 9352,
+        "heading_line": 9351,
+        "line": 9353,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149365,8 +149370,8 @@
       "source_location": {
         "heading": "DL-087 - Six Older Crew Lifecycle Events Are Retired For The Shared Collaborative Workflow Events",
         "heading_level": 3,
-        "heading_line": 9411,
-        "line": 9413,
+        "heading_line": 9412,
+        "line": 9414,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149382,8 +149387,8 @@
       "source_location": {
         "heading": "DL-088 - Subagent Spawn Request Event Names Are Retired",
         "heading_level": 3,
-        "heading_line": 9481,
-        "line": 9483,
+        "heading_line": 9482,
+        "line": 9484,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149399,8 +149404,8 @@
       "source_location": {
         "heading": "DL-089 - Application-Scoped Platform Evaluations Count In Their Own Application Bucket Under RP-OPERATIONAL-2555D",
         "heading_level": 3,
-        "heading_line": 9542,
-        "line": 9544,
+        "heading_line": 9543,
+        "line": 9545,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149416,8 +149421,8 @@
       "source_location": {
         "heading": "DL-090 - Registration Of All Seventeen Collaborative Workflow Events One Family Per Landing Under Bounded Technical Bindings",
         "heading_level": 3,
-        "heading_line": 9603,
-        "line": 9605,
+        "heading_line": 9604,
+        "line": 9606,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149433,8 +149438,8 @@
       "source_location": {
         "heading": "DL-091 - A Failed Collaborative Run Gets Its Own Recorded Event",
         "heading_level": 3,
-        "heading_line": 9691,
-        "line": 9693,
+        "heading_line": 9692,
+        "line": 9694,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149450,8 +149455,8 @@
       "source_location": {
         "heading": "DL-092 - Collaborative Workflow Event History Is Kept As Long As Its Chat Exists",
         "heading_level": 3,
-        "heading_line": 9753,
-        "line": 9755,
+        "heading_line": 9754,
+        "line": 9756,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149467,8 +149472,8 @@
       "source_location": {
         "heading": "DL-093 - The Seven Coordination Families' Registration Entries Are Jared's Decision Entries For Those Families",
         "heading_level": 3,
-        "heading_line": 9817,
-        "line": 9819,
+        "heading_line": 9818,
+        "line": 9820,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149484,8 +149489,8 @@
       "source_location": {
         "heading": "DL-094 - Step 9 Registration Of coordination.agent_registered Moves The Approved Checkpoint To 2026-09-25.1",
         "heading_level": 3,
-        "heading_line": 9882,
-        "line": 9884,
+        "heading_line": 9883,
+        "line": 9885,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149501,8 +149506,8 @@
       "source_location": {
         "heading": "DL-095 - A Silent Agent Counts As Crashed Five Minutes After Its Last Heartbeat",
         "heading_level": 3,
-        "heading_line": 9959,
-        "line": 9961,
+        "heading_line": 9960,
+        "line": 9962,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149518,8 +149523,8 @@
       "source_location": {
         "heading": "DL-096 - Every Step 9 Registration's Own Decision Log Entry Is Jared's Decision Entry For Its Family",
         "heading_level": 3,
-        "heading_line": 10024,
-        "line": 10026,
+        "heading_line": 10025,
+        "line": 10027,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149535,8 +149540,8 @@
       "source_location": {
         "heading": "DL-104 - The Chat Transcript Uses The Turn Stage Layout Distinct Item Families And An Accent Budget",
         "heading_level": 3,
-        "heading_line": 10214,
-        "line": 10216,
+        "heading_line": 10215,
+        "line": 10217,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149552,8 +149557,8 @@
       "source_location": {
         "heading": "DL-105 - The Working Card Folds When The Answer Starts And Short Narration Folds Into It",
         "heading_level": 3,
-        "heading_line": 10267,
-        "line": 10269,
+        "heading_line": 10268,
+        "line": 10270,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149569,8 +149574,8 @@
       "source_location": {
         "heading": "DL-106 - Replies Stream Stop Lives In The Composer And Motion Follows The Theme Family",
         "heading_level": 3,
-        "heading_line": 10315,
-        "line": 10317,
+        "heading_line": 10316,
+        "line": 10318,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149586,8 +149591,8 @@
       "source_location": {
         "heading": "DL-107 - Chat Sound Is On By Default With A One Click Mute",
         "heading_level": 3,
-        "heading_line": 10368,
-        "line": 10370,
+        "heading_line": 10369,
+        "line": 10371,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149603,8 +149608,8 @@
       "source_location": {
         "heading": "DL-108 - Sends Made While The Assistant Is Busy Queue By Default And Send Now Steers",
         "heading_level": 3,
-        "heading_line": 10419,
-        "line": 10421,
+        "heading_line": 10420,
+        "line": 10422,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149620,8 +149625,8 @@
       "source_location": {
         "heading": "DL-109 - Wand Module Surfaces Use The Theme's Own Font And Nothing Is Cramped",
         "heading_level": 3,
-        "heading_line": 10472,
-        "line": 10474,
+        "heading_line": 10473,
+        "line": 10475,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149637,8 +149642,8 @@
       "source_location": {
         "heading": "DL-110 - Back Seat Driver Shows Plain Status Words And The Plans Change To Match",
         "heading_level": 3,
-        "heading_line": 10523,
-        "line": 10525,
+        "heading_line": 10524,
+        "line": 10526,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149654,8 +149659,8 @@
       "source_location": {
         "heading": "DL-111 - The Coordinator's Mark In A Crew Card Uses The Text Or Seat Colour Not The Accent",
         "heading_level": 3,
-        "heading_line": 10574,
-        "line": 10576,
+        "heading_line": 10575,
+        "line": 10577,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149671,8 +149676,8 @@
       "source_location": {
         "heading": "DL-112 - A Chat Room Message Sent Mid Round Queues For The Next Round And Can Steer Without Interrupting",
         "heading_level": 3,
-        "heading_line": 10619,
-        "line": 10621,
+        "heading_line": 10620,
+        "line": 10622,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149688,8 +149693,8 @@
       "source_location": {
         "heading": "DL-113 - Each Theme Family Gets Its Own Motion Personality For Popups And Chat Cards",
         "heading_level": 3,
-        "heading_line": 10672,
-        "line": 10674,
+        "heading_line": 10673,
+        "line": 10675,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149705,8 +149710,8 @@
       "source_location": {
         "heading": "DL-114 - Setup Popups Keep The Blur Only If Slint 1.18.1 Can Draw It Otherwise They Are Solid",
         "heading_level": 3,
-        "heading_line": 10726,
-        "line": 10728,
+        "heading_line": 10727,
+        "line": 10729,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149722,8 +149727,8 @@
       "source_location": {
         "heading": "DL-115 - Reduce Motion Means Instant",
         "heading_level": 3,
-        "heading_line": 10781,
-        "line": 10783,
+        "heading_line": 10782,
+        "line": 10784,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149739,8 +149744,8 @@
       "source_location": {
         "heading": "DL-116 - Applied Taught Rules Are Reported As Followed And The Plans Define What Counts As Following",
         "heading_level": 3,
-        "heading_line": 10824,
-        "line": 10826,
+        "heading_line": 10825,
+        "line": 10827,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149756,8 +149761,8 @@
       "source_location": {
         "heading": "DL-117 - Review's Setup Offers Team Presets",
         "heading_level": 3,
-        "heading_line": 10880,
-        "line": 10882,
+        "heading_line": 10881,
+        "line": 10883,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149773,8 +149778,8 @@
       "source_location": {
         "heading": "DL-118 - The Two Recovery Buttons Use The Plans' Words Retry And Recover",
         "heading_level": 3,
-        "heading_line": 10932,
-        "line": 10934,
+        "heading_line": 10933,
+        "line": 10935,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149790,8 +149795,8 @@
       "source_location": {
         "heading": "DL-119 - Review And BrainStorm Keep Their Plans Entry Points And The Plans Gain Crew Auto Settings",
         "heading_level": 3,
-        "heading_line": 10977,
-        "line": 10979,
+        "heading_line": 10978,
+        "line": 10980,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149807,8 +149812,8 @@
       "source_location": {
         "heading": "DL-120 - Crews Are Summonable By The Agent And Crew Auto Is The Project Wide Default That Lets It Use Them",
         "heading_level": 3,
-        "heading_line": 11030,
-        "line": 11032,
+        "heading_line": 11031,
+        "line": 11033,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149824,8 +149829,8 @@
       "source_location": {
         "heading": "DL-121 - Start Is Blocked Until The User Picks A Replacement For An Offline Model",
         "heading_level": 3,
-        "heading_line": 11091,
-        "line": 11093,
+        "heading_line": 11092,
+        "line": 11094,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149841,8 +149846,8 @@
       "source_location": {
         "heading": "DL-122 - Activity Shows A Short Team List For The Four Collaboration Kinds And Back Seat Driver",
         "heading_level": 3,
-        "heading_line": 11140,
-        "line": 11142,
+        "heading_line": 11141,
+        "line": 11143,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149858,8 +149863,8 @@
       "source_location": {
         "heading": "DL-123 - A Collapsed Or Narrow Run Card May Move Its Actions Behind Expand And Its Helper Count Into A Hover Card",
         "heading_level": 3,
-        "heading_line": 11192,
-        "line": 11194,
+        "heading_line": 11193,
+        "line": 11195,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149875,8 +149880,8 @@
       "source_location": {
         "heading": "DL-124 - Screens Say Helpers And The Data Keeps Participant",
         "heading_level": 3,
-        "heading_line": 11239,
-        "line": 11241,
+        "heading_line": 11240,
+        "line": 11242,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149892,8 +149897,8 @@
       "source_location": {
         "heading": "DL-125 - Send Findings To Agent Fills The Message Box Instead Of Sending",
         "heading_level": 3,
-        "heading_line": 11284,
-        "line": 11286,
+        "heading_line": 11285,
+        "line": 11287,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149909,8 +149914,8 @@
       "source_location": {
         "heading": "DL-126 - ELI5 Has A Project Default That A Chat Can Override And Switching It Never Rewrites A Reply",
         "heading_level": 3,
-        "heading_line": 11332,
-        "line": 11334,
+        "heading_line": 11333,
+        "line": 11335,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149926,8 +149931,8 @@
       "source_location": {
         "heading": "DL-127 - Teach Opens The Teach Popup Everywhere",
         "heading_level": 3,
-        "heading_line": 11412,
-        "line": 11414,
+        "heading_line": 11413,
+        "line": 11415,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149943,8 +149948,8 @@
       "source_location": {
         "heading": "DL-128 - The Coordinator Writes Each Crew Part's Done When And Must Finish First",
         "heading_level": 3,
-        "heading_line": 11460,
-        "line": 11462,
+        "heading_line": 11461,
+        "line": 11463,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149960,8 +149965,8 @@
       "source_location": {
         "heading": "DL-129 - The Live Run Line And Per Reply Files Row Replace The Old Summary Above The Message Box",
         "heading_level": 3,
-        "heading_line": 11503,
-        "line": 11505,
+        "heading_line": 11504,
+        "line": 11506,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149977,8 +149982,8 @@
       "source_location": {
         "heading": "DL-130 - All Seven New Commands Are Added",
         "heading_level": 3,
-        "heading_line": 11549,
-        "line": 11551,
+        "heading_line": 11550,
+        "line": 11552,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -149994,8 +149999,8 @@
       "source_location": {
         "heading": "DL-131 - A Crew's Own Time And Cost Limit Overrides The General Run Limit",
         "heading_level": 3,
-        "heading_line": 11608,
-        "line": 11610,
+        "heading_line": 11609,
+        "line": 11611,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150011,8 +150016,8 @@
       "source_location": {
         "heading": "DL-132 - This Chat's Assistant Checks The Work Of A Helper Who Is Also The Coordinator",
         "heading_level": 3,
-        "heading_line": 11664,
-        "line": 11666,
+        "heading_line": 11665,
+        "line": 11667,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150028,8 +150033,8 @@
       "source_location": {
         "heading": "DL-133 - The Team Preset Personas Are Registered For Team Use And Grill Me Is A Skill",
         "heading_level": 3,
-        "heading_line": 11707,
-        "line": 11709,
+        "heading_line": 11708,
+        "line": 11710,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150045,8 +150050,8 @@
       "source_location": {
         "heading": "DL-134 - Three Official Labels Change To Friendlier Words And Two Data Words Get Plain Display Words",
         "heading_level": 3,
-        "heading_line": 11754,
-        "line": 11756,
+        "heading_line": 11755,
+        "line": 11757,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150062,8 +150067,8 @@
       "source_location": {
         "heading": "DL-135 - Crew Auto Leaves A One Line Note In The Chat Worded For The Project",
         "heading_level": 3,
-        "heading_line": 11813,
-        "line": 11815,
+        "heading_line": 11814,
+        "line": 11816,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150079,8 +150084,8 @@
       "source_location": {
         "heading": "DL-136 - A Project Wide Pause All Automations Switch Stops Every Scheduled Send And Build Until The User Turns It Back On",
         "heading_level": 3,
-        "heading_line": 11869,
-        "line": 11871,
+        "heading_line": 11870,
+        "line": 11872,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150096,8 +150101,8 @@
       "source_location": {
         "heading": "DL-137 - Each Helper's Line In A Running Card Streams What The Helper Is Writing Reusing The Reply Streaming",
         "heading_level": 3,
-        "heading_line": 11930,
-        "line": 11932,
+        "heading_line": 11931,
+        "line": 11933,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150113,8 +150118,8 @@
       "source_location": {
         "heading": "DL-138 - Approved Wand Modules Answers And Theme Fonts",
         "heading_level": 3,
-        "heading_line": 11984,
-        "line": 11986,
+        "heading_line": 11985,
+        "line": 11987,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150130,8 +150135,8 @@
       "source_location": {
         "heading": "DL-139 - Skia Only Desktop With Our Own Skia Extensions And A Leptos Web Client",
         "heading_level": 3,
-        "heading_line": 12172,
-        "line": 12174,
+        "heading_line": 12173,
+        "line": 12175,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150147,8 +150152,8 @@
       "source_location": {
         "heading": "DL-140 - Assistant Chat Icons Become One Neon Family",
         "heading_level": 3,
-        "heading_line": 12284,
-        "line": 12286,
+        "heading_line": 12285,
+        "line": 12287,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150164,8 +150169,8 @@
       "source_location": {
         "heading": "DL-141 - Every Status Reads At A Glance From One Shared Set Of Marks",
         "heading_level": 3,
-        "heading_line": 12353,
-        "line": 12355,
+        "heading_line": 12354,
+        "line": 12356,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150181,8 +150186,8 @@
       "source_location": {
         "heading": "DL-142 - The Working Activity Live Step Is A Dark Disc With A Lit Icon",
         "heading_level": 3,
-        "heading_line": 12407,
-        "line": 12409,
+        "heading_line": 12408,
+        "line": 12410,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150198,8 +150203,8 @@
       "source_location": {
         "heading": "DL-143 - Send And Stop Are The Solid Living Design",
         "heading_level": 3,
-        "heading_line": 12453,
-        "line": 12455,
+        "heading_line": 12454,
+        "line": 12456,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150215,8 +150220,8 @@
       "source_location": {
         "heading": "DL-144 - NieR Mode Covers The Whole Assistant Chat And Scene Changes Cross Fade",
         "heading_level": 3,
-        "heading_line": 12507,
-        "line": 12509,
+        "heading_line": 12508,
+        "line": 12510,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150232,8 +150237,8 @@
       "source_location": {
         "heading": "DL-145 - The Chat's Hover Labels Wait For A Deliberate Pause And Three Small Chrome Fixes",
         "heading_level": 3,
-        "heading_line": 12563,
-        "line": 12565,
+        "heading_line": 12564,
+        "line": 12566,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150249,8 +150254,8 @@
       "source_location": {
         "heading": "DL-146 - The Capabilities Wand In Colour The Fast Bolt Strikes From The Top And Grill Me's Icon Is A Kettle Grill",
         "heading_level": 3,
-        "heading_line": 12620,
-        "line": 12622,
+        "heading_line": 12621,
+        "line": 12623,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150266,8 +150271,8 @@
       "source_location": {
         "heading": "DL-147 - Activity Detail Gets A Tidy Goal Panel One Line To Do Rows And A Live Subagent Transcript",
         "heading_level": 3,
-        "heading_line": 12673,
-        "line": 12675,
+        "heading_line": 12674,
+        "line": 12676,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150283,8 +150288,8 @@
       "source_location": {
         "heading": "DL-148 - The Setup Popups Get Step Tiles A Readable Chat Preview And A Draggable Send Time",
         "heading_level": 3,
-        "heading_line": 12734,
-        "line": 12736,
+        "heading_line": 12735,
+        "line": 12737,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150300,8 +150305,8 @@
       "source_location": {
         "heading": "DL-149 - Agents Are Drawn As Little Puppets The Agent Graphs Become Cast Plates And Technical Details Leaves The Run Surfaces",
         "heading_level": 3,
-        "heading_line": 12791,
-        "line": 12793,
+        "heading_line": 12792,
+        "line": 12794,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150317,8 +150322,8 @@
       "source_location": {
         "heading": "DL-150 - The Ask Card Gets A Livelier Look",
         "heading_level": 3,
-        "heading_line": 12851,
-        "line": 12853,
+        "heading_line": 12852,
+        "line": 12854,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150334,8 +150339,8 @@
       "source_location": {
         "heading": "DL-151 - The Retro Themes Follow PMConcept7's Colours And Box Shapes",
         "heading_level": 3,
-        "heading_line": 12896,
-        "line": 12898,
+        "heading_line": 12897,
+        "line": 12899,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150351,8 +150356,8 @@
       "source_location": {
         "heading": "DL-152 - NieR Mode Where A Look Is Chosen NieR Onboarding And Tour And Their Sounds",
         "heading_level": 3,
-        "heading_line": 12952,
-        "line": 12954,
+        "heading_line": 12953,
+        "line": 12955,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150368,8 +150373,8 @@
       "source_location": {
         "heading": "DL-153 - The App Opens In Its Own Look Setup's Starting Look And The Four Families' Hero Moments",
         "heading_level": 3,
-        "heading_line": 13038,
-        "line": 13040,
+        "heading_line": 13039,
+        "line": 13041,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150385,8 +150390,8 @@
       "source_location": {
         "heading": "DL-154 - A Collaboration Setup Sheet's Graph Stays In View As Helpers And Rounds Are Added",
         "heading_level": 3,
-        "heading_line": 13242,
-        "line": 13244,
+        "heading_line": 13243,
+        "line": 13245,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150402,8 +150407,8 @@
       "source_location": {
         "heading": "DL-156 - The Plan Card's Buttons Line Up And Fit The Card In Every Theme",
         "heading_level": 3,
-        "heading_line": 13302,
-        "line": 13304,
+        "heading_line": 13303,
+        "line": 13305,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150419,8 +150424,8 @@
       "source_location": {
         "heading": "DL-157 - The Schedule Ended Wording, A Command To Open The Exact Plan, And Previews As The Hover Tag Exception",
         "heading_level": 3,
-        "heading_line": 14110,
-        "line": 14112,
+        "heading_line": 14111,
+        "line": 14113,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150436,8 +150441,8 @@
       "source_location": {
         "heading": "DL-158 - The Ask Card Fits Long Answers",
         "heading_level": 3,
-        "heading_line": 13196,
-        "line": 13198,
+        "heading_line": 13197,
+        "line": 13199,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150453,8 +150458,8 @@
       "source_location": {
         "heading": "DL-159 - The Chat Opens In The Look You Chose, From Its First Frame",
         "heading_level": 3,
-        "heading_line": 13409,
-        "line": 13411,
+        "heading_line": 13410,
+        "line": 13412,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150470,8 +150475,8 @@
       "source_location": {
         "heading": "DL-160 - The To-Do Navigation Line Loses Its Last Item Button",
         "heading_level": 3,
-        "heading_line": 13357,
-        "line": 13359,
+        "heading_line": 13358,
+        "line": 13360,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150487,8 +150492,8 @@
       "source_location": {
         "heading": "DL-161 - PMConcept7 Carries Its Own Fonts",
         "heading_level": 3,
-        "heading_line": 13131,
-        "line": 13133,
+        "heading_line": 13132,
+        "line": 13134,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150504,8 +150509,8 @@
       "source_location": {
         "heading": "DL-162 - The Left Rail Takes The Polish Design",
         "heading_level": 3,
-        "heading_line": 13461,
-        "line": 13463,
+        "heading_line": 13462,
+        "line": 13464,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150521,8 +150526,8 @@
       "source_location": {
         "heading": "DL-163 - The Jujutsu View Of Source Control Gets Its Own Five Tabs",
         "heading_level": 3,
-        "heading_line": 13538,
-        "line": 13540,
+        "heading_line": 13539,
+        "line": 13541,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150538,8 +150543,8 @@
       "source_location": {
         "heading": "DL-171 - One Merged, Quieter Hover Across PMConcept7, With Its Own Forms In Retro And NieR",
         "heading_level": 3,
-        "heading_line": 14041,
-        "line": 14043,
+        "heading_line": 14042,
+        "line": 14044,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150555,8 +150560,8 @@
       "source_location": {
         "heading": "DL-173 - The Usage Page Is Redesigned And Replaces The Old One",
         "heading_level": 3,
-        "heading_line": 13602,
-        "line": 13604,
+        "heading_line": 13603,
+        "line": 13605,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150572,8 +150577,8 @@
       "source_location": {
         "heading": "DL-174 - The Accounts Room Acts In Place Auto Switch Per Provider And Every Account Shown",
         "heading_level": 3,
-        "heading_line": 13666,
-        "line": 13668,
+        "heading_line": 13667,
+        "line": 13669,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150589,8 +150594,8 @@
       "source_location": {
         "heading": "DL-175 - Usage Shows Pace Without Countdowns At Readable Sizes",
         "heading_level": 3,
-        "heading_line": 13753,
-        "line": 13755,
+        "heading_line": 13754,
+        "line": 13756,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150606,8 +150611,8 @@
       "source_location": {
         "heading": "DL-176 - Narrow Usage Widgets Real Move And Resize Previews Size Presets Tidy And Gravity",
         "heading_level": 3,
-        "heading_line": 13802,
-        "line": 13804,
+        "heading_line": 13803,
+        "line": 13805,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150623,8 +150628,8 @@
       "source_location": {
         "heading": "DL-177 - Live Readings On By Default With A Live Paused Control And A Concept Demo Hour",
         "heading_level": 3,
-        "heading_line": 13863,
-        "line": 13865,
+        "heading_line": 13864,
+        "line": 13866,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150640,8 +150645,8 @@
       "source_location": {
         "heading": "DL-178 - Usage Rooms Get Heroes Calm Colour And A Soft Key Light And No Fact Is Dropped",
         "heading_level": 3,
-        "heading_line": 13920,
-        "line": 13922,
+        "heading_line": 13921,
+        "line": 13923,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150657,8 +150662,8 @@
       "source_location": {
         "heading": "DL-179 - Usage Uses The Chat Menus Official Provider Logos And Family Motion",
         "heading_level": 3,
-        "heading_line": 13979,
-        "line": 13981,
+        "heading_line": 13980,
+        "line": 13982,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150674,8 +150679,8 @@
       "source_location": {
         "heading": "DL-180 - Home Becomes One Universal Panel System And The Chat Stays Fixed On The Right",
         "heading_level": 3,
-        "heading_line": 14184,
-        "line": 14186,
+        "heading_line": 14185,
+        "line": 14187,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150691,8 +150696,8 @@
       "source_location": {
         "heading": "DL-181 - The Terminal Is Rebuilt As One Session Per Tab With No AI Of Its Own",
         "heading_level": 3,
-        "heading_line": 14294,
-        "line": 14296,
+        "heading_line": 14295,
+        "line": 14297,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150708,8 +150713,8 @@
       "source_location": {
         "heading": "DL-182 - The Terminal Shows Images With Kitty Graphics Sixel And iTerm2 All In The First Release",
         "heading_level": 3,
-        "heading_line": 14380,
-        "line": 14382,
+        "heading_line": 14381,
+        "line": 14383,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150725,8 +150730,8 @@
       "source_location": {
         "heading": "DL-183 - The Terminal Gets Real Colour Schemes Backgrounds Effects And Fonts All Applying Live",
         "heading_level": 3,
-        "heading_line": 14444,
-        "line": 14446,
+        "heading_line": 14445,
+        "line": 14447,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150742,8 +150747,8 @@
       "source_location": {
         "heading": "DL-184 - No Boxes With A Coloured Side No Emoji And No Pills Anywhere In Puppet Master",
         "heading_level": 3,
-        "heading_line": 14539,
-        "line": 14541,
+        "heading_line": 14540,
+        "line": 14542,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150759,8 +150764,8 @@
       "source_location": {
         "heading": "DL-185 - One Demo Studio For All Of PMConcept7 And What The 5.6 Pro Chat Needs When It Moves In",
         "heading_level": 3,
-        "heading_line": 14597,
-        "line": 14599,
+        "heading_line": 14598,
+        "line": 14600,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150776,8 +150781,8 @@
       "source_location": {
         "heading": "DL-186 - Dashboards Run On The Usage Board Engine One Board Per Tab Saved Per Project With Savable Presets",
         "heading_level": 3,
-        "heading_line": 14653,
-        "line": 14655,
+        "heading_line": 14654,
+        "line": 14656,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150793,8 +150798,8 @@
       "source_location": {
         "heading": "DL-187 - Ten Answers On The Chat The Debug Console Terminal Tabs Saved Scrollback Notifications And Shells",
         "heading_level": 3,
-        "heading_line": 14722,
-        "line": 14724,
+        "heading_line": 14723,
+        "line": 14725,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150810,8 +150815,8 @@
       "source_location": {
         "heading": "DL-188 - Event Authority Admits workspace.layout_changed 2.0.0",
         "heading_level": 3,
-        "heading_line": 14791,
-        "line": 14793,
+        "heading_line": 14792,
+        "line": 14794,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150827,8 +150832,8 @@
       "source_location": {
         "heading": "DL-189 - Terminal Customize From The Panel And Settings",
         "heading_level": 3,
-        "heading_line": 14875,
-        "line": 14877,
+        "heading_line": 14876,
+        "line": 14878,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150844,8 +150849,8 @@
       "source_location": {
         "heading": "DL-190 - Full Editor Customize And One Preview Rule",
         "heading_level": 3,
-        "heading_line": 14943,
-        "line": 14945,
+        "heading_line": 14944,
+        "line": 14946,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150861,8 +150866,8 @@
       "source_location": {
         "heading": "DL-191 - Liquid Glass Reads As Lenses And Reflections",
         "heading_level": 3,
-        "heading_line": 14993,
-        "line": 14995,
+        "heading_line": 14994,
+        "line": 14996,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150878,8 +150883,8 @@
       "source_location": {
         "heading": "DL-192 - Wallpapers Are Selectable From Every Look",
         "heading_level": 3,
-        "heading_line": 15059,
-        "line": 15061,
+        "heading_line": 15060,
+        "line": 15062,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150895,8 +150900,8 @@
       "source_location": {
         "heading": "DL-193 - Notification Defaults And Usage Under The Bell",
         "heading_level": 3,
-        "heading_line": 15126,
-        "line": 15128,
+        "heading_line": 15127,
+        "line": 15129,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150912,8 +150917,8 @@
       "source_location": {
         "heading": "DL-194 - Wizard And Orchestrator Minor Theme Matching",
         "heading_level": 3,
-        "heading_line": 15180,
-        "line": 15182,
+        "heading_line": 15181,
+        "line": 15183,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150929,8 +150934,8 @@
       "source_location": {
         "heading": "DL-195 - Connected Onboarding Art And Glass",
         "heading_level": 3,
-        "heading_line": 15228,
-        "line": 15230,
+        "heading_line": 15229,
+        "line": 15231,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150946,8 +150951,8 @@
       "source_location": {
         "heading": "DL-196 - The Pill Ban Concerns Labels",
         "heading_level": 3,
-        "heading_line": 15277,
-        "line": 15279,
+        "heading_line": 15278,
+        "line": 15280,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150963,8 +150968,8 @@
       "source_location": {
         "heading": "DL-197 - Settled Contrast Includes Resting Hover And Placeholders",
         "heading_level": 3,
-        "heading_line": 15323,
-        "line": 15325,
+        "heading_line": 15324,
+        "line": 15326,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150980,8 +150985,8 @@
       "source_location": {
         "heading": "DL-198 - Hover Polish And The Friendly Breathing Ring",
         "heading_level": 3,
-        "heading_line": 15376,
-        "line": 15378,
+        "heading_line": 15377,
+        "line": 15379,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -150997,8 +151002,8 @@
       "source_location": {
         "heading": "DL-199 - Clear Panel Drop Zones And Polished Resize Feedback",
         "heading_level": 3,
-        "heading_line": 15429,
-        "line": 15431,
+        "heading_line": 15430,
+        "line": 15432,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151014,8 +151019,8 @@
       "source_location": {
         "heading": "DL-200 - Settings Stays Put On Updates And Enters Chapters At The Top",
         "heading_level": 3,
-        "heading_line": 15479,
-        "line": 15481,
+        "heading_line": 15480,
+        "line": 15482,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151031,8 +151036,8 @@
       "source_location": {
         "heading": "DL-201 - D44 Approves The Shared Glyph Rollout",
         "heading_level": 3,
-        "heading_line": 15537,
-        "line": 15539,
+        "heading_line": 15538,
+        "line": 15540,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151048,8 +151053,8 @@
       "source_location": {
         "heading": "DL-202 - Shell Spacing, Panel Grip And Rail Controls",
         "heading_level": 3,
-        "heading_line": 15583,
-        "line": 15585,
+        "heading_line": 15584,
+        "line": 15586,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151065,8 +151070,8 @@
       "source_location": {
         "heading": "DL-203 - Liquid Glass And Wallpaper Publication",
         "heading_level": 3,
-        "heading_line": 15635,
-        "line": 15637,
+        "heading_line": 15636,
+        "line": 15638,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151082,8 +151087,8 @@
       "source_location": {
         "heading": "DL-204 - Bell Staging And Setup Continuation",
         "heading_level": 3,
-        "heading_line": 15684,
-        "line": 15686,
+        "heading_line": 15685,
+        "line": 15687,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151099,8 +151104,8 @@
       "source_location": {
         "heading": "DL-205 - Shared Switcher And Room Handover",
         "heading_level": 3,
-        "heading_line": 15727,
-        "line": 15729,
+        "heading_line": 15728,
+        "line": 15730,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151116,8 +151121,8 @@
       "source_location": {
         "heading": "DL-206 - Terminal Backgrounds And Monitor Housing",
         "heading_level": 3,
-        "heading_line": 15776,
-        "line": 15778,
+        "heading_line": 15777,
+        "line": 15779,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151133,8 +151138,8 @@
       "source_location": {
         "heading": "DL-207 - Personal Terminal Presets",
         "heading_level": 3,
-        "heading_line": 15832,
-        "line": 15834,
+        "heading_line": 15833,
+        "line": 15835,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151150,8 +151155,8 @@
       "source_location": {
         "heading": "DL-208 - Editor Delivery And Shared Glyph Rollout",
         "heading_level": 3,
-        "heading_line": 15886,
-        "line": 15888,
+        "heading_line": 15887,
+        "line": 15889,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151167,8 +151172,8 @@
       "source_location": {
         "heading": "DL-209 - Continuity And Settled Presentation",
         "heading_level": 3,
-        "heading_line": 15933,
-        "line": 15935,
+        "heading_line": 15934,
+        "line": 15936,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151184,8 +151189,8 @@
       "source_location": {
         "heading": "DL-210 - Account Warning Hold Consumers",
         "heading_level": 3,
-        "heading_line": 15987,
-        "line": 15989,
+        "heading_line": 15988,
+        "line": 15990,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151201,8 +151206,8 @@
       "source_location": {
         "heading": "DL-211 - Picker Back Navigation",
         "heading_level": 3,
-        "heading_line": 16030,
-        "line": 16032,
+        "heading_line": 16031,
+        "line": 16033,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151218,8 +151223,8 @@
       "source_location": {
         "heading": "DL-212 - Pass Two Scope And Deferred Successors",
         "heading_level": 3,
-        "heading_line": 16076,
-        "line": 16078,
+        "heading_line": 16077,
+        "line": 16079,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151235,8 +151240,8 @@
       "source_location": {
         "heading": "DL-213 - Terminal Rounds Four And Five, Flicker On Or Off, Bell Follow Look Or Off",
         "heading_level": 3,
-        "heading_line": 16129,
-        "line": 16131,
+        "heading_line": 16130,
+        "line": 16132,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151252,8 +151257,8 @@
       "source_location": {
         "heading": "DL-214 - One Switcher Per Look, Seated Home Tabs And Friendly Lavender",
         "heading_level": 3,
-        "heading_line": 16195,
-        "line": 16197,
+        "heading_line": 16196,
+        "line": 16198,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151269,8 +151274,8 @@
       "source_location": {
         "heading": "DL-215 - Motion Acceptance Bar And Jared's Motion Calls",
         "heading_level": 3,
-        "heading_line": 16258,
-        "line": 16260,
+        "heading_line": 16259,
+        "line": 16261,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151286,8 +151291,8 @@
       "source_location": {
         "heading": "DL-216 - P1000 Raster Reading, Animated Covers, Silent Bell And Frost Crossfade",
         "heading_level": 3,
-        "heading_line": 16314,
-        "line": 16316,
+        "heading_line": 16315,
+        "line": 16317,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151303,8 +151308,8 @@
       "source_location": {
         "heading": "DL-217 - Contracts Added By The Motion Fix Lanes",
         "heading_level": 3,
-        "heading_line": 16381,
-        "line": 16383,
+        "heading_line": 16382,
+        "line": 16384,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151320,8 +151325,8 @@
       "source_location": {
         "heading": "DL-218 - Wonderer Runs Alongside And Grill Me Is A Skill",
         "heading_level": 3,
-        "heading_line": 16505,
-        "line": 16507,
+        "heading_line": 16506,
+        "line": 16508,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151337,8 +151342,8 @@
       "source_location": {
         "heading": "DL-219 - No Platform-Specific Solutions",
         "heading_level": 3,
-        "heading_line": 16580,
-        "line": 16582,
+        "heading_line": 16581,
+        "line": 16583,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151354,8 +151359,8 @@
       "source_location": {
         "heading": "DL-220 - The Concept Is Not Production",
         "heading_level": 3,
-        "heading_line": 16632,
-        "line": 16634,
+        "heading_line": 16633,
+        "line": 16635,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151371,8 +151376,8 @@
       "source_location": {
         "heading": "DL-221 - Q22 Closed As Best Effort",
         "heading_level": 3,
-        "heading_line": 16679,
-        "line": 16681,
+        "heading_line": 16680,
+        "line": 16682,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151388,8 +151393,8 @@
       "source_location": {
         "heading": "DL-222 - F6 Landed",
         "heading_level": 3,
-        "heading_line": 16731,
-        "line": 16733,
+        "heading_line": 16732,
+        "line": 16734,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151405,8 +151410,8 @@
       "source_location": {
         "heading": "DL-223 - Wallpaper Fade-First",
         "heading_level": 3,
-        "heading_line": 16805,
-        "line": 16807,
+        "heading_line": 16806,
+        "line": 16808,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151422,8 +151427,8 @@
       "source_location": {
         "heading": "DL-224 - The Whole System Should Wow People",
         "heading_level": 3,
-        "heading_line": 16859,
-        "line": 16861,
+        "heading_line": 16860,
+        "line": 16862,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151439,8 +151444,8 @@
       "source_location": {
         "heading": "DL-225 - Friendly Takes Its Cues From Handheld And Console Menus",
         "heading_level": 3,
-        "heading_line": 16907,
-        "line": 16909,
+        "heading_line": 16908,
+        "line": 16910,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151456,8 +151461,8 @@
       "source_location": {
         "heading": "DL-226 - Glass Carry Holds A Pre-Painted Frost",
         "heading_level": 3,
-        "heading_line": 16953,
-        "line": 16955,
+        "heading_line": 16954,
+        "line": 16956,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151473,8 +151478,8 @@
       "source_location": {
         "heading": "DL-227 - Ctrl+Shift+D Is Reserved For Readiness And Doctor",
         "heading_level": 3,
-        "heading_line": 17000,
-        "line": 17002,
+        "heading_line": 17001,
+        "line": 17003,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151490,8 +151495,8 @@
       "source_location": {
         "heading": "DL-228 - The Week Sweep Records What The Concept Built",
         "heading_level": 3,
-        "heading_line": 17050,
-        "line": 17052,
+        "heading_line": 17051,
+        "line": 17053,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151507,8 +151512,8 @@
       "source_location": {
         "heading": "DL-229 - Glass Keeps Usage Calm With No Sweep And No Opaque-Then-Clear",
         "heading_level": 3,
-        "heading_line": 17134,
-        "line": 17136,
+        "heading_line": 17135,
+        "line": 17137,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151524,8 +151529,8 @@
       "source_location": {
         "heading": "DL-230 - Jared's Answers To The Week's Open Questions",
         "heading_level": 3,
-        "heading_line": 17184,
-        "line": 17186,
+        "heading_line": 17185,
+        "line": 17187,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151541,8 +151546,8 @@
       "source_location": {
         "heading": "DL-231 - Chat Room Rounds Run By Themselves, With An Option To Pause Between Rounds",
         "heading_level": 3,
-        "heading_line": 17273,
-        "line": 17275,
+        "heading_line": 17274,
+        "line": 17276,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151558,8 +151563,8 @@
       "source_location": {
         "heading": "DL-232 - Port The 5.6 Pro Chat Into The Home Column",
         "heading_level": 3,
-        "heading_line": 17364,
-        "line": 17366,
+        "heading_line": 17365,
+        "line": 17367,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151575,8 +151580,8 @@
       "source_location": {
         "heading": "DL-233 - Remove The Stand-In Chat And Size Pinned History As The Panel Redesign Designed",
         "heading_level": 3,
-        "heading_line": 17463,
-        "line": 17465,
+        "heading_line": 17464,
+        "line": 17466,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151592,8 +151597,8 @@
       "source_location": {
         "heading": "DL-234 - Show The Live Thinking In The Chat",
         "heading_level": 3,
-        "heading_line": 17527,
-        "line": 17529,
+        "heading_line": 17528,
+        "line": 17530,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151609,8 +151614,8 @@
       "source_location": {
         "heading": "DL-235 - Pip Brand, Assets And Faces",
         "heading_level": 3,
-        "heading_line": 17613,
-        "line": 17615,
+        "heading_line": 17614,
+        "line": 17616,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151626,8 +151631,8 @@
       "source_location": {
         "heading": "DL-236 - Project Box A And Switching",
         "heading_level": 3,
-        "heading_line": 17680,
-        "line": 17682,
+        "heading_line": 17681,
+        "line": 17683,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151643,8 +151648,8 @@
       "source_location": {
         "heading": "DL-237 - One Universal Loading Indicator",
         "heading_level": 3,
-        "heading_line": 17743,
-        "line": 17745,
+        "heading_line": 17744,
+        "line": 17746,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151660,8 +151665,8 @@
       "source_location": {
         "heading": "DL-238 - Onboarding With Pip",
         "heading_level": 3,
-        "heading_line": 17821,
-        "line": 17823,
+        "heading_line": 17822,
+        "line": 17824,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151677,8 +151682,8 @@
       "source_location": {
         "heading": "DL-239 - Pip Chat Primitive And Parts",
         "heading_level": 3,
-        "heading_line": 17923,
-        "line": 17925,
+        "heading_line": 17924,
+        "line": 17926,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151694,8 +151699,8 @@
       "source_location": {
         "heading": "DL-240 - D1 Processes Naming",
         "heading_level": 3,
-        "heading_line": 17987,
-        "line": 17989,
+        "heading_line": 17988,
+        "line": 17990,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151711,8 +151716,8 @@
       "source_location": {
         "heading": "DL-241 - D2 Process Membership",
         "heading_level": 3,
-        "heading_line": 18037,
-        "line": 18039,
+        "heading_line": 18038,
+        "line": 18040,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151728,8 +151733,8 @@
       "source_location": {
         "heading": "DL-242 - D3 Process Grouping",
         "heading_level": 3,
-        "heading_line": 18089,
-        "line": 18091,
+        "heading_line": 18090,
+        "line": 18092,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151745,8 +151750,8 @@
       "source_location": {
         "heading": "DL-243 - D4 Conditional Processes Domain",
         "heading_level": 3,
-        "heading_line": 18140,
-        "line": 18142,
+        "heading_line": 18141,
+        "line": 18143,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151762,8 +151767,8 @@
       "source_location": {
         "heading": "DL-244 - D5 Status Bar Work Group",
         "heading_level": 3,
-        "heading_line": 18190,
-        "line": 18192,
+        "heading_line": 18191,
+        "line": 18193,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151779,8 +151784,8 @@
       "source_location": {
         "heading": "DL-245 - D6 Three Panel Tabs And Pop Out",
         "heading_level": 3,
-        "heading_line": 18243,
-        "line": 18245,
+        "heading_line": 18244,
+        "line": 18246,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151796,8 +151801,8 @@
       "source_location": {
         "heading": "DL-246 - D7 One Work Projection",
         "heading_level": 3,
-        "heading_line": 18308,
-        "line": 18310,
+        "heading_line": 18309,
+        "line": 18311,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151813,8 +151818,8 @@
       "source_location": {
         "heading": "DL-247 - D8 Process Group Stop",
         "heading_level": 3,
-        "heading_line": 18364,
-        "line": 18366,
+        "heading_line": 18365,
+        "line": 18367,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151830,8 +151835,8 @@
       "source_location": {
         "heading": "DL-248 - D9 Completion Delivery",
         "heading_level": 3,
-        "heading_line": 18417,
-        "line": 18419,
+        "heading_line": 18418,
+        "line": 18420,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151847,8 +151852,8 @@
       "source_location": {
         "heading": "DL-249 - D10 Quit With Work",
         "heading_level": 3,
-        "heading_line": 18469,
-        "line": 18471,
+        "heading_line": 18470,
+        "line": 18472,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151864,8 +151869,8 @@
       "source_location": {
         "heading": "DL-250 - D11 Read Only System Services",
         "heading_level": 3,
-        "heading_line": 18522,
-        "line": 18524,
+        "heading_line": 18523,
+        "line": 18525,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151881,8 +151886,8 @@
       "source_location": {
         "heading": "DL-251 - D12 Resource Samples For All Servers",
         "heading_level": 3,
-        "heading_line": 18581,
-        "line": 18583,
+        "heading_line": 18582,
+        "line": 18584,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151898,8 +151903,8 @@
       "source_location": {
         "heading": "DL-252 - D13 Safe Process Input",
         "heading_level": 3,
-        "heading_line": 18636,
-        "line": 18638,
+        "heading_line": 18637,
+        "line": 18639,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151915,8 +151920,8 @@
       "source_location": {
         "heading": "DL-253 - D14 Category Glyphs And Pip Agents",
         "heading_level": 3,
-        "heading_line": 18687,
-        "line": 18689,
+        "heading_line": 18688,
+        "line": 18690,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151932,8 +151937,8 @@
       "source_location": {
         "heading": "DL-254 - Chat Detail, Width And Glass Repairs",
         "heading_level": 3,
-        "heading_line": 18751,
-        "line": 18753,
+        "heading_line": 18752,
+        "line": 18754,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151949,8 +151954,8 @@
       "source_location": {
         "heading": "DL-255 - Work Contracts And Deferred Surfaces",
         "heading_level": 3,
-        "heading_line": 18836,
-        "line": 18838,
+        "heading_line": 18837,
+        "line": 18839,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151966,8 +151971,8 @@
       "source_location": {
         "heading": "DL-256 - Shared Pip Sound Quality And Room",
         "heading_level": 3,
-        "heading_line": 18902,
-        "line": 18904,
+        "heading_line": 18903,
+        "line": 18905,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151983,8 +151988,8 @@
       "source_location": {
         "heading": "DL-257 - NieR Theme Family Replaces The Independent Override",
         "heading_level": 3,
-        "heading_line": 18958,
-        "line": 18960,
+        "heading_line": 18959,
+        "line": 18961,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152000,8 +152005,8 @@
       "source_location": {
         "heading": "DL-258 - QA Round 2 GUI And Owner Boundary Alignment",
         "heading_level": 3,
-        "heading_line": 19077,
-        "line": 19079,
+        "heading_line": 19078,
+        "line": 19080,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152017,8 +152022,8 @@
       "source_location": {
         "heading": "DL-259 - Onboarding Product Scope, Connectivity, Custody And Shared Help",
         "heading_level": 3,
-        "heading_line": 19229,
-        "line": 19231,
+        "heading_line": 19230,
+        "line": 19232,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152034,8 +152039,8 @@
       "source_location": {
         "heading": "DL-260 — Product canon excludes prototype mechanics (Jared, 2026-10-31, Q3 B)",
         "heading_level": 2,
-        "heading_line": 19751,
-        "line": 19753,
+        "heading_line": 19752,
+        "line": 19754,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152051,8 +152056,8 @@
       "source_location": {
         "heading": "DL-270 - Storage Review Decisions: Compression, Durability, Payloads, Pages, Mirrors, Analytics, Engines, Media, Gates",
         "heading_level": 3,
-        "heading_line": 19824,
-        "line": 19826,
+        "heading_line": 19825,
+        "line": 19827,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152068,8 +152073,8 @@
       "source_location": {
         "heading": "DL-271 — Onboarding credential, recovery and pairing feedback",
         "heading_level": 2,
-        "heading_line": 19917,
-        "line": 19919,
+        "heading_line": 19918,
+        "line": 19920,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152085,8 +152090,8 @@
       "source_location": {
         "heading": "DL-272 — Footage review alignment, real product rules",
         "heading_level": 3,
-        "heading_line": 20047,
-        "line": 20049,
+        "heading_line": 20048,
+        "line": 20050,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152102,8 +152107,8 @@
       "source_location": {
         "heading": "DL-273 — Retire unselected hosted offerings; keep self-managed services and defer restricted tokens",
         "heading_level": 3,
-        "heading_line": 20141,
-        "line": 20143,
+        "heading_line": 20142,
+        "line": 20144,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152119,8 +152124,8 @@
       "source_location": {
         "heading": "DL-280 - Approve The Packet And Apply The Later Rulings",
         "heading_level": 3,
-        "heading_line": 20237,
-        "line": 20239,
+        "heading_line": 20238,
+        "line": 20240,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152136,8 +152141,8 @@
       "source_location": {
         "heading": "DL-281 - One Settings Ladder And The Word Computer",
         "heading_level": 3,
-        "heading_line": 20288,
-        "line": 20290,
+        "heading_line": 20289,
+        "line": 20291,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152153,8 +152158,8 @@
       "source_location": {
         "heading": "DL-282 - One Settings Home And Explicit Joining",
         "heading_level": 3,
-        "heading_line": 20344,
-        "line": 20346,
+        "heading_line": 20345,
+        "line": 20347,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152170,8 +152175,8 @@
       "source_location": {
         "heading": "DL-283 - Show Origin And Change At The Actual Place",
         "heading_level": 3,
-        "heading_line": 20395,
-        "line": 20397,
+        "heading_line": 20396,
+        "line": 20398,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152187,8 +152192,8 @@
       "source_location": {
         "heading": "DL-284 - Copy Own Values And Selected Accounts Without Keys",
         "heading_level": 3,
-        "heading_line": 20448,
-        "line": 20450,
+        "heading_line": 20449,
+        "line": 20451,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152204,8 +152209,8 @@
       "source_location": {
         "heading": "DL-285 - Agent Settings And Always Choices Keep Their Authority",
         "heading_level": 3,
-        "heading_line": 20502,
-        "line": 20504,
+        "heading_line": 20503,
+        "line": 20505,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152221,8 +152226,8 @@
       "source_location": {
         "heading": "DL-286 - Reduce Motion And The Saved Look Reach The First Frame",
         "heading_level": 3,
-        "heading_line": 20556,
-        "line": 20558,
+        "heading_line": 20557,
+        "line": 20559,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152238,8 +152243,8 @@
       "source_location": {
         "heading": "DL-287 - No Project Is A Real Chat On A Named Computer",
         "heading_level": 3,
-        "heading_line": 20611,
-        "line": 20613,
+        "heading_line": 20612,
+        "line": 20614,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152255,8 +152260,8 @@
       "source_location": {
         "heading": "DL-288 - A Chat Folder Does Not Grant The Whole Computer",
         "heading_level": 3,
-        "heading_line": 20664,
-        "line": 20666,
+        "heading_line": 20665,
+        "line": 20667,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152272,8 +152277,8 @@
       "source_location": {
         "heading": "DL-289 - Explicit Other Project Reads Always State Coverage",
         "heading_level": 3,
-        "heading_line": 20717,
-        "line": 20719,
+        "heading_line": 20718,
+        "line": 20720,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152289,8 +152294,8 @@
       "source_location": {
         "heading": "DL-290 - Requests To Other Chats Respect The Receiver",
         "heading_level": 3,
-        "heading_line": 20769,
-        "line": 20771,
+        "heading_line": 20770,
+        "line": 20772,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152306,8 +152311,8 @@
       "source_location": {
         "heading": "DL-291 - Two Equal Ways To Join A Project With Report And Undo",
         "heading_level": 3,
-        "heading_line": 20821,
-        "line": 20823,
+        "heading_line": 20822,
+        "line": 20824,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152323,8 +152328,8 @@
       "source_location": {
         "heading": "DL-292 - Goals Crew Plan Modes And Schedules Work Without A Project",
         "heading_level": 3,
-        "heading_line": 20880,
-        "line": 20882,
+        "heading_line": 20881,
+        "line": 20883,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152340,8 +152345,8 @@
       "source_location": {
         "heading": "DL-293 - New Project And Split Projects Use The Existing Owners",
         "heading_level": 3,
-        "heading_line": 20942,
-        "line": 20944,
+        "heading_line": 20943,
+        "line": 20945,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152357,8 +152362,8 @@
       "source_location": {
         "heading": "DL-294 - Create Online Copies On Every Offered Service",
         "heading_level": 3,
-        "heading_line": 20994,
-        "line": 20996,
+        "heading_line": 20995,
+        "line": 20997,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152374,8 +152379,8 @@
       "source_location": {
         "heading": "DL-295 - Contribution Forks Are GitHub Only For Now",
         "heading_level": 3,
-        "heading_line": 21047,
-        "line": 21049,
+        "heading_line": 21048,
+        "line": 21050,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152391,8 +152396,8 @@
       "source_location": {
         "heading": "DL-296 - Starters Are Files And Saved Setups Are Configuration",
         "heading_level": 3,
-        "heading_line": 21099,
-        "line": 21101,
+        "heading_line": 21100,
+        "line": 21102,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152408,8 +152413,8 @@
       "source_location": {
         "heading": "DL-297 - Inspect Sources Keep Format In Settings And Protect Backups",
         "heading_level": 3,
-        "heading_line": 21151,
-        "line": 21153,
+        "heading_line": 21152,
+        "line": 21154,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152425,8 +152430,8 @@
       "source_location": {
         "heading": "DL-298 - YOLO Pushes And Publishes With Narrow Force Push Authority",
         "heading_level": 3,
-        "heading_line": 21204,
-        "line": 21206,
+        "heading_line": 21205,
+        "line": 21207,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152442,8 +152447,8 @@
       "source_location": {
         "heading": "DL-299 - Approve A Build Grant Once And Show Every Target",
         "heading_level": 3,
-        "heading_line": 21258,
-        "line": 21260,
+        "heading_line": 21259,
+        "line": 21261,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152459,8 +152464,8 @@
       "source_location": {
         "heading": "DL-300 - Event Authority Admits The App Scope Editions And Three New Families",
         "heading_level": 3,
-        "heading_line": 21315,
-        "line": 21317,
+        "heading_line": 21316,
+        "line": 21318,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -243508,9 +243513,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18764,
+    "depends_on_edge_count": 18765,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21972,
+    "edge_count": 21973,
     "node_count": 7424,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
