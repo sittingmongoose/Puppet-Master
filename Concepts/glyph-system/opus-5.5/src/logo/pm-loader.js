@@ -16,7 +16,7 @@
  * Arming. A loader is found when it is first styled: its unarmed state runs a 1 ms no-op animation (pml-arm) and one
  * document listener for animationstart arms it, so the owner needs no DOM observer and costs nothing while no loader
  * is shown. An unarmed loader is invisible for its first frame or two; armed, it fades in already in the shared
- * clock's phase (PMLogo.clock), so every loader on screen swings together and none starts with a jump.
+ * clock's phase (PMLogo.clock), so Pip loaders swing together. NieR diamonds retain a stable per-host offset.
  *
  * data-pml-run on the loader (written only here):
  *   on     moving, in phase                     off    held at the still pose: offscreen, the tab hidden, or the
@@ -58,6 +58,14 @@
      the Diamond loaders part's hollow diamond (styles.d/14-nier-parts.css), or with that part off today's fallback,
      the plain ink ring every spinner showed in NieR before (pm-loader.css). */
   const NIER = '<span class="pml-nier" aria-hidden="true"></span>';
+  // SW-21: retain one deterministic phase per host for its lifetime, including redraws and look switches.
+  // The golden-angle sequence spreads neighbouring waits without a new loop or per-frame reshuffle.
+  const nierOffsets = new WeakMap();
+  let nierSequence = 0;
+  function nierOffset(el) {
+    if (!nierOffsets.has(el)) nierOffsets.set(el, (nierSequence++ * 0.3819660112501051) % 1);
+    return nierOffsets.get(el);
+  }
   const NIER_MS = Object.freeze({ diamond: 2800, ring: 800, breath: 2400 });   // pm-loader.css, 14-nier-parts.css
   const isNier = (look) => L.family(look) === 'nier';
   function draw(el) {
@@ -74,8 +82,8 @@
     const ms = (v) => Math.round(v) + 'ms', c = L.clock;
     if (family === 'nier') {
       // NieR's part keeps its own periods (the diamond's 2.8 s turn, the ring's 0.8 s, the 2.4 s breath), scaled by
-      // --pml-k, and joins the shared clock's phase like every other loader
-      el.style.setProperty('--pml-ndelay', ms(c.delay(NIER_MS.diamond * k)));
+      // --pml-k. Diamonds add a stable host offset; the ring and Reduced Motion breath keep their shared phase.
+      el.style.setProperty('--pml-ndelay', ms(c.delay(NIER_MS.diamond * k) - nierOffset(el) * NIER_MS.diamond * k));
       el.style.setProperty('--pml-sdelay', ms(c.delay(NIER_MS.ring * k)));
       el.style.setProperty('--pml-nbdelay', ms(c.delay(NIER_MS.breath * k)));
       return;
