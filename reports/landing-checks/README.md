@@ -468,8 +468,11 @@ calls such a run clean. In `--json` the timed-out subchecks are listed under `in
 `elapsed_seconds` and `limit_seconds`, beside the `subcheck_timeout_seconds` the run used.
 
 The landing check hands the aggregates a bound of 600 seconds by default, where it used to hand them
-180. Since 2026-11-04 `pm-plans-verify.py` uses the same 600 seconds when `run-gates`,
-`audit-governance` or a standalone validator runs without `--subcheck-timeout-seconds`. The measured case: `lint-contractrefs` takes about 199 seconds in the shared checkout on the
+180. Since 2026-11-04 `pm-plans-verify.py` uses the same 600 seconds when `run-gates` or
+`audit-governance` runs without `--subcheck-timeout-seconds`, and for the standalone commands that run
+their validator as a subprocess and accept that flag (such as `validate-plan-migration`). Commands
+that run in-process have no such bound, and `validate-bootstrap-ledgers` keeps its own 180-second
+`--timeout-seconds` per ledger. The measured case: `lint-contractrefs` takes about 199 seconds in the shared checkout on the
 network mount, and finds nothing when run on its own (0 failures at `e44b9186fb`). At the
 terminal.workgroup_moved landing of 2026-09-24 the 180-second bound killed it in both aggregates, and
 the two timeout rows read as new failures and lifted two subcheck totals from 0 to 1.
