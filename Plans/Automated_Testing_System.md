@@ -7234,3 +7234,57 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+
+### ATS-380 - Card 2 independent guard oracles
+
+```yaml
+plan_unit_id: ATS-380
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: The six exact DCN families have per-family positive, negative and retained-read oracles in Plans/card2_event_fixtures.json,
+  checked by python3 scripts/pm_card2_events.py. Every negative is derived from a valid base and changes one logical
+  defect; observational copies are updated together. It must fail exactly its intended guard. The checker removes
+  each real guard independently, requires all and only that guard's negatives to pass, requires every other negative
+  still fail for its own reason, and then restores it. Unresolved schema references fail closed and the command
+  exits nonzero on any failure or exception; failure-oracle testing rejects an exit code of zero. Native execution,
+  source authentication, redb snapshot/CAS, wire durability, first-receipt issuance, crash/restore and actual deletion/access
+  enforcement remain NOT_RUN. Synthetic owner/authenticity observations test contract predicates and cannot admit
+  a writer or establish native proof. No new test file under tests/ is authorized by .gitignore, so this lane keeps
+  its executable oracle in scripts/.
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- All family/scope positives pass, every negative has one failure, and every removed guard flips only its own negatives.
+- Requested/failed/no-change verification emits no history, and changed live state does not invalidate retained
+  genuine history.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_ats-380
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens: []
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```

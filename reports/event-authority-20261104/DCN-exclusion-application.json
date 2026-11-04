@@ -1,0 +1,255 @@
+{
+  "application_id": "EA-W3-DCN-CARD2-EXCLUSIONS-20261104",
+  "base_commit": "16acf7594a3fe8559af89491b895f440b314b99e",
+  "scope": "11 retired rows; prepared contracts are not admitted. No denominator removal, bucket/cohort/category change, canonical union rewrite or frozen validator change.",
+  "individual_union": "Parent must merge individual-disposition/deepen/DCN/LEDGER.jsonl into the canonical union; LEDGER_WRITE_RULE.md forbids a worker merge. Exact row files and census lines are updated here.",
+  "rows": [
+    {
+      "event_type": "browser.session.navigated",
+      "decision": "DL-405",
+      "before_disposition": "KEEP_QUARANTINED",
+      "after_disposition": "RECLASSIFY_TO_EXCLUDED",
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_browser.session.navigated.json",
+      "before_sha256": "5b8b4d8fdb5e89107fc0686dbc574ed0f633bf74279061f2ea63af0d8b6a6ad8",
+      "after_sha256": "db8c6dc3cff1c8c1ac7fcb88629030357dfcd225b41537eb798f679d5418e1f8",
+      "owner_evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1309,
+          "line_end": 1309,
+          "quote": "`browser.session.navigated` and `browser.session.resized` are retired"
+        },
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "line_start": 13380,
+          "line_end": 13380,
+          "quote": "each manual session is the manual face of exactly one Browser workspace"
+        }
+      ]
+    },
+    {
+      "event_type": "browser.session.resized",
+      "decision": "DL-405",
+      "before_disposition": "KEEP_QUARANTINED",
+      "after_disposition": "RECLASSIFY_TO_EXCLUDED",
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_browser.session.resized.json",
+      "before_sha256": "53c3310552ab811d7e06a28d0c9e97f492e3414a9295d4375d96b67fb453c260",
+      "after_sha256": "9b5260be75fed5c702315913e5151848620575bbbfa94bdf8086fa490bf9e39f",
+      "owner_evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1309,
+          "line_end": 1309,
+          "quote": "`browser.session.navigated` and `browser.session.resized` are retired"
+        },
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "line_start": 13380,
+          "line_end": 13380,
+          "quote": "each manual session is the manual face of exactly one Browser workspace"
+        }
+      ]
+    },
+    {
+      "event_type": "memory.gist.verification_requested",
+      "decision": "DL-407",
+      "before_disposition": "KEEP_QUARANTINED",
+      "after_disposition": "RECLASSIFY_TO_EXCLUDED",
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.verification_requested.json",
+      "before_sha256": "60308cc545c4a9482046f118224b02afcc770740dca118a7d9e566be177cdffa",
+      "after_sha256": "c347d50dfd199fd6a995ba8ed07b4d1feed82fd2bfb080e5a9a496a3ca5efc35",
+      "owner_evidence": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 3179,
+          "line_end": 3179,
+          "quote": "DL-407 retires memory.gist.verification_requested"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1127,
+          "line_end": 1127,
+          "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
+        }
+      ]
+    },
+    {
+      "event_type": "memory.gist.verified",
+      "decision": "DL-407",
+      "before_disposition": "KEEP_QUARANTINED",
+      "after_disposition": "RECLASSIFY_TO_EXCLUDED",
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.verified.json",
+      "before_sha256": "61f4d57a269e129cc662c5d0ef28d9bdb333e52fad2dd43a3ac7c0c86a453a69",
+      "after_sha256": "3c64e9bed82522759ed30a55825cf973ca9dc12a8a2dcb0b21145dec2c5a1241",
+      "owner_evidence": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 3179,
+          "line_end": 3179,
+          "quote": "DL-407 retires memory.gist.verification_requested"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1127,
+          "line_end": 1127,
+          "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
+        }
+      ]
+    },
+    {
+      "event_type": "memory.gist.verification_failed",
+      "decision": "DL-407",
+      "before_disposition": "KEEP_QUARANTINED",
+      "after_disposition": "RECLASSIFY_TO_EXCLUDED",
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.verification_failed.json",
+      "before_sha256": "3f7c14222116d1429c89460a9ada30099be80241c9c3bdb6dd30321622c93721",
+      "after_sha256": "7bdd80316382c03647d4f136bc8c313941ce665e964b45dab7318e422b8c9e44",
+      "owner_evidence": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 3179,
+          "line_end": 3179,
+          "quote": "DL-407 retires memory.gist.verification_requested"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1127,
+          "line_end": 1127,
+          "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
+        }
+      ]
+    },
+    {
+      "event_type": "memory.gist.updated",
+      "decision": "DL-407",
+      "before_disposition": "KEEP_QUARANTINED",
+      "after_disposition": "RECLASSIFY_TO_EXCLUDED",
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.updated.json",
+      "before_sha256": "bfb147c46c3d0e0b679c9e167a219fedc47204ea5c1aabadd4db9e39dd434126",
+      "after_sha256": "a432425c4b3fe27c67b40b07e6d03eba0e382106a426b209df9356dd77315f64",
+      "owner_evidence": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 3179,
+          "line_end": 3179,
+          "quote": "DL-407 retires memory.gist.verification_requested"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1127,
+          "line_end": 1127,
+          "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
+        }
+      ]
+    },
+    {
+      "event_type": "memory.gist.pinned",
+      "decision": "DL-407",
+      "before_disposition": "KEEP_QUARANTINED",
+      "after_disposition": "RECLASSIFY_TO_EXCLUDED",
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.pinned.json",
+      "before_sha256": "167ca8dc3611c5e6eae0460e45b9cd5859de71c245d31f33066e20300c4a8549",
+      "after_sha256": "ad5729fe424b4a2143bc45e78093711704208c0299822664964663dd3f165924",
+      "owner_evidence": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 3179,
+          "line_end": 3179,
+          "quote": "DL-407 retires memory.gist.verification_requested"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1127,
+          "line_end": 1127,
+          "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
+        }
+      ]
+    },
+    {
+      "event_type": "memory.gist.unpinned",
+      "decision": "DL-407",
+      "before_disposition": "KEEP_QUARANTINED",
+      "after_disposition": "RECLASSIFY_TO_EXCLUDED",
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.unpinned.json",
+      "before_sha256": "e025be9d56093eb8ad706b19531e4d2ccd1f4a87d6794c61a7b491ed834d74f5",
+      "after_sha256": "b54fc1de532782866d14d250930678281a3a8e2911662d24e108cdaaf3fdbe06",
+      "owner_evidence": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 3179,
+          "line_end": 3179,
+          "quote": "DL-407 retires memory.gist.verification_requested"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1127,
+          "line_end": 1127,
+          "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
+        }
+      ]
+    },
+    {
+      "event_type": "memory.gist.discarded",
+      "decision": "DL-407",
+      "before_disposition": "KEEP_QUARANTINED",
+      "after_disposition": "RECLASSIFY_TO_EXCLUDED",
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.discarded.json",
+      "before_sha256": "c69126fc08860fabbd239f3e14f351caf5dfb0cd4230b5ff053e7aef7f868f58",
+      "after_sha256": "659044408d57212252f30e3284bba1bf9b5283c6f5a218b1b42f2e8d785f3799",
+      "owner_evidence": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 3179,
+          "line_end": 3179,
+          "quote": "DL-407 retires memory.gist.verification_requested"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1127,
+          "line_end": 1127,
+          "quote": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
+        }
+      ]
+    },
+    {
+      "event_type": "dashboard.widget_added",
+      "decision": "DL-180",
+      "before_disposition": "KEEP_QUARANTINED",
+      "after_disposition": "RECLASSIFY_TO_EXCLUDED",
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_dashboard.widget_added.json",
+      "before_sha256": "95afd692f3a6ad43ca3b6370445d5d6ed7beccf1984ba265feaff6c8b25532da",
+      "after_sha256": "1c9002b2387d7ec6ad463aabcfe839018450b20b5a5a70cf9dc59f6a5a984f25",
+      "owner_evidence": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 16973,
+          "line_end": 16973,
+          "quote": "No event named dashboard.widget_added is emitted."
+        }
+      ]
+    },
+    {
+      "event_type": "coordination.debug_mirror_exported",
+      "decision": "DL-270",
+      "before_disposition": "KEEP_QUARANTINED",
+      "after_disposition": "RECLASSIFY_TO_EXCLUDED",
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.debug_mirror_exported.json",
+      "before_sha256": "52bebae4d7080a5755ec08b93b46d7645650e80bbc037c8d85f1624b7a09cf86",
+      "after_sha256": "6c272a08437e9623b7a639f758f231e11a52f55896288f1deb39ba7b98fe514d",
+      "owner_evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 553,
+          "line_end": 553,
+          "quote": "the live mirror files it described are retired, so no new mirror export attempt is recorded"
+        }
+      ]
+    }
+  ],
+  "census": {
+    "path": "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl",
+    "before_sha256": "83a1698ac3dfe2795fec2f10aed3eaabfae6f4074966ed5e6806f756ddf15af0",
+    "after_sha256": "b3af78deab3288928d798db1bb051321ab849765427d41403f25a65cfe8cac4d",
+    "changed_rows": 11
+  }
+}

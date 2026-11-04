@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L12645-L13361
+Source lines: L12645-L13859
 
-Source SHA256: `32d7069dd628e1076d7f1ea3eb26f8578336610cd126e5ce392920ce0a0ffb69`
+Source SHA256: `c4cb9ca3fa25e70f507796433dbd9e83ba283a71129d4544302c71caf3b11b54`
 
 ---
 
@@ -725,3 +725,501 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-035, ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Decision_Log.md#DL-139
+
+
+### SMPFS-244 - browser.session.created prepared semantic contract
+
+```yaml
+plan_unit_id: SMPFS-244
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.created@1.0.0, prepared
+  without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2; the unlanded
+  answer/retention commits must integrate before admission. Per-family current-canon search and scoped negative
+  evidence are recorded in reports/event-authority-20261104/DCN.md and its pinned external per-family-search.json.
+  BrowserRuntimeService commits the new manual session for cmd.browser.open_workspace_preview or cmd.browser.open_detached_preview,
+  then records its creation. revision_before=0, revision_after=1; previous class, takeover and lifecycle plus before_record_ref
+  are null, lifecycle_state=open and changed_fields=[created]. A later placement/capability change from the same
+  command is a separate real change; creation itself is never repeated as state_changed.
+
+  DL-405: each manual session is the manual face of exactly one Browser workspace. browser_session_state.v1 carries
+  required workspace_id, joined to the genuine workspace on the exact storage, Home Server, Execution Host/Computer,
+  Environment and Project-or-app scope. That workspace link is assigned once and is not a second workspace lifecycle.
+  A single owner operation/change may append a manual session event or the corresponding Browser Program workspace/controller
+  event, never both for the same change. A separate genuine workspace change remains separately governed by DL-046;
+  it cannot be inferred from this session event. The five manual contracts do not add rows to browser_event_admission.json''s
+  53-name census. browser.session.navigated and browser.session.resized are retired; Navigate/Reload retain their
+  existing no-session-event behavior and the record retains current URL/viewport. Protected AuthBrowserSession never
+  enters this persistence or history path.
+
+  The full payload is Plans/card2_event_payloads.schema.json#/$defs/browser_session_created, exact Project logical
+  schema_id pm.browser.session.created.payload.v1 and distinct application logical schema_id pm.browser.session.created.payload.application.v1,
+  both schema_version=1.0.0. The selected root is closed; identifiers require exact full-match in addition to length
+  bounds, including trailing-LF rejection. It holds metadata, revisions, changed field names and opaque owner-record/evidence
+  references only, never URL, screenshot/page content, cookies, memory claims/text or secrets. Complete semantic
+  before/after values remain with the existing source owner. revision_after=revision_before+1 over u64. The source
+  must authenticate the exact subject, scope, operation, before/after revisions and committed outcome; an all-true
+  fixture is not native producer authority. Scope is application_or_project only for these existing owner-supported
+  editions: real Project keys/bytes remain unchanged; application has project_id=null, actual Computer/server and
+  original source graph selected by CV-366 (OriginalBrowserTransitionSource and BrowserSessionApplicationV1 / BrowserWorkspaceApplicationV1).
+  App memory additionally requires the actual private thread. Missing original source/method/admitted edition remains
+  unavailable, with no fabricated Project, fallback Client or cross-thread corpus.
+
+  browser.session.created is read by reader.browser.session.created.history@1.0.0 for the existing manual Browser
+  history consumers, without driving a browser, granting a controller lease, or recreating a process. This reader
+  explicitly adopts SP-278 and reader.storage.event_record_index@1.0.0. It reuses projector.storage.event_record_index@1.0.0
+  only for complete generic metadata indexing: checkpoints table, key event_record_index_checkpoint.v1:{storage_instance_id},
+  the uniquely current #/generations/{generation_id} value in Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  and event_record_index.v2@{generation_id}. Verify the original generation birth anchor and actual complete coverage,
+  including nonmatching application/Project rows, not a matching-row maximum. Resolve exact scope partition, event_type,
+  event_id, sequence_id, publication_locator, source frame/CRC and payload commitment in one redb snapshot under
+  the actual CURRENT/manifest maintenance fence. The complete SP-278 live read token contains storage_instance_id,
+  checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name,
+  source_selection and live redb_snapshot_id. A persisted read token is only its nine-field durable projection under
+  DL-076; no redb_snapshot_id is stored. source_selection binds storage_instance_id, CURRENT path/bytes, selected
+  segment generation, manifest path/bytes/generation, recovery epoch, survivor prefix, retained inventory, durable
+  watermarks, excluded ranges and retired inputs. Generation-only comparison is insufficient: a same-generation
+  frontier change invalidates publication. Revalidate access, deletion and that complete token at disclosure; changed
+  fences discard the answer. The generic owner''s checkpoint CAS/complete-source transaction remains SP-278''s,
+  not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history
+  view, family checkpoint, cursor or ACK; its sole effect is an ephemeral read answer. It never writes or advances
+  the generic checkpoint. Crash/rebuild reacquires the generic index and recomputes the answer, never reruns an
+  owner command, emits an event, restores a lease, charges Usage or injects a prompt. Historical validation evaluates
+  the genuine original committed transition under its original schema/policy; disappearance or changed current state
+  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- DL-045
+- CV-366
+- CV-332
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- One authentic committed owner mutation produces exactly one history event only after exact family admission.
+- All closed payload, command, transition, historical read, duplicate-record and scope oracles pass.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_smpfs-244
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.created
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### SMPFS-245 - browser.session.state_changed prepared semantic contract
+
+```yaml
+plan_unit_id: SMPFS-245
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.state_changed@1.0.0, prepared
+  without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2; the unlanded
+  answer/retention commits must integrate before admission. Per-family current-canon search and scoped negative
+  evidence are recorded in reports/event-authority-20261104/DCN.md and its pinned external per-family-search.json.
+  BrowserRuntimeService records an actual existing manual-session change by the two preview-open commands, cmd.browser.detach_browser_tab,
+  cmd.browser.reopen or cmd.browser.retry. The source owner identifies the changed_fields and immutable before/after
+  record refs; navigation/reload alone do not create this event. Retry that merely returns the previous result emits
+  nothing; a genuinely accepted recovery transition retains the same session/workspace identity. No event is inferred
+  merely from changed URL/viewport observations.
+
+  DL-405: each manual session is the manual face of exactly one Browser workspace. browser_session_state.v1 carries
+  required workspace_id, joined to the genuine workspace on the exact storage, Home Server, Execution Host/Computer,
+  Environment and Project-or-app scope. That workspace link is assigned once and is not a second workspace lifecycle.
+  A single owner operation/change may append a manual session event or the corresponding Browser Program workspace/controller
+  event, never both for the same change. A separate genuine workspace change remains separately governed by DL-046;
+  it cannot be inferred from this session event. The five manual contracts do not add rows to browser_event_admission.json''s
+  53-name census. browser.session.navigated and browser.session.resized are retired; Navigate/Reload retain their
+  existing no-session-event behavior and the record retains current URL/viewport. Protected AuthBrowserSession never
+  enters this persistence or history path.
+
+  The full payload is Plans/card2_event_payloads.schema.json#/$defs/browser_session_state_changed, exact Project
+  logical schema_id pm.browser.session.state_changed.payload.v1 and distinct application logical schema_id pm.browser.session.state_changed.payload.application.v1,
+  both schema_version=1.0.0. The selected root is closed; identifiers require exact full-match in addition to length
+  bounds, including trailing-LF rejection. It holds metadata, revisions, changed field names and opaque owner-record/evidence
+  references only, never URL, screenshot/page content, cookies, memory claims/text or secrets. Complete semantic
+  before/after values remain with the existing source owner. revision_after=revision_before+1 over u64. The source
+  must authenticate the exact subject, scope, operation, before/after revisions and committed outcome; an all-true
+  fixture is not native producer authority. Scope is application_or_project only for these existing owner-supported
+  editions: real Project keys/bytes remain unchanged; application has project_id=null, actual Computer/server and
+  original source graph selected by CV-366 (OriginalBrowserTransitionSource and BrowserSessionApplicationV1 / BrowserWorkspaceApplicationV1).
+  App memory additionally requires the actual private thread. Missing original source/method/admitted edition remains
+  unavailable, with no fabricated Project, fallback Client or cross-thread corpus.
+
+  browser.session.state_changed is read by reader.browser.session.state_changed.history@1.0.0 for the existing manual
+  Browser history consumers, without driving a browser, granting a controller lease, or recreating a process. This
+  reader explicitly adopts SP-278 and reader.storage.event_record_index@1.0.0. It reuses projector.storage.event_record_index@1.0.0
+  only for complete generic metadata indexing: checkpoints table, key event_record_index_checkpoint.v1:{storage_instance_id},
+  the uniquely current #/generations/{generation_id} value in Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  and event_record_index.v2@{generation_id}. Verify the original generation birth anchor and actual complete coverage,
+  including nonmatching application/Project rows, not a matching-row maximum. Resolve exact scope partition, event_type,
+  event_id, sequence_id, publication_locator, source frame/CRC and payload commitment in one redb snapshot under
+  the actual CURRENT/manifest maintenance fence. The complete SP-278 live read token contains storage_instance_id,
+  checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name,
+  source_selection and live redb_snapshot_id. A persisted read token is only its nine-field durable projection under
+  DL-076; no redb_snapshot_id is stored. source_selection binds storage_instance_id, CURRENT path/bytes, selected
+  segment generation, manifest path/bytes/generation, recovery epoch, survivor prefix, retained inventory, durable
+  watermarks, excluded ranges and retired inputs. Generation-only comparison is insufficient: a same-generation
+  frontier change invalidates publication. Revalidate access, deletion and that complete token at disclosure; changed
+  fences discard the answer. The generic owner''s checkpoint CAS/complete-source transaction remains SP-278''s,
+  not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history
+  view, family checkpoint, cursor or ACK; its sole effect is an ephemeral read answer. It never writes or advances
+  the generic checkpoint. Crash/rebuild reacquires the generic index and recomputes the answer, never reruns an
+  owner command, emits an event, restores a lease, charges Usage or injects a prompt. Historical validation evaluates
+  the genuine original committed transition under its original schema/policy; disappearance or changed current state
+  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- DL-045
+- CV-366
+- CV-332
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- One authentic committed owner mutation produces exactly one history event only after exact family admission.
+- All closed payload, command, transition, historical read, duplicate-record and scope oracles pass.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_smpfs-245
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.state_changed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### SMPFS-246 - browser.session.closed prepared semantic contract
+
+```yaml
+plan_unit_id: SMPFS-246
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.closed@1.0.0, prepared without
+  admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2; the unlanded
+  answer/retention commits must integrate before admission. Per-family current-canon search and scoped negative
+  evidence are recorded in reports/event-authority-20261104/DCN.md and its pinned external per-family-search.json.
+  BrowserRuntimeService records cmd.browser.keep_closed only after the existing open session is committed closed.
+  previous_lifecycle_state=open, lifecycle_state=closed, and changed_fields contains lifecycle_state. Repeating
+  Keep closed on an already closed session is a no-op with no second event.
+
+  DL-405: each manual session is the manual face of exactly one Browser workspace. browser_session_state.v1 carries
+  required workspace_id, joined to the genuine workspace on the exact storage, Home Server, Execution Host/Computer,
+  Environment and Project-or-app scope. That workspace link is assigned once and is not a second workspace lifecycle.
+  A single owner operation/change may append a manual session event or the corresponding Browser Program workspace/controller
+  event, never both for the same change. A separate genuine workspace change remains separately governed by DL-046;
+  it cannot be inferred from this session event. The five manual contracts do not add rows to browser_event_admission.json''s
+  53-name census. browser.session.navigated and browser.session.resized are retired; Navigate/Reload retain their
+  existing no-session-event behavior and the record retains current URL/viewport. Protected AuthBrowserSession never
+  enters this persistence or history path.
+
+  The full payload is Plans/card2_event_payloads.schema.json#/$defs/browser_session_closed, exact Project logical
+  schema_id pm.browser.session.closed.payload.v1 and distinct application logical schema_id pm.browser.session.closed.payload.application.v1,
+  both schema_version=1.0.0. The selected root is closed; identifiers require exact full-match in addition to length
+  bounds, including trailing-LF rejection. It holds metadata, revisions, changed field names and opaque owner-record/evidence
+  references only, never URL, screenshot/page content, cookies, memory claims/text or secrets. Complete semantic
+  before/after values remain with the existing source owner. revision_after=revision_before+1 over u64. The source
+  must authenticate the exact subject, scope, operation, before/after revisions and committed outcome; an all-true
+  fixture is not native producer authority. Scope is application_or_project only for these existing owner-supported
+  editions: real Project keys/bytes remain unchanged; application has project_id=null, actual Computer/server and
+  original source graph selected by CV-366 (OriginalBrowserTransitionSource and BrowserSessionApplicationV1 / BrowserWorkspaceApplicationV1).
+  App memory additionally requires the actual private thread. Missing original source/method/admitted edition remains
+  unavailable, with no fabricated Project, fallback Client or cross-thread corpus.
+
+  browser.session.closed is read by reader.browser.session.closed.history@1.0.0 for the existing manual Browser
+  history consumers, without driving a browser, granting a controller lease, or recreating a process. This reader
+  explicitly adopts SP-278 and reader.storage.event_record_index@1.0.0. It reuses projector.storage.event_record_index@1.0.0
+  only for complete generic metadata indexing: checkpoints table, key event_record_index_checkpoint.v1:{storage_instance_id},
+  the uniquely current #/generations/{generation_id} value in Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  and event_record_index.v2@{generation_id}. Verify the original generation birth anchor and actual complete coverage,
+  including nonmatching application/Project rows, not a matching-row maximum. Resolve exact scope partition, event_type,
+  event_id, sequence_id, publication_locator, source frame/CRC and payload commitment in one redb snapshot under
+  the actual CURRENT/manifest maintenance fence. The complete SP-278 live read token contains storage_instance_id,
+  checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name,
+  source_selection and live redb_snapshot_id. A persisted read token is only its nine-field durable projection under
+  DL-076; no redb_snapshot_id is stored. source_selection binds storage_instance_id, CURRENT path/bytes, selected
+  segment generation, manifest path/bytes/generation, recovery epoch, survivor prefix, retained inventory, durable
+  watermarks, excluded ranges and retired inputs. Generation-only comparison is insufficient: a same-generation
+  frontier change invalidates publication. Revalidate access, deletion and that complete token at disclosure; changed
+  fences discard the answer. The generic owner''s checkpoint CAS/complete-source transaction remains SP-278''s,
+  not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history
+  view, family checkpoint, cursor or ACK; its sole effect is an ephemeral read answer. It never writes or advances
+  the generic checkpoint. Crash/rebuild reacquires the generic index and recomputes the answer, never reruns an
+  owner command, emits an event, restores a lease, charges Usage or injects a prompt. Historical validation evaluates
+  the genuine original committed transition under its original schema/policy; disappearance or changed current state
+  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- DL-045
+- CV-366
+- CV-332
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- One authentic committed owner mutation produces exactly one history event only after exact family admission.
+- All closed payload, command, transition, historical read, duplicate-record and scope oracles pass.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_smpfs-246
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.closed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### SMPFS-247 - browser.session.promoted prepared semantic contract
+
+```yaml
+plan_unit_id: SMPFS-247
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.promoted@1.0.0, prepared
+  without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2; the unlanded
+  answer/retention commits must integrate before admission. Per-family current-canon search and scoped negative
+  evidence are recorded in reports/event-authority-20261104/DCN.md and its pinned external per-family-search.json.
+  BrowserRuntimeService records cmd.browser.promote_to_normal_browsing only after the session changes from an existing
+  non-normal session_class to normal_browsing, with session_class in changed_fields. Workspace and browser_session_id
+  remain stable; an already normal session produces no second event. Promotion is not a controller grant or a Browser
+  Program workspace recreation.
+
+  DL-405: each manual session is the manual face of exactly one Browser workspace. browser_session_state.v1 carries
+  required workspace_id, joined to the genuine workspace on the exact storage, Home Server, Execution Host/Computer,
+  Environment and Project-or-app scope. That workspace link is assigned once and is not a second workspace lifecycle.
+  A single owner operation/change may append a manual session event or the corresponding Browser Program workspace/controller
+  event, never both for the same change. A separate genuine workspace change remains separately governed by DL-046;
+  it cannot be inferred from this session event. The five manual contracts do not add rows to browser_event_admission.json''s
+  53-name census. browser.session.navigated and browser.session.resized are retired; Navigate/Reload retain their
+  existing no-session-event behavior and the record retains current URL/viewport. Protected AuthBrowserSession never
+  enters this persistence or history path.
+
+  The full payload is Plans/card2_event_payloads.schema.json#/$defs/browser_session_promoted, exact Project logical
+  schema_id pm.browser.session.promoted.payload.v1 and distinct application logical schema_id pm.browser.session.promoted.payload.application.v1,
+  both schema_version=1.0.0. The selected root is closed; identifiers require exact full-match in addition to length
+  bounds, including trailing-LF rejection. It holds metadata, revisions, changed field names and opaque owner-record/evidence
+  references only, never URL, screenshot/page content, cookies, memory claims/text or secrets. Complete semantic
+  before/after values remain with the existing source owner. revision_after=revision_before+1 over u64. The source
+  must authenticate the exact subject, scope, operation, before/after revisions and committed outcome; an all-true
+  fixture is not native producer authority. Scope is application_or_project only for these existing owner-supported
+  editions: real Project keys/bytes remain unchanged; application has project_id=null, actual Computer/server and
+  original source graph selected by CV-366 (OriginalBrowserTransitionSource and BrowserSessionApplicationV1 / BrowserWorkspaceApplicationV1).
+  App memory additionally requires the actual private thread. Missing original source/method/admitted edition remains
+  unavailable, with no fabricated Project, fallback Client or cross-thread corpus.
+
+  browser.session.promoted is read by reader.browser.session.promoted.history@1.0.0 for the existing manual Browser
+  history consumers, without driving a browser, granting a controller lease, or recreating a process. This reader
+  explicitly adopts SP-278 and reader.storage.event_record_index@1.0.0. It reuses projector.storage.event_record_index@1.0.0
+  only for complete generic metadata indexing: checkpoints table, key event_record_index_checkpoint.v1:{storage_instance_id},
+  the uniquely current #/generations/{generation_id} value in Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  and event_record_index.v2@{generation_id}. Verify the original generation birth anchor and actual complete coverage,
+  including nonmatching application/Project rows, not a matching-row maximum. Resolve exact scope partition, event_type,
+  event_id, sequence_id, publication_locator, source frame/CRC and payload commitment in one redb snapshot under
+  the actual CURRENT/manifest maintenance fence. The complete SP-278 live read token contains storage_instance_id,
+  checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name,
+  source_selection and live redb_snapshot_id. A persisted read token is only its nine-field durable projection under
+  DL-076; no redb_snapshot_id is stored. source_selection binds storage_instance_id, CURRENT path/bytes, selected
+  segment generation, manifest path/bytes/generation, recovery epoch, survivor prefix, retained inventory, durable
+  watermarks, excluded ranges and retired inputs. Generation-only comparison is insufficient: a same-generation
+  frontier change invalidates publication. Revalidate access, deletion and that complete token at disclosure; changed
+  fences discard the answer. The generic owner''s checkpoint CAS/complete-source transaction remains SP-278''s,
+  not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history
+  view, family checkpoint, cursor or ACK; its sole effect is an ephemeral read answer. It never writes or advances
+  the generic checkpoint. Crash/rebuild reacquires the generic index and recomputes the answer, never reruns an
+  owner command, emits an event, restores a lease, charges Usage or injects a prompt. Historical validation evaluates
+  the genuine original committed transition under its original schema/policy; disappearance or changed current state
+  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- DL-045
+- CV-366
+- CV-332
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- One authentic committed owner mutation produces exactly one history event only after exact family admission.
+- All closed payload, command, transition, historical read, duplicate-record and scope oracles pass.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_smpfs-247
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.promoted
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### SMPFS-248 - browser.session.takeover_state_changed prepared semantic contract
+
+```yaml
+plan_unit_id: SMPFS-248
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.takeover_state_changed@1.0.0,
+  prepared without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card
+  2; the unlanded answer/retention commits must integrate before admission. Per-family current-canon search and
+  scoped negative evidence are recorded in reports/event-authority-20261104/DCN.md and its pinned external per-family-search.json.
+  BrowserRuntimeService records an actual takeover_state change committed by cmd.browser.take_over, cmd.browser.pause_agent,
+  cmd.browser.let_agent_continue or cmd.browser.stop_agent_keep_browser. The authenticated owner outcome, not the
+  command label alone, selects the before/after states from none|offered|paused_for_user|promoted|stopped_keep_browser.
+  They must differ and changed_fields contains takeover_state. No new takeover policy or state mapping is selected
+  here; the existing Browser permission/controller owner authenticates its actual outcome.
+
+  DL-405: each manual session is the manual face of exactly one Browser workspace. browser_session_state.v1 carries
+  required workspace_id, joined to the genuine workspace on the exact storage, Home Server, Execution Host/Computer,
+  Environment and Project-or-app scope. That workspace link is assigned once and is not a second workspace lifecycle.
+  A single owner operation/change may append a manual session event or the corresponding Browser Program workspace/controller
+  event, never both for the same change. A separate genuine workspace change remains separately governed by DL-046;
+  it cannot be inferred from this session event. The five manual contracts do not add rows to browser_event_admission.json''s
+  53-name census. browser.session.navigated and browser.session.resized are retired; Navigate/Reload retain their
+  existing no-session-event behavior and the record retains current URL/viewport. Protected AuthBrowserSession never
+  enters this persistence or history path.
+
+  The full payload is Plans/card2_event_payloads.schema.json#/$defs/browser_session_takeover_state_changed, exact
+  Project logical schema_id pm.browser.session.takeover_state_changed.payload.v1 and distinct application logical
+  schema_id pm.browser.session.takeover_state_changed.payload.application.v1, both schema_version=1.0.0. The selected
+  root is closed; identifiers require exact full-match in addition to length bounds, including trailing-LF rejection.
+  It holds metadata, revisions, changed field names and opaque owner-record/evidence references only, never URL,
+  screenshot/page content, cookies, memory claims/text or secrets. Complete semantic before/after values remain
+  with the existing source owner. revision_after=revision_before+1 over u64. The source must authenticate the exact
+  subject, scope, operation, before/after revisions and committed outcome; an all-true fixture is not native producer
+  authority. Scope is application_or_project only for these existing owner-supported editions: real Project keys/bytes
+  remain unchanged; application has project_id=null, actual Computer/server and original source graph selected by
+  CV-366 (OriginalBrowserTransitionSource and BrowserSessionApplicationV1 / BrowserWorkspaceApplicationV1). App
+  memory additionally requires the actual private thread. Missing original source/method/admitted edition remains
+  unavailable, with no fabricated Project, fallback Client or cross-thread corpus.
+
+  browser.session.takeover_state_changed is read by reader.browser.session.takeover_state_changed.history@1.0.0
+  for the existing manual Browser history consumers, without driving a browser, granting a controller lease, or
+  recreating a process. This reader explicitly adopts SP-278 and reader.storage.event_record_index@1.0.0. It reuses
+  projector.storage.event_record_index@1.0.0 only for complete generic metadata indexing: checkpoints table, key
+  event_record_index_checkpoint.v1:{storage_instance_id}, the uniquely current #/generations/{generation_id} value
+  in Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, and event_record_index.v2@{generation_id}.
+  Verify the original generation birth anchor and actual complete coverage, including nonmatching application/Project
+  rows, not a matching-row maximum. Resolve exact scope partition, event_type, event_id, sequence_id, publication_locator,
+  source frame/CRC and payload commitment in one redb snapshot under the actual CURRENT/manifest maintenance fence.
+  The complete SP-278 live read token contains storage_instance_id, checkpoint_key, checkpoint_ref, generation_id,
+  generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and live redb_snapshot_id.
+  A persisted read token is only its nine-field durable projection under DL-076; no redb_snapshot_id is stored.
+  source_selection binds storage_instance_id, CURRENT path/bytes, selected segment generation, manifest path/bytes/generation,
+  recovery epoch, survivor prefix, retained inventory, durable watermarks, excluded ranges and retired inputs. Generation-only
+  comparison is insufficient: a same-generation frontier change invalidates publication. Revalidate access, deletion
+  and that complete token at disclosure; changed fences discard the answer. The generic owner''s checkpoint CAS/complete-source
+  transaction remains SP-278''s, not this reader''s. Family checkpoint disposition is none_required: the family
+  creates no projector, durable history view, family checkpoint, cursor or ACK; its sole effect is an ephemeral
+  read answer. It never writes or advances the generic checkpoint. Crash/rebuild reacquires the generic index and
+  recomputes the answer, never reruns an owner command, emits an event, restores a lease, charges Usage or injects
+  a prompt. Historical validation evaluates the genuine original committed transition under its original schema/policy;
+  disappearance or changed current state of the live subject does not invalidate a retained event. Withdrawn or
+  forged sources still refuse.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- DL-045
+- CV-366
+- CV-332
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- One authentic committed owner mutation produces exactly one history event only after exact family admission.
+- All closed payload, command, transition, historical read, duplicate-record and scope oracles pass.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_smpfs-248
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.takeover_state_changed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```

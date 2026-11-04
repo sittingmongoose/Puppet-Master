@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L17423-L17841
+Source lines: L17417-L17834
 
-Source SHA256: `212f3634ee38453d53ee6294b83f1280bb82aeef9426394b0ba303c6f76ab24a`
+Source SHA256: `39c3903f5c8721f5f828a6e569756cffcb13e36c077a4345668d6a3d71a529ca`
 
 ---
 
@@ -142,7 +142,7 @@ canonical_text: 'The chat port adds producers to existing commands and local act
   kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and
   shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control
   or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not
-  puppet strings. The one shared person-silhouette renderer owned by F3-594 serves crew diagrams, cast plates, run cards and rosters. Optional
+  puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional
   agent strings and the single Pip primitive retain their existing meaning.'
 gui_related: true
 gui_classification_reason: Maps hosted chat controls to existing commands, Settings transactions and local
@@ -177,11 +177,12 @@ acceptance_criteria:
   own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet
   head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s
   materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
-  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer owned by F3-594 serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
+  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
   retain their existing meaning.'
 validation_surfaces:
-  - scripts/pm-shard-plans.py
-  - scripts/pm-plan-index.py
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
 risk_class: hosted_chat_owner_drift
 reasoning_tier: high
 context_scope: chat56_pmconcept7_port
@@ -202,7 +203,6 @@ source_lineage:
   source; not native or final visual verification)
 - 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
   source evidence, not native APIs.'
-- "DL-260 source lineage only (no product API or implementation obligation): ppYou/PX_YOU/pnYou were the concept person-rendering helpers and pixel table; the shared product renderer is owned by F3-594."
 preserved_exact_tokens:
 - cmd.agents.open_thread
 - cmd.editor.close_tab
@@ -302,7 +302,8 @@ canonical_text: >-
   web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or
   controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass
   plate; unavailable owner navigation says why. G6 confines Clear finished producers to the thread Processes
-  view and panel Processes tab. All Work consumers use the stable catalog identities without a replacement command family or implicit Event Authority admission.
+  view and panel Processes tab. PM7_WORK_UI and PM_WORK demonstrate these routes in the concept; they are
+  adapters to the stable catalog identities, not replacement native commands or Event Authority admission.
   D2/D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): composer run_dock Review/Show is
   an additional producer of cmd.chat.processes.open for a process or scheduled item, preserving
   Project/thread/work identity and selecting that item in Processes. Agent Review selects the existing Subagents
@@ -320,7 +321,7 @@ canonical_text: >-
   is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new invocation through the
   terminal owner, with an explicit new-session request when needed; Restart keeps cmd.work.restart for
   restartable live server/db/watcher work. Concept W.restart/W.stop adapters do not replace those native owner
-  routes. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live
+  routes. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live
   process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that
   thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or
   returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At
@@ -345,12 +346,12 @@ acceptance_criteria:
   - "The nine work/navigation command IDs match the closed schema enum and each has exactly one canonical production-intent handler."
   - "Navigation/view-local clear are distinguished from runtime mutations; no stop_all alias or delete-record Clear Finished appears."
   - "Existing terminal/owner/schedule routes preserve exact identities, and deferred Home/shortcut/event producers stay absent."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority."
 validation_surfaces:
-- "scripts/pm-shard-plans.py"
-- "scripts/pm-plan-index.py"
-- "scripts/pm7-build-check.py"
-- "scripts/pm-plans-verify.py"
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-build-check.py
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -363,8 +364,6 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
-- "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
-- "DL-260 source lineage only (no product API): PM7_WORK_UI/PM_WORK, clearFinished platform/thread:<id> and canSendInput/answer were concept route/view adapters; native owners retain exact command, view, prompt, generation and permission checks."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

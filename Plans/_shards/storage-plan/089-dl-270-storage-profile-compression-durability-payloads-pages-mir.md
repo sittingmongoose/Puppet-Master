@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28166-L29587
+Source lines: L28061-L30056
 
-Source SHA256: `46b65fa5cef7d5b67ad27e23a573b372e74628124d8a2210af1f16d9011b6b4e`
+Source SHA256: `452eb063ad8c3c01bf9f26a9383d387ce73c1773bb7ae6c3665f05070f03ce8d`
 
 ---
 
@@ -909,8 +909,8 @@ acceptance_criteria:
 - Sparse row/head/snapshot/mirror/index storage has one value authority and same-key revision maps.
 - Join Undo/backup/retention is explicit and contains no secrets or offline writes.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plan-index.py
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -962,7 +962,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: |-
   Application work uses the same seglog, two redb files, payload packs, render pages/index engines and storage lock/maintenance/backup owners as Project counterparts, under SP-345’s app-data root and actual Server. App scope is not a Project Vault and holds no project_home_server_id before conversion. The attached table is the exclusive physical app key map for ordinary chat/root/recovery/UI/notebook/browser/runtime records; version/schema/source selection is CV-366. Raw missing Project interpolation, main-root fallback, per-thread infinite app buckets and new live JSON are forbidden. Source/context authority uses exact Host/Environment/roots, not the configured display path alone.
   Place/folder records bind actual Server/Host/Environment and canonical path identity/currentness, draft_id before first message and thread_id thereafter. Concurrent first save/command adopts one folder exactly once. Visible chat folders live outside PM data in the Computer’s configured no-project chat root; no talk-only folder, rename relocation or implicit delete. Disconnected chat metadata remains named/read-only; continuation needs the real current writer. Request/outbox continuity remains the existing thread owner; facade preview is local and does not create its own storage family. Client close does not stop the Server’s admitted work.
-  One app Server-wide counterpart bucket per family supplies the same limits, budget/TTL/retention/holds and backup classification as the Project bucket, not a reset per chat. An app family with a Project counterpart takes that counterpart's storage tier (Jared, 2026-11-04). Restore points share one 2,048 cap with the exact 7,776,000-second reference-release threshold, oldest eligible pressure and every descendant/application/preserve/legal/source/rollback/maintenance/backup hold; states/results remain available|expired|deleted|corrupt and branched|refused|failed. Web cache shares the 500 MB default with owner TTL/LRU. No other numeric cap is invented. Families whose counterpart has no hard cap retain that explicit disposition plus mandatory disk budget; unknown policy cannot be treated as unlimited. A table token owner_*_counterpart must resolve through Plans/storage_value_registry.json to the existing named policy/anchor, never a new policy ID or a production registration.
+  One app Server-wide counterpart bucket per family supplies the same limits, budget/TTL/retention/holds and backup classification as the Project bucket, not a reset per chat. An app family with a Project counterpart takes that counterpart's storage tier (Jared, 2026-11-04). Restore points share one 2,048 cap with the exact 7,776,000-second reference-release threshold, oldest eligible pressure and every descendant/application/preserve/legal/source/rollback/maintenance/backup hold; states/results remain available|expired|deleted|corrupt and branched|refused|failed. Web cache shares the 500 MB default with owner TTL/LRU. No other numeric cap is invented. Families whose counterpart has no hard cap retain that explicit disposition plus mandatory disk budget; unknown policy cannot be treated as unlimited. A table token owner_*_counterpart is a required F-d resolution to the existing named policy/anchor, never a new policy ID or a production registration.
   One app index builder/publication slot and source token/checkpoint domain preserve exact Server/thread/root/generation. Source read, compaction, restore/revert and FileSafe use actual absolute Host/root and all canonical source/currentness/permission/writer/Stop/recovery gates; replay rebuilds only derived views, never canonical authority. App notebook keeps its five existing parent kinds and 16 KiB inline/64 KiB request, 512-token/2 KiB capsule, 1,024-token/4 KiB combined injection limits. Memory stays thread-private with 350-token capsule and existing verification/evidence; public_safe taught rules remain distinct. Cross-read grants never authorize notebook/private-memory access.
   Browser creation/reset, Eval, terminal and layout adopt their whole app CV-366 source graphs or remain unavailable. Protected auth is not app browser automation, capture, restore or export content. Live PTY/process/kernel/controller/ports remain on original Computer through conversion; future sessions re-resolve. App Home/panels/boards use exact Server/app/workspace keys, named layouts/presets stay per person, board snapshots match saved scope/Server only, and converted Project UI loads independently. Canonical app records/held payloads join coherent Full Server Backup, derived pages/indexes rebuild; counterpart source/dedupe/rollback/retention and deletion deadlines remain. Chat Undo expiry cannot purge independently retained notebook/checkpoint/task/audit authority.
   Developer-session application families are dev_session_record_application and eval_session_record_application, using DebugSessionRecordStorageApplicationV1 and EvalSessionRecordStorageApplicationV1 in Plans/developer_session_application_contracts.schema.json. They inherit the Project counterpart tier later_gui_or_feature_projection, RP-DEBUG-30D, mandatory canonical backup/restore and independent holds. The source graph selects the actual debugger/evaluator broker for lifecycle, source/lease/generation, read/checkpoint and retention. BRS-033 restores exact history/session metadata as stopped or reconciliation-required, never a live adapter/kernel/lease or current permission grant. No browser family is their custody and no second engine is introduced.
@@ -981,8 +981,8 @@ acceptance_criteria:
 - App buckets match counterpart bounds; held canonical source never evicts as a cache.
 - No root/Host/thread aliasing, canonical reconstruction or unsupported native-source fallback.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plan-index.py
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1107,8 +1107,8 @@ acceptance_criteria:
 - Failure/restart/resume/cancel/Undo preserve settled effects, original source and target authority.
 - Backups and retention avoid dual-live restoration or early independent authority purge.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plan-index.py
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1182,8 +1182,8 @@ acceptance_criteria:
 - Original Project/historical/certified graph remains unchanged and ordinary bindings immutable.
 - Canonical task/audit and Stop survive moves, restore and chat Undo expiry with counterpart limits.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plan-index.py
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1257,9 +1257,9 @@ Every application key begins with its distinct versioned family prefix and actua
 | `goal_receipt` → `goal_receipt_application` | `goal_receipt.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
 | `goal_runtime_lineage_record` → `goal_runtime_lineage_record_application` | `goal_runtime_lineage_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
 | `collaboration_definition` → `collaboration_definition_application` | `collaboration_definition.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(definition_id)}` | canonical; `RP-CONFIG-CURRENT` |
-| `collaboration_run` → `collaboration_run_application` | `collaboration_run.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(collaboration_run_id)}` | canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404; was `RP-RUNTIME-365D`) |
-| `collaboration_participant` → `collaboration_participant_application` | `collaboration_participant.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}` | canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404; was `RP-RUNTIME-365D`) |
-| `collaboration_transcript` → `collaboration_transcript_application` | `collaboration_transcript.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}:{hex(item_id)}` | canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404; was `RP-RUNTIME-365D`) |
+| `collaboration_run` → `collaboration_run_application` | `collaboration_run.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(collaboration_run_id)}` | canonical; `RP-RUNTIME-365D` |
+| `collaboration_participant` → `collaboration_participant_application` | `collaboration_participant.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}` | canonical; `RP-RUNTIME-365D` |
+| `collaboration_transcript` → `collaboration_transcript_application` | `collaboration_transcript.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}:{hex(item_id)}` | canonical; `RP-RUNTIME-365D` |
 | `crew_auto` → `crew_auto_application` | `crew_auto.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}` | canonical; `RP-CONFIG-CURRENT` |
 | `crew_board_message` → `crew_board_message_application` | `crew_board_message.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(message_id)}` | canonical; `RP-COORDINATION-180D` |
 | `coordination_agent` → `coordination_agent_application` | `coordination_agent.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(agent_id)}` | derived; `RP-PROJECTION-3GEN` |
@@ -1299,8 +1299,8 @@ acceptance_criteria:
 - Pause physical birth/key/wrapper/CAS/epochs/read/backup/refusal are coherent and separate from Project.
 - Stop/conversion/timer/restore races cannot double-run or clear a newer latch.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plan-index.py
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1388,8 +1388,8 @@ acceptance_criteria:
 - Restore/conversion preserves old evidence without transferring authority or clearing Stop/holds.
 - Action list reads existing receipts and no new live JSON/event engine.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plan-index.py
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1430,3 +1430,577 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### SP-760 - browser.session.created storage and read custody
+
+```yaml
+plan_unit_id: SP-760
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored Storage owner contract for exactly browser.session.created@1.0.0 under DL-045; prepared
+  without admission. SMPFS-244 and CV-780 own its real transition and exact identity. Reuse the existing EventRecord
+  canonical seglog plus event_record_index, never a second event log or new canonical session/gist store. Explicitly
+  adopt SP-026/SP-236 first-native wire, SP-278 full generic index/read selection, SP-286/CV-339 full-value v2 first
+  receipt and recovery, and SP-337 payload custody. Each closed metadata payload in Plans/card2_event_payloads.schema.json#/$defs/browser_session_created
+  is bounded below 16 KiB even at all maximum lengths (browser <=4096 bytes; memory <=6144 bytes). No inline base64
+  or embedded body is permitted; if a future separately governed successor needs a larger body, it must use SP-337
+  BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
+  inline limit.
+
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232
+  (the source commit/hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
+  refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
+  keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
+  owner access/deletion gates, showing unavailable redacted metadata when lawful; never resurrect deleted content.
+  The canonical original transition/operation result, event obligation, event/receipt custody and referent custody
+  are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application
+  source graph and Full Server Backup. Restore verifies original storage/scope/server/Computer/subject identity,
+  version, cutoffs and receipt commitments before new append or read. Memory still obeys AMS-054 thread-private
+  custody; Browser excludes protected authentication profiles and sessions. Live references and holds follow their
+  existing owners, not a new retention floor.
+
+  browser.session.created is read by reader.browser.session.created.history@1.0.0 for the existing manual Browser
+  history consumers, without driving a browser, granting a controller lease, or recreating a process. This reader
+  explicitly adopts SP-278 and reader.storage.event_record_index@1.0.0. It reuses projector.storage.event_record_index@1.0.0
+  only for complete generic metadata indexing: checkpoints table, key event_record_index_checkpoint.v1:{storage_instance_id},
+  the uniquely current #/generations/{generation_id} value in Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  and event_record_index.v2@{generation_id}. Verify the original generation birth anchor and actual complete coverage,
+  including nonmatching application/Project rows, not a matching-row maximum. Resolve exact scope partition, event_type,
+  event_id, sequence_id, publication_locator, source frame/CRC and payload commitment in one redb snapshot under
+  the actual CURRENT/manifest maintenance fence. The complete SP-278 live read token contains storage_instance_id,
+  checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name,
+  source_selection and live redb_snapshot_id. A persisted read token is only its nine-field durable projection under
+  DL-076; no redb_snapshot_id is stored. source_selection binds storage_instance_id, CURRENT path/bytes, selected
+  segment generation, manifest path/bytes/generation, recovery epoch, survivor prefix, retained inventory, durable
+  watermarks, excluded ranges and retired inputs. Generation-only comparison is insufficient: a same-generation
+  frontier change invalidates publication. Revalidate access, deletion and that complete token at disclosure; changed
+  fences discard the answer. The generic owner''s checkpoint CAS/complete-source transaction remains SP-278''s,
+  not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history
+  view, family checkpoint, cursor or ACK; its sole effect is an ephemeral read answer. It never writes or advances
+  the generic checkpoint. Crash/rebuild reacquires the generic index and recomputes the answer, never reruns an
+  owner command, emits an event, restores a lease, charges Usage or injects a prompt. Historical validation evaluates
+  the genuine original committed transition under its original schema/policy; disappearance or changed current state
+  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.
+
+  No new durable family projection/checkpoint exists, so there is no derived retention object to assign; the unchanged
+  generic index/checkpoint retains its own SP-278 policy. No registry admission, storage registry family, duplicate
+  mirror, policy object, Spec Lock or governance refresh is implied.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- SP-278
+- SP-286
+- SP-337
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Exact source/index/token/identity/scope and no-effect read oracles pass.
+- Retained reads ignore changed live state but refuse withdrawn/forged sources and deleted body disclosure.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_sp-760
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.created
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### SP-761 - browser.session.state_changed storage and read custody
+
+```yaml
+plan_unit_id: SP-761
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored Storage owner contract for exactly browser.session.state_changed@1.0.0 under DL-045;
+  prepared without admission. SMPFS-245 and CV-781 own its real transition and exact identity. Reuse the existing
+  EventRecord canonical seglog plus event_record_index, never a second event log or new canonical session/gist store.
+  Explicitly adopt SP-026/SP-236 first-native wire, SP-278 full generic index/read selection, SP-286/CV-339 full-value
+  v2 first receipt and recovery, and SP-337 payload custody. Each closed metadata payload in Plans/card2_event_payloads.schema.json#/$defs/browser_session_state_changed
+  is bounded below 16 KiB even at all maximum lengths (browser <=4096 bytes; memory <=6144 bytes). No inline base64
+  or embedded body is permitted; if a future separately governed successor needs a larger body, it must use SP-337
+  BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
+  inline limit.
+
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232
+  (the source commit/hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
+  refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
+  keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
+  owner access/deletion gates, showing unavailable redacted metadata when lawful; never resurrect deleted content.
+  The canonical original transition/operation result, event obligation, event/receipt custody and referent custody
+  are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application
+  source graph and Full Server Backup. Restore verifies original storage/scope/server/Computer/subject identity,
+  version, cutoffs and receipt commitments before new append or read. Memory still obeys AMS-054 thread-private
+  custody; Browser excludes protected authentication profiles and sessions. Live references and holds follow their
+  existing owners, not a new retention floor.
+
+  browser.session.state_changed is read by reader.browser.session.state_changed.history@1.0.0 for the existing manual
+  Browser history consumers, without driving a browser, granting a controller lease, or recreating a process. This
+  reader explicitly adopts SP-278 and reader.storage.event_record_index@1.0.0. It reuses projector.storage.event_record_index@1.0.0
+  only for complete generic metadata indexing: checkpoints table, key event_record_index_checkpoint.v1:{storage_instance_id},
+  the uniquely current #/generations/{generation_id} value in Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  and event_record_index.v2@{generation_id}. Verify the original generation birth anchor and actual complete coverage,
+  including nonmatching application/Project rows, not a matching-row maximum. Resolve exact scope partition, event_type,
+  event_id, sequence_id, publication_locator, source frame/CRC and payload commitment in one redb snapshot under
+  the actual CURRENT/manifest maintenance fence. The complete SP-278 live read token contains storage_instance_id,
+  checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name,
+  source_selection and live redb_snapshot_id. A persisted read token is only its nine-field durable projection under
+  DL-076; no redb_snapshot_id is stored. source_selection binds storage_instance_id, CURRENT path/bytes, selected
+  segment generation, manifest path/bytes/generation, recovery epoch, survivor prefix, retained inventory, durable
+  watermarks, excluded ranges and retired inputs. Generation-only comparison is insufficient: a same-generation
+  frontier change invalidates publication. Revalidate access, deletion and that complete token at disclosure; changed
+  fences discard the answer. The generic owner''s checkpoint CAS/complete-source transaction remains SP-278''s,
+  not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history
+  view, family checkpoint, cursor or ACK; its sole effect is an ephemeral read answer. It never writes or advances
+  the generic checkpoint. Crash/rebuild reacquires the generic index and recomputes the answer, never reruns an
+  owner command, emits an event, restores a lease, charges Usage or injects a prompt. Historical validation evaluates
+  the genuine original committed transition under its original schema/policy; disappearance or changed current state
+  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.
+
+  No new durable family projection/checkpoint exists, so there is no derived retention object to assign; the unchanged
+  generic index/checkpoint retains its own SP-278 policy. No registry admission, storage registry family, duplicate
+  mirror, policy object, Spec Lock or governance refresh is implied.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- SP-278
+- SP-286
+- SP-337
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Exact source/index/token/identity/scope and no-effect read oracles pass.
+- Retained reads ignore changed live state but refuse withdrawn/forged sources and deleted body disclosure.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_sp-761
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.state_changed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### SP-762 - browser.session.closed storage and read custody
+
+```yaml
+plan_unit_id: SP-762
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored Storage owner contract for exactly browser.session.closed@1.0.0 under DL-045; prepared
+  without admission. SMPFS-246 and CV-782 own its real transition and exact identity. Reuse the existing EventRecord
+  canonical seglog plus event_record_index, never a second event log or new canonical session/gist store. Explicitly
+  adopt SP-026/SP-236 first-native wire, SP-278 full generic index/read selection, SP-286/CV-339 full-value v2 first
+  receipt and recovery, and SP-337 payload custody. Each closed metadata payload in Plans/card2_event_payloads.schema.json#/$defs/browser_session_closed
+  is bounded below 16 KiB even at all maximum lengths (browser <=4096 bytes; memory <=6144 bytes). No inline base64
+  or embedded body is permitted; if a future separately governed successor needs a larger body, it must use SP-337
+  BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
+  inline limit.
+
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232
+  (the source commit/hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
+  refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
+  keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
+  owner access/deletion gates, showing unavailable redacted metadata when lawful; never resurrect deleted content.
+  The canonical original transition/operation result, event obligation, event/receipt custody and referent custody
+  are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application
+  source graph and Full Server Backup. Restore verifies original storage/scope/server/Computer/subject identity,
+  version, cutoffs and receipt commitments before new append or read. Memory still obeys AMS-054 thread-private
+  custody; Browser excludes protected authentication profiles and sessions. Live references and holds follow their
+  existing owners, not a new retention floor.
+
+  browser.session.closed is read by reader.browser.session.closed.history@1.0.0 for the existing manual Browser
+  history consumers, without driving a browser, granting a controller lease, or recreating a process. This reader
+  explicitly adopts SP-278 and reader.storage.event_record_index@1.0.0. It reuses projector.storage.event_record_index@1.0.0
+  only for complete generic metadata indexing: checkpoints table, key event_record_index_checkpoint.v1:{storage_instance_id},
+  the uniquely current #/generations/{generation_id} value in Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  and event_record_index.v2@{generation_id}. Verify the original generation birth anchor and actual complete coverage,
+  including nonmatching application/Project rows, not a matching-row maximum. Resolve exact scope partition, event_type,
+  event_id, sequence_id, publication_locator, source frame/CRC and payload commitment in one redb snapshot under
+  the actual CURRENT/manifest maintenance fence. The complete SP-278 live read token contains storage_instance_id,
+  checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name,
+  source_selection and live redb_snapshot_id. A persisted read token is only its nine-field durable projection under
+  DL-076; no redb_snapshot_id is stored. source_selection binds storage_instance_id, CURRENT path/bytes, selected
+  segment generation, manifest path/bytes/generation, recovery epoch, survivor prefix, retained inventory, durable
+  watermarks, excluded ranges and retired inputs. Generation-only comparison is insufficient: a same-generation
+  frontier change invalidates publication. Revalidate access, deletion and that complete token at disclosure; changed
+  fences discard the answer. The generic owner''s checkpoint CAS/complete-source transaction remains SP-278''s,
+  not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history
+  view, family checkpoint, cursor or ACK; its sole effect is an ephemeral read answer. It never writes or advances
+  the generic checkpoint. Crash/rebuild reacquires the generic index and recomputes the answer, never reruns an
+  owner command, emits an event, restores a lease, charges Usage or injects a prompt. Historical validation evaluates
+  the genuine original committed transition under its original schema/policy; disappearance or changed current state
+  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.
+
+  No new durable family projection/checkpoint exists, so there is no derived retention object to assign; the unchanged
+  generic index/checkpoint retains its own SP-278 policy. No registry admission, storage registry family, duplicate
+  mirror, policy object, Spec Lock or governance refresh is implied.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- SP-278
+- SP-286
+- SP-337
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Exact source/index/token/identity/scope and no-effect read oracles pass.
+- Retained reads ignore changed live state but refuse withdrawn/forged sources and deleted body disclosure.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_sp-762
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.closed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### SP-763 - browser.session.promoted storage and read custody
+
+```yaml
+plan_unit_id: SP-763
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored Storage owner contract for exactly browser.session.promoted@1.0.0 under DL-045;
+  prepared without admission. SMPFS-247 and CV-783 own its real transition and exact identity. Reuse the existing
+  EventRecord canonical seglog plus event_record_index, never a second event log or new canonical session/gist store.
+  Explicitly adopt SP-026/SP-236 first-native wire, SP-278 full generic index/read selection, SP-286/CV-339 full-value
+  v2 first receipt and recovery, and SP-337 payload custody. Each closed metadata payload in Plans/card2_event_payloads.schema.json#/$defs/browser_session_promoted
+  is bounded below 16 KiB even at all maximum lengths (browser <=4096 bytes; memory <=6144 bytes). No inline base64
+  or embedded body is permitted; if a future separately governed successor needs a larger body, it must use SP-337
+  BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
+  inline limit.
+
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232
+  (the source commit/hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
+  refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
+  keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
+  owner access/deletion gates, showing unavailable redacted metadata when lawful; never resurrect deleted content.
+  The canonical original transition/operation result, event obligation, event/receipt custody and referent custody
+  are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application
+  source graph and Full Server Backup. Restore verifies original storage/scope/server/Computer/subject identity,
+  version, cutoffs and receipt commitments before new append or read. Memory still obeys AMS-054 thread-private
+  custody; Browser excludes protected authentication profiles and sessions. Live references and holds follow their
+  existing owners, not a new retention floor.
+
+  browser.session.promoted is read by reader.browser.session.promoted.history@1.0.0 for the existing manual Browser
+  history consumers, without driving a browser, granting a controller lease, or recreating a process. This reader
+  explicitly adopts SP-278 and reader.storage.event_record_index@1.0.0. It reuses projector.storage.event_record_index@1.0.0
+  only for complete generic metadata indexing: checkpoints table, key event_record_index_checkpoint.v1:{storage_instance_id},
+  the uniquely current #/generations/{generation_id} value in Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  and event_record_index.v2@{generation_id}. Verify the original generation birth anchor and actual complete coverage,
+  including nonmatching application/Project rows, not a matching-row maximum. Resolve exact scope partition, event_type,
+  event_id, sequence_id, publication_locator, source frame/CRC and payload commitment in one redb snapshot under
+  the actual CURRENT/manifest maintenance fence. The complete SP-278 live read token contains storage_instance_id,
+  checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name,
+  source_selection and live redb_snapshot_id. A persisted read token is only its nine-field durable projection under
+  DL-076; no redb_snapshot_id is stored. source_selection binds storage_instance_id, CURRENT path/bytes, selected
+  segment generation, manifest path/bytes/generation, recovery epoch, survivor prefix, retained inventory, durable
+  watermarks, excluded ranges and retired inputs. Generation-only comparison is insufficient: a same-generation
+  frontier change invalidates publication. Revalidate access, deletion and that complete token at disclosure; changed
+  fences discard the answer. The generic owner''s checkpoint CAS/complete-source transaction remains SP-278''s,
+  not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history
+  view, family checkpoint, cursor or ACK; its sole effect is an ephemeral read answer. It never writes or advances
+  the generic checkpoint. Crash/rebuild reacquires the generic index and recomputes the answer, never reruns an
+  owner command, emits an event, restores a lease, charges Usage or injects a prompt. Historical validation evaluates
+  the genuine original committed transition under its original schema/policy; disappearance or changed current state
+  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.
+
+  No new durable family projection/checkpoint exists, so there is no derived retention object to assign; the unchanged
+  generic index/checkpoint retains its own SP-278 policy. No registry admission, storage registry family, duplicate
+  mirror, policy object, Spec Lock or governance refresh is implied.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- SP-278
+- SP-286
+- SP-337
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Exact source/index/token/identity/scope and no-effect read oracles pass.
+- Retained reads ignore changed live state but refuse withdrawn/forged sources and deleted body disclosure.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_sp-763
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.promoted
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### SP-764 - browser.session.takeover_state_changed storage and read custody
+
+```yaml
+plan_unit_id: SP-764
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored Storage owner contract for exactly browser.session.takeover_state_changed@1.0.0
+  under DL-045; prepared without admission. SMPFS-248 and CV-784 own its real transition and exact identity. Reuse
+  the existing EventRecord canonical seglog plus event_record_index, never a second event log or new canonical session/gist
+  store. Explicitly adopt SP-026/SP-236 first-native wire, SP-278 full generic index/read selection, SP-286/CV-339
+  full-value v2 first receipt and recovery, and SP-337 payload custody. Each closed metadata payload in Plans/card2_event_payloads.schema.json#/$defs/browser_session_takeover_state_changed
+  is bounded below 16 KiB even at all maximum lengths (browser <=4096 bytes; memory <=6144 bytes). No inline base64
+  or embedded body is permitted; if a future separately governed successor needs a larger body, it must use SP-337
+  BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
+  inline limit.
+
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232
+  (the source commit/hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
+  refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
+  keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
+  owner access/deletion gates, showing unavailable redacted metadata when lawful; never resurrect deleted content.
+  The canonical original transition/operation result, event obligation, event/receipt custody and referent custody
+  are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application
+  source graph and Full Server Backup. Restore verifies original storage/scope/server/Computer/subject identity,
+  version, cutoffs and receipt commitments before new append or read. Memory still obeys AMS-054 thread-private
+  custody; Browser excludes protected authentication profiles and sessions. Live references and holds follow their
+  existing owners, not a new retention floor.
+
+  browser.session.takeover_state_changed is read by reader.browser.session.takeover_state_changed.history@1.0.0
+  for the existing manual Browser history consumers, without driving a browser, granting a controller lease, or
+  recreating a process. This reader explicitly adopts SP-278 and reader.storage.event_record_index@1.0.0. It reuses
+  projector.storage.event_record_index@1.0.0 only for complete generic metadata indexing: checkpoints table, key
+  event_record_index_checkpoint.v1:{storage_instance_id}, the uniquely current #/generations/{generation_id} value
+  in Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, and event_record_index.v2@{generation_id}.
+  Verify the original generation birth anchor and actual complete coverage, including nonmatching application/Project
+  rows, not a matching-row maximum. Resolve exact scope partition, event_type, event_id, sequence_id, publication_locator,
+  source frame/CRC and payload commitment in one redb snapshot under the actual CURRENT/manifest maintenance fence.
+  The complete SP-278 live read token contains storage_instance_id, checkpoint_key, checkpoint_ref, generation_id,
+  generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and live redb_snapshot_id.
+  A persisted read token is only its nine-field durable projection under DL-076; no redb_snapshot_id is stored.
+  source_selection binds storage_instance_id, CURRENT path/bytes, selected segment generation, manifest path/bytes/generation,
+  recovery epoch, survivor prefix, retained inventory, durable watermarks, excluded ranges and retired inputs. Generation-only
+  comparison is insufficient: a same-generation frontier change invalidates publication. Revalidate access, deletion
+  and that complete token at disclosure; changed fences discard the answer. The generic owner''s checkpoint CAS/complete-source
+  transaction remains SP-278''s, not this reader''s. Family checkpoint disposition is none_required: the family
+  creates no projector, durable history view, family checkpoint, cursor or ACK; its sole effect is an ephemeral
+  read answer. It never writes or advances the generic checkpoint. Crash/rebuild reacquires the generic index and
+  recomputes the answer, never reruns an owner command, emits an event, restores a lease, charges Usage or injects
+  a prompt. Historical validation evaluates the genuine original committed transition under its original schema/policy;
+  disappearance or changed current state of the live subject does not invalidate a retained event. Withdrawn or
+  forged sources still refuse.
+
+  No new durable family projection/checkpoint exists, so there is no derived retention object to assign; the unchanged
+  generic index/checkpoint retains its own SP-278 policy. No registry admission, storage registry family, duplicate
+  mirror, policy object, Spec Lock or governance refresh is implied.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- SP-278
+- SP-286
+- SP-337
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Exact source/index/token/identity/scope and no-effect read oracles pass.
+- Retained reads ignore changed live state but refuse withdrawn/forged sources and deleted body disclosure.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_sp-764
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.takeover_state_changed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### SP-765 - memory.gist_state_changed storage and read custody
+
+```yaml
+plan_unit_id: SP-765
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored Storage owner contract for exactly memory.gist_state_changed@1.0.0 under DL-045;
+  prepared without admission. AMS-130 and CV-785 own its real transition and exact identity. Reuse the existing
+  EventRecord canonical seglog plus event_record_index, never a second event log or new canonical session/gist store.
+  Explicitly adopt SP-026/SP-236 first-native wire, SP-278 full generic index/read selection, SP-286/CV-339 full-value
+  v2 first receipt and recovery, and SP-337 payload custody. Each closed metadata payload in Plans/card2_event_payloads.schema.json#/$defs/memory_gist_state_changed
+  is bounded below 16 KiB even at all maximum lengths (browser <=4096 bytes; memory <=6144 bytes). No inline base64
+  or embedded body is permitted; if a future separately governed successor needs a larger body, it must use SP-337
+  BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
+  inline limit.
+
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232
+  (the source commit/hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
+  refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
+  keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
+  owner access/deletion gates, showing unavailable redacted metadata when lawful; never resurrect deleted content.
+  The canonical original transition/operation result, event obligation, event/receipt custody and referent custody
+  are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application
+  source graph and Full Server Backup. Restore verifies original storage/scope/server/Computer/subject identity,
+  version, cutoffs and receipt commitments before new append or read. Memory still obeys AMS-054 thread-private
+  custody; Browser excludes protected authentication profiles and sessions. Live references and holds follow their
+  existing owners, not a new retention floor.
+
+  memory.gist_state_changed is read by reader.memory.gist_state_changed.history@1.0.0 for the existing memory GUI
+  and audit consumers; prompt assembly reads the current authorized MemoryGist under AMS-054, never an event body
+  as injection authority. This reader explicitly adopts SP-278 and reader.storage.event_record_index@1.0.0. It reuses
+  projector.storage.event_record_index@1.0.0 only for complete generic metadata indexing: checkpoints table, key
+  event_record_index_checkpoint.v1:{storage_instance_id}, the uniquely current #/generations/{generation_id} value
+  in Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, and event_record_index.v2@{generation_id}.
+  Verify the original generation birth anchor and actual complete coverage, including nonmatching application/Project
+  rows, not a matching-row maximum. Resolve exact scope partition, event_type, event_id, sequence_id, publication_locator,
+  source frame/CRC and payload commitment in one redb snapshot under the actual CURRENT/manifest maintenance fence.
+  The complete SP-278 live read token contains storage_instance_id, checkpoint_key, checkpoint_ref, generation_id,
+  generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and live redb_snapshot_id.
+  A persisted read token is only its nine-field durable projection under DL-076; no redb_snapshot_id is stored.
+  source_selection binds storage_instance_id, CURRENT path/bytes, selected segment generation, manifest path/bytes/generation,
+  recovery epoch, survivor prefix, retained inventory, durable watermarks, excluded ranges and retired inputs. Generation-only
+  comparison is insufficient: a same-generation frontier change invalidates publication. Revalidate access, deletion
+  and that complete token at disclosure; changed fences discard the answer. The generic owner''s checkpoint CAS/complete-source
+  transaction remains SP-278''s, not this reader''s. Family checkpoint disposition is none_required: the family
+  creates no projector, durable history view, family checkpoint, cursor or ACK; its sole effect is an ephemeral
+  read answer. It never writes or advances the generic checkpoint. Crash/rebuild reacquires the generic index and
+  recomputes the answer, never reruns an owner command, emits an event, restores a lease, charges Usage or injects
+  a prompt. Historical validation evaluates the genuine original committed transition under its original schema/policy;
+  disappearance or changed current state of the live subject does not invalidate a retained event. Withdrawn or
+  forged sources still refuse.
+
+  No new durable family projection/checkpoint exists, so there is no derived retention object to assign; the unchanged
+  generic index/checkpoint retains its own SP-278 policy. No registry admission, storage registry family, duplicate
+  mirror, policy object, Spec Lock or governance refresh is implied.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- SP-278
+- SP-286
+- SP-337
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an
+  after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct
+  real changes retain distinct identities.
+- Exact source/index/token/identity/scope and no-effect read oracles pass.
+- Retained reads ignore changed live state but refuse withdrawn/forged sources and deleted body disclosure.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_sp-765
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- memory.gist_state_changed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```

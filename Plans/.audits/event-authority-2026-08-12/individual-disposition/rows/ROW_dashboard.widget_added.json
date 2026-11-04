@@ -6,8 +6,8 @@
     "july248"
   ],
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to dashboard.widget_added. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "RECLASSIFY_TO_EXCLUDED: current owner retires dashboard.widget_added; DL-180. See reports/event-authority-20261104/DCN-exclusion-application.json. Legacy bucket/cohort pins and denominator preserved. Previous rationale: Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to dashboard.widget_added. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
   "evidence": {
     "membership_version": {
       "status": "OWNER_REQUIRED",
@@ -85,6 +85,11 @@
       "citation": "Plans/.audits/event-authority-2026-08-12/cohort-pins/EVENT_TO_COHORTS.json:245-247",
       "status": "ok",
       "notes": "Immutable cohort map assigns dashboard.widget_added to july248; retained independently of working bucket."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:16973",
+      "status": "ok",
+      "notes": "No event named dashboard.widget_added is emitted."
     }
   ],
   "owner_veto": null,

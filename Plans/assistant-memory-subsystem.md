@@ -3147,3 +3147,111 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#AMS-054, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### AMS-130 - memory.gist_state_changed prepared semantic contract
+
+```yaml
+plan_unit_id: AMS-130
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.gist_state_changed@1.0.0, prepared
+  without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2; the unlanded
+  answer/retention commits must integrate before admission. Per-family current-canon search and scoped negative
+  evidence are recorded in reports/event-authority-20261104/DCN.md and its pinned external per-family-search.json.
+  RealMemoryProvider records one real successful MemoryGist change for each successful verify, edit, pin, unpin,
+  discard or automatic mutation, including save/import, claim/evidence currentness, decay/half-life, access count/time
+  and derived-field invalidation/re-derivation when they actually change canonical gist state. Exact producer entry
+  points are cmd.chat.memory.verify, cmd.chat.memory.edit, cmd.chat.memory.pin, cmd.chat.memory.discard, RealMemoryProvider.upsert_gist,
+  RealMemoryProvider.set_verification_state, RealMemoryProvider.record_access, RealMemoryProvider.delete_gist. All
+  require the already specified Assistant-only scope and existing permission/verification rules. changed_fields
+  names every changed canonical field but contains no field value. A successful verification adopts AMS-044/045
+  claim-level support, resolvable scoped current evidence and the existing explicit allow_manual_verify_without_evidence
+  exception; it does not invent a second verification rule. Requested verification and failed verification keep
+  only their command result and append zero history events; successful verification with no real change also appends
+  none. A separate authoritative automatic invalidation that actually changes a gist is one automatic mutation,
+  not an event for a failed command. Pin requires false to true, unpin true to false, discard sets verification_state=Discarded;
+  edit and automatic require an actual delta. One committed mutation increments the revision once; deferred or unavailable
+  maintenance performs no mutation and emits nothing. The seven retired command spellings are not aliases that may
+  append. This contract does not change section 7.2 archive/delete policy or decide the duplicate-sweep survivor.
+
+  DL-407 retires memory.gist.verification_requested, memory.gist.verified, memory.gist.verification_failed, memory.gist.updated,
+  memory.gist.pinned, memory.gist.unpinned and memory.gist.discarded only under this complete surviving contract.
+  A request/failure never creates its own history; do not append either vocabulary twice. Existing memory-body/version
+  audit custody is unchanged.
+
+  The full payload is Plans/card2_event_payloads.schema.json#/$defs/memory_gist_state_changed, exact Project logical
+  schema_id pm.memory.gist_state_changed.payload.v1 and distinct application logical schema_id pm.memory.gist_state_changed.payload.application.v1,
+  both schema_version=1.0.0. The selected root is closed; identifiers require exact full-match in addition to length
+  bounds, including trailing-LF rejection. It holds metadata, revisions, changed field names and opaque owner-record/evidence
+  references only, never URL, screenshot/page content, cookies, memory claims/text or secrets. Complete semantic
+  before/after values remain with the existing source owner. revision_after=revision_before+1 over u64. The source
+  must authenticate the exact subject, scope, operation, before/after revisions and committed outcome; an all-true
+  fixture is not native producer authority. Scope is application_or_project only for these existing owner-supported
+  editions: real Project keys/bytes remain unchanged; application has project_id=null, actual Computer/server and
+  original source graph selected by CV-366 (OriginalMemoryMutationSource and MemoryViewApplicationV1 under AMS-054).
+  App memory additionally requires the actual private thread. Missing original source/method/admitted edition remains
+  unavailable, with no fabricated Project, fallback Client or cross-thread corpus.
+
+  memory.gist_state_changed is read by reader.memory.gist_state_changed.history@1.0.0 for the existing memory GUI
+  and audit consumers; prompt assembly reads the current authorized MemoryGist under AMS-054, never an event body
+  as injection authority. This reader explicitly adopts SP-278 and reader.storage.event_record_index@1.0.0. It reuses
+  projector.storage.event_record_index@1.0.0 only for complete generic metadata indexing: checkpoints table, key
+  event_record_index_checkpoint.v1:{storage_instance_id}, the uniquely current #/generations/{generation_id} value
+  in Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, and event_record_index.v2@{generation_id}.
+  Verify the original generation birth anchor and actual complete coverage, including nonmatching application/Project
+  rows, not a matching-row maximum. Resolve exact scope partition, event_type, event_id, sequence_id, publication_locator,
+  source frame/CRC and payload commitment in one redb snapshot under the actual CURRENT/manifest maintenance fence.
+  The complete SP-278 live read token contains storage_instance_id, checkpoint_key, checkpoint_ref, generation_id,
+  generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and live redb_snapshot_id.
+  A persisted read token is only its nine-field durable projection under DL-076; no redb_snapshot_id is stored.
+  source_selection binds storage_instance_id, CURRENT path/bytes, selected segment generation, manifest path/bytes/generation,
+  recovery epoch, survivor prefix, retained inventory, durable watermarks, excluded ranges and retired inputs. Generation-only
+  comparison is insufficient: a same-generation frontier change invalidates publication. Revalidate access, deletion
+  and that complete token at disclosure; changed fences discard the answer. The generic owner''s checkpoint CAS/complete-source
+  transaction remains SP-278''s, not this reader''s. Family checkpoint disposition is none_required: the family
+  creates no projector, durable history view, family checkpoint, cursor or ACK; its sole effect is an ephemeral
+  read answer. It never writes or advances the generic checkpoint. Crash/rebuild reacquires the generic index and
+  recomputes the answer, never reruns an owner command, emits an event, restores a lease, charges Usage or injects
+  a prompt. Historical validation evaluates the genuine original committed transition under its original schema/policy;
+  disappearance or changed current state of the live subject does not invalidate a retained event. Withdrawn or
+  forged sources still refuse.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- DL-045
+- CV-366
+- AMS-054
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an
+  after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct
+  real changes retain distinct identities.
+- One authentic committed owner mutation produces exactly one history event only after exact family admission.
+- All closed payload, command, transition, historical read, duplicate-record and scope oracles pass.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_ams-130
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- memory.gist_state_changed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```

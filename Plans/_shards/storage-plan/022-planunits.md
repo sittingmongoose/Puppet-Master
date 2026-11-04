@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2396-L15243
+Source lines: L2402-L15247
 
-Source SHA256: `46b65fa5cef7d5b67ad27e23a573b372e74628124d8a2210af1f16d9011b6b4e`
+Source SHA256: `452eb063ad8c3c01bf9f26a9383d387ce73c1773bb7ae6c3665f05070f03ce8d`
 
 ---
 
@@ -6514,8 +6514,6 @@ preserved_exact_tokens:
 - preview.session.started
 - preview.session.stopped
 - preview.session.refreshed
-- browser.session.navigated
-- browser.session.resized
 - browser.context_captured
 negative_constraints: []
 preserved_contractrefs: []

@@ -24483,3 +24483,495 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Contracts_V0
 | app eligibility error additions | application_automation_paused, app_automation_pause_unavailable; existing Project error tokens and codecs remain untouched. No alias equates the two scopes. |
 
 The selected app request union accepts only an authenticated user actor. A malformed or non-user request still returns the owner’s refusal without fabricating a structurally valid user input. Changed canonical pause record, its epoch and original result custody commit under one internal whole-value CAS/write/readback; retries that observe the already desired value return the current unchanged record with no new epoch. An unavailable result may not reconstruct pause from an event, Setting or absence. The physical wrapper/key/retention and never-born birth proof are defined only in SP-352.
+
+
+### CV-780 - browser.session.created identity replay and withdrawal
+
+```yaml
+plan_unit_id: CV-780
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract, exactly browser.session.created@1.0.0. Adopt Contracts_V0#EventRecord
+  2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339
+  strict full-value v2 first-AppendReceipt custody. No local envelope or digest is created. Exact family payload/schema
+  routing is Plans/card2_event_payloads.schema.json#/$defs/browser_session_created; Project pm.browser.session.created.payload.v1
+  and application pm.browser.session.created.payload.application.v1, version 1.0.0, must match actual scope. Envelope
+  Project/thread/Run/Attempt joins match the genuine source; non-execution manual operations have Run/Attempt null
+  together and no invented node. The existing owner first reserves one original operation ID with its immutable
+  source and event obligation; that ID is unique for the lifetime of its actual Home Server and survives restart/recovery/backup.
+  Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is
+  exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}
+  within the unchanged (scope_partition,event_type,idempotency_key) lifetime. Project partition is project~ plus
+  unpadded base64url of exact UTF-8 project_id; application is app. Global event_id is ''card2:'' followed by colon-separated
+  lowercase UTF-8 hex of storage_instance_id, server_id, original operation ID and exact event_type. It is reserved
+  once, never regenerated from observation/retry time, and cannot be reused for another semantic event. Lost original
+  identity never authorizes a new one.
+
+  The producer-owned semantic comparison is precisely the central EventRecord recipe: caller-supplied semantics
+  only; exclude Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. Same identity/same semantic
+  digest returns the original event/result with zero new effects; a different semantic digest is idempotency_conflict;
+  authoritative dedupe unavailable is dedupe_unavailable with zero append/effects. Never select or accept projector_replay_only
+  on current append or retry: reject replay_only_not_appendable. Compatibility reading it grants no write/effect
+  permission. No-op, failed, refused or unknown owner outcome cannot claim a successful event. After actual family
+  admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event
+  obligation, ordinary Storage append/commit-frame issuance under SP-286, exact first receipt custody, then dependent
+  terminal result publication. Pending event obligations retain their original source and retry only append resolution;
+  no crash reruns a browser effect or memory edit. An unavailable family refuses execution before a history-dependent
+  change; these drafts grant no native writer.
+
+  Compatibility dispatch is exact family/version/schema ID; unrecognized successors quarantine instead of guessing
+  or translating a retired spelling. Preserve retained original records and their original source custody; migration
+  is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before
+  stopping the old producer, drains or fences original pending obligations through SP-286, removes that version
+  from live acceptance and reader publication, invalidates reader caches, and rebuilds only generic derived metadata
+  from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
+  historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
+  and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
+  refuses. This unit grants no registration and no native proof.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- CV-317
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Canonical semantic digest and CV-366 app key remain exact.
+- Current append and retry reject projector_replay_only; all family identity/receipt/withdrawal negatives reject.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_cv-780
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.created
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### CV-781 - browser.session.state_changed identity replay and withdrawal
+
+```yaml
+plan_unit_id: CV-781
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract, exactly browser.session.state_changed@1.0.0. Adopt Contracts_V0#EventRecord
+  2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339
+  strict full-value v2 first-AppendReceipt custody. No local envelope or digest is created. Exact family payload/schema
+  routing is Plans/card2_event_payloads.schema.json#/$defs/browser_session_state_changed; Project pm.browser.session.state_changed.payload.v1
+  and application pm.browser.session.state_changed.payload.application.v1, version 1.0.0, must match actual scope.
+  Envelope Project/thread/Run/Attempt joins match the genuine source; non-execution manual operations have Run/Attempt
+  null together and no invented node. The existing owner first reserves one original operation ID with its immutable
+  source and event obligation; that ID is unique for the lifetime of its actual Home Server and survives restart/recovery/backup.
+  Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is
+  exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}
+  within the unchanged (scope_partition,event_type,idempotency_key) lifetime. Project partition is project~ plus
+  unpadded base64url of exact UTF-8 project_id; application is app. Global event_id is ''card2:'' followed by colon-separated
+  lowercase UTF-8 hex of storage_instance_id, server_id, original operation ID and exact event_type. It is reserved
+  once, never regenerated from observation/retry time, and cannot be reused for another semantic event. Lost original
+  identity never authorizes a new one.
+
+  The producer-owned semantic comparison is precisely the central EventRecord recipe: caller-supplied semantics
+  only; exclude Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. Same identity/same semantic
+  digest returns the original event/result with zero new effects; a different semantic digest is idempotency_conflict;
+  authoritative dedupe unavailable is dedupe_unavailable with zero append/effects. Never select or accept projector_replay_only
+  on current append or retry: reject replay_only_not_appendable. Compatibility reading it grants no write/effect
+  permission. No-op, failed, refused or unknown owner outcome cannot claim a successful event. After actual family
+  admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event
+  obligation, ordinary Storage append/commit-frame issuance under SP-286, exact first receipt custody, then dependent
+  terminal result publication. Pending event obligations retain their original source and retry only append resolution;
+  no crash reruns a browser effect or memory edit. An unavailable family refuses execution before a history-dependent
+  change; these drafts grant no native writer.
+
+  Compatibility dispatch is exact family/version/schema ID; unrecognized successors quarantine instead of guessing
+  or translating a retired spelling. Preserve retained original records and their original source custody; migration
+  is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before
+  stopping the old producer, drains or fences original pending obligations through SP-286, removes that version
+  from live acceptance and reader publication, invalidates reader caches, and rebuilds only generic derived metadata
+  from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
+  historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
+  and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
+  refuses. This unit grants no registration and no native proof.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- CV-317
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Canonical semantic digest and CV-366 app key remain exact.
+- Current append and retry reject projector_replay_only; all family identity/receipt/withdrawal negatives reject.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_cv-781
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.state_changed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### CV-782 - browser.session.closed identity replay and withdrawal
+
+```yaml
+plan_unit_id: CV-782
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract, exactly browser.session.closed@1.0.0. Adopt Contracts_V0#EventRecord
+  2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339
+  strict full-value v2 first-AppendReceipt custody. No local envelope or digest is created. Exact family payload/schema
+  routing is Plans/card2_event_payloads.schema.json#/$defs/browser_session_closed; Project pm.browser.session.closed.payload.v1
+  and application pm.browser.session.closed.payload.application.v1, version 1.0.0, must match actual scope. Envelope
+  Project/thread/Run/Attempt joins match the genuine source; non-execution manual operations have Run/Attempt null
+  together and no invented node. The existing owner first reserves one original operation ID with its immutable
+  source and event obligation; that ID is unique for the lifetime of its actual Home Server and survives restart/recovery/backup.
+  Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is
+  exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}
+  within the unchanged (scope_partition,event_type,idempotency_key) lifetime. Project partition is project~ plus
+  unpadded base64url of exact UTF-8 project_id; application is app. Global event_id is ''card2:'' followed by colon-separated
+  lowercase UTF-8 hex of storage_instance_id, server_id, original operation ID and exact event_type. It is reserved
+  once, never regenerated from observation/retry time, and cannot be reused for another semantic event. Lost original
+  identity never authorizes a new one.
+
+  The producer-owned semantic comparison is precisely the central EventRecord recipe: caller-supplied semantics
+  only; exclude Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. Same identity/same semantic
+  digest returns the original event/result with zero new effects; a different semantic digest is idempotency_conflict;
+  authoritative dedupe unavailable is dedupe_unavailable with zero append/effects. Never select or accept projector_replay_only
+  on current append or retry: reject replay_only_not_appendable. Compatibility reading it grants no write/effect
+  permission. No-op, failed, refused or unknown owner outcome cannot claim a successful event. After actual family
+  admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event
+  obligation, ordinary Storage append/commit-frame issuance under SP-286, exact first receipt custody, then dependent
+  terminal result publication. Pending event obligations retain their original source and retry only append resolution;
+  no crash reruns a browser effect or memory edit. An unavailable family refuses execution before a history-dependent
+  change; these drafts grant no native writer.
+
+  Compatibility dispatch is exact family/version/schema ID; unrecognized successors quarantine instead of guessing
+  or translating a retired spelling. Preserve retained original records and their original source custody; migration
+  is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before
+  stopping the old producer, drains or fences original pending obligations through SP-286, removes that version
+  from live acceptance and reader publication, invalidates reader caches, and rebuilds only generic derived metadata
+  from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
+  historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
+  and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
+  refuses. This unit grants no registration and no native proof.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- CV-317
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Canonical semantic digest and CV-366 app key remain exact.
+- Current append and retry reject projector_replay_only; all family identity/receipt/withdrawal negatives reject.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_cv-782
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.closed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### CV-783 - browser.session.promoted identity replay and withdrawal
+
+```yaml
+plan_unit_id: CV-783
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract, exactly browser.session.promoted@1.0.0. Adopt Contracts_V0#EventRecord
+  2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339
+  strict full-value v2 first-AppendReceipt custody. No local envelope or digest is created. Exact family payload/schema
+  routing is Plans/card2_event_payloads.schema.json#/$defs/browser_session_promoted; Project pm.browser.session.promoted.payload.v1
+  and application pm.browser.session.promoted.payload.application.v1, version 1.0.0, must match actual scope. Envelope
+  Project/thread/Run/Attempt joins match the genuine source; non-execution manual operations have Run/Attempt null
+  together and no invented node. The existing owner first reserves one original operation ID with its immutable
+  source and event obligation; that ID is unique for the lifetime of its actual Home Server and survives restart/recovery/backup.
+  Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is
+  exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}
+  within the unchanged (scope_partition,event_type,idempotency_key) lifetime. Project partition is project~ plus
+  unpadded base64url of exact UTF-8 project_id; application is app. Global event_id is ''card2:'' followed by colon-separated
+  lowercase UTF-8 hex of storage_instance_id, server_id, original operation ID and exact event_type. It is reserved
+  once, never regenerated from observation/retry time, and cannot be reused for another semantic event. Lost original
+  identity never authorizes a new one.
+
+  The producer-owned semantic comparison is precisely the central EventRecord recipe: caller-supplied semantics
+  only; exclude Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. Same identity/same semantic
+  digest returns the original event/result with zero new effects; a different semantic digest is idempotency_conflict;
+  authoritative dedupe unavailable is dedupe_unavailable with zero append/effects. Never select or accept projector_replay_only
+  on current append or retry: reject replay_only_not_appendable. Compatibility reading it grants no write/effect
+  permission. No-op, failed, refused or unknown owner outcome cannot claim a successful event. After actual family
+  admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event
+  obligation, ordinary Storage append/commit-frame issuance under SP-286, exact first receipt custody, then dependent
+  terminal result publication. Pending event obligations retain their original source and retry only append resolution;
+  no crash reruns a browser effect or memory edit. An unavailable family refuses execution before a history-dependent
+  change; these drafts grant no native writer.
+
+  Compatibility dispatch is exact family/version/schema ID; unrecognized successors quarantine instead of guessing
+  or translating a retired spelling. Preserve retained original records and their original source custody; migration
+  is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before
+  stopping the old producer, drains or fences original pending obligations through SP-286, removes that version
+  from live acceptance and reader publication, invalidates reader caches, and rebuilds only generic derived metadata
+  from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
+  historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
+  and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
+  refuses. This unit grants no registration and no native proof.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- CV-317
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Canonical semantic digest and CV-366 app key remain exact.
+- Current append and retry reject projector_replay_only; all family identity/receipt/withdrawal negatives reject.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_cv-783
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.promoted
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### CV-784 - browser.session.takeover_state_changed identity replay and withdrawal
+
+```yaml
+plan_unit_id: CV-784
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract, exactly browser.session.takeover_state_changed@1.0.0. Adopt Contracts_V0#EventRecord
+  2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339
+  strict full-value v2 first-AppendReceipt custody. No local envelope or digest is created. Exact family payload/schema
+  routing is Plans/card2_event_payloads.schema.json#/$defs/browser_session_takeover_state_changed; Project pm.browser.session.takeover_state_changed.payload.v1
+  and application pm.browser.session.takeover_state_changed.payload.application.v1, version 1.0.0, must match actual
+  scope. Envelope Project/thread/Run/Attempt joins match the genuine source; non-execution manual operations have
+  Run/Attempt null together and no invented node. The existing owner first reserves one original operation ID with
+  its immutable source and event obligation; that ID is unique for the lifetime of its actual Home Server and survives
+  restart/recovery/backup. Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application
+  idempotency is exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}
+  within the unchanged (scope_partition,event_type,idempotency_key) lifetime. Project partition is project~ plus
+  unpadded base64url of exact UTF-8 project_id; application is app. Global event_id is ''card2:'' followed by colon-separated
+  lowercase UTF-8 hex of storage_instance_id, server_id, original operation ID and exact event_type. It is reserved
+  once, never regenerated from observation/retry time, and cannot be reused for another semantic event. Lost original
+  identity never authorizes a new one.
+
+  The producer-owned semantic comparison is precisely the central EventRecord recipe: caller-supplied semantics
+  only; exclude Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. Same identity/same semantic
+  digest returns the original event/result with zero new effects; a different semantic digest is idempotency_conflict;
+  authoritative dedupe unavailable is dedupe_unavailable with zero append/effects. Never select or accept projector_replay_only
+  on current append or retry: reject replay_only_not_appendable. Compatibility reading it grants no write/effect
+  permission. No-op, failed, refused or unknown owner outcome cannot claim a successful event. After actual family
+  admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event
+  obligation, ordinary Storage append/commit-frame issuance under SP-286, exact first receipt custody, then dependent
+  terminal result publication. Pending event obligations retain their original source and retry only append resolution;
+  no crash reruns a browser effect or memory edit. An unavailable family refuses execution before a history-dependent
+  change; these drafts grant no native writer.
+
+  Compatibility dispatch is exact family/version/schema ID; unrecognized successors quarantine instead of guessing
+  or translating a retired spelling. Preserve retained original records and their original source custody; migration
+  is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before
+  stopping the old producer, drains or fences original pending obligations through SP-286, removes that version
+  from live acceptance and reader publication, invalidates reader caches, and rebuilds only generic derived metadata
+  from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
+  historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
+  and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
+  refuses. This unit grants no registration and no native proof.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- CV-317
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Canonical semantic digest and CV-366 app key remain exact.
+- Current append and retry reject projector_replay_only; all family identity/receipt/withdrawal negatives reject.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_cv-784
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.takeover_state_changed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### CV-785 - memory.gist_state_changed identity replay and withdrawal
+
+```yaml
+plan_unit_id: CV-785
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract, exactly memory.gist_state_changed@1.0.0. Adopt Contracts_V0#EventRecord
+  2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339
+  strict full-value v2 first-AppendReceipt custody. No local envelope or digest is created. Exact family payload/schema
+  routing is Plans/card2_event_payloads.schema.json#/$defs/memory_gist_state_changed; Project pm.memory.gist_state_changed.payload.v1
+  and application pm.memory.gist_state_changed.payload.application.v1, version 1.0.0, must match actual scope. Envelope
+  Project/thread/Run/Attempt joins match the genuine source; non-execution manual operations have Run/Attempt null
+  together and no invented node. The existing owner first reserves one original operation ID with its immutable
+  source and event obligation; that ID is unique for the lifetime of its actual Home Server and survives restart/recovery/backup.
+  Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is
+  exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}
+  within the unchanged (scope_partition,event_type,idempotency_key) lifetime. Project partition is project~ plus
+  unpadded base64url of exact UTF-8 project_id; application is app. Global event_id is ''card2:'' followed by colon-separated
+  lowercase UTF-8 hex of storage_instance_id, server_id, original operation ID and exact event_type. It is reserved
+  once, never regenerated from observation/retry time, and cannot be reused for another semantic event. Lost original
+  identity never authorizes a new one.
+
+  The producer-owned semantic comparison is precisely the central EventRecord recipe: caller-supplied semantics
+  only; exclude Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. Same identity/same semantic
+  digest returns the original event/result with zero new effects; a different semantic digest is idempotency_conflict;
+  authoritative dedupe unavailable is dedupe_unavailable with zero append/effects. Never select or accept projector_replay_only
+  on current append or retry: reject replay_only_not_appendable. Compatibility reading it grants no write/effect
+  permission. No-op, failed, refused or unknown owner outcome cannot claim a successful event. After actual family
+  admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event
+  obligation, ordinary Storage append/commit-frame issuance under SP-286, exact first receipt custody, then dependent
+  terminal result publication. Pending event obligations retain their original source and retry only append resolution;
+  no crash reruns a browser effect or memory edit. An unavailable family refuses execution before a history-dependent
+  change; these drafts grant no native writer.
+
+  Compatibility dispatch is exact family/version/schema ID; unrecognized successors quarantine instead of guessing
+  or translating a retired spelling. Preserve retained original records and their original source custody; migration
+  is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before
+  stopping the old producer, drains or fences original pending obligations through SP-286, removes that version
+  from live acceptance and reader publication, invalidates reader caches, and rebuilds only generic derived metadata
+  from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
+  historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
+  and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
+  refuses. This unit grants no registration and no native proof.'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- CV-317
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Canonical semantic digest and CV-366 app key remain exact.
+- Current append and retry reject projector_replay_only; all family identity/receipt/withdrawal negatives reject.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_cv-785
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- memory.gist_state_changed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```

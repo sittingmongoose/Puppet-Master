@@ -2,15 +2,15 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L111-L334
+Source lines: L111-L335
 
-Source SHA256: `76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647`
+Source SHA256: `1af8b0321a641e5ee5d064b60e281e0d5541ce4691b0c154e7e0fb28a6d04509`
 
 ---
 
 ## GUI web development and smoke-test workflow addendum (2026-07-07)
 
-The Leptos web GUI development workflow (DL-139; it replaces the Slint/WASM web GUI) uses a trusted local daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Because the web GUI is drawn with browser elements, smoke tests and state capture drive and read the page's own elements, and the same fixtures and behavioral scenarios also run through the Slint desktop, with each interface's screenshots checked against its own visual baselines, because the two share behavior, not pixels (F3-583). The test harness must prove daemon capability probes, pairing/origin/CSRF protections, degraded reasons when the daemon is absent or narrowed, screenshot and state-capture evidence, and reload behavior for the static web route. Production builds must not enable dev/test, MCP, live-preview, or browser automation controls unless explicit configuration enables the capability and records permission/audit receipts. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode.
+The Leptos web GUI development workflow (DL-139; it replaces the Slint/WASM web GUI) uses a trusted local daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Because the web GUI is drawn with browser elements, smoke tests and state capture drive and read the page's own elements, and the same fixtures and behavioral scenarios also run through the Slint desktop, with each interface's screenshots checked against its own visual baselines, because the two share behavior, not pixels (F3-583). The test harness must prove daemon capability probes, pairing/origin/CSRF protections, degraded reasons when the daemon is absent or narrowed, screenshot and state-capture evidence, and reload behavior for the static web route. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless explicit configuration enables the capability and records permission/audit receipts.
 
 ### ATS-023 - Web GUI Dev Preview And Smoke Tests
 
@@ -24,7 +24,8 @@ canonical_text: >-
   automation smoke test that drives and reads the page's own elements, screenshots/state-capture, deterministic state
   hooks, and fast rebuild/reload; the same fixtures and behavioral scenarios also run through the Slint desktop, and
   each interface's screenshots are checked against its own visual baselines. Production builds must not
-  enable dev/test, MCP, live-preview or browser automation features unless explicit configuration enables the capability and records permission/audit receipts. Fixture mode is excluded from this exception. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode.
+  enable dev/test, MCP, live-preview, fixture, or browser automation features unless explicit configuration enables the
+  capability and records permission/audit receipts.
 gui_related: true
 gui_classification_reason: This unit defines user-visible web GUI development preview controls, screenshots, and smoke-test evidence.
 depends_on:
@@ -34,15 +35,16 @@ depends_on:
 unblocks:
 - F3-417
 acceptance_criteria:
-- "The local daemon plus static web route workflow has fixture mode, browser automation smoke test, screenshots/state-capture, state hooks, and fast reload coverage."
-- "The shared fixtures and behavioral scenarios also run through the Slint desktop, and screenshots of the web and desktop interfaces are captured and each is checked against its own interface's visual baselines."
-- "Smoke tests prove authenticated local origin or pairing, origin/CSRF protection, capability probe, degraded reason, and permission/audit receipt projection."
-- "Production builds keep dev/test, MCP, live-preview and browser automation controls disabled unless explicit configuration enables the capability; fixture mode is never available in production."
-- "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this spec."
-- "Fixture-mode tests use isolated labelled deterministic state in both GUI targets, with no prototype scenario picker, product run-mode switch, production admission, readiness, production receipt or real-work credit."
+- The local daemon plus static web route workflow has fixture mode, browser automation smoke test, screenshots/state-capture, state hooks, and fast reload coverage.
+- The shared fixtures and behavioral scenarios also run through the Slint desktop, and screenshots of the web and desktop interfaces are captured and each is checked against its own interface's visual baselines.
+- Smoke tests prove authenticated local origin or pairing, origin/CSRF protection, capability probe, degraded reason, and permission/audit receipt projection.
+- Production builds keep dev/test, MCP, live-preview, fixture, and browser automation controls disabled unless explicit configuration enables the capability.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this spec.
 validation_surfaces:
-- "scripts/pm-gui-asset-policy.py"
-- "scripts/pm-plans-verify.py"
+- python3 scripts/pm-gui-asset-policy.py
+- python3 scripts/pm-plans-verify.py validate-gui-asset-policy
+- python3 scripts/pm-plans-verify.py validate-implementation-readiness
+- python3 scripts/pm-plans-verify.py run-gates
 risk_class: web_gui_dev_test_authority_leak
 reasoning_tier: high
 context_scope: gui_platform_currentness_repair
@@ -70,7 +72,6 @@ preserved_exact_tokens:
 negative_constraints:
 - "Production builds must not enable dev/test/MCP/live-preview features unless explicitly configured."
 - "Browser-only WASM must not claim direct OS authority."
-- "Do not ship fixture mode in production, offer a prototype scenario picker or treat fixture state/captures as real owner state, production receipts or readiness evidence."
 stale_retired_dispositions:
 - "DL-139 retires the Slint/WASM web GUI this workflow was first written for; the workflow now serves the Leptos web GUI."
 owner_hints:

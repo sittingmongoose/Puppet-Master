@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8329-L8479
+Source lines: L8323-L8472
 
-Source SHA256: `212f3634ee38453d53ee6294b83f1280bb82aeef9426394b0ba303c6f76ab24a`
+Source SHA256: `39c3903f5c8721f5f828a6e569756cffcb13e36c077a4345668d6a3d71a529ca`
 
 ---
 
@@ -115,8 +115,9 @@ owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   GUI development-preview command controls are limited to cmd.gui_dev_preview.reload,
   cmd.gui_dev_preview.fixture_mode.set, cmd.gui_dev_preview.capture_state, and
-  cmd.gui_dev_preview.daemon_capabilities.inspect. They are development-preview and automated-test controls only and
-  must not be reused as production runtime, terminal, filesystem, browser automation, CEF, tray, native-window or process/container commands. Other development-preview controls are compiled out or disabled in production unless explicitly configured; cmd.gui_dev_preview.fixture_mode.set is always compiled out of production. It selects isolated labelled deterministic developer/test state only. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode.
+  cmd.gui_dev_preview.daemon_capabilities.inspect. They are development-preview and automated-test controls only,
+  are compiled out or disabled in production unless explicitly configured, and must not be reused as production
+  runtime, terminal, filesystem, browser automation, CEF, tray, native-window, or process/container commands.
 gui_related: true
 gui_classification_reason: This unit defines user-visible development-preview GUI controls and command IDs.
 depends_on:
@@ -124,14 +125,13 @@ depends_on:
 - F3-417
 unblocks: []
 acceptance_criteria:
-- "Dev-preview controls remain scoped to reload, fixture mode, screenshot/state capture, and daemon capability inspection."
-- "Production builds disable or omit other dev-preview controls unless explicit configuration enables the matching dev/test surface; fixture mode is always absent and no production configuration enables it."
-- "The commands do not grant OS-owned capabilities and do not replace production runtime command families."
-- "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created."
-- "The fixture command selects isolated labelled developer/test data only, without a prototype scenario picker, product run-mode switch, production admission, readiness or production receipt credit."
+- Dev-preview controls remain scoped to reload, fixture mode, screenshot/state capture, and daemon capability inspection.
+- Production builds disable or omit these controls unless explicit configuration enables the matching dev/test surface.
+- The commands do not grant OS-owned capabilities and do not replace production runtime command families.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created.
 validation_surfaces:
-- "scripts/pm-plans-verify.py"
-- "scripts/pm-plan-index.py"
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plan-index.py validate
 risk_class: dev_preview_command_authority_leak
 reasoning_tier: high
 context_scope: gui_platform_currentness_repair
@@ -153,7 +153,6 @@ preserved_exact_tokens:
 negative_constraints:
 - "Do not invent production runtime commands for dev-preview workflow."
 - "Do not let dev-preview commands grant PTY, filesystem, process/container, CEF, tray, native-window, or browser automation authority."
-- "Do not let fixture_mode.set select prototype scenarios, enable a product run mode, admit fixture data to production or produce readiness/production receipt credit."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 - Plans/FinalGUISpec.md
