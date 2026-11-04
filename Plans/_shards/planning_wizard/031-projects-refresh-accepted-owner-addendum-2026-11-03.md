@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L3927-L4061
+Source lines: L3925-L4059
 
-Source SHA256: `1673bcaf914022ab37b9867009b0a76435d4bdb3f41ecbec595e56ad1353c026`
+Source SHA256: `cf42e4927a229ccf6cb92a3e5dc034396c6b106366b4099bfc22a0fb450c88f6`
 
 ---
 
@@ -20,7 +20,7 @@ owner_doc: Plans/Planning_Wizard.md
 canonical_text: |-
   New Project is a launcher plus one guided page and live Review over PJCT-009, shared with Product Onboarding and conversion-to-new. The launcher recognizes a pasted online URL, folder or computer/address as a suggested way, never an authority or identity proof. Six equal entry ways are new, folder, online, computer/NAS, restore and from-chat. They map to existing new/existing_local/existing_online/restore intents; from-chat consumes the chat conversion engine and computer/NAS is a source transport, not a new backend or arbitrary registration kind. P11 other-app import remains not here yet.
 
-  Compute applicable sections from current answers and owner results, not a stored visited/completed boolean. New content asks Start with; existing content is inspected by SCS-025. Where work runs names the Computer/Server, while where files live names the actual local/Server/SSH/PM/SMB/NFS/mounted source and full destination path. Show available space and refused/missing/waiting status from current owner evidence, not a fabricated estimate. New folders default to code.execution.projects-folder for the selected Computer, a Computer-only execution_host-keyed path defaulting to install-derived ~/Projects; preserve interior name spaces and validate the actual destination filesystem/collision. Advanced may select another admitted work Host/Environment without making a Client the execution owner.
+  Compute applicable sections from current answers and owner results, not a stored visited/completed boolean. New content asks Start with; existing content is inspected by SCS-025. Where work runs names the Computer/Server, while where files live names the actual local/Server/SSH/PM/SMB/NFS/mounted source and full destination path. Show available space and refused/missing/waiting status from current owner evidence, not a fabricated estimate. New folders default to code.execution.projects-folder for the selected Computer, a Computer-only execution_host-keyed path with factory value execution_host_home_relative Projects, resolved against that actual Host’s home (for example ~/Projects on Unix), never an install-folder or initiating-Client path; preserve interior name spaces and validate the actual destination filesystem/collision. Advanced may select another admitted work Host/Environment without making a Client the execution owner.
 
   Your usual settings follows SSYS-002/059. A chosen source Project copies its own_values, selected owner things and account IDs through SSYS-036/062; Advanced may select exact portable IDs and effective_values/Keep them fixed, with project_only_rows off by default. The eleven disjoint selector sets are Settings-owned and the visible kind is Notifications & limits. No copy runs when merely opening an existing Project, on Later or connect-only. One MA-074 readiness list reports ready_here, check_there, sign_in_there, key_needed, not_installed, expired or cannot_move on the destination Computer. No keys, CLI profiles, pairings, implicit install or invented account fallback travel.
 

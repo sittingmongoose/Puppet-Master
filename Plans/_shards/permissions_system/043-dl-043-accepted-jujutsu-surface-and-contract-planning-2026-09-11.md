@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L10025-L11098
+Source lines: L10025-L11102
 
-Source SHA256: `b3a68929bbad7d4d579a3664aed2b7c628752fea67df2cfeaebc49e0715c83a2`
+Source SHA256: `f2390c30383160c10085e8e037d332c605cc838256a825363b0d5562478ffa86`
 
 ---
 
@@ -253,13 +253,14 @@ canonical_text: 'Permissions owns rule matching and durable authority; Settings 
 
 
   The finite existing safety-answer scalar rows are safety.rules.default-tool-permission, safety.approvals.doom-loop-action
-  and safety.protection.external-dir-action, each with careful_order deny→ask→allow. The profile order is
+  and safety.protection.external-dir-action, plus the admitted safety.rules.computer-use answer, each with
+  careful_order deny→ask→allow. The profile order is
   read_only→plan→regular→full (custom uses the stated Computer fallback), and the one FileSafe switch orders
   On before Off. The per-tool-permissions and web-tool-permissions maps stay per_item: first resolve each
   layer own answer for the exact permission key with existing owner matching/deny semantics, then protectively
   combine simultaneous Computer-own and Project-own declared answers with deny before ask before allow. This
   is not per-field profile merging or a reordering of independent granular durable-rule specificity. Do not
-  invent a fourth scalar ask row or generic internet-use toggle from imprecise source wording; actual web/network
+  invent extra scalar ask rows or a generic internet-use toggle from imprecise source wording; actual web/network
   policy retains its existing owner contract. Numeric declared limit rows use computer_ceiling through Settings/runtime
   admission; Reduce motion keeps its separate Everywhere/Device/Project plus OS rule.
 
@@ -417,8 +418,9 @@ canonical_text: 'Application chat, Goal, Crew, Plan/Deep Plan and scheduled mess
 
   Permissions keys are: `other_projects_read` (Regular ask once per chat, explicit requested Project set;
   Everywhere/Computer defaults), `other_projects_message` (Regular each exact send, scoped Allow for this
-  chat), `incoming_chat_messages` (receiving Project Ask me/allowed/Off), `computer_use` (Computer only, per-chat/per-app
-  task admission), `outward_after_cross_project_read` (Regular ask; scoped chat grant only), `system_change`
+  chat), `incoming_chat_messages` (receiving Project Ask me/allowed/Off), `computer_use` (Everywhere default plus
+  Computer/Project own safety choices under SSYS-059 more_careful, keyed by exact execution_host Computer,
+  with independent per-chat/per-app task admission), `outward_after_cross_project_read` (Regular ask; scoped chat grant only), `system_change`
   (Regular ask, no Always), plus existing `external_directory`. Map other_projects_read once to `safety.rules.cross-project-read-policy`,
   incoming_chat_messages to `safety.rules.incoming-chat-messages`, computer_use to `safety.rules.computer-use`,
   and external_directory to the existing safety.protection.external-dir-action and safety.protection.external-dir-allowlist.
@@ -506,7 +508,9 @@ canonical_text: 'Application chat, Goal, Crew, Plan/Deep Plan and scheduled mess
   immediately before durable commit.
 
 
-  computer_use is off until exact task/chat/app/Computer admission. It consumes the closed T-186 executable
+  computer_use resolves safety.rules.computer-use before exact task/chat/app/Computer admission; deny refuses,
+  and ask or allow never substitutes for desktop capability/readiness or the separate current scoped screen/provider
+  disclosure grant. Screen use is off until those independent checks admit it. It consumes the closed T-186 executable
   census computer.screen, computer.pointer and computer.keys, with their sole Tools handlers and versioned
   request/result definitions; computer.* is only a family selector. The current ActiveToolNamespaceReceipt,
   supported adapter/provider/model/session, schema hashes, desktop/controller lease and generation, observation/app/window

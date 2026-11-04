@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L28302-L29072
+Source lines: L28302-L29076
 
-Source SHA256: `f4e5a424ee6841b4988ce457166d26b762be0b3f0c4aa0c5d0d03132ef6be00f`
+Source SHA256: `a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d`
 
 ---
 
@@ -485,7 +485,11 @@ canonical_text: 'No project is a first-class chat place with project_id=null, sc
   Plan/schedules/conversion, then cross-project reads/requests, then computer use/continue elsewhere/cross-computer
   conversion; unfinished routes disclose typed unavailability. The shared CV-365 execution envelope permits explicit
   empty admitted roots and null working_directory for talk-only/internal planning. The actual granted or newly created
-  folder supplies process cwd; no HOME or viewing-device fallback is inferred.'
+  folder supplies process cwd; no HOME or viewing-device fallback is inferred.
+
+  Pre-message intake selects AttachmentAddRequestV3/ResultV3 and AttachmentOwnerContextV1: draft_id/revision, actual Computer/Environment/roots, initiating Client, exact composer destination/generation, source digest/read grant and idempotency remain draft-owned. First-message commit alone mints the real thread and performs AttachmentDraftAdoptionV1 once against the complete immutable attachment manifest and both writer generations. Exact retry returns the same adoption receipt; conflicting digest/generation refuses and preserves the draft. Cancellation before commit cleans only unheld draft payloads after the owner receipt; late intake never inserts into a different composer. No first-message evidence means no adoption and no early thread creation.
+
+  Attachment Details/Open/Remove/Retry/Download/Freeze reference select their operation-specific V3 request/result in Plans/projects_refresh_fix_contracts.schema.json with the exact registered command ID, attachment/version/digest and revision. Read/navigation returns details/open/download disposition; Remove detaches only the composer reference and preserves independently held payloads; Retry binds the failed owner operation; Freeze rechecks the source read grant/hash and returns the captured version. Add and Save to project retain their own historical contracts. An added result is not a Remove/Open success.'
 gui_related: true
 gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
 depends_on:
@@ -647,7 +651,7 @@ canonical_text: Make a project from this chat and Move this chat into a project 
   the preview. Existing approvals settle first; active work/timers are fenced by their owners. Conversion never
   enters Planning Wizard, PRD Builder or Orchestrator automatically. CV-367 owns the exhaustive ChatMoveManifestV1
   and every per-family disposition; CV-366 owns its conversion_manifest semantic hash, and SP-350 owns operation/cutover/lineage/Undo
-  custody. The live preview and apply use that one complete map; absent owner/source/policy materialization is a
+  custody. The live preview and apply preserve the same complete family plan across the draft-preview to real-target cutover binding specified by CV-367; absent owner/source/policy materialization is a
   typed blocker, never an implicit nothing-to-move result.
 gui_related: true
 gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.

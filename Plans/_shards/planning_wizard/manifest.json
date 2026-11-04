@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-03T23:47:45Z",
+  "generated_at_utc": "2026-11-04T06:20:37Z",
   "index_path": "Plans/_shards/planning_wizard/00-index.md",
-  "index_sha256": "326aa542088e4fe03cc40bd79fd9cd522dc6fd8b811474a681a6f0b8c35e3d1f",
+  "index_sha256": "f4cb815544f819347e6b919fed9e87c5cabd666876e98dac52e5980554b025c7",
   "manifest_path": "Plans/_shards/planning_wizard/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/planning_wizard/001-preamble.md",
-      "sha256": "0b67ece644a18412fe9f31d5c03b400eecafec8f7d7a91616760fe784623f88f",
+      "sha256": "9f938f23928dba9f2037417451b3096dc1c54e4f088213c987e62ba77cbcfc3c",
       "shard_id": "001",
       "source_line_end": 5,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/planning_wizard/002-0.-scope.md",
-      "sha256": "856261f55b7ffff2ae78bfc4cf62031de084a638f820f71789d900c8d5bc6b1b",
+      "sha256": "f3b7b2e6e484187e73f33c0305e2aa55ff97f49c947f14692f23710bf7f6e3ec",
       "shard_id": "002",
       "source_line_end": 9,
       "source_line_start": 7,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Ownership And Consumers",
       "path": "Plans/_shards/planning_wizard/003-1.-ownership-and-consumers.md",
-      "sha256": "50c801814797430706def33b0eda4ba43d8dae334410a45d487112e62b5e6b7d",
+      "sha256": "d68d0c6526a8d08e12a13f24ce3833666ef440c4b1103567bf751b53a50da7d2",
       "shard_id": "003",
       "source_line_end": 16,
       "source_line_start": 12,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Canonical PlanUnits",
       "path": "Plans/_shards/planning_wizard/004-2.-canonical-planunits.md",
-      "sha256": "dc23934ffb8c48f4e58a90d11e29b2ec320e7f344d33c95b8ce1bff305316e48",
+      "sha256": "6dfa4da3734ef6beaac8e0336613faf3b87efc06663ca78368ebb3f0113981d3",
       "shard_id": "004",
       "source_line_end": 97,
       "source_line_start": 19,
@@ -44,7 +44,7 @@
     {
       "heading": "GUI approval and Plan Compile launch repair addendum (2026-07-02)",
       "path": "Plans/_shards/planning_wizard/005-gui-approval-and-plan-compile-launch-repair-addendum-2026-07-02.md",
-      "sha256": "32355ec9e26784709521d1c934d36cac4ef8a9b382127fff86055f01b99d9082",
+      "sha256": "fff5785599ee8d7ddb7418142c51f78bd537628197dce8e33abfd07a957f57bd",
       "shard_id": "005",
       "source_line_end": 1154,
       "source_line_start": 99,
@@ -53,7 +53,7 @@
     {
       "heading": "Assistant redesign: BSD, Wonderer and Grill Me in the Planning Wizard start flow (2026-09-03)",
       "path": "Plans/_shards/planning_wizard/006-assistant-redesign-bsd-wonderer-and-grill-me-in-the-planning-wiz.md",
-      "sha256": "c0a29e345872a329731f9d5590134276ef6c8198f10fcd015a72428eac730948",
+      "sha256": "4abb5d2c731634656440843c0cfb31dfc58d463f80e9ece8083e82ff444773ee",
       "shard_id": "006",
       "source_line_end": 1241,
       "source_line_start": 1158,
@@ -62,7 +62,7 @@
     {
       "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
       "path": "Plans/_shards/planning_wizard/007-3.-contracts-schemas-events-or-data-shapes.md",
-      "sha256": "5b71fda83fd049fb6a0e348efaa38a2800cbcff00d90adeef9214ec075c54dd8",
+      "sha256": "dbcc4a4e8ccc0b725a47a436d272afb574ddaf202b267ee1c93f8ce8e23adc84",
       "shard_id": "007",
       "source_line_end": 1245,
       "source_line_start": 1243,
@@ -71,7 +71,7 @@
     {
       "heading": "4. Integration Surfaces",
       "path": "Plans/_shards/planning_wizard/008-4.-integration-surfaces.md",
-      "sha256": "9d4a70979696afdd6ca2b80b72509f8766d2a2a846b4852caf59535892428854",
+      "sha256": "3a22f86dabdc694ee5702ce3ce7b4b60a6ec35cd78d375e0a7d4abc97448d4f8",
       "shard_id": "008",
       "source_line_end": 1250,
       "source_line_start": 1248,
@@ -80,7 +80,7 @@
     {
       "heading": "5. Validation And Acceptance",
       "path": "Plans/_shards/planning_wizard/009-5.-validation-and-acceptance.md",
-      "sha256": "6244c33acd54cc2e9c972d07045c75c606810a9e3ad5d7118802e3753d0bd853",
+      "sha256": "b53fda366ccef40326b33e20a1ecbeb5b10ce3c1dfbb0ba3de1691f2bcabc5d2",
       "shard_id": "009",
       "source_line_end": 1255,
       "source_line_start": 1253,
@@ -89,7 +89,7 @@
     {
       "heading": "6. Plan-To-Node Readiness",
       "path": "Plans/_shards/planning_wizard/010-6.-plan-to-node-readiness.md",
-      "sha256": "4134c0d4e20ca132d988b8fef99b174d7c17e151015963a24913eaaa6a3a2a50",
+      "sha256": "2a51fb112175556c65a91e4952834490514de54253af775bbf6437b5447c8286",
       "shard_id": "010",
       "source_line_end": 1262,
       "source_line_start": 1258,
@@ -98,7 +98,7 @@
     {
       "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
       "path": "Plans/_shards/planning_wizard/011-7.-deferred-retired-compatibility-and-non-goals.md",
-      "sha256": "f621bc11194a1f41982d772c07cd81ab05959f01c5e866a33969ffef0cdbbeda",
+      "sha256": "2310b21f7abd1c6fb4f715d25cac207953bcb064816e62f4938d30dbf255f481",
       "shard_id": "011",
       "source_line_end": 1267,
       "source_line_start": 1265,
@@ -107,7 +107,7 @@
     {
       "heading": "8. Source Lineage And Governance",
       "path": "Plans/_shards/planning_wizard/012-8.-source-lineage-and-governance.md",
-      "sha256": "47ad7694ea059e3be35f23a070a8cd9c4aea30cd9c2b71185c8538c4d37b5f74",
+      "sha256": "bbdf0f365edbb35ae57e3384e6251e31ffa2aaf83ab8165210c1b0a936474038",
       "shard_id": "012",
       "source_line_end": 1272,
       "source_line_start": 1270,
@@ -116,7 +116,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
       "path": "Plans/_shards/planning_wizard/013-ledger-compile-addendum-pldg-20260622-001-fff.md",
-      "sha256": "0949cbc712ba6bfbed2efdd59ea805dffc1d8fe3de84f38a692e0da7b6ccdf32",
+      "sha256": "8b84c2e66fd6f57b11c5a31c7de38a43fa6f66eeefb78c9ecea0e62af09cdbea",
       "shard_id": "013",
       "source_line_end": 1319,
       "source_line_start": 1274,
@@ -125,7 +125,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/planning_wizard/014-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "c6e2a9920db513c31e84f627eb19ed05b4fea22fcbe3edd8171b7b51032f1ee1",
+      "sha256": "219148faaedc3d89c2707f1007d21f490663f684167d8ef9d4d39ec47d1652cc",
       "shard_id": "014",
       "source_line_end": 1472,
       "source_line_start": 1322,
@@ -134,7 +134,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260701-001-feature-intake",
       "path": "Plans/_shards/planning_wizard/015-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
-      "sha256": "d947e1e68c97f5f1e3163d86dc7b996b2242676aa063b36d24a6d477e75d970b",
+      "sha256": "d7a979c32e5515fe6e501d6fc36eb9a849a649e9889906a22ca6c8c69eeb3d84",
       "shard_id": "015",
       "source_line_end": 1562,
       "source_line_start": 1474,
@@ -143,7 +143,7 @@
     {
       "heading": "Implementation Readiness Gate Addendum - 2026-07-05",
       "path": "Plans/_shards/planning_wizard/016-implementation-readiness-gate-addendum-2026-07-05.md",
-      "sha256": "a0307e3ce30810f41481386760a65d97c7c5a777ab139c211415f81075f6145f",
+      "sha256": "31df937aaac4673a33e8d7b489d1479dd6f258eb8cb1b5334b333cf4f327291c",
       "shard_id": "016",
       "source_line_end": 1636,
       "source_line_start": 1564,
@@ -152,7 +152,7 @@
     {
       "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
       "path": "Plans/_shards/planning_wizard/017-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
-      "sha256": "6871382970fb9a28c57d60892dc7b1cf59bc580afd4f7fae7e48e2b145119563",
+      "sha256": "f2e7cfa30ff80902cb564217adf39ebecb672cab4ccb01d1cc7ca585b7e69721",
       "shard_id": "017",
       "source_line_end": 1643,
       "source_line_start": 1637,
@@ -161,7 +161,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/planning_wizard/018-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "028d75e6f273d2cba940d6c71176c69538d973108cbe580769d27c6263ffad37",
+      "sha256": "5e62311ef16f856111b4f8891fc043b5ce888d169d397c2709f188e22ea45c73",
       "shard_id": "018",
       "source_line_end": 1654,
       "source_line_start": 1645,
@@ -170,7 +170,7 @@
     {
       "heading": "PMConcept6 Concept Promotion Addendum - 2026-07-11",
       "path": "Plans/_shards/planning_wizard/019-pmconcept6-concept-promotion-addendum-2026-07-11.md",
-      "sha256": "935902506d03e5f1c9e6d6daf0fb968684d80fadf82f5d84210013f9ce138e2b",
+      "sha256": "806d023024fc306c8835bd978a43f85f9d60ce8d7c5aa33a47e08e9895433158",
       "shard_id": "019",
       "source_line_end": 1711,
       "source_line_start": 1656,
@@ -179,7 +179,7 @@
     {
       "heading": "PMConcept6 Shell Sweep Addendum - 2026-07-16",
       "path": "Plans/_shards/planning_wizard/020-pmconcept6-shell-sweep-addendum-2026-07-16.md",
-      "sha256": "b194c2a8241bc52c36243256d563799bd12a10c0eaae4be15209bca7903d90c1",
+      "sha256": "1f9229f159161760af2896c7cd6be672885a654a2cf742ef69c25bf6355610cc",
       "shard_id": "020",
       "source_line_end": 1769,
       "source_line_start": 1713,
@@ -188,7 +188,7 @@
     {
       "heading": "PMConcept7 Concept Promotion Addendum - 2026-07-23",
       "path": "Plans/_shards/planning_wizard/021-pmconcept7-concept-promotion-addendum-2026-07-23.md",
-      "sha256": "237b7eb1eb9d650fb95bbd9f1704018899336f610c254e3f4176adc531b48bd0",
+      "sha256": "39a25776a5ff2f92e93f629a25b0dc4fee5d45d79ee3b212f1a3c379b7384709",
       "shard_id": "021",
       "source_line_end": 1773,
       "source_line_start": 1771,
@@ -197,7 +197,7 @@
     {
       "heading": "Named Plan consumer scope (2026-09-27)",
       "path": "Plans/_shards/planning_wizard/022-named-plan-consumer-scope-2026-09-27.md",
-      "sha256": "f660075d61edcb29deb0e1794b85de2d93d5b4da07e3e2ee935355ec52401162",
+      "sha256": "3a96d4b0a5cdeb97d88eea9c9e52f44ab3f9b7538423302bc70403cbf3cdb570",
       "shard_id": "022",
       "source_line_end": 1779,
       "source_line_start": 1775,
@@ -206,7 +206,7 @@
     {
       "heading": "Product Onboarding and Guided Tour owner addendum (reconciled 2026-09-10)",
       "path": "Plans/_shards/planning_wizard/023-product-onboarding-and-guided-tour-owner-addendum-reconciled-202.md",
-      "sha256": "f422586153bd9f5f76b67e804778e9ea92d7fb250421ba74aaf0a4ead9640aef",
+      "sha256": "cbe82b650cbfe28965c5e3f750aa5e2e1c0b00be936f294f0caab29d6a276995",
       "shard_id": "023",
       "source_line_end": 2577,
       "source_line_start": 1781,
@@ -215,79 +215,79 @@
     {
       "heading": "Product Onboarding route-and-review correction addendum - 2026-09-01",
       "path": "Plans/_shards/planning_wizard/024-product-onboarding-route-and-review-correction-addendum-2026-09-.md",
-      "sha256": "8077ede6216e88fcc7c1112a4892cc29d2693b70492c70a105060d7eb273ff88",
+      "sha256": "17d2ad5fde09da1ef98344a541e109a10b082610e865b9296f7a7a4930fbd73f",
       "shard_id": "024",
-      "source_line_end": 2893,
+      "source_line_end": 2891,
       "source_line_start": 2579,
       "split_rule": "heading-##"
     },
     {
       "heading": "Forge/Backup/tsnet Product Onboarding consumer addendum - 2026-09-01",
       "path": "Plans/_shards/planning_wizard/025-forge-backup-tsnet-product-onboarding-consumer-addendum-2026-09-.md",
-      "sha256": "271b68762c77b110e02f2c515f98aa51facf7d627de892c35ec1e56c8fbd8f11",
+      "sha256": "5fa03b5053dbb10db0bf67240223dcc736d6fa803723aecb2650cd0dd437c23f",
       "shard_id": "025",
-      "source_line_end": 3313,
-      "source_line_start": 2894,
+      "source_line_end": 3311,
+      "source_line_start": 2892,
       "split_rule": "heading-##"
     },
     {
       "heading": "Notebook Topic Research Addendum (2026-09-05)",
       "path": "Plans/_shards/planning_wizard/026-notebook-topic-research-addendum-2026-09-05.md",
-      "sha256": "a2d25f67b80536b41184d55275a8cd835d6ee90c8966a9e5eb1ddf2af9bcb634",
+      "sha256": "4d869b763a6f1260eebc18dac1a9c3137745da9917c4ffffc313b94da1985858",
       "shard_id": "026",
-      "source_line_end": 3348,
-      "source_line_start": 3315,
+      "source_line_end": 3346,
+      "source_line_start": 3313,
       "split_rule": "heading-##"
     },
     {
       "heading": "DL-036 research and audit decision review in planning - 2026-09-09",
       "path": "Plans/_shards/planning_wizard/027-dl-036-research-and-audit-decision-review-in-planning-2026-09-09.md",
-      "sha256": "691e70af8082290a960a5a4c0ad41874634fe28f89256bef1efef6827e3d6d68",
+      "sha256": "211800790e7aaac47e6582c56ce6b48a7998504037bc5ebfc5c666d8ab5c42fe",
       "shard_id": "027",
-      "source_line_end": 3439,
-      "source_line_start": 3351,
+      "source_line_end": 3437,
+      "source_line_start": 3349,
       "split_rule": "heading-##"
     },
     {
       "heading": "Bounded Seal Acceptance Addendum - 2026-09-17",
       "path": "Plans/_shards/planning_wizard/028-bounded-seal-acceptance-addendum-2026-09-17.md",
-      "sha256": "6b7007099afd5a6f5810299a05fb96e3d867f71c01fbaa4f5c85c76654c0f4dd",
+      "sha256": "5ac8d54fe815c3430a8f22be64a51424f96ea2710a7b7d38141555e28918a545",
       "shard_id": "028",
-      "source_line_end": 3557,
-      "source_line_start": 3441,
+      "source_line_end": 3555,
+      "source_line_start": 3439,
       "split_rule": "heading-##"
     },
     {
       "heading": "Files reached through another Puppet Master addendum - 2026-09-25",
       "path": "Plans/_shards/planning_wizard/029-files-reached-through-another-puppet-master-addendum-2026-09-25.md",
-      "sha256": "fbcdcd0f701b2fd9abfdf35e311e1db2305bc5fd3197049b80df271b30bcc0d9",
+      "sha256": "64489cef367657abdc6b3dc1a8de6d26153e32c93b65a0944b761cc001d58af4",
       "shard_id": "029",
-      "source_line_end": 3681,
-      "source_line_start": 3559,
+      "source_line_end": 3679,
+      "source_line_start": 3557,
       "split_rule": "heading-##"
     },
     {
       "heading": "DL-180 \u2014 The Tour's Workspace Chapter Teaches Panels (2026-10-09)",
       "path": "Plans/_shards/planning_wizard/030-dl-180-the-tour-s-workspace-chapter-teaches-panels-2026-10-09.md",
-      "sha256": "d7918b299ebf58739fce1930255d888d517b1c1b0b689e299c72dc336db653ef",
+      "sha256": "ee03a8c5ea69be789cb9dc2ce0a2c7ae671eb50e7a79859c54edf474f5b1ed8e",
       "shard_id": "030",
-      "source_line_end": 3924,
-      "source_line_start": 3683,
+      "source_line_end": 3922,
+      "source_line_start": 3681,
       "split_rule": "heading-##"
     },
     {
       "heading": "Projects refresh accepted owner addendum (2026-11-03)",
       "path": "Plans/_shards/planning_wizard/031-projects-refresh-accepted-owner-addendum-2026-11-03.md",
-      "sha256": "0d33f08b7b571ececef2adeb03342e0e696328b3583b08d0355bde5f0e325995",
+      "sha256": "cd9d4d3a880ccb73bc6d9e2868d912e98a8de90529498e1d4615cccc2845086f",
       "shard_id": "031",
-      "source_line_end": 4061,
-      "source_line_start": 3927,
+      "source_line_end": 4059,
+      "source_line_start": 3925,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 4061,
+    "line_count": 4059,
     "path": "Plans/Planning_Wizard.md",
-    "sha256": "1673bcaf914022ab37b9867009b0a76435d4bdb3f41ecbec595e56ad1353c026"
+    "sha256": "cf42e4927a229ccf6cb92a3e5dc034396c6b106366b4099bfc22a0fb450c88f6"
   }
 }

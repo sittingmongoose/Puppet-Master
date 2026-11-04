@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L18065-L19562
+Source lines: L18065-L19564
 
-Source SHA256: `682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3`
+Source SHA256: `c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121`
 
 ---
 
@@ -1393,7 +1393,9 @@ canonical_text: 'All six Plan/Deep Plan strategies, exact approved versions, age
   is adopted together or remains unavailable. Plans/projects_refresh_command_bindings.json enumerates exact
   commands, local actions, schema pointers, handlers, selectors and producer contracts; expected_event_types=[]
   for each new primary grants no event admission. Native handlers, runtime receipts, visual/accessibility evidence
-  and governance certification remain unproved.'
+  and governance certification remain unproved.
+
+  cmd.permissions.open, cmd.permissions.review_request and cmd.permissions.pick_external_directory select PermissionsOpenV3, PermissionsReviewV3 and PermissionsDirectoryPickerV3 request/result definitions in Plans/projects_refresh_fix_contracts.schema.json. Open and Review return exact route/focus with no rule mutation; Review binds approval_scope_key and the original request digest/revision for inspection only, never a decision. The native directory picker binds the actual Client, offered Settings target and owner revision; only verified selected-directory readback can add it through the existing Permissions owner. Cancel/refusal changes no rule; duplicate paths and invalid globs retain their typed owner errors. Rule mutation contracts and approve/decline handlers remain separate.'
 gui_related: true
 gui_classification_reason: Defines visible control dispatch, availability, disabled feedback, accessibility
   and exact caller return.

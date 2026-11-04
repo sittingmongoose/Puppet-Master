@@ -2,9 +2,9 @@
 
 Source: `Plans/human-in-the-loop.md`
 
-Source lines: L2682-L2802
+Source lines: L2682-L2804
 
-Source SHA256: `47519c7d88d096b8adfe6c3d1bc0374a67bd88ac55c3779e1fcde821ddf1e6a4`
+Source SHA256: `01873d61989908279c600d475affad68d2793cba0a774bb8d20a7af2f249a457`
 
 ---
 
@@ -63,7 +63,9 @@ canonical_text: 'The existing approval host renders three distinct authorities f
   its exact one-dispatch direct-user Send now/Build/resume exception; neither changes stored pause nor clears
   task/source/destination holds. CV-365/366 and SP-353 supply exact app authority/source custody, independent
   audit/backup/retention and historical restored evidence; current Settings, client claims or a copied grant
-  never become an actual human decision.'
+  never become an actual human decision.
+
+  RuntimeApproveV3Request and RuntimeDeclineV3Request select a closed union of the historical run_id/node_id/blocked_sequence/optional attempt_id payload and a discriminated chat_tool decision carrying its exact command, request digest/revision, tool/target, protected person evidence and expiry. Pre-attempt blocks retain absent attempt_id; current attempts resolve only from the original blocked episode, never focus. Results distinguish node identity/effects from the ChatToolApprovalResult resolution payload. node.unblocked applies only to node approval; chat-tool resolution uses approval.chat_tool_resolved with DL-300 requires_owner_adoption. Cross-variant fields, wrong decisions and stale/currentness mismatch refuse; the host, handlers and permission ladder are shared.'
 gui_related: true
 gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are
   user-visible.

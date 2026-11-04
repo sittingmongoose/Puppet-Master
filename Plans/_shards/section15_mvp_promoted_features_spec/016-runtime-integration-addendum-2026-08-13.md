@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L9431-L9853
 
-Source SHA256: `0398aca0a8d02e356ae284700fb6b1b57992a6eb3b3aa08ed90180c6a9cebda5`
+Source SHA256: `29202993e8ede84b3d108d6e5a58ee6bfd886eb3e27a06e2ea6c27fb51968c5c`
 
 ---
 
@@ -28,11 +28,11 @@ canonical_text: Classical DAP debugging uses the shared DebugSessionRecord and D
   verbs; cmd.debug.* remains assistant-investigation scoped and is never a DAP alias. No-project use,
   where the exact debug target/capability is supported, binds explicit app scope, thread/Computer/working
   root and real adapter/source identity. Project-specific presets still require their real Project; no
-  ghost target or hidden Orchestrator run is fabricated. The application sibling uses Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1,
-  CV-366's exact whole app source graph and SP-349's distinct application physical family; creation/reset
-  consumes OriginalBrowserTransitionSource in Plans/application_workflow_sources.schema.json. Retain every
+  ghost target or hidden Orchestrator run is fabricated. The application sibling uses Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1,
+  CV-366's developer-session source graph and SP-349's distinct application physical family; lifecycle
+  transitions consume OriginalDebugSessionSource in Plans/application_workflow_sources.schema.json under the same DebugSessionBroker. Retain every
   original Project source/hash/codec unchanged. Missing app native-source, writer/read/checkpoint/backup
-  or controller proof stays unavailable; protected-auth capture, profile migration and focus-based fallback
+  or session-broker proof stays unavailable; browser profile/controller substitution and focus-based fallback
   are forbidden.
 gui_related: false
 gui_classification_reason: This is the promoted debugger runtime and command-namespace boundary, not debugger
@@ -108,11 +108,11 @@ canonical_text: Persistent evaluation uses EvalSessionRecord and EvalSessionBrok
   consumption; idle-time pause never suspends other resource, security, recursion, provider, output, or
   artifact limits. An app EvalSession instead binds application scope, real thread/Goal/run/Computer and
   admitted roots under the same kernel limits and owner/session isolation; nullable Project does not create
-  a hidden global kernel. The application sibling uses Plans/application_workflow_contracts.schema.json#/$defs/BrowserSessionApplicationV1,
-  CV-366's exact whole app source graph and SP-349's distinct application physical family; creation/reset
-  consumes OriginalBrowserTransitionSource in Plans/application_workflow_sources.schema.json. Retain every
+  a hidden global kernel. The application sibling uses Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1,
+  CV-366's developer-session source graph and SP-349's distinct application physical family; lifecycle
+  transitions consume OriginalEvalSessionSource in Plans/application_workflow_sources.schema.json under the same EvalSessionBroker. Retain every
   original Project source/hash/codec unchanged. Missing app native-source, writer/read/checkpoint/backup
-  or controller proof stays unavailable; protected-auth capture, profile migration and focus-based fallback
+  or session-broker proof stays unavailable; browser profile/controller substitution and focus-based fallback
   are forbidden.
 gui_related: false
 gui_classification_reason: This unit defines evaluator sandbox, scope, accounting, and authority rather

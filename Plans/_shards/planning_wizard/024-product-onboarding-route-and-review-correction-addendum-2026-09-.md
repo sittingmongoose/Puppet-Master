@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2579-L2893
+Source lines: L2579-L2891
 
-Source SHA256: `1673bcaf914022ab37b9867009b0a76435d4bdb3f41ecbec595e56ad1353c026`
+Source SHA256: `cf42e4927a229ccf6cb92a3e5dc034396c6b106366b4099bfc22a0fb450c88f6`
 
 ---
 
@@ -50,8 +50,7 @@ canonical_text: 'Product Onboarding keeps the four First Project intents new/exi
   Control owner’s safeguards remain unchanged. DL-259 H8: Naming and Review show the actual resolved NFS, SMB or already-connected
   share/path selected by the source owner, preserving its identity instead of displaying an empty local-only field. DL-259
   late integration, 2026-10-31: for an unnamed Project using the automatic local destination, Name shows the base destination
-  plus “in a folder with your Project’s name”. With the factory base the line is “Kept in Documents › Puppet Master,
-  in a folder with your Project''s name”. A placeholder or unselected suggestion never supplies a chosen folder leaf.
+  plus “in a folder with your Project’s name”. The line inserts the selected Computer’s resolved code.execution.projects-folder destination. Its factory value is execution_host_home_relative Projects, expanded against that actual Host’s home (for example ~/Projects on Unix), never a fixed Documents destination or the initiating Client’s home. A placeholder or unselected suggestion never supplies a chosen folder leaf.
   Typing a name or explicitly choosing a suggestion adds that current draft name; clearing it restores the generic line.
   The local-location picker’s On this computer card names the base destination. Existing folders and selected network/mounted/remote
   sources still display their actual resolved location under H8. These are truthful draft previews and create no folder
@@ -203,8 +202,7 @@ acceptance_criteria:
 - 'DL-259 H8: Naming and Review show the actual resolved NFS, SMB or already-connected share/path selected by the source
   owner, preserving its identity instead of displaying an empty local-only field.'
 - 'DL-259 late integration, 2026-10-31: for an unnamed Project using the automatic local destination, Name shows the
-  base destination plus “in a folder with your Project’s name”. With the factory base the line is “Kept in Documents
-  › Puppet Master, in a folder with your Project''s name”. A placeholder or unselected suggestion never supplies a chosen
+  base destination plus “in a folder with your Project’s name”. The line inserts the selected Computer’s resolved code.execution.projects-folder destination. Its factory value is execution_host_home_relative Projects, expanded against that actual Host’s home (for example ~/Projects on Unix), never a fixed Documents destination or the initiating Client’s home. A placeholder or unselected suggestion never supplies a chosen
   folder leaf. Typing a name or explicitly choosing a suggestion adds that current draft name; clearing it restores the
   generic line. The local-location picker’s On this computer card names the base destination. Existing folders and selected
   network/mounted/remote sources still display their actual resolved location under H8. These are truthful draft previews
