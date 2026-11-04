@@ -6887,7 +6887,9 @@ canonical_text: 'DockerHub repository creation/image push and managed template-r
   Every remote action feeds the existing ObservableWork/History What the build did projection with exact target/authority/outcome.
   Reuse the run owner''s Stop and owner-provided true Undo/compensation, explicitly saying No safe Undo where
   needed; stopping never erases or silently reverses in-flight effects. No parallel log, new build.* event
-  family, separate runner or runtime-evidence claim is introduced.'
+  family, separate runner or runtime-evidence claim is introduced.
+
+  The selected V3 domain requests and results in Plans/projects_refresh_fix_contracts.schema.json carry exact command identity, operation/idempotency and return context. Repository create/confirm/cancel carry namespace/repository/privacy or pending request identity; image/tag push carries digest/tags/platforms/registry/account; template push carries immutable template/commit and its SCM authority supplement. OrchestratorLocalBuildV3 is Project-scoped, binds build profile/input/target and returns a local artifact with remote_effect_performed=false; OrchestratorImagePushV3 binds that successful result separately. Only template SCM publication uses Git branch/head/lease fields. Human confirm remains a real protected person decision. Unknown remote outcomes reconcile before retry through the existing writer.'
 gui_related: true
 gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are user-visible.
 depends_on:

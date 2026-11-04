@@ -5,7 +5,7 @@
   "evidence_level": "static_contract_examples_only",
   "native_runtime_executed": false,
   "source_companion_ref": "Plans/projects_refresh_command_bindings.json",
-  "source_companion_sha256": "52aa76b40d66117a6ad32fd00b48b06dedd6aced9d9055583899595ba1a7bb55",
+  "source_companion_sha256": "0cd45903590ac3c92967bcb8236c33e67dce7cea6d68d300b5369df831d99df8",
   "projects_refresh_cases": [
     {
       "case_id": "fd-binding-commands",
@@ -13707,8 +13707,8 @@
             "command_id": "cmd.docker.create_repository",
             "owner_ref": "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
             "handler": "handlers::docker::create_repository",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Result",
             "group": "automation",
             "gui_consumers": [
               "Docker Manager > Create Repository"
@@ -13752,8 +13752,8 @@
             "command_id": "cmd.docker.create_repository.cancel",
             "owner_ref": "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
             "handler": "handlers::docker::create_repository_cancel",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Result",
             "group": "automation",
             "gui_consumers": [
               "Docker Manager > Create Repository > Cancel"
@@ -13797,8 +13797,8 @@
             "command_id": "cmd.docker.create_repository.confirm",
             "owner_ref": "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
             "handler": "handlers::docker::create_repository_confirm",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Result",
             "group": "automation",
             "gui_consumers": [
               "Docker Manager > Create Repository > Confirm"
@@ -13842,8 +13842,8 @@
             "command_id": "cmd.docker.image.push",
             "owner_ref": "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
             "handler": "handlers::docker::image_push",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Result",
             "group": "automation",
             "gui_consumers": [
               "Docker Manager > Image > Push"
@@ -13887,8 +13887,8 @@
             "command_id": "cmd.docker.registry.tag_push",
             "owner_ref": "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
             "handler": "handlers::docker::registry_tag_push",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Result",
             "group": "automation",
             "gui_consumers": [
               "Docker Manager > Registry > Tag Push"
@@ -13932,8 +13932,8 @@
             "command_id": "cmd.docker.template.push",
             "owner_ref": "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
             "handler": "handlers::docker::template_push",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Result",
             "group": "automation",
             "gui_consumers": [
               "Docker Manager > Unraid template > Push"
@@ -17971,8 +17971,8 @@
             "command_id": "cmd.orchestrator.build_run",
             "owner_ref": "Plans/Orchestrator_Page.md#OP-038",
             "handler": "handlers::orchestrator::build_run",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Result",
             "group": "automation",
             "gui_consumers": [
               "Orchestrator page"
@@ -18016,8 +18016,8 @@
             "command_id": "cmd.orchestrator.push_image",
             "owner_ref": "Plans/Orchestrator_Page.md#OP-038",
             "handler": "handlers::orchestrator::push_image",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Result",
             "group": "automation",
             "gui_consumers": [
               "Orchestrator page"
@@ -20863,8 +20863,8 @@
             "command_id": "cmd.runtime.approve",
             "owner_ref": "Plans/Permissions_System.md#PS-145",
             "handler": "handlers::runtime::approve",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalDecisionRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
             "group": "automation",
             "gui_consumers": [
               "Orchestrator > Blocked run actions > Approve"
@@ -20908,8 +20908,8 @@
             "command_id": "cmd.runtime.decline",
             "owner_ref": "Plans/Permissions_System.md#PS-145",
             "handler": "handlers::runtime::decline",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalDecisionRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Result",
             "group": "automation",
             "gui_consumers": [
               "Orchestrator > Blocked run actions > Decline"
@@ -41348,8 +41348,8 @@
             "command_id": "cmd.docker.create_repository",
             "owner_ref": "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
             "handler": "handlers::docker::create_repository",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Result",
             "group": "automation",
             "gui_consumers": [
               "Docker Manager > Create Repository"
@@ -41393,8 +41393,8 @@
             "command_id": "cmd.docker.create_repository.cancel",
             "owner_ref": "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
             "handler": "handlers::docker::create_repository_cancel",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Result",
             "group": "automation",
             "gui_consumers": [
               "Docker Manager > Create Repository > Cancel"
@@ -41438,8 +41438,8 @@
             "command_id": "cmd.docker.create_repository.confirm",
             "owner_ref": "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
             "handler": "handlers::docker::create_repository_confirm",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Result",
             "group": "automation",
             "gui_consumers": [
               "Docker Manager > Create Repository > Confirm"
@@ -41483,8 +41483,8 @@
             "command_id": "cmd.docker.image.push",
             "owner_ref": "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
             "handler": "handlers::docker::image_push",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Result",
             "group": "automation",
             "gui_consumers": [
               "Docker Manager > Image > Push"
@@ -41528,8 +41528,8 @@
             "command_id": "cmd.docker.registry.tag_push",
             "owner_ref": "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
             "handler": "handlers::docker::registry_tag_push",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Result",
             "group": "automation",
             "gui_consumers": [
               "Docker Manager > Registry > Tag Push"
@@ -41573,8 +41573,8 @@
             "command_id": "cmd.docker.template.push",
             "owner_ref": "Plans/Containers_Registry_and_Unraid.md#CRAU-104",
             "handler": "handlers::docker::template_push",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Result",
             "group": "automation",
             "gui_consumers": [
               "Docker Manager > Unraid template > Push"
@@ -45612,8 +45612,8 @@
             "command_id": "cmd.orchestrator.build_run",
             "owner_ref": "Plans/Orchestrator_Page.md#OP-038",
             "handler": "handlers::orchestrator::build_run",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Result",
             "group": "automation",
             "gui_consumers": [
               "Orchestrator page"
@@ -45657,8 +45657,8 @@
             "command_id": "cmd.orchestrator.push_image",
             "owner_ref": "Plans/Orchestrator_Page.md#OP-038",
             "handler": "handlers::orchestrator::push_image",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Result",
             "group": "automation",
             "gui_consumers": [
               "Orchestrator page"
@@ -48504,8 +48504,8 @@
             "command_id": "cmd.runtime.approve",
             "owner_ref": "Plans/Permissions_System.md#PS-145",
             "handler": "handlers::runtime::approve",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalDecisionRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
             "group": "automation",
             "gui_consumers": [
               "Orchestrator > Blocked run actions > Approve"
@@ -48549,8 +48549,8 @@
             "command_id": "cmd.runtime.decline",
             "owner_ref": "Plans/Permissions_System.md#PS-145",
             "handler": "handlers::runtime::decline",
-            "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalDecisionRequestV2",
-            "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalResultV2",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Request",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Result",
             "group": "automation",
             "gui_consumers": [
               "Orchestrator > Blocked run actions > Decline"

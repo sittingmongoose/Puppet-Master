@@ -28697,8 +28697,8 @@
       "event_test_requirements": [
         "Assert cmd.docker.create_repository records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Result"
     },
     "catalog.docker_create_repository_cancel": {
       "ui_element_id": "catalog.docker_create_repository_cancel",
@@ -28775,8 +28775,8 @@
       "event_test_requirements": [
         "Assert cmd.docker.create_repository.cancel records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Result"
     },
     "catalog.docker_create_repository_confirm": {
       "ui_element_id": "catalog.docker_create_repository_confirm",
@@ -28853,8 +28853,8 @@
       "event_test_requirements": [
         "Assert cmd.docker.create_repository.confirm records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Result"
     },
     "catalog.docker_drift_compare": {
       "ui_element_id": "catalog.docker_drift_compare",
@@ -29877,8 +29877,8 @@
       "event_test_requirements": [
         "Assert cmd.docker.image.push records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Result"
     },
     "catalog.docker_image_tag": {
       "ui_element_id": "catalog.docker_image_tag",
@@ -30835,8 +30835,8 @@
       "event_test_requirements": [
         "Assert cmd.docker.registry.tag_push records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Result"
     },
     "catalog.docker_remove": {
       "ui_element_id": "catalog.docker_remove",
@@ -31366,8 +31366,8 @@
       "event_test_requirements": [
         "Assert cmd.docker.template.push records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Result"
     },
     "catalog.docker_volume": {
       "ui_element_id": "catalog.docker_volume",
@@ -46804,8 +46804,8 @@
       "event_test_requirements": [
         "Assert cmd.orchestrator.build_run records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Result"
     },
     "catalog.orchestrator_compare_run_output": {
       "ui_element_id": "catalog.orchestrator_compare_run_output",
@@ -48264,8 +48264,8 @@
       "event_test_requirements": [
         "Assert cmd.orchestrator.push_image records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandRequestV2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/PublicationAdmissionCommandResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Result"
     },
     "catalog.orchestrator_restore_safe_point_then_retry": {
       "ui_element_id": "catalog.orchestrator_restore_safe_point_then_retry",
@@ -61361,7 +61361,8 @@
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.runtime.approve emits canonical domain event(s) and records dispatch correlation evidence; placeholder command_applied events are invalid.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "Branch policy (HITL-038): expected_event_types applies to the legacy Orchestrator node branch only. Application/Project chat-tool decisions emit only approval.chat_tool_resolved with the existing ChatToolApprovalResult payload after actual producer adoption; requires_owner_adoption blocks unavailable producers. No tool branch emits node.unblocked. Both branches revalidate original pending request/blocked episode, current attempt, decision expiry and Stop before resolution."
       ],
       "evidence_required": "Production wiring contract for cmd.runtime.approve; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.runtime_approve.availability",
@@ -61422,10 +61423,11 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.runtime.approve emits canonical event type node.unblocked with command_id, origin, correlation_id, and handler target."
+        "Assert cmd.runtime.approve emits canonical event type node.unblocked with command_id, origin, correlation_id, and handler target. Applies only to the Orchestrator node branch.",
+        "Branch policy (HITL-038): expected_event_types applies to the legacy Orchestrator node branch only. Application/Project chat-tool decisions emit only approval.chat_tool_resolved with the existing ChatToolApprovalResult payload after actual producer adoption; requires_owner_adoption blocks unavailable producers. No tool branch emits node.unblocked. Both branches revalidate original pending request/blocked episode, current attempt, decision expiry and Stop before resolution."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalDecisionRequestV2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result"
     },
     "catalog.runtime_decline": {
       "ui_element_id": "catalog.runtime_decline",
@@ -61445,7 +61447,8 @@
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.runtime.decline records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "Branch policy (HITL-038): expected_event_types applies to the legacy Orchestrator node branch only. Application/Project chat-tool decisions emit only approval.chat_tool_resolved with the existing ChatToolApprovalResult payload after actual producer adoption; requires_owner_adoption blocks unavailable producers. No tool branch emits node.unblocked. Both branches revalidate original pending request/blocked episode, current attempt, decision expiry and Stop before resolution."
       ],
       "evidence_required": "Production wiring contract for cmd.runtime.decline; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.runtime_decline.availability",
@@ -61501,10 +61504,11 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.runtime.decline records dispatch receipt cmd.runtime.decline.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.runtime.decline records dispatch receipt cmd.runtime.decline.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event. Applies only to the Orchestrator node branch.",
+        "Branch policy (HITL-038): expected_event_types applies to the legacy Orchestrator node branch only. Application/Project chat-tool decisions emit only approval.chat_tool_resolved with the existing ChatToolApprovalResult payload after actual producer adoption; requires_owner_adoption blocks unavailable producers. No tool branch emits node.unblocked. Both branches revalidate original pending request/blocked episode, current attempt, decision expiry and Stop before resolution."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalDecisionRequestV2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Result"
     },
     "catalog.runtime_locate_and_verify_recovery": {
       "ui_element_id": "catalog.runtime_locate_and_verify_recovery",

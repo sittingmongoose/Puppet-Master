@@ -1250,6 +1250,16 @@
             "Plans/pm7_build_contracts.schema.json#/$defs/project_switch_request_v2",
             "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
             "Plans/project_system_contracts.schema.json#/$defs/project_action_request_v2",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Request",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Request",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Request",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Request",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Request",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Request",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Request",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Request",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Request",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Request",
             "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AssistantPlanScheduleRequestScopeV2",
             "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AutomationPauseSetRequestScopeV2",
             "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCancelRequestScopeV2",
@@ -1261,6 +1271,8 @@
             "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageUpdateRequestScopeV2",
             "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2",
             "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_request",
+            "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+            "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
             "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_request",
             "Plans/server_system_contracts.schema.json#/$defs/settings_peer_trust_command_request",
             "Plans/settings_system_contracts.schema.json#/$defs/settings_export_request_v2",
@@ -1282,9 +1294,7 @@
             "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest",
             "Plans/shared_runtime_command_contracts.schema.json#/$defs/FileActionRequestV2",
             "Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2",
-            "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2",
-            "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
-            "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1"
+            "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
           ]
         },
         "result_schema_ref": {
@@ -1370,6 +1380,16 @@
             "Plans/pm7_build_contracts.schema.json#/$defs/command_result_v2",
             "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
             "Plans/project_system_contracts.schema.json#/$defs/project_action_result_v2",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Result",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Result",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Result",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Result",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Result",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Result",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Result",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Result",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
+            "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Result",
             "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AutomationPauseSetResultScopeV2",
             "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionScheduleResultScopeV2",
             "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ExecutionWindowCancelResultScopeV2",
@@ -1381,6 +1401,8 @@
             "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageUpdateResultScopeV2",
             "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2",
             "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
+            "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandResultV1",
+            "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandResultV1",
             "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
             "Plans/server_system_contracts.schema.json#/$defs/settings_peer_trust_command_result",
             "Plans/settings_system_contracts.schema.json#/$defs/settings_export_manifest_v2",
@@ -1401,9 +1423,7 @@
             "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult",
             "Plans/shared_runtime_command_contracts.schema.json#/$defs/FileActionResultV2",
             "Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionResultV2",
-            "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2",
-            "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandResultV1",
-            "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandResultV1"
+            "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2"
           ]
         },
         "return_contract": {
