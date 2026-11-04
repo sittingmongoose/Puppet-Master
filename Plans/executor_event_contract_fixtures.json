@@ -29415,6 +29415,974 @@
         "source_child_success": true
       },
       "expected": "reject"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "score-priority-valid-boundary-0",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "remediation",
+            "manual_priority": 0,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "remediation",
+              "manual_priority": 0,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            "lane": "remediation"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001"
+        },
+        "source_child_success": true
+      },
+      "expected": "accept"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "score-priority-valid-boundary-50",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "remediation",
+            "manual_priority": 50,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "remediation",
+              "manual_priority": 50,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            "lane": "remediation"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001"
+        },
+        "source_child_success": true
+      },
+      "expected": "accept"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "score-priority-valid-boundary-100",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "remediation",
+            "manual_priority": 100,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "remediation",
+              "manual_priority": 100,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            "lane": "remediation"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001"
+        },
+        "source_child_success": true
+      },
+      "expected": "accept"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "score-priority-ready-invalid--1",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "remediation",
+            "manual_priority": -1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "remediation",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            "lane": "remediation"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001"
+        },
+        "source_child_success": true
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "score-priority-ready-invalid-101",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "remediation",
+            "manual_priority": 101,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "remediation",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            "lane": "remediation"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001"
+        },
+        "source_child_success": true
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "score-priority-ready-invalid-True",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "remediation",
+            "manual_priority": true,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "remediation",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            "lane": "remediation"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001"
+        },
+        "source_child_success": true
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "score-priority-ready-invalid-1.5",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "remediation",
+            "manual_priority": 1.5,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "remediation",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            "lane": "remediation"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001"
+        },
+        "source_child_success": true
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "score-priority-selected-invalid--1",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "remediation",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "remediation",
+              "manual_priority": -1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            "lane": "remediation"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001"
+        },
+        "source_child_success": true
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "score-priority-selected-invalid-101",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "remediation",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "remediation",
+              "manual_priority": 101,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            "lane": "remediation"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001"
+        },
+        "source_child_success": true
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "score-priority-selected-invalid-True",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "remediation",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "remediation",
+              "manual_priority": true,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            "lane": "remediation"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001"
+        },
+        "source_child_success": true
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "score-priority-selected-invalid-1.5",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [
+          {
+            "scheduler_lane": "remediation",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-high"
+          },
+          {
+            "scheduler_lane": "normal",
+            "manual_priority": 1,
+            "transitive_unblock_count": 2,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "node_id": "node-low"
+          }
+        ],
+        "selected_nodes": [
+          {
+            "node_id": "node-high",
+            "score_tuple": {
+              "scheduler_lane": "remediation",
+              "manual_priority": 1.5,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            "lane": "remediation"
+          }
+        ],
+        "non_selected_nodes": [
+          {
+            "node_id": "node-low",
+            "exclusion_reason_code": "capacity",
+            "ready_state": "ready"
+          }
+        ]
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001"
+        },
+        "source_child_success": true
+      },
+      "expected": "reject"
     }
   ]
 }

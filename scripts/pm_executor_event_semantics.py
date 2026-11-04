@@ -133,6 +133,12 @@ def validate_retry(contract, payload, records):
         require(until >= observed, 'backoff deadline')
 
 
+def validate_score_domain(ready, selected):
+    for score in ready + [item['score_tuple'] for item in selected]:
+        require(type(score['manual_priority']) is int and 0 <= score['manual_priority'] <= 100,
+                'scheduler manual_priority integer 0..100')
+
+
 def validate_capture(contract, payload, capture):
     """Check normalized owner reads, independently joined parents, and committed post-state.
 
@@ -267,6 +273,10 @@ def validate_capture(contract, payload, capture):
         validate_retry(contract, payload, records)
     if name == 'scheduler.pass':
         scheduler = records['scheduler']['body']
+        operation = records['operation']['body']
+        validate_score_domain(operation['ready_nodes'], operation['selected_nodes'])
+        validate_score_domain([], scheduler['selected_nodes'])
+        validate_score_domain(payload['ready_nodes'], payload['selected_nodes'])
         require(scheduler['selected_nodes'] == payload['selected_nodes'], 'scheduler source selection')
         ready = payload['ready_nodes']
         selected = [x['node_id'] for x in payload['selected_nodes']]
@@ -369,7 +379,7 @@ def mutate(value, changes):
 def main():
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
     families = json.loads((ROOT / 'Plans/executor_event_semantic_fixtures.json').read_text())['families']
-    failures, count, traces = [], 0, 0
+    failures, count, traces, score_cases = [], 0, 0, 0
     require(set(families) == {c['event_type'] for c in contracts}, 'fixture family closure')
     for contract in contracts:
         family = families[contract['event_type']]
@@ -388,7 +398,16 @@ def main():
             actual = run_trace(contract, family['baseline']['payload'], scenario)
             if actual != scenario['expected']:
                 failures.append([contract['event_type'], scenario['case'], actual])
-    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
+        for case in family.get('score_domain_cases', []):
+            score_cases += 1
+            try:
+                validate_score_domain(case['ready_nodes'], case['selected_nodes'])
+                result = 'accept'
+            except (ValueError, KeyError):
+                result = 'reject'
+            if result != case['expected']:
+                failures.append([contract['event_type'], case['case'], result])
+    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)
 
 

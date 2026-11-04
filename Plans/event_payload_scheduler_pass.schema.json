@@ -71,7 +71,10 @@
             ]
           },
           "manual_priority": {
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "default": 50
           },
           "transitive_unblock_count": {
             "type": "integer",
@@ -118,7 +121,10 @@
                 ]
               },
               "manual_priority": {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100,
+                "default": 50
               },
               "transitive_unblock_count": {
                 "type": "integer",

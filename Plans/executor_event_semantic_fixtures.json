@@ -47001,6 +47001,830 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "source-consistent-priority-0",
+          "changes": [
+            {
+              "path": "payload/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 0,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "payload/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 0,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/body/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 0,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/body/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 0,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c9be8a1715100a38ac628bd74cb74fbb6c8ed12f96e4952bbb1bd52707608ad5"
+            },
+            {
+              "path": "capture/records/scheduler/body/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 0,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "30da68dd44bdf45905be5c52004f74246aa9344eb117910edeb476c9723c7de1"
+            },
+            {
+              "path": "capture/transition/observed_payload/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 0,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "capture/transition/observed_payload/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 0,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            }
+          ],
+          "expected": "accept"
+        },
+        {
+          "case": "source-consistent-priority-50",
+          "changes": [
+            {
+              "path": "payload/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 50,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "payload/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 50,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/body/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 50,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/body/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 50,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c90ec4b0356e7b120208c68e403db8d998a2d0421c8919ed5b6bcdcd129ce0d7"
+            },
+            {
+              "path": "capture/records/scheduler/body/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 50,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "4c3405cde8f729e6b62bf2f884653bb22552ac2b6b16bfa8ccfcf5d85f04bdfe"
+            },
+            {
+              "path": "capture/transition/observed_payload/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 50,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "capture/transition/observed_payload/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 50,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            }
+          ],
+          "expected": "accept"
+        },
+        {
+          "case": "source-consistent-priority-100",
+          "changes": [
+            {
+              "path": "payload/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 100,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "payload/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 100,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/body/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 100,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/body/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 100,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "f6fadaf700605de87aeb9b0ed97d9a4fc7f9bac7aefff7bf7167342ec27a6b0e"
+            },
+            {
+              "path": "capture/records/scheduler/body/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 100,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "835e3c7d75737a974e20be2ca2ad2509c84fb0fccd97f9d29eb815df85d06cc4"
+            },
+            {
+              "path": "capture/transition/observed_payload/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 100,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "capture/transition/observed_payload/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 100,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            }
+          ],
+          "expected": "accept"
+        },
+        {
+          "case": "source-consistent-priority--1",
+          "changes": [
+            {
+              "path": "payload/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": -1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "payload/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": -1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/body/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": -1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/body/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": -1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "abb33511f3743b88a6ce51ede05cf34160321ff19bb8d7040df77773eb9fb05c"
+            },
+            {
+              "path": "capture/records/scheduler/body/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": -1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "0bb361d5e4ec6f1bd087adc7aab012489a27e36af8e70262480c04d4ebfe6e1d"
+            },
+            {
+              "path": "capture/transition/observed_payload/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": -1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "capture/transition/observed_payload/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": -1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "source-consistent-priority-101",
+          "changes": [
+            {
+              "path": "payload/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 101,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "payload/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 101,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/body/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 101,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/body/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 101,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "88a95f0ff1d405cd6d7b291b867145dada405c67645a849d65bcecbaa1e144eb"
+            },
+            {
+              "path": "capture/records/scheduler/body/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 101,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "7b5ca58b50e0f8abc925bc1cf8fe70f856a53a2e90d05377ae75d50774323c1f"
+            },
+            {
+              "path": "capture/transition/observed_payload/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 101,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "capture/transition/observed_payload/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 101,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "source-consistent-priority-True",
+          "changes": [
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "b0defd2b809f27d3a8f671e72bbed875bdecbda73b333b018ad83f9a9f9eb0b3"
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "0ee5ace7484f25a2f1a9e7c98e3bc39d1e86119f028a185e56be4f454ef575ff"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "source-consistent-priority-1.5",
+          "changes": [
+            {
+              "path": "payload/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 1.5,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "payload/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 1.5,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/body/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 1.5,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/body/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 1.5,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8f4886acac39d761c73650666e00327a991f600aa44776d11c083339f839d9e3"
+            },
+            {
+              "path": "capture/records/scheduler/body/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 1.5,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "c9999aba571dd1cdab59804015170e4b96615940d870992715974013c786fad4"
+            },
+            {
+              "path": "capture/transition/observed_payload/ready_nodes",
+              "value": [
+                {
+                  "scheduler_lane": "remediation",
+                  "manual_priority": 1.5,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-high"
+                },
+                {
+                  "scheduler_lane": "normal",
+                  "manual_priority": 1,
+                  "transitive_unblock_count": 2,
+                  "ready_since_utc": "2026-11-04T12:00:00Z",
+                  "node_id": "node-low"
+                }
+              ]
+            },
+            {
+              "path": "capture/transition/observed_payload/selected_nodes",
+              "value": [
+                {
+                  "node_id": "node-high",
+                  "score_tuple": {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 1.5,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  "lane": "remediation"
+                }
+              ]
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -47170,6 +47994,281 @@
             ],
             "effects": 0
           }
+        }
+      ],
+      "score_domain_cases": [
+        {
+          "case": "normalized-ready-priority-0",
+          "ready_nodes": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": 0,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-low"
+            }
+          ],
+          "selected_nodes": [],
+          "expected": "accept"
+        },
+        {
+          "case": "normalized-selected-priority-0",
+          "ready_nodes": [],
+          "selected_nodes": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 0,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ],
+          "expected": "accept"
+        },
+        {
+          "case": "normalized-ready-priority-50",
+          "ready_nodes": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": 50,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-low"
+            }
+          ],
+          "selected_nodes": [],
+          "expected": "accept"
+        },
+        {
+          "case": "normalized-selected-priority-50",
+          "ready_nodes": [],
+          "selected_nodes": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 50,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ],
+          "expected": "accept"
+        },
+        {
+          "case": "normalized-ready-priority-100",
+          "ready_nodes": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": 100,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-low"
+            }
+          ],
+          "selected_nodes": [],
+          "expected": "accept"
+        },
+        {
+          "case": "normalized-selected-priority-100",
+          "ready_nodes": [],
+          "selected_nodes": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 100,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ],
+          "expected": "accept"
+        },
+        {
+          "case": "normalized-ready-priority--1",
+          "ready_nodes": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": -1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-low"
+            }
+          ],
+          "selected_nodes": [],
+          "expected": "reject"
+        },
+        {
+          "case": "normalized-selected-priority--1",
+          "ready_nodes": [],
+          "selected_nodes": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": -1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "normalized-ready-priority-101",
+          "ready_nodes": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": 101,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-low"
+            }
+          ],
+          "selected_nodes": [],
+          "expected": "reject"
+        },
+        {
+          "case": "normalized-selected-priority-101",
+          "ready_nodes": [],
+          "selected_nodes": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 101,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "normalized-ready-priority-True",
+          "ready_nodes": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": true,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-low"
+            }
+          ],
+          "selected_nodes": [],
+          "expected": "reject"
+        },
+        {
+          "case": "normalized-selected-priority-True",
+          "ready_nodes": [],
+          "selected_nodes": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": true,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "normalized-ready-priority-1.5",
+          "ready_nodes": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": 1.5,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04T12:00:00Z",
+              "node_id": "node-low"
+            }
+          ],
+          "selected_nodes": [],
+          "expected": "reject"
+        },
+        {
+          "case": "normalized-selected-priority-1.5",
+          "ready_nodes": [],
+          "selected_nodes": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 1.5,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ],
+          "expected": "reject"
         }
       ]
     }
