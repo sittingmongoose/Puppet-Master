@@ -12667,10 +12667,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 373,
+        "False": 374,
         "True": 68
       },
-      "heading_count": 688,
+      "heading_count": 689,
       "implementation_surfaces": [
         "Plans/Commands_System.md",
         "Plans/Contracts_V0.md",
@@ -12694,12 +12694,13 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 32164,
+      "line_count": 32199,
       "path": "Plans/orchestrator-subagent-integration.md",
-      "plan_unit_count": 441,
+      "plan_unit_count": 442,
       "plan_unit_ids": [
         "OSI-431",
         "OSI-438",
+        "OSI-650",
         "OSI-001",
         "OSI-002",
         "OSI-003",
@@ -13326,6 +13327,7 @@
         "handoff_validation_failure_outcome_policy",
         "handoff_validation_phase_responsibilities",
         "handoffvalidator_parser_selection_retry_workflow",
+        "heartbeat_threshold_drift",
         "help_request_message_example",
         "hook_execution_order_shared_context_blocking_policy",
         "hook_level_handoff_validation_function",
@@ -13585,16 +13587,16 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "975d158680edb20c2d1c08e1338ce73e63356d69d02d268a31b73be19b0c7e3d",
+      "sha256": "a9c9b254073e29133da61ac15e895350b1bcd9097149180c1b24d8f505e24ce6",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 440,
+        "accepted": 441,
         "retired": 1
       },
       "title": "Orchestrator Subagent Integration -- Implementation Plan",
       "unit_type_counts": {
         "compatibility_disposition": 3,
-        "requirement": 437,
+        "requirement": 438,
         "schema_contract": 1
       },
       "validation_surfaces": [
@@ -13605,6 +13607,7 @@
         "Plans/Automated_Testing_System.md#ATS-058",
         "Plans/coordination_event_contract_fixtures.json",
         "Plans/coordination_event_payloads.schema.json",
+        "Plans/coordination_wave2_oracles.json",
         "future Orchestrator subagent wave runtime review",
         "future durable thread-operation fixtures",
         "future subagent host-capability authority fixture",
@@ -13617,6 +13620,7 @@
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_coordination_wave2.py",
         "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md",
         "restart and duplicate-request fixtures",
         "scripts/pm-assistant-contract-check.py",
@@ -18693,10 +18697,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 231,
+        "False": 237,
         "True": 110
       },
-      "heading_count": 818,
+      "heading_count": 824,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18791,9 +18795,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 29587,
+      "line_count": 30021,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 341,
+      "plan_unit_count": 347,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -19108,6 +19112,12 @@
         "SP-316",
         "SP-317",
         "SP-319",
+        "SP-540",
+        "SP-541",
+        "SP-542",
+        "SP-543",
+        "SP-544",
+        "SP-545",
         "SP-320",
         "SP-321",
         "SP-322",
@@ -19149,6 +19159,7 @@
         "commit_durability_profile_drift",
         "compaction_completion_authority",
         "containerized_host_storage_drift",
+        "coordination_authority_drift",
         "cross_domain_secret_leak_identity_collision_or_false_persistence_proof",
         "dry_method_provenance_storage_gap",
         "duplicate_first_acknowledgement_or_lost_canonical_receipt_authority",
@@ -19258,10 +19269,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "46b65fa5cef7d5b67ad27e23a573b372e74628124d8a2210af1f16d9011b6b4e",
+      "sha256": "da77de7cf190179b4f9bbc64b8849c32a715329e6b07870e62acd0c5b0aa8f15",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 337,
+        "accepted": 343,
         "retired": 3,
         "superseded": 1
       },
@@ -19272,7 +19283,7 @@
         "migration": 1,
         "migration_contract": 2,
         "owner_boundary": 2,
-        "requirement": 277,
+        "requirement": 283,
         "schema_contract": 23,
         "security_contract": 1,
         "storage_contract": 27,
@@ -19538,6 +19549,7 @@
         "python3 scripts/pm-working-notebook-contracts.py validate",
         "python3 scripts/pm_browser_workspace_created_v2.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_coordination_wave2.py",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
@@ -21638,7 +21650,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T14:25:25Z",
+  "generated_at_utc": "2026-11-05T18:29:51Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21646,13 +21658,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3675,
+      "False": 3682,
       "True": 3813
     },
-    "plan_unit_count": 7488,
+    "plan_unit_count": 7495,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7269,
+      "accepted": 7276,
       "retired": 196,
       "superseded": 23
     },
@@ -21722,7 +21734,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5622,
+      "requirement": 5629,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,

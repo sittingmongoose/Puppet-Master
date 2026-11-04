@@ -362,7 +362,8 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
         failures.append({"error": "payload_schema_uri"})
     defs = payloads.get("$defs", {})
     members = [DEF_BY_TYPE[event_type] for event_type in SEVEN] + ["debug_mirror_exported"]
-    if set(defs) != {"lineage_envelope", "non_secret_ref", *members}:
+    app_members = {DEF_BY_TYPE[event_type] + "ApplicationV1" for event_type in SEVEN}
+    if set(defs) != {"lineage_envelope", "non_secret_ref", *members, *app_members}:
         failures.append({"error": "payload_schema_definition_census", "detail": sorted(defs)})
         return failures
     if payloads.get("oneOf") != [{"$ref": f"{PAYLOAD_SCHEMA_URI}#/$defs/{name}"} for name in members]:
@@ -407,7 +408,9 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
         failures.append({"error": "platform_pattern", "definition": "lineage_envelope"})
     if defs["agent_file_ownership_updated"].get("properties", {}).get("path_ref") != PATH_REF:
         failures.append({"error": "path_ref_pattern", "definition": "agent_file_ownership_updated"})
-    nulls = null_admitting_nodes(payloads)
+    project_payloads = copy.deepcopy(payloads)
+    project_payloads["$defs"] = {name: value for name, value in defs.items() if name not in app_members}
+    nulls = null_admitting_nodes(project_payloads)
     if nulls:
         failures.append({"error": "payload_schema_admits_null", "detail": nulls[:5]})
     return failures
@@ -801,7 +804,7 @@ def projections_bundle(root: Path = ROOT) -> dict[str, Any]:
     projections = load(PROJECTION_PATH, root)
     generic = load(GENERIC_PATH, root)
     mapping = {GENERIC_CURSOR_REF: "#/$defs/generic_source_cursor"}
-    bundle_defs = {name: rewrite_refs(copy.deepcopy(definition), mapping) for name, definition in projections["$defs"].items()}
+    bundle_defs = {name: rewrite_refs(copy.deepcopy(definition), mapping) for name, definition in projections["$defs"].items() if not name.endswith("ApplicationV1")}
     bundle_defs["generic_source_cursor"] = copy.deepcopy(generic["$defs"]["coverage"]["properties"]["last_frame"])
     return {
         "$id": "pm.storage_value.coordination_read_model_projections.v1",

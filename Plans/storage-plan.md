@@ -27353,6 +27353,440 @@ At the final publication boundary, when the receipt is returned to the caller, t
 - **Withdrawal, per family.** First the writer is cut off: the append admission refuses new events of that family, and because the lifecycle needs all seven, it also refuses new registrations. Registered agents continue only through the families still admitted, and an agent that cannot reach an admitted terminal event stays non-terminal in the projection; it is never inferred terminal. Then the projector and readers are fenced: the current checkpoint core is withdrawn, with `withdrawn_at_utc` set once, the projector stops ordinary advance, and every reader returns unavailable. Last comes the successor: every original event and its dedupe and receipt custody are kept, the owner-approved successor or version is identified, StorageMigrationCoordinator rebuilds with the new admitted set, and scope, coverage and currentness are verified before a new current core is published. No silent zero-cursor reset, sibling reuse, history rewrite or deletion of seglog records follows.
 - **Activation.** Admission is per family, but the `AgentCoordinator` append path is activated natively only when all seven families are admitted, because the transition table needs registration and every terminal family. Until then an admitted family is contract-only and nothing is appended.
 
+### SP-540 - coordination.agent_aborted Project contract refresh
+
+This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a newly authored owner contract under DL-045 for already specified behavior, without admission. Only the preserved Project edition is prepared: OSI-440, CV-366 and SP-351 keep application sources, keys and admissions separate.
+
+**Producer and ordering.** `AgentCoordinator.record_abort(AgentAbortResolution)`: Only the component that resolves the abort: the parent run's orchestration path, the user command path or the runtime. Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.
+
+**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_aborted` (schema ID `pm.coordination_event.agent_aborted.schema.v1`, version 1.0.0) is this family's payload. CV-353's EventRecord joins apply explicitly: Project scope, matching project/run/thread/node, null attempt and payload_ref, inline payload, no_secrets and dedupe_by_idempotency_key; the occurred timestamp is its own payload timestamp. Optional missing values are omitted, never null. This is not an application admission.
+
+**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordination.agent_aborted`. Its event ID is `evt_coordination_` plus SHA-256 of RFC 8785 JSON strings `[storage_instance_id, recovery_epoch, project_id, event_type, agent_id, agent_revision]`, epoch and revision decimal without leading zero. Storage instance and epoch are actual captured values retained with the complete prepared payload for retries. Revision increments exactly once from its registration; lineage is checked against that registration. Exact scoped retry returns the original event and receipt, a changed semantic digest refuses, and a lost acknowledgement resolves only through the explicitly adopted SP-286/CV-339 `storage.first_append_receipt.resolve.v2`; no first mint, reconstructed request or replay effect.
+
+**Transition.** Terminal, as coordination.agent_unregistered, with agent status cancelled. aborted_by_ref kind follows abort_reason: run and parent_run_id for parent, actor for user, component for runtime. The first terminal event to append wins. No update before registration or after a terminal event is accepted. Concurrent terminal attempts have one winner under SP-320's revision precedence.
+
+**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_value.coordination_projector_checkpoint.v1@1.0.0` in `Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint`. Rows and checkpoint advance atomically in one redb transaction under exact prior-value CAS, after complete CURRENT-selected source, generation, anchor and frontier verification. Persist only the nine-field durable token, never redb_snapshot_id; rejoin the live read transaction's snapshot and validate all ten fields. Inclusive replay validates its last frame and rebuilds projections only, never scheduling, prompt injection, append or notifications. Scheduler, agent coordinator, prompt context and inspection use their SP-320 versioned readers after coverage, publication, permission and deletion checks. Under DL-270/SP-339 the retained `storage.coordination_reader.mirror_export.v1@1.0.0` identity is solely an on-request export reader, with live-server access while PM runs; no automatic mirror write, background mirror consumer, or mirror recovery authority survives. Export output is only the user-named output, and never PM store mutation.
+
+**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and current permission/tombstone checks before every disclosure. Refs and retained history grant no access. The existing `coordination_event_records` and `coordination_read_model_projections` storage registry rows govern; no new stored family or key. `retention_policy_ref` is `RP-COORDINATION-180D@1.0.0` (Case L-3 Coordination class and SP-320); its run_completion anchor is the Run's first durable terminal canonical record, never this agent's terminal record, and unresolved completion is ineligible for expiry. Derived rows/checkpoint keep `RP-PROJECTION-3GEN@1.0.0`, including holds and same-key publication history; no retention choice is made.
+
+**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's writer and new registrations, then withdraws the checkpoint core and fences projector/readers. Only an owner-approved successor and verified complete rebuild publishes a new core; original events, dedupe and first-receipt custody remain. No silent cursor reset or sibling substitution. Native activation still requires all seven admissions.
+
+**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transitions and projection cases. `scripts/pm_coordination_events.py` checks these static cases. Native append, CAS, custody, read, withdrawal and recovery obligations remain NOT_RUN. Membership is ABSENT and this text grants no readiness, DEPTH_PASS or registry authority.
+
+```yaml
+plan_unit_id: SP-540
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'coordination.agent_aborted alone adopts the complete Project contract
+  immediately above: its own producer, CV-353 closed payload, SP-286/CV-339 first
+  receipt, SP-320 identity and transitions, SP-278 exact atomic checkpoint, custody,
+  existing retention, replay and withdrawal. DL-270/SP-339 restrict mirror_export
+  to on-request export; OSI-440 application admission remains separate. Prepared without
+  admission; native NOT_RUN.'
+gui_related: false
+gui_classification_reason: Backend event authority and custody.
+depends_on:
+- OSI-438
+- CV-353
+- SP-320
+- SP-278
+- SP-286
+- SP-339
+- ATS-058
+unblocks: []
+acceptance_criteria:
+- coordination.agent_aborted validates its own payload, joins, identity and transitions;
+  never infer a sibling contract.
+- No app admission, automatic mirror, remint or effect replay.
+validation_surfaces:
+- python3 scripts/pm_coordination_wave2.py
+- python3 scripts/pm_coordination_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: coordination_authority_drift
+reasoning_tier: high
+context_scope: agent_aborted
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-270
+- reports/event-authority-20261104/DCO-search.json
+preserved_exact_tokens:
+- coordination.agent_aborted
+- RP-COORDINATION-180D
+- RP-PROJECTION-3GEN
+negative_constraints:
+- No admission, new retention choice or native proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-541 - coordination.agent_crashed Project contract refresh
+
+This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a newly authored owner contract under DL-045 for already specified behavior, without admission. Only the preserved Project edition is prepared: OSI-440, CV-366 and SP-351 keep application sources, keys and admissions separate.
+
+**Producer and ordering.** `AgentCoordinator.record_crash(AgentCrashResolution)`: Only the scheduler or the crash detector, once, on direct crash evidence (process_exit, heartbeat_expired, process_lost, worktree_lost); never the agent. heartbeat_expired needs the runtime policy value coordination_heartbeat_expiry_ms and records the observed heartbeat_age_ms. Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.
+
+**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_crashed` (schema ID `pm.coordination_event.agent_crashed.schema.v1`, version 1.0.0) is this family's payload. CV-353's EventRecord joins apply explicitly: Project scope, matching project/run/thread/node, null attempt and payload_ref, inline payload, no_secrets and dedupe_by_idempotency_key; the occurred timestamp is its own payload timestamp. Optional missing values are omitted, never null. This is not an application admission.
+
+**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordination.agent_crashed`. Its event ID is `evt_coordination_` plus SHA-256 of RFC 8785 JSON strings `[storage_instance_id, recovery_epoch, project_id, event_type, agent_id, agent_revision]`, epoch and revision decimal without leading zero. Storage instance and epoch are actual captured values retained with the complete prepared payload for retries. Revision increments exactly once from its registration; lineage is checked against that registration. Exact scoped retry returns the original event and receipt, a changed semantic digest refuses, and a lost acknowledgement resolves only through the explicitly adopted SP-286/CV-339 `storage.first_append_receipt.resolve.v2`; no first mint, reconstructed request or replay effect.
+
+**Transition.** Terminal, as coordination.agent_unregistered, with agent status failed. The first terminal event to append wins; the other gets coordination_conflict and appends nothing. Heartbeat expiry reaches the agent's claims only through this event. No update before registration or after a terminal event is accepted. Concurrent terminal attempts have one winner under SP-320's revision precedence.
+
+**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_value.coordination_projector_checkpoint.v1@1.0.0` in `Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint`. Rows and checkpoint advance atomically in one redb transaction under exact prior-value CAS, after complete CURRENT-selected source, generation, anchor and frontier verification. Persist only the nine-field durable token, never redb_snapshot_id; rejoin the live read transaction's snapshot and validate all ten fields. Inclusive replay validates its last frame and rebuilds projections only, never scheduling, prompt injection, append or notifications. Scheduler, agent coordinator, prompt context and inspection use their SP-320 versioned readers after coverage, publication, permission and deletion checks. Under DL-270/SP-339 the retained `storage.coordination_reader.mirror_export.v1@1.0.0` identity is solely an on-request export reader, with live-server access while PM runs; no automatic mirror write, background mirror consumer, or mirror recovery authority survives. Export output is only the user-named output, and never PM store mutation.
+
+**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and current permission/tombstone checks before every disclosure. Refs and retained history grant no access. The existing `coordination_event_records` and `coordination_read_model_projections` storage registry rows govern; no new stored family or key. `retention_policy_ref` is `RP-COORDINATION-180D@1.0.0` (Case L-3 Coordination class and SP-320); its run_completion anchor is the Run's first durable terminal canonical record, never this agent's terminal record, and unresolved completion is ineligible for expiry. Derived rows/checkpoint keep `RP-PROJECTION-3GEN@1.0.0`, including holds and same-key publication history; no retention choice is made.
+
+**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's writer and new registrations, then withdraws the checkpoint core and fences projector/readers. Only an owner-approved successor and verified complete rebuild publishes a new core; original events, dedupe and first-receipt custody remain. No silent cursor reset or sibling substitution. Native activation still requires all seven admissions.
+
+**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transitions and projection cases. `scripts/pm_coordination_events.py` checks these static cases. Native append, CAS, custody, read, withdrawal and recovery obligations remain NOT_RUN. Membership is ABSENT and this text grants no readiness, DEPTH_PASS or registry authority.
+
+**Answered threshold.** OSI-650 applies DL-095 from `plans/ea-s09-decisions-hb-scope-20261104`: heartbeat_expired requires observed heartbeat_age_ms strictly greater than 300000, never equality. Other crash evidence remains independent. The threshold is not a new payload field.
+
+```yaml
+plan_unit_id: SP-541
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'coordination.agent_crashed alone adopts the complete Project contract
+  immediately above: its own producer, CV-353 closed payload, SP-286/CV-339 first
+  receipt, SP-320 identity and transitions, SP-278 exact atomic checkpoint, custody,
+  existing retention, replay and withdrawal. DL-270/SP-339 restrict mirror_export
+  to on-request export; OSI-440 application admission remains separate. Prepared without
+  admission; native NOT_RUN.'
+gui_related: false
+gui_classification_reason: Backend event authority and custody.
+depends_on:
+- OSI-438
+- CV-353
+- SP-320
+- SP-278
+- SP-286
+- SP-339
+- ATS-058
+unblocks: []
+acceptance_criteria:
+- coordination.agent_crashed validates its own payload, joins, identity and transitions;
+  never infer a sibling contract.
+- No app admission, automatic mirror, remint or effect replay.
+validation_surfaces:
+- python3 scripts/pm_coordination_wave2.py
+- python3 scripts/pm_coordination_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: coordination_authority_drift
+reasoning_tier: high
+context_scope: agent_crashed
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-270
+- reports/event-authority-20261104/DCO-search.json
+preserved_exact_tokens:
+- coordination.agent_crashed
+- RP-COORDINATION-180D
+- RP-PROJECTION-3GEN
+negative_constraints:
+- No admission, new retention choice or native proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-542 - coordination.agent_file_ownership_updated Project contract refresh
+
+This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a newly authored owner contract under DL-045 for already specified behavior, without admission. Only the preserved Project edition is prepared: OSI-440, CV-366 and SP-351 keep application sources, keys and admissions separate.
+
+**Producer and ordering.** `AgentCoordinator.update_file_ownership(AgentFileOwnershipUpdate); Gap #33's update_file_activity_claim is a sketch of the same append`: The same execution path, from normalized hook, provider stream, output parsing and git diff observations; only high and medium confidence claims are appended. Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.
+
+**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_file_ownership_updated` (schema ID `pm.coordination_event.agent_file_ownership_updated.schema.v1`, version 1.0.0) is this family's payload. CV-353's EventRecord joins apply explicitly: Project scope, matching project/run/thread/node, null attempt and payload_ref, inline payload, no_secrets and dedupe_by_idempotency_key; the occurred timestamp is its own payload timestamp. Optional missing values are omitted, never null. This is not an application admission.
+
+**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordination.agent_file_ownership_updated`. Its event ID is `evt_coordination_` plus SHA-256 of RFC 8785 JSON strings `[storage_instance_id, recovery_epoch, project_id, event_type, agent_id, agent_revision]`, epoch and revision decimal without leading zero. Storage instance and epoch are actual captured values retained with the complete prepared payload for retries. Revision increments exactly once from its registration; lineage is checked against that registration. Exact scoped retry returns the original event and receipt, a changed semantic digest refuses, and a lost acknowledgement resolves only through the explicitly adopted SP-286/CV-339 `storage.first_append_receipt.resolve.v2`; no first mint, reconstructed request or replay effect.
+
+**Transition.** A registered, non-terminal agent only, at the agent's revision plus 1. A new claim, or a changed claim_kind, claim_confidence or operation_id for the same path_hash, replaces the agent's claim row for that path; an identical claim returns coordination_unchanged. A claim warns and sequences agents and is not a FileSafe lock or lease. It ends only when the agent's terminal event is applied; there is no release value. No update before registration or after a terminal event is accepted. Concurrent terminal attempts have one winner under SP-320's revision precedence.
+
+**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_value.coordination_projector_checkpoint.v1@1.0.0` in `Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint`. Rows and checkpoint advance atomically in one redb transaction under exact prior-value CAS, after complete CURRENT-selected source, generation, anchor and frontier verification. Persist only the nine-field durable token, never redb_snapshot_id; rejoin the live read transaction's snapshot and validate all ten fields. Inclusive replay validates its last frame and rebuilds projections only, never scheduling, prompt injection, append or notifications. Scheduler, agent coordinator, prompt context and inspection use their SP-320 versioned readers after coverage, publication, permission and deletion checks. Under DL-270/SP-339 the retained `storage.coordination_reader.mirror_export.v1@1.0.0` identity is solely an on-request export reader, with live-server access while PM runs; no automatic mirror write, background mirror consumer, or mirror recovery authority survives. Export output is only the user-named output, and never PM store mutation.
+
+**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and current permission/tombstone checks before every disclosure. Refs and retained history grant no access. The existing `coordination_event_records` and `coordination_read_model_projections` storage registry rows govern; no new stored family or key. `retention_policy_ref` is `RP-COORDINATION-180D@1.0.0` (Case L-3 Coordination class and SP-320); its run_completion anchor is the Run's first durable terminal canonical record, never this agent's terminal record, and unresolved completion is ineligible for expiry. Derived rows/checkpoint keep `RP-PROJECTION-3GEN@1.0.0`, including holds and same-key publication history; no retention choice is made.
+
+**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's writer and new registrations, then withdraws the checkpoint core and fences projector/readers. Only an owner-approved successor and verified complete rebuild publishes a new core; original events, dedupe and first-receipt custody remain. No silent cursor reset or sibling substitution. Native activation still requires all seven admissions.
+
+**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transitions and projection cases. `scripts/pm_coordination_events.py` checks these static cases. Native append, CAS, custody, read, withdrawal and recovery obligations remain NOT_RUN. Membership is ABSENT and this text grants no readiness, DEPTH_PASS or registry authority.
+
+```yaml
+plan_unit_id: SP-542
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'coordination.agent_file_ownership_updated alone adopts the complete
+  Project contract immediately above: its own producer, CV-353 closed payload, SP-286/CV-339
+  first receipt, SP-320 identity and transitions, SP-278 exact atomic checkpoint,
+  custody, existing retention, replay and withdrawal. DL-270/SP-339 restrict mirror_export
+  to on-request export; OSI-440 application admission remains separate. Prepared without
+  admission; native NOT_RUN.'
+gui_related: false
+gui_classification_reason: Backend event authority and custody.
+depends_on:
+- OSI-438
+- CV-353
+- SP-320
+- SP-278
+- SP-286
+- SP-339
+- ATS-058
+unblocks: []
+acceptance_criteria:
+- coordination.agent_file_ownership_updated validates its own payload, joins, identity
+  and transitions; never infer a sibling contract.
+- No app admission, automatic mirror, remint or effect replay.
+validation_surfaces:
+- python3 scripts/pm_coordination_wave2.py
+- python3 scripts/pm_coordination_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: coordination_authority_drift
+reasoning_tier: high
+context_scope: agent_file_ownership_updated
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-270
+- reports/event-authority-20261104/DCO-search.json
+preserved_exact_tokens:
+- coordination.agent_file_ownership_updated
+- RP-COORDINATION-180D
+- RP-PROJECTION-3GEN
+negative_constraints:
+- No admission, new retention choice or native proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-543 - coordination.agent_operation_updated Project contract refresh
+
+This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a newly authored owner contract under DL-045 for already specified behavior, without admission. Only the preserved Project edition is prepared: OSI-440, CV-366 and SP-351 keep application sources, keys and admissions separate.
+
+**Producer and ordering.** `AgentCoordinator.update_operation(AgentOperationUpdate)`: The same execution path: once for the initial operation right after registration, then on a new operation or an actual change of its summary, progress or refs. Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.
+
+**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_operation_updated` (schema ID `pm.coordination_event.agent_operation_updated.schema.v1`, version 1.0.0) is this family's payload. CV-353's EventRecord joins apply explicitly: Project scope, matching project/run/thread/node, null attempt and payload_ref, inline payload, no_secrets and dedupe_by_idempotency_key; the occurred timestamp is its own payload timestamp. Optional missing values are omitted, never null. This is not an application admission.
+
+**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordination.agent_operation_updated`. Its event ID is `evt_coordination_` plus SHA-256 of RFC 8785 JSON strings `[storage_instance_id, recovery_epoch, project_id, event_type, agent_id, agent_revision]`, epoch and revision decimal without leading zero. Storage instance and epoch are actual captured values retained with the complete prepared payload for retries. Revision increments exactly once from its registration; lineage is checked against that registration. Exact scoped retry returns the original event and receipt, a changed semantic digest refuses, and a lost acknowledgement resolves only through the explicitly adopted SP-286/CV-339 `storage.first_append_receipt.resolve.v2`; no first mint, reconstructed request or replay effect.
+
+**Transition.** A registered, non-terminal agent only, at the agent's revision plus 1. The latest event for an operation_id wins in coordination_operation_projection.v1 and sets the agent's current operation; the first observation time is kept. An unchanged operation returns coordination_unchanged. Operation rows stay after the terminal event. No update before registration or after a terminal event is accepted. Concurrent terminal attempts have one winner under SP-320's revision precedence.
+
+**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_value.coordination_projector_checkpoint.v1@1.0.0` in `Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint`. Rows and checkpoint advance atomically in one redb transaction under exact prior-value CAS, after complete CURRENT-selected source, generation, anchor and frontier verification. Persist only the nine-field durable token, never redb_snapshot_id; rejoin the live read transaction's snapshot and validate all ten fields. Inclusive replay validates its last frame and rebuilds projections only, never scheduling, prompt injection, append or notifications. Scheduler, agent coordinator, prompt context and inspection use their SP-320 versioned readers after coverage, publication, permission and deletion checks. Under DL-270/SP-339 the retained `storage.coordination_reader.mirror_export.v1@1.0.0` identity is solely an on-request export reader, with live-server access while PM runs; no automatic mirror write, background mirror consumer, or mirror recovery authority survives. Export output is only the user-named output, and never PM store mutation.
+
+**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and current permission/tombstone checks before every disclosure. Refs and retained history grant no access. The existing `coordination_event_records` and `coordination_read_model_projections` storage registry rows govern; no new stored family or key. `retention_policy_ref` is `RP-COORDINATION-180D@1.0.0` (Case L-3 Coordination class and SP-320); its run_completion anchor is the Run's first durable terminal canonical record, never this agent's terminal record, and unresolved completion is ineligible for expiry. Derived rows/checkpoint keep `RP-PROJECTION-3GEN@1.0.0`, including holds and same-key publication history; no retention choice is made.
+
+**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's writer and new registrations, then withdraws the checkpoint core and fences projector/readers. Only an owner-approved successor and verified complete rebuild publishes a new core; original events, dedupe and first-receipt custody remain. No silent cursor reset or sibling substitution. Native activation still requires all seven admissions.
+
+**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transitions and projection cases. `scripts/pm_coordination_events.py` checks these static cases. Native append, CAS, custody, read, withdrawal and recovery obligations remain NOT_RUN. Membership is ABSENT and this text grants no readiness, DEPTH_PASS or registry authority.
+
+```yaml
+plan_unit_id: SP-543
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'coordination.agent_operation_updated alone adopts the complete Project
+  contract immediately above: its own producer, CV-353 closed payload, SP-286/CV-339
+  first receipt, SP-320 identity and transitions, SP-278 exact atomic checkpoint,
+  custody, existing retention, replay and withdrawal. DL-270/SP-339 restrict mirror_export
+  to on-request export; OSI-440 application admission remains separate. Prepared without
+  admission; native NOT_RUN.'
+gui_related: false
+gui_classification_reason: Backend event authority and custody.
+depends_on:
+- OSI-438
+- CV-353
+- SP-320
+- SP-278
+- SP-286
+- SP-339
+- ATS-058
+unblocks: []
+acceptance_criteria:
+- coordination.agent_operation_updated validates its own payload, joins, identity
+  and transitions; never infer a sibling contract.
+- No app admission, automatic mirror, remint or effect replay.
+validation_surfaces:
+- python3 scripts/pm_coordination_wave2.py
+- python3 scripts/pm_coordination_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: coordination_authority_drift
+reasoning_tier: high
+context_scope: agent_operation_updated
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-270
+- reports/event-authority-20261104/DCO-search.json
+preserved_exact_tokens:
+- coordination.agent_operation_updated
+- RP-COORDINATION-180D
+- RP-PROJECTION-3GEN
+negative_constraints:
+- No admission, new retention choice or native proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-544 - coordination.agent_status_updated Project contract refresh
+
+This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a newly authored owner contract under DL-045 for already specified behavior, without admission. Only the preserved Project edition is prepared: OSI-440, CV-366 and SP-351 keep application sources, keys and admissions separate.
+
+**Producer and ordering.** `AgentCoordinator.update_status(AgentStatusUpdate)`: The Orchestrator's execution path for the agent, on an actual change of status or status_reason. Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.
+
+**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_status_updated` (schema ID `pm.coordination_event.agent_status_updated.schema.v1`, version 1.0.0) is this family's payload. CV-353's EventRecord joins apply explicitly: Project scope, matching project/run/thread/node, null attempt and payload_ref, inline payload, no_secrets and dedupe_by_idempotency_key; the occurred timestamp is its own payload timestamp. Optional missing values are omitted, never null. This is not an application admission.
+
+**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordination.agent_status_updated`. Its event ID is `evt_coordination_` plus SHA-256 of RFC 8785 JSON strings `[storage_instance_id, recovery_epoch, project_id, event_type, agent_id, agent_revision]`, epoch and revision decimal without leading zero. Storage instance and epoch are actual captured values retained with the complete prepared payload for retries. Revision increments exactly once from its registration; lineage is checked against that registration. Exact scoped retry returns the original event and receipt, a changed semantic digest refuses, and a lost acknowledgement resolves only through the explicitly adopted SP-286/CV-339 `storage.first_append_receipt.resolve.v2`; no first mint, reconstructed request or replay effect.
+
+**Transition.** A registered, non-terminal agent only, at the agent's revision plus 1. status takes queued, running, awaiting_parent or blocked; complete, failed and cancelled arise only from the three terminal families, and a status update never stands in for a terminal event. An update that changes neither status nor status_reason returns coordination_unchanged; a skipped or repeated revision is stale_revision, a changed lineage lineage_mismatch, an event after the terminal event already_terminal. No update before registration or after a terminal event is accepted. Concurrent terminal attempts have one winner under SP-320's revision precedence.
+
+**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_value.coordination_projector_checkpoint.v1@1.0.0` in `Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint`. Rows and checkpoint advance atomically in one redb transaction under exact prior-value CAS, after complete CURRENT-selected source, generation, anchor and frontier verification. Persist only the nine-field durable token, never redb_snapshot_id; rejoin the live read transaction's snapshot and validate all ten fields. Inclusive replay validates its last frame and rebuilds projections only, never scheduling, prompt injection, append or notifications. Scheduler, agent coordinator, prompt context and inspection use their SP-320 versioned readers after coverage, publication, permission and deletion checks. Under DL-270/SP-339 the retained `storage.coordination_reader.mirror_export.v1@1.0.0` identity is solely an on-request export reader, with live-server access while PM runs; no automatic mirror write, background mirror consumer, or mirror recovery authority survives. Export output is only the user-named output, and never PM store mutation.
+
+**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and current permission/tombstone checks before every disclosure. Refs and retained history grant no access. The existing `coordination_event_records` and `coordination_read_model_projections` storage registry rows govern; no new stored family or key. `retention_policy_ref` is `RP-COORDINATION-180D@1.0.0` (Case L-3 Coordination class and SP-320); its run_completion anchor is the Run's first durable terminal canonical record, never this agent's terminal record, and unresolved completion is ineligible for expiry. Derived rows/checkpoint keep `RP-PROJECTION-3GEN@1.0.0`, including holds and same-key publication history; no retention choice is made.
+
+**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's writer and new registrations, then withdraws the checkpoint core and fences projector/readers. Only an owner-approved successor and verified complete rebuild publishes a new core; original events, dedupe and first-receipt custody remain. No silent cursor reset or sibling substitution. Native activation still requires all seven admissions.
+
+**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transitions and projection cases. `scripts/pm_coordination_events.py` checks these static cases. Native append, CAS, custody, read, withdrawal and recovery obligations remain NOT_RUN. Membership is ABSENT and this text grants no readiness, DEPTH_PASS or registry authority.
+
+```yaml
+plan_unit_id: SP-544
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'coordination.agent_status_updated alone adopts the complete Project
+  contract immediately above: its own producer, CV-353 closed payload, SP-286/CV-339
+  first receipt, SP-320 identity and transitions, SP-278 exact atomic checkpoint,
+  custody, existing retention, replay and withdrawal. DL-270/SP-339 restrict mirror_export
+  to on-request export; OSI-440 application admission remains separate. Prepared without
+  admission; native NOT_RUN.'
+gui_related: false
+gui_classification_reason: Backend event authority and custody.
+depends_on:
+- OSI-438
+- CV-353
+- SP-320
+- SP-278
+- SP-286
+- SP-339
+- ATS-058
+unblocks: []
+acceptance_criteria:
+- coordination.agent_status_updated validates its own payload, joins, identity and
+  transitions; never infer a sibling contract.
+- No app admission, automatic mirror, remint or effect replay.
+validation_surfaces:
+- python3 scripts/pm_coordination_wave2.py
+- python3 scripts/pm_coordination_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: coordination_authority_drift
+reasoning_tier: high
+context_scope: agent_status_updated
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-270
+- reports/event-authority-20261104/DCO-search.json
+preserved_exact_tokens:
+- coordination.agent_status_updated
+- RP-COORDINATION-180D
+- RP-PROJECTION-3GEN
+negative_constraints:
+- No admission, new retention choice or native proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-545 - coordination.agent_unregistered Project contract refresh
+
+This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a newly authored owner contract under DL-045 for already specified behavior, without admission. Only the preserved Project edition is prepared: OSI-440, CV-366 and SP-351 keep application sources, keys and admissions separate.
+
+**Producer and ordering.** `AgentCoordinator.unregister_agent(AgentTerminalUpdate)`: The Orchestrator's node completion path or the scheduler's cleanup, once, when the agent ends with a known outcome; the unregister_agent(&str) sketches are source lineage. Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.
+
+**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_unregistered` (schema ID `pm.coordination_event.agent_unregistered.schema.v1`, version 1.0.0) is this family's payload. CV-353's EventRecord joins apply explicitly: Project scope, matching project/run/thread/node, null attempt and payload_ref, inline payload, no_secrets and dedupe_by_idempotency_key; the occurred timestamp is its own payload timestamp. Optional missing values are omitted, never null. This is not an application admission.
+
+**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordination.agent_unregistered`. Its event ID is `evt_coordination_` plus SHA-256 of RFC 8785 JSON strings `[storage_instance_id, recovery_epoch, project_id, event_type, agent_id, agent_revision]`, epoch and revision decimal without leading zero. Storage instance and epoch are actual captured values retained with the complete prepared payload for retries. Revision increments exactly once from its registration; lineage is checked against that registration. Exact scoped retry returns the original event and receipt, a changed semantic digest refuses, and a lost acknowledgement resolves only through the explicitly adopted SP-286/CV-339 `storage.first_append_receipt.resolve.v2`; no first mint, reconstructed request or replay effect.
+
+**Transition.** Terminal. A registered, non-terminal agent at the agent's revision plus 1. The agent row takes terminal_status, every claim of the agent is released in the same transaction and the agent leaves every snapshot. Each agent has exactly one terminal event: a racing terminal event with the same revision is stale_revision, a later one already_terminal. No update before registration or after a terminal event is accepted. Concurrent terminal attempts have one winner under SP-320's revision precedence.
+
+**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_value.coordination_projector_checkpoint.v1@1.0.0` in `Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint`. Rows and checkpoint advance atomically in one redb transaction under exact prior-value CAS, after complete CURRENT-selected source, generation, anchor and frontier verification. Persist only the nine-field durable token, never redb_snapshot_id; rejoin the live read transaction's snapshot and validate all ten fields. Inclusive replay validates its last frame and rebuilds projections only, never scheduling, prompt injection, append or notifications. Scheduler, agent coordinator, prompt context and inspection use their SP-320 versioned readers after coverage, publication, permission and deletion checks. Under DL-270/SP-339 the retained `storage.coordination_reader.mirror_export.v1@1.0.0` identity is solely an on-request export reader, with live-server access while PM runs; no automatic mirror write, background mirror consumer, or mirror recovery authority survives. Export output is only the user-named output, and never PM store mutation.
+
+**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and current permission/tombstone checks before every disclosure. Refs and retained history grant no access. The existing `coordination_event_records` and `coordination_read_model_projections` storage registry rows govern; no new stored family or key. `retention_policy_ref` is `RP-COORDINATION-180D@1.0.0` (Case L-3 Coordination class and SP-320); its run_completion anchor is the Run's first durable terminal canonical record, never this agent's terminal record, and unresolved completion is ineligible for expiry. Derived rows/checkpoint keep `RP-PROJECTION-3GEN@1.0.0`, including holds and same-key publication history; no retention choice is made.
+
+**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's writer and new registrations, then withdraws the checkpoint core and fences projector/readers. Only an owner-approved successor and verified complete rebuild publishes a new core; original events, dedupe and first-receipt custody remain. No silent cursor reset or sibling substitution. Native activation still requires all seven admissions.
+
+**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transitions and projection cases. `scripts/pm_coordination_events.py` checks these static cases. Native append, CAS, custody, read, withdrawal and recovery obligations remain NOT_RUN. Membership is ABSENT and this text grants no readiness, DEPTH_PASS or registry authority.
+
+```yaml
+plan_unit_id: SP-545
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'coordination.agent_unregistered alone adopts the complete Project
+  contract immediately above: its own producer, CV-353 closed payload, SP-286/CV-339
+  first receipt, SP-320 identity and transitions, SP-278 exact atomic checkpoint,
+  custody, existing retention, replay and withdrawal. DL-270/SP-339 restrict mirror_export
+  to on-request export; OSI-440 application admission remains separate. Prepared without
+  admission; native NOT_RUN.'
+gui_related: false
+gui_classification_reason: Backend event authority and custody.
+depends_on:
+- OSI-438
+- CV-353
+- SP-320
+- SP-278
+- SP-286
+- SP-339
+- ATS-058
+unblocks: []
+acceptance_criteria:
+- coordination.agent_unregistered validates its own payload, joins, identity and transitions;
+  never infer a sibling contract.
+- No app admission, automatic mirror, remint or effect replay.
+validation_surfaces:
+- python3 scripts/pm_coordination_wave2.py
+- python3 scripts/pm_coordination_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: coordination_authority_drift
+reasoning_tier: high
+context_scope: agent_unregistered
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-270
+- reports/event-authority-20261104/DCO-search.json
+preserved_exact_tokens:
+- coordination.agent_unregistered
+- RP-COORDINATION-180D
+- RP-PROJECTION-3GEN
+negative_constraints:
+- No admission, new retention choice or native proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
 ### Unknown, prepared and sibling families
 
 Until a family is admitted, its events are quarantined before append or projection: the append admission refuses them, and the projector's filter excludes them. The projector applies each admitted family on its own and never infers a sibling's state. A family that is not admitted never makes an agent terminal, and a missing registration never creates an agent.
