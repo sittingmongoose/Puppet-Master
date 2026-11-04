@@ -1,3 +1,5 @@
+import {installActivityPaintProbe} from '../helpers/activity-paint.mjs';
+
 // Stream F SW regressions. Uses actual controls and the public fixture APIs.
 export const tests = {
  'SW01 first click in short window': async t => {
@@ -6,27 +8,21 @@ export const tests = {
    const f=await t.app.open();
    await t.emulate({reducedMotion:'no-preference'});
    const b=f.locator('#pmRoot [data-action="open-activity"]').first();
+   await f.evaluate(installActivityPaintProbe);
    await f.evaluate(()=>{
-    window.__activityPaint=null;window.__activityClickRenders=0;window.__activityClickActive=false;
+    window.__activityClickRenders=0;window.__activityClickActive=false;
     PM56_EXT.slot('afterRender',(_ctx,info)=>{if(window.__activityClickActive&&info.phase==='app')window.__activityClickRenders++;});
     document.addEventListener('click',()=>{window.__activityClickActive=false;},{once:true});
     document.addEventListener('click',e=>{
-     if(!e.isTrusted||!e.target.closest('[data-action="open-activity"]'))return;
-     window.__activityClickActive=true;
-     const start=e.timeStamp;
-     const probe=()=>{
-      const panel=document.querySelector('#pmRoot .activity-panel.cover');
-      if(panel&&panel.getBoundingClientRect().width>0&&Number(getComputedStyle(panel).opacity)>0)requestAnimationFrame(()=>{window.__activityPaint=performance.now()-start;});
-      else if(performance.now()-start<2000)requestAnimationFrame(probe);
-      else window.__activityPaint=2000;
-     };requestAnimationFrame(probe);
+     if(e.isTrusted&&e.target.closest('[data-action="open-activity"]'))window.__activityClickActive=true;
     },{capture:true,once:true});
    });
    await b.click();
-   await t.until('cover frame observed',()=>window.__activityPaint!==null);
-   const ms=await f.evaluate(()=>window.__activityPaint);
-   t.log('input to cover frame '+i+': '+ms);
-   await t.check('first click painted within 500 ms '+i,ms<=500);
+   await f.waitForFunction(()=>window.__activityPaintResult!==null,{},{timeout:10000});
+   const paint=await f.evaluate(()=>window.__activityPaintResult);
+   t.log('input to first cover paint '+i+': '+JSON.stringify(paint));
+   await t.check('first click painted within 500 ms '+i,
+    !paint.error&&paint.input.trusted&&paint.elapsed>=0&&paint.elapsed<=500);
    await t.equal('cover click avoids full transcript render '+i,await f.evaluate(()=>window.__activityClickRenders),0);
    await t.painted('#pmRoot .activity-panel.cover');
   }
