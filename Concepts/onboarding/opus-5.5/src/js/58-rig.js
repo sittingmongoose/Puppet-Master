@@ -515,12 +515,13 @@
         return d;
       };
       /* Pip hangs below the stage's own words over its column (Retro's title line, NieR's unit line: the bar crossed
-         Retro Light's SETUP LOG at 740, FO-55). Where the span left cannot hold Pip at rest with its margins it is drawn
-         smaller, just enough, at once: one size for the span, never animated (.77 in Retro Light at 740; 1 elsewhere) */
-      const s0 = L0.s, dx0 = into(at[0] + lo * s0, at[0] + hi * s0, v.x0, v.x1), X0 = at[0] + dx0 + lo * s0 - 8, X1 = at[0] + dx0 + hi * s0 + 8;
-      let y0 = v.y0;
-      (this.hdr || []).forEach((w) => { if (w.x1 > X0 && w.x0 < X1) y0 = Math.max(y0, w.y1); });
-      const k = clamp((v.y1 - y0 - 16) / (L0.rope + (h[1] + h[3] - 31.5 - (c[1] - 14.5)) * s0), .5, 1);
+         Retro Light's SETUP LOG at 740, FO-55). Where they cut the span and what is left cannot hold Pip at rest with
+         its 8-unit margins it is drawn smaller, just enough, at once: one size for the span, never animated (Retro Light
+         at 740). Where no words are over it, a short span narrows the margins as before and Pip keeps its size */
+      const s0 = L0.s, dx0 = into(at[0] + lo * s0, at[0] + hi * s0, v.x0, v.x1), X0 = at[0] + dx0 + lo * s0 - 4, X1 = at[0] + dx0 + hi * s0 + 4;
+      let y0 = v.y0, cut = false;
+      (this.hdr || []).forEach((w) => { if (w.x1 > X0 && w.x0 < X1 && w.y1 > y0) { y0 = w.y1; cut = true; } });
+      const k = cut ? clamp((v.y1 - y0 - 16) / (L0.rope + (h[1] + h[3] - 31.5 - (c[1] - 14.5)) * s0), .5, 1) : 1;
       if (Math.abs(k - (this.pipK || 1)) > .002) this.setPipK(k);
       const s = Lay.s;
       return [into(at[0] + lo * s, at[0] + hi * s, v.x0, v.x1), into(at[1] + (c[1] - 14.5) * s, at[1] + Lay.rope + (h[1] + h[3] - 31.5) * s, y0, v.y1)];
