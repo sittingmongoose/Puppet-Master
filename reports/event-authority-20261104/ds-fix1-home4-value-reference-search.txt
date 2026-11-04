@@ -3,10 +3,10 @@ Revision searched: a6665ac36c8239c1907ee34eb881b23d6a8be79b (branch plans/ea-b1-
 
 == grep -rnF "store it by reference" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
 Plans/storage-plan.md:28446:  DL-270 card 6. Every redb family declares a maximum value size, at most 16 KiB; larger values go to the payload store (SP-337). Canonical, non-rebuildable families and derived, rebuildable families live in two separate redb files,
-Plans/.plan_migration/pds-20261104-002-current-planunit-snapshot/span_map.jsonl:12380:{"anchors": [], "body_line_end": 28478, "body_line_start": 28427, "byte_end": 2660185, "byte_start": 2654670, "contractrefs": [], "gui_classification_reason": "Span does not 
-Plans/.plan_migration/pds-20261104-001-current-planunit-snapshot/span_map.jsonl:12380:{"anchors": [], "body_line_end": 28478, "body_line_start": 28427, "byte_end": 2660185, "byte_start": 2654670, "contractrefs": [], "gui_classification_reason": "Span does not 
-Plans/.plan_migration/pds-20261104-004-current-planunit-snapshot/span_map.jsonl:12380:{"anchors": [], "body_line_end": 28478, "body_line_start": 28427, "byte_end": 2660349, "byte_start": 2654834, "contractrefs": [], "gui_classification_reason": "Span does not 
-Plans/.plan_migration/pds-20261104-003-current-planunit-snapshot/span_map.jsonl:12380:{"anchors": [], "body_line_end": 28478, "body_line_start": 28427, "byte_end": 2660185, "byte_start": 2654670, "contractrefs": [], "gui_classification_reason": "Span does not 
+Plans/.plan_migration/pds-20261104-002-current-planunit-snapshot/span_map.jsonl:12380:{"anchors": [], "body_line_end": 28478, "body_line_start": 28427, "byte_end": 2660185, "byte_start": 2654670, "contractrefs": [], "gui_classification_reason": "Span does not
+Plans/.plan_migration/pds-20261104-001-current-planunit-snapshot/span_map.jsonl:12380:{"anchors": [], "body_line_end": 28478, "body_line_start": 28427, "byte_end": 2660185, "byte_start": 2654670, "contractrefs": [], "gui_classification_reason": "Span does not
+Plans/.plan_migration/pds-20261104-004-current-planunit-snapshot/span_map.jsonl:12380:{"anchors": [], "body_line_end": 28478, "body_line_start": 28427, "byte_end": 2660349, "byte_start": 2654834, "contractrefs": [], "gui_classification_reason": "Span does not
+Plans/.plan_migration/pds-20261104-003-current-planunit-snapshot/span_map.jsonl:12380:{"anchors": [], "body_line_end": 28478, "body_line_start": 28427, "byte_end": 2660185, "byte_start": 2654670, "contractrefs": [], "gui_classification_reason": "Span does not
 (hits: 5)
 
 == grep -rnF "stored by reference" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
@@ -40,7 +40,7 @@ Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:218
 (hits: 15)
 
 == grep -rnF "overflow envelope" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
-Plans/storage-plan.md:17308:The payload is one canonical MessagePack map of the complete closed EventRecord `2.0.0`, including every required-present null, not merely the event-specific `payload`, the header tuple, JSON text, or a digest. Existing payload and 
+Plans/storage-plan.md:17308:The payload is one canonical MessagePack map of the complete closed EventRecord `2.0.0`, including every required-present null, not merely the event-specific `payload`, the header tuple, JSON text, or a digest. Existing payload and
 Plans/.plan_migration/pds-20261012-001-current-planunit-snapshot/span_map.jsonl:10913:{"anchors": [], "body_line_end": 17226, "body_line_start": 17198, "byte_end": 903897, "byte_start": 900548, "contractrefs": [], "gui_classification_reason": "Span mentions GU
 Plans/.plan_migration/pds-20261016-003-current-planunit-snapshot/span_map.jsonl:10961:{"anchors": [], "body_line_end": 17226, "body_line_start": 17198, "byte_end": 903897, "byte_start": 900548, "contractrefs": [], "gui_classification_reason": "Span mentions GU
 Plans/.plan_migration/pds-20261011-004-current-planunit-snapshot/span_map.jsonl:10913:{"anchors": [], "body_line_end": 17226, "body_line_start": 17198, "byte_end": 903897, "byte_start": 900548, "contractrefs": [], "gui_classification_reason": "Span mentions GU
@@ -117,4 +117,3 @@ Plans/home_layout_event_contract_fixtures.json:1262:          "backup_entry_valu
 
 == grep -rnF "stored_value_ref" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
 (hits: 0)
-

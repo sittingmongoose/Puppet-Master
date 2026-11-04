@@ -4,6 +4,10 @@
 **Worktree:** Nas1 `~/pm-worktrees/ea-ds`, kept for the lead. Second pass (DS-P2): VM sparse worktree `~/pm-worktrees/DS-p2` from `600575221d`, removed after the push.
 **Inputs:** `BRIEF-DRAFT.md`, `lanes/DS.md`, D1b's `BLOCKERS.md` and `DEPTH.jsonl`. Every D1b claim used here was re-checked on this branch.
 
+## Review round 2: findings and responses (DS-FIX2)
+
+The cycle-2 review supersedes all earlier complete-depth claims below. A receipted correction (`ds-fix2-depth-retraction.json`) retracts the three 12/12 assessments and repins the same honest assessment: compaction 11/12; Browser created/reset 10/12 each. Layout and terminal remain 10/12. Membership and registration history are preserved; no frozen validator change or substitute assessment. Technical follow-through and final grades are recorded below as completed.
+
 ## Review round 1: findings and responses (DS-FIX1, VM, 2026-11-04)
 
 **Review:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DS-sol/REVIEW.md` (Sol, verdict NOT_READY at `a6665ac36c`). **Worktree:** VM sparse `~/pm-worktrees/DS-fix1` from `a6665ac36c`, removed after the push. No new ids were minted: SP-400 and SP-273 are amended in place.
