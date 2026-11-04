@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 import jsonschema
 import importlib.util
-from functools import lru_cache
+from functools import lru_cache, wraps
 from jsonschema.validators import extend
 from referencing import Registry, Resource
 from referencing.exceptions import Unresolvable
@@ -15,11 +15,59 @@ from referencing.jsonschema import DRAFT202012
 
 ROOT = Path(__file__).resolve().parents[1]
 FORMAT = jsonschema.FormatChecker()
+
+
+def numeric_atom_ok(value):
+    """The existing canonical MessagePack integer domain, also used by schemas."""
+    return (not isinstance(value, (int, float)) or isinstance(value, bool)
+            or type(value) is int and -(2 ** 63) <= value <= 2 ** 64 - 1)
+
+
+def numbers_ok(value):
+    if isinstance(value, dict):
+        return all(numbers_ok(child) for child in value.values())
+    if isinstance(value, (list, tuple)):
+        return all(numbers_ok(child) for child in value)
+    return numeric_atom_ok(value)
+
+
+def integer_boundary(refusal):
+    """Refuse before comparisons or codecs; never catch unrelated model defects."""
+    def decorate(fn):
+        @wraps(fn)
+        def checked(*args, **kwargs):
+            if not numbers_ok((args, kwargs)):
+                return copy.deepcopy(refusal)
+            return fn(*args, **kwargs)
+        return checked
+    return decorate
+
+
+def parse_integer(token):
+    if token == '-0':
+        raise ValueError('DS15 forbids the negative-zero JSON spelling')
+    return int(token)
+
+
+def parse_numeric_json(encoded):
+    """Keep lexical rejection before Python erases -0; JSON rejects 01 itself."""
+    value = json.loads(encoded, parse_int=parse_integer)
+    if not numbers_ok(value):
+        raise ValueError('DS15 requires canonical-range JSON integers')
+    return value
+
+
+def numeric_keyword(validator, enabled, instance, schema):
+    if enabled and not numbers_ok(instance):
+        yield jsonschema.ValidationError('DS15 requires canonical-range integers; floats are forbidden')
+
+
 def exact_pattern(validator, pattern, instance, schema):
     if isinstance(instance, str) and re.fullmatch(pattern, instance) is None:
         yield jsonschema.ValidationError('String does not fully match identifier pattern')
 
-StrictValidator = extend(jsonschema.Draft202012Validator, {'pattern': exact_pattern})
+StrictValidator = extend(jsonschema.Draft202012Validator,
+                         {'pattern': exact_pattern, 'ds15IntegerDomain': numeric_keyword})
 _codec_spec = importlib.util.spec_from_file_location('pm_ds15_readiness_codec', ROOT / 'scripts/pm-implementation-readiness.py')
 _codec = importlib.util.module_from_spec(_codec_spec)
 _codec_spec.loader.exec_module(_codec)
@@ -92,6 +140,9 @@ def schema_registry():
 @lru_cache(maxsize=None)
 def cached_validator(encoded):
     schema = json.loads(encoded)
+    # This explicitly adopted boundary profile also covers shared EventRecord,
+    # receipt and source resources without changing their global contracts.
+    schema.update(read('Plans/ds15_integer_domain.schema.json')['boundary_keywords'])
     jsonschema.Draft202012Validator.check_schema(schema)
     registry = schema_registry()
     check_reference_closure(schema, registry)
@@ -102,6 +153,7 @@ def application_source_validator():
     schema = read('Plans/application_workflow_sources.schema.json')
     return validator({'$ref': schema['$id'] + '#/$defs/OriginalBrowserTransitionSource'})
 
+@integer_boundary(None)
 def identity(c, payload, source=None):
     if payload.get('scope', {}).get('kind') == 'app':
         if not source:
@@ -112,6 +164,7 @@ def identity(c, payload, source=None):
     parts = [c['event_type'], c['family_revision'], *scope] + [payload[k] for k in c['identity_fields']]
     return hashlib.sha256(_codec.canonical_messagepack_bytes(parts)).hexdigest()
 
+@integer_boundary(None)
 def commitment(event):
     domain = 'pm.storage.original_event_value_commitment.v1'
     codec = 'pm.seglog_frame_v2.event_value.canonical_msgpack.v1'
@@ -140,6 +193,7 @@ def admission_present(value):
     return value is not None
 
 
+@integer_boundary(False)
 def envelope_ok(c, d, retry=True):
     e, original = d['envelope'], d['original']['event']
     scope = d['context']['scope']
@@ -180,6 +234,7 @@ def envelope_ok(c, d, retry=True):
             return False
     return e['idempotency_key'] == identity(c, e['payload'], source)
 
+@integer_boundary(False)
 def receipt_ok(d):
     r, custody, result, event = d['receipt'], d['custody'], d['issued_result'], d['original']['event']
     if not (shared_valid('AppendReceipt', r) and shared_valid('custody_v2', custody)
@@ -196,6 +251,7 @@ def receipt_ok(d):
             and custody['idempotency_key'] == event['idempotency_key']
             and custody['producer_semantic_digest'] == _codec.event_producer_semantic_digest(event))
 
+@integer_boundary(False)
 def token_matches_storage(token, storage_instance_id):
     key = 'event_record_index_checkpoint.v1:' + storage_instance_id
     return (token['storage_instance_id'] == storage_instance_id
@@ -212,6 +268,7 @@ def owner_text(c):
     unit = text[start:end if end != -1 else len(text)]
     return json.loads(unit.split('```yaml\n', 1)[1].split('\n```', 1)[0])['canonical_text']
 
+@integer_boundary(False)
 def payload_ok(c, p, x):
     if list(validator(read(c['payload_schema_ref'])).iter_errors(p)):
         return False
@@ -285,6 +342,7 @@ def payload_ok(c, p, x):
                           or (p['refresh_origin'] == 'filemanager.preview_refresh' and not p.get('browser_session_id'))))))
     raise AssertionError('Missing per-family transition oracle: ' + n)
 
+@integer_boundary({'result': 'REFUSE', 'effects': 0})
 def evaluate(c, op, d):
     """Normative reference model over concrete source/receipt/index values."""
     p, x = d['payload'], d['context']
@@ -385,6 +443,15 @@ def evaluate(c, op, d):
             return {'result': 'REFUSE', 'effects': 0}
         return evaluate(c, 'publish', d)
     raise AssertionError(op)
+
+
+def evaluate_json(c, op, encoded):
+    """Raw JSON ingress preserves the lexical fences before typed evaluation."""
+    try:
+        data = parse_numeric_json(encoded)
+    except ValueError:
+        return {'result': 'REFUSE', 'effects': 0}
+    return evaluate(c, op, data)
 
 def patch(data, changes):
     for path, value in changes.items():
@@ -491,6 +558,7 @@ PREPARED_FAMILIES = {'doctor.custom_headless.checked', 'live.session.started', '
                      'dev.session.stopped', 'dev.session.restarting', 'preview.session.started',
                      'preview.session.refreshed', 'preview.session.stopped'}
 
+@integer_boundary(False)
 def value_valid(schema_ref, value):
     if list(validator(read(schema_ref)).iter_errors(value)):
         return False
@@ -505,6 +573,7 @@ def value_valid(schema_ref, value):
     return True
 
 
+@integer_boundary(None)
 def migrate(kind, source, evidence):
     """Static migration oracle only. It neither opens a store nor authorizes writes."""
     if not evidence.get('verified') or not evidence.get('backup_verified'):
@@ -585,6 +654,132 @@ def proof_success(result):
             or result.get('result') not in ('REFUSE', 'UNAVAILABLE', 'PENDING'))
 
 
+def numeric_input(case, negative=True):
+    """One numeric leaf at its real boundary; observations stay value-equal."""
+    fixtures = read('Plans/ds15_event_contract_fixtures.json')
+    f = next(f for f in fixtures if f['event_type'] == case['event_type'])
+    c = next(c for c in read('Plans/ds15_event_contracts.json') if c['event_type'] == case['event_type'])
+    if case['target'] == 'atom':
+        parent = case['parent']
+    elif case['target'] in ('identity', 'payload_schema'):
+        parent = copy.deepcopy(f['positive'])
+    elif case['target'] in ('value', 'migration'):
+        fixture = next(f for f in read('Plans/ds15_value_contract_fixtures.json')
+                       if f['schema_ref'] == case['schema_ref'])
+        parent = copy.deepcopy(fixture['migration_base' if case['target'] == 'migration' else 'positive'])
+    else:
+        parent = copy.deepcopy(f['semantic_base'])
+        if case.get('parent_case'):
+            parent = semantic_input(c, f, next(z for z in f['semantic_cases'] if z['id'] == case['parent_case']))
+    if not negative:
+        return c, parent
+    if case['target'] == 'atom':
+        return c, json.loads(case['token'])
+    patch(parent, {case['path']: json.loads(case['token'])})
+    return c, parent
+
+
+def numeric_operation(case, data):
+    c = next(c for c in read('Plans/ds15_event_contracts.json') if c['event_type'] == case['event_type'])
+    target = case['target']
+    if target == 'atom':
+        return numbers_ok(data)
+    if target == 'identity':
+        return identity(c, data)
+    if target == 'payload_schema':
+        return not list(validator(read(c['payload_schema_ref'])).iter_errors(data))
+    if target == 'value':
+        return value_valid(case['schema_ref'], data)
+    if target == 'migration':
+        return migrate(data['kind'], data['source'], data['evidence'])
+    if target == 'commitment':
+        return commitment(data['original']['event'])
+    if target == 'digest':
+        # This adopted codec remains unchanged and integer-only. Validate the
+        # numeric prerequisite before asking it for canonical bytes.
+        return _codec.event_producer_semantic_digest(data['envelope']) if numbers_ok(data) else None
+    return evaluate(c, case['operation'], data)
+
+
+def numeric_wire(case):
+    if case['target'] == 'atom':
+        return case['token']
+    _, data = numeric_input(case, False)
+    marker = '__DS15_numeric_lexeme__'
+    patch(data, {case['path']: marker})
+    encoded = json.dumps(data)
+    assert encoded.count(json.dumps(marker)) == 1, case['id']
+    return encoded.replace(json.dumps(marker), case['token'])
+
+
+def numeric_guard_result(case, negative=True):
+    """The actual shared numeric prerequisite, isolated from dependent codecs."""
+    if case['token'] == '-0':
+        try:
+            return parse_integer('-0' if negative else '0') == 0
+        except ValueError:
+            return False
+    if case['token'] in ('01', '00', '-01'):
+        # Standard JSON grammar, not a lane-owned validation predicate.
+        try:
+            parse_numeric_json(case['token'] if negative else '1')
+        except ValueError:
+            return False
+        return True
+    return numbers_ok(numeric_input(case, negative)[1])
+
+
+def check_numeric_contracts():
+    cases = read('Plans/ds15_numeric_contract_fixtures.json')
+    assert len({z['id'] for z in cases}) == len(cases), 'Duplicate numeric case id'
+    for family in PREPARED_FAMILIES:
+        own = [z for z in cases if z['event_type'] == family]
+        assert {'1', '1.0', '1e0', '0', '-0', '01', '2.0', '0.0'} <= {z['token'] for z in own}
+    for case in cases:
+        c, parent = numeric_input(case, False)
+        assert proof_success(numeric_operation(case, parent)), (case['id'], 'invalid numeric parent')
+        assert numeric_guard_result(case, False), (case['id'], 'invalid numeric prerequisite parent')
+        assert numeric_guard_result(case) == case['valid'], (case['id'], 'numeric guard')
+        encoded = numeric_wire(case)
+        try:
+            decoded = parse_numeric_json(encoded)
+        except ValueError:
+            assert not case['valid'], case['id']
+        else:
+            assert case['valid'] and proof_success(numeric_operation(case, decoded)), case['id']
+        if case['target'] == 'evaluate':
+            assert proof_success(evaluate_json(c, case['operation'], encoded)) == case['valid'], case['id']
+        # Raw lexical refusal is tested before -0 becomes indistinguishable
+        # from canonical zero; leading zeros fail the JSON grammar itself.
+        if case['token'] in ('-0', '01', '00', '-01'):
+            try:
+                parse_numeric_json(case['token'])
+            except ValueError:
+                pass
+            else:
+                raise AssertionError((case['id'], 'noncanonical JSON spelling accepted'))
+            continue
+        _, data = numeric_input(case)
+        got = numeric_operation(case, data)
+        assert proof_success(got) == case['valid'], (case['id'], got)
+        if case.get('operation') == 'event_schema':
+            valid = not list(validator(read('Plans/event_record.schema.json')).iter_errors(data['envelope']))
+            assert valid == case['valid'], (case['id'], 'adopted EventRecord schema profile')
+        if case.get('path', '').startswith('receipt/'):
+            assert shared_valid('AppendReceipt', data['receipt']) == case['valid'], (case['id'], 'receipt schema profile')
+        if case.get('path', '').startswith('checkpoint/'):
+            valid = not list(validator(read(c['checkpoint_schema_ref'])).iter_errors(data['checkpoint']))
+            assert valid == case['valid'], (case['id'], 'checkpoint schema profile')
+        # Verify the same raw numeric token at the complete operation input.
+        try:
+            decoded = parse_numeric_json(json.dumps(data))
+        except ValueError:
+            assert not case['valid'], case['id']
+        else:
+            assert case['valid'] and numeric_operation(case, decoded) == got, case['id']
+    return len(cases)
+
+
 def check_guard_proofs():
     proofs = read('Plans/ds15_guard_proof_fixtures.json')
     assert len({p['id'] for p in proofs}) == len(proofs), 'Duplicate guard proof id'
@@ -606,6 +801,7 @@ def main():
     count = semantic_count = schema_count = predicate_count = 0
     for c in contracts:
         name = c['event_type']
+        assert c['numeric_schema_profile_ref'] == 'Plans/ds15_integer_domain.schema.json'
         assert name not in json.dumps(registry), name + ' unexpectedly admitted'
         v = validator(read(c['payload_schema_ref']))
         f = next(f for f in fixtures if f['event_type'] == name)
@@ -669,6 +865,7 @@ def main():
             schema_count += 1
     value_cases = check_value_contracts() if (ROOT / 'Plans/ds15_value_contract_fixtures.json').exists() else 0
     guard_proofs = check_guard_proofs()
-    print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'predicate_oracles':predicate_count,'value_oracles':value_cases,'guard_proof_oracles':guard_proofs,'native_execution':'NOT_RUN'}))
+    numeric_cases = check_numeric_contracts()
+    print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'predicate_oracles':predicate_count,'value_oracles':value_cases,'guard_proof_oracles':guard_proofs,'numeric_oracles':numeric_cases,'native_execution':'NOT_RUN'}))
 
 if __name__ == '__main__': main()

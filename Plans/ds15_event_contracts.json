@@ -19,7 +19,8 @@
     "identity_fields": [
       "doctor_invocation_id"
     ],
-    "scope_policy": "project_only"
+    "scope_policy": "project_only",
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "live.session.started",
@@ -41,7 +42,8 @@
     "identity_fields": [
       "live_session_id"
     ],
-    "scope_policy": "project_only"
+    "scope_policy": "project_only",
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "live.step.updated",
@@ -65,7 +67,8 @@
       "step_id",
       "step_revision"
     ],
-    "scope_policy": "project_only"
+    "scope_policy": "project_only",
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "live.artifact.created",
@@ -88,7 +91,8 @@
       "live_session_id",
       "artifact_id"
     ],
-    "scope_policy": "project_only"
+    "scope_policy": "project_only",
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "live.session.completed",
@@ -110,7 +114,8 @@
     "identity_fields": [
       "live_session_id"
     ],
-    "scope_policy": "project_only"
+    "scope_policy": "project_only",
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "live.session.degraded",
@@ -133,7 +138,8 @@
       "live_session_id",
       "degradation_revision"
     ],
-    "scope_policy": "project_only"
+    "scope_policy": "project_only",
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "browser.context_captured",
@@ -168,7 +174,8 @@
     "application_identity_fields": [
       "server_id",
       "original_operation_id"
-    ]
+    ],
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "dev.session.started",
@@ -197,7 +204,8 @@
       "Plans/storage-plan.md:1071,18287,18343",
       "Plans/Shared_Integration_Runtime.md:259",
       "Plans/UI_Command_Catalog.md:919-921"
-    ]
+    ],
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "dev.session.stopping",
@@ -226,7 +234,8 @@
       "Plans/storage-plan.md:1071,18287,18343",
       "Plans/Shared_Integration_Runtime.md:259",
       "Plans/UI_Command_Catalog.md:919-921"
-    ]
+    ],
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "dev.session.stopped",
@@ -255,7 +264,8 @@
       "Plans/storage-plan.md:1071,18287,18343",
       "Plans/Shared_Integration_Runtime.md:259",
       "Plans/UI_Command_Catalog.md:919-921"
-    ]
+    ],
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "dev.session.restarting",
@@ -284,7 +294,8 @@
       "Plans/storage-plan.md:1071,18287,18343",
       "Plans/Shared_Integration_Runtime.md:259",
       "Plans/UI_Command_Catalog.md:919-921"
-    ]
+    ],
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "preview.session.started",
@@ -315,7 +326,8 @@
       "Plans/storage-plan.md:1180-1187",
       "Plans/FileManager.md:616-626",
       "Plans/UI_Command_Catalog.md:463-464,9570-9588"
-    ]
+    ],
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "preview.session.refreshed",
@@ -346,7 +358,8 @@
       "Plans/storage-plan.md:1180-1187",
       "Plans/FileManager.md:616-626",
       "Plans/UI_Command_Catalog.md:463-464,9570-9588"
-    ]
+    ],
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   },
   {
     "event_type": "preview.session.stopped",
@@ -377,6 +390,7 @@
       "Plans/storage-plan.md:1180-1187",
       "Plans/FileManager.md:616-626",
       "Plans/UI_Command_Catalog.md:463-464,9570-9588"
-    ]
+    ],
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   }
 ]

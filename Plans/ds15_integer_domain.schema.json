@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/Plans/ds15_integer_domain.schema.json",
+  "$comment": "DS15 boundary profile, adopted separately by every prepared family. ds15IntegerDomain is an asserted custom keyword implemented by the DS15 StrictValidator, not a claim that stock JSON Schema distinguishes integer lexemes. Apply it before all schema, identity, digest, payload, receipt, checkpoint, admission and migration operations, including adopted shared schemas. Accept only integers in [-9223372036854775808,18446744073709551615], encoded with the existing shortest canonical MessagePack integer form. JSON parsing refuses -0, decimal/exponent forms (including mathematical integers such as 1.0, 1e0, 2.0 and 0.0), nonfinite values, and malformed leading zeros such as 01. Programmatic integral floats also refuse. Booleans retain their Boolean type and never satisfy an integer schema. No codec, digest preimage or caller-semantic comparison domain changes. Invalid representations produce explicit refusal (false/null at predicate/identity boundaries), never an escaping codec exception. Existing already-parsed integer zero is canonical zero; its erased original spelling cannot be recovered. Raw JSON callers must use parse_numeric_json before this typed boundary.",
+  "boundary_keywords": {
+    "ds15IntegerDomain": true
+  },
+  "ds15IntegerDomain": true
+}

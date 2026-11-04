@@ -83,7 +83,16 @@ for f in functions:
    add(f.name,node.value.test,True,'migration-result-validity')
 # Deduplicate equivalent mutation positions.
 mutations=list({(x['function'],x['line'],x['column'],x['end_line'],x['end_column'],x['kind'],x['ast_dump'],x['replacement']):x for x in mutations}.values())
+assert len(mutations)==177, 'An existing reviewed guard moved'
+# Append the two numeric prerequisites; retain every G000..G176 meaning.
+support_names={'numeric_atom_ok','numbers_ok','integer_boundary','parse_integer','parse_numeric_json'}
+support=[x for x in tree.body if isinstance(x,ast.FunctionDef) and x.name in support_names]
+atom=next(x for x in support if x.name=='numeric_atom_ok')
+lexical=next(x for x in support if x.name=='parse_integer')
+add('numeric_atom_ok',atom.body[-1].value,True,'numeric-domain-prerequisite')
+add('parse_integer',lexical.body[0].test,False,'negative-zero-spelling')
 functions += list(helpers.values())
+functions = support + functions
 cases=[];controls=[]
 def add_case(c,f,case,target='evaluate',base=None):
  d=m.semantic_input(c,f,case) if target=='evaluate' and base is None else copy.deepcopy(f['semantic_base'] if base is None else base)
@@ -105,6 +114,11 @@ def call(g,case):
  if target=='original_output_present':return g[target](d['application_source']['original_output'])
  if target=='outcome_present':return g[target](d['outcome'])
  if target=='admission_present':return g[target](d['admitted_sequence'])
+ if target=='numeric_prerequisite':
+  if d['token']=='-0':
+   try:return g['parse_integer'](d['token'] if d['negative'] else '0')==0
+   except ValueError:return False
+  return g['numeric_atom_ok'](d['data'])
  raise AssertionError(target)
 def refused(got):
  if isinstance(got,dict) and 'result' in got:return got['result'] in {'REFUSE','UNAVAILABLE','PENDING'}
@@ -136,6 +150,21 @@ for proof in proofs:
   probe['expected']=call(m.__dict__,{'contract':c,'input':data,'target':target,'operation':operation})
   assert refused(probe['expected'])==negative,('invalid guard proof baseline',probe)
   add_case(c,f,probe,target,data)
+numeric_grammar=[]
+for case in m.read('Plans/ds15_numeric_contract_fixtures.json'):
+ if case['token'] in ('01','00','-01'):
+  assert not m.numeric_guard_result(case)
+  numeric_grammar.append(case['id'])
+  continue
+ c=next(c for c in cs if c['event_type']==case['event_type'])
+ f=next(f for f in fs if f['event_type']==case['event_type'])
+ for negative in (False,True):
+  data=m.numeric_input(case,negative)[1] if case['token']!='-0' else None
+  if data is not None and case['target']!='atom':
+   for key in case['path'].split('/'):
+    data=data[int(key)] if isinstance(data,list) else data[key]
+  probe={'id':case['id']+('' if negative else '-parent'),'changes':{},'expected':case['valid'] if negative else True}
+  add_case(c,f,probe,'numeric_prerequisite',{'token':case['token'],'negative':negative,'data':data})
 class Replace(ast.NodeTransformer):
  def __init__(self,mut):self.mut=mut;self.changed=0
  def generic_visit(self,node):
@@ -174,12 +203,25 @@ def memoized_predicate(fn):
   if key not in cache:cache[key]=(args,kwargs,fn(*args,**kwargs))
   return cache[key][2]
  return wrapped
-all_names=names|presence_helpers
-unchanged_predicates={n:memoized_predicate(getattr(m,n)) for n in all_names-{'evaluate','migrate'}}
+all_names=names|presence_helpers|support_names
+unchanged_predicates={n:memoized_predicate(getattr(m,n)) for n in (names|presence_helpers)-{'evaluate','migrate'}}
 dependencies={f.name:{n.func.id for n in ast.walk(f) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id in all_names} for f in functions}
 def depends_on(name,target,seen=()):
  return name==target or (name not in seen and any(depends_on(n,target,(*seen,name)) for n in dependencies.get(name,())))
 def model(ids):
+ if any(i>=177 for i in ids):
+  # The numeric atom is shared by decorators AND a schema keyword. Recompile
+  # the whole module for its mutation so no original validator/cache retains
+  # the unmutated helper through its Python globals. Still change only the
+  # one named AST expression, with the same independent rest-of-AST check.
+  whole=copy.deepcopy(tree)
+  for i in ids:
+   mut=mutations[i]
+   whole.body=[exact_weaken(f,mut) if isinstance(f,ast.FunctionDef) and f.name==mut['function'] else f for f in whole.body]
+  g={'__file__':m.__file__,'__name__':'ds15_numeric_guard_mutant'}
+  exec(compile(ast.fix_missing_locations(whole),m.__file__,'exec'),g)
+  g['read']=pinned_read
+  return g
  subset=copy.deepcopy(functions)
  for i in ids:
   mut=mutations[i]
@@ -191,7 +233,7 @@ def model(ids):
 
 # F10 regression: removing receipt equality must preserve full-value custody.
 # Its three first-receipt observations agree in every corrupt-commitment case.
-assert len(mutations)==177,'Review guard ids changed; adjudicate the inventory'
+assert len(mutations)==179,'Review guard ids changed; adjudicate the inventory'
 assert mutations[32]['guard']=="r == custody['first_append_receipt'] == result['first_append_receipt']"
 regression=[];g032=model((32,))
 for c in cs:
@@ -265,6 +307,7 @@ result={'status':'partial' if any(not z['caught_by'] for z in cases) or any(not 
         'duplicate_witnesses':len(duplicate_proofs),
         'guards_without_single_or_duplicate_proof':[o['id'] for o in outputs if not o['negative_successes'] and not any(o['id'] in z['guards'] for z in duplicate_proofs)],
         'unexposed_after_duplicate_sets':sum(not z['caught_by'] and not z.get('caught_by_duplicate_sets') for z in cases),
+        'numeric_grammar_refusals':numeric_grammar,
         'seconds':round(time.monotonic()-t,1)}
 assert source==(R/'scripts/pm-ds15-event-contracts.py').read_text(), 'Checker changed during audit'
 for path,digest in input_hashes.items():
