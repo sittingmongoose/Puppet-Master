@@ -299,6 +299,7 @@ def semantic_body_mutation(record, event):
                          (event.replace('.', '_')+'.schema.json')).read_text())
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
     p = record['payload']
+    baseline_valid = validator.is_valid(p)
     fields = schema['$defs'][p['scope']['scope_kind']]['properties']
     identity_fields = {'schema_id','schema_version','scope','operation_id','thread_id',
                        'computer_id','actor_ref','ts'}
@@ -311,7 +312,11 @@ def semantic_body_mutation(record, event):
             if value == old:
                 continue
             candidate = copy.deepcopy(p); candidate[key] = value
-            if validator.is_valid(candidate):
+            # A regression campaign may deliberately invalidate the positive.
+            # Preserve that defect for the ordinary positive check; the helper
+            # still changes exactly one independently valid result field.
+            if (Draft202012Validator(definition, format_checker=FormatChecker()).is_valid(value)
+                    and (not baseline_valid or validator.is_valid(candidate))):
                 return candidate
     raise AssertionError('No independent semantic-body fixture for '+event)
 
