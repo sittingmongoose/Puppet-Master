@@ -83,11 +83,16 @@ def store_operation(logical, force_reference=False):
     return value, resolved
 
 
+def operation_value_size(body):
+    """Physical-value byte gate, before decoding or schema dispatch."""
+    if len(body) > 16384:
+        raise ValueError('operation_value_too_large')
+
+
 def operation_contract(name, value, resolved, expected, schema):
     import msgpack
     from pm_event_index_binding import binding_bytes
-    if len(binding_bytes(value)) > 16384:
-        raise ValueError('operation_value_too_large')
+    operation_value_size(binding_bytes(value))
     definition = schema['$defs'][name.replace('.', '_') + '_operation']
     if list(Draft202012Validator(definition, format_checker=FORMAT).iter_errors(value)):
         raise ValueError('operation_schema')
@@ -137,12 +142,16 @@ def identity(name, payload, scope_key, server_id=None):
     application = scope['scope_kind'] == 'application' if scope else scope_key == 'application'
     if application:
         server_id = scope['server_id'] if scope else server_id
-        if not server_id:
-            raise ValueError('original_server_required')
+        original_server_required(server_id)
         key = 'application@1:' + server_id.encode().hex() + ':' + payload['operation_id'].encode().hex()
     else:
         key = name + ':' + digest
     return 'evt_' + name.replace('.', '_') + '_' + digest, key
+
+
+def original_server_required(server_id):
+    if not server_id:
+        raise ValueError('original_server_required')
 
 def semantic(name, payload, scope_key, event_id, original=None, server_id=None):
     if name.startswith('auth.github.') and scope_key != 'application':
@@ -263,6 +272,17 @@ def persona_semantic(name, payload, scope_key, source):
                 raise ValueError('original_source_join')
 
 
+def selected_result_contract(value, shared, registry):
+    definition = shared['$defs']['persona_select_result_v2']
+    if list(Draft202012Validator(definition, registry=registry, format_checker=FORMAT).iter_errors(value)):
+        raise ValueError('selected_result_schema')
+
+
+def resolution_contract(value, schema):
+    if list(Draft202012Validator(schema['$defs']['persona_selected_resolution']).iter_errors(value)):
+        raise ValueError('resolution_schema')
+
+
 def check_persona(row, schema):
     from referencing import Registry, Resource
     name, p = row['event_type'], row['valid']
@@ -289,9 +309,12 @@ def check_persona(row, schema):
         actual_verb = body['command_id'].split('.')[-1]
         for kind in ('request', 'result'):
             ref = shared['$defs']['persona_' + actual_verb + '_' + kind + '_v2']
-            Draft202012Validator(ref, registry=registry, format_checker=FORMAT).validate(source[kind])
+            if name == 'persona.selected' and kind == 'result':
+                selected_result_contract(source[kind], shared, registry)
+            else:
+                Draft202012Validator(ref, registry=registry, format_checker=FORMAT).validate(source[kind])
         if name == 'persona.selected':
-            Draft202012Validator(schema['$defs']['persona_selected_resolution']).validate(source['resolution'])
+            resolution_contract(source['resolution'], schema)
         sk = persona_scope_key(body)
         persona_semantic(name, body, sk, source)
         persona_semantic(name, copy.deepcopy(body), sk, source)
@@ -317,16 +340,17 @@ def check_persona(row, schema):
         else:
             raise AssertionError((name, 'accepted semantic negative', case['case_id']))
     if name == 'persona.selected':
-        result_validator = Draft202012Validator(shared['$defs']['persona_select_result_v2'], registry=registry)
         original = row['source']['result']
         for alias in ('requested_persona_id', 'effective_persona_id'):
-            assert list(result_validator.iter_errors({**original, alias: 'forbidden'}))
-        resolution_validator = Draft202012Validator(schema['$defs']['persona_selected_resolution'])
+            expect_failure(lambda: selected_result_contract({**original, alias: 'forbidden'}, shared, registry),
+                           'selected_result_schema', name, alias)
         resolution = row['source']['resolution']
         for alias in ('requested_persona_id', 'effective_persona_id'):
-            assert list(resolution_validator.iter_errors({**resolution, alias: 'forbidden'}))
+            expect_failure(lambda: resolution_contract({**resolution, alias: 'forbidden'}, schema),
+                           'resolution_schema', name, alias)
         for key in ('requested_persona', 'effective_persona', 'runtime_snapshot_ref', 'runtime_snapshot_sha256'):
-            assert list(resolution_validator.iter_errors({k: v for k, v in resolution.items() if k != key}))
+            expect_failure(lambda: resolution_contract({k: v for k, v in resolution.items() if k != key}, schema),
+                           'resolution_schema', name, key)
     return {'event_type': name, 'status': 'pass', 'payload_negatives': len(row['invalid']),
             'relational_negatives': len(row['semantic_invalid']), 'positive_variants': len(variants),
             'event_id_vector': eid, 'native_execution': 'NOT_RUN'}
@@ -343,6 +367,43 @@ def source_scope_key(source):
     # Preserve the separately specified non-Persona Event ID recipe. The actual
     # Server is also stored and joined independently, and enters CV-366 app keys.
     return 'application' if scope['scope_kind'] == 'application' else 'project:' + scope['project_id']
+
+
+def partition_contract(scope, partition):
+    import base64
+    expected = ('app' if scope['scope_kind'] == 'application' else
+                'project~' + base64.urlsafe_b64encode(scope['project_id'].encode()).decode().rstrip('='))
+    if scope['scope_partition'] != expected or partition != expected:
+        raise ValueError('partition')
+
+
+def stage_contract(name, case, schema):
+    """Isolated pre-dispatch boundaries; never claim raw bytes as logical values.
+
+    These are also called by the complete operation/append paths. A missing
+    reference has no decodable body, so its availability control belongs at
+    transport, rather than claiming it is an otherwise valid logical operation.
+    """
+    stage = case['stage']
+    if stage == 'operation_value_size':
+        return operation_value_size(bytes.fromhex(case['body_hex']))
+    if stage == 'transport':
+        return transport(bytes.fromhex(case['body_hex']), case['payload_ref'], case['resolved'])
+    if stage == 'reference_availability':
+        return reference_available(case['payload_ref'], case['resolved'])
+    if stage == 'partition':
+        return partition_contract(case['scope'], case['scope_partition'])
+    if stage == 'payload_schema':
+        if list(Draft202012Validator(schema['$defs'][name.replace('.', '_')],
+                                    format_checker=FORMAT).iter_errors(case['payload'])):
+            raise ValueError('payload_schema')
+        return
+    if stage == 'operation_schema':
+        if list(Draft202012Validator(schema['$defs'][name.replace('.', '_') + '_operation'],
+                                    format_checker=FORMAT).iter_errors(case['value'])):
+            raise ValueError('operation_schema')
+        return
+    raise ValueError('unknown_oracle_stage')
 
 
 def semantic_record(record):
@@ -382,14 +443,18 @@ def transport(body_bytes, payload_ref, resolved):
         if len(body_bytes) > 16384:
             raise ValueError('inline_body_too_large')
         return
-    if (resolved is None or resolved['ref'] != payload_ref or not resolved['durable']
-            or not resolved['access_current']):
-        raise ValueError('payload_ref_unavailable')
+    reference_available(payload_ref, resolved)
     if (resolved['blake3_id'] != blake3(body_bytes).hexdigest()
             or resolved['byte_size'] != len(body_bytes)
             or resolved['media_type'] != 'application/msgpack'
             or bytes.fromhex(resolved['bytes_hex']) != body_bytes):
         raise ValueError('payload_ref_integrity')
+
+
+def reference_available(payload_ref, resolved):
+    if (resolved is None or resolved['ref'] != payload_ref or not resolved['durable']
+            or not resolved['access_current']):
+        raise ValueError('payload_ref_unavailable')
 
 
 def append_contract(name, case, schema, original=None):
@@ -416,10 +481,7 @@ def append_contract(name, case, schema, original=None):
         raise ValueError('original_source_join')
     if name.startswith('auth.github.') and scope['scope_kind'] != 'application':
         raise ValueError('scope')
-    expected_partition = ('app' if scope['scope_kind'] == 'application' else
-        'project~' + base64.urlsafe_b64encode(scope['project_id'].encode()).decode().rstrip('='))
-    if scope['scope_partition'] != expected_partition or case['scope_partition'] != expected_partition:
-        raise ValueError('partition')
+    partition_contract(scope, case['scope_partition'])
     scope_schema = load_plan('Plans/shared_integration_runtime.schema.json')['$defs']['WorkflowScopeV2']
     if list(Draft202012Validator(scope_schema).iter_errors(scope)):
         raise ValueError('scope')
@@ -523,6 +585,12 @@ def check_append_contract(row, schema):
             expect_failure(call, case['expected_error'], name, case['label'])
         else:
             call()
+    for case in row['stage_cases']:
+        call = lambda: stage_contract(name, case, schema)
+        if 'expected_error' in case:
+            expect_failure(call, case['expected_error'], name, case['label'])
+        else:
+            call()
     for case in row['history_cases']:
         call = lambda: history_contract(name, case, schema)
         if 'expected_error' in case:
@@ -562,6 +630,26 @@ def check_append_contract(row, schema):
             'storage_metadata_retry': 'same_semantic_digest', 'caller_semantic_retry': 'idempotency_conflict'}
 
 
+def preparation_contract(expected, fixtures, grade, registry, values, schema):
+    """Prepared-oracle metadata fences, independent of native admission."""
+    if {r['event_type'] for r in fixtures['families']} != expected or len(fixtures['families']) != len(expected):
+        raise ValueError('fixture_family_coverage')
+    if {r['event_type'] for r in grade['rows']} != expected:
+        raise ValueError('grade_family_coverage')
+    if not all(r['disposition'] == 'UNDISPOSITIONED' for r in grade['rows']):
+        raise ValueError('unadmitted_disposition')
+    if expected.intersection(r['event_type'] for r in registry['families']):
+        raise ValueError('prepared_membership')
+    for name in expected:
+        slug = name.replace('.', '_')
+        value = next(r for r in values['families'] if r['family_id'] == slug + '_operation')
+        if value['retention_policy_ref'] != 'PENDING_RETENTION_DECISION':
+            raise ValueError('retention_pending')
+        Draft202012Validator.check_schema(value['value_schema'])
+        if value['value_schema'] != schema['$defs'][slug + '_operation']:
+            raise ValueError('operation_schema_binding')
+
+
 def run(fixtures_path=None):
     schema = json.loads((ROOT / 'Plans/dg6b_event_contracts.schema.json').read_text())
     resolved_references = resolve_schema_graph(schema)
@@ -571,11 +659,10 @@ def run(fixtures_path=None):
                 'plugin.hook.invoked', 'plugin.load_failed', 'plugin.loaded', 'plugin.permission.override',
                 'plugin.tool.collision', 'plugin.tool.registered', 'persona.created', 'persona.deleted',
                 'persona.exported', 'persona.imported', 'persona.selected', 'persona.updated'}
-    assert {r['event_type'] for r in fixtures['families']} == expected
-    assert len(fixtures['families']) == len(expected)
     grade = load_plan('reports/event-authority-20261104/DG6B.self-grade.json')
-    assert {r['event_type'] for r in grade['rows']} == expected
-    assert all(r['disposition'] == 'UNDISPOSITIONED' for r in grade['rows']), 'unadmitted_disposition'
+    registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
+    values = json.loads((ROOT / 'Plans/storage_value_registry.json').read_text())
+    preparation_contract(expected, fixtures, grade, registry, values, schema)
     results = []
     for row in fixtures['families']:
         name, p = row['event_type'], row['valid']
@@ -597,7 +684,8 @@ def run(fixtures_path=None):
         changed = {**p, 'ts': '2026-11-04T12:01:00Z'}
         probes.append(('original_payload_conflict', lambda: semantic(name, changed, 'application', eid, original=p, server_id=server)))
         if name.startswith('auth.'):
-            probes.append(('scope', lambda: semantic(name, p, 'project:other', eid)))
+            project_eid = identity(name, p, 'project:other')[0]
+            probes.append(('scope', lambda: semantic(name, p, 'project:other', project_eid)))
         else:
             # Same operation in another source scope cannot have the original identity.
             probes.append(('identity', lambda: semantic(name, p, 'project:other', eid)))
@@ -623,16 +711,6 @@ def run(fixtures_path=None):
                 raise AssertionError((name, 'accepted semantic negative', reason))
         results.append({'event_type': name, 'payload_negatives': len(row['invalid']),
                         'relational_negatives': len(probes), 'event_id_vector': eid, 'status': 'pass'})
-    # Prepared contract gate must not be confused with event registry membership.
-    registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
-    assert not expected.intersection(r['event_type'] for r in registry['families'])
-    values = json.loads((ROOT / 'Plans/storage_value_registry.json').read_text())
-    for name in expected:
-        slug = name.replace('.', '_')
-        value = next(r for r in values['families'] if r['family_id'] == slug + '_operation')
-        assert value['retention_policy_ref'] == 'PENDING_RETENTION_DECISION'
-        Draft202012Validator.check_schema(value['value_schema'])
-        assert value['value_schema'] == schema['$defs'][slug + '_operation']
     for row, result in zip(fixtures['families'], results):
         result['append_oracles'] = check_append_contract(row, schema)
     return {'status': 'pass', 'native_execution': 'NOT_RUN',
