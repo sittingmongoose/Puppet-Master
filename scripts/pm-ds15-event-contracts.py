@@ -272,6 +272,16 @@ def payload_ok(c, p, x):
 def evaluate(c, op, d):
     """Normative reference model over concrete source/receipt/index values."""
     p, x = d['payload'], d['context']
+    # Boundary oracles deliberately exercise the adopted EventRecord contract
+    # separately from the stricter, bounded family metadata schemas. They do
+    # not authorize a family append or introduce a large-inline payload field.
+    if op == 'envelope_boundary':
+        return {'result': 'ACCEPT' if envelope_ok(c, d, retry=False) else 'REFUSE', 'effects': 0}
+    if op == 'receipt_boundary':
+        return {'result': 'ACCEPT' if receipt_ok(d) else 'REFUSE', 'effects': 0}
+    if op == 'event_schema':
+        valid = not list(validator(read('Plans/event_record.schema.json')).iter_errors(d['envelope']))
+        return {'result': 'ACCEPT' if valid else 'REFUSE', 'effects': 0}
     if op in ('payload', 'recover', 'publish', 'withdraw_writer'):
         policies = [d['envelope'].get('replay_policy'), d['original']['event'].get('replay_policy'),
                     d.get('replay_policy'), x.get('replay_policy'), x.get('envelope_replay_policy')]
@@ -371,6 +381,24 @@ def patch(data, changes):
             del parent[key]
         else:
             parent[key] = copy.deepcopy(value)
+
+
+def predicate_ok(c, target, data):
+    """Exercise a real validation boundary without a caller's other guards.
+
+    These are static guard controls, never publication/append operations. A
+    fixture must first validate its parent at this same boundary, then change
+    one leaf. End-to-end semantic cases remain independently required below.
+    """
+    if target == 'payload_ok':
+        return payload_ok(c, data['payload'], data['context'])
+    if target == 'envelope_ok':
+        return envelope_ok(c, data, retry=False)
+    if target == 'receipt_ok':
+        return receipt_ok(data)
+    if target == 'token_matches_storage':
+        return token_matches_storage(data['selected_token'], data['storage_instance_id'])
+    raise AssertionError('Unknown guard boundary: ' + target)
 
 REQUIRED = {'valid-transition', 'invalid-transition', 'envelope-mismatch', 'original-retry', 'lost-ack',
             'append-recovery', 'missing-outcome', 'corrupt-outcome', 'corrupt-receipt', 'changed-bytes',
@@ -481,7 +509,7 @@ def main():
     assert {c['event_type'] for c in contracts} == {f['event_type'] for f in fixtures} == PREPARED_FAMILIES, 'DS15 prepared-family set changed'
     registry = read('Plans/event_family_registry.json')
     value_registry = read('Plans/storage_value_registry.json')
-    count = semantic_count = schema_count = 0
+    count = semantic_count = schema_count = predicate_count = 0
     for c in contracts:
         name = c['event_type']
         assert name not in json.dumps(registry), name + ' unexpectedly admitted'
@@ -522,6 +550,13 @@ def main():
             got = evaluate(c, case['operation'], data)
             assert got == case['expected'], (name, case['id'], got, case['expected'])
             semantic_count += 1
+        for case in f.get('predicate_cases', []):
+            data = copy.deepcopy(f['semantic_base'])
+            assert predicate_ok(c, case['target'], data), (name, case['id'], 'invalid parent')
+            assert len(case['changes']) == 1, (name, case['id'], 'not one leaf')
+            patch(data, case['changes'])
+            assert not predicate_ok(c, case['target'], data), (name, case['id'], 'guard accepted')
+            predicate_count += 1
         schema_ids = [case['id'] for case in f['schema_cases']]
         assert len(schema_ids) == len(set(schema_ids)) and SCHEMA_REQUIRED <= set(schema_ids), name
         for case in f['schema_cases']:
@@ -535,6 +570,6 @@ def main():
                 raise AssertionError((name, case['id'], 'unresolved schema reference accepted'))
             schema_count += 1
     value_cases = check_value_contracts() if (ROOT / 'Plans/ds15_value_contract_fixtures.json').exists() else 0
-    print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'value_oracles':value_cases,'native_execution':'NOT_RUN'}))
+    print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'predicate_oracles':predicate_count,'value_oracles':value_cases,'native_execution':'NOT_RUN'}))
 
 if __name__ == '__main__': main()
