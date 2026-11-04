@@ -32,6 +32,8 @@ export default async function(t){
    await f.evaluate(id=>O55.studio.onboarding.screen(id,'fresh'),screen);
    await f.waitForFunction(()=>{const e=document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)');return e&&!e.matches('.o55-hold,.o55-entering');});
    await f.evaluate(([family,mode])=>O55.ui.applyLook(family,mode),look.split('-'));await t.settle();
+   await f.waitForFunction(expected=>PMLogo.look()===expected,look);
+   await f.locator('#o55np-reboot').waitFor({state:'hidden'});
    await t.equal(`${look} ${screen} look retained`,()=>f.evaluate(()=>PMLogo.look()),look);
    if(screen==='where') await f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [role="radio"]').first().click();
    if(screen==='where') await measure(t,f,f.locator('#pm-o55-onboarding .o55-tag:visible').first(),look+' Recommended');
