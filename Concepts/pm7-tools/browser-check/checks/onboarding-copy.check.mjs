@@ -70,7 +70,8 @@ export default async function (t) {
           observations.push({id, body, expected, marker, ok:body === expected && marker === id + '|' + mode});
           if (id === 'lookFamily:basic') {
             for (const other of [mode === 'ELI5' ? 'Expert' : 'ELI5', mode]) {
-              await f.locator('.o55-talkslot .o55-talk').click();
+              // Settings can change wording while this note remains open; a header click closes the menu.
+              await f.evaluate(m => window.O55.talk.set(m, 'copy-check-settings'), other);
               const changed = await note.textContent();
               const target = tips.find(x => x.g === 'chrome' && x.id === id)[other === 'Expert' ? 'expert' : 'text'];
               observations.push({id, other, body:changed, expected:target, ok:changed === target && await note.getAttribute('data-written') === id + '|' + other});
