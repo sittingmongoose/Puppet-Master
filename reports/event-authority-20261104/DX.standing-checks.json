@@ -1,5 +1,5 @@
 {
-  "status": "PARTIAL",
+  "status": "PASS_FINITE_STATIC_MODEL",
   "families": 16,
   "standing_cells_checked": 176,
   "rows": [
@@ -65,7 +65,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -331,16 +332,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 12,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -408,7 +429,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -654,16 +676,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 12,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -731,7 +773,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -977,16 +1020,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 12,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -1054,7 +1117,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -1300,16 +1364,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 12,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -1377,7 +1461,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -1623,16 +1708,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 12,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -1700,7 +1805,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -1946,16 +2052,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 10,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -2023,7 +2149,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -2269,16 +2396,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 12,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -2346,7 +2493,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -2592,16 +2740,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 10,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -2669,7 +2837,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -2915,16 +3084,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 10,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -2992,7 +3181,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -3238,16 +3428,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 12,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -3315,7 +3525,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -3561,16 +3772,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 12,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -3638,7 +3869,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -3884,16 +4116,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 10,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -3961,7 +4213,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -4227,16 +4480,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 10,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -4304,7 +4577,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -4570,16 +4844,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 10,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -4647,7 +4941,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -4893,16 +5188,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 12,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -4970,7 +5285,8 @@
             }
           ],
           "full_checker": "independent full CLI injection: pass, each expected rejection matched",
-          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed.",
+          "isolated_schema_case": "S2-project-only"
         },
         "3": {
           "status": "PASS",
@@ -5281,16 +5597,36 @@
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
           "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
+          "retained_replay_only_case": "F11-retained-replay-only-history",
+          "foreign_policy_case": "F11-retained-foreign-policy"
         },
         "11": {
-          "status": "PARTIAL",
-          "named_successor_negative": "illegal-successor",
-          "original_result": "reject: illegal successor",
-          "successor_guard_removed": "accept",
-          "new_independent_controls": 10,
+          "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
+          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
+          "summary": {
+            "sites": 172,
+            "single_negative_sites": 160,
+            "single_trace_schema_sites": 1,
+            "named_duplicate_sites": 11,
+            "unproved_sites": 0,
+            "negative_cases": 3227,
+            "single_site_evaluations": 555044,
+            "trace_scenarios": 230,
+            "trace_site_evaluations": 39560,
+            "extra_trace_mutations": 8,
+            "masked_guard_case_instances": 510,
+            "masked_classifications": {
+              "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
+              "NAMED_DUPLICATE_SET": 336,
+              "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
+              "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
+            },
+            "unproved_guard_case_instances": 0,
+            "nonempty_named_sets": 20,
+            "native_execution": "NOT_RUN"
+          }
         }
       },
       "native_execution": "NOT_RUN",
@@ -5298,5 +5634,5 @@
     }
   ],
   "native_execution": "NOT_RUN",
-  "graded_source_head": "26fc48d3703972ce2f4ab2440d7b2699e80ae264"
+  "graded_source_head": "2de4b3704aa75707f271a4d9467cfbd963491152"
 }
