@@ -1,0 +1,632 @@
+{
+ "application_id": "EA-B1-DS-FIX1-LAYOUT-REGRADE",
+ "applied_at_utc": "2026-11-04T20:36:31Z",
+ "applied_by": "claude-opus-5.5:lane-DS-FIX1-ea-b1-20261104",
+ "branch": "plans/ea-b1-seal-blockers-20261104",
+ "applied_on_revision": "78a7f8e824917911b31961505783db8f067e7cb6",
+ "review_finding": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DS-sol/REVIEW.md DS-SOL-01 and DS-SOL-02 (blocking): layout's producer and oracle cells stay non-PASS until the Home4 complete-value bound and reference identifiers are repaired; then re-grade them honestly",
+ "authority_refs": [
+  "Plans/Decision_Log.md#DL-039",
+  "Plans/Decision_Log.md#DL-045"
+ ],
+ "rubric": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+  "sha256": "81f1d8b25ee407975fea50d14ecf44f94127608b912e08b27edd7f62f9b10221"
+ },
+ "pattern": "reports/event-authority-20261104/ds-p2-august-regrade-application.json: receipted row update with before and after hashes; every citation an exact single-line quote located by script",
+ "rows": [
+  {
+   "event_type": "workspace.layout_changed",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_workspace.layout_changed.json",
+   "before_sha256": "4482699e0f2976d839a146a0d3de8f708337f99e77a4c2a1903bf8e27886e614",
+   "after_sha256": "550a5960c335f4dca1cbcb38f86294f82d8f367149779bc4cd750505a5312ea0",
+   "ledger_line": 295,
+   "census_line": 39,
+   "ledger_line_before_sha256": "b7db153a5092d66b633d21318f31c24f295c8e8160b7c00ee941d13985c8721a",
+   "ledger_line_after_sha256": "658868c00464b037e5a5ce0abe6a45b371c0a29826fc5021e674845b9ee14d55",
+   "census_line_before_sha256": "08a93d8cf6b4b7a618936073b732f791ddbed0d644fcfcb6c04de3e6e4fc7bcc",
+   "census_line_after_sha256": "4e0322b0b491cb3875edba070ff1776905a725cdd7d626c608996f34e1421c60",
+   "disposition_before": "KEEP_REGISTERED",
+   "disposition_after": "KEEP_REGISTERED",
+   "provisional_before": false,
+   "provisional_after": false,
+   "cells_before": {
+    "owner_doc": "PASS",
+    "producer": "PASS",
+    "membership_version": "PASS",
+    "closed_payload_schema": "PASS",
+    "scope_identity": "PASS",
+    "replay_idempotency": "PASS",
+    "retention": "PASS",
+    "redaction_custody": "PASS",
+    "transitions": "PASS",
+    "consumers_checkpoints": "PASS",
+    "compatibility_withdrawal": "PASS",
+    "positive_negative_oracles": "PASS"
+   },
+   "cells_after": {
+    "owner_doc": "PASS",
+    "producer": "FAIL",
+    "membership_version": "PASS",
+    "closed_payload_schema": "PASS",
+    "scope_identity": "PASS",
+    "replay_idempotency": "PASS",
+    "retention": "PASS",
+    "redaction_custody": "PASS",
+    "transitions": "PASS",
+    "consumers_checkpoints": "PASS",
+    "compatibility_withdrawal": "PASS",
+    "positive_negative_oracles": "FAIL"
+   },
+   "changed_fields": [
+    "citations_checked",
+    "disposition_rationale",
+    "evidence",
+    "quality_notes"
+   ],
+   "census_changed_fields": [
+    "notes"
+   ]
+  }
+ ],
+ "files": {
+  "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+   "before_sha256": "00f6b80636b4e08ea87f79d1cb2626cfc4e635ab1e17f09e94aa7d4ff3858367",
+   "after_sha256": "d5db5c6adb93cfed7eab39dfc7b146eec7e166e124687bd27625097663af79e9",
+   "lines_changed": 1
+  },
+  "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": {
+   "before_sha256": "49a6a6c4d5662f18c86d029a3e840649156fede160fad231915a97f2d3011651",
+   "after_sha256": "d1496fb25c97be9c19e7a24c25c6284ea48538275dd951090e4132b1d8e1ab55",
+   "lines_changed": 1
+  }
+ },
+ "changed_cells": [
+  "producer",
+  "positive_negative_oracles"
+ ],
+ "boundaries": {
+  "registry_changed": false,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "validator_changed": false,
+  "cohort_pins_changed": false,
+  "owner_choice_changed": false,
+  "disposition_changed": false,
+  "provisional_changed": false,
+  "consumer_invented_or_reactivated": false,
+  "denominator_removal_claimed": false,
+  "depth_pass_claimed_beyond_cells": false,
+  "seal_claimed": false
+ },
+ "citation_anchor_revision": {
+  "new_citations": "78a7f8e824917911b31961505783db8f067e7cb6",
+  "note": "Every citation this application writes is an exact single-line quote located at this revision."
+ },
+ "not_updated": "individual-disposition/COVERAGE.json (generated 2026-09-11) is not regenerated, as in step 5.",
+ "cell_evidence": {
+  "workspace.layout_changed": {
+   "membership_version": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04 to the 2.0.0 row: registry 2026-11-04.1 binds family_revision 2.0.0 (DL-188) to the v2 payload schema, whose $id and schema_version const are 2.0.0. 1.1.0 is a compatibility reader only.",
+    "evidence": [
+     {
+      "path": "Plans/event_family_registry.json",
+      "line_start": 2795,
+      "line_end": 2795,
+      "quote": "\"event_type\": \"workspace.layout_changed\",",
+      "excerpt_sha256": "151e56879d5dce0cde2d1ef6db8245b80ae4688e4f4fdaf3f689550874e9f139",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/event_family_registry.json",
+      "line_start": 2794,
+      "line_end": 2794,
+      "quote": "\"family_revision\": \"2.0.0\",",
+      "excerpt_sha256": "111cd773b758e128c7f05e5c41e27c77e807384fd855eaa1cc7533244e50d7a0",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
+      "line_start": 3,
+      "line_end": 3,
+      "quote": "\"$id\": \"https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0\",",
+      "excerpt_sha256": "c0d46c0bf7d877e7128cc46275482ca04358f757d313731299acbaed4d874b8a",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
+      "line_start": 43,
+      "line_end": 43,
+      "quote": "\"const\": \"2.0.0\"",
+      "excerpt_sha256": "f206a78b368b345c07bb0096277e6754e4c89c3f0d5dc5e3dfb56ee190b33edf",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "owner_doc": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: FinalGUISpec F3-515 is the semantic owner and CV-361 the 2.0.0 payload owner.",
+    "evidence": [
+     {
+      "path": "Plans/event_family_registry.json",
+      "line_start": 2797,
+      "line_end": 2797,
+      "quote": "\"semantic_owner_doc\": \"Plans/FinalGUISpec.md#f3-515---settled-interaction-event-and-persistence-boundary\",",
+      "excerpt_sha256": "5afcbc6a97db2691a9b25a4c959a8b038bc19e1364442ae24087bd479eae756e",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/event_family_registry.json",
+      "line_start": 2798,
+      "line_end": 2798,
+      "quote": "\"payload_owner_doc\": \"Plans/Contracts_V0.md#CV-361\",",
+      "excerpt_sha256": "e351d378bfd6a9b77f37fd6af4b83a00120de5bb905204790d633fc9c86399a8",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 23690,
+      "line_end": 23690,
+      "quote": "### CV-361 - The workspace.layout_changed 2.0.0 Payload",
+      "excerpt_sha256": "0931823bae0267c6935311c56a4a1b1714cbcaa423838909612675d7d695e8a3",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "producer": {
+    "status": "FAIL",
+    "note": "Re-graded 2026-11-04 (lane DS-FIX1; review DS-SOL-01 kept it non-PASS). Producer home.workspace_layout_commit.v1 (SP-273) with its ordering and SP-286/CV-339 adoption; SP-400 (Home4 4.0.0, newly authored under DL-045) is the v2 slot and receipt contract and now bounds the complete stored value at SP-340's 16,384 bytes with a resolved payload reference (DS-SOL-01 repaired, 31cd37713c). Still not PASS: A 2.0.0 payload over 16 KiB has no append route: CV-361's affected_tab_ids, affected_panel_ids and the other affected arrays are unbounded, SP-273 fixes payload_ref=null for this family's new native writes, the envelope's DL-270 prose (Contracts_V0.md:1019) replaces a body over 16 KiB with a BLAKE3 payload_ref, and Plans/event_record.schema.json 2.0.0 still requires an object payload and types payload_ref as a nullable string. That envelope inconsistency is not this lane's to settle (open item in reports/event-authority-20261104/DS.md). Native installation NOT_RUN.",
+    "evidence": [
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21845,
+      "line_end": 21845,
+      "quote": "The current writer is `home.workspace_layout_commit.v1@3.0.0`",
+      "excerpt_sha256": "8c7e4da591c7c4b04c8891c3e4d7a93f9d338e13e76e827d99966b8f9a65a429",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21872,
+      "line_end": 21872,
+      "quote": "Append `workspace.layout_changed` through normal schema/redaction/scope/dedupe admission using those exact frozen bytes.",
+      "excerpt_sha256": "1439f0af034c54d838b6d5f15b01a14f369186c871ead5feef593ac73e57bf89",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21975,
+      "line_end": 21975,
+      "quote": "Require SP-286/CV-339's actual strict shared receipt writer 2.0.0",
+      "excerpt_sha256": "ce6d6d62d08f2ff16262e320cee0f71afbd239aadbb5805c5f21446dbf60615e",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 27512,
+      "line_end": 27512,
+      "quote": "Amended 2026-11-04 (DL-045): SP-400 writes that successor",
+      "excerpt_sha256": "494171c80241fbbbfa08c9d0157e38e2dc6f22826ff14f7d43fa6bb84a1d7693",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 29534,
+      "line_end": 29534,
+      "quote": "v2 Home layout writes use the Home4 slot and receipt contract Plans/home_layout_v2_slot_receipt.schema.json",
+      "excerpt_sha256": "848a71599c6515f0aef7fe65b3d1a8d1f9f9c8c1ecddc3271e622da387f4396a",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 29515,
+      "line_end": 29515,
+      "quote": "**The complete value and its reference form (newly authored under DL-045, 2026-11-04).**",
+      "excerpt_sha256": "62f9c900f7ad731277449760135267931f8af2298064ff5959939ee422009060",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/home_layout_v2_slot_receipt.schema.json",
+      "line_start": 1801,
+      "line_end": 1801,
+      "quote": "\"stored_value_ref\": {",
+      "excerpt_sha256": "985adbe514aa8f517b7f5084cf252e012068abb01f8ca569d1c09a94dfed2360",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21851,
+      "line_end": 21851,
+      "quote": "payload_ref=null, redaction_profile=no_secrets, replay_policy=dedupe_by_idempotency_key, and all migration fields are null for new native writes.",
+      "excerpt_sha256": "3123f88d1727a9bf66f7d79d238343756f35af6576cfc616b86b1f790f1607b3",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
+      "line_start": 176,
+      "line_end": 176,
+      "quote": "\"affected_tab_ids\": {",
+      "excerpt_sha256": "70ecb94bd58e7d47346d1bd2a45df3075982543f023c5b232c8de03bedf5da28",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 1019,
+      "line_end": 1019,
+      "quote": "A larger body is replaced by a `payload_ref` holding a BLAKE3 id, byte size and media type",
+      "excerpt_sha256": "1ddc43b84b670daa9f857929fc9cfe3763aa622f64ee73afcde6ffe53696b7c2",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/event_record.schema.json",
+      "line_start": 121,
+      "line_end": 121,
+      "quote": "\"$ref\": \"#/$defs/nullable_non_empty_string\"",
+      "excerpt_sha256": "12cae5b192f332ba87c70640c055c4ff1e4ee73e8180b7765dd2f838cf299102",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 28257,
+      "line_end": 28257,
+      "quote": "An EventRecord carries at most 16 KiB of inline body.",
+      "excerpt_sha256": "07596b63a868cdb24b2bf9bd5f32842568be58578bdca9dece57f4fe233a3ef7",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "closed_payload_schema": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: the v2 payload root is closed (additionalProperties false); 1.1.0 stays the compatibility reader.",
+    "evidence": [
+     {
+      "path": "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
+      "line_start": 7,
+      "line_end": 7,
+      "quote": "\"additionalProperties\": false,",
+      "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 23690,
+      "line_end": 23690,
+      "quote": "### CV-361 - The workspace.layout_changed 2.0.0 Payload",
+      "excerpt_sha256": "0931823bae0267c6935311c56a4a1b1714cbcaa423838909612675d7d695e8a3",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "scope_identity": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: project_only; SP-273's operation digest and envelope/payload Project join, carried over to v2 writes by its 2026-10-09 amendment.",
+    "evidence": [
+     {
+      "path": "Plans/event_family_registry.json",
+      "line_start": 2796,
+      "line_end": 2796,
+      "quote": "\"scope_policy\": \"project_only\",",
+      "excerpt_sha256": "8472a5d51eb53462551949130f1f8bd4f09280814f6c7f854cccadb4de30bc95",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21847,
+      "line_end": 21847,
+      "quote": "Define `operation_digest = lowerhex(SHA256(RFC8785([storage_instance_id,project_id,workspace_tab_id,command_instance_id])))`",
+      "excerpt_sha256": "84f641c3d7a4873b8b0e26c1f77f0b8a8b79cbe3af0a79e9095e7f52ed33c916",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21851,
+      "line_end": 21851,
+      "quote": "Envelope project_id equals payload project_id and the actual layout project; scope_kind=project.",
+      "excerpt_sha256": "3123f88d1727a9bf66f7d79d238343756f35af6576cfc616b86b1f790f1607b3",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21825,
+      "line_end": 21825,
+      "quote": "The custody below (transaction slot, operation receipt, reader checkpoint), the transaction, crash convergence, retention and read rules carry over to v2 writes",
+      "excerpt_sha256": "490ad2373e2fb1ccee582818e4e0f2e0fdcc180bca7829033cbc1b226fcd870c",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "replay_idempotency": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: SP-273 idempotency, crash convergence and no-backfill rules, carried over to v2 writes.",
+    "evidence": [
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21849,
+      "line_end": 21849,
+      "quote": "Keep the actual command idempotency key and the NEW Home domain-request RFC8785 binding digest request_sha256 in the operation receipt.",
+      "excerpt_sha256": "c119ab2acb384b7043ed036f767eefbb5777700b6853090e248f42c928d99852",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21877,
+      "line_end": 21877,
+      "quote": "Crash before candidate write resumes or cancels only the same admitted operation; it cannot invent a new command.",
+      "excerpt_sha256": "02e5035a3fa392dd63e266cdd7a90d22f5d58d44ffd25066e8206d3c93d30280",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21879,
+      "line_end": 21879,
+      "quote": "A missing event for an old layout is never enough to create one.",
+      "excerpt_sha256": "b1439c433e27273b6ab71dd2cc5a5beacbba91549738df3a2a2f9e9faa74382f",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "retention": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: RP-AUTHORITY-INDEFINITE for the event; the reader checkpoint is disposable RP-PROJECTION-3GEN.",
+    "evidence": [
+     {
+      "path": "Plans/event_family_registry.json",
+      "line_start": 2832,
+      "line_end": 2832,
+      "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+      "excerpt_sha256": "218a403b240aa548ad151a5d5401bf2a73e2a57cbfe0c0ceb2f649d6f0ebc652",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21899,
+      "line_end": 21899,
+      "quote": "The event remains indefinite metadata under its exact registered policy.",
+      "excerpt_sha256": "76b2aa5be4e5dc607a69f30892d1df614bc8453ea32076be8fa39697b07ac6f4",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21859,
+      "line_end": 21859,
+      "quote": "`home_layout_event_reader_checkpoint`, key `home_layout_event_reader_checkpoint.v1:{storage_instance_id}:{project_id}:{workspace_tab_id}`",
+      "excerpt_sha256": "4b1a7623a9bf60a20aa144c8d0c8760bb60dc62bd5646c5f5059abf6cbb8b5c0",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "redaction_custody": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: reject_unhandled_secrets; SP-273 receipt custody and access/tombstone checks before disclosure, carried over to v2; SP-400 keeps a referenced complete value under the holding family's custody, retention and backup.",
+    "evidence": [
+     {
+      "path": "Plans/event_family_registry.json",
+      "line_start": 2815,
+      "line_end": 2815,
+      "quote": "\"mode\": \"reject_unhandled_secrets\",",
+      "excerpt_sha256": "91c21aae18a31744144bca6d3504227098463bc391436ab5b9042a5b03d04763",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21903,
+      "line_end": 21903,
+      "quote": "Apply current project/workspace access, deletion tombstones, quarantine and backup custody before every ref resolution and disclosure.",
+      "excerpt_sha256": "69d65b3b032e7932f3e26850c5c36973f19465d6cc2734c7ef1ff9ab374592ba",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21858,
+      "line_end": 21858,
+      "quote": "`home_layout_operation_receipt`, key `home_layout_operation_receipt.v1:{project_id}:{workspace_tab_id}:{operation_digest}`",
+      "excerpt_sha256": "40c1e748af8fee4b02fb44cd7243a423bd8e75132c65d283d4cf27fcc719dd52",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 29515,
+      "line_end": 29515,
+      "quote": "**The complete value and its reference form (newly authored under DL-045, 2026-11-04).**",
+      "excerpt_sha256": "62f9c900f7ad731277449760135267931f8af2298064ff5959939ee422009060",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "transitions": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: SP-330 validate/write/readback/revision/receipt/append order; a failed or unchanged commit appends none (CV-361).",
+    "evidence": [
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 27512,
+      "line_end": 27512,
+      "quote": "**Transaction and receipt.** Every committed structural change is one admitted command",
+      "excerpt_sha256": "494171c80241fbbbfa08c9d0157e38e2dc6f22826ff14f7d43fa6bb84a1d7693",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 23706,
+      "line_end": 23706,
+      "quote": "Every committed structural change appends exactly one workspace.layout_changed",
+      "excerpt_sha256": "66d8412446c79fdf8dbbd6aa1b834cf4cdae1ed3656019f3291ac4f4ddedefb5",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "consumers_checkpoints": {
+    "status": "PASS",
+    "note": "Cited from the Plans 2026-11-04 under DL-039 AUG-CP-WLC-001 (\"remain unknown until cited from the Plans, and that depth work is authorized\"). Reader/projector home.workspace_layout_event_reader.v1@1.0.0 maintains the filtered checkpoint home_layout_event_reader_checkpoint.v1:{storage_instance_id}:{project_id}:{workspace_tab_id} with prior-checkpoint CAS in one redb transaction and RP-PROJECTION-3GEN rebuild; consumers home.workspace_layout_home_view.v1, home.workspace_layout_editor_routing.v1 and home.workspace_layout_terminal_presentation.v1, all 1.0.0; SP-278 adopted with the nine-field durable token (DL-076); carried over to v2 writes by SP-273's amendment. Existing identifiers only; none invented.",
+    "evidence": [
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21891,
+      "line_end": 21891,
+      "quote": "Define NEW `home.workspace_layout_event_reader.v1@1.0.0` over existing `event_record_index.v2`",
+      "excerpt_sha256": "23fd74ea1d3131f688ef596d1c6d574c2476c7e6040b3d1a0ff4ab1c6d74102b",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21893,
+      "line_end": 21893,
+      "quote": "Three NEW read consumers share the verified token: `home.workspace_layout_home_view.v1`, `home.workspace_layout_editor_routing.v1`, and `home.workspace_layout_terminal_presentation.v1`",
+      "excerpt_sha256": "e38f302d9a027eccc0044b6aa4c70ba2720e885d69f914eed228423374504f91",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21859,
+      "line_end": 21859,
+      "quote": "`home_layout_event_reader_checkpoint`, key `home_layout_event_reader_checkpoint.v1:{storage_instance_id}:{project_id}:{workspace_tab_id}`",
+      "excerpt_sha256": "4b1a7623a9bf60a20aa144c8d0c8760bb60dc62bd5646c5f5059abf6cbb8b5c0",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21895,
+      "line_end": 21895,
+      "quote": "In one redb transaction it writes only the filtered checkpoint",
+      "excerpt_sha256": "d4d212e21f2e17d36fb5d1ed7aa5db3cda077ded9460737823bf70a8415b5494",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21938,
+      "line_end": 21938,
+      "quote": "Adopt actual canonical SP-278, not an opaque generic-index pointer.",
+      "excerpt_sha256": "55ce2fc0be3fd3f71dd47fde0565227c0ee40ff61a9272289a23e84250880593",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21944,
+      "line_end": 21944,
+      "quote": "stores the nine-field durable read token that SP-278 defines on 2026-09-24; `redb_snapshot_id` is not stored.",
+      "excerpt_sha256": "de18a33f14208ec37cec7dfcb9f97408b8ee1840acaa829bcac751252145b8ca",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21901,
+      "line_end": 21901,
+      "quote": "The filtered checkpoint now materializes RP-PROJECTION-3GEN",
+      "excerpt_sha256": "c3a0f306a24c013dedba7fa0d3a30eb7adb9c2c1d43cff163e6954ede6bca1a0",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21825,
+      "line_end": 21825,
+      "quote": "The custody below (transaction slot, operation receipt, reader checkpoint), the transaction, crash convergence, retention and read rules carry over to v2 writes",
+      "excerpt_sha256": "490ad2373e2fb1ccee582818e4e0f2e0fdcc180bca7829033cbc1b226fcd870c",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "compatibility_withdrawal": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: 1.0.0/1.1.0 history stays readable through the compatibility reader; SP-273 consumer and producer withdrawal rules.",
+    "evidence": [
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21905,
+      "line_end": 21905,
+      "quote": "Payload 1.0.0 history is read-only compatibility using actual frozen source contracts where available",
+      "excerpt_sha256": "d2c7c6deef78f8d867ca069d902ba826ed0d1f896211da90a629518d1b3149f6",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21907,
+      "line_end": 21907,
+      "quote": "Withdrawing a read consumer invalidates only its token/publication.",
+      "excerpt_sha256": "18e40f04bb56292bf09a1c5af235830b6ea1691e7973d2fac3e7a983b565934a",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21825,
+      "line_end": 21825,
+      "quote": "whose compatibility reader keeps 1.1.0 events readable",
+      "excerpt_sha256": "490ad2373e2fb1ccee582818e4e0f2e0fdcc180bca7829033cbc1b226fcd870c",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "positive_negative_oracles": {
+    "status": "FAIL",
+    "note": "Re-graded 2026-11-04 (lane DS-FIX1; review DS-SOL-01/02 kept it non-PASS). The DL-076 v5 suite, ATS-040's 2.0.0 payload fixtures and SP-400's Home4 fixtures now cover the complete-value bound and every payload-reference branch: 10 valid (16,384 bytes inline, 16,385 by reference, the review's 25-tab slot, a valid 16,385-byte source payload_ref, a receipt over the limit), 30 schema and 33 joined-value negatives including the review's two probes, trailing-LF ids and projector_replay_only; the checker passes and its self-test fails on bad input. Still not PASS under the rubric (a boundary missing from the contract cannot be tested): A 2.0.0 payload over 16 KiB has no append route: CV-361's affected_tab_ids, affected_panel_ids and the other affected arrays are unbounded, SP-273 fixes payload_ref=null for this family's new native writes, the envelope's DL-270 prose (Contracts_V0.md:1019) replaces a body over 16 KiB with a BLAKE3 payload_ref, and Plans/event_record.schema.json 2.0.0 still requires an object payload and types payload_ref as a nullable string. That envelope inconsistency is not this lane's to settle (open item in reports/event-authority-20261104/DS.md). Native pairs NOT_RUN.",
+    "evidence": [
+     {
+      "path": "Plans/Automated_Testing_System.md",
+      "line_start": 3914,
+      "line_end": 3914,
+      "quote": "valid workspace-event fixtures satisfy the 2.0.0 payload",
+      "excerpt_sha256": "d013736c395fac4dec18125e0e2419e0f89594e4bae270c95d9e50c4e4a60953",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/home_layout_event_contract_fixtures.json",
+      "line_start": 6,
+      "line_end": 6,
+      "quote": "\"path\": \"/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v5/manifest.json\",",
+      "excerpt_sha256": "5b9ff0d675d8e56e175896db6e606eb65334ea54fec7d542b7539ab701f560ca",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 22027,
+      "line_end": 22027,
+      "quote": "Amended 2026-11-04 (DL-076): the frozen joined subject is re-frozen as v5",
+      "excerpt_sha256": "91869508a2ee7aecf80f62342873b80942c4e83f289abc52b142aff5a5a9246d",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 29524,
+      "line_end": 29524,
+      "quote": "**Static oracles.** `Plans/home_layout_v2_slot_receipt_fixtures.json` holds 10 valid values",
+      "excerpt_sha256": "6df6c646dcc6ee8b0985e9a1c3d29f888104f146b6220a8a531b395535716beb",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/home_layout_v2_slot_receipt_fixtures.json",
+      "line_start": 6,
+      "line_end": 6,
+      "quote": "\"checker\": \"python3 scripts/pm_home_layout_v2_slot_receipt.py\",",
+      "excerpt_sha256": "fd0d5e0ae16bc3f27ef23fec79677f03c06640d72a68dca0c50dbb97572a410a",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 21851,
+      "line_end": 21851,
+      "quote": "payload_ref=null, redaction_profile=no_secrets, replay_policy=dedupe_by_idempotency_key, and all migration fields are null for new native writes.",
+      "excerpt_sha256": "3123f88d1727a9bf66f7d79d238343756f35af6576cfc616b86b1f790f1607b3",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
+      "line_start": 176,
+      "line_end": 176,
+      "quote": "\"affected_tab_ids\": {",
+      "excerpt_sha256": "70ecb94bd58e7d47346d1bd2a45df3075982543f023c5b232c8de03bedf5da28",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 1019,
+      "line_end": 1019,
+      "quote": "A larger body is replaced by a `payload_ref` holding a BLAKE3 id, byte size and media type",
+      "excerpt_sha256": "1ddc43b84b670daa9f857929fc9cfe3763aa622f64ee73afcde6ffe53696b7c2",
+      "quote_check": "exact"
+     }
+    ]
+   }
+  }
+ }
+}
