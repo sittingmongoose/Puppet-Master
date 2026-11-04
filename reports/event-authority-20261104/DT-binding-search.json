@@ -65,6 +65,89 @@
         "checkpoint_family_id": "dt_approval_requested_checkpoint",
         "payload_schema_id": "pm.event_payload.approval_requested.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_approval_requested_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7241,
+            "quote": "   For approval.requested alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash aft"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 954,
+            "quote": "| `approval.requested` | HITL / blocked-state owner | UI, orchestrator, permissions, recovery | `run_id`, `node_id`, `blocked_sequence`, `approval_scope_key`, ordered `allowed_action_ids[]`, `detail_ref?`, `tool_use_id?` (CV-355), `ts` |"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 963,
+            "quote": "Every persisted event family has exactly one registered scope_policy: application_only, project_only, application_or_project or inherits_referenced_event. CV-366’s closed family/payload/version/source table is the current app-workflow selector. The former universal project_only grouping for run, memory, coordination, FileSafe, safe-point and approval consumers is superseded only for the explicitly"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7237,
+            "quote": "  - approval.requested, approval.granted, approval.denied, and approval.timeout preserve blocked approval scope and identity minima."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7259,
+            "quote": "  - \"`approval.requested`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 23501,
+            "quote": "  approval.requested carries an optional tool_use_id naming the tool call that waits for the"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 23512,
+            "quote": "  - \"approval.requested includes tool_use_id whenever the waiting action is a tool call.\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 23530,
+            "quote": "  - \"approval.requested\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24472,
+            "quote": "### CV-600 - approval.requested prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24480,
+            "quote": "  Newly authored owner contract under DL-045 for approval.requested@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/human-in-the-loop.md (Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366). An actual current blocked episode creates one ordered action request; it is not a grant. Tool requests carry tool_use_id; other requests omit it. The closed "
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 606,
+            "quote": "| `Plans/human-in-the-loop.md` | — | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | — |"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 8766,
+            "quote": "  approval.requested bound to that tool_use_id, CV-355); several may be running at once when a provider"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29481,
+            "quote": "### SP-580 - approval.requested prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29489,
+            "quote": "  Newly authored owner contract under DL-045 for approval.requested only. Producer HITLBlockedEpisodeOwner.requested calls storage.dt.approval_requested.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt"
+          }
+        ],
+        "negative_evidence": "No exact dt_approval_requested_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_approval_requested_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_requested_source",
+          "source_key": "storage/event-sources/dt/approval_requested/{event_id}/{stage}.json",
+          "source_owner_guard": "HITLBlockedEpisodeOwner.requested.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1"
+        }
       }
     },
     {
@@ -112,6 +195,69 @@
         "checkpoint_family_id": "dt_approval_granted_checkpoint",
         "payload_schema_id": "pm.event_payload.approval_granted.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_approval_granted_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7241,
+            "quote": "   For approval.requested alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash aft"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 955,
+            "quote": "| `approval.granted` | HITL / approval resolver | UI, orchestrator, permissions, recovery | `run_id`, `node_id`, `blocked_sequence`, `approval_scope_key`, `approver_identity`, selected `allowed_action_id`, rationale ref or bounded rationale, `tool_use_id?` (CV-355), `ts` |"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7237,
+            "quote": "  - approval.requested, approval.granted, approval.denied, and approval.timeout preserve blocked approval scope and identity minima."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7260,
+            "quote": "  - \"`approval.granted`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 23503,
+            "quote": "  waiting action is a tool call and absent otherwise. approval.granted, approval.denied and"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24505,
+            "quote": "### CV-601 - approval.granted prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24513,
+            "quote": "  Newly authored owner contract under DL-045 for approval.granted@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/human-in-the-loop.md (Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366). Requires the exact unresolved requested episode and an authenticated human selecting a member of its ordered allowed_action_ids; PAUSE precedence and live revo"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 606,
+            "quote": "| `Plans/human-in-the-loop.md` | — | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | — |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29514,
+            "quote": "### SP-581 - approval.granted prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29522,
+            "quote": "  Newly authored owner contract under DL-045 for approval.granted only. Producer HITLBlockedEpisodeOwner.granted calls storage.dt.approval_granted.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resol"
+          }
+        ],
+        "negative_evidence": "No exact dt_approval_granted_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_approval_granted_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_granted_source",
+          "source_key": "storage/event-sources/dt/approval_granted/{event_id}/{stage}.json",
+          "source_owner_guard": "HITLBlockedEpisodeOwner.granted.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1"
+        }
       }
     },
     {
@@ -159,6 +305,69 @@
         "checkpoint_family_id": "dt_approval_denied_checkpoint",
         "payload_schema_id": "pm.event_payload.approval_denied.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_approval_denied_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7272,
+            "quote": "   For approval.denied alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after "
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 956,
+            "quote": "| `approval.denied` | HITL / approval resolver | UI, orchestrator, permissions, recovery | `run_id`, `node_id`, `blocked_sequence`, `approval_scope_key`, `approver_identity?`, denial reason, `tool_use_id?` (CV-355), `ts` |"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7237,
+            "quote": "  - approval.requested, approval.granted, approval.denied, and approval.timeout preserve blocked approval scope and identity minima."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7261,
+            "quote": "  - \"`approval.denied`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 23503,
+            "quote": "  waiting action is a tool call and absent otherwise. approval.granted, approval.denied and"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24538,
+            "quote": "### CV-602 - approval.denied prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24546,
+            "quote": "  Newly authored owner contract under DL-045 for approval.denied@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/human-in-the-loop.md (Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366). Requires the exact unresolved requested episode; terminal denial never unblocks or executes the tool. The closed payload is Plans/dt_event_contracts.schema.json"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 606,
+            "quote": "| `Plans/human-in-the-loop.md` | — | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | — |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29547,
+            "quote": "### SP-582 - approval.denied prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29555,
+            "quote": "  Newly authored owner contract under DL-045 for approval.denied only. Producer HITLBlockedEpisodeOwner.denied calls storage.dt.approval_denied.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve."
+          }
+        ],
+        "negative_evidence": "No exact dt_approval_denied_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_approval_denied_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_denied_source",
+          "source_key": "storage/event-sources/dt/approval_denied/{event_id}/{stage}.json",
+          "source_owner_guard": "HITLBlockedEpisodeOwner.denied.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1"
+        }
       }
     },
     {
@@ -206,6 +415,69 @@
         "checkpoint_family_id": "dt_approval_timeout_checkpoint",
         "payload_schema_id": "pm.event_payload.approval_timeout.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_approval_timeout_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7272,
+            "quote": "   For approval.denied alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after "
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 957,
+            "quote": "| `approval.timeout` | HITL / approval resolver | UI, orchestrator, permissions, recovery | `run_id`, `node_id`, `blocked_sequence`, `approval_scope_key`, `timeout_class?`, `tool_use_id?` (CV-355), `ts` |"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7237,
+            "quote": "  - approval.requested, approval.granted, approval.denied, and approval.timeout preserve blocked approval scope and identity minima."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7262,
+            "quote": "  - \"`approval.timeout`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 23504,
+            "quote": "  approval.timeout echo the same tool_use_id when the request carried one. No other field of these"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24571,
+            "quote": "### CV-603 - approval.timeout prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24579,
+            "quote": "  Newly authored owner contract under DL-045 for approval.timeout@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/human-in-the-loop.md (Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366). Requires the exact unresolved requested episode and the original owner timeout expiry evidence; terminal timeout never authorizes work. The closed payload is P"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 606,
+            "quote": "| `Plans/human-in-the-loop.md` | — | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | — |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29580,
+            "quote": "### SP-583 - approval.timeout prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29588,
+            "quote": "  Newly authored owner contract under DL-045 for approval.timeout only. Producer HITLBlockedEpisodeOwner.timeout calls storage.dt.approval_timeout.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resol"
+          }
+        ],
+        "negative_evidence": "No exact dt_approval_timeout_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_approval_timeout_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_timeout_source",
+          "source_key": "storage/event-sources/dt/approval_timeout/{event_id}/{stage}.json",
+          "source_owner_guard": "HITLBlockedEpisodeOwner.timeout.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1"
+        }
       }
     },
     {
@@ -243,6 +515,64 @@
         "checkpoint_family_id": "dt_config_migrated_checkpoint",
         "payload_schema_id": "pm.event_payload.config_migrated.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_config_migrated_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7303,
+            "quote": "   For config.migrated alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after "
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24604,
+            "quote": "### CV-604 - config.migrated prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24612,
+            "quote": "  Newly authored owner contract under DL-045 for config.migrated@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/WorktreeGitImprovement.md (WorktreeGitImprovement.md:594-612). Only first-load single→None, per_phase→Phase and per_task→Task are accepted. Original immutable input hash and committed Settings result are retained. Replay never writes Settings again. The "
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 602,
+            "quote": "| `Plans/WorktreeGitImprovement.md` | — | `config.migrated`, `worktree.created`, `worktree.deleted` | — |"
+          },
+          {
+            "path": "Plans/WorktreeGitImprovement.md",
+            "line": 611,
+            "quote": "- Migration: on first load, map legacy strings to enum variants (\"single\" → None, \"per_phase\" → Phase, \"per_task\" → Task). Log `config.migrated` seglog event."
+          },
+          {
+            "path": "Plans/WorktreeGitImprovement.md",
+            "line": 3508,
+            "quote": "- \"config.migrated\""
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29613,
+            "quote": "### SP-584 - config.migrated prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29621,
+            "quote": "  Newly authored owner contract under DL-045 for config.migrated only. Producer SettingsMigrationCoordinator.branch_granularity calls storage.dt.config_migrated.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append"
+          }
+        ],
+        "negative_evidence": "No exact dt_config_migrated_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_config_migrated_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/config_migrated_source",
+          "source_key": "storage/event-sources/dt/config_migrated/{event_id}/{stage}.json",
+          "source_owner_guard": "SettingsMigrationCoordinator.branch_granularity.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1",
+          "application_source_family_id": "dt_config_migrated_application_source",
+          "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/config_migrated_application_source",
+          "application_source_key": "storage/event-sources/dt/config_migrated/application/{event_id}/{stage}.msgpack",
+          "application_source_encoding": "pm.application.physical_messagepack.v1"
+        },
+        "application_premise": "CV-366 currently requires actual server/original-operation app identity and a distinct source/codec; this draft reuses them explicitly. No pre-existing exact DT application source custody sibling was found. WorkflowScopeV2 and the selected actual owner graph remain controlling, specified_unimplemented and admission-gated."
       }
     },
     {
@@ -285,6 +615,64 @@
         "checkpoint_family_id": "dt_gate_evaluation_started_checkpoint",
         "payload_schema_id": "pm.event_payload.gate_evaluation_started.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_gate_evaluation_started_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7303,
+            "quote": "   For config.migrated alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after "
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 943,
+            "quote": "| `gate.evaluation_started` | progression gate runner | scheduler, UI, validation reports | `gate_id`, `run_id`, `node_id?`, `attempt_id?`, `score_threshold?`, `ts` |"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7131,
+            "quote": "  - gate.evaluation_started, gate.passed, and gate.failed preserve gate/runtime/attempt/score/evidence minima."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7150,
+            "quote": "  - \"`gate.evaluation_started`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24637,
+            "quote": "### CV-605 - gate.evaluation_started prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24645,
+            "quote": "  Newly authored owner contract under DL-045 for gate.evaluation_started@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Progression_Gates.md (Contracts_V0.md:943-945; Progression_Gates.md GATE-012). A fresh evaluation_id is captured with the exact gate inputs before evaluation. Neither this event nor a previous pass permits progression. The closed payload is Plans"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 592,
+            "quote": "| `Plans/Progression_Gates.md` | — | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | — |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29646,
+            "quote": "### SP-585 - gate.evaluation_started prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29654,
+            "quote": "  Newly authored owner contract under DL-045 for gate.evaluation_started only. Producer ProgressionGateRunner.evaluation_started calls storage.dt.gate_evaluation_started.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.fir"
+          }
+        ],
+        "negative_evidence": "No exact dt_gate_evaluation_started_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_gate_evaluation_started_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_evaluation_started_source",
+          "source_key": "storage/event-sources/dt/gate_evaluation_started/{event_id}/{stage}.json",
+          "source_owner_guard": "ProgressionGateRunner.evaluation_started.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1"
+        }
       }
     },
     {
@@ -327,6 +715,64 @@
         "checkpoint_family_id": "dt_gate_failed_checkpoint",
         "payload_schema_id": "pm.event_payload.gate_failed.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_gate_failed_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7334,
+            "quote": "   For gate.failed alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 945,
+            "quote": "| `gate.failed` | progression gate runner | scheduler, UI, validation reports | `gate_id`, `run_id`, `node_id?`, `attempt_id?`, `score?`, `score_threshold?`, `failure_reason_code`, evidence refs, `ts` |"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7131,
+            "quote": "  - gate.evaluation_started, gate.passed, and gate.failed preserve gate/runtime/attempt/score/evidence minima."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7152,
+            "quote": "  - \"`gate.failed`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24670,
+            "quote": "### CV-606 - gate.failed prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24678,
+            "quote": "  Newly authored owner contract under DL-045 for gate.failed@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Progression_Gates.md (Contracts_V0.md:943-945; Progression_Gates.md GATE-012). Exactly one failed result follows the matching evaluation_started with failure code and evidence. A blocked GATE-012 report with clarification items is BLOCKED, not falsely classi"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 592,
+            "quote": "| `Plans/Progression_Gates.md` | — | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | — |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29679,
+            "quote": "### SP-586 - gate.failed prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29687,
+            "quote": "  Newly authored owner contract under DL-045 for gate.failed only. Producer ProgressionGateRunner.failed calls storage.dt.gate_failed.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name"
+          }
+        ],
+        "negative_evidence": "No exact dt_gate_failed_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_gate_failed_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_failed_source",
+          "source_key": "storage/event-sources/dt/gate_failed/{event_id}/{stage}.json",
+          "source_owner_guard": "ProgressionGateRunner.failed.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1"
+        }
       }
     },
     {
@@ -369,6 +815,64 @@
         "checkpoint_family_id": "dt_gate_passed_checkpoint",
         "payload_schema_id": "pm.event_payload.gate_passed.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_gate_passed_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7334,
+            "quote": "   For gate.failed alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 944,
+            "quote": "| `gate.passed` | progression gate runner | scheduler, UI, validation reports | `gate_id`, `run_id`, `node_id?`, `attempt_id?`, `score?`, `score_threshold?`, evidence refs, `ts` |"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7131,
+            "quote": "  - gate.evaluation_started, gate.passed, and gate.failed preserve gate/runtime/attempt/score/evidence minima."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7151,
+            "quote": "  - \"`gate.passed`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24703,
+            "quote": "### CV-607 - gate.passed prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24711,
+            "quote": "  Newly authored owner contract under DL-045 for gate.passed@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Progression_Gates.md (Contracts_V0.md:943-945; Progression_Gates.md GATE-012). Exactly one result follows the matching evaluation_started; all gate-specific PASS predicates and evidence must hold. GATE-012 requires a valid PASS report with zero clarification"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 592,
+            "quote": "| `Plans/Progression_Gates.md` | — | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | — |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29712,
+            "quote": "### SP-587 - gate.passed prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29720,
+            "quote": "  Newly authored owner contract under DL-045 for gate.passed only. Producer ProgressionGateRunner.passed calls storage.dt.gate_passed.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name"
+          }
+        ],
+        "negative_evidence": "No exact dt_gate_passed_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_gate_passed_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_passed_source",
+          "source_key": "storage/event-sources/dt/gate_passed/{event_id}/{stage}.json",
+          "source_owner_guard": "ProgressionGateRunner.passed.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1"
+        }
       }
     },
     {
@@ -426,6 +930,79 @@
         "checkpoint_family_id": "dt_requirements_clarification_requested_checkpoint",
         "payload_schema_id": "pm.event_payload.requirements_clarification_requested.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_requirements_clarification_requested_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7365,
+            "quote": "   For requirements.clarification_requested alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations "
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 1451,
+            "quote": "The persisted `requirements.clarification_requested` event is the requirements-quality clarification request event. It carries the same `wizard_id`, `thread_id`, and `question_ids[]` set represented by the blocked requirements report, and legacy single-question tool shapes (`header?: string`, `text: string`, `options?: string[]`, and `answer: string`) normalize into the questionnaire payload and `"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8661,
+            "quote": "  requirements.clarification_requested event carries blocked requirements"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8672,
+            "quote": "  - requirements.clarification_requested carries wizard_id, thread_id, and question_ids[] from the blocked requirements report."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8693,
+            "quote": "  - \"`requirements.clarification_requested`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24736,
+            "quote": "### CV-608 - requirements.clarification_requested prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24744,
+            "quote": "  Newly authored owner contract under DL-045 for requirements.clarification_requested@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Progression_Gates.md (Progression_Gates.md:428-475; Contracts_V0.md:1451). Only a schema-valid blocked requirements report with nonempty needs_user_clarification emits. question_ids equals the complete report question set. No automat"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 592,
+            "quote": "| `Plans/Progression_Gates.md` | — | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | — |"
+          },
+          {
+            "path": "Plans/Progression_Gates.md",
+            "line": 468,
+            "quote": "      - A persisted `requirements.clarification_requested` event exists for the same `wizard_id`, `thread_id`, and `question_id` set represented by the final blocked report."
+          },
+          {
+            "path": "Plans/Progression_Gates.md",
+            "line": 2304,
+            "quote": "  - \"requirements.clarification_requested\""
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29745,
+            "quote": "### SP-588 - requirements.clarification_requested prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29753,
+            "quote": "  Newly authored owner contract under DL-045 for requirements.clarification_requested only. Producer RequirementsQualityGate.request_clarification calls storage.dt.requirements_clarification_requested.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adop"
+          }
+        ],
+        "negative_evidence": "No exact dt_requirements_clarification_requested_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_requirements_clarification_requested_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/requirements_clarification_requested_source",
+          "source_key": "storage/event-sources/dt/requirements_clarification_requested/{event_id}/{stage}.json",
+          "source_owner_guard": "RequirementsQualityGate.request_clarification.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1"
+        }
       }
     },
     {
@@ -463,6 +1040,64 @@
         "checkpoint_family_id": "dt_run_background_enqueued_checkpoint",
         "payload_schema_id": "pm.event_payload.run_background_enqueued.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_run_background_enqueued_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7365,
+            "quote": "   For requirements.clarification_requested alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations "
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24769,
+            "quote": "### CV-609 - run.background_enqueued prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24777,
+            "quote": "  Newly authored owner contract under DL-045 for run.background_enqueued@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/storage-plan.md (storage-plan.md:1656; CV-365/CV-366). Append only after the durable enqueue intent captures authenticated actual scope/Host/root. Queue release follows receipt. Missing worktree fields never choose main Project or application sco"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 609,
+            "quote": "| `Plans/storage-plan.md` | — | `coordination.debug_mirror_exported`, `run.background_enqueued` | — |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1656,
+            "quote": "`run.background_enqueued` remains part of the existing run-event family and may carry optional `worktree_path` and `branch_name` fields when background work is enqueued from a bound thread. Consumers require captured explicit scope and real root/Host; absent worktree fields never select main-Project or app scope. Current app dispatch uses explicit CV-365 scope and actual Host/root; missing worktre"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10789,
+            "quote": "- run.background_enqueued"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29778,
+            "quote": "### SP-589 - run.background_enqueued prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29786,
+            "quote": "  Newly authored owner contract under DL-045 for run.background_enqueued only. Producer BackgroundRunQueue.enqueue calls storage.dt.run_background_enqueued.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_rece"
+          }
+        ],
+        "negative_evidence": "No exact dt_run_background_enqueued_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_run_background_enqueued_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/run_background_enqueued_source",
+          "source_key": "storage/event-sources/dt/run_background_enqueued/{event_id}/{stage}.json",
+          "source_owner_guard": "BackgroundRunQueue.enqueue.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1",
+          "application_source_family_id": "dt_run_background_enqueued_application_source",
+          "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/run_background_enqueued_application_source",
+          "application_source_key": "storage/event-sources/dt/run_background_enqueued/application/{event_id}/{stage}.msgpack",
+          "application_source_encoding": "pm.application.physical_messagepack.v1"
+        },
+        "application_premise": "CV-366 currently requires actual server/original-operation app identity and a distinct source/codec; this draft reuses them explicitly. No pre-existing exact DT application source custody sibling was found. WorkflowScopeV2 and the selected actual owner graph remain controlling, specified_unimplemented and admission-gated."
       }
     },
     {
@@ -890,6 +1525,464 @@
         "checkpoint_family_id": "dt_tool_denied_checkpoint",
         "payload_schema_id": "pm.event_payload.tool_denied.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_tool_denied_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 597,
+            "quote": "Artifact, HITL, and tool approval canon uses an owner split rather than a three-way SSOT. `Plans/Runtime_Artifacts_Panel.md` owns runtime artifact presentation and artifact-surface behavior; `Plans/storage-plan.md` owns durable artifact-projection key families and projector storage; `Plans/Contracts_V0.md` owns the shared event envelope, persisted approval events, and compatibility boundary for re"
+          },
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 39,
+            "quote": "- In persisted event streams, tool activity MUST be represented using the canonical tool event types (`tool.invoked`, `tool.denied`) and MUST include stable `run_id` + `thread_id` correlation.  "
+          },
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 755,
+            "quote": "canonical_text: Persisted event streams represent tool activity with canonical tool event types tool.invoked and tool.denied"
+          },
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 785,
+            "quote": "- tool.denied"
+          },
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7396,
+            "quote": "   For tool.denied alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body"
+          },
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7427,
+            "quote": "   For tool.execution_started alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 480,
+            "quote": "Artifact, HITL, and tool-denial surfaces must converge on the same blocked episode and runtime action contract. `Runtime_Artifacts_Panel`, `Runtime_Artifacts_Panel.md`, `Tools.md`, `Contracts_V0`, `Contracts_V0.md`, `storage-plan`, `storage-plan.md`, `human-in-the-loop`, and `human-in-the-loop.md` must preserve `attempt_id`, `tool.denied`, `HITL`, `human-in-the-loop`, `allowed_action_ids`, and `al"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 520,
+            "quote": "Tool and artifact events are runtime contracts when they affect execution, mutation authority, denial recovery, or provider/account routing. `tool.invoked`, `tool.denied`, `/tool`, `/event`, `/event/policy`, `/attempt/actor/account`, and `mutation_capable` records carry the same blocked reason taxonomy and identity envelope as orchestration events. When a tool event intersects Orchestrator executi"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 522,
+            "quote": "Runtime attribution packets are carried by immutable prompt handoff bundles, `attempt.started`, `attempt_record`, `/dispatch`, and usage/worker-inspection projections when relevant. `tool.invoked` and `tool.denied` are both first-class runtime trace records; `tool.invoked` must not remain under-attributed analytics exhaust when it affects execution, artifacts, receipts, usage, or operational ident"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 546,
+            "quote": "HITL and tool-event contracts retire request-local and analytics-only eras into compatibility language. `HITL`, `HITLRequest`, `request-local`, `tier_id`, `tier_type`, `allowed_actions`, `allowed_actions[]`, and `approve_continue` are legacy approval vocabulary unless mapped to the `runtime-facing` blocked overlay: `waiting_approval`, canonical `allowed_action_ids`, `allowed_action_ids[]`, `cmd.ru"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 572,
+            "quote": "Tool denial and approval projections use the scheduler-impacting payload, not thinner compatibility rows. `Tools.md`, `Contracts_V0`, `Contracts_V0.md`, `storage-plan`, `storage-plan.md`, and `tool.denied` consumers must not publish thin payloads as sufficient canon when scheduler state changes. `/event` approval records, storage blocked projections, and runtime action routes stay consistent on `b"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 646,
+            "quote": "Validation and artifact attribution inherit the shared runtime identity envelope. Validation-pass reports require at least `provider` and `model` for compatibility, but provider-using artifacts must still expose the fuller requested/effective `/effective` runtime identity when the artifact participates in account, usage, or routing audit. `Contracts_V0`, `Contracts_V0.md`, `tool.denied`, `tool.inv"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 752,
+            "quote": "The runtime packet set requires `execution_role`, and receipt-style operation bridges are where `operational_identity` belongs. One shared attribution family is available to `tool.invoked`, `tool.denied`, `runtime_artifact.*`, `runtime_artifact`, runtime receipts, `usage_record` / `cost_usage`, and relevant evidence or trace views so tool, receipt, usage, artifact, and evidence pivots do not fork "
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 792,
+            "quote": "Scheduler-impacting approval and tool-denial states are blocked-runtime episodes. Pending approvals, `/pending` state, and any scheduler-impacting `tool.denied` outcome must resolve to the blocked episode contract instead of a weak standalone tool-denial path. Relevant `tool.invoked`, `tool.denied`, runtime artifact payloads, operational receipt records, and `/bridge` records carry `operational_id"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 1306,
+            "quote": "ContractRef: EventType:tool.invoked, EventType:tool.denied, ContractName:Plans/Contracts_V0.md"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 1334,
+            "quote": "**tool event contract** for `tool.denied`."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 1457,
+            "quote": "Web operations MUST use the existing `tool.invoked` and `tool.denied` event families. `tool.invoked` records successful or attempted-completed web operations; `tool.denied` records policy/user-denied web operations. The `web.operation` / `web.operation.*` vocabulary is reserved for payload classification only; creating a parallel `web.operation.*` seglog event family is an explicit prohibition unl"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 1463,
+            "quote": "Web result and denial payloads use the same lightweight `/meta` shape. `tool.denied.payload.meta` for web operations may carry `web_operation?`, `tool_id?`, `operation_input_ref?`, `operation_input_preview?`, `invocation_source?`, `agent_reason?`, source IDs when present, `requested_adapter_id?`, `projection_freshness?`, `projection_health?`, `denial_reason_code?`, `allowed_action_ids[]?`, and `he"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 2590,
+            "quote": "FileSafe fail-closed security events use the canonical `EventRecord` envelope (`schema_id = pm.event.v0`). These payload definitions cover the FileSafe P0 fail-closed repair only; they do not replace `tool.denied`, safe-point events, permission approvals, or adjacent runtime receipt contracts."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 2793,
+            "quote": "### `tool.denied` alignment"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 2796,
+            "quote": "`tool.denied` MUST carry canonical runtime mapping fields when the denial affects scheduler state:"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 2797,
+            "quote": "ContractRef: EventType:tool.denied, ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 5105,
+            "quote": "  tool.invoked, tool.denied, runtime artifacts, receipts, usage, and evidence"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 5115,
+            "quote": "  - tool.invoked and tool.denied are first-class runtime trace records when they affect execution or artifacts."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 5133,
+            "quote": "  - \"`tool.denied`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8059,
+            "quote": "  - \"ContractRef: EventType:tool.invoked, EventType:tool.denied, ContractName:Plans/Contracts_V0.md\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8076,
+            "quote": "  tool.denied payloads preserve the same runtime/tool/artifact attribution"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8085,
+            "quote": "  - tool.denied payloads preserve node_id, attempt_id, lane_id, package_id, execution_role, effective_account_id, operational_identity, tool_use_id, provider_attempt_ref, and usage_event_ref."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8104,
+            "quote": "  - \"`tool.denied`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8759,
+            "quote": "  Web operations use the existing tool.invoked and tool.denied event families;"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8769,
+            "quote": "  - Policy or user-denied web operations use tool.denied."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8789,
+            "quote": "  - \"`tool.denied`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8820,
+            "quote": "  - tool.denied.payload.meta preserves web operation, input preview, requested adapter, projection, denial_reason_code, allowed_action_ids[]?, and headless_denied?."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 15432,
+            "quote": "  tool.denied carries canonical runtime mapping fields when a denial affects"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 15442,
+            "quote": "  - \"tool.denied carries canonical runtime mapping fields when a denial affects scheduler state.\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 15461,
+            "quote": "  - \"`tool.denied`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 15468,
+            "quote": "  - \"ContractRef: EventType:tool.denied, ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 15470,
+            "quote": "  - \"tool.denied runtime mapping fields must not be treated as UI-only projection conveniences.\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24802,
+            "quote": "### CV-610 - tool.denied prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24810,
+            "quote": "  Newly authored owner contract under DL-045 for tool.denied@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Tools.md 8.0/8.2; Contracts_V0.md 3 tool.denied, CV-355/CV-366). Denial follows policy/FileSafe/schema refusal and precedes any tool dispatch; never executes or contributes to executed-call tool_usage rollups. Current runtime node denials retain al"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24909,
+            "quote": "  Newly authored owner contract under DL-045 for tool.invoked@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Tools.md 8.0/8.2/8.4; Contracts_V0.md 3 and 3.4). A completed or attempted-completed operation emits exactly one record; success=false contributes to error_count. Refused calls use tool.denied and never increment executed-call rollups. index_used "
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 600,
+            "quote": "| `Plans/Tools.md` | — | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | — |"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 8765,
+            "quote": "  status of running, completed, failed (tool_result ok false or tool.denied) or waiting (an"
+          },
+          {
+            "path": "Plans/FileSafe.md",
+            "line": 2845,
+            "quote": "- Align `tool.denied` emission with the normalized `filesafe_blocked` outcome taxonomy so guard events and terminal outcomes tell the same story."
+          },
+          {
+            "path": "Plans/FileSafe.md",
+            "line": 12663,
+            "quote": "- \"tool.denied\""
+          },
+          {
+            "path": "Plans/OpenCode_Deep_Extraction.md",
+            "line": 104,
+            "quote": "   - \"Provider\", \"EventRecord\", \"UICommand\", \"tool.invoked/tool.denied\" as Puppet Master contract names."
+          },
+          {
+            "path": "Plans/OpenCode_Deep_Extraction.md",
+            "line": 1586,
+            "quote": "- 'tool.invoked/tool.denied'"
+          },
+          {
+            "path": "Plans/Permissions_System.md",
+            "line": 189,
+            "quote": "The tool invocation is blocked. The policy engine emits a `tool.denied` event (`Plans/Contracts_V0.md#EventRecord`) and returns an error to the agent. The tool is not executed."
+          },
+          {
+            "path": "Plans/Permissions_System.md",
+            "line": 2243,
+            "quote": "canonical_text: \"Exactly three permission actions exist: allow proceeds without approval, ask pauses pending canonical user resolution options, and deny blocks execution, emits tool.denied, and returns an error.\""
+          },
+          {
+            "path": "Plans/Permissions_System.md",
+            "line": 2281,
+            "quote": "- \"tool.denied\""
+          },
+          {
+            "path": "Plans/Permissions_System.md",
+            "line": 9410,
+            "quote": "Permission audit/tool.denied uses EventRecord 2.0.0: actual Project identity or scope_kind=application with project_id=null and real thread/run/Computer. PS-145 supplies app durable mutation evidence without a synthetic Project/node or empty Project v1 key. The original Project payload/key remains exact. Every mutation-capable dependency needs its admitted materialized scope-matched snapshot; miss"
+          },
+          {
+            "path": "Plans/Permissions_System.md",
+            "line": 9505,
+            "quote": "  Permission audit and tool.denied records consume EventRecord 2.0 application"
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 651,
+            "quote": "- Tool events (`tool.invoked`, `tool.denied`) extracted from OpenCode response parts"
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 2865,
+            "quote": "  platform opencode, mode, and http transport; tool.invoked/tool.denied from response parts; usage.event from"
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 2902,
+            "quote": "  - \"tool.denied\""
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 81,
+            "quote": "- **deny** — Tool is blocked; `tool.denied` event emitted."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 758,
+            "quote": "- The web-operation child payload used by `tool.invoked` / `tool.denied` stores operation-local data under the web child payload, while requested/effective runtime identity remains top-level and shared. Required child fields are `web_operation`, `operation_input`, `invocation_source`, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1174,
+            "quote": "- `tool.denied`"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1301,
+            "quote": "- **Error-count semantics:** `error_count` is the number of `tool.invoked` events in the window where `success = false`. `tool.denied` events and FileSafe blocks are excluded from `tool_usage.{window}` rollups so the widget reflects executed tool calls only."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1496,
+            "quote": "4. **FileSafe and YOLO order** -- After allow (or ask approved), run FileSafe before executing; do not emit `tool.denied` for FileSafe blocks (§10.6)."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1498,
+            "quote": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1566,
+            "quote": "### `tool.denied` requirements"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1993,
+            "quote": "- tool.denied"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 4329,
+            "quote": "- Web operation child payload refs remain visible through `tool.invoked` and `tool.denied`."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 4347,
+            "quote": "- tool.denied"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 6456,
+            "quote": "  / `tool.denied` events; grep/Search acceleration reports optional `index_used`."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 6488,
+            "quote": "- tool.denied"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 7152,
+            "quote": "canonical_text: The Usage widget consumes the same windows, excludes `tool.denied` and FileSafe blocks from executed-call"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 7182,
+            "quote": "- tool.denied"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 8325,
+            "quote": "canonical_text: When `tool.denied` blocks progress, its event or mapped payload includes blocked reason, optional failure"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 8351,
+            "quote": "- tool.denied"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 9494,
+            "quote": "- tool.denied"
+          },
+          {
+            "path": "Plans/UI_Command_Catalog.md",
+            "line": 383,
+            "quote": "- `tool.invoked` (tool_name = `lsp`) or `tool.denied` (if policy blocks)."
+          },
+          {
+            "path": "Plans/UI_Command_Catalog.md",
+            "line": 3153,
+            "quote": "canonical_text: LSP minimum commands share path/position args where applicable, emit tool.invoked or tool.denied events, and affect File editor, Problems panel, and Chat when LSP-in-chat is enabled."
+          },
+          {
+            "path": "Plans/UI_Command_Catalog.md",
+            "line": 3187,
+            "quote": "- tool.denied"
+          },
+          {
+            "path": "Plans/Wiring_Matrix.md",
+            "line": 75,
+            "quote": "| btn.graph.retry | Orchestrator > Node Graph Display detail panel | cmd.graph.retry_node | handlers::run_graph::retry_node | tool.invoked, tool.denied | Handler registered in dispatcher; Dispatch emits tool.invoked or tool.denied; Node state transitions to retrying when invocation succeeds | (EXAMPLE) |"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 1500,
+            "quote": "- Denied web-operation activity preserves `tool.denied.payload.meta` with `web_operation`, canonical `operation_input`, derived `operation_input_preview?`, `invocation_source`, optional `agent_reason`, source IDs when present, `denial_reason_code`, `denial_source` (`policy` | `permission` | `mode` | `user`), `suggested_recovery_action`, requested adapter/projection fields, `allowed_action_ids[]`, "
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 1557,
+            "quote": "- tool.denied.payload.meta"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 1601,
+            "quote": "- tool.denied"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 9351,
+            "quote": "  Denied web-operation activity preserves `tool.denied.payload.meta` with"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 9381,
+            "quote": "  - \"tool.denied.payload.meta\""
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1628,
+            "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md §8.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1663,
+            "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10724,
+            "quote": "- tool.denied"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10730,
+            "quote": "- tool.denied events and FileSafe blocks do not contribute to tool_usage.{window}."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10974,
+            "quote": "- tool.denied"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29811,
+            "quote": "### SP-590 - tool.denied prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29819,
+            "quote": "  Newly authored owner contract under DL-045 for tool.denied only. Producer ToolDispatcher.denied calls storage.dt.tool_denied.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, inclu"
+          }
+        ],
+        "negative_evidence": "No exact dt_tool_denied_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_tool_denied_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_denied_source",
+          "source_key": "storage/event-sources/dt/tool_denied/{event_id}/{stage}.json",
+          "source_owner_guard": "ToolDispatcher.denied.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1",
+          "application_source_family_id": "dt_tool_denied_application_source",
+          "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_denied_application_source",
+          "application_source_key": "storage/event-sources/dt/tool_denied/application/{event_id}/{stage}.msgpack",
+          "application_source_encoding": "pm.application.physical_messagepack.v1"
+        },
+        "application_premise": "CV-366 currently requires actual server/original-operation app identity and a distinct source/codec; this draft reuses them explicitly. No pre-existing exact DT application source custody sibling was found. WorkflowScopeV2 and the selected actual owner graph remain controlling, specified_unimplemented and admission-gated."
       }
     },
     {
@@ -937,6 +2030,74 @@
         "checkpoint_family_id": "dt_tool_execution_completed_checkpoint",
         "payload_schema_id": "pm.event_payload.tool_execution_completed.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_tool_execution_completed_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7396,
+            "quote": "   For tool.denied alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body"
+          },
+          {
+            "path": "Plans/Collaborative_Workflows.md",
+            "line": 2506,
+            "quote": "  tool.execution_completed events, and the assistant-turn presentation vocabulary of EP-128, which"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 942,
+            "quote": "| `tool.execution_completed` | tool runner | run graph, history, usage, audit, recovery | `run_id`, `thread_id?`, `tool_use_id`, `tool_name`, terminal outcome, `result_ref?`, `duration_ms?`, `ts` |"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7073,
+            "quote": "  tool.execution_completed, worktree.created, and worktree.deleted identity,"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7106,
+            "quote": "  - \"`tool.execution_completed`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24835,
+            "quote": "### CV-611 - tool.execution_completed prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24843,
+            "quote": "  Newly authored owner contract under DL-045 for tool.execution_completed@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Contracts_V0.md:941-942; Tools.md 8.2). Exactly one terminal record follows a matching execution_started; result_ref joins original result custody and duration_ms is nonnegative. Replay never reexecutes. The closed payload is Plans/dt_"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 600,
+            "quote": "| `Plans/Tools.md` | — | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | — |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29844,
+            "quote": "### SP-591 - tool.execution_completed prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29852,
+            "quote": "  Newly authored owner contract under DL-045 for tool.execution_completed only. Producer ToolRunner.execution_completed calls storage.dt.tool_execution_completed.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_appen"
+          }
+        ],
+        "negative_evidence": "No exact dt_tool_execution_completed_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_tool_execution_completed_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_completed_source",
+          "source_key": "storage/event-sources/dt/tool_execution_completed/{event_id}/{stage}.json",
+          "source_owner_guard": "ToolRunner.execution_completed.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1",
+          "application_source_family_id": "dt_tool_execution_completed_application_source",
+          "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_completed_application_source",
+          "application_source_key": "storage/event-sources/dt/tool_execution_completed/application/{event_id}/{stage}.msgpack",
+          "application_source_encoding": "pm.application.physical_messagepack.v1"
+        },
+        "application_premise": "CV-366 currently requires actual server/original-operation app identity and a distinct source/codec; this draft reuses them explicitly. No pre-existing exact DT application source custody sibling was found. WorkflowScopeV2 and the selected actual owner graph remain controlling, specified_unimplemented and admission-gated."
       }
     },
     {
@@ -989,6 +2150,79 @@
         "checkpoint_family_id": "dt_tool_execution_started_checkpoint",
         "payload_schema_id": "pm.event_payload.tool_execution_started.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_tool_execution_started_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7427,
+            "quote": "   For tool.execution_started alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash"
+          },
+          {
+            "path": "Plans/Collaborative_Workflows.md",
+            "line": 2505,
+            "quote": "  normalized provider stream of Plans/Contracts_V0.md section 2, the tool.execution_started and"
+          },
+          {
+            "path": "Plans/Collaborative_Workflows.md",
+            "line": 2562,
+            "quote": "  - \"tool.execution_started\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 941,
+            "quote": "| `tool.execution_started` | tool runner | run graph, history, usage, audit, recovery | `run_id`, `thread_id?`, `tool_use_id`, `tool_name`, `attempt_id?`, `runtime_snapshot_ref?`, `ts` |"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7072,
+            "quote": "  run.completed, node.started, node.completed, tool.execution_started,"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7105,
+            "quote": "  - \"`tool.execution_started`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24868,
+            "quote": "### CV-612 - tool.execution_started prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24876,
+            "quote": "  Newly authored owner contract under DL-045 for tool.execution_started@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Contracts_V0.md:941-942; Tools.md 8.2). After every dispatch policy/schema/hook gate succeeds, record the admitted tool-use start before invoking the tool. No start is emitted for a policy denial. The closed payload is Plans/dt_event_con"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 600,
+            "quote": "| `Plans/Tools.md` | — | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | — |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29877,
+            "quote": "### SP-592 - tool.execution_started prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29885,
+            "quote": "  Newly authored owner contract under DL-045 for tool.execution_started only. Producer ToolRunner.execution_started calls storage.dt.tool_execution_started.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_rece"
+          }
+        ],
+        "negative_evidence": "No exact dt_tool_execution_started_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_tool_execution_started_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_started_source",
+          "source_key": "storage/event-sources/dt/tool_execution_started/{event_id}/{stage}.json",
+          "source_owner_guard": "ToolRunner.execution_started.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1",
+          "application_source_family_id": "dt_tool_execution_started_application_source",
+          "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_started_application_source",
+          "application_source_key": "storage/event-sources/dt/tool_execution_started/application/{event_id}/{stage}.msgpack",
+          "application_source_encoding": "pm.application.physical_messagepack.v1"
+        },
+        "application_premise": "CV-366 currently requires actual server/original-operation app identity and a distinct source/codec; this draft reuses them explicitly. No pre-existing exact DT application source custody sibling was found. WorkflowScopeV2 and the selected actual owner graph remain controlling, specified_unimplemented and admission-gated."
       }
     },
     {
@@ -1511,6 +2745,544 @@
         "checkpoint_family_id": "dt_tool_invoked_checkpoint",
         "payload_schema_id": "pm.event_payload.tool_invoked.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_tool_invoked_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 549,
+            "quote": "Instant Grep implementation-safe detail stays with the owner docs before any consumer-mirror cleanup: storage owns `ArcSwap` publication and `dirty-layer` lifecycle/recovery, runtime contracts only carry shared `/runtime` event and routing fields if promoted, FinalGUISpec owns project indexing `/degradation/settings` visibility, and Usage analytics consumes `tool.invoked.index_used` without re-own"
+          },
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 555,
+            "quote": "- `Tools.md` is the primary owner for grep tool semantics, sparse-n-gram query flow, covering/fallback rules, and `tool.invoked.index_used`"
+          },
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 800,
+            "quote": "- `Tools.md` is the primary owner for grep tool semantics, index-accelerated query flow, covering algorithm, fallback behavior, and `tool.invoked` analytics fields"
+          },
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 1853,
+            "quote": "- 'tool.invoked.index_used'"
+          },
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 39,
+            "quote": "- In persisted event streams, tool activity MUST be represented using the canonical tool event types (`tool.invoked`, `tool.denied`) and MUST include stable `run_id` + `thread_id` correlation.  "
+          },
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 755,
+            "quote": "canonical_text: Persisted event streams represent tool activity with canonical tool event types tool.invoked and tool.denied"
+          },
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 784,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7427,
+            "quote": "   For tool.execution_started alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash"
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 682,
+            "quote": "| `cmd.chat.run_user_command` | `{ command_name, arguments? }` | `tool.invoked` when `subtask: true`; otherwise the canonical chat message event registered by the event owner, not `chat.message.submitted` unless that event is explicitly registered | Assistant chat, Command palette |"
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 2956,
+            "quote": "  - Expected events are tool.invoked when subtask: true, otherwise the canonical chat message event registered by the event owner."
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 2979,
+            "quote": "  - \"tool.invoked\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 520,
+            "quote": "Tool and artifact events are runtime contracts when they affect execution, mutation authority, denial recovery, or provider/account routing. `tool.invoked`, `tool.denied`, `/tool`, `/event`, `/event/policy`, `/attempt/actor/account`, and `mutation_capable` records carry the same blocked reason taxonomy and identity envelope as orchestration events. When a tool event intersects Orchestrator executi"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 522,
+            "quote": "Runtime attribution packets are carried by immutable prompt handoff bundles, `attempt.started`, `attempt_record`, `/dispatch`, and usage/worker-inspection projections when relevant. `tool.invoked` and `tool.denied` are both first-class runtime trace records; `tool.invoked` must not remain under-attributed analytics exhaust when it affects execution, artifacts, receipts, usage, or operational ident"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 546,
+            "quote": "HITL and tool-event contracts retire request-local and analytics-only eras into compatibility language. `HITL`, `HITLRequest`, `request-local`, `tier_id`, `tier_type`, `allowed_actions`, `allowed_actions[]`, and `approve_continue` are legacy approval vocabulary unless mapped to the `runtime-facing` blocked overlay: `waiting_approval`, canonical `allowed_action_ids`, `allowed_action_ids[]`, `cmd.ru"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 646,
+            "quote": "Validation and artifact attribution inherit the shared runtime identity envelope. Validation-pass reports require at least `provider` and `model` for compatibility, but provider-using artifacts must still expose the fuller requested/effective `/effective` runtime identity when the artifact participates in account, usage, or routing audit. `Contracts_V0`, `Contracts_V0.md`, `tool.denied`, `tool.inv"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 662,
+            "quote": "Tool, usage, and page projections must not shadow runtime contract ownership. `Plans/Tools.md`, `/Tools.md`, and `tool.invoked` records are analytics-thin unless they carry the richer attribution packet from the shared runtime contract. Usage already preserves canonical `account_id`; the remaining usage-side `account-history` gap is requested/effective `/effective` identity and runtime-role carry-"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 752,
+            "quote": "The runtime packet set requires `execution_role`, and receipt-style operation bridges are where `operational_identity` belongs. One shared attribution family is available to `tool.invoked`, `tool.denied`, `runtime_artifact.*`, `runtime_artifact`, runtime receipts, `usage_record` / `cost_usage`, and relevant evidence or trace views so tool, receipt, usage, artifact, and evidence pivots do not fork "
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 792,
+            "quote": "Scheduler-impacting approval and tool-denial states are blocked-runtime episodes. Pending approvals, `/pending` state, and any scheduler-impacting `tool.denied` outcome must resolve to the blocked episode contract instead of a weak standalone tool-denial path. Relevant `tool.invoked`, `tool.denied`, runtime artifact payloads, operational receipt records, and `/bridge` records carry `operational_id"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 1306,
+            "quote": "ContractRef: EventType:tool.invoked, EventType:tool.denied, ContractName:Plans/Contracts_V0.md"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 1308,
+            "quote": "**tool event contract** for `tool.invoked`."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 1457,
+            "quote": "Web operations MUST use the existing `tool.invoked` and `tool.denied` event families. `tool.invoked` records successful or attempted-completed web operations; `tool.denied` records policy/user-denied web operations. The `web.operation` / `web.operation.*` vocabulary is reserved for payload classification only; creating a parallel `web.operation.*` seglog event family is an explicit prohibition unl"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 1459,
+            "quote": "For `tool.invoked.payload.meta`, common web fields are `web_operation`, `tool_id`, `operation_input_ref?`, `operation_input_preview?`, `invocation_source`, `agent_reason?`, source IDs when present, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fa"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 5105,
+            "quote": "  tool.invoked, tool.denied, runtime artifacts, receipts, usage, and evidence"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 5115,
+            "quote": "  - tool.invoked and tool.denied are first-class runtime trace records when they affect execution or artifacts."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 5132,
+            "quote": "  - \"`tool.invoked`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8021,
+            "quote": "  tool.invoked persisted payloads carry runtime/tool/artifact attribution"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8031,
+            "quote": "  - tool.invoked payloads preserve node_id, attempt_id, lane_id, package_id, execution_role, effective_account_id, operational_identity, tool_use_id, provider_attempt_ref, and usage_event_ref."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8051,
+            "quote": "  - \"`tool.invoked`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8059,
+            "quote": "  - \"ContractRef: EventType:tool.invoked, EventType:tool.denied, ContractName:Plans/Contracts_V0.md\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8759,
+            "quote": "  Web operations use the existing tool.invoked and tool.denied event families;"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8768,
+            "quote": "  - Successful or attempted-completed web operations use tool.invoked."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8788,
+            "quote": "  - \"`tool.invoked`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 8818,
+            "quote": "  - tool.invoked.payload.meta preserves common web fields including web_operation, tool_id, operation_input_ref, operation_input_preview, invocation_source, support_tier, execution_path, adapter IDs, projection state, fallback flags, counts, quality hints, warnings, and error_code."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24901,
+            "quote": "### CV-613 - tool.invoked prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24909,
+            "quote": "  Newly authored owner contract under DL-045 for tool.invoked@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Tools.md 8.0/8.2/8.4; Contracts_V0.md 3 and 3.4). A completed or attempted-completed operation emits exactly one record; success=false contributes to error_count. Refused calls use tool.denied and never increment executed-call rollups. index_used "
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 600,
+            "quote": "| `Plans/Tools.md` | — | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | — |"
+          },
+          {
+            "path": "Plans/LSPSupport.md",
+            "line": 224,
+            "quote": "- Internal-tool LSP boundaries are explicit: `LSPSupport.md` owns LSP `/tooling` behavior for plan-mode and `/interview` context, but `internal-tool` event records use `run_id`, `tool.invoked`, and `mutation_capable: bool`; mixed `lsp` actions remain under-owned until UI-session reads and mutation_capable apply-edit paths are separated."
+          },
+          {
+            "path": "Plans/LSPSupport.md",
+            "line": 1849,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/OpenCode_Deep_Extraction.md",
+            "line": 104,
+            "quote": "   - \"Provider\", \"EventRecord\", \"UICommand\", \"tool.invoked/tool.denied\" as Puppet Master contract names."
+          },
+          {
+            "path": "Plans/OpenCode_Deep_Extraction.md",
+            "line": 1586,
+            "quote": "- 'tool.invoked/tool.denied'"
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 651,
+            "quote": "- Tool events (`tool.invoked`, `tool.denied`) extracted from OpenCode response parts"
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 2865,
+            "quote": "  platform opencode, mode, and http transport; tool.invoked/tool.denied from response parts; usage.event from"
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 2901,
+            "quote": "  - \"tool.invoked\""
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 758,
+            "quote": "- The web-operation child payload used by `tool.invoked` / `tool.denied` stores operation-local data under the web child payload, while requested/effective runtime identity remains top-level and shared. Required child fields are `web_operation`, `operation_input`, `invocation_source`, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 903,
+            "quote": "Plans/Tools.md (`/Tools.md`) owns `grep` /fallback semantics, `/sparse-n-gram` index-acceleration behavior, tool-event field disclosure, filtering, and /degradation language: acceleration may narrow candidates, but raw ripgrep remains the visible fallback when the index is unavailable, disabled, invalid, or skipped by query rules. The `/fallback/freshness/degradation/filtering/event-field` owner b"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1173,
+            "quote": "- `tool.invoked`"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1186,
+            "quote": "- `tool.invoked` events for grep/Search acceleration include optional `index_used`; `tool.invoked.index_used = true` means sparse-n-gram candidate narrowing served the query, while `false` means raw ripgrep fallback or another unindexed path served it."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1298,
+            "quote": "- **Value shape:** MessagePack or a typed struct, never JSON text (SP-339, SP-340): `{ [tool_name: string]: { count: number, p50_ms: number, p95_ms: number, error_count: number, index_used?: { true_count: number, false_count: number } } }`. The example is JSON for shape only. Example: `{ \"bash\": { \"count\": 42, \"p50_ms\": 120, \"p95_ms\": 500, \"error_count\": 2 }, \"grep\": { \"count\": 30, \"p50_ms\": 18, \""
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1301,
+            "quote": "- **Error-count semantics:** `error_count` is the number of `tool.invoked` events in the window where `success = false`. `tool.denied` events and FileSafe blocks are excluded from `tool_usage.{window}` rollups so the widget reflects executed tool calls only."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1498,
+            "quote": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1994,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 2236,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 2531,
+            "quote": "- Do not use `tool.invoked.index_used` for fuzzy/path discovery; it remains only grep/Search sparse-n-gram disclosure."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 4329,
+            "quote": "- Web operation child payload refs remain visible through `tool.invoked` and `tool.denied`."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 4346,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 5103,
+            "quote": "- tool.invoked.index_used"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 6455,
+            "quote": "canonical_text: Blocked and denied tool packets expose the shared runtime-facing blocked payload fields and canonical `tool.invoked`"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 6464,
+            "quote": "- '`tool.invoked.index_used=true` means sparse-n-gram narrowing served the query; false means fallback or another unindexed"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 6487,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 6494,
+            "quote": "- tool.invoked.index_used = true"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 6497,
+            "quote": "- Do not use `tool.invoked.index_used` for fuzzy/path discovery; it remains only grep/Search sparse-n-gram disclosure."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 7108,
+            "quote": "- Analytics aggregates `tool.invoked` events so the Usage page can render without scanning seglog."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 7134,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 7162,
+            "quote": "- '`error_count` counts executed `tool.invoked` events where `success = false`.'"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 9495,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 10487,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/UI_Command_Catalog.md",
+            "line": 383,
+            "quote": "- `tool.invoked` (tool_name = `lsp`) or `tool.denied` (if policy blocks)."
+          },
+          {
+            "path": "Plans/UI_Command_Catalog.md",
+            "line": 3153,
+            "quote": "canonical_text: LSP minimum commands share path/position args where applicable, emit tool.invoked or tool.denied events, and affect File editor, Problems panel, and Chat when LSP-in-chat is enabled."
+          },
+          {
+            "path": "Plans/UI_Command_Catalog.md",
+            "line": 3186,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/Wiring_Matrix.md",
+            "line": 70,
+            "quote": "| menu.lsp.goto_def | File Editor context menu | cmd.lsp.goto_definition | handlers::lsp::goto_definition | tool.invoked | Handler registered in dispatcher; Dispatch emits tool.invoked with tool_name=lsp; Editor navigates to definition location | (EXAMPLE) |"
+          },
+          {
+            "path": "Plans/Wiring_Matrix.md",
+            "line": 71,
+            "quote": "| menu.lsp.find_refs | File Editor context menu | cmd.lsp.find_references | handlers::lsp::find_references | tool.invoked | Handler registered in dispatcher; Dispatch emits tool.invoked with tool_name=lsp; References panel populated | (EXAMPLE) |"
+          },
+          {
+            "path": "Plans/Wiring_Matrix.md",
+            "line": 75,
+            "quote": "| btn.graph.retry | Orchestrator > Node Graph Display detail panel | cmd.graph.retry_node | handlers::run_graph::retry_node | tool.invoked, tool.denied | Handler registered in dispatcher; Dispatch emits tool.invoked or tool.denied; Node state transitions to retrying when invocation succeeds | (EXAMPLE) |"
+          },
+          {
+            "path": "Plans/Wiring_Matrix.md",
+            "line": 119,
+            "quote": "        \"tool.invoked\""
+          },
+          {
+            "path": "Plans/Wiring_Matrix.md",
+            "line": 123,
+            "quote": "        \"Dispatch emits tool.invoked with tool_name=lsp\","
+          },
+          {
+            "path": "Plans/Wiring_Matrix.md",
+            "line": 962,
+            "quote": "- 'tool.invoked'"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 1602,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 26,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 667,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 779,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 791,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 803,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 987,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 1332,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 1344,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 1450,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 1462,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 1562,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 1574,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 1678,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/plan_graph.json",
+            "line": 1690,
+            "quote": "            \"tool.invoked\""
+          },
+          {
+            "path": "Plans/rewrite-tie-in-memo.md",
+            "line": 144,
+            "quote": "- Grep/Search acceleration does not mint rewrite-local analytics events: the grep `tool.invoked` seglog event may include optional `index_used: boolean` for analytics, with no other event-shape change; detailed tool-event ownership remains in `Plans/Tools.md`, storage rollups in `Plans/storage-plan.md`, and Usage interpretation in `Plans/usage-feature.md`."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 59,
+            "quote": "- Artifact indexes treat `attempt_id?` and `node_id?` as first-class indexed refs where relevant. Tool events (`tool.invoked`) keep `tool_name`, `run_id`, optional `thread_id`, latency, success, and error as analytics fields, but storage joins them through the same attempt/receipt/usage/artifact attribution packet instead of a separate tool-only identity world."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1626,
+            "quote": "**Scan range:** Last N hours (e.g. at least 7d for `tool_usage.7d`) or since last scan checkpoint. Read the sealed Parquet archive (SP-341) plus the active seglog tail in order, as a checkpointed catch-up or rebuild (no JSONL mirror input, SP-339); filter by event type (`usage.event`, `run.completed`, `tool.invoked`). Canonical tool-usage windows for MVP are `5h`, `24h`, and `7d`; `1h` remains opt"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1628,
+            "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md §8.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1663,
+            "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 2140,
+            "quote": "- **Phase 5:** Unit: rollup computation (usage by platform, tool percentiles). Integration: fixture seglog with known usage.event and tool.invoked; run analytics scan; assert rollup values in redb."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 2640,
+            "quote": "- \"tool.invoked\""
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10715,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10973,
+            "quote": "- tool.invoked"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29910,
+            "quote": "### SP-593 - tool.invoked prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29918,
+            "quote": "  Newly authored owner contract under DL-045 for tool.invoked only. Producer ToolDispatcher.completed_invocation calls storage.dt.tool_invoked.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 789,
+            "quote": "Usage analytics consumers interpret grep/Search acceleration through `tool.invoked.index_used`: `true` counts queries served by sparse-n-gram candidate narrowing, while `false` counts raw ripgrep fallback or another unindexed path."
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 3924,
+            "quote": "canonical_text: 'Usage analytics consumes `tool.invoked.index_used`: `true` means sparse-n-gram candidate narrowing; `false` means raw ripgrep fallback or another unindexed path.'"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 3954,
+            "quote": "- 'tool.invoked.index_used'"
+          }
+        ],
+        "negative_evidence": "No exact dt_tool_invoked_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_tool_invoked_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_invoked_source",
+          "source_key": "storage/event-sources/dt/tool_invoked/{event_id}/{stage}.json",
+          "source_owner_guard": "ToolDispatcher.completed_invocation.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1",
+          "application_source_family_id": "dt_tool_invoked_application_source",
+          "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_invoked_application_source",
+          "application_source_key": "storage/event-sources/dt/tool_invoked/application/{event_id}/{stage}.msgpack",
+          "application_source_encoding": "pm.application.physical_messagepack.v1"
+        },
+        "application_premise": "CV-366 currently requires actual server/original-operation app identity and a distinct source/codec; this draft reuses them explicitly. No pre-existing exact DT application source custody sibling was found. WorkflowScopeV2 and the selected actual owner graph remain controlling, specified_unimplemented and admission-gated."
       }
     },
     {
@@ -1933,6 +3705,469 @@
         "checkpoint_family_id": "dt_usage_event_checkpoint",
         "payload_schema_id": "pm.event_payload.usage_event.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_usage_event_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 195,
+            "quote": "The UF-085 canonical token buckets (`input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` / `cache_write_ttl` where exposed, `output_total`, `output_visible`, `reasoning` / `thoughts`, `provider_total`, and `context_estimate`) MUST be stored or explicitly represented as unknown/not_exposed in every usage record, with `total_tokens` derived without losing bucket detail or"
+          },
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 1611,
+            "quote": "- Amended 2026-10-31 (DL-270, SP-341, UF-108) - daily usage totals are canonical redb records, backed up and never rebuilt from expired usage.event records, and never replace bucket-level records; this constraint covers bucket fields inside usage.event records."
+          },
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7458,
+            "quote": "   For usage.event alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body"
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 126,
+            "quote": "Amended 2026-10-31 (DL-270): the verified reclaim action in storage health (SP-340) is the existing `cmd.storage.compaction.request`, one owner-routed maintenance request for the whole storage instance under the maintenance lease, with results shown per storage group; it adds no new command ID here. Here \"store compaction\" means redb `compact()`, which the owner also runs on its own schedule with "
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 9048,
+            "quote": "**Usage detail retention.** Nothing other than the Keep usage history for setting (`ai.usage.usage-retention`) prunes `usage.event` records, and no command, `cmd.storage.compaction.request` included, prunes them; daily usage totals are kept whatever it says (Plans/usage-feature.md#UF-108, Plans/storage-plan.md#SP-341). Commands infer no expiry for them from prefix, key, path or age."
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 9063,
+            "quote": "  50 older row stays as the fallback. Detail usage.event records are governed by ai.usage.usage-retention and"
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 9093,
+            "quote": "- No command prunes usage.event beyond ai.usage.usage-retention."
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 9121,
+            "quote": "- usage.event"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 474,
+            "quote": "Runtime event rows that affect execution, usage, or recovery must carry the shared identity snapshot rather than a compatibility-era subset. `run.started`, `usage.event`, `/Run`, `/UI`, `/attempt`, and `/effective` consumers in `Contracts_V0`, `Contracts_V0.md`, `storage-plan`, and `storage-plan.md` must preserve `/runtime/auth/account`, requested/effective persona/runtime/auth/account, and snapsh"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 540,
+            "quote": "Event-schema precision is mandatory wherever runtime identity appears in tables or examples. `Contracts_V0`, `Contracts_V0.md`, `storage-plan`, `storage-plan.md`, `run.started`, `usage.event`, `hitl.*`, `config-validation`, `safe_point`, `safe_point.created`, `scheduler.pass`, and `remediation.resolved` rows must not `under-specify`, `mis-key`, or preserve `multi-addendum` field drift for runtime "
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 574,
+            "quote": "Output, route, and artifact surfaces inherit runtime/account lineage and route identity instead of local shortcuts. `Plans/Project_Output_Artifacts.md`, `/Project_Output_Artifacts.md`, and `/runtime/account` outputs must carry modern event/runtime/account lineage. `/open`, `route_target`, `OpenSubject`, `OpenFile`, `cmd.nav`, and `cmd.nav.*` share one canonical route target object consumed by spec"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 4564,
+            "quote": "  - \"`usage.event`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 5400,
+            "quote": "  for run.started, usage.event, hitl.*, safe_point.created, scheduler.pass, and"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 5427,
+            "quote": "  - \"`usage.event`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24934,
+            "quote": "### CV-614 - usage.event prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24942,
+            "quote": "  Newly authored owner contract under DL-045 for usage.event@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/usage-feature.md (usage-feature.md UF-085, UF-108; storage-plan.md SP-341; CV-366). Normalize actual provider/header/CLI/estimate observations; null means unknown, never zero. Cache/reasoning subset fields are not added to inclusive totals. Adjustments repla"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 612,
+            "quote": "| `Plans/usage-feature.md` | — | `usage.event` | — |"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 462,
+            "quote": "Amended 2026-10-31 (DL-270): `usage.jsonl` is retired as a live file (SP-339, UF-108). Receipts reference `usage.event` refs and the redb daily usage rollups, never a `usage.jsonl` artifact, and `pm export` writes JSONL on request. How long detailed usage records are kept is set by `ai.usage.usage-retention` (UF-108); daily totals are kept regardless."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2953,
+            "quote": "canonical_text: Executor storage and usage alignment consumes storage-plan and usage-feature owner sections; receipts carry checkpoint-marker, run.completed.usage, bounded usage.jsonl compatibility retirement, lock-path/FileSafe/worktree path alignment, and budget-exceeded split. Amended 2026-10-31 (DL-270), usage.jsonl is retired as a live file (SP-339, UF-108); receipts carry usage.event refs an"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "line": 3626,
+            "quote": "- Per-thread usage is served from redb rollups keyed by thread_id, updated as each usage.event lands (amended 2026-10-31, DL-270, SP-341, UF-108); the Usage page and widgets never scan raw events. Raw events feed the Parquet archive written at segment seal, and a raw-event drill-down is a keyed lookup"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "line": 29906,
+            "quote": "  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay, and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state matrix. A numeric cell is not only a number: it carries value, value_state, source_class, source_confidence, s"
+          },
+          {
+            "path": "Plans/Multi-Account.md",
+            "line": 5305,
+            "quote": "  Multi-Account provider and account rows display usage, quota, credits, billing visibility, and provider pressure only from normalized UsageRecord, CredentialRouteEpoch, and ProviderCapabilityEpoch projections. Amended 2026-10-31 (DL-270): the usage values on these rows read the redb daily rollups per account, provider and model that UF-108 owns, never raw usage.event records, and the existing pr"
+          },
+          {
+            "path": "Plans/OpenCode_Deep_Extraction.md",
+            "line": 46,
+            "quote": "Usage linkage preserves usage.event, storage-plan, storage-plan.md, usage-feature, usage-feature.md, /account/model, and UsageRecord references so account/model usage lineage can be reconciled without moving the UsageRecord owner here."
+          },
+          {
+            "path": "Plans/OpenCode_Deep_Extraction.md",
+            "line": 1234,
+            "quote": "- 'usage.event'"
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 652,
+            "quote": "- `usage.event` from message metadata (input/output tokens)"
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 751,
+            "quote": "**Usage and Ledger alignment:** OpenCode server returns message-level usage; the adapter maps it to normalized usage (same shape as `usage.event`). Persistence and Ledger/Usage consumption follow `Plans/storage-plan.md` and `Plans/usage-feature.md`. For implementers, the OpenCode product pipeline (`Session.getUsage`, processor finish-step) is the reference for how message metadata becomes stored u"
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 2865,
+            "quote": "  platform opencode, mode, and http transport; tool.invoked/tool.denied from response parts; usage.event from"
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 2904,
+            "quote": "  - \"usage.event\""
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 3281,
+            "quote": "  usage.event persistence and Ledger/Usage consumption."
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 3320,
+            "quote": "  - \"usage.event\""
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 1155,
+            "quote": "- Claude Code CLI structured output probes such as `claude -p --output-format json --permission-mode plan \"Reply exactly OK\"` can return usage fields including `usage.outputTokens`, `usage.cacheReadTokens`, and `usage.cacheWriteTokens`. PM treats those as provider/runtime usage observations that normalize through `usage.event`, not as a separate tool counter schema."
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 6439,
+            "quote": "- usage.event"
+          },
+          {
+            "path": "Plans/UI_Command_Catalog.md",
+            "line": 177,
+            "quote": "- Legacy event examples that use `run.started` or `usage.event` with `tier_id`, `run.tier_started`, `run.tier_completed`, `run.verification_result` keyed by `tier`, `hitl.approval_requested` with `request_id`, `tier_id`, `tier_type`, or `allowed_actions`, and tier-start validation `/persona/QA` examples are tier-era compatibility only; current runtime events and approvals resolve through package/s"
+          },
+          {
+            "path": "Plans/UI_Command_Catalog.md",
+            "line": 2099,
+            "quote": "- usage.event"
+          },
+          {
+            "path": "Plans/Widget_System.md",
+            "line": 1059,
+            "quote": "  Dashboard-hosted Usage widgets are consumers of the canonical UsageRecord projection and FinalGUISpec value-state matrix. A Usage widget may summarize token, context, cost, quota, cache, reasoning, provider_total, context_estimate, Antigravity credits, or provider pressure only when it carries value_state, source_class, source_confidence, settlement_status, projection_freshness, and reason for d"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 1297,
+            "quote": "- run-level or message-level usage snapshots derived from canonical `usage.event` and `run.completed.usage`"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 1304,
+            "quote": "- Amended 2026-10-31 (DL-270): thread usage totals and widgets read the redb usage rollups and never scan raw `usage.event` records (UF-108, SP-341). Raw `usage.event` reads are limited to the on-demand per-turn drill-down in the Raw view."
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 8118,
+            "quote": "  selections, tool/activity-derived context, canonical `usage.event` and"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 8145,
+            "quote": "  - \"usage.event\""
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 8168,
+            "quote": "  raw usage.event reads are limited to the per-turn Context Detail drill-down."
+          },
+          {
+            "path": "Plans/human-in-the-loop.md",
+            "line": 73,
+            "quote": "UI and storage routes must not cross-wire governance approvals with tool approvals. UI_Command_Catalog, Run_Graph_View, Orchestrator_Page, storage-plan, `Plans/Prompt_Pipeline.md`, `/Prompt_Pipeline.md`, Prompt_Pipeline, usage-feature, usage-feature.md, FileManager, newfeatures, and orchestrator-subagent-integration are consumers of the same event-to-surface model: `hitl.*` rows in the event-table"
+          },
+          {
+            "path": "Plans/human-in-the-loop.md",
+            "line": 847,
+            "quote": "canonical_text: Clarification questions and blocked-resolution flows use node-effective execution metadata, palette-friendly copy, and detail pivots without losing runtime truth; UI and storage routes must not cross-wire governance approvals with tool approvals, and hitl.* event rows carry config, run.started, usage.event, actor projections, meta links, action-family normalization, and current blo"
+          },
+          {
+            "path": "Plans/human-in-the-loop.md",
+            "line": 881,
+            "quote": "- usage.event"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1519,
+            "quote": "Storage also owns `run.completed.usage` persistence as the optional run-completion usage snapshot. It is a bounded snapshot derived from canonical `usage.event` records, not a replacement for the usage event ledger."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1618,
+            "quote": "- `run.completed.usage` is the optional run-completion snapshot carried in `run.completed`; it is derived from canonical `usage.event` records and must include the same attribution tuple when present."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1624,
+            "quote": "**Trigger:** Periodic only (e.g. every 5 minutes), plus rollup updates as each `usage.event` lands (UF-108). Amended 2026-10-31 (DL-270): opening the Usage view reads redb rollups and never starts a scan of raw events. Can run in a background task or a separate thread; must not block the main UI. A rollup refresh should leave the previously written rollups visible until it completes."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1626,
+            "quote": "**Scan range:** Last N hours (e.g. at least 7d for `tool_usage.7d`) or since last scan checkpoint. Read the sealed Parquet archive (SP-341) plus the active seglog tail in order, as a checkpointed catch-up or rebuild (no JSONL mirror input, SP-339); filter by event type (`usage.event`, `run.completed`, `tool.invoked`). Canonical tool-usage windows for MVP are `5h`, `24h`, and `7d`; `1h` remains opt"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1628,
+            "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md §8.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1663,
+            "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1669,
+            "quote": "- [ ] **Implement analytics scan:** scan the sealed Parquet archive and the seglog tail (no JSONL) for usage/tool/run events, with usage rollups also updated as each `usage.event` lands and daily usage totals kept forever (SP-341, UF-108); compute 5h/7d, tool latency, and **tool_usage** (per-tool count, p50/p95, error_count) rollups; write to redb `rollups` (including `tool_usage.{window}` per Pla"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1673,
+            "quote": "- [ ] **Emit usage.event with thread_id and parent lineage:** When recording usage for Assistant or Interview runs, include `thread_id`, `parent_run_id` when applicable, and the canonical attribution fields needed for per-thread and parent-rollup aggregation."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1674,
+            "quote": "- [ ] **Emit usage.event for hidden/background model work:** title generation, summaries, compaction helpers, tool-triggered model calls, and other helper invocations still write canonical `usage.event` records even when not directly user-visible."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1675,
+            "quote": "- [ ] **Emit run.completed with optional usage snapshot:** When a run finishes, include optional `usage` in the `run.completed` payload using the canonical UF-085 usage field set (`input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` / `cache_write_ttl` where exposed, `output_total`, `output_visible`, `reasoning` / `thoughts`, `provider_total`, `context_estimate`, `count"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 2052,
+            "quote": "  Build: analytics scan job (periodic) that scans the Parquet archive of sealed segments plus the unsealed seglog tail, in sequence order, over a time range (SP-341; there is no JSONL source, SP-339), computes 5h/7d usage rollups, tool latency, and tool_usage (per-tool count, p50/p95, error_count per Plans/Tools.md §8.4), writes to redb `rollups` namespace, and stores a scan checkpoint. Usage roll"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 2056,
+            "quote": "  Build: wire chat persistence (thread list and thread content to seglog; open a thread from the derived render-page store, meaning `thread_head`, the newest sealed page and the hot tail (SP-338), and page older items in with mandatory load-older (ACD-242); opening never replays the thread's events; per assistant-chat-design), editor state to redb `editor` namespace (FileManager.md §2.9), Usage/da"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 2140,
+            "quote": "- **Phase 5:** Unit: rollup computation (usage by platform, tool percentiles). Integration: fixture seglog with known usage.event and tool.invoked; run analytics scan; assert rollup values in redb."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10011,
+            "quote": "canonical_text: Storage owns run.completed.usage as an optional bounded run-completion usage snapshot derived from canonical usage.event records, not as a replacement for the usage event ledger."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10042,
+            "quote": "- canonical usage.event records"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10309,
+            "quote": "  Live storage-managed collections must declare TTL, max-cardinality, or both; bounded-collections canon is satisfied when owner sections name family, bound type/source, and retention/eviction notes for active maps, auth caches, LSP maps, queues, event records, safe points, temp artifacts, and stale rewrite remnants. Amended 2026-10-31 (DL-270): detailed usage.event records carry the ai.usage.usag"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10559,
+            "quote": "canonical_text: Projector checkpoints encode resume state without duplicate semantic writes and are atomic with projector durability, but runtime/executor checkpoint marker events and safe-point lineage records in seglog remain required before mutation-capable execution or restore flows continue; run.completed.usage carries optional usage snapshot attribution from usage.event records."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10602,
+            "quote": "- usage.event"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10682,
+            "quote": "canonical_text: \"Analytics scans read the Parquet archive of sealed segments and the unsealed seglog tail (SP-341) in sequence order over canonical windows, compute usage, tool latency, error rate, and tool usage rollups, exclude denied/FileSafe-blocked calls from tool_usage, and checkpoint sequence plus survivor identity idempotently; timestamps filter windows but never resume replay. Amended 202"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10713,
+            "quote": "- usage.event"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10972,
+            "quote": "- usage.event"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 11108,
+            "quote": "canonical_text: Usage checklist coverage requires Assistant/Interview usage events with thread and parent lineage, hidden/background model work usage.event records, and optional run.completed usage snapshots with canonical attribution fields while per-request canon remains usage.event."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 11136,
+            "quote": "- usage.event with thread_id and parent lineage"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 11174,
+            "quote": "- canonical per-request data remains usage.event"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 11176,
+            "quote": "- run.completed optional usage snapshot does not replace canonical per-request usage.event data."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 13471,
+            "quote": "canonical_text: Phases 5-6 preserve analytics scan and rollups plus chat, editor, and Usage wiring expectations, including tool_usage, p50/p95/error_count, redb rollups, Usage/dashboard reads, usage.event, run.completed, and end-to-end visible flow."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 13518,
+            "quote": "- usage.event"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 17413,
+            "quote": "| Detailed usage records (`usage.event`; amended 2026-10-31, DL-270) | the `ai.usage.usage-retention` window (90 days by default); no count eviction | compact expired unheld rows from the event log and the Parquet archive; daily usage totals per account, provider and model are kept forever (SP-341, UF-108) |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 28492,
+            "quote": "  page and widgets read redb rollups updated as each usage.event lands, and their totals, windows and charts never"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29753,
+            "quote": "  Newly authored owner contract under DL-045 for requirements.clarification_requested only. Producer RequirementsQualityGate.request_clarification calls storage.dt.requirements_clarification_requested.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adop"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29819,
+            "quote": "  Newly authored owner contract under DL-045 for tool.denied only. Producer ToolDispatcher.denied calls storage.dt.tool_denied.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, inclu"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29918,
+            "quote": "  Newly authored owner contract under DL-045 for tool.invoked only. Producer ToolDispatcher.completed_invocation calls storage.dt.tool_invoked.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29943,
+            "quote": "### SP-594 - usage.event prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29951,
+            "quote": "  Newly authored owner contract under DL-045 for usage.event only. Producer UsageTracker.normalize_finish_step calls storage.dt.usage_event.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 b"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29984,
+            "quote": "  Newly authored owner contract under DL-045 for worktree.created only. Producer WorktreeLifecycleOwner.created calls storage.dt.worktree_created.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolv"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 30017,
+            "quote": "  Newly authored owner contract under DL-045 for worktree.deleted only. Producer WorktreeLifecycleOwner.deleted calls storage.dt.worktree_deleted.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolv"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 116,
+            "quote": "- **Backend**: `UsageTracker`, `QuotaManager`, `UsageRecord` persisted to `usage.jsonl`; orchestrator records usage; platform runners report token usage. Amended 2026-10-31 (DL-270): `UsageRecord` is persisted as `usage.event` in the event log with redb rollups, not to `usage.jsonl` (SP-339, UF-108)."
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 377,
+            "quote": "The `cost_usage` runtime artifact is an attribution record only. It uses the same canonical usage pipeline and schema as `usage.event`."
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 394,
+            "quote": "For implementers: the flow by which usage is collected and stored can be referenced from the OpenCode product (anomalyco/opencode repo). Conceptual flow: **provider response** → adapter → **LanguageModelV2Usage** (or equivalent) → **getUsage-style normalization** (e.g. Session.getUsage) → **processor** applies on finish-step to assistant message + step-finish part; **UI reads from messages** and/o"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 617,
+            "quote": "  - Retention policy: keep raw seglog events for a configurable window (default 90 days); archive or compact older events with an optional export-first step. Amended 2026-10-31 (DL-270): for `usage.event` this window is the Keep usage history for setting, `ai.usage.usage-retention` (90 days by default); daily usage totals are kept whatever it says (UF-108)."
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 2280,
+            "quote": "canonical_text: OpenCode product usage flow is a non-binding reference for provider response to usage normalization to message and usage.event storage; Puppet Master does not replicate it exactly and instead normalizes all providers and transports to the same usage.event/message usage shape."
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 2314,
+            "quote": "- usage.event"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 7159,
+            "quote": "The canonical analytics/UsageRecord pipeline is unchanged. A run-start event is neither `usage.event` nor `run.completed.usage`: consuming it cannot create a UsageRecord, token/request count, cost, quota, settlement, elapsed-time partition, rollup update or notification. Missing usage stays unknown, never zero; existing UsageRecord/usage_event_ref identity and attempt/provider accounting authority"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 7601,
+            "quote": "  that update as each usage.event lands: totals, windows and charts never scan raw events, and the Ledger's list"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 7608,
+            "quote": "  days from them. Problem 5's raw-event window is that setting for usage.event. usage.jsonl is retired as a live"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 7643,
+            "quote": "  - \"usage.event\""
+          }
+        ],
+        "negative_evidence": "No exact dt_usage_event_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_usage_event_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/usage_event_source",
+          "source_key": "storage/event-sources/dt/usage_event/{event_id}/{stage}.json",
+          "source_owner_guard": "UsageTracker.normalize_finish_step.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1",
+          "application_source_family_id": "dt_usage_event_application_source",
+          "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/usage_event_application_source",
+          "application_source_key": "storage/event-sources/dt/usage_event/application/{event_id}/{stage}.msgpack",
+          "application_source_encoding": "pm.application.physical_messagepack.v1"
+        },
+        "application_premise": "CV-366 currently requires actual server/original-operation app identity and a distinct source/codec; this draft reuses them explicitly. No pre-existing exact DT application source custody sibling was found. WorkflowScopeV2 and the selected actual owner graph remain controlling, specified_unimplemented and admission-gated."
       }
     },
     {
@@ -1990,6 +4225,79 @@
         "checkpoint_family_id": "dt_worktree_created_checkpoint",
         "payload_schema_id": "pm.event_payload.worktree_created.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_worktree_created_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7458,
+            "quote": "   For usage.event alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 946,
+            "quote": "| `worktree.created` | source control / lane allocator | orchestrator, storage, recovery | `project_id`, `repo_id?`, `worktree_id`, `run_id?`, `package_id?`, `lane_id?`, `branch_name`, `worktree_path`, `ts` |"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7073,
+            "quote": "  tool.execution_completed, worktree.created, and worktree.deleted identity,"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7083,
+            "quote": "  - worktree.created and worktree.deleted preserve worktree identity, branch/path, cleanup reason, grace period, lock and safe-point fields."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7107,
+            "quote": "  - \"`worktree.created`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24967,
+            "quote": "### CV-615 - worktree.created prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 24975,
+            "quote": "  Newly authored owner contract under DL-045 for worktree.created@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/WorktreeGitImprovement.md (WorktreeGitImprovement.md:200-221; Contracts_V0.md:946-947). Original allocation ownership and branch/path custody must exist before created is appended and before a node starts work. Creation replay inspects original allocati"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 602,
+            "quote": "| `Plans/WorktreeGitImprovement.md` | — | `config.migrated`, `worktree.created`, `worktree.deleted` | — |"
+          },
+          {
+            "path": "Plans/WorktreeGitImprovement.md",
+            "line": 221,
+            "quote": "- `worktree.deleted` may be emitted only after the grace-period and file-lock checks pass; `worktree.created` records the allocation path, branch, lane/run/package lineage, and source-control owner before a node begins work in that tree"
+          },
+          {
+            "path": "Plans/WorktreeGitImprovement.md",
+            "line": 1687,
+            "quote": "- worktree.created"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29976,
+            "quote": "### SP-595 - worktree.created prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29984,
+            "quote": "  Newly authored owner contract under DL-045 for worktree.created only. Producer WorktreeLifecycleOwner.created calls storage.dt.worktree_created.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolv"
+          }
+        ],
+        "negative_evidence": "No exact dt_worktree_created_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_worktree_created_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/worktree_created_source",
+          "source_key": "storage/event-sources/dt/worktree_created/{event_id}/{stage}.json",
+          "source_owner_guard": "WorktreeLifecycleOwner.created.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1"
+        }
       }
     },
     {
@@ -2052,6 +4360,84 @@
         "checkpoint_family_id": "dt_worktree_deleted_checkpoint",
         "payload_schema_id": "pm.event_payload.worktree_deleted.v1",
         "checkpoint_schema_id": "pm.storage_value.dt_worktree_deleted_checkpoint.v1"
+      },
+      "pass2_search": {
+        "scope": "Top-level live Plans md/json/jsonl, excluding DT companions and generated/lineage surfaces; exact family then original source/custody/codec/publication role inspection.",
+        "matches": [
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 7489,
+            "quote": "   For worktree.deleted alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 947,
+            "quote": "| `worktree.deleted` | source control / cleanup owner | orchestrator, storage, recovery | `project_id`, `repo_id?`, `worktree_id`, `run_id?`, `package_id?`, `lane_id?`, `cleanup_reason`, `grace_period_ms`, `file_lock_checked`, `active_lock_refs[]?`, `safe_point_refs[]?`, `ts` |"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7073,
+            "quote": "  tool.execution_completed, worktree.created, and worktree.deleted identity,"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7083,
+            "quote": "  - worktree.created and worktree.deleted preserve worktree identity, branch/path, cleanup reason, grace period, lock and safe-point fields."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 7108,
+            "quote": "  - \"`worktree.deleted`\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 25000,
+            "quote": "### CV-616 - worktree.deleted prepared event contract"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 25008,
+            "quote": "  Newly authored owner contract under DL-045 for worktree.deleted@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/WorktreeGitImprovement.md (WorktreeGitImprovement.md:200-221; Contracts_V0.md:946-947). Delete only after original result custody, grace period, file-lock and active-lock/safe-point dependency checks pass. Active lock references must be empty or proven "
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 602,
+            "quote": "| `Plans/WorktreeGitImprovement.md` | — | `config.migrated`, `worktree.created`, `worktree.deleted` | — |"
+          },
+          {
+            "path": "Plans/WorktreeGitImprovement.md",
+            "line": 221,
+            "quote": "- `worktree.deleted` may be emitted only after the grace-period and file-lock checks pass; `worktree.created` records the allocation path, branch, lane/run/package lineage, and source-control owner before a node begins work in that tree"
+          },
+          {
+            "path": "Plans/WorktreeGitImprovement.md",
+            "line": 1686,
+            "quote": "- worktree.deleted"
+          },
+          {
+            "path": "Plans/WorktreeGitImprovement.md",
+            "line": 1689,
+            "quote": "- worktree.deleted may be emitted only after the grace-period and file-lock checks pass."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 30009,
+            "quote": "### SP-596 - worktree.deleted prepared event contract"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 30017,
+            "quote": "  Newly authored owner contract under DL-045 for worktree.deleted only. Producer WorktreeLifecycleOwner.deleted calls storage.dt.worktree_deleted.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolv"
+          }
+        ],
+        "negative_evidence": "No exact dt_worktree_deleted_source source-stage schema, original owner resolver or publication path was defined outside the DT draft. SP-286/CV-339 receipt, SP-278 source verification and SP-131 filesystem durability are reused; original source custody is authored here, not inferred from any sibling.",
+        "new_bindings": {
+          "source_family_id": "dt_worktree_deleted_source",
+          "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/worktree_deleted_source",
+          "source_key": "storage/event-sources/dt/worktree_deleted/{event_id}/{stage}.json",
+          "source_owner_guard": "WorktreeLifecycleOwner.deleted.resolve_original",
+          "source_encoding": "pm.dt.source.json.v1"
+        }
       }
     }
   ]
