@@ -1,140 +1,158 @@
-# DG6B — review round 3, prepared without admission
+# DG6B — review round 4, prepared without admission
 
-Branch: `plans/ea-w2-plugins-personas-github-20261104`. Input head: `1d515cc6776b48c48252c2a295186338ad98fd94`. Fixed contract head: `ce5bc08d29fb1e28e614182b66de2e2711860317`. Worker: **DG6B-FIX3**, stream E, VM. This is the third and final fix round; no additional review/delegate was started. Native execution: **NOT_RUN**.
+Branch: `plans/ea-w2-plugins-personas-github-20261104`. Input: `2db4922de7699a40a9cb4f288a326a064c99e2a8`. Fixed contract commit: **`96cff41a8263e49644328eb23611c1dd5d135152`**. Worker: DG6B-FIX4, VM. This extra targeted round was explicitly authorized after the three-round cap. No additional review or delegation was started. Native execution: **NOT_RUN**.
 
-Both Astra round-2 blockers are fixed. The prepared-contract self-grade is **190 PASS / 19 PARTIAL / 19 ABSENT / zero CONFLICT**, across nineteen independently checked families. Membership stays ABSENT, retention stays PARTIAL/PENDING_RETENTION_DECISION, and dispositions stay UNDISPOSITIONED. This does not admit a writer or certify native behavior.
+C4-B1 is fixed for all nineteen families. Prepared-contract grades are **190 PASS / 19 PARTIAL / 19 ABSENT / zero CONFLICT**. Membership stays ABSENT; retention stays PARTIAL / PENDING_RETENTION_DECISION; every disposition stays UNDISPOSITIONED. These results prepare contracts without admitting writers.
 
-## Review round 3: findings and responses
+## Review round 4: findings and responses
 
-- **B1 — fixed (`ce5bc08d29fb1e28e614182b66de2e2711860317`).** Where: `scripts/pm-dg6b-event-contracts.py:18`, `resolve_schema_graph`, and ATS-335/336. Cause: fixture-driven instance validation never visited some reference branches. Fix: eager resolution of every `$ref` and `$dynamicRef` across the owned schema and four adopted resource documents, with correct resource base URIs and local-only resolution, before instance validation. All 408 stock refs resolve. Nineteen separate full-checker mutations put the exact review dangling ref under the uncovered operation-ID conditional; all exit nonzero with `unresolved_schema_ref`. Five more full-checker mutations put dangling refs in unused definitions, one per selected schema resource; all refuse. No existing check was removed or weakened.
-- **B2 — fixed (`ce5bc08d29fb1e28e614182b66de2e2711860317`).** Where: SP-670/671/672's nineteen individually named physical-operation paragraphs, the nineteen operation schemas and existing storage-value rows/profiles, and `scripts/pm-dg6b-event-contracts.py:71` (`store_operation`) / `:86` (`operation_contract`). Cause: externalizing the EventRecord body left a 16,898-byte full operation in a 16,384-byte value. Fix: a closed physical union of the full logical operation and `{schema_id,schema_version,event_type,payload_ref}`; `payload_ref` is exactly `{blake3_id,byte_size,media_type}`, pointing to the complete canonical MessagePack operation, including payload and original effect receipt. Both physical alternatives are measured against 16,384 bytes. Resolve durable/access-authorized bytes, verify BLAKE3/size/media/canonical encoding, validate the closed logical schema, then compare all fields to independent frozen original custody. The exact review value is now a **259-byte reference**; the raw 16,898-byte value is explicitly refused. Full schema-valid logical-operation boundaries are 16,383 / 16,384 inline and 16,385 referenced, independent of the event-body limit. Every real positive operation in all nineteen families is measured; every family has inline/reference, reference-integrity, missing/durability/access, wrong payload/receipt and oversized-physical-value cases. All nineteen oversized full-process mutations refuse.
-- **Standing check 10 — fixed (`ce5bc08d29fb1e28e614182b66de2e2711860317`).** Each exact consumer now distinguishes immutable at-write evidence from later live account/plugin/Persona/CAS/selection state. Retained valid-at-write positives survive changed live state. Current reader/access/redaction/body/withdrawal fences still apply; forged, withdrawn, unadmitted-at-write, inaccessible or deleted-body reads refuse. Frozen source flags describe original admission, never a current lease. This reuses existing consumers and retention/deletion owners; it creates no new reader or policy.
+**C4-B1 — fixed (`96cff41a8263e49644328eb23611c1dd5d135152`).** Where: `Plans/dg6b_event_contract_fixtures.json:4517` (`inline_base64_body`), `:8318` (forged history), `:9900` (physical byte stage), `scripts/pm-dg6b-event-contracts.py:86` / `:380` / `:454`, and `scripts/pm-dg6b-guard-proof.py`. Why: negative inputs left independent schema, scope, identity, source or envelope defects after their intended guard was removed. Fix: rebuild the named controls and every additional survivor from valid representations; synchronize copies and identities; authenticate coherent replacement bytes with the intended integrity defect kept separate; use the actual pre-dispatch boundary for synthetic sizes and missing-reference availability.
 
-No finding is disputed or stopped for Jared. Pending retention and individual admission remain integration items; native persistence/credential/effect/backup proof remains NOT_RUN.
+- **Named controls:** all nineteen forbidden-body negatives synchronize frozen source and EventRecord payload; all nineteen forged-history negatives synchronize their transport while preserving genuine source custody; all eight unrelated plugin receipts synchronize the EventRecord copy; all five application-only auth negatives use coherent Project partitions, envelopes and recomputed identities. Generated auth scope negatives use the corresponding Project identity.
+- **Other controls:** six Persona Server substitutions synchronize request/frozen copies while retaining the intended scope-key mismatch. Deleted revision and updated subject substitutions retain valid CAS/source relations. Every payload-schema negative differs from a valid payload at exactly one leaf, including the extra two-field retired-tier case found this round. Reference-byte controls remain canonical, schema-valid and coherent with expected operation custody while retaining their targeted digest defect. New controls cover checkpoint-key mismatch and authenticated noncanonical operation encoding in every family.
+- **Boundary controls:** fake padded logical operations were replaced with 16,383 / 16,384-byte positives and a 16,385-byte negative at the physical byte gate used by `operation_contract`. Missing-reference tests invoke the availability function used by transport. Raw/colon/LF partitions and retired-tier enum controls exercise their actual partition or schema boundary; corresponding full-path refusals remain covered by preservation, owner/scope, pattern and CLI controls. Synthetic bytes are never claimed as schema-valid logical operations.
+- **Guard preservation:** original writer-policy predicates remain intact. The two current-writer-policy refusal paths enforce the same invariant and are removed together in the proof; both source locations are exported. Other repeated checks are grouped by their named invariant. Metadata checks retain their exact family, disposition, membership, retention and schema-binding conditions; registry/value files are still read fresh. No original rejection is lost: all 961 relational/append/operation/history/retry outcomes and 228 original payload-schema refusals remain unchanged.
 
-## Every standing check, every family
+Verification: `python3 scripts/pm-dg6b-guard-proof.py --output <external-path>.json`; `python3 scripts/pm-dg6b-event-contracts.py`. The independent fixture audit reports **1,245 negatives, zero wrong initial reasons, zero survivors**. The complete matrix reports **2,324 negatives × 51 logical guard groups**, zero unexpected results. All 52 refusal classifications are covered; writer policy accounts for two classifications in one invariant. Every unrelated negative retains its exact original refusal. Every unique real upstream schema check is memoized in the proof; instance validation and eager reference lookup execute for every probe. The production checker bytes are never patched on disk. A fresh restored module and the unmodified CLI pass.
 
-P = **pass** at the fixed contract head. F = **fixed (`ce5bc08d29fb`)**. No check is open. Each row has at least one independent negative for every check run through the complete CLI in a fresh process; every expected refusal requires both a nonzero exit and its expected error. The retained-history and Storage-metadata retry positives run in the stock full checker.
+No finding is disputed or stopped for Jared. Retention assignment, separate per-family admission and native proof remain integration items.
 
-| Family | 1 Replay | 2 App key | 3 Project | 4 Size/ref | 5 LF | 6 Retry | 7 Token | 8 Exit | 9 Refs | 10 History |
-|---|---|---|---|---|---|---|---|---|---|---|
-| `auth.github.authenticated` | P | P | P | F | P | P | P | P | F | F |
-| `auth.github.device_code.issued` | P | P | P | F | P | P | P | P | F | F |
-| `auth.github.disconnected` | P | P | P | F | P | P | P | P | F | F |
-| `auth.github.failed` | P | P | P | F | P | P | P | P | F | F |
-| `auth.github.token.polling` | P | P | P | F | P | P | P | P | F | F |
-| `plugin.hook.blocked` | P | P | P | F | P | P | P | P | F | F |
-| `plugin.hook.error` | P | P | P | F | P | P | P | P | F | F |
-| `plugin.hook.invoked` | P | P | P | F | P | P | P | P | F | F |
-| `plugin.load_failed` | P | P | P | F | P | P | P | P | F | F |
-| `plugin.loaded` | P | P | P | F | P | P | P | P | F | F |
-| `plugin.permission.override` | P | P | P | F | P | P | P | P | F | F |
-| `plugin.tool.collision` | P | P | P | F | P | P | P | P | F | F |
-| `plugin.tool.registered` | P | P | P | F | P | P | P | P | F | F |
-| `persona.created` | P | P | P | F | P | P | P | P | F | F |
-| `persona.deleted` | P | P | P | F | P | P | P | P | F | F |
-| `persona.exported` | P | P | P | F | P | P | P | P | F | F |
-| `persona.imported` | P | P | P | F | P | P | P | P | F | F |
-| `persona.selected` | P | P | P | F | P | P | P | P | F | F |
-| `persona.updated` | P | P | P | F | P | P | P | P | F | F |
+## Guard-removal table
 
-Checks: (1) replay-only current append refusal; (2) exact CV-366 application keys and genuine original Server; (3) encoded project~ positives/raw/colon/LF negatives for fourteen eligible families, Project refusal for five auth families; (4) SP-337 event and physical-operation limits/authenticated refs; (5) trailing-LF refusal; (6) caller semantics conflict, Storage metadata ignored; (7) token and source-selection storage UUID joins; (8) accepted records cannot certify a failure; (9) all references resolve regardless of visited branch; (10) retained immutable history remains independent of current live state while forged/withdrawn reads refuse.
+Each ID has the form `<family>:<kind>/<label>`. The flip column gives label selectors across applicable families and the exact count. “All other N IDs” means the exact complement in the 2,324-probe universe, verified with unchanged refusal text. The full JSON contains every individual flip/stay ID and every source location, without truncation: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix4/guard-removal.json` — SHA-256 `c2df6c3c3ccc41b8a0740fed332ad2af0c7f7db0d8da58b124e13fa312994217`. The committed compact table is `reports/event-authority-20261104/DG6B.guard-removal-summary.json`.
 
-## Earlier findings replayed
+| Guard / invariant | Negatives that flip | Negatives that stay rejected |
+|---|---|---|
+| `access` | 25: `append_invalid/source_access_revoked`; `semantic_invalid/source_access_revoked` | All other 2299 IDs, same refusal |
+| `cadence` | 1: `semantic/cadence` | All other 2323 IDs, same refusal |
+| `cas` | 3: `semantic_invalid/stale_cas` | All other 2321 IDs, same refusal |
+| `checkpoint_schema` | 76: `append_invalid/checkpoint_trailing_lf_frontier_sha256`; `append_invalid/checkpoint_trailing_lf_generation_anchor_sha256`; `append_invalid/checkpoint_trailing_lf_generation_id`; `append_invalid/persisted_snapshot_forbidden` | All other 2248 IDs, same refusal |
+| `checkpoint_storage_join` | 57: `append_invalid/wrong_checkpoint_key`; `append_invalid/wrong_checkpoint_source_storage`; `append_invalid/wrong_checkpoint_storage` | All other 2267 IDs, same refusal |
+| `confirmation` | 1: `semantic_invalid/unconfirmed_delete` | All other 2323 IDs, same refusal |
+| `creation_source` | 1: `extra/creation_source` | All other 2323 IDs, same refusal |
+| `current_writer_policy` | 38: `append_invalid/replay_only_append`; `append_invalid/wrong_current_replay_policy` | All other 2286 IDs, same refusal |
+| `definition_writer` | 5: `extra/definition_writer` | All other 2319 IDs, same refusal |
+| `envelope_source_join` | 57: `append_invalid/wrong_actor`; `append_invalid/wrong_schema_route`; `append_invalid/wrong_time` | All other 2267 IDs, same refusal |
+| `event_record_schema` | 19: `extra/event_record_schema` | All other 2305 IDs, same refusal |
+| `failure_error_reason` | 1: `wrong_reason_cannot_prove_failure` | All other 2323 IDs, same refusal |
+| `failure_oracle` | 1: `success_cannot_prove_failure` | All other 2323 IDs, same refusal |
+| `fixture_family_coverage` | 19: `preparation/fixture_family_coverage` | All other 2305 IDs, same refusal |
+| `grade_family_coverage` | 19: `preparation/grade_family_coverage` | All other 2305 IDs, same refusal |
+| `historical_access` | 38: `history_cases/history_access_current`; `history_cases/history_body_deleted` | All other 2286 IDs, same refusal |
+| `historical_provenance` | 57: `history_cases/history_admitted_when_written`; `history_cases/history_authentic`; `history_cases/history_retained` | All other 2267 IDs, same refusal |
+| `historical_withdrawn` | 38: `history_cases/history_family_withdrawn`; `history_cases/history_reader_current` | All other 2286 IDs, same refusal |
+| `home_scope` | 1: `semantic_invalid/project_home_in_no_project` | All other 2323 IDs, same refusal |
+| `idempotency_conflict` | 162: `caller_semantic_change/*`; `retry_cases/caller_causation_event_id`; `retry_cases/caller_correlation_id`; `retry_cases/caller_parent_event_id`; `retry_cases/caller_producer_sequence_id` | All other 2162 IDs, same refusal |
+| `idempotency_key` | 95: `append_invalid/actual_server_application_key`; `append_invalid/application_key_odd_hex`; `append_invalid/application_key_trailing_lf`; `append_invalid/application_key_uppercase_hex`; `append_invalid/legacy_application_key` | All other 2229 IDs, same refusal |
+| `identity` | 21: `semantic/identity`; `semantic/scope` | All other 2303 IDs, same refusal |
+| `inline_body_too_large` | 20: `append_invalid/schema_valid_16385_byte_inline`; `transport/*` | All other 2304 IDs, same refusal |
+| `mirror` | 4: `semantic_invalid/mirror_write` | All other 2320 IDs, same refusal |
+| `observation_only_hook` | 2: `semantic/post_attempt_complete`; `semantic/post_tool_invoke` | All other 2322 IDs, same refusal |
+| `operation_schema` | 344: `operation_schema/*` | All other 1980 IDs, same refusal |
+| `operation_schema_binding` | 19: `preparation/operation_schema_binding` | All other 2305 IDs, same refusal |
+| `operation_source_join` | 38: `operation_cases/authenticated_but_wrong_effect_receipt_ref`; `operation_cases/authenticated_but_wrong_payload` | All other 2286 IDs, same refusal |
+| `operation_value_too_large` | 21: `operation_cases/oversized_inline_operation`; `operation_cases/review_exact_16898_byte_inline_operation`; `stage_cases/physical_byte_stage_16385` | All other 2303 IDs, same refusal |
+| `original_payload_conflict` | 13: `semantic/original_payload` | All other 2311 IDs, same refusal |
+| `original_server_required` | 1: `original_server_required` | All other 2323 IDs, same refusal |
+| `original_source_join` | 72: `append_invalid/receipt_substitution`; `append_invalid/unrelated_original_source`; `history_cases/history_forged_original`; `semantic_invalid/changed_runtime_snapshot`; `semantic_invalid/frozen_timestamp_changed`; `semantic_invalid/recomputed_effective_identity`; `semantic_invalid/result_substitution`; `semantic_invalid/revision_substitution`; `semantic_invalid/subject_substitution` | All other 2252 IDs, same refusal |
+| `override_lineage` | 1: `semantic_invalid/coherent_wrong_lineage_owner` | All other 2323 IDs, same refusal |
+| `partition` | 48: `semantic_invalid/project_partition_wrong`; `stage_cases/invalid_project_partition_'project-one'`; `stage_cases/invalid_project_partition_'project:project-one'`; `stage_cases/invalid_project_partition_'project~cHJvamVjdC1vbmU\n'` | All other 2276 IDs, same refusal |
+| `payload_ref_integrity` | 342: `append_invalid/reference_hash_wrong`; `operation_cases/operation_noncanonical_encoding`; `operation_cases/operation_reference_blake3_id`; `operation_cases/operation_reference_byte_size`; `operation_cases/operation_reference_bytes_hex`; `operation_cases/operation_reference_media_type`; `transport/*` | All other 1982 IDs, same refusal |
+| `payload_ref_unavailable` | 190: `append_invalid/reference_not_durable`; `operation_cases/operation_reference_access_current`; `operation_cases/operation_reference_durable`; `stage_cases/operation_reference_missing`; `transport/*` | All other 2134 IDs, same refusal |
+| `payload_schema` | 266: `append_invalid/inline_base64_body`; `payload_schema/*`; `stage_cases/coherent_retired_tier` | All other 2058 IDs, same refusal |
+| `payload_transport_join` | 19: `extra/payload_transport_join` | All other 2305 IDs, same refusal |
+| `prepared_membership` | 19: `preparation/prepared_membership` | All other 2305 IDs, same refusal |
+| `protected` | 4: `semantic_invalid/protected_id_mutation` | All other 2320 IDs, same refusal |
+| `reach` | 1: `semantic_invalid/only_projects_in_no_project` | All other 2323 IDs, same refusal |
+| `resolution_schema` | 6: `resolution/effective_persona_id`; `resolution/missing/effective_persona`; `resolution/missing/requested_persona`; `resolution/missing/runtime_snapshot_ref`; `resolution/missing/runtime_snapshot_sha256`; `resolution/requested_persona_id` | All other 2318 IDs, same refusal |
+| `retention_pending` | 19: `preparation/retention_pending` | All other 2305 IDs, same refusal |
+| `retry_identity` | 19: `extra/retry_identity` | All other 2305 IDs, same refusal |
+| `scope` | 16: `append_invalid/project_auth_forbidden`; `semantic/scope`; `semantic_invalid/server_substitution` | All other 2308 IDs, same refusal |
+| `selected_result_schema` | 2: `selected_result/effective_persona_id`; `selected_result/requested_persona_id` | All other 2322 IDs, same refusal |
+| `source_trust` | 1: `semantic_invalid/unverified_import` | All other 2323 IDs, same refusal |
+| `unadmitted_disposition` | 19: `preparation/unadmitted_disposition` | All other 2305 IDs, same refusal |
+| `unknown_oracle_stage` | 1: `unknown_oracle_stage` | All other 2323 IDs, same refusal |
+| `unresolved_schema_ref` | 57: `schema_graph/*` | All other 2267 IDs, same refusal |
+| `writer` | 25: `append_invalid/withdrawn_event_writer`; `semantic_invalid/withdrawn_event_writer`; `semantic_invalid/writer_stale` | All other 2299 IDs, same refusal |
 
-| Review / finding | Replayed regression and result |
+## All eleven standing checks
+
+| Check | All-family result and evidence |
 |---|---|
-| Cycle 1 B1 | All six Persona rows have genuine No-project library and encoded-Project positives; removing each exact prepared family independently fails the complete checker. Current P-060/UCC-214/v2 source routes are preserved. |
-| Cycle 1 B2 | Both requested_persona_id and effective_persona_id alias-positive mutations fail; canonical requested_persona/effective_persona and frozen resolution remain. |
-| Cycle 1 B3 | CURRENT_WRITER disposition mutations fail for all nineteen, including all thirteen originally prepared families; UNDISPOSITIONED preparation remains distinct from emission. |
-| Cycle 1 B4 | Both coherent Block-shaped post_tool_invoke and post_attempt_complete mutations fail; three execution-flow pre-hooks retain positives. |
-| Astra round 1 B1 | Legacy application keys and wrong original Server keys fail in all nineteen; full UTF-8 boundary positives remain. |
-| Astra round 1 B2 | Replay-only append, Project partition, event/operation refs and all eight exact unrelated-plugin-receipt substitutions fail. Genuine original receipts remain independent inputs. |
-| Astra round 1 B3 | Coherent frozen-source tier/tier_id mutation fails; five actual override-lineage positives remain, and coherent wrong-run owner refuses. |
-| Astra round 1 B4 | Withdrawn event-writer positives fail, including persona.exported; authorized read-only Computer-mirror export with no definition-write lease passes independently. |
+| 1 Current writer/replay-only | PASS: original policy predicates retained; nineteen independent full CLI replay-only refusals. |
+| 2 CV-366 | PASS: existing exact UTF-8 Server/operation recipes, maximum keys and legacy/wrong-Server/odd/uppercase/LF controls preserved. |
+| 3 Project partition | PASS: fourteen eligible encoded Project positives and five coherent auth refusals; raw/colon/LF controls at their real boundaries. |
+| 4 SP-337 | PASS: physical byte stages, real operation boundaries and authenticated references; exact Astra B2 16,898-byte inline refusal and 259-byte reference recovery. |
+| 5 LF | PASS: 2,373 independent pattern/earlier-Persona regression checks; all 246 schema negatives have a single-leaf valid control. |
+| 6 Retry semantics | PASS: Storage metadata preserves digest; caller semantic changes conflict. |
+| 7 Durable token | PASS: storage/source-selection/key mismatches isolated; persisted snapshot and identifier negatives preserved. |
+| 8 Failure oracle | PASS: success and wrong-reason helper controls isolate both failure guards; nineteen full CLI accepted-negative injections exit nonzero. |
+| 9 All references | PASS: all 408 references resolve; 57 isolated dormant/unused ref probes and nineteen dormant plus two unused full CLI refusals. |
+| 10 Historical read | PASS: 133 independent later-live-state positives; provenance, withdrawal, access and forged-original controls remain decisive. |
+| 11 Negative isolation | PASS: 1,245 fixture negatives and the complete 2,324-case / 51-invariant matrix, with no unexplained survivor or unrelated acceptance. |
+
+## Earlier findings remain fixed
+
+| Finding | Recheck |
+|---|---|
+| Astra-2 B1 dangling dormant refs | Exact uncovered conditional, unused `$ref` and `$dynamicRef` controls still refuse; eager resolution unchanged. |
+| Astra-2 B2 oversized authenticated operation | Independent canonical MessagePack matches all 86 append positives. Exact 16,898-byte operation refuses inline and recovers its complete logical body/receipt through the 259-byte wrapper. |
+| Cycle-1 B1 Persona owners; B2 runtime names | No-project / real Project / source-Server / home / mirror / protected / CAS / reach and canonical requested_persona/effective_persona bindings pass 58 owner/scope probes plus the pattern regression suite. |
+| Cycle-1 B3 CURRENT_WRITER claim | Nineteen full CLI disposition mutations refuse. Membership/registry stay unchanged. |
+| Cycle-1 B4 observation hooks | Three pre-hooks pass; both coherent post-hook Block observations still refuse. |
+| Astra-1 B1 keys; B2 source/append/reference custody | Existing original negative outcomes preserved; repaired unrelated receipts now isolate custody. |
+| Astra-1 B3 tier/lineage; B4 export writer | Retired-tier schemas and coherent wrong-lineage refusal remain; current read-only mirror export passes and stale event-writer export refuses. |
+| Earlier timestamp/profile/dataset notes | No generator is rerun: no Markdown, registry or indexed source changed this round. Profile checker still has the identical 41 pre-existing errors. Unpatterned dataset-name LF remains an external generic-publication/native prerequisite, not a patterned-identifier failure. |
 
 ## Family grades before and after
 
-Before uses Astra round 2's independent grade. P=PASS, p=PARTIAL, A=ABSENT. Every after row retains membership A and retention p; its other ten criteria pass at prepared static-contract depth.
+Before is cycle-4 independent review. P=PASS, p=PARTIAL, A=ABSENT. Only the oracle cell changes, PARTIAL → PASS. Membership remains A and retention remains p for every family. All 228 cells and 313 current exact citations are checked.
 
-| Family | Before | After | Max logical / physical positive operation bytes |
-|---|---|---|---|
-| `auth.github.authenticated` | 8 P / 3 p / 1 A | 10 P / 1 p / 1 A | 16898 / 16384 |
-| `auth.github.device_code.issued` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 6989 / 6989 |
-| `auth.github.disconnected` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 6969 / 6969 |
-| `auth.github.failed` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 6913 / 6913 |
-| `auth.github.token.polling` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 6970 / 6970 |
-| `plugin.hook.blocked` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 6901 / 6901 |
-| `plugin.hook.error` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 6907 / 6907 |
-| `plugin.hook.invoked` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 6882 / 6882 |
-| `plugin.load_failed` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 6893 / 6893 |
-| `plugin.loaded` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 6907 / 6907 |
-| `plugin.permission.override` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 6924 / 6924 |
-| `plugin.tool.collision` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 6914 / 6914 |
-| `plugin.tool.registered` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 6883 / 6883 |
-| `persona.created` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 9463 / 9463 |
-| `persona.deleted` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 9463 / 9463 |
-| `persona.exported` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 9498 / 9498 |
-| `persona.imported` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 9584 / 9584 |
-| `persona.selected` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 9898 / 9898 |
-| `persona.updated` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 9538 / 9538 |
+| Family | Before | After |
+|---|---|---|
+| `auth.github.authenticated` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `auth.github.device_code.issued` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `auth.github.disconnected` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `auth.github.failed` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `auth.github.token.polling` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `plugin.hook.blocked` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `plugin.hook.error` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `plugin.hook.invoked` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `plugin.load_failed` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `plugin.loaded` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `plugin.permission.override` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `plugin.tool.collision` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `plugin.tool.registered` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `persona.created` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `persona.deleted` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `persona.exported` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `persona.imported` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `persona.selected` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
+| `persona.updated` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A |
 
-Aggregate: **170 PASS / 39 PARTIAL / 19 ABSENT before → 190 PASS / 19 PARTIAL / 19 ABSENT after**. No CONFLICT. Evidence in the self-grade is re-located and re-hashed against the fixed contract tree; matching citations alone do not prove native execution.
+Aggregate: **171 PASS / 38 PARTIAL / 19 ABSENT → 190 PASS / 19 PARTIAL / 19 ABSENT**, zero CONFLICT. Prepared gate: **0/19 → 19/19**, with pending retention and absent membership remaining explicit permitted open cells.
 
-## Bindings, premises, IDs and scope
+## Scope, IDs and open items
 
-Each family's newly authored physical-operation representation and immutable-at-write history oracle is individually stated inside its existing exact SP-670/671/672 subsection and ATS-335/336 row. Per-family search scope and negative evidence are in canon-search.json: all live top-level Plans Markdown/JSON/JSONL at the input head, reusing SP-337/SP-340, original operation/receipt custody and the exact existing consumer. There was no closed operation-reference alternative or separate frozen/live history oracle. No new feature, consumer, filtered projector, checkpoint identity, retention class or deletion choice was made. The existing operation identity and original full-value first-AppendReceipt contract remain unchanged.
+No owner prose, schema, registry, profile, retention policy, event-family admission, Decision Log, Spec Lock, auto-decisions, frozen validator or governance evidence changed this round. Existing per-family owner contracts and historical-decision premises are not extended. The protected-source audit verifies unchanged current owner/schema/registry bytes against the input head. No new technical or product binding was authored.
 
-Current origin/main at the initial fetch is 16acf7594a3fe8559af89491b895f440b314b99e. Exact fenced-unit comparisons for SP-337, SP-340, SP-278, CV-366, P-060, DL-045 and DL-076 are byte-identical. No historical decision premise failed. All nineteen remain inside DL-045's existing scope.
+**IDs used:** zero new IDs. Existing GAAAF-077..081, PLUG-131..138, P-120..125, SP-670..672, CV-690..691 and ATS-335..336 remain the lane's 26 IDs, unchanged. Membership stays absent; retention stays pending; native execution stays NOT_RUN.
 
-**IDs used:** zero new IDs minted. Amended existing SP-670..672 and ATS-335..336. Existing exact-family owners GAAAF-077..081, PLUG-131..138 and P-120..125, and route IDs CV-690..691, remain unchanged. All 26 existing lane IDs are retained.
+Changed paths are the fixture pack, the existing checker, the new guard-proof script, this report, self-grade and compact guard summary. No Plans Markdown changed, so no derived regeneration or timestamp churn is introduced. Shard and index validation pass against existing generated content; fifteen currentness files were copied and hash-matched. No reseal, landing lock, main push, mailbox or subagent was used.
 
-Only six source paths change this round: Plans/storage-plan.md (nineteen exact physical/read bindings), Plans/Automated_Testing_System.md (nineteen exact oracle rows), Plans/dg6b_event_contracts.schema.json, Plans/dg6b_event_contract_fixtures.json, Plans/storage_value_registry.json (nineteen existing rows/profile notes), and scripts/pm-dg6b-event-contracts.py. Generated shard owners are exactly automated_testing_system, storage-plan and storage_value_registry. Index files are regenerated by the official script with all fifteen currentness files hash-matched first. Shared-file edits are confined to SP-670/671/672, ATS-335/336, and the existing nineteen operation rows/profiles; no shared existing owner is reflowed.
+## Verification and evidence
 
-No event registry append, admission, Decision Log entry, Spec Lock, auto_decisions, governance evidence, frozen validator, test file, .gitignore, landing lock, main push, mailbox or subagent was used. Initial checks: 17 GB RAM available, 115 GB root disk free; later checks remained above 6 GB RAM and 50 GB disk. The required sparse detached DG6B-fix3 worktree is removed after pushing the report. No temporary branch is created.
+| Check | Exit / result |
+|---|---|
+| Complete guard-removal proof | 0; 51 invariant groups, 2,324 negatives, zero failures, exact input hashes stable, restored full checker pass |
+| Independent fixture isolation | 0; 1,245 negatives, zero wrong initial reasons, zero survivors |
+| Unmodified full CLI adversarial controls | 0; 78 expected nonzero process exits, all correct |
+| Preservation / byte / history audit | 0; 1,189 old refusals preserved; 86 independent MessagePack encodings; 133 live-state positives; exact B2 recovery |
+| Owner/scope; pattern regressions | 0; 58/58 and 2,373/2,373 |
+| Full checker; Projects refresh; GitHub integration | 0; parsed top-level pass |
+| Primary command catalog | 0; 19 tests |
+| Shard check; plan-index validate | 0; parsed top-level pass; 7,447 PlanUnits, native certification remains blocked |
+| Storage profile checker | 1; identical ordered 41-error pre-existing baseline |
+| Self-grade / payload purity / diff whitespace | 0; 313 exact citations; 246 one-leaf schema negatives; clean diff |
 
-## Verification
-
-| Command / suite | Exit | Result |
-|---|---:|---|
-| python3 scripts/pm-dg6b-event-contracts.py | 0 | top-level pass; 19 families, 408 refs, 86 append positives, 475 append negatives, 233 operation cases, 171 history cases and 95 retry cases |
-| full-checker-mutations.py | 0 | 395 independent expected nonzero CLI exits; zero unexpected success |
-| owner-scope-mutations.py | 0 | 58/58 independent owner/scope probes |
-| identifier-audit.py | 0 | 266/266 payload, operation and reference identifier LF probes |
-| history-live-state-audit | 0 | seven later live-state flags independently changed for each of nineteen retained originals |
-| python3 scripts/pm-projects-refresh-contracts.py | 0 | top-level pass |
-| python3 scripts/pm-github-project-integration.py | 0 | top-level pass; no admission |
-| python3 -m unittest discover -s tests -p test_pm_primary_command_catalog.py | 0 | 19 tests OK |
-| python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json | 0 | pass; only the three edited source owners |
-| python3 scripts/pm-plan-index.py generate | 0 | parsed top-level pass |
-| python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json | 0 | parsed top-level pass |
-| python3 scripts/pm-plan-index.py validate | 0 | parsed top-level pass |
-| python3 scripts/pm-storage-profile-check.py | 1 | byte-identical to round-2's 41-error baseline; no new error |
-| Self-grade citations / source preservation / git diff --check | 0 | exact quotations/hashes and protected/base-row preservation verified |
-
-Repository-wide governance reseal/landing gates and native execution are not claimed. Index timestamps are generator-owned; generated files were not hand-edited.
-
-## Retained evidence
-
-All evidence below is outside the repository. Each path is relative to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/`:
-
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/checks-manifest.json` — SHA-256 `7134c63b69151e3398ffee4bccfc2a50df193b8b6159e6276c26aaaaf9f18716`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/full-checker-mutations.py` — SHA-256 `206837cd1d53e2ea11dcd8cb8dce97fd9429a65502c7dec0c3c078129de689fa`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/full-checker-mutations.json` — SHA-256 `a903e6d30424dfe045939c2c6d9a34ec0da5db1daf53626725203d40144a8e7b`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/standing-checks-per-family.json` — SHA-256 `da6a9cf54f4f6b8bcbd0f01f0bb5f053078a3e8d621a005804367dfd15740092`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/operation-sizes.json` — SHA-256 `160b86b272242dd471bcbed3b0d73cdded974244d7065c8974dec8d1dfb1459a`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/canon-search.json` — SHA-256 `f8bb1ba4b1130456810564cce4698dd522bf272f18931a76495196df4b7ef328`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/premise-currentness.json` — SHA-256 `aa19ccbd1bc92536940ebaf77a571f0ad92dd5793f6126ed86c9e6870fe46a6e`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/currentness-copy.json` — SHA-256 `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/checker.json` — SHA-256 `b04beaea9b92f2433100c78d5833bd50e309505325b15d536fdfa0a31706f647`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/owner-scope-mutations.py` — SHA-256 `c3f962d14a14da73a8f60a2fb3df94d73ce3335cb3ecef3e50c6e04936c6b8f9`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/owner-scope-mutations.json` — SHA-256 `4893ba2df883b3551c629107dcaa5f2decd0d3fed75ffa78db6e4c994583e59e`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/identifier-audit.py` — SHA-256 `db84293f9434aa90e3fa33cf92fd7083286862662b33f67d7324945208143c41`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/identifier-audit.json` — SHA-256 `c4f05a563c94d63dddf39b886f027d414c1896f5a2d8e79e019015d5c61534fc`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/history-live-state-audit.json` — SHA-256 `b232dade10193a7e6f41fc2b51f94dc72cc87bbd336d705b967b80e703424243`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/shards-check.json` — SHA-256 `93fdbc49c3bee9277b2bcbadece09c3b4782b55a969b0f896dfc1b9661049c20`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/index-validate.json` — SHA-256 `320e66d703d9e38ee3e26acea19959b4da3e59cd8985009cff57ee5256982c4d`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/self-grade-validation.json` — SHA-256 `86878ed2707a8f7911309122d400cd62915b2efe44c99b61a94fa859d8cfbe42`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix3/scope-preservation.json` — SHA-256 `b7e0f3b15078a7eccd0fd7b57192124543edc1421dbcae7b9d6482ae8a99019c`
-
-Report and self-grade are copied to the DG6B drafts root and pushed. Open integration items: retention assignment, per-family admission and native proof. This lane starts no further fix/review cycle.
+Evidence manifest: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix4/checks-manifest.json` — SHA-256 `5da0a77aa4e2bfe5a3e11fb029281e8e080cbf5240827b63d46f6e74c3dd052a`. It pins every retained control output and reproduction aid by path, bytes and SHA-256. Raw evidence remains outside the repository. Report and self-grade are copied to the DG6B drafts root. The sparse detached worktree is removed after both commits are pushed.

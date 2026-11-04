@@ -1,0 +1,914 @@
+{
+  "status": "pass",
+  "fixed_contract_head": "96cff41a8263e49644328eb23611c1dd5d135152",
+  "guard_groups": 51,
+  "refusal_classifications": 52,
+  "negative_count": 2324,
+  "fixture_negative_count": 1245,
+  "unexpected_flips_or_survivors": 0,
+  "full_checker_restored": "pass",
+  "native_execution": "NOT_RUN",
+  "full_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix4/guard-removal.json",
+    "sha256": "c2df6c3c3ccc41b8a0740fed332ad2af0c7f7db0d8da58b124e13fa312994217"
+  },
+  "input_sha256": {
+    "scripts/pm-dg6b-event-contracts.py": "b328f6b5d117b9bfd254e63d80a0619d05232fefbe4234f158ea413d5d3eefe9",
+    "scripts/pm-dg6b-guard-proof.py": "59ce4139d9ca21f1413dd0474aad6c489e42103ae7550b7ed2e4e9f7dee4df67",
+    "Plans/dg6b_event_contract_fixtures.json": "a76ad4f02c9ad51fdbf25f93ca05536a3ac570acae412d6f88d23dc54cb8dfa4",
+    "Plans/dg6b_event_contracts.schema.json": "a907834a59ee2638208d35e1d951a3168c747fb41b3d0983f785a7eee066ce9e",
+    "reports/event-authority-20261104/DG6B.self-grade.json": "d8a4e00a4d8f0def23c162aa78483deb1aabcba949465a9eb1e2b748d521f6a9"
+  },
+  "rows": [
+    {
+      "guard": "access",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 203
+        },
+        {
+          "function": "append_contract",
+          "line": 479
+        }
+      ],
+      "flips": 25,
+      "flip_label_selectors": [
+        "append_invalid/source_access_revoked",
+        "semantic_invalid/source_access_revoked"
+      ],
+      "stays_rejected": 2299
+    },
+    {
+      "guard": "cadence",
+      "source_locations": [
+        {
+          "function": "semantic",
+          "line": 170
+        }
+      ],
+      "flips": 1,
+      "flip_label_selectors": [
+        "semantic/cadence"
+      ],
+      "stays_rejected": 2323
+    },
+    {
+      "guard": "cas",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 217
+        },
+        {
+          "function": "persona_semantic",
+          "line": 247
+        },
+        {
+          "function": "persona_semantic",
+          "line": 251
+        }
+      ],
+      "flips": 3,
+      "flip_label_selectors": [
+        "semantic_invalid/stale_cas"
+      ],
+      "stays_rejected": 2321
+    },
+    {
+      "guard": "checkpoint_schema",
+      "source_locations": [
+        {
+          "function": "append_contract",
+          "line": 519
+        }
+      ],
+      "flips": 76,
+      "flip_label_selectors": [
+        "append_invalid/checkpoint_trailing_lf_frontier_sha256",
+        "append_invalid/checkpoint_trailing_lf_generation_anchor_sha256",
+        "append_invalid/checkpoint_trailing_lf_generation_id",
+        "append_invalid/persisted_snapshot_forbidden"
+      ],
+      "stays_rejected": 2248
+    },
+    {
+      "guard": "checkpoint_storage_join",
+      "source_locations": [
+        {
+          "function": "append_contract",
+          "line": 523
+        }
+      ],
+      "flips": 57,
+      "flip_label_selectors": [
+        "append_invalid/wrong_checkpoint_key",
+        "append_invalid/wrong_checkpoint_source_storage",
+        "append_invalid/wrong_checkpoint_storage"
+      ],
+      "stays_rejected": 2267
+    },
+    {
+      "guard": "confirmation",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 215
+        }
+      ],
+      "flips": 1,
+      "flip_label_selectors": [
+        "semantic_invalid/unconfirmed_delete"
+      ],
+      "stays_rejected": 2323
+    },
+    {
+      "guard": "creation_source",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 245
+        }
+      ],
+      "flips": 1,
+      "flip_label_selectors": [
+        "extra/creation_source"
+      ],
+      "stays_rejected": 2323
+    },
+    {
+      "guard": "current_writer_policy",
+      "source_locations": [
+        {
+          "function": "append_contract",
+          "line": 466
+        },
+        {
+          "function": "append_contract",
+          "line": 468
+        }
+      ],
+      "flips": 38,
+      "flip_label_selectors": [
+        "append_invalid/replay_only_append",
+        "append_invalid/wrong_current_replay_policy"
+      ],
+      "stays_rejected": 2286
+    },
+    {
+      "guard": "definition_writer",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 208
+        }
+      ],
+      "flips": 5,
+      "flip_label_selectors": [
+        "extra/definition_writer"
+      ],
+      "stays_rejected": 2319
+    },
+    {
+      "guard": "envelope_source_join",
+      "source_locations": [
+        {
+          "function": "append_contract",
+          "line": 504
+        },
+        {
+          "function": "append_contract",
+          "line": 508
+        }
+      ],
+      "flips": 57,
+      "flip_label_selectors": [
+        "append_invalid/wrong_actor",
+        "append_invalid/wrong_schema_route",
+        "append_invalid/wrong_time"
+      ],
+      "stays_rejected": 2267
+    },
+    {
+      "guard": "event_record_schema",
+      "source_locations": [
+        {
+          "function": "append_contract",
+          "line": 471
+        }
+      ],
+      "flips": 19,
+      "flip_label_selectors": [
+        "extra/event_record_schema"
+      ],
+      "stays_rejected": 2305
+    },
+    {
+      "guard": "failure_error_reason",
+      "source_locations": [
+        {
+          "function": "expect_failure",
+          "line": 538
+        }
+      ],
+      "flips": 1,
+      "flip_label_selectors": [
+        "wrong_reason_cannot_prove_failure"
+      ],
+      "stays_rejected": 2323
+    },
+    {
+      "guard": "failure_oracle",
+      "source_locations": [
+        {
+          "function": "expect_failure",
+          "line": 540
+        }
+      ],
+      "flips": 1,
+      "flip_label_selectors": [
+        "success_cannot_prove_failure"
+      ],
+      "stays_rejected": 2323
+    },
+    {
+      "guard": "fixture_family_coverage",
+      "source_locations": [
+        {
+          "function": "preparation_contract",
+          "line": 636
+        }
+      ],
+      "flips": 19,
+      "flip_label_selectors": [
+        "preparation/fixture_family_coverage"
+      ],
+      "stays_rejected": 2305
+    },
+    {
+      "guard": "grade_family_coverage",
+      "source_locations": [
+        {
+          "function": "preparation_contract",
+          "line": 638
+        }
+      ],
+      "flips": 19,
+      "flip_label_selectors": [
+        "preparation/grade_family_coverage"
+      ],
+      "stays_rejected": 2305
+    },
+    {
+      "guard": "historical_access",
+      "source_locations": [
+        {
+          "function": "history_contract",
+          "line": 134
+        }
+      ],
+      "flips": 38,
+      "flip_label_selectors": [
+        "history_cases/history_access_current",
+        "history_cases/history_body_deleted"
+      ],
+      "stays_rejected": 2286
+    },
+    {
+      "guard": "historical_provenance",
+      "source_locations": [
+        {
+          "function": "history_contract",
+          "line": 130
+        }
+      ],
+      "flips": 57,
+      "flip_label_selectors": [
+        "history_cases/history_admitted_when_written",
+        "history_cases/history_authentic",
+        "history_cases/history_retained"
+      ],
+      "stays_rejected": 2267
+    },
+    {
+      "guard": "historical_withdrawn",
+      "source_locations": [
+        {
+          "function": "history_contract",
+          "line": 132
+        }
+      ],
+      "flips": 38,
+      "flip_label_selectors": [
+        "history_cases/history_family_withdrawn",
+        "history_cases/history_reader_current"
+      ],
+      "stays_rejected": 2286
+    },
+    {
+      "guard": "home_scope",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 199
+        },
+        {
+          "function": "persona_semantic",
+          "line": 201
+        }
+      ],
+      "flips": 1,
+      "flip_label_selectors": [
+        "semantic_invalid/project_home_in_no_project"
+      ],
+      "stays_rejected": 2323
+    },
+    {
+      "guard": "idempotency_conflict",
+      "source_locations": [
+        {
+          "function": "append_contract",
+          "line": 530
+        }
+      ],
+      "flips": 162,
+      "flip_label_selectors": [
+        "caller_semantic_change/*",
+        "retry_cases/caller_causation_event_id",
+        "retry_cases/caller_correlation_id",
+        "retry_cases/caller_parent_event_id",
+        "retry_cases/caller_producer_sequence_id"
+      ],
+      "stays_rejected": 2162
+    },
+    {
+      "guard": "idempotency_key",
+      "source_locations": [
+        {
+          "function": "append_contract",
+          "line": 497
+        }
+      ],
+      "flips": 95,
+      "flip_label_selectors": [
+        "append_invalid/actual_server_application_key",
+        "append_invalid/application_key_odd_hex",
+        "append_invalid/application_key_trailing_lf",
+        "append_invalid/application_key_uppercase_hex",
+        "append_invalid/legacy_application_key"
+      ],
+      "stays_rejected": 2229
+    },
+    {
+      "guard": "identity",
+      "source_locations": [
+        {
+          "function": "semantic",
+          "line": 160
+        },
+        {
+          "function": "append_contract",
+          "line": 495
+        }
+      ],
+      "flips": 21,
+      "flip_label_selectors": [
+        "semantic/identity",
+        "semantic/scope"
+      ],
+      "stays_rejected": 2303
+    },
+    {
+      "guard": "inline_body_too_large",
+      "source_locations": [
+        {
+          "function": "transport",
+          "line": 444
+        }
+      ],
+      "flips": 20,
+      "flip_label_selectors": [
+        "append_invalid/schema_valid_16385_byte_inline",
+        "transport/*"
+      ],
+      "stays_rejected": 2304
+    },
+    {
+      "guard": "mirror",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 211
+        }
+      ],
+      "flips": 4,
+      "flip_label_selectors": [
+        "semantic_invalid/mirror_write"
+      ],
+      "stays_rejected": 2320
+    },
+    {
+      "guard": "observation_only_hook",
+      "source_locations": [
+        {
+          "function": "semantic",
+          "line": 165
+        }
+      ],
+      "flips": 2,
+      "flip_label_selectors": [
+        "semantic/post_attempt_complete",
+        "semantic/post_tool_invoke"
+      ],
+      "stays_rejected": 2322
+    },
+    {
+      "guard": "operation_schema",
+      "source_locations": [
+        {
+          "function": "operation_contract",
+          "line": 98
+        },
+        {
+          "function": "operation_contract",
+          "line": 112
+        },
+        {
+          "function": "stage_contract",
+          "line": 404
+        }
+      ],
+      "flips": 344,
+      "flip_label_selectors": [
+        "operation_schema/*"
+      ],
+      "stays_rejected": 1980
+    },
+    {
+      "guard": "operation_schema_binding",
+      "source_locations": [
+        {
+          "function": "preparation_contract",
+          "line": 650
+        }
+      ],
+      "flips": 19,
+      "flip_label_selectors": [
+        "preparation/operation_schema_binding"
+      ],
+      "stays_rejected": 2305
+    },
+    {
+      "guard": "operation_source_join",
+      "source_locations": [
+        {
+          "function": "operation_contract",
+          "line": 119
+        },
+        {
+          "function": "operation_contract",
+          "line": 114
+        }
+      ],
+      "flips": 38,
+      "flip_label_selectors": [
+        "operation_cases/authenticated_but_wrong_effect_receipt_ref",
+        "operation_cases/authenticated_but_wrong_payload"
+      ],
+      "stays_rejected": 2286
+    },
+    {
+      "guard": "operation_value_too_large",
+      "source_locations": [
+        {
+          "function": "operation_value_size",
+          "line": 89
+        }
+      ],
+      "flips": 21,
+      "flip_label_selectors": [
+        "operation_cases/oversized_inline_operation",
+        "operation_cases/review_exact_16898_byte_inline_operation",
+        "stage_cases/physical_byte_stage_16385"
+      ],
+      "stays_rejected": 2303
+    },
+    {
+      "guard": "original_payload_conflict",
+      "source_locations": [
+        {
+          "function": "semantic",
+          "line": 162
+        }
+      ],
+      "flips": 13,
+      "flip_label_selectors": [
+        "semantic/original_payload"
+      ],
+      "stays_rejected": 2311
+    },
+    {
+      "guard": "original_server_required",
+      "source_locations": [
+        {
+          "function": "original_server_required",
+          "line": 154
+        }
+      ],
+      "flips": 1,
+      "flip_label_selectors": [
+        "original_server_required"
+      ],
+      "stays_rejected": 2323
+    },
+    {
+      "guard": "original_source_join",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 224
+        },
+        {
+          "function": "persona_semantic",
+          "line": 236
+        },
+        {
+          "function": "persona_semantic",
+          "line": 238
+        },
+        {
+          "function": "persona_semantic",
+          "line": 228
+        },
+        {
+          "function": "persona_semantic",
+          "line": 234
+        },
+        {
+          "function": "persona_semantic",
+          "line": 265
+        },
+        {
+          "function": "persona_semantic",
+          "line": 269
+        },
+        {
+          "function": "persona_semantic",
+          "line": 272
+        },
+        {
+          "function": "append_contract",
+          "line": 481
+        }
+      ],
+      "flips": 72,
+      "flip_label_selectors": [
+        "append_invalid/receipt_substitution",
+        "append_invalid/unrelated_original_source",
+        "history_cases/history_forged_original",
+        "semantic_invalid/changed_runtime_snapshot",
+        "semantic_invalid/frozen_timestamp_changed",
+        "semantic_invalid/recomputed_effective_identity",
+        "semantic_invalid/result_substitution",
+        "semantic_invalid/revision_substitution",
+        "semantic_invalid/subject_substitution"
+      ],
+      "stays_rejected": 2252
+    },
+    {
+      "guard": "override_lineage",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 260
+        },
+        {
+          "function": "persona_semantic",
+          "line": 263
+        }
+      ],
+      "flips": 1,
+      "flip_label_selectors": [
+        "semantic_invalid/coherent_wrong_lineage_owner"
+      ],
+      "stays_rejected": 2323
+    },
+    {
+      "guard": "partition",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 196
+        },
+        {
+          "function": "partition_contract",
+          "line": 377
+        }
+      ],
+      "flips": 48,
+      "flip_label_selectors": [
+        "semantic_invalid/project_partition_wrong",
+        "stage_cases/invalid_project_partition_'project-one'",
+        "stage_cases/invalid_project_partition_'project:project-one'",
+        "stage_cases/invalid_project_partition_'project~cHJvamVjdC1vbmU\\n'"
+      ],
+      "stays_rejected": 2276
+    },
+    {
+      "guard": "payload_ref_integrity",
+      "source_locations": [
+        {
+          "function": "operation_contract",
+          "line": 105
+        },
+        {
+          "function": "operation_contract",
+          "line": 108
+        },
+        {
+          "function": "operation_contract",
+          "line": 110
+        },
+        {
+          "function": "transport",
+          "line": 451
+        }
+      ],
+      "flips": 342,
+      "flip_label_selectors": [
+        "append_invalid/reference_hash_wrong",
+        "operation_cases/operation_noncanonical_encoding",
+        "operation_cases/operation_reference_blake3_id",
+        "operation_cases/operation_reference_byte_size",
+        "operation_cases/operation_reference_bytes_hex",
+        "operation_cases/operation_reference_media_type",
+        "transport/*"
+      ],
+      "stays_rejected": 1982
+    },
+    {
+      "guard": "payload_ref_unavailable",
+      "source_locations": [
+        {
+          "function": "reference_available",
+          "line": 457
+        }
+      ],
+      "flips": 190,
+      "flip_label_selectors": [
+        "append_invalid/reference_not_durable",
+        "operation_cases/operation_reference_access_current",
+        "operation_cases/operation_reference_durable",
+        "stage_cases/operation_reference_missing",
+        "transport/*"
+      ],
+      "stays_rejected": 2134
+    },
+    {
+      "guard": "payload_schema",
+      "source_locations": [
+        {
+          "function": "stage_contract",
+          "line": 399
+        },
+        {
+          "function": "append_contract",
+          "line": 474
+        }
+      ],
+      "flips": 266,
+      "flip_label_selectors": [
+        "append_invalid/inline_base64_body",
+        "payload_schema/*",
+        "stage_cases/coherent_retired_tier"
+      ],
+      "stays_rejected": 2058
+    },
+    {
+      "guard": "payload_transport_join",
+      "source_locations": [
+        {
+          "function": "append_contract",
+          "line": 512
+        }
+      ],
+      "flips": 19,
+      "flip_label_selectors": [
+        "extra/payload_transport_join"
+      ],
+      "stays_rejected": 2305
+    },
+    {
+      "guard": "prepared_membership",
+      "source_locations": [
+        {
+          "function": "preparation_contract",
+          "line": 642
+        }
+      ],
+      "flips": 19,
+      "flip_label_selectors": [
+        "preparation/prepared_membership"
+      ],
+      "stays_rejected": 2305
+    },
+    {
+      "guard": "protected",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 213
+        }
+      ],
+      "flips": 4,
+      "flip_label_selectors": [
+        "semantic_invalid/protected_id_mutation"
+      ],
+      "stays_rejected": 2320
+    },
+    {
+      "guard": "reach",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 221
+        }
+      ],
+      "flips": 1,
+      "flip_label_selectors": [
+        "semantic_invalid/only_projects_in_no_project"
+      ],
+      "stays_rejected": 2323
+    },
+    {
+      "guard": "resolution_schema",
+      "source_locations": [
+        {
+          "function": "resolution_contract",
+          "line": 283
+        }
+      ],
+      "flips": 6,
+      "flip_label_selectors": [
+        "resolution/effective_persona_id",
+        "resolution/missing/effective_persona",
+        "resolution/missing/requested_persona",
+        "resolution/missing/runtime_snapshot_ref",
+        "resolution/missing/runtime_snapshot_sha256",
+        "resolution/requested_persona_id"
+      ],
+      "stays_rejected": 2318
+    },
+    {
+      "guard": "retention_pending",
+      "source_locations": [
+        {
+          "function": "preparation_contract",
+          "line": 647
+        }
+      ],
+      "flips": 19,
+      "flip_label_selectors": [
+        "preparation/retention_pending"
+      ],
+      "stays_rejected": 2305
+    },
+    {
+      "guard": "retry_identity",
+      "source_locations": [
+        {
+          "function": "append_contract",
+          "line": 528
+        }
+      ],
+      "flips": 19,
+      "flip_label_selectors": [
+        "extra/retry_identity"
+      ],
+      "stays_rejected": 2305
+    },
+    {
+      "guard": "scope",
+      "source_locations": [
+        {
+          "function": "semantic",
+          "line": 158
+        },
+        {
+          "function": "persona_semantic",
+          "line": 192
+        },
+        {
+          "function": "append_contract",
+          "line": 483
+        },
+        {
+          "function": "append_contract",
+          "line": 487
+        }
+      ],
+      "flips": 16,
+      "flip_label_selectors": [
+        "append_invalid/project_auth_forbidden",
+        "semantic/scope",
+        "semantic_invalid/server_substitution"
+      ],
+      "stays_rejected": 2308
+    },
+    {
+      "guard": "selected_result_schema",
+      "source_locations": [
+        {
+          "function": "selected_result_contract",
+          "line": 278
+        }
+      ],
+      "flips": 2,
+      "flip_label_selectors": [
+        "selected_result/effective_persona_id",
+        "selected_result/requested_persona_id"
+      ],
+      "stays_rejected": 2322
+    },
+    {
+      "guard": "source_trust",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 219
+        },
+        {
+          "function": "persona_semantic",
+          "line": 253
+        }
+      ],
+      "flips": 1,
+      "flip_label_selectors": [
+        "semantic_invalid/unverified_import"
+      ],
+      "stays_rejected": 2323
+    },
+    {
+      "guard": "unadmitted_disposition",
+      "source_locations": [
+        {
+          "function": "preparation_contract",
+          "line": 640
+        }
+      ],
+      "flips": 19,
+      "flip_label_selectors": [
+        "preparation/unadmitted_disposition"
+      ],
+      "stays_rejected": 2305
+    },
+    {
+      "guard": "unknown_oracle_stage",
+      "source_locations": [
+        {
+          "function": "stage_contract",
+          "line": 406
+        }
+      ],
+      "flips": 1,
+      "flip_label_selectors": [
+        "unknown_oracle_stage"
+      ],
+      "stays_rejected": 2323
+    },
+    {
+      "guard": "unresolved_schema_ref",
+      "source_locations": [
+        {
+          "function": "resolve_schema_graph",
+          "line": 46
+        }
+      ],
+      "flips": 57,
+      "flip_label_selectors": [
+        "schema_graph/*"
+      ],
+      "stays_rejected": 2267
+    },
+    {
+      "guard": "writer",
+      "source_locations": [
+        {
+          "function": "persona_semantic",
+          "line": 206
+        },
+        {
+          "function": "append_contract",
+          "line": 477
+        }
+      ],
+      "flips": 25,
+      "flip_label_selectors": [
+        "append_invalid/withdrawn_event_writer",
+        "semantic_invalid/withdrawn_event_writer",
+        "semantic_invalid/writer_stale"
+      ],
+      "stays_rejected": 2299
+    }
+  ]
+}
