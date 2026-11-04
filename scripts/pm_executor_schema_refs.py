@@ -34,20 +34,22 @@ def check_references(schema, schema_path):
     """Resolve every reference, including dormant definitions and local resources.
 
     Complete retrieved documents are walked too. Registry resolves JSON pointers,
-    anchors and nested resource IDs; no network retrieval is allowed. Cache keys
-    contain the root bytes and, for external refs, every local schema's file stamp,
-    so a same-process on-disk schema mutation cannot reuse a prior resolution.
+    anchors and nested resource IDs; no network retrieval is allowed. Local-only
+    reference checks cache the complete root bytes. External graphs are resolved
+    afresh so an on-disk dependency mutation cannot reuse a prior resolution.
     """
-    refs = list(_references(schema))
-    signature = ()
-    if any(isinstance(ref, str) and not ref.startswith('#') for ref in refs):
-        signature = tuple((str(path), path.stat().st_mtime_ns, path.stat().st_size)
-                          for path in sorted((ROOT / 'Plans').glob('*.schema.json')))
-    return _check_references_cached(json.dumps(schema, sort_keys=True), schema_path, signature)
+    text = json.dumps(schema, sort_keys=True)
+    if any(isinstance(ref, str) and not ref.startswith('#') for ref in _references(schema)):
+        return _check_reference_graph(text, schema_path)
+    return _check_local_references_cached(text, schema_path)
 
 
 @lru_cache(maxsize=128)
-def _check_references_cached(text, schema_path, resource_signature):
+def _check_local_references_cached(text, schema_path):
+    return _check_reference_graph(text, schema_path)
+
+
+def _check_reference_graph(text, schema_path):
     schema = json.loads(text)
     _check_schema_text(text)
     if not list(_references(schema)):
