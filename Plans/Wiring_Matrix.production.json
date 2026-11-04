@@ -10833,8 +10833,8 @@
       "evidence_required": "Future production evidence for cmd.auth_profile.sign_in: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::multi_account::sign_in",
-      "request_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest",
-      "result_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult",
+      "request_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileSignInRequestV2",
+      "result_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileSignInResultV2",
       "state_selector": "state.commands.auth_profile_sign_in.availability",
       "test_evidence": [
         {
