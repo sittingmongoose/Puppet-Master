@@ -23,6 +23,7 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 
 | Check file | What it asserts |
 |---|---|
+| `inbox-prewarm` | SW-26: early real bell holds defer the unrelated editor cache build until the inbox finishes closing; optional DevTools trace. Both surfaces. |
 | `idle-in-drag` | SW-17: real Home and Usage divider holds, owned idle callbacks stay out of the drag and parked work resumes after release. Both surfaces; `--set film=1` keeps the recording viewport, otherwise 1390×900. |
 | `performance-stalls` | SW-09/10/15/16/26: DevTools trace and GPU-film diagnostics for Studio, look picks, inbox, Crew Start and drag. `--set only=crew\|drag\|look\|bell\|pair`; paired runs take `--set base=<main> --set fixed=<build> --set order=control,fixed` and `--set page=<first build>` (add `--set task=look` for actual title-bar picks). `--set trace=<path> --set metrics=<path>` saves data. Focus and actual edge tracking are asserted; film judges painted stalls. |
 | `motion-token-speed` | SW-09: cached Crew sheet exits keep the Settings owner's Fast/Measured/Cinematic duration ratios on either surface. |

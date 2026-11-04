@@ -23,9 +23,9 @@ export default async function(t) {
  await cdp.send('Emulation.setFocusEmulationEnabled',{enabled:true});
  const metrics=[];
  async function sample(name, action, ms=1200) {
-  await f.evaluate(name=>{window.__perfSample={name,start:performance.now(),gaps:[],times:[],last:performance.now(),on:true}; const s=window.__perfSample; performance.mark(name); function tick(now){if(!s.on)return; s.gaps.push(now-s.last);s.times.push([now,now-s.last]);s.last=now;requestAnimationFrame(tick);}requestAnimationFrame(tick);},name);
+  await f.evaluate(name=>{window.__perfSample={name,start:performance.now(),gaps:[],times:[],last:performance.now(),on:true}; const s=window.__perfSample; performance.mark(name); if(name.includes('bell'))document.addEventListener('click',()=>{s.clickAt=performance.now();performance.mark(name+'-click');},{once:true,capture:true}); function tick(now){if(!s.on)return; s.gaps.push(now-s.last);s.times.push([now,now-s.last]);s.last=now;requestAnimationFrame(tick);}requestAnimationFrame(tick);},name);
   await t.mark(name); await action(); await t.page.waitForTimeout(ms);
-  metrics.push(await f.evaluate(()=>{const s=window.__perfSample;s.on=false;const a=s.gaps.slice(1).sort((a,b)=>a-b),m=s.times.filter(([t])=>t>=s.movingStart&&t<=s.movingEnd).map(x=>x[1]).sort((a,b)=>a-b);return {name:s.name,max:Math.max(...a),p95:a[Math.floor(a.length*.95)],frames:a.length,movingP95:m[Math.floor(m.length*.95)],movingMax:Math.max(...m),movingFrames:m.length};}));
+  metrics.push(await f.evaluate(()=>{const s=window.__perfSample;s.on=false;const a=s.gaps.slice(1).sort((a,b)=>a-b),m=s.times.filter(([t])=>t>=s.movingStart&&t<=s.movingEnd).map(x=>x[1]).sort((a,b)=>a-b);return {name:s.name,max:Math.max(...a),p95:a[Math.floor(a.length*.95)],frames:a.length,movingP95:m[Math.floor(m.length*.95)],movingMax:Math.max(...m),movingFrames:m.length,firstPostClickGap:s.clickAt==null?null:s.times.find(([t])=>t>=s.clickAt)?.[1]};}));
  }
  async function drag(name) {
    const b=await f.locator('#chatResizer').boundingBox();
@@ -81,6 +81,7 @@ export default async function(t) {
     for(let i=0;i<3;i++) {
      await sample(look+'-bell-'+i,async()=>{await f.locator('#pmnStack').click();await t.check('inbox opened',await f.evaluate(()=>PM_TITLEBAR_NOTIFY.isOpen()));});
      await t.page.keyboard.press('Escape');
+     await f.locator('#pmnPanel').waitFor({state:'hidden',timeout:10000});
     }
    }
   }
