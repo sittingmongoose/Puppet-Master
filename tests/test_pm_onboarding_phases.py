@@ -384,10 +384,8 @@ class OnboardingStorageTests(unittest.TestCase):
         self.assertEqual(browser_checkpoint[0], browser.expected_storage_family())
         # Re-pinned 2026-11-04 (Plans/storage-plan.md Case L-3, DL-084 and DL-092; branch
         # plans/ea-storage-retention-20261104): RP-CHAT-THREAD-LIFETIME@1.0.0 materializes the Chat content
-        # class, so the registry has 28 retention policies. Re-pinned 2026-11-04 (Plans/storage-plan.md Case L-3,
-        # DL-401; branch plans/ea-retention-cards1-20261104): RP-TELEMETRY-90D@1.0.0 materializes the Ordinary
-        # telemetry class, so the registry has 29. The family rows pinned above are unchanged.
-        self.assertEqual(len(self.registry["retention_policies"]), 29)
+        # class, so the registry has 28 retention policies. The family rows pinned above are unchanged.
+        self.assertEqual(len(self.registry["retention_policies"]), 28)
         self.assertEqual(self.storage.validate(self.registry), [])
         failures, counts = GATE.validate_onboarding_storage_contract()
         self.assertEqual(failures, [])
