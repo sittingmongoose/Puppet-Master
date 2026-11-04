@@ -4573,7 +4573,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24460,
+      "line_count": 24461,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 361,
       "plan_unit_ids": [
@@ -5298,7 +5298,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4",
+      "sha256": "dab0151af0da2451cf27ca31cecedc40607a0a6c9ab9ad880754668fe5bb5722",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 361
@@ -6306,7 +6306,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "4839a39c8b12328328129611acbc78ce280f8f8d23644c934b05e5942e836581",
+      "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 264
@@ -9566,7 +9566,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 8354,
+      "line_count": 8355,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 85,
       "plan_unit_ids": [
@@ -9738,7 +9738,7 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a",
+      "sha256": "340679f1e0852d0ad5ef0345415686be14f53b12677402812d37989477a39c34",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 76,
@@ -13717,7 +13717,7 @@
         "future notification credential custody",
         "future permission settings"
       ],
-      "line_count": 11097,
+      "line_count": 11098,
       "path": "Plans/Permissions_System.md",
       "plan_unit_count": 148,
       "plan_unit_ids": [
@@ -13908,7 +13908,7 @@
         "visualizer_sandbox_escape",
         "wholesale_browser_state_or_auth_export"
       ],
-      "sha256": "be588c010efb580a9bbf9295495cfb87fad75afa25bfda6cf37e2756cc72a048",
+      "sha256": "b3a68929bbad7d4d579a3664aed2b7c628752fea67df2cfeaebc49e0715c83a2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 148
@@ -17672,7 +17672,7 @@
         "future shared Rust interface model and sole owner services; no implementation claimed",
         "future typed Settings owner projections"
       ],
-      "line_count": 5602,
+      "line_count": 5603,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 60,
       "plan_unit_ids": [
@@ -17793,7 +17793,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "88e5a8d78002197ab17cb34138f1412cc6d3620a853e8ed2df51f1b3b70f6a2e",
+      "sha256": "c23553ce45ab08cd88f19a446f11417c4bb2eb4b2731793079dfae5b7f867bb7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 60
@@ -19131,7 +19131,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "9ced98523c3e0b52aca8a654da21c55d14f24aa6f00963836bad73e283497a15",
+      "sha256": "e8f080cb883e483017b1b5ff48918b08ae3ce02c4c9c0d48424694fe494b5891",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 337,
@@ -21506,7 +21506,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T01:24:34Z",
+  "generated_at_utc": "2026-11-04T01:51:31Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

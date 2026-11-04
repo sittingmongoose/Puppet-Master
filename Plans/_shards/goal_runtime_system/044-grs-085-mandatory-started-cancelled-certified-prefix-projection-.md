@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8132-L8354
+Source lines: L8132-L8355
 
-Source SHA256: `e4026ffeb82d2d1d5da6b5b9416b04752e835346314594a6af6cdc1fb9ac2e9a`
+Source SHA256: `340679f1e0852d0ad5ef0345415686be14f53b12677402812d37989477a39c34`
 
 ---
 
@@ -118,6 +118,7 @@ depends_on:
 - ACD-508
 - SIR-055
 - PS-145
+- DL-300
 unblocks: []
 acceptance_criteria:
 - App Goal create/direct Save/approved proposal/pause/resume/Stop/cancel/history/restart/backup succeeds through

@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L19639-L21106
 
-Source SHA256: `4839a39c8b12328328129611acbc78ce280f8f8d23644c934b05e5942e836581`
+Source SHA256: `d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd`
 
 ---
 
@@ -1429,7 +1429,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Records an Event Authority checkpoint approval for persisted event families.
 split_recommended: false
-depends_on: [DL-188, DL-292]
+depends_on: [DL-292]
 unblocks: [SSYS-060, PS-145, CV-366, GRS-086]
 acceptance_criteria:
   - "Plans/event_family_registry.json is registry revision 2026-11-04.1 with 46 families: the 43 of 2026-10-09.1, eleven of them Goal families with the exact CV-366 scope-selector edition, plus settings.layer.changed, approval.chat_tool_requested and approval.chat_tool_resolved."

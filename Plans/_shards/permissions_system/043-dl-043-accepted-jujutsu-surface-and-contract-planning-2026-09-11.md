@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L10025-L11097
+Source lines: L10025-L11098
 
-Source SHA256: `be588c010efb580a9bbf9295495cfb87fad75afa25bfda6cf37e2756cc72a048`
+Source SHA256: `b3a68929bbad7d4d579a3664aed2b7c628752fea67df2cfeaebc49e0715c83a2`
 
 ---
 
@@ -556,6 +556,7 @@ depends_on:
 - PS-144
 - PS-017
 - PS-019
+- DL-300
 unblocks: []
 acceptance_criteria:
 - App Goal/Crew/Plan/scheduled task uses actual roots and immutable app evidence; original Project exact fixtures

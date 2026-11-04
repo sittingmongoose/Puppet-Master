@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23953-L24460
+Source lines: L23953-L24461
 
-Source SHA256: `a0e330da6e834f36a69751ea11d322e952cafbf176a1c665508d561068d411b4`
+Source SHA256: `dab0151af0da2451cf27ca31cecedc40607a0a6c9ab9ad880754668fe5bb5722`
 
 ---
 
@@ -159,6 +159,7 @@ depends_on:
 - CV-365
 - CV-317
 - CV-339
+- DL-300
 unblocks: []
 acceptance_criteria:
 - Every selected sibling has exact logical ID/root/version/source methods and full offline resource closure.
