@@ -11,6 +11,7 @@ import contextlib
 import copy
 import importlib.util
 import io
+import inspect
 import json
 from pathlib import Path
 import time
@@ -36,7 +37,21 @@ def run(job):
     entry = next(s for s in stored['families'] if s['value_schema_id'] == schema['$id'])
     overrides = {}
     original_retry, original_resolve, original_history = m.retry_outcome, m.resolve_body, m.historical_read_valid
-    if name == '1_replay_only':
+    if name == '11_generation_limit_removed':
+        del schema['properties']['history']['maxItems']
+        overrides[cp_path]=schema
+        entry['value_schema']=copy.deepcopy(schema)
+    elif name == '11_historical_edition_removed':
+        source=inspect.getsource(m.historical_read_valid)
+        old='or not payload_validator.is_valid(body)'
+        assert source.count(old)==1
+        exec(source.replace(old,''),m.__dict__)
+    elif name == '11_terminal_started_join_removed':
+        source=inspect.getsource(m.test_joins)
+        old="or payload['started_event_id'] != started['event_id']"
+        assert source.count(old)==1
+        exec(source.replace(old,''),m.__dict__)
+    elif name == '1_replay_only':
         for f in cases:
             f['record']['replay_policy'] = 'projector_replay_only'
     elif name == '2_old_application_key':
@@ -210,13 +225,14 @@ def main():
                 '9_registry_only_history_ref_missing','9_external_document_hidden_ref_missing',
                 '9_dynamic_anchor_missing','10_live_state_required_for_history',
                 '10_withdrawn_history_claimed_valid','10_forged_history_claimed_valid',
-                'B2_payload_reference_support_removed']
+                'B2_payload_reference_support_removed','11_generation_limit_removed','11_historical_edition_removed']
     jobs = [(r['event_type'],name,1) for r in rows for name in negative]
     jobs += [(r['event_type'],name,0) for r in rows for name in ['9_valid_history_ref','9_valid_file_ref','9_external_document_cycle_valid']]
     jobs += [('chat.thread_archived',name,1) for name in ['F3_archive_stopped_again','F3_automatic_archive']]
     jobs += [(family,'B2_legal_large_inline_body',1) for family in ['chat.message','bundle.selection_sent_to_chat']]
     jobs += [(family,'B2_original_review_maximum_arrays_inline',1)
              for family in ['chat.message','bundle.selection_sent_to_chat']]
+    jobs += [(family,'11_terminal_started_join_removed',1) for family in ['chat.thread_worktree_pre_merge_test_failed','chat.thread_worktree_pre_merge_test_passed']]
     results = []
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
         for future in as_completed([pool.submit(run,job) for job in jobs]):

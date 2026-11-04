@@ -2005,7 +2005,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7336,
+      "line_count": 7357,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 78,
       "plan_unit_ids": [
@@ -2158,7 +2158,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "52b8c961dbb21bcb37e42364fe249eccc6cf32041b68ad7beaa39e16ed5ddc16",
+      "sha256": "d924e07084fd90a081d68b6795382ac1bddbc269fd8cb3da681b64da81f6d5ea",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 77,
@@ -2317,6 +2317,7 @@
         "python3 scripts/pm_coordination_events.py",
         "python3 scripts/pm_dch_event_regressions.py",
         "python3 scripts/pm_dch_events.py",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-proof.json>",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
         "scripts/pm-integration-packet-audit-work.py",
@@ -21567,7 +21568,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T20:28:20Z",
+  "generated_at_utc": "2026-11-04T21:29:25Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

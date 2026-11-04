@@ -203,17 +203,13 @@
           "maxLength": 4096
         },
         "exit_code": {
-          "anyOf": [
-            {
-              "type": "integer",
-              "not": {
-                "const": 0
-              }
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": [
+            "integer",
+            "null"
+          ],
+          "not": {
+            "const": 0
+          }
         },
         "duration_ms": {
           "type": "integer",
@@ -262,7 +258,10 @@
               "test_outcome": {
                 "const": "exit"
               }
-            }
+            },
+            "required": [
+              "test_outcome"
+            ]
           },
           "then": {
             "properties": {
@@ -291,7 +290,10 @@
               "test_outcome": {
                 "const": "process_error"
               }
-            }
+            },
+            "required": [
+              "test_outcome"
+            ]
           },
           "then": {
             "properties": {
@@ -495,17 +497,13 @@
           "maxLength": 4096
         },
         "exit_code": {
-          "anyOf": [
-            {
-              "type": "integer",
-              "not": {
-                "const": 0
-              }
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": [
+            "integer",
+            "null"
+          ],
+          "not": {
+            "const": 0
+          }
         },
         "duration_ms": {
           "type": "integer",
@@ -554,7 +552,10 @@
               "test_outcome": {
                 "const": "exit"
               }
-            }
+            },
+            "required": [
+              "test_outcome"
+            ]
           },
           "then": {
             "properties": {
@@ -583,7 +584,10 @@
               "test_outcome": {
                 "const": "process_error"
               }
-            }
+            },
+            "required": [
+              "test_outcome"
+            ]
           },
           "then": {
             "properties": {

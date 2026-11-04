@@ -117,10 +117,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -128,12 +128,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -1530,7 +1530,7 @@
           "idempotency_key": "dch:5978cfc0d2317edf19ce1bad56aa876a22f187a8f3c863aaf6b364631e0034ff",
           "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:4c75a3d3f227aa3e00770fd482f15c2f6268ba1f0dc2a2cbee907470691a7d91:603:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:603:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -1546,7 +1546,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -1872,7 +1872,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "6ab1319b1edf171143f315ed741e0987b84d0153cb68a53c930ffba562fc86e1"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "b9cb29b6bd31c77ed5a3bbba5a701d176a7a01b90637ddf33f70f05537e7941e"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "0173f6c2020d8fa80c98874cd64bc7425363298a70b3e48c7c2d17aca95ae784"
         },
         "expected_valid": false
       }
@@ -1997,10 +2014,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -2008,12 +2025,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -3318,7 +3335,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:e8130fcdd5ab904f45aab17dfd3c07840b38d7b3f1ce40ea3ada7c0490c9f99c:594:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:594:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -3334,7 +3351,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -3660,7 +3677,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "8f83df6dbebe745219b01442dc8f6019783001ac2de029bcad5f1d9fbf0d14ea"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "c8907e63803f25ec0e7bbae6fe6a99c48c18655dffe990eff45f0fa7db0cd997"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "380e0124db21f1a9fc6d12d813051757993883bcbe774ec62f2466ce1ca7b727"
         },
         "expected_valid": false
       }
@@ -3794,10 +3828,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -3805,12 +3839,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -5263,7 +5297,7 @@
           "idempotency_key": "dch:f40b74981ee633871f99091a11d081ac846bcd388effe78b9f36de23ead7d78f",
           "payload_schema_id": "pm.dch_event.bundle_selection_sent_to_chat.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:7b38b3c10aa0a9451118b416130af1e487ea05fd6049e2e51caf3d2b1a28a612:722:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:722:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -5279,7 +5313,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -6470,7 +6504,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "cfd5e01d86c4868356fde4d6f83a87835b95f22d8bd77bbd3e4b53a95f57baf4"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "99db37c62746d515c0699c40c1bde2221752db1fa90a0ffd457ec5de16faceb9"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "f08f1057bb04242a0fc0d183f900d6c38853ea09383a8906abeb806528dc309a"
         },
         "expected_valid": false
       }
@@ -6605,10 +6656,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -6616,12 +6667,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -7982,7 +8033,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.bundle_selection_sent_to_chat.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:319a44d65180234ac51a3ce224caa6c39a4db370ecd416a06f227a6bdfab16c7:713:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:713:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -7998,7 +8049,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -9189,7 +9240,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "d9b6fe5973b0137e7e85f8d7eacb451c46a2bbc239c24876dc243ba649054630"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "c732dcff4d479d14b023d6f59609d014cba0204dcb0ecb5edb6bb31c24196b38"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "b32787d54c200ac34490ce092139de6a371339ebb478474600897603c1cbb6fc"
         },
         "expected_valid": false
       }
@@ -9313,10 +9381,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -9324,12 +9392,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -10726,7 +10794,7 @@
           "idempotency_key": "dch:fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
           "payload_schema_id": "pm.dch_event.chat_message.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:5163259f120a298adbb762c53e70afb94a141588080fb78bad410f866569a593:532:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:532:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -10742,7 +10810,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -11713,7 +11781,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "6f0be5e14c4a5049ed46871bc7937e24cde23e092255b5eddbe0af519abba31d"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "7a98454a14b2015b363f9f165a26e5d83339c2cda46e542adf6867af5fbd1151"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "b0ad449ba6770d55bc6cbfc27bfaf5858c59834185da9ab03b70334ca908eb9a"
         },
         "expected_valid": false
       }
@@ -11838,10 +11923,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -11849,12 +11934,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -13159,7 +13244,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_message.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:933934ca2e8f588af64964ddfe466de79dcac8c78501d434833ca0fccf22172b:523:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:523:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -13175,7 +13260,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -14146,7 +14231,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "c910ecb9befedd7275df6d1485fe1a187b3b74bc5b71eaef5c9ab6fcb4348bb8"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "6903e0979dbe93d0237f05098b041f0485baca7d91a5599b8e6a8ef4db84f214"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "cb7a2c402b4aa51132b735c7d236c62bf955e763f83a64d08f440ed5a110ca65"
         },
         "expected_valid": false
       }
@@ -14435,7 +14537,8 @@
       {
         "name": "wrong_command",
         "changes": {
-          "payload.command_id": "cmd.chat.thread.archive"
+          "payload.command_id": "cmd.chat.thread.archive",
+          "source.request.command_id": "cmd.chat.thread.archive"
         },
         "expected_valid": false
       },
@@ -14466,6 +14569,20 @@
           "source.after.operation_id": "other_operation"
         },
         "expected_valid": false
+      },
+      {
+        "name": "wrong_request_command",
+        "changes": {
+          "source.request.command_id": "cmd.chat.thread.archive"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "previous_state_mismatch",
+        "changes": {
+          "source.before.state": "suspended"
+        },
+        "expected_valid": false
       }
     ],
     "retry_oracles": [
@@ -14475,10 +14592,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -14486,12 +14603,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -15916,7 +16033,7 @@
           "idempotency_key": "dch:b9c2ab2ab653110d3733bc17f634f20ced61ff20565790c2d64741c4f0dcf8ee",
           "payload_schema_id": "pm.dch_event.chat_thread_archived.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:6ed74a700024ec522aab22bbd1d898046f18f5e0a78b8c04ca4fc1807d2cdfea:617:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:617:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -15932,7 +16049,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -16266,7 +16383,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "2a960e872e5134b401e81519d3580e4507e629ae1e16125c7515bd2f38e98bef"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "bfacbf9721ee4c8cc71756d86583d1515490b0352e131a813b948fbf7949c991"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "31f414255416e2a6a0af9b826a7ff88f8a38403b6ca75b98623e0fab54aa1462"
         },
         "expected_valid": false
       }
@@ -16556,7 +16690,8 @@
       {
         "name": "wrong_command",
         "changes": {
-          "payload.command_id": "cmd.chat.thread.archive"
+          "payload.command_id": "cmd.chat.thread.archive",
+          "source.request.command_id": "cmd.chat.thread.archive"
         },
         "expected_valid": false
       },
@@ -16587,6 +16722,20 @@
           "source.after.operation_id": "other_operation"
         },
         "expected_valid": false
+      },
+      {
+        "name": "wrong_request_command",
+        "changes": {
+          "source.request.command_id": "cmd.chat.thread.archive"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "previous_state_mismatch",
+        "changes": {
+          "source.before.state": "suspended"
+        },
+        "expected_valid": false
       }
     ],
     "retry_oracles": [
@@ -16596,10 +16745,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -16607,12 +16756,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -17945,7 +18094,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_archived.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:506e779c9dd5d9b2afdb15e72741e0554bbfefc26139c4b7971fca3c5eb2fee8:608:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:608:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -17961,7 +18110,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -18295,7 +18444,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "3d576c715a35f514790f7ecdc9e9bfa495a4379e93cf4fbd29708dbcb364791e"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "ae18ee6ef9d05747704c55f3583fda323dccea8b64c3f8d7a06321b751830c89"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "e0be83ad2fbfd1f7a865fcc671c3c9517a56e40f5a4422e5eb8361ff2b287fe1"
         },
         "expected_valid": false
       }
@@ -18410,10 +18576,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -18421,12 +18587,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -19781,7 +19947,7 @@
           "idempotency_key": "dch:9bcd4ceaeffd1451004ccf2cb96db8df579f9b800e2154cc71721f820e82c50a",
           "payload_schema_id": "pm.dch_event.chat_thread_created.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:4141de4a9f431323b00cae58283766efd485543587b5290b7d1dafc54fe4fe8b:518:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:518:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -19797,7 +19963,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -20111,7 +20277,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "2c0add709a31b13df01307c101c4ff4d50ea0a1b2d5be0a41b21401ece7a91b3"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "75b38a92a9609bfe3dbf971dbe1fe0290b44dcf233a784344716e8f9a5628562"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "999a5db6d867227be9ca721beedadf95d09feca7dded3dbf7174fb609691a3f5"
         },
         "expected_valid": false
       }
@@ -20227,10 +20410,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -20238,12 +20421,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -21506,7 +21689,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_created.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:dc6a983802669fb0de014cd3fcbc0593374b0e1445edbad7bfac48604f750305:509:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:509:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -21522,7 +21705,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -21836,7 +22019,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "12b6ea5e4c96ef65516f74a91542d7f2d77a6c7c9c0faadf94c1479d7e1243f1"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "337ed2d1d675db7337b7e5a1b1a6e21239f466b484e375c4b677bbf64a64694d"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "0b2f4bbb917ed88a35309fef618a131137206f5299f7bf51bd58549017cb1ffa"
         },
         "expected_valid": false
       }
@@ -21951,10 +22151,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -21962,12 +22162,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -23322,7 +23522,7 @@
           "idempotency_key": "dch:9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
           "payload_schema_id": "pm.dch_event.chat_thread_deleted.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:26ec3693e7de574af638579c27dc460374818743f724d182e435d292d589a2a9:503:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:503:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -23338,7 +23538,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -23652,7 +23852,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "8343d719e121142695e1ad225b1857c0a2d6f3e585290eb339bd2974c0bd125a"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "a87f38b685c9ebcf14663a71f8b2b2035402444aa77d2c4c5913cd2870a98b87"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "56bd54a8110176356f9115413d6885d4a9acae7899aca0642179d8b8ae58008b"
         },
         "expected_valid": false
       }
@@ -23768,10 +23985,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -23779,12 +23996,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -25047,7 +25264,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_deleted.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:cf221c1130d8375835866a09061a49588ada3a229471f3c83036cca1d755d73d:494:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:494:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -25063,7 +25280,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -25377,7 +25594,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "9b718781b48957ce66a256036082d49830118ced81b66768013af99939ffb7a5"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "6a537739ec0177a79d44cbabe8e217d41fcb34d9b8dc091ac7b5056c3310df7a"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "1d954263e71dcc58ba9624f73bbb18d348fac5b5ad726d12b868397fb6eeb796"
         },
         "expected_valid": false
       }
@@ -25498,10 +25732,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -25509,12 +25743,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -26897,7 +27131,7 @@
           "idempotency_key": "dch:c84c3f31d98d0723bfff8297be4db7e1540f9d5d67d1d2a3de51a74a268e8861",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_bound.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:c487c7df366281f0157a700837c470bf43de73d1e434397e057d51c76a701808:555:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:555:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -26913,7 +27147,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -27235,7 +27469,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "8999cdc8949df0248b79c53988831868836320609c4a0a8735bfe8341fbb33e6"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "6a1468e346fc5744027d7ec392997eda23657227202007c9e8e0a5d90b25f0fb"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "a4594b249b8dbb8b406d19111431e2bdae1cc5c169ed93ff9292252fb46a3a72"
         },
         "expected_valid": false
       }
@@ -27357,10 +27608,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -27368,12 +27619,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -28664,7 +28915,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_bound.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:f6373ac5f842f9aa598365a4837f8d7b03ce848fef295a0f35c3dbb755a839fa:546:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:546:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -28680,7 +28931,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -29002,7 +29253,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "9a9af9b73adfa275c3379ce17c0687d05c48b948c22026d0f3615929abc8e82f"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "dc6115a6cd7ec85cc76a3552e0390b0b7d77c7335e5c1d198e6bec871f22e161"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "dc2eac2ea3c47bec72bafcd54b1ab91cba6f6547ab2aa5ace0f512b845f72f25"
         },
         "expected_valid": false
       }
@@ -29117,10 +29385,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -29128,12 +29396,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -30488,7 +30756,7 @@
           "idempotency_key": "dch:101366dc796471027c5cf741ee8743eb3672288e97f495632144388a3ba5b1c3",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_create_failed.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:62c61d282e477310d875bdd3b73b558c1dce16bf9cf1a3417fcae5c0371b63ca:483:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:483:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -30504,7 +30772,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -30818,7 +31086,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "a89e3a7d1d494c7f2413bf3c985e0bfd301c16e65f5cc17236705588aac88ee9"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "8dcedf42455f6aed0aa62c5a73dd0c0cf344318c9f2e8a1dbc11ed3cbc745010"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "6a41dfd79afb64182227fc0f0cec01a6d2803340f5140ce9007519f5467a342e"
         },
         "expected_valid": false
       }
@@ -30934,10 +31219,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -30945,12 +31230,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -32213,7 +32498,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_create_failed.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:f0ae1dd58f2f06a0b1f49dfbed4158633081897e542ca021c02fed642fee3c84:474:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:474:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -32229,7 +32514,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -32543,7 +32828,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "6e6ee0037eac8c86f24532028626730308abad2103c962ef3e4eaba0eab451f1"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "1abbc01e3131fe6718eed76874a413e6cd50611123bf8f9b13b55c4a90dd5cba"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "d6aa8c852286bebb0049ea3a3670fd530dfa85bfb36425fa1d6909dc7ade81cd"
         },
         "expected_valid": false
       }
@@ -32670,10 +32972,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -32681,12 +32983,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -34097,7 +34399,7 @@
           "idempotency_key": "dch:ce85e1968e7baf3f4bb21699c455b9aff2d82dc36b69a9ee50d959712398f6a6",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:deae233c33c5f1fd68c54315b35cf0c0012558e4d5f6f076e055d2c962a3d5e7:591:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:591:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -34113,7 +34415,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -34443,7 +34745,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "180034ac5cc7ae7d6d836826a2c31b51f28728f593a9395e1b08017f4d3cf42f"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "1decd04ef7b638d6f090cf48c527e0f04f65a1a502bcf30f0464ecf223369be1"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "1baf2bfefce9b614833b8c93fc3703cfc6a9d7632506b7cd2a173f6906550133"
         },
         "expected_valid": false
       }
@@ -34571,10 +34890,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -34582,12 +34901,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -35906,7 +36225,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:770c20c841dc1cadf6f7d39b529e51f4833c85c45cfc8ac3cc5720ced5d2a4fc:582:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:582:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -35922,7 +36241,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -36252,7 +36571,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "abb610d0996fcd060b241f0e465da327f0b46ad90690b46cee312433f9e6be69"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "5673ac3ed8d0e2c4ed104a30eae9e7b9ac3d859daf16aeb66014f9344f0daea1"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "c91b088cfa66227bf0cddab4b15e2d87910a3900983b9e27894dda292536c247"
         },
         "expected_valid": false
       }
@@ -36376,10 +36712,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -36387,12 +36723,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -37789,7 +38125,7 @@
           "idempotency_key": "dch:487e6f889ddedf5f041c6f3f0a6a88cdfb9e4252dd34079c14326ac45af1037d",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_merged.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:6eaaf5ea4d60d82842d4010441c0dda9b5372f9113666c8c88b2e7ec7074b857:610:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:610:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -37805,7 +38141,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -38131,7 +38467,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "8d39f75f3856b359ca32e561da01ecfe86b15fc6e1ba5f88aac38470a664fc61"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "2dcfd2a72c06f0e37a7e9af6dc23c75a3a5c05db5e24fa9fb681324e2a054cca"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "5d34119cd69a638ceae2dfd849700fed3e403849f2e6271cf8a93526a0d1803a"
         },
         "expected_valid": false
       }
@@ -38256,10 +38609,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -38267,12 +38620,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -39577,7 +39930,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_merged.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:f3fba98062ae898de2cb1dab433b2513caee0abf199fbe08327d9a64918083f9:601:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:601:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -39593,7 +39946,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -39919,7 +40272,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "304c50878fa3d0de39c29c7a5e28fa9c488ad97b0b7144fc24c1b701b12a7779"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "a86ae5866f24ba33dbc034b6802c3044299be46f3af428fcbe2888d438dcaadd"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "fe1babd233405243ffcdb69ecdfd0de34b0b89060d63f12b99aa4cff05e38d66"
         },
         "expected_valid": false
       }
@@ -40043,10 +40413,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -40054,12 +40424,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -41456,7 +41826,7 @@
           "idempotency_key": "dch:74aca44eeec2c5e7fb5b7d407593d1e34366fe96503d50d5f69dab67dcdd1273",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_pr_created.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:ff1a85746e314edceec041ff6f2e494280385313e51c346a59c50a3dcb3a265c:596:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:596:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -41472,7 +41842,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -41798,7 +42168,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "68f29c740ab07f9e01bbb58cd75f7dd15aea7359745a020056f7c4ba0f35cef7"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "bb00602283a7f9f35a2cb5479cee87982216bf8528562a7144d1d58896989dab"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "cc18927f96221bafe9d082937ac5b21fdb270d7aee219aac31440899414a79fb"
         },
         "expected_valid": false
       }
@@ -41923,10 +42310,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -41934,12 +42321,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -43244,7 +43631,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_pr_created.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:01d4e8b9d54b0852e8f9b7712a375af57dc636ccd0805a52255c914a80063739:587:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:587:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -43260,7 +43647,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -43586,7 +43973,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "1fd5746155e1be9cdaa094d312f1678800d7dd3ac250cb0821d33a48842edd71"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "c316abb88ff986e75e21912842c1afa2dbfe89bec32941e9110c3f63be009643"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "b085270eb6c0a38d99adc9c351765cbef51b5e56ad415f03309bfcc5ce9b320d"
         },
         "expected_valid": false
       }
@@ -43707,10 +44111,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -43718,12 +44122,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -45106,7 +45510,7 @@
           "idempotency_key": "dch:160d8a06ebe3f0ef5a4d049601079163518b543b44b976d8ebf72a7d6d63a9b0",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_pr_failed.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:063e4423c40a21731ba5d3fa3be879cf152db3fa4d9efc3335f73eb70214d66a:532:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:532:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -45122,7 +45526,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -45444,7 +45848,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "0da1641170a59ebeb1902d384811d3ea51742a4a6e7a0556d92e06cb589b1018"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "1f142449cee8363ee2dfe86fd22fe1310c687771aef91facba50a2d242c8f6ee"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "22c6facc145e17cb321f7c97c392770e2f644d755a9b3914260d1c6bb66d4748"
         },
         "expected_valid": false
       }
@@ -45566,10 +45987,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -45577,12 +45998,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -46873,7 +47294,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_pr_failed.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:c228c7e1f4dba75aa4d3ed1233a93af29e0f910975ddb83f5d12e2d0e69a4975:523:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:523:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -46889,7 +47310,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -47211,7 +47632,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "c06198f79d880419c74c34247a40ef370932e62d8c1d6cf5897eacfe24bc5f51"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "20997980ceb6d330b0848828b451578e48ce1ad83e24737051a5c02248c56362"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "f9691882405cb55212abba393aee837fd3a9928299c8fcf145dc3af0fb5a3bfe"
         },
         "expected_valid": false
       }
@@ -47347,10 +47785,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -47358,12 +47796,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -47561,21 +47999,34 @@
       {
         "name": "mismatched_started_operation_id",
         "changes": {
-          "source.started.payload.operation_id": "other"
+          "source.started.payload.operation_id": "other",
+          "source.started.event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
+          "source.started.idempotency_key": "dch:228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
+          "payload.started_event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
+          "source.outcome.started_event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_computer_id",
         "changes": {
-          "source.started.payload.computer_id": "other"
+          "source.started.payload.computer_id": "other",
+          "source.started.event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
+          "source.started.idempotency_key": "dch:82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
+          "payload.started_event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
+          "source.outcome.started_event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_thread_id",
         "changes": {
-          "source.started.payload.thread_id": "other"
+          "source.started.payload.thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAX",
+          "source.started.thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAX",
+          "source.started.event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
+          "source.started.idempotency_key": "dch:775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
+          "payload.started_event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
+          "source.outcome.started_event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab"
         },
         "expected_valid": false
       },
@@ -47596,14 +48047,14 @@
       {
         "name": "mismatched_started_strategy",
         "changes": {
-          "source.started.payload.strategy": "other"
+          "source.started.payload.strategy": "merge"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_started_event_id",
         "changes": {
-          "source.started.payload.started_event_id": "other"
+          "payload.started_event_id": "evt_dch_cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
         },
         "expected_valid": false
       },
@@ -47666,7 +48117,11 @@
       {
         "name": "mismatched_started_scope",
         "changes": {
-          "source.started.payload.scope.server_id": "other"
+          "source.started.payload.scope.server_id": "other",
+          "source.started.event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
+          "source.started.idempotency_key": "dch:8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
+          "payload.started_event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
+          "source.outcome.started_event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf"
         },
         "expected_valid": false
       },
@@ -47680,7 +48135,8 @@
       {
         "name": "successful_exit_cannot_be_failure",
         "changes": {
-          "source.outcome.exit_code": 0
+          "source.outcome.exit_code": 0,
+          "payload.exit_code": 0
         },
         "expected_valid": false
       },
@@ -47723,12 +48179,12 @@
         "expected_valid": true
       },
       {
-        "name": "timeout_cannot_have_success_exit",
+        "name": "timeout_cannot_have_exit_code",
         "changes": {
           "payload.test_outcome": "timeout",
-          "payload.exit_code": 0,
+          "payload.exit_code": 2,
           "source.outcome.kind": "timeout",
-          "source.outcome.exit_code": 0
+          "source.outcome.exit_code": 2
         },
         "expected_valid": false
       },
@@ -47745,12 +48201,12 @@
         "expected_valid": true
       },
       {
-        "name": "process_error_cannot_have_success_exit",
+        "name": "process_error_cannot_have_exit_code",
         "changes": {
           "payload.test_outcome": "process_error",
-          "payload.exit_code": 0,
+          "payload.exit_code": 2,
           "source.outcome.kind": "process_error",
-          "source.outcome.exit_code": 0,
+          "source.outcome.exit_code": 2,
           "payload.error_ref": "pmref:fixture:process_error",
           "source.outcome.error_ref": "pmref:fixture:process_error"
         },
@@ -47770,6 +48226,82 @@
         "name": "started_envelope_edition_mismatch",
         "changes": {
           "source.started.schema_version": "1.0.0"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "started_payload_extra_field",
+        "changes": {
+          "source.started.payload.unexpected": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "started_identity_mismatch",
+        "changes": {
+          "source.started.event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "payload.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "source.outcome.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "actual_exit_boolean",
+        "changes": {
+          "source.outcome.exit_code": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "actual_kind_mismatch",
+        "base": "process_error",
+        "changes": {
+          "payload.test_outcome": "process_error",
+          "payload.exit_code": null,
+          "source.outcome.kind": "timeout",
+          "source.outcome.exit_code": null,
+          "payload.error_ref": "pmref:fixture:process_error",
+          "source.outcome.error_ref": "pmref:fixture:process_error"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "actual_error_mismatch",
+        "base": "process_error",
+        "changes": {
+          "payload.test_outcome": "process_error",
+          "payload.exit_code": null,
+          "source.outcome.kind": "process_error",
+          "source.outcome.exit_code": null,
+          "payload.error_ref": "pmref:fixture:process_error",
+          "source.outcome.error_ref": "pmref:fixture:other_error"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "exit_error_evidence_forbidden",
+        "changes": {
+          "payload.error_ref": "pmref:fixture:error",
+          "source.outcome.error_ref": "pmref:fixture:error"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_terminal_kind",
+        "base": "timeout",
+        "changes": {
+          "payload.test_outcome": "unsupported",
+          "payload.exit_code": null,
+          "source.outcome.kind": "unsupported",
+          "source.outcome.exit_code": null
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "actual_exit_wrong_type",
+        "changes": {
+          "payload.exit_code": "invalid",
+          "source.outcome.exit_code": "invalid"
         },
         "expected_valid": false
       }
@@ -49115,7 +49647,7 @@
           "idempotency_key": "dch:9fc2de962929adf2d245b08b547facabbd0f1afd91b2a48750c16ab9a6dee9fd",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_failed.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:ceb2e5fe0b3ad9eb5ce54dc7d14099b75ab8b3a1e6e57ffbea94b47366562118:682:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:682:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -49131,7 +49663,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -49473,11 +50005,58 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "c1dada85cdb40d96597bd2ee57b408d002aa0af56f7a7cb752a250b9a0677df0"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "f3a9189c20db4cf17e1642cc9ffad730324722469e3a2e460359cbc151f47462"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "078c2a3f7b34378707a6a92d9d2f2258dd648e6a9fbc139bb1634716bd1b6bba"
         },
         "expected_valid": false
       }
-    ]
+    ],
+    "missing_field_bases": {
+      "test_outcome": {
+        "schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_failed.project.v1",
+        "schema_version": "1.0.0",
+        "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "operation_id": "fixture_operation_id",
+        "actor_ref": "pmref:fixture:actor_ref",
+        "ts": "2026-11-04T00:00:00Z",
+        "computer_id": "fixture_computer_id",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cDE",
+          "project_id": "p1",
+          "project_home_server_id": "server1",
+          "named_plan_id": null,
+          "server_id": "server1"
+        },
+        "worktree_id": "fixture_worktree_id",
+        "command": "fixture_command",
+        "exit_code": null,
+        "duration_ms": 1,
+        "strategy": "squash",
+        "user_override": false,
+        "started_event_id": "evt_dch_883eb87dd918e3ce8df8403b8d612bfb94f75d1c6f10e02082d98dad5c1a4b10",
+        "test_outcome": "timeout",
+        "error_ref": null
+      }
+    }
   },
   {
     "event_type": "chat.thread_worktree_pre_merge_test_failed",
@@ -49610,10 +50189,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -49621,12 +50200,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -49732,21 +50311,32 @@
       {
         "name": "mismatched_started_operation_id",
         "changes": {
-          "source.started.payload.operation_id": "other"
+          "source.started.payload.operation_id": "other",
+          "source.started.event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e",
+          "source.started.idempotency_key": "application@1:73657276657231:6f74686572",
+          "payload.started_event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e",
+          "source.outcome.started_event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_computer_id",
         "changes": {
-          "source.started.payload.computer_id": "other"
+          "source.started.payload.computer_id": "other",
+          "source.started.event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029",
+          "payload.started_event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029",
+          "source.outcome.started_event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_thread_id",
         "changes": {
-          "source.started.payload.thread_id": "other"
+          "source.started.payload.thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAX",
+          "source.started.thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAX",
+          "source.started.event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4",
+          "payload.started_event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4",
+          "source.outcome.started_event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4"
         },
         "expected_valid": false
       },
@@ -49767,14 +50357,14 @@
       {
         "name": "mismatched_started_strategy",
         "changes": {
-          "source.started.payload.strategy": "other"
+          "source.started.payload.strategy": "merge"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_started_event_id",
         "changes": {
-          "source.started.payload.started_event_id": "other"
+          "payload.started_event_id": "evt_dch_cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
         },
         "expected_valid": false
       },
@@ -49837,7 +50427,11 @@
       {
         "name": "mismatched_started_scope",
         "changes": {
-          "source.started.payload.scope.server_id": "other"
+          "source.started.payload.scope.server_id": "other",
+          "source.started.event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f",
+          "source.started.idempotency_key": "application@1:6f74686572:666978747572655f6f7065726174696f6e5f6964",
+          "payload.started_event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f",
+          "source.outcome.started_event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f"
         },
         "expected_valid": false
       },
@@ -49851,7 +50445,8 @@
       {
         "name": "successful_exit_cannot_be_failure",
         "changes": {
-          "source.outcome.exit_code": 0
+          "source.outcome.exit_code": 0,
+          "payload.exit_code": 0
         },
         "expected_valid": false
       },
@@ -49894,12 +50489,12 @@
         "expected_valid": true
       },
       {
-        "name": "timeout_cannot_have_success_exit",
+        "name": "timeout_cannot_have_exit_code",
         "changes": {
           "payload.test_outcome": "timeout",
-          "payload.exit_code": 0,
+          "payload.exit_code": 2,
           "source.outcome.kind": "timeout",
-          "source.outcome.exit_code": 0
+          "source.outcome.exit_code": 2
         },
         "expected_valid": false
       },
@@ -49916,12 +50511,12 @@
         "expected_valid": true
       },
       {
-        "name": "process_error_cannot_have_success_exit",
+        "name": "process_error_cannot_have_exit_code",
         "changes": {
           "payload.test_outcome": "process_error",
-          "payload.exit_code": 0,
+          "payload.exit_code": 2,
           "source.outcome.kind": "process_error",
-          "source.outcome.exit_code": 0,
+          "source.outcome.exit_code": 2,
           "payload.error_ref": "pmref:fixture:process_error",
           "source.outcome.error_ref": "pmref:fixture:process_error"
         },
@@ -49941,6 +50536,82 @@
         "name": "started_envelope_edition_mismatch",
         "changes": {
           "source.started.schema_version": "1.0.0"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "started_payload_extra_field",
+        "changes": {
+          "source.started.payload.unexpected": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "started_identity_mismatch",
+        "changes": {
+          "source.started.event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "payload.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "source.outcome.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "actual_exit_boolean",
+        "changes": {
+          "source.outcome.exit_code": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "actual_kind_mismatch",
+        "base": "process_error",
+        "changes": {
+          "payload.test_outcome": "process_error",
+          "payload.exit_code": null,
+          "source.outcome.kind": "timeout",
+          "source.outcome.exit_code": null,
+          "payload.error_ref": "pmref:fixture:process_error",
+          "source.outcome.error_ref": "pmref:fixture:process_error"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "actual_error_mismatch",
+        "base": "process_error",
+        "changes": {
+          "payload.test_outcome": "process_error",
+          "payload.exit_code": null,
+          "source.outcome.kind": "process_error",
+          "source.outcome.exit_code": null,
+          "payload.error_ref": "pmref:fixture:process_error",
+          "source.outcome.error_ref": "pmref:fixture:other_error"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "exit_error_evidence_forbidden",
+        "changes": {
+          "payload.error_ref": "pmref:fixture:error",
+          "source.outcome.error_ref": "pmref:fixture:error"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_terminal_kind",
+        "base": "timeout",
+        "changes": {
+          "payload.test_outcome": "unsupported",
+          "payload.exit_code": null,
+          "source.outcome.kind": "unsupported",
+          "source.outcome.exit_code": null
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "actual_exit_wrong_type",
+        "changes": {
+          "payload.exit_code": "invalid",
+          "source.outcome.exit_code": "invalid"
         },
         "expected_valid": false
       }
@@ -51286,7 +51957,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_failed.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:91c0e686ecd8b8813b3ef5c48080a4e1e833a29462b1b0d1c645aa70e6e60187:673:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:673:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -51302,7 +51973,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -51644,11 +52315,58 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "4d272b869890d12a29227d08d12f08471ee19acb0b69ca85633c86670756c08a"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "17c7a5fc1a128cc78e2ac5e0c10dfc6efc34b42ea55369d0c3ce876b5661c6f2"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "966bc80b190e2a5cd077ebaa7dfb7da3352d23b77b00a287e2443b76af0053c3"
         },
         "expected_valid": false
       }
-    ]
+    ],
+    "missing_field_bases": {
+      "test_outcome": {
+        "schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_failed.application.v1",
+        "schema_version": "1.0.0",
+        "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "operation_id": "fixture_operation_id",
+        "actor_ref": "pmref:fixture:actor_ref",
+        "ts": "2026-11-04T00:00:00Z",
+        "computer_id": "fixture_computer_id",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server1"
+        },
+        "worktree_id": "fixture_worktree_id",
+        "command": "fixture_command",
+        "exit_code": null,
+        "duration_ms": 1,
+        "strategy": "squash",
+        "user_override": false,
+        "started_event_id": "evt_dch_9567cab91d7741dc89992544e1710d064cc69f720bf44862259bf72508154a54",
+        "test_outcome": "timeout",
+        "error_ref": null
+      }
+    }
   },
   {
     "event_type": "chat.thread_worktree_pre_merge_test_passed",
@@ -51768,10 +52486,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -51779,12 +52497,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -51982,21 +52700,34 @@
       {
         "name": "mismatched_started_operation_id",
         "changes": {
-          "source.started.payload.operation_id": "other"
+          "source.started.payload.operation_id": "other",
+          "source.started.event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
+          "source.started.idempotency_key": "dch:228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
+          "payload.started_event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f",
+          "source.outcome.started_event_id": "evt_dch_228dff1d79831c8213adf550fde6c1eaf84bcd9b27823f4fbaa5bfc1c67d6c5f"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_computer_id",
         "changes": {
-          "source.started.payload.computer_id": "other"
+          "source.started.payload.computer_id": "other",
+          "source.started.event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
+          "source.started.idempotency_key": "dch:82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
+          "payload.started_event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce",
+          "source.outcome.started_event_id": "evt_dch_82a237ca1887f9fe83487b75a1cd67a4997170ba15f6af3be3da77f313cc02ce"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_thread_id",
         "changes": {
-          "source.started.payload.thread_id": "other"
+          "source.started.payload.thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAX",
+          "source.started.thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAX",
+          "source.started.event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
+          "source.started.idempotency_key": "dch:775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
+          "payload.started_event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab",
+          "source.outcome.started_event_id": "evt_dch_775e54f686eeef72be58e5976db46c4152a4948962ae44a84a6a906ae63681ab"
         },
         "expected_valid": false
       },
@@ -52017,14 +52748,14 @@
       {
         "name": "mismatched_started_strategy",
         "changes": {
-          "source.started.payload.strategy": "other"
+          "source.started.payload.strategy": "merge"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_started_event_id",
         "changes": {
-          "source.started.payload.started_event_id": "other"
+          "payload.started_event_id": "evt_dch_cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
         },
         "expected_valid": false
       },
@@ -52087,7 +52818,11 @@
       {
         "name": "mismatched_started_scope",
         "changes": {
-          "source.started.payload.scope.server_id": "other"
+          "source.started.payload.scope.server_id": "other",
+          "source.started.event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
+          "source.started.idempotency_key": "dch:8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
+          "payload.started_event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf",
+          "source.outcome.started_event_id": "evt_dch_8a05d36efbf5cadd75492f14834ad4586e03ad18051541b76b2ac6a706563cbf"
         },
         "expected_valid": false
       },
@@ -52114,6 +52849,36 @@
         "name": "started_envelope_edition_mismatch",
         "changes": {
           "source.started.schema_version": "1.0.0"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "started_payload_extra_field",
+        "changes": {
+          "source.started.payload.unexpected": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "started_identity_mismatch",
+        "changes": {
+          "source.started.event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "payload.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "source.outcome.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "actual_exit_boolean",
+        "changes": {
+          "source.outcome.exit_code": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "pass_requires_actual_exit",
+        "changes": {
+          "source.outcome.kind": "timeout"
         },
         "expected_valid": false
       }
@@ -53403,7 +54168,7 @@
           "idempotency_key": "dch:82d5ab4ec5293a2bf34462dcedb2e68fe2c0e1563a553dcb3818c3f128eb471c",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_passed.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:18f9eb2f49747e966fbd0931bfe6315a71164769ddca85cf81e7b213b8f5abc8:625:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:625:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -53419,7 +54184,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -53745,7 +54510,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "98469853703f7b1775608b0e13215397b55ec24f62805daee7e25c70e0784714"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "e4c190ff630f77fb9f8968540f1a339d448496f8e1cd7812d56de10739324e18"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "83fa5d3ac64d1654e4c6e8afda7e37b5f55ea7ed5b1c2ae08243fca93856f4a6"
         },
         "expected_valid": false
       }
@@ -53870,10 +54652,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -53881,12 +54663,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -53992,21 +54774,32 @@
       {
         "name": "mismatched_started_operation_id",
         "changes": {
-          "source.started.payload.operation_id": "other"
+          "source.started.payload.operation_id": "other",
+          "source.started.event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e",
+          "source.started.idempotency_key": "application@1:73657276657231:6f74686572",
+          "payload.started_event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e",
+          "source.outcome.started_event_id": "evt_dch_ce02c9d67592c7fc053f531717f07aefc9c42e693f6f616feb03c72500fb650e"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_computer_id",
         "changes": {
-          "source.started.payload.computer_id": "other"
+          "source.started.payload.computer_id": "other",
+          "source.started.event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029",
+          "payload.started_event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029",
+          "source.outcome.started_event_id": "evt_dch_3d7ba71b3aa9f141c2055d8191a3734862e1b6b25562542996d3b2bce16ba029"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_thread_id",
         "changes": {
-          "source.started.payload.thread_id": "other"
+          "source.started.payload.thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAX",
+          "source.started.thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAX",
+          "source.started.event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4",
+          "payload.started_event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4",
+          "source.outcome.started_event_id": "evt_dch_978d5f10f581039ff9d7ba63aa8317f27df505c0e83946b8def38183921884d4"
         },
         "expected_valid": false
       },
@@ -54027,14 +54820,14 @@
       {
         "name": "mismatched_started_strategy",
         "changes": {
-          "source.started.payload.strategy": "other"
+          "source.started.payload.strategy": "merge"
         },
         "expected_valid": false
       },
       {
         "name": "mismatched_started_started_event_id",
         "changes": {
-          "source.started.payload.started_event_id": "other"
+          "payload.started_event_id": "evt_dch_cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
         },
         "expected_valid": false
       },
@@ -54097,7 +54890,11 @@
       {
         "name": "mismatched_started_scope",
         "changes": {
-          "source.started.payload.scope.server_id": "other"
+          "source.started.payload.scope.server_id": "other",
+          "source.started.event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f",
+          "source.started.idempotency_key": "application@1:6f74686572:666978747572655f6f7065726174696f6e5f6964",
+          "payload.started_event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f",
+          "source.outcome.started_event_id": "evt_dch_7a8b822f035e0a754d469e117a528c25ec1ea146df3845eb79c3586a1e57347f"
         },
         "expected_valid": false
       },
@@ -54124,6 +54921,36 @@
         "name": "started_envelope_edition_mismatch",
         "changes": {
           "source.started.schema_version": "1.0.0"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "started_payload_extra_field",
+        "changes": {
+          "source.started.payload.unexpected": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "started_identity_mismatch",
+        "changes": {
+          "source.started.event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "payload.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "source.outcome.started_event_id": "evt_dch_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "actual_exit_boolean",
+        "changes": {
+          "source.outcome.exit_code": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "pass_requires_actual_exit",
+        "changes": {
+          "source.outcome.kind": "timeout"
         },
         "expected_valid": false
       }
@@ -55413,7 +56240,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_passed.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:6d264c8a575fdb6e939b8b48c736b478ea4844d1935a29a5d53e7bcbe829ddc1:616:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:616:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -55429,7 +56256,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -55755,7 +56582,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "6030d855fba47ddf28c152adc8284a6476931c942cad535b83dddbb6f7ee79b2"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "261b8165f2b6e8c82f95e84d546b9f5f0c4e08179f8fda41281c15bb4c191243"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "bc9a56484bd016beac197944847ca7cf540ea5d548319001690a12b941c7b7bd"
         },
         "expected_valid": false
       }
@@ -55876,10 +56720,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -55887,12 +56731,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -57275,7 +58119,7 @@
           "idempotency_key": "dch:883eb87dd918e3ce8df8403b8d612bfb94f75d1c6f10e02082d98dad5c1a4b10",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_started.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:7af30a1e522d525cb8b4cc59da73c7dc9523f629a2f3f4945e7c3e508ac84ba5:548:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:548:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -57291,7 +58135,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -57613,7 +58457,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "a80c8e56f65990573e287850b717b25b4c65491fdb3fd24cc79acb807bb5788e"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "201501b0fd3e61045ba4d034ebb0ed963190a65fa801addca0e07e8c1ae63730"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "0e2ad72025394014e231d8380c9c0cba8d3251119d4fd8e42904a1f57b1977a7"
         },
         "expected_valid": false
       }
@@ -57735,10 +58596,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -57746,12 +58607,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -59042,7 +59903,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_started.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:307489beccf35c067d4881ef77753316e8c7ffc266ad54efa7a473a46912ec15:539:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:539:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -59058,7 +59919,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -59380,7 +60241,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "e2e0a74e812b2ba3c328c0c60d244f2ddad940dfb6e5a9051f0a2175e92877e9"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "eea12fa87fe37087b60acc79ce038cf3a4ab238665941781bf1961c5b43c7251"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "f5ef088cdd49098f0b5c947f86ec0c05148199f9d32e5caa8f0319ec15139bab"
         },
         "expected_valid": false
       }
@@ -59498,10 +60376,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -59509,12 +60387,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -60883,7 +61761,7 @@
           "idempotency_key": "dch:5e2ccc1e6f3b261d5915af26b0bedf33e0303bfabe97a5902db158c60127dcc7",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_renamed.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:f2a965f44f52b4eb1aa7a290c666d65be43232ec926e16ae4ea270dc6a2cf375:547:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:547:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -60899,7 +61777,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -61217,7 +62095,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "66ee5aa1a1b50129bb0509d466f1aabb1a849907c3e13c70ec199c6b61a8411b"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "d5974994180b72980c35285bdbf61b6175d8841430b0fbda2e8afd7bd89a2f9a"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "7c97be222d0560db33031ec86c7b1203984971b4d94aeb6c4309f9a63eab7792"
         },
         "expected_valid": false
       }
@@ -61336,10 +62231,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -61347,12 +62242,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -62629,7 +63524,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_renamed.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:14a41417d71ff34d62d76417bc434b8ce6ab8c084b48c573e91cb9aa665339f0:538:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:538:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -62645,7 +63540,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -62963,7 +63858,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "fe88a9d3a44615cca5bb6cf03c92a2b8b5dff40bdcf0bd750bd7cfa788d2e407"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "63a2432de49cff111ed00b6226d1b8f141eac390bc493af127415365463a1739"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "fb12c036bcf7d1de9c869bd2ae7a4f8c61d34ad9192e89fddd5679e2f165b29c"
         },
         "expected_valid": false
       }
@@ -63078,10 +63990,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -63089,12 +64001,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -64449,7 +65361,7 @@
           "idempotency_key": "dch:08afb3513911c6792d178ef28e99c219a6a683db2cbf73aa82f6ffe0ac6a5b7a",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_unbound.project.v1",
           "payload": {},
-          "payload_ref": "payload:v1:31665fd55bd5f3312eca1e65b9103be03c25017ff6e2438d22bf671ec70a4d76:486:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:486:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -64465,7 +65377,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -64779,7 +65691,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "e39693a00bb5fd5bae7576ad8b11d6e417f81b857425aaac4a5e725ba12de272"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "a5e1ae6fdbbe3657265c5b1cac2af11346ae26d8d0b91922f743a791fa3394c7"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "7ee7ef708f3070fde8ce5ce66326629fb093266ac7a9a889f52955c8ba1dd76d"
         },
         "expected_valid": false
       }
@@ -64895,10 +65824,10 @@
       },
       {
         "name": "same_operation_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
-        "expected": "conflict"
+        "expected": "conflict",
+        "record_changes": {
+          "producer_sequence_id": 7
+        }
       },
       {
         "name": "missing_authoritative_dedupe",
@@ -64906,12 +65835,12 @@
         "expected": "dedupe_unavailable"
       },
       {
-        "name": "missing_dedupe_changed_semantics",
-        "payload_changes": {
-          "actor_ref": "pmref:fixture:other_actor"
-        },
+        "name": "missing_dedupe_metadata_retry",
         "dedupe_available": false,
-        "expected": "dedupe_unavailable"
+        "expected": "dedupe_unavailable",
+        "record_changes": {
+          "sequence_id": 2
+        }
       },
       {
         "name": "storage_metadata_only",
@@ -66174,7 +67103,7 @@
           "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
           "payload_schema_id": "pm.dch_event.chat_thread_worktree_unbound.application.v1",
           "payload": {},
-          "payload_ref": "payload:v1:487c1da49ce631aff8353265a7117c35ffd1dc078fc7e8398a9308b07dade0a9:477:application/msgpack",
+          "payload_ref": "payload:v1:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:477:application/msgpack",
           "redaction_profile": "no_secrets",
           "replay_policy": "dedupe_by_idempotency_key",
           "migration": {
@@ -66190,7 +67119,7 @@
             "schema_version": "1.0.0",
             "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
             "operation_id": "fixture_operation_id",
-            "actor_ref": "pmref:fixture:corrupt",
+            "actor_ref": "pmref:fixture:actor_ref",
             "ts": "2026-11-04T00:00:00Z",
             "computer_id": "fixture_computer_id",
             "scope": {
@@ -66504,7 +67433,24 @@
       {
         "name": "unsupported_original_edition",
         "changes": {
-          "record.payload.schema_version": "9.0.0"
+          "record.payload.schema_version": "9.0.0",
+          "witness.source_value_sha256": "2824b6391f7da7f9cd3918d70b97e3507091249147ed91c88ff95b7395ae326a"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_original_envelope",
+        "changes": {
+          "record.schema_version": "1.0.0",
+          "witness.source_value_sha256": "acf966747a534adfecbeb8c13e366bdf9ce02c50a224a92e1ddb9e35db44bb98"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_policy",
+        "changes": {
+          "record.replay_policy": "append_once",
+          "witness.source_value_sha256": "07a4c3e6b5b674d58d888cccfb34634fd0417c14d23a3b6ad91abbdc7a586052"
         },
         "expected_valid": false
       }
