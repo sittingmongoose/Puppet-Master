@@ -13,12 +13,12 @@
     {
       "path": "Plans/filesafe_event_sources/safe_point_restored.schema.json",
       "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/safe_point_restored/1.0.0",
-      "sha256": "fd75d91a032b5f08ed1e00d33d9c128ffcec36eed58d70b9a78dd31082b8b661"
+      "sha256": "9f89ed967fe6b04c60facf86b2f16c871386be3c458348be227e8d64bfad1556"
     },
     {
       "path": "Plans/event_payloads/safe_point_restored_v2.schema.json",
       "uri": "https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0",
-      "sha256": "a6ee516638c14dbe256a0c75bdd83181dfcc2a12c0a25fdcb017368dcb44d1bf"
+      "sha256": "f8c9524a259da2ee13bfb4fa5d5de270b58931cc8211571fba7e691e6a6de349"
     },
     {
       "path": "Plans/shared_integration_runtime.schema.json",
@@ -173,7 +173,7 @@
     "recovered_after_restart",
     "conflict_reason_code"
   ],
-  "graph_sha256": "0cbbeabffda5483d062a27657b0ee9017ffca0355fd449c02bb7594a6944c667",
+  "graph_sha256": "bf2d1990f0516a222cc4b59245238d52375b6ece5b70c7f22408eab39ca383ae",
   "application_body_roots": {
     "restore_request": "#/$defs/application_request",
     "safe_point_record": "#/$defs/application_records/properties/safe_point_record",

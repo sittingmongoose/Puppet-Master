@@ -13,7 +13,7 @@
     {
       "path": "Plans/filesafe_event_sources/filesafe_guard_init_failed.schema.json",
       "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/filesafe_guard_init_failed/1.0.0",
-      "sha256": "081f04c4bd21296b148a3359a4d8cc5a0d84698bb1e85f491f5f7c6ddf24733f"
+      "sha256": "c6a168b6a1184fe5878acb0f655eac3581e07105817fb970959e0a7b056ececb"
     },
     {
       "path": "Plans/event_payloads/filesafe_guard_init_failed_v2.schema.json",
@@ -128,5 +128,5 @@
   "retention_policy_ref": "PENDING_RETENTION_DECISION",
   "native_admission": "unavailable_until_complete_owner_adoption",
   "preserved_project_resources": [],
-  "graph_sha256": "945a847c6e7f6cec33a4fe9cb4caade6873d449c3a990741a589acaac252abd2"
+  "graph_sha256": "dea70dbb45f893e595ea41396d9101d96268024dd242a252afd94273a38a0df6"
 }

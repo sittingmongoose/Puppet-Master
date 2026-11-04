@@ -166,7 +166,9 @@
         },
         "original_input_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         }
       }
     },
@@ -347,7 +349,9 @@
         },
         "original_input_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         }
       }
     },
@@ -425,7 +429,9 @@
               },
               "sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
               }
             }
           },
@@ -434,7 +440,9 @@
         },
         "accepted_source_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "native_project_record": {
           "$ref": "https://puppetmaster.local/schemas/filesafe_event_sources/original-project/original-safe-point.v1.schema.json"
@@ -615,7 +623,9 @@
         },
         "original_input_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         }
       }
     },
@@ -693,7 +703,9 @@
               },
               "sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
               }
             }
           },
@@ -702,7 +714,9 @@
         },
         "accepted_source_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "application_records": {
           "$ref": "#/$defs/application_records"
@@ -916,11 +930,15 @@
         },
         "snapshot_manifest_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "content_state_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "entry_count": {
           "type": "integer",
@@ -1005,7 +1023,9 @@
                 },
                 "index_state_sha256": {
                   "type": "string",
-                  "pattern": "^[0-9a-f]{64}$"
+                  "pattern": "^[0-9a-f]{64}$",
+                  "minLength": 64,
+                  "maxLength": 64
                 },
                 "index_entries": {
                   "type": "array",
@@ -1220,7 +1240,9 @@
                 },
                 "index_state_sha256": {
                   "type": "string",
-                  "pattern": "^[0-9a-f]{64}$"
+                  "pattern": "^[0-9a-f]{64}$",
+                  "minLength": 64,
+                  "maxLength": 64
                 },
                 "index_entries": {
                   "type": "array",
@@ -1357,7 +1379,9 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
                   },
                   {
                     "type": "null"
@@ -1372,7 +1396,7 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "pattern": "^(?:[0-9a-f]{2})*$"
+                    "pattern": "^(?:[0-9a-f]{2})*$(?![\\s\\S])"
                   },
                   {
                     "type": "null"
@@ -1569,7 +1593,9 @@
             "properties": {
               "payload_id": {
                 "type": "string",
-                "pattern": "^blake3:[0-9a-f]{64}$"
+                "pattern": "^blake3:[0-9a-f]{64}$",
+                "minLength": 71,
+                "maxLength": 71
               },
               "ref": {
                 "type": "string",
@@ -1577,7 +1603,9 @@
               },
               "sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
               },
               "length": {
                 "type": "integer",

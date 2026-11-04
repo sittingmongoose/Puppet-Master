@@ -13,12 +13,12 @@
     {
       "path": "Plans/filesafe_event_sources/safe_point_created.schema.json",
       "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/safe_point_created/1.0.0",
-      "sha256": "92077c0278fa08d9c19e5dcf7515eb45ad4a419ba73be78af0ad3af55af5eec5"
+      "sha256": "31983839419855292f41f09525255a240289efc25c46deb32c6c78b1ec7f2436"
     },
     {
       "path": "Plans/event_payloads/safe_point_created_v2.schema.json",
       "uri": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0",
-      "sha256": "cc5123ce147a40e2688173d54c9510a79d568c5cd2aa63821540fd143118f960"
+      "sha256": "661ab066697addaff1be1d4632e66b0c1c33e5e4c464274501e78c9d95feca4f"
     },
     {
       "path": "Plans/shared_integration_runtime.schema.json",
@@ -180,7 +180,7 @@
     "branch_name",
     "HEAD_sha"
   ],
-  "graph_sha256": "3c84af09f7b70dc9fa32817a4996152eed1a121122ce7ee244b0bc4516c8d0e3",
+  "graph_sha256": "12a4a06f1725bb25135fae38fa028eb6e99b2d4a6138624c33fda2686f81d1eb",
   "application_body_roots": {
     "capture_request": "#/$defs/application_request",
     "safe_point_record": "#/$defs/application_records/properties/safe_point_record",

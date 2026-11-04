@@ -140,11 +140,15 @@
         },
         "target_state_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "pre_restore_state_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "actor_ref": {
           "type": "string",
@@ -156,7 +160,9 @@
         },
         "original_input_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         }
       }
     },
@@ -311,11 +317,15 @@
         },
         "target_state_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "pre_restore_state_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "actor_ref": {
           "type": "string",
@@ -327,7 +337,9 @@
         },
         "original_input_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         }
       }
     },
@@ -405,7 +417,9 @@
               },
               "sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
               }
             }
           },
@@ -414,7 +428,9 @@
         },
         "accepted_source_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "native_project_record": {
           "$ref": "https://puppetmaster.local/schemas/filesafe_event_sources/original-project/original-safe-point-restore-transaction.v1.schema.json"
@@ -569,11 +585,15 @@
         },
         "target_state_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "pre_restore_state_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "actor_ref": {
           "type": "string",
@@ -585,7 +605,9 @@
         },
         "original_input_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         }
       }
     },
@@ -667,7 +689,9 @@
               },
               "sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
               }
             }
           },
@@ -676,7 +700,9 @@
         },
         "accepted_source_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "application_records": {
           "$ref": "#/$defs/application_records"
@@ -890,11 +916,15 @@
         },
         "snapshot_manifest_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "content_state_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "entry_count": {
           "type": "integer",
@@ -979,7 +1009,9 @@
                 },
                 "index_state_sha256": {
                   "type": "string",
-                  "pattern": "^[0-9a-f]{64}$"
+                  "pattern": "^[0-9a-f]{64}$",
+                  "minLength": 64,
+                  "maxLength": 64
                 },
                 "index_entries": {
                   "type": "array",
@@ -1194,7 +1226,9 @@
                 },
                 "index_state_sha256": {
                   "type": "string",
-                  "pattern": "^[0-9a-f]{64}$"
+                  "pattern": "^[0-9a-f]{64}$",
+                  "minLength": 64,
+                  "maxLength": 64
                 },
                 "index_entries": {
                   "type": "array",
@@ -1331,7 +1365,9 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
                   },
                   {
                     "type": "null"
@@ -1346,7 +1382,7 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "pattern": "^(?:[0-9a-f]{2})*$"
+                    "pattern": "^(?:[0-9a-f]{2})*$(?![\\s\\S])"
                   },
                   {
                     "type": "null"
@@ -1543,7 +1579,9 @@
             "properties": {
               "payload_id": {
                 "type": "string",
-                "pattern": "^blake3:[0-9a-f]{64}$"
+                "pattern": "^blake3:[0-9a-f]{64}$",
+                "minLength": 71,
+                "maxLength": 71
               },
               "ref": {
                 "type": "string",
@@ -1551,7 +1589,9 @@
               },
               "sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
               },
               "length": {
                 "type": "integer",
@@ -1731,11 +1771,15 @@
         },
         "target_manifest_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "target_state_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "pre_restore_manifest_ref": {
           "type": "string",
@@ -1743,11 +1787,15 @@
         },
         "pre_restore_manifest_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "pre_restore_state_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "operations": {
           "type": "array",
@@ -1821,7 +1869,9 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
                   },
                   {
                     "type": "null"
@@ -1847,7 +1897,9 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
                   },
                   {
                     "type": "null"
@@ -1878,7 +1930,8 @@
                   {
                     "type": "null"
                   }
-                ]
+                ],
+                "description": "Required for create/replace; null for delete; exact original composition checked under CV-558."
               },
               "tombstone_ref": {
                 "anyOf": [
@@ -1889,7 +1942,8 @@
                   {
                     "type": "null"
                   }
-                ]
+                ],
+                "description": "Transaction-owned same-directory rollback/tombstone required for delete; null for create; retained under FileSafe 11.1.2b."
               },
               "state": {
                 "enum": [
@@ -1899,7 +1953,121 @@
                   "rolled_back"
                 ]
               }
-            }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "operation_kind": {
+                      "const": "create"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "expected_before_type": {
+                      "type": "null"
+                    },
+                    "expected_before_sha256": {
+                      "type": "null"
+                    },
+                    "target_type": {
+                      "enum": [
+                        "file",
+                        "directory",
+                        "symlink",
+                        "gitlink"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "operation_kind": {
+                      "const": "replace"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "expected_before_type": {
+                      "enum": [
+                        "file",
+                        "directory",
+                        "symlink",
+                        "gitlink"
+                      ]
+                    },
+                    "target_type": {
+                      "enum": [
+                        "file",
+                        "directory",
+                        "symlink",
+                        "gitlink"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "operation_kind": {
+                      "const": "delete"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "expected_before_type": {
+                      "enum": [
+                        "file",
+                        "directory",
+                        "symlink",
+                        "gitlink"
+                      ]
+                    },
+                    "target_type": {
+                      "type": "null"
+                    },
+                    "target_sha256": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "operation_kind": {
+                      "const": "metadata"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "expected_before_type": {
+                      "enum": [
+                        "file",
+                        "directory",
+                        "symlink",
+                        "gitlink"
+                      ]
+                    },
+                    "target_type": {
+                      "enum": [
+                        "file",
+                        "directory",
+                        "symlink",
+                        "gitlink"
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
           }
         },
         "phase": {
@@ -1993,7 +2161,9 @@
           "type": [
             "string",
             "null"
-          ]
+          ],
+          "minLength": 1,
+          "description": "Null in the original pre-append capture; otherwise exactly the original result EventRecord.event_id (CV-558)."
         },
         "redaction_profile": {
           "enum": [
@@ -2143,17 +2313,23 @@
         },
         "target_manifest_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "pre_restore_manifest_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "post_restore_manifest_sha256": {
           "anyOf": [
             {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             },
             {
               "type": "null"

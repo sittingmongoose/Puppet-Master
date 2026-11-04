@@ -241,6 +241,9 @@ def application_original_failures(family, candidate, bank):
     else:
         tx=records['restore_transaction'];eq=records['equality_result'];pre=records['pre_restore_manifest'];post=records['post_restore_manifest']
         preh=digest(pre);posth=digest(post) if post is not None else None
+        # A pre-append source may not yet have the result-event pointer. Once
+        # populated it names this exact original event, never another result.
+        require(tx['result_event_ref'] in (None,candidate['event']['event_id']),'result_event_join')
         require(all(tx.get(k)==p.get(k) for k in ('safe_point_id','restore_transaction_id','run_id','node_id','attempt_id','restore_outcome','target_state_sha256','pre_restore_state_sha256','post_restore_state_sha256','conflict_reason_code','recovered_after_restart')),'transaction_result')
         require(tx['canonical_safe_point_key']=='application@1:'+req['scope']['server_id'].encode().hex()+':'+p['safe_point_id'].encode().hex(),'safe_point_key')
         require(tx['target_manifest_ref']==members['snapshot_manifest']['ref'] and tx['pre_restore_manifest_ref']==members['pre_restore_manifest']['ref']
@@ -261,13 +264,23 @@ def application_original_failures(family, candidate, bank):
         require({k for k in before.keys()|target.keys() if before.get(k)!=target.get(k)}.issubset(op_paths),'operation_coverage')
         for op in ops:
             path=op['identity']['canonical_absolute_path'];b=before.get(path);t=target.get(path)
+            b=b if b and b['present'] else None
+            t=t if t and t['present'] else None
             require((b or t) is not None and op['identity']==(t or b)['identity']
                 and op['expected_before_sha256']==(b['blob_sha256'] if b else None)
                 and op['target_sha256']==(t['blob_sha256'] if t else None)
                 and op['expected_before_type']==(b['kind'] if b else None)
                 and op['target_type']==(t['kind'] if t else None),'operation_subject')
-            require((op['operation_kind'] not in ('create','replace') or bool(op['stage_ref']))
-                and (op['operation_kind']!='delete' or bool(op['tombstone_ref'])),'operation_staging')
+            kind=op['operation_kind']
+            require({'create':b is None and t is not None,
+                'replace':b is not None and t is not None,
+                'delete':b is not None and t is None,
+                'metadata':b is not None and t is not None and all(b[k]==t[k] for k in
+                    ('kind','payload_id','blob_sha256','length','symlink_target_hex','gitlink_oid'))
+                }.get(kind,False),'operation_kind')
+            require((kind not in ('create','replace') or bool(op['stage_ref']))
+                and (kind!='create' or op['tombstone_ref'] is None)
+                and (kind!='delete' or (op['stage_ref'] is None and bool(op['tombstone_ref']))),'operation_staging')
         require(tx['operation_cursor']<=len(ops) and tx['path_mutation_count']<=len(ops)
             and bool(tx['mutation_lease_ref']) and tx['updated_at_utc']==p['ts']
             and (tx['restart_count']>0)==p['recovered_after_restart'],'journal_cursor_lease')
@@ -292,6 +305,7 @@ def materialization_failures(family, candidate, bank):
     graph,validator=context(family)
     if list(validator('materialization').iter_errors(candidate)): return ['materialization_schema']
     source,event,custody=(candidate[k] for k in ('source','event','custody'))
+    if event['replay_policy']=='projector_replay_only':return ['replay_only_not_appendable']
     p=event['payload'];req=source['original_request'];scope=req['scope'];ctx=req['execution_context']
     if list(validator('Result').iter_errors(p)): return ['payload_schema']
     failures=[]
@@ -417,6 +431,10 @@ class ProtocolOracle:
                     for k,v in self.boundary.items()))
     def step(self,action,candidate=None):
         c=candidate or self.original
+        # Eligibility is independent of the producer semantic digest. Keep its
+        # Storage-owned field selection and retained-issued lookup unchanged.
+        if action in ('owner_commit','prepare','append','receipt','retry') and c['event']['replay_policy']=='projector_replay_only':
+            return 'replay_only_not_appendable'
         if self.crashed and action not in ('crash','recover'):
             return 'recovery_required'
         if action=='owner_commit':

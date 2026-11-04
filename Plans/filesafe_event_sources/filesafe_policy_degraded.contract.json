@@ -13,7 +13,7 @@
     {
       "path": "Plans/filesafe_event_sources/filesafe_policy_degraded.schema.json",
       "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/filesafe_policy_degraded/1.0.0",
-      "sha256": "dbc987682934ad04920eb11437741cdebe6a290402f9e6b7b634c0fe50b999ae"
+      "sha256": "1854f82bb2de023f2096ffde215bc66ad9175b464fb1d609bb414a2a0f31550c"
     },
     {
       "path": "Plans/event_payloads/filesafe_policy_degraded_v2.schema.json",
@@ -129,5 +129,5 @@
   "retention_policy_ref": "RP-OPERATIONAL-2555D",
   "native_admission": "unavailable_until_complete_owner_adoption",
   "preserved_project_resources": [],
-  "graph_sha256": "e5223cd758e4ab5580d491ec4a3c5533c10e7acb82f52f30b7e10ef1d58934d0"
+  "graph_sha256": "e10546c7097e60c519f432a65df69e302e19ae20df265648e93399e3acef8052"
 }
