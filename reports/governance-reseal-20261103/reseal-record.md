@@ -2,7 +2,19 @@
 
 ## Status
 
-Checked on the branch, not landed when this was written. Jared assigned the reseal in chat on 2026-11-03 ("whoever you want. Opus 5.5 xhigh is fine"). The `pm7-reseal` thread (Opus 5.5) prepared branch `plans/governance-reseal-20261103` at frozen main `4dbe63c96c46`, in the full local T3 worktree `~/.t3/worktrees/PuppetMaster/t3-43d1d239`. The same agent lands it under the landing lock right after the baseline-bound comparison. A later reports-only commit restates this status with the landed SHAs.
+Landed. Jared assigned the reseal in chat on 2026-11-03 ("whoever you want. Opus 5.5 xhigh is fine"). The `pm7-reseal` thread (Opus 5.5) prepared branch `plans/governance-reseal-20261103` at frozen main `4dbe63c96c46`, in the full local T3 worktree `~/.t3/worktrees/PuppetMaster/t3-43d1d239`. It landed the branch itself, holding the landing lock from 2026-11-04T03:53:27Z:
+
+| Step | Result |
+|---|---|
+| **Reseal commit `9fa4018fb0`** | Pushed to `main` on both remotes, `4dbe63c96c..9fa4018fb0`. Both tips were verified. |
+| **Branch comparison** on `9fa4018fb0`, with the baseline-bound shared edition | Exit 1, nothing that stops the landing. 348 in each aggregate (baseline 5,950), plan migration 0. The 6 new rows are `event_authority_currentness_source_drift` for the evidence bundle, the receipt and the Spec Lock, measured against the old edition. Of the rows naming this branch's paths, 42 are excused as staleness: 34 receipt rows, 6 drift rows and 2 buildability rows. 0 infrastructure rows. 783 s. The baseline and the shared edition are byte-identical before and after. |
+| **Shard checks** | Pass in the branch worktree and in the shared checkout after the fast-forward. |
+| **Shared landing check** after the fast-forward, before the push | Identical to the branch comparison: exit 1, nothing that stops the landing. 1,093 s. |
+| **Shared currentness** | After the push, the seven generated files from `reviewed-currentness/` were installed and the eight frozen files are unchanged. Validation gives `evidence_valid=true`, and all 15 shared files equal the prepared edition. Proof: `landing/shared-currentness-install.json`. |
+| **Follow-up `bb8e125b63`** | Snapshot `pds-20261104-002-current-planunit-snapshot` (96 documents, 7,421 PlanUnits, status `pass`). Then the baseline, recorded at `9fa4018fb0` with the installed edition: run-gates 230, audit-governance 230, plan migration 0, 24 buckets. Baseline SHA-256 `97400a63728d687147b15f251d181556c396ffec586a485345afe8c1ced5f6c2`. |
+| **This status update** | A reports-only commit on top of the follow-up. Both land in one fast-forward after a shared landing check. That check's verdict is in `landing/landing-check-followup.out` in the evidence folder. |
+
+The 348 against 230 difference is the drift that the old shared edition reported until the prepared edition was installed: 117 source-drift rows and 1 registry-drift row.
 
 This record claims none of the following:
 - runtime certification or a PNC-019 recertification;

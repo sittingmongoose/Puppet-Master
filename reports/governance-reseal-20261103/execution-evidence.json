@@ -1149,10 +1149,40 @@
     }
   },
   "landing_boundaries": {
-    "landing_lock_taken": false,
-    "main_pushed": false,
-    "shared_checkout_written": false,
-    "snapshot_or_baseline_recorded": false
+    "baseline_commit": "9fa4018fb091bd86d36cbaa791ef726b72f8b162",
+    "baseline_sha256": "97400a63728d687147b15f251d181556c396ffec586a485345afe8c1ced5f6c2",
+    "baseline_totals": {
+      "audit_governance": 230,
+      "plan_migration": 0,
+      "run_gates": 230
+    },
+    "branch_comparison": {
+      "audit_governance": 348,
+      "blocking": 0,
+      "exit": 1,
+      "infrastructure": 0,
+      "new_rows": 6,
+      "plan_migration": 0,
+      "report": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261103/comparison/landing-check-9fa4018fb0.out",
+      "run_gates": 348,
+      "sha": "9fa4018fb0"
+    },
+    "followup_commit": "bb8e125b63",
+    "landing_lock_taken": true,
+    "landing_lock_taken_at_utc": "2026-11-04T03:53:27Z",
+    "main_before": "4dbe63c96c464a9a90b790739d77a90bda619871",
+    "main_pushed": true,
+    "reseal_commit": "9fa4018fb091bd86d36cbaa791ef726b72f8b162",
+    "shared_checkout_written": true,
+    "shared_currentness_installed_after_push": true,
+    "shared_currentness_proof": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261103/landing/shared-currentness-install.json",
+    "shared_landing_check": {
+      "exit": 1,
+      "identical_to_branch_comparison": true,
+      "report": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261103/landing/landing-check.out"
+    },
+    "snapshot_or_baseline_recorded": true,
+    "snapshot_run": "Plans/.plan_migration/pds-20261104-002-current-planunit-snapshot"
   },
   "normalized_comparison": {
     "audit-governance": {
@@ -2148,5 +2178,5 @@
     "tracked_regular_file_count": 17498
   },
   "schema_id": "pm.governance.reseal.execution_evidence.v1",
-  "status": "prepared_not_landed"
+  "status": "landed"
 }
