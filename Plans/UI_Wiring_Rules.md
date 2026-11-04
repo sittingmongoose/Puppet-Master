@@ -1117,8 +1117,9 @@ acceptance_criteria:
 - ui.onboarding.choose_look's choose_look intent (Q22 retires preview_nier) carry a closed look_choice with only the
   changed fields non-null and write the session with look_previewed; its two toggles carry look_choice null and write
   nothing; none has an owner route, owner command, cmd.theme.* or Settings transaction (DL-153).
-- ui.onboarding.start with source_surface first_run paints a Basic Dark preview with Basic Dark preselected; with
-  settings_rerun it keeps the look on screen preselected; neither writes a setting (F3-520, DL-153).
+- ui.onboarding.start with source_surface first_run preselects the one Settings-resolved saved look, including
+  without a Project; Basic Dark is only the factory/pre-claim fallback. settings_rerun keeps the look on screen
+  preselected; neither writes a setting. The preview commits once at the accepted application/Computer or real-Project boundary (F3-520, DL-286).
 - Every request/result validates against pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2
   with closed applied, disabled, and rejected outcomes.
 - local_context consumes PWIZ-021's exact closed v2 owner definition, including required nullable phase/command/preflight/Project-commit
@@ -3068,7 +3069,10 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-settings-layering-check.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -3135,7 +3139,9 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -3205,7 +3211,9 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -3277,7 +3285,9 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -3348,7 +3358,9 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103

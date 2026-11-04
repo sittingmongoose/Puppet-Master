@@ -3652,8 +3652,8 @@ status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-defined main_stage_order, connect_existing_stage_order,
   and deferred_project_stage_order. The eleven-stage main path commits the Project before paid-provider setup
-  and then Free Models; the six-stage connect-existing shortcut and explicit Project Later path do not fabricate
-  a Project or run its provider phases. These graphs bind exactly fourteen typed local actions: `ui.onboarding.start`,
+  and then Free Models. The six-stage connect-existing shortcut does not fabricate a Project or run provider phases;
+  Project Later sets up AI and Free Models through its explicit app/Computer binding, then lands in No project (DL-287). These graphs bind exactly fourteen typed local actions: `ui.onboarding.start`,
   `ui.onboarding.next`, `ui.onboarding.back`, `ui.onboarding.close`, `ui.onboarding.skip`, `ui.onboarding.defer`,
   `ui.onboarding.open_details`, `ui.onboarding.more_ways`, `ui.onboarding.choose_simple_path`, `ui.onboarding.open_owner_flow`,
   `ui.onboarding.run_automatic_preparation`, `ui.onboarding.choose_first_project`, `ui.onboarding.finish`,
@@ -3663,20 +3663,20 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   local contract. Every request has required closed, normalized, secret-free local_context fields; arbitrary/raw
   payload fields, additional keys, and secret-bearing values are rejected. Exact intent/scope/choice/branch
   combinations distinguish setup/project disclosure from branch-local more_ways updates and whole-session Skip
-  from Project/Remote-Access optional-scope Skip. `ui.onboarding.start` opens a first_run window in a Basic
-  Dark preview, with Basic Dark preselected, and a settings_rerun window in the look on screen; `ui.onboarding.choose_look`
+  from Project/Remote-Access optional-scope Skip. `ui.onboarding.start` consumes the one Settings-resolved first-paint look for first_run, including before
+  a Project exists, with Basic Dark only as the factory/pre-claim fallback; settings_rerun preselects the look on screen; `ui.onboarding.choose_look`
   previews the five-family look choice (Q22), the header''s Look menu and the NieR Mode editor panel through
-  a closed look_choice. Neither dispatches `cmd.theme.*` or a Settings transaction; the look is written with
-  the Project at commit (F3-520, DL-153). When a selected branch needs owner work, its local draft queues the
+  a closed look_choice. Neither dispatches `cmd.theme.*` or a Settings transaction; the look is written once at
+  the accepted application/Computer or real-Project commit boundary (F3-520, DL-286). When a selected branch needs owner work, its local draft queues the
   typed owner route and intent. The only precommit dispatch is owner-authorized read-only preflight or authentication
   necessary for the selected source, with exact current owner request validation, permission, consent, draft/session
   revision, hash, expiry and return context. MACS-005 supports first-time source sign-in without phantom Project/account/repository
-  identities; it is not broad provider setup. Every other owner mutation waits for current Review and PJCT-007''s
-  exact Project-owned setup-commit binding. That confirmation binds `path_kind`, `queued_setup_plan_ref`, `queued_setup_plan_revision`,
+  identities; it is not broad provider setup. Other Project mutations wait for current Review and PJCT-007''s
+  exact Project-owned setup-commit binding; N15 Later instead uses its reviewed app/Computer setup binding. The Project confirmation binds `path_kind`, `queued_setup_plan_ref`, `queued_setup_plan_revision`,
   `reviewed_setup_plan_revision`, `review_confirmation=person_confirmed_reviewed_plan`, `approved_setup_plan_sha256`,
   revision, and continuation generation plus the bounded draft and actual commit binding; a matching `automatic_preparation_currentness_ref`
   admits the Project owner''s existing command and sole commit chain once. Settings copy uses SSYS-036''s precommit
-  preview and postcommit rebind/apply. Paid-provider setup then Free Models use the actual Project result;
+  preview and postcommit rebind/apply. Paid-provider setup then Free Models use the actual Project result on the Project path or the explicit app/Computer binding on Later;
   explicit paid Skip still offers Free Models. Current owner ObservableWork/results/receipts reverse-project
   through the exact reviewed revision and plan hash; terminal success may advance without a second confirmation,
   while stale, mismatched, blocked, failed, cancelled, or recovery-required results dispatch nothing new and
@@ -3721,7 +3721,7 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   runs, the application''s own notices about it (a widget removed, a persona applied from the next turn) stay
   quiet in every look, and the Tour''s closing note says what was put back (F3-521, DL-153). Finish restores
   by default or keeps layout only after explicit selection through the existing finish action, removes practice
-  content, and lands on the real Planning Wizard with the committed Project selected and no work auto-started.
+  content, and lands on the real Planning Wizard when a Project is committed, otherwise in the No project chat; no work auto-starts.
   Close/reload requires a safe owner- revalidated checkpoint; absent original state or stale observations never
   yield a newly invented snapshot: what of the original basis still resolves is restored, then a fresh session
   starts with a plain notice, and only a restoration failure exposes recovery. Run Onboarding Again resets
@@ -3900,8 +3900,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Main, connect-existing and Project Later consume the three exact PWIZ-021 stage-order definitions; wiring
-  does not re-own their roster. Provider/Free Models phases require a real committed Project and never appear
-  in connect-existing or Project Later as fake completed work.
+  does not re-own their roster. Provider/Free Models phases use a real committed Project on the Project path,
+  the reviewed app/Computer binding on Later, and do not run on connect-existing; no path fabricates completed work.
 - Back consumes the exact durable history of the currently valid path under PWIZ-021: connect-existing `remote_access_setup`
     returns to `simple_path`, while main-path `remote_access_setup` returns to `server_storage_client`; no
     skipped shortcut stage is synthesized into reverse wiring. FO-22 excludes steps invalidated by a replaced
@@ -3909,10 +3909,10 @@ acceptance_criteria:
 - The exact current action set contains the fourteen named `ui.onboarding.*` IDs; every authored control emits
   one typed local action and no action is registered as a UICommand, domain event, or production wiring row.
   `simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior.
-- '`ui.onboarding.start` paints a Basic Dark preview for first_run (Basic Dark preselected, with NieR available
-  as the fifth family (Q22)) and keeps the look on screen for settings_rerun; `ui.onboarding.choose_look` previews
+- '`ui.onboarding.start` preselects the Settings-resolved saved look for first_run, even without a Project; Basic Dark
+  is only the factory/pre-claim fallback. settings_rerun keeps the look on screen. `ui.onboarding.choose_look` previews
   the five-family look, including NieR (Q22), the Look menu and the editor panel with no owner route, `cmd.theme.*`
-  or Settings transaction, the look being written with the Project at commit (DL-153).'
+  or Settings transaction; the look commits once at the accepted application/Computer or real-Project boundary (DL-286).'
 - Requests and results validate against the closed action schema; applied, disabled, and rejected are distinct,
   and disabled/rejected results dispatch no owner work, write no session/continuation, carry no production
   receipt, and expose exact reasons.
@@ -3999,7 +3999,7 @@ acceptance_criteria:
   `cmd.panel_tab.*` commits), and the restore stays quiet (DL-153) (amended 2026-10-09, DL-180).
 - Skip restores captured layout, Chat state, placeholder, and focus through existing owners; Finish restores
   by default or keeps layout only on explicit selection through `ui.guided_tour.finish`, then removes practice
-  content and focuses the real Planning Wizard with the committed Project and no auto-started work. No `ui.guided_tour.restore_layout`,
+  content and focuses the real Planning Wizard with a committed Project, otherwise the No project chat, with no auto-started work. No `ui.guided_tour.restore_layout`,
   `ui.guided_tour.keep_layout`, or generic owner mutation is introduced.
 - Close/reload revalidates the last safe checkpoint and original restoration references against current owners
   before resume; missing or stale state restores what still resolves and starts a fresh session with a notice,
@@ -4749,7 +4749,7 @@ Current Product Onboarding consumes PWIZ-021's exact fourteen typed local action
 
 The actions consume `pm.product_onboarding.action_request.v2` -> `pm.product_onboarding.action_result.v2` from the owner schema, including closed phase-gated `local_context`, applied/disabled/rejected results, zero dispatch/write on disabled or rejected outcomes, and no local production receipt. SSYS-036 owns draft copy preview/rebind; MACS-005 owns first-time selected-source sign-in; PJCT-007 owns actual Project commit binding; MS-122 owns post-commit Free Models. Exact durable bounded draft, phase, Project binding and focus continuation follow PWIZ-021/SP-252. Close never completes, Back never undoes/repeats commit, Defer retains the exact continuation, and Details stays ephemeral and owner-command-free. A selected owner route consumes the existing sole owner handler and gains reverse consumers without a wrapper command. The predecessor `cmd.onboarding.first_run.open`, `cmd.onboarding.provider_setup.open`, `cmd.onboarding.provider_setup.use_provider`, `cmd.onboarding.skip_to_planning_wizard`, `cmd.onboarding.free_models.review`, `cmd.onboarding.free_models.defer`, `cmd.onboarding.review_setup`, `cmd.onboarding.open_planning_wizard`, `cmd.onboarding.free_models.refresh`, `cmd.onboarding.free_models.retry`, and `cmd.onboarding.free_models.setup` spellings are source-lineage-only: none is a production row or compatibility alias. The separate packet candidates `cmd.onboarding.back`, `cmd.onboarding.cancel`, `cmd.onboarding.continue`, `cmd.onboarding.defer`, `cmd.onboarding.finish`, `cmd.onboarding.open_details`, `cmd.onboarding.resume`, and `cmd.onboarding.skip` are source-lineage candidate tokens only and are rejected as commands, aliases, and handlers because typed local `ui.onboarding.*` actions own their semantics.
 
-Current Guided Tour consumes the v3 owner schema's eleven typed local actions, including `ui.guided_tour.show_me`, in exact `chat_teacher` -> `workspace` -> `planning_wizard` order. Teacher selection and local send reuse `cmd.persona.select` and `cmd.chat.send`. Same-answer ELI5 reuses only `cmd.chat.eli5.explain_reply` (one extra, simpler reply; the example answer is never rewritten, DL-126), and `cmd.chat.eli5.set` is used only as the quick dot, which changes later replies; panel, workspace layout, and widget practice retain their existing owners and command identities (amended 2026-10-09, DL-180: the panel docking practice is retired with the movable chat; WM-041 lists the four workspace actions). Try it and Show Me share mounted handlers and observed predicates. Planning receives at least half of meaningful actions and dwell and includes genuine answer editing. Skip restores captured state; Finish restores by default or keeps layout only on explicit selection through `ui.guided_tour.finish`, removes practice content, and lands on the real Planning Wizard with the committed Project and no auto-start. Safe close/reload requires owner-revalidated checkpoint and original restoration references, not an ephemeral-only session or an invented baseline. `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, and `ui.guided_tour.toggle_reduced_motion` remain retired action IDs; explicit Keep is a finish disposition and Reduced Motion remains Settings-owned. Touch Closure adds reverse consumers without duplicate catalog/production rows, and records missing machine/native/durable evidence as partial rather than runtime closure.
+Current Guided Tour consumes the v3 owner schema's eleven typed local actions, including `ui.guided_tour.show_me`, in exact `chat_teacher` -> `workspace` -> `planning_wizard` order. Teacher selection and local send reuse `cmd.persona.select` and `cmd.chat.send`. Same-answer ELI5 reuses only `cmd.chat.eli5.explain_reply` (one extra, simpler reply; the example answer is never rewritten, DL-126), and `cmd.chat.eli5.set` is used only as the quick dot, which changes later replies; panel, workspace layout, and widget practice retain their existing owners and command identities (amended 2026-10-09, DL-180: the panel docking practice is retired with the movable chat; WM-041 lists the four workspace actions). Try it and Show Me share mounted handlers and observed predicates. Planning receives at least half of meaningful actions and dwell and includes genuine answer editing. Skip restores captured state; Finish restores by default or keeps layout only on explicit selection through `ui.guided_tour.finish`, removes practice content, and lands on the real Planning Wizard with a committed Project, otherwise the No project chat, with no auto-start. Safe close/reload requires owner-revalidated checkpoint and original restoration references, not an ephemeral-only session or an invented baseline. `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, and `ui.guided_tour.toggle_reduced_motion` remain retired action IDs; explicit Keep is a finish disposition and Reduced Motion remains Settings-owned. Touch Closure adds reverse consumers without duplicate catalog/production rows, and records missing machine/native/durable evidence as partial rather than runtime closure.
 
 The retired Settings spellings `cmd.settings.open_notifications`, `cmd.settings.category.reset`, and `cmd.settings.suggestion.dismiss` are likewise source-lineage-only and are neither production rows nor compatibility aliases. Exact Settings navigation uses `cmd.settings.open`; reset and dismissal compose `cmd.settings.transaction.preview` plus `cmd.settings.transaction.apply`.
 
@@ -8194,8 +8194,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_settings
@@ -8394,8 +8394,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_projects
@@ -8604,8 +8604,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_no_project
@@ -8765,8 +8765,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_automation
@@ -8906,8 +8906,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_goal_crew
@@ -9045,8 +9045,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_plan_schedule
