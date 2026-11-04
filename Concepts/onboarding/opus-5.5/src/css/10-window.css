@@ -198,6 +198,11 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-card { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 14px; width: 100%; padding: 14px 16px; text-align: left; border-radius: var(--o55-card-r); cursor: pointer;
   border: 1px solid var(--o55-line); background: var(--o55-card-bg); color: var(--text-primary); font: inherit; transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 200ms ease; }
 .o55-card:hover { border-color: color-mix(in srgb, var(--o55-accent) 55%, var(--o55-line)); transform: translateY(-1px); }
+/* A card or tile lifted on hover keeps its hover: a hover-only strip under it covers the pixels it rose, so the area that
+   holds the hover never leaves a pointer resting at its bottom edge (FO-49: the edge rose past the pointer, the hover
+   dropped, the card came back under it, and it trembled; under Reduce Motion it flipped every frame). Nothing is drawn. */
+.o55-card { position: relative; }
+:is(.o55-card, .o55-tile):hover::before { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 4px; }
 .o55-card.o55-on { border-color: var(--o55-accent); background: color-mix(in srgb, var(--o55-accent) 11%, var(--o55-card-bg)); box-shadow: inset 0 0 0 1px var(--o55-accent); }
 .o55-card[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; }
 .o55-glyph { display: grid; place-items: center; width: 42px; height: 42px; border-radius: calc(var(--o55-card-r) * 0.8); color: var(--o55-accent); background: color-mix(in srgb, var(--o55-accent) 13%, transparent); flex: none; }
