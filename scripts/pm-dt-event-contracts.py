@@ -164,7 +164,7 @@ def transition(name, payload, before, outcome):
             return False
         if state == 'adjusted' and not payload.get('adjusted_at_utc'):
             return False
-        return all(payload.get(k) == before[k] for k in ['usage_record_id', 'dedupe_key', 'provider_attempt_ref', 'parent_usage_record_id', 'account_id', 'billing_entity_id', 'provider_account_ref']) and payload['raw_payload_ref'] == before['observation_ref'] and payload['provider_payload_hash'] == before['observation_sha256'] and usage_values_valid(payload)
+        return payload.get('parent_run_id') == before['parent_run_id'] and all(payload.get(k) == before[k] for k in ['usage_record_id', 'dedupe_key', 'provider_attempt_ref', 'parent_usage_record_id', 'account_id', 'billing_entity_id', 'provider_account_ref']) and payload['raw_payload_ref'] == before['observation_ref'] and payload['provider_payload_hash'] == before['observation_sha256'] and usage_values_valid(payload)
     if name == 'worktree.created':
         return before['allocation_state'] == 'allocated' and outcome['allocation_state'] == 'created' and all(payload.get(k) == before[k] for k in ['branch_name', 'worktree_path', 'repo_id', 'run_id', 'lane_id', 'package_id'])
     if name == 'worktree.deleted':

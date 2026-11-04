@@ -115056,7 +115056,8 @@
           "account_id": "account-1",
           "billing_entity_id": "billing-1",
           "provider_account_ref": "provider-account-1",
-          "accepted_partial": false
+          "accepted_partial": false,
+          "parent_run_id": null
         },
         "prepared_sha256": null,
         "owner_outcome_ref": null,
@@ -115075,7 +115076,8 @@
           "producer_sequence_id": 15
         },
         "runtime_context": {
-          "provider_attempt_ref": "provider-attempt-1"
+          "provider_attempt_ref": "provider-attempt-1",
+          "parent_run_id": null
         },
         "owner_result": null
       },
@@ -115110,9 +115112,10 @@
           "account_id": "account-1",
           "billing_entity_id": "billing-1",
           "provider_account_ref": "provider-account-1",
-          "accepted_partial": false
+          "accepted_partial": false,
+          "parent_run_id": null
         },
-        "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+        "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
         "owner_outcome_ref": "outcome:usage_event:revision-2",
         "payload": {
           "schema_id": "pm.event_payload.usage_event.v1",
@@ -115210,7 +115213,8 @@
           "producer_sequence_id": 15
         },
         "runtime_context": {
-          "provider_attempt_ref": "provider-attempt-1"
+          "provider_attempt_ref": "provider-attempt-1",
+          "parent_run_id": null
         },
         "owner_result": {
           "event_type": "usage.event"
@@ -115264,6 +115268,15 @@
             "prior_settlement_status"
           ],
           "value": "settled",
+          "expected": "transition_refused"
+        },
+        {
+          "case": "unproven_parent_run",
+          "path": [
+            "before",
+            "parent_run_id"
+          ],
+          "value": "parent-other",
           "expected": "transition_refused"
         }
       ],
@@ -115372,8 +115385,8 @@
         "event_id": "evt_dt_d06fc65ebbbd2bfa20ceb31cec1390ba2c416aa46931638688c03339b9283a41"
       },
       "source_byte_oracle": {
-        "prepared_hex": "7b226265666f7265223a7b2261636365707465645f7061727469616c223a66616c73652c226163636f756e745f6964223a226163636f756e742d31222c2262696c6c696e675f656e746974795f6964223a2262696c6c696e672d31222c226465647570655f6b6579223a2270726f76696465722d726573706f6e73652d31222c226f62736572766174696f6e5f726566223a2270726f76696465722d6f62736572766174696f6e2d31222c226f62736572766174696f6e5f736861323536223a2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161222c22706172656e745f75736167655f7265636f72645f6964223a6e756c6c2c227072696f725f736574746c656d656e745f737461747573223a6e756c6c2c227072696f725f75736167655f6576656e745f726566223a6e756c6c2c2270726f76696465725f6163636f756e745f726566223a2270726f76696465722d6163636f756e742d31222c2270726f76696465725f617474656d70745f726566223a2270726f76696465722d617474656d70742d31222c2275736167655f7265636f72645f6964223a2275736167652d31227d2c2263617074757265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22656e76656c6f70655f636f6e74657874223a7b226163746f725f726566223a226f776e65723a5573616765547261636b65722e6e6f726d616c697a655f66696e6973685f73746570222c22617474656d70745f6964223a22617474656d70742d31222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a6e756c6c2c2270726f64756365725f73657175656e63655f6964223a31352c2270726f6a6563745f6964223a2270726f6a6563742d31222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d2c226576656e745f6964223a226576745f64745f64303666633635656262626432626661323063656233316365633133393062613263343136616134363933313633383638386330333333396239323833613431222c226576656e745f74797065223a2275736167652e6576656e74222c226964656d706f74656e63795f6b6579223a2264743a32346432633630643533326533643635363236623866363733346532663039343334616533316264663065626533356637313464343261343336356134656362222c226f776e65725f6f7574636f6d655f726566223a6e756c6c2c226f776e65725f726566223a226f776e65723a75736167655f6576656e743a7265766973696f6e2d31222c226f776e65725f726573756c74223a6e756c6c2c226f776e65725f7265766973696f6e223a312c227061796c6f6164223a6e756c6c2c2270726570617265645f736861323536223a6e756c6c2c2270726f6475636572223a225573616765547261636b65722e6e6f726d616c697a655f66696e6973685f73746570222c2272756e74696d655f636f6e74657874223a7b2270726f76696465725f617474656d70745f726566223a2270726f76696465722d617474656d70742d31227d2c22736368656d615f6964223a22706d2e73746f726167655f76616c75652e64745f75736167655f6576656e745f736f757263652e7631222c22736368656d615f76657273696f6e223a22312e302e30222c2273636f70655f706172746974696f6e223a2270726f6a6563747e63484a76616d566a64433078222c227374616765223a227072657061726564222c2273746f726167655f696e7374616e63655f6964223a2231313131313131312d313131312d343131312d383131312d313131313131313131313131222c227375626a656374223a7b226465647570655f6b6579223a2270726f76696465722d726573706f6e73652d31222c226f627365727665645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22736574746c656d656e745f737461747573223a226f62736572766564222c2275736167655f7265636f72645f6964223a2275736167652d31227d7d",
-        "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57"
+        "prepared_hex": "7b226265666f7265223a7b2261636365707465645f7061727469616c223a66616c73652c226163636f756e745f6964223a226163636f756e742d31222c2262696c6c696e675f656e746974795f6964223a2262696c6c696e672d31222c226465647570655f6b6579223a2270726f76696465722d726573706f6e73652d31222c226f62736572766174696f6e5f726566223a2270726f76696465722d6f62736572766174696f6e2d31222c226f62736572766174696f6e5f736861323536223a2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161222c22706172656e745f72756e5f6964223a6e756c6c2c22706172656e745f75736167655f7265636f72645f6964223a6e756c6c2c227072696f725f736574746c656d656e745f737461747573223a6e756c6c2c227072696f725f75736167655f6576656e745f726566223a6e756c6c2c2270726f76696465725f6163636f756e745f726566223a2270726f76696465722d6163636f756e742d31222c2270726f76696465725f617474656d70745f726566223a2270726f76696465722d617474656d70742d31222c2275736167655f7265636f72645f6964223a2275736167652d31227d2c2263617074757265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22656e76656c6f70655f636f6e74657874223a7b226163746f725f726566223a226f776e65723a5573616765547261636b65722e6e6f726d616c697a655f66696e6973685f73746570222c22617474656d70745f6964223a22617474656d70742d31222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a6e756c6c2c2270726f64756365725f73657175656e63655f6964223a31352c2270726f6a6563745f6964223a2270726f6a6563742d31222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d2c226576656e745f6964223a226576745f64745f64303666633635656262626432626661323063656233316365633133393062613263343136616134363933313633383638386330333333396239323833613431222c226576656e745f74797065223a2275736167652e6576656e74222c226964656d706f74656e63795f6b6579223a2264743a32346432633630643533326533643635363236623866363733346532663039343334616533316264663065626533356637313464343261343336356134656362222c226f776e65725f6f7574636f6d655f726566223a6e756c6c2c226f776e65725f726566223a226f776e65723a75736167655f6576656e743a7265766973696f6e2d31222c226f776e65725f726573756c74223a6e756c6c2c226f776e65725f7265766973696f6e223a312c227061796c6f6164223a6e756c6c2c2270726570617265645f736861323536223a6e756c6c2c2270726f6475636572223a225573616765547261636b65722e6e6f726d616c697a655f66696e6973685f73746570222c2272756e74696d655f636f6e74657874223a7b22706172656e745f72756e5f6964223a6e756c6c2c2270726f76696465725f617474656d70745f726566223a2270726f76696465722d617474656d70742d31227d2c22736368656d615f6964223a22706d2e73746f726167655f76616c75652e64745f75736167655f6576656e745f736f757263652e7631222c22736368656d615f76657273696f6e223a22312e302e30222c2273636f70655f706172746974696f6e223a2270726f6a6563747e63484a76616d566a64433078222c227374616765223a227072657061726564222c2273746f726167655f696e7374616e63655f6964223a2231313131313131312d313131312d343131312d383131312d313131313131313131313131222c227375626a656374223a7b226465647570655f6b6579223a2270726f76696465722d726573706f6e73652d31222c226f627365727665645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22736574746c656d656e745f737461747573223a226f62736572766564222c2275736167655f7265636f72645f6964223a2275736167652d31227d7d",
+        "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a"
       },
       "positive_variants": [
         {
@@ -115409,7 +115422,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -115428,7 +115442,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "application_scope": {
               "schema_id": "pm.workflow_scope.v2",
@@ -115475,9 +115490,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "c4d505f3330158dbce77d6332a4148bc9c4eacade6267e7d764aeb7c270cedfe",
+            "prepared_sha256": "90190ec527ae625b459369743db365e7aa01dcea01dbf79c28991c13341a19bb",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -115575,7 +115591,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "application_scope": {
               "schema_id": "pm.workflow_scope.v2",
@@ -115710,8 +115727,8 @@
             }
           },
           "physical_byte_oracle": {
-            "prepared_hex": "de0017b16170706c69636174696f6e5f73636f706588ad6e616d65645f706c616e5f6964c0b670726f6a6563745f686f6d655f7365727665725f6964c0aa70726f6a6563745f6964c0a9736368656d615f6964b4706d2e776f726b666c6f775f73636f70652e7632ae736368656d615f76657273696f6ea5322e302e30aa73636f70655f6b696e64ab6170706c69636174696f6eaf73636f70655f706172746974696f6ea3617070a97365727665725f6964a87365727665722d31a66265666f72658cb061636365707465645f7061727469616cc2aa6163636f756e745f6964a96163636f756e742d31b162696c6c696e675f656e746974795f6964a962696c6c696e672d31aa6465647570655f6b6579b370726f76696465722d726573706f6e73652d31af6f62736572766174696f6e5f726566b670726f76696465722d6f62736572766174696f6e2d31b26f62736572766174696f6e5f736861323536d94061616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161b6706172656e745f75736167655f7265636f72645f6964c0b77072696f725f736574746c656d656e745f737461747573c0b57072696f725f75736167655f6576656e745f726566c0b470726f76696465725f6163636f756e745f726566b270726f76696465722d6163636f756e742d31b470726f76696465725f617474656d70745f726566b270726f76696465722d617474656d70742d31af75736167655f7265636f72645f6964a775736167652d31af63617074757265645f61745f757463b4323032362d31312d30345430303a30303a30305ab0656e76656c6f70655f636f6e746578748ba96163746f725f726566d9286f776e65723a5573616765547261636b65722e6e6f726d616c697a655f66696e6973685f73746570aa617474656d70745f6964a9617474656d70742d31b56566666563746976655f6163636f756e745f726566c0a76e6f64655f6964c0af6f636375727265645f61745f757463c0b470726f64756365725f73657175656e63655f69640faa70726f6a6563745f6964c0b57265717565737465645f6163636f756e745f726566c0a672756e5f6964a572756e2d31aa73636f70655f6b696e64ab6170706c69636174696f6ea97468726561645f6964c0a86576656e745f6964d9476576745f64745f64383561653332623330393161346365306635306466613265626230336437303030313130666537336462383165633539383536346335313431303064363632aa6576656e745f74797065ab75736167652e6576656e74af6964656d706f74656e63795f6b6579d99f6170706c69636174696f6e40313a373336353732373636353732326433313a3331333933333633333633333335363133323635333033303336333033353334333533323632363133363632363136343337363336313337363336323631363633383635333833393330333936323633333636313333363233353339363433343633333933303336363633343632333233323635363136343332363136323634bb6f726967696e616c5f6f776e65725f6f7065726174696f6e5f6964d9246f726967696e616c2d6f776e65722d6f7065726174696f6e2d75736167655f6576656e74b26f776e65725f6f7065726174696f6e5f6964d94031393363363335613265303036303534353262613662616437636137636261663865383930396263366133623539643463393036663462323265616432616264b16f776e65725f6f7574636f6d655f726566c0a96f776e65725f726566bc6f776e65723a75736167655f6576656e743a7265766973696f6e2d31ac6f776e65725f726573756c74c0ae6f776e65725f7265766973696f6e01a77061796c6f6164c0af70726570617265645f736861323536c0a870726f6475636572d9225573616765547261636b65722e6e6f726d616c697a655f66696e6973685f73746570af72756e74696d655f636f6e7465787481b470726f76696465725f617474656d70745f726566b270726f76696465722d617474656d70742d31a9736368656d615f6964d935706d2e73746f726167655f76616c75652e64745f75736167655f6576656e745f736f757263652e6170706c69636174696f6e2e7631ae736368656d615f76657273696f6ea5312e302e30af73636f70655f706172746974696f6ea3617070a57374616765a87072657061726564b373746f726167655f696e7374616e63655f6964d92431313131313131312d313131312d343131312d383131312d313131313131313131313131a77375626a65637484aa6465647570655f6b6579b370726f76696465722d726573706f6e73652d31af6f627365727665645f61745f757463b4323032362d31312d30345430303a30303a30305ab1736574746c656d656e745f737461747573a86f62736572766564af75736167655f7265636f72645f6964a775736167652d31",
-            "prepared_sha256": "c4d505f3330158dbce77d6332a4148bc9c4eacade6267e7d764aeb7c270cedfe"
+            "prepared_hex": "de0017b16170706c69636174696f6e5f73636f706588ad6e616d65645f706c616e5f6964c0b670726f6a6563745f686f6d655f7365727665725f6964c0aa70726f6a6563745f6964c0a9736368656d615f6964b4706d2e776f726b666c6f775f73636f70652e7632ae736368656d615f76657273696f6ea5322e302e30aa73636f70655f6b696e64ab6170706c69636174696f6eaf73636f70655f706172746974696f6ea3617070a97365727665725f6964a87365727665722d31a66265666f72658db061636365707465645f7061727469616cc2aa6163636f756e745f6964a96163636f756e742d31b162696c6c696e675f656e746974795f6964a962696c6c696e672d31aa6465647570655f6b6579b370726f76696465722d726573706f6e73652d31af6f62736572766174696f6e5f726566b670726f76696465722d6f62736572766174696f6e2d31b26f62736572766174696f6e5f736861323536d94061616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161ad706172656e745f72756e5f6964c0b6706172656e745f75736167655f7265636f72645f6964c0b77072696f725f736574746c656d656e745f737461747573c0b57072696f725f75736167655f6576656e745f726566c0b470726f76696465725f6163636f756e745f726566b270726f76696465722d6163636f756e742d31b470726f76696465725f617474656d70745f726566b270726f76696465722d617474656d70742d31af75736167655f7265636f72645f6964a775736167652d31af63617074757265645f61745f757463b4323032362d31312d30345430303a30303a30305ab0656e76656c6f70655f636f6e746578748ba96163746f725f726566d9286f776e65723a5573616765547261636b65722e6e6f726d616c697a655f66696e6973685f73746570aa617474656d70745f6964a9617474656d70742d31b56566666563746976655f6163636f756e745f726566c0a76e6f64655f6964c0af6f636375727265645f61745f757463c0b470726f64756365725f73657175656e63655f69640faa70726f6a6563745f6964c0b57265717565737465645f6163636f756e745f726566c0a672756e5f6964a572756e2d31aa73636f70655f6b696e64ab6170706c69636174696f6ea97468726561645f6964c0a86576656e745f6964d9476576745f64745f64383561653332623330393161346365306635306466613265626230336437303030313130666537336462383165633539383536346335313431303064363632aa6576656e745f74797065ab75736167652e6576656e74af6964656d706f74656e63795f6b6579d99f6170706c69636174696f6e40313a373336353732373636353732326433313a3331333933333633333633333335363133323635333033303336333033353334333533323632363133363632363136343337363336313337363336323631363633383635333833393330333936323633333636313333363233353339363433343633333933303336363633343632333233323635363136343332363136323634bb6f726967696e616c5f6f776e65725f6f7065726174696f6e5f6964d9246f726967696e616c2d6f776e65722d6f7065726174696f6e2d75736167655f6576656e74b26f776e65725f6f7065726174696f6e5f6964d94031393363363335613265303036303534353262613662616437636137636261663865383930396263366133623539643463393036663462323265616432616264b16f776e65725f6f7574636f6d655f726566c0a96f776e65725f726566bc6f776e65723a75736167655f6576656e743a7265766973696f6e2d31ac6f776e65725f726573756c74c0ae6f776e65725f7265766973696f6e01a77061796c6f6164c0af70726570617265645f736861323536c0a870726f6475636572d9225573616765547261636b65722e6e6f726d616c697a655f66696e6973685f73746570af72756e74696d655f636f6e7465787482ad706172656e745f72756e5f6964c0b470726f76696465725f617474656d70745f726566b270726f76696465722d617474656d70742d31a9736368656d615f6964d935706d2e73746f726167655f76616c75652e64745f75736167655f6576656e745f736f757263652e6170706c69636174696f6e2e7631ae736368656d615f76657273696f6ea5312e302e30af73636f70655f706172746974696f6ea3617070a57374616765a87072657061726564b373746f726167655f696e7374616e63655f6964d92431313131313131312d313131312d343131312d383131312d313131313131313131313131a77375626a65637484aa6465647570655f6b6579b370726f76696465722d726573706f6e73652d31af6f627365727665645f61745f757463b4323032362d31312d30345430303a30303a30305ab1736574746c656d656e745f737461747573a86f62736572766564af75736167655f7265636f72645f6964a775736167652d31",
+            "prepared_sha256": "90190ec527ae625b459369743db365e7aa01dcea01dbf79c28991c13341a19bb"
           }
         },
         {
@@ -115747,7 +115764,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": true
+              "accepted_partial": true,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -115766,7 +115784,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -115801,9 +115820,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": true
+              "accepted_partial": true,
+              "parent_run_id": null
             },
-            "prepared_sha256": "839fb6d2b2a05b8eb2e6920cdf57954f2b0b58718e24fafc04eaf362b512457e",
+            "prepared_sha256": "c389c9e7dc5c095774679a5d8862721c63fb4251e5aa3403cf21f47537098387",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -115901,7 +115921,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -116057,7 +116078,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -116076,7 +116098,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -116111,9 +116134,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "1f9316dc2a6ae66b528357f19eeea9bb6152bfc15c7e581191985d7b665fb675",
+            "prepared_sha256": "80e552053c0bac27ab915e40b304945b97487a21431b84f5d82b2452bccc73ac",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -116212,7 +116236,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -116369,7 +116394,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -116388,7 +116414,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -116423,9 +116450,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "6dc93a2fc85e7e57a91c3cdddefb8c02ec3a6c067ec8404de92329aa5fe3e46d",
+            "prepared_sha256": "f6ca2752ccaab0753f3c9cfff683f37fc54cb2424d61244abe05afeb07849288",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -116524,7 +116552,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -116681,7 +116710,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -116700,7 +116730,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -116735,9 +116766,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "66e5b4924b090732333f4a983db923faa5f6fdefc412f05c8404e8bebc62dba4",
+            "prepared_sha256": "f93fe0fa9e331e5badcd3c5d86065d410762fb4ac55bdd18fa9afea03d9a85d1",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -116835,7 +116867,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -116991,7 +117024,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -117010,7 +117044,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -117045,9 +117080,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "8a3fc3452fff736c18bfd452b2c042bd81240103dfc0e65a480a549ca59e5977",
+            "prepared_sha256": "ea69a227aa97f1df27803495e061bc66447fad35b9ef5a38fb1adfe4b5d6b40f",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -117145,7 +117181,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -117301,7 +117338,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -117320,7 +117358,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -117355,9 +117394,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -117455,7 +117495,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -117611,7 +117652,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -117630,7 +117672,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -117665,9 +117708,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -117765,7 +117809,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -117921,7 +117966,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -117940,7 +117986,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -117975,9 +118022,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -118075,7 +118123,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -118231,7 +118280,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -118250,7 +118300,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -118285,9 +118336,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -118385,7 +118437,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -118541,7 +118594,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -118560,7 +118614,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -118595,9 +118650,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -118695,7 +118751,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -118851,7 +118908,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -118870,7 +118928,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-retry-1"
+              "provider_attempt_ref": "provider-attempt-retry-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -118905,9 +118964,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "fb9b661dfb8efc1266da8cf8d45a36a86d5b98f179935c0381a43f63d21f403b",
+            "prepared_sha256": "8104ecfab9882e70ecd763d3be4ab0069d784845e1fba3e1968f0c925a352e80",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -119006,7 +119066,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-retry-1"
+              "provider_attempt_ref": "provider-attempt-retry-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -119163,7 +119224,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -119182,7 +119244,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -119217,9 +119280,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -119317,7 +119381,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -119473,7 +119538,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -119492,7 +119558,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -119527,9 +119594,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -119627,7 +119695,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -119783,7 +119852,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -119802,7 +119872,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -119837,9 +119908,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -119937,7 +120009,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -120093,7 +120166,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -120112,7 +120186,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -120147,9 +120222,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -120247,7 +120323,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -120403,7 +120480,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -120422,7 +120500,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -120457,9 +120536,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -120557,7 +120637,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -120713,7 +120794,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -120732,7 +120814,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -120767,9 +120850,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -120867,7 +120951,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -121023,7 +121108,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -121042,7 +121128,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -121077,9 +121164,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -121177,7 +121265,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -121333,7 +121422,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -121352,7 +121442,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -121387,9 +121478,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -121487,7 +121579,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -121643,7 +121736,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -121662,7 +121756,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -121697,9 +121792,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+            "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -121797,7 +121893,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": "provider-attempt-1"
+              "provider_attempt_ref": "provider-attempt-1",
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -121953,7 +122050,8 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
             "prepared_sha256": null,
             "owner_outcome_ref": null,
@@ -121972,7 +122070,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": null
+              "provider_attempt_ref": null,
+              "parent_run_id": null
             },
             "owner_result": null
           },
@@ -122007,9 +122106,10 @@
               "account_id": "account-1",
               "billing_entity_id": "billing-1",
               "provider_account_ref": "provider-account-1",
-              "accepted_partial": false
+              "accepted_partial": false,
+              "parent_run_id": null
             },
-            "prepared_sha256": "4613ea1a367e6a2525ebe4adb3325f779e9f7e84442dbb19945854c479cbdb24",
+            "prepared_sha256": "508cdbd02c28dcbbd6648f0214977e1fd6c06388401727c863ad5384736370c6",
             "owner_outcome_ref": "outcome:usage_event:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.usage_event.v1",
@@ -122095,7 +122195,8 @@
               "producer_sequence_id": 15
             },
             "runtime_context": {
-              "provider_attempt_ref": null
+              "provider_attempt_ref": null,
+              "parent_run_id": null
             },
             "owner_result": {
               "event_type": "usage.event"
@@ -122194,6 +122295,324 @@
               "pricing_source": null,
               "pricing_effective_at": null,
               "pricing_version": null
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          }
+        },
+        {
+          "case": "actual_child_run_preserves_parent_run_and_record",
+          "prepared": {
+            "schema_id": "pm.storage_value.dt_usage_event_source.v1",
+            "schema_version": "1.0.0",
+            "stage": "prepared",
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "scope_partition": "project~cHJvamVjdC0x",
+            "event_type": "usage.event",
+            "event_id": "evt_dt_2f36b38b6dd16820bc2c825f79cdbf78e27d3f23a14ce60b7c8874214c8d8dce",
+            "idempotency_key": "dt:bdfc650c2f532077ea9eb5a3bf4bbb2ccc7ff677bbb3168e3ab59c8a8af7a917",
+            "producer": "UsageTracker.normalize_finish_step",
+            "owner_ref": "owner:usage_event:revision-1",
+            "owner_revision": 1,
+            "subject": {
+              "usage_record_id": "usage-child-1",
+              "dedupe_key": "provider-response-child-1",
+              "settlement_status": "observed",
+              "observed_at_utc": "2026-11-04T00:00:00Z"
+            },
+            "captured_at_utc": "2026-11-04T00:00:00Z",
+            "before": {
+              "observation_ref": "provider-observation-1",
+              "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "usage_record_id": "usage-child-1",
+              "dedupe_key": "provider-response-child-1",
+              "provider_attempt_ref": "provider-attempt-child-1",
+              "parent_usage_record_id": "usage-1",
+              "prior_settlement_status": null,
+              "prior_usage_event_ref": null,
+              "account_id": "account-1",
+              "billing_entity_id": "billing-1",
+              "provider_account_ref": "provider-account-1",
+              "accepted_partial": false,
+              "parent_run_id": "run-1"
+            },
+            "prepared_sha256": null,
+            "owner_outcome_ref": null,
+            "payload": null,
+            "envelope_context": {
+              "scope_kind": "project",
+              "project_id": "project-1",
+              "thread_id": null,
+              "run_id": "child-run-1",
+              "node_id": null,
+              "attempt_id": "child-attempt-1",
+              "actor_ref": "owner:UsageTracker.normalize_finish_step",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": null,
+              "producer_sequence_id": 15
+            },
+            "runtime_context": {
+              "provider_attempt_ref": "provider-attempt-child-1",
+              "parent_run_id": "run-1"
+            },
+            "owner_result": null
+          },
+          "completed": {
+            "schema_id": "pm.storage_value.dt_usage_event_source.v1",
+            "schema_version": "1.0.0",
+            "stage": "completed",
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "scope_partition": "project~cHJvamVjdC0x",
+            "event_type": "usage.event",
+            "event_id": "evt_dt_2f36b38b6dd16820bc2c825f79cdbf78e27d3f23a14ce60b7c8874214c8d8dce",
+            "idempotency_key": "dt:bdfc650c2f532077ea9eb5a3bf4bbb2ccc7ff677bbb3168e3ab59c8a8af7a917",
+            "producer": "UsageTracker.normalize_finish_step",
+            "owner_ref": "owner:usage_event:revision-1",
+            "owner_revision": 1,
+            "subject": {
+              "usage_record_id": "usage-child-1",
+              "dedupe_key": "provider-response-child-1",
+              "settlement_status": "observed",
+              "observed_at_utc": "2026-11-04T00:00:00Z"
+            },
+            "captured_at_utc": "2026-11-04T00:00:00Z",
+            "before": {
+              "observation_ref": "provider-observation-1",
+              "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "usage_record_id": "usage-child-1",
+              "dedupe_key": "provider-response-child-1",
+              "provider_attempt_ref": "provider-attempt-child-1",
+              "parent_usage_record_id": "usage-1",
+              "prior_settlement_status": null,
+              "prior_usage_event_ref": null,
+              "account_id": "account-1",
+              "billing_entity_id": "billing-1",
+              "provider_account_ref": "provider-account-1",
+              "accepted_partial": false,
+              "parent_run_id": "run-1"
+            },
+            "prepared_sha256": "30847b865d0a9482dc7e39546016078c1decd368ecaf0ce6f8af1a4d22bfb7ca",
+            "owner_outcome_ref": "outcome:usage_event:revision-2",
+            "payload": {
+              "schema_id": "pm.event_payload.usage_event.v1",
+              "schema_version": "1.0.0",
+              "usage_record_id": "usage-child-1",
+              "usage_event_ref": "evt_dt_2f36b38b6dd16820bc2c825f79cdbf78e27d3f23a14ce60b7c8874214c8d8dce",
+              "dedupe_key": "provider-response-child-1",
+              "run_id": "child-run-1",
+              "attempt_id": "child-attempt-1",
+              "provider_id": "provider-1",
+              "provider_route_kind": "fixture-id",
+              "model_id": "model-1",
+              "source_class": "provider_reported",
+              "source_confidence": "high",
+              "source_authority": "provider-response",
+              "settlement_status": "observed",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "redaction_status": "redacted",
+              "provider_payload_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "counting_semantics": {
+                "cache_is_input_subset": true,
+                "reasoning_is_output_subset": true
+              },
+              "input_total": 100,
+              "input_non_cached": 60,
+              "cache_read": 30,
+              "cache_write": 10,
+              "cache_write_1h": 0,
+              "output_total": 50,
+              "output_visible": 40,
+              "reasoning": 10,
+              "provider_total": 150,
+              "context_estimate": null,
+              "cost_microdollars": 1000,
+              "provider_attempt_ref": "provider-attempt-child-1",
+              "account_id": "account-1",
+              "billing_entity_id": "billing-1",
+              "provider_account_ref": "provider-account-1",
+              "raw_payload_ref": "provider-observation-1",
+              "display_cost_policy": "show",
+              "cost": {
+                "cost_status": "provider_reported",
+                "cost_microdollars": 1000,
+                "cost_minor_units": {
+                  "amount": 1,
+                  "currency": "USD",
+                  "minor_unit_exponent": 2
+                },
+                "currency": "USD",
+                "pricing_snapshot_id": "price-1",
+                "pricing_source": "provider",
+                "pricing_effective_at": "2026-11-01T00:00:00Z",
+                "pricing_version": "price-v1",
+                "bucket_costs_microdollars": {
+                  "input_non_cached": 600,
+                  "cache_read": 0,
+                  "cache_write": 0,
+                  "cache_write_1h": 0,
+                  "output_visible": 300,
+                  "reasoning": 100
+                },
+                "custom_provider_price_row_ref": null
+              },
+              "quota": {
+                "window_kind": "rolling",
+                "window_scope": "account-1",
+                "quota_status": "reported",
+                "evidence_source": "provider_api",
+                "reset_at": null,
+                "cooldown_until": null,
+                "quota_remaining": 80,
+                "quota_used": 20,
+                "quota_limit": 100,
+                "credits_remaining": null,
+                "credits_status": "not_exposed"
+              },
+              "currency": "USD",
+              "cost_status": "provider_reported",
+              "pricing_snapshot_id": "price-1",
+              "pricing_source": "provider",
+              "pricing_effective_at": "2026-11-01T00:00:00Z",
+              "pricing_version": "price-v1",
+              "parent_usage_record_id": "usage-1",
+              "parent_run_id": "run-1"
+            },
+            "envelope_context": {
+              "scope_kind": "project",
+              "project_id": "project-1",
+              "thread_id": null,
+              "run_id": "child-run-1",
+              "node_id": null,
+              "attempt_id": "child-attempt-1",
+              "actor_ref": "owner:UsageTracker.normalize_finish_step",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "producer_sequence_id": 15
+            },
+            "runtime_context": {
+              "provider_attempt_ref": "provider-attempt-child-1",
+              "parent_run_id": "run-1"
+            },
+            "owner_result": {
+              "event_type": "usage.event"
+            }
+          },
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "evt_dt_2f36b38b6dd16820bc2c825f79cdbf78e27d3f23a14ce60b7c8874214c8d8dce",
+            "event_type": "usage.event",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "child-run-1",
+            "node_id": null,
+            "attempt_id": "child-attempt-1",
+            "actor_ref": "owner:UsageTracker.normalize_finish_step",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "observed_at_utc": "2026-11-04T00:00:01Z",
+            "persisted_at_utc": "2026-11-04T00:00:01Z",
+            "sequence_id": 15,
+            "producer_sequence_id": 15,
+            "correlation_id": "correlation-51",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "dt:bdfc650c2f532077ea9eb5a3bf4bbb2ccc7ff677bbb3168e3ab59c8a8af7a917",
+            "payload_schema_id": "pm.event_payload.usage_event.v1",
+            "payload": {
+              "schema_id": "pm.event_payload.usage_event.v1",
+              "schema_version": "1.0.0",
+              "usage_record_id": "usage-child-1",
+              "usage_event_ref": "evt_dt_2f36b38b6dd16820bc2c825f79cdbf78e27d3f23a14ce60b7c8874214c8d8dce",
+              "dedupe_key": "provider-response-child-1",
+              "run_id": "child-run-1",
+              "attempt_id": "child-attempt-1",
+              "provider_id": "provider-1",
+              "provider_route_kind": "fixture-id",
+              "model_id": "model-1",
+              "source_class": "provider_reported",
+              "source_confidence": "high",
+              "source_authority": "provider-response",
+              "settlement_status": "observed",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "redaction_status": "redacted",
+              "provider_payload_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "counting_semantics": {
+                "cache_is_input_subset": true,
+                "reasoning_is_output_subset": true
+              },
+              "input_total": 100,
+              "input_non_cached": 60,
+              "cache_read": 30,
+              "cache_write": 10,
+              "cache_write_1h": 0,
+              "output_total": 50,
+              "output_visible": 40,
+              "reasoning": 10,
+              "provider_total": 150,
+              "context_estimate": null,
+              "cost_microdollars": 1000,
+              "provider_attempt_ref": "provider-attempt-child-1",
+              "account_id": "account-1",
+              "billing_entity_id": "billing-1",
+              "provider_account_ref": "provider-account-1",
+              "raw_payload_ref": "provider-observation-1",
+              "display_cost_policy": "show",
+              "cost": {
+                "cost_status": "provider_reported",
+                "cost_microdollars": 1000,
+                "cost_minor_units": {
+                  "amount": 1,
+                  "currency": "USD",
+                  "minor_unit_exponent": 2
+                },
+                "currency": "USD",
+                "pricing_snapshot_id": "price-1",
+                "pricing_source": "provider",
+                "pricing_effective_at": "2026-11-01T00:00:00Z",
+                "pricing_version": "price-v1",
+                "bucket_costs_microdollars": {
+                  "input_non_cached": 600,
+                  "cache_read": 0,
+                  "cache_write": 0,
+                  "cache_write_1h": 0,
+                  "output_visible": 300,
+                  "reasoning": 100
+                },
+                "custom_provider_price_row_ref": null
+              },
+              "quota": {
+                "window_kind": "rolling",
+                "window_scope": "account-1",
+                "quota_status": "reported",
+                "evidence_source": "provider_api",
+                "reset_at": null,
+                "cooldown_until": null,
+                "quota_remaining": 80,
+                "quota_used": 20,
+                "quota_limit": 100,
+                "credits_remaining": null,
+                "credits_status": "not_exposed"
+              },
+              "currency": "USD",
+              "cost_status": "provider_reported",
+              "pricing_snapshot_id": "price-1",
+              "pricing_source": "provider",
+              "pricing_effective_at": "2026-11-01T00:00:00Z",
+              "pricing_version": "price-v1",
+              "parent_usage_record_id": "usage-1",
+              "parent_run_id": "run-1"
             },
             "payload_ref": null,
             "redaction_profile": "no_secrets",
@@ -122432,9 +122851,10 @@
                 "account_id": "account-1",
                 "billing_entity_id": "billing-1",
                 "provider_account_ref": "provider-account-1",
-                "accepted_partial": false
+                "accepted_partial": false,
+                "parent_run_id": null
               },
-              "prepared_sha256": "e45b176891e2ee2cade4a2314abc3c9d190ab358e6c71c49283f6134b6971c57",
+              "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
               "owner_outcome_ref": "outcome:usage_event:revision-2",
               "payload": {
                 "schema_id": "pm.event_payload.usage_event.v1",
@@ -122532,7 +122952,8 @@
                 "producer_sequence_id": 15
               },
               "runtime_context": {
-                "provider_attempt_ref": "provider-attempt-1"
+                "provider_attempt_ref": "provider-attempt-1",
+                "parent_run_id": null
               },
               "owner_result": {
                 "event_type": "usage.event"
@@ -147187,6 +147608,11 @@
       "case": "negative_zero",
       "bytes": "{\"n\":-0}",
       "accepted": false
+    },
+    {
+      "case": "negative_finite_number",
+      "bytes": "{\"n\":-1}",
+      "accepted": true
     }
   ]
 }
