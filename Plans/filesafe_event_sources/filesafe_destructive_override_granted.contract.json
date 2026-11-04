@@ -124,13 +124,13 @@
     {
       "ordinal": 9,
       "role": "retention_release",
-      "barrier": "PENDING_RETENTION_DECISION; this graph selects no deletion or lifetime policy"
+      "barrier": "RP-AUTHORITY-INDEFINITE; apply existing Case L-3 exact-kind policy and independent owner holds; no admission or body deletion authority"
     }
   ],
   "consumer_id": "storage.filesafe_destructive_override_granted_history_read.v1@1.0.0",
   "family_checkpoint": "none_required",
-  "retention_policy_ref": "PENDING_RETENTION_DECISION",
+  "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
   "native_admission": "unavailable_until_complete_owner_adoption",
   "preserved_project_resources": [],
-  "graph_sha256": "dc89733e77d14872135b8f1eb3941ff2f8e7256861a279ed01ea8143e9316c54"
+  "graph_sha256": "8ccfe0fd6cfe2138419321e6f701d806f1c76461a472472e8573c5ac7ea71cb2"
 }

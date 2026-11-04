@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-04T18:13:22Z",
+  "generated_at_utc": "2026-11-04T18:48:40Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -46061,7 +46061,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "323cb328c6e1ab6de46d5c9aa372881c3a0c98ccbe858d6ed32e71d038b857df",
+        "expected": "88ef1d61ac97c1a4a36444add5b06fa6afdfbc051e62049532d26e199ece456a",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46099,10 +46099,6 @@
         "error": "pnc019_source_hash_stale",
         "expected": "605f8185d957222830679784c73d128f0f9c4fa67dc985fe152596c52decc192",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46171,70 +46167,6 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/human-in-the-loop.md"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/ledger_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/implementation_readiness_fourth_recheck_20260628.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/source_compile_readiness_integration_matrix_20260628.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_temp_checkout_inspection_20260629.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_upstream_inspection_20260629.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260629-001-feature-name/state/current.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260629-001-feature-name/state/handoff.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/current.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/import_completion_recheck_20260703.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/state/current.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/state/handoff.json"
-      },
-      {
-        "error": "event_authority_currentness_source_missing",
-        "source_path": "Plans/ledgers/v2/schemas/plan_unit.schema.json"
       },
       {
         "error": "event_authority_currentness_source_drift",

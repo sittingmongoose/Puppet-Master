@@ -9,6 +9,7 @@ import copy
 import hashlib
 import importlib.util
 import json
+import struct
 from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urljoin
@@ -102,15 +103,190 @@ def graph_failures(family):
     for row in graph['resources']:
         doc=load(row['path']);Draft202012Validator.check_schema(doc)
         if doc.get('$id',row['uri']) != row['uri']: failures.append('resource_uri')
-    if graph['retention_policy_ref'] != 'PENDING_RETENTION_DECISION': failures.append('retention_changed')
+    failures.extend(retention_binding_failures(family,graph['retention_policy_ref']))
     if graph['native_admission'] != 'unavailable_until_complete_owner_adoption': failures.append('admission_overclaim')
     return failures
+
+def retention_binding_failures(family, policy):
+    expected_retention = {
+        'filesafe.destructive_override_granted': 'RP-AUTHORITY-INDEFINITE',
+        'filesafe.policy_degraded': 'RP-OPERATIONAL-2555D',
+    }.get(family, 'PENDING_RETENTION_DECISION')
+    return ['retention_changed'] if policy != expected_retention else []
 
 def real_admission(family):
     return 'missing_event_registration' if not any(r['event_type']==family for r in load('Plans/event_family_registry.json')['families']) else 'registered_requires_independent_depth'
 
 def instant(value):
     return datetime.fromisoformat(value.replace('Z','+00:00'))
+
+def decode_original(raw, codec):
+    """Strict decoder for the closed integer/string/bool application record domain."""
+    data=bytes.fromhex(raw)
+    if codec=='RFC8785':
+        from pm_projects_refresh_contracts import unique_object
+        value=json.loads(data,object_pairs_hook=unique_object)
+        if storage_owner().jcs_bytes(value)!=data:raise ValueError('noncanonical JSON')
+        return value
+    offset=0
+    def take(n):
+        nonlocal offset
+        if offset+n>len(data):raise ValueError('torn MessagePack')
+        result=data[offset:offset+n];offset+=n;return result
+    def integer(n,signed=False):return int.from_bytes(take(n),'big',signed=signed)
+    def read():
+        tag=integer(1)
+        if tag<128:return tag
+        if tag>=224:return tag-256
+        if tag in (192,194,195):return {192:None,194:False,195:True}[tag]
+        if tag in range(204,208):return integer(2**(tag-204))
+        if tag in range(208,212):return integer(2**(tag-208),True)
+        if 160<=tag<=191:return take(tag-160).decode('utf-8')
+        if tag in (217,218,219):return take(integer({217:1,218:2,219:4}[tag])).decode('utf-8')
+        if 144<=tag<=159 or tag in (220,221):
+            n=tag-144 if tag<160 else integer(2 if tag==220 else 4)
+            return [read() for _ in range(n)]
+        if 128<=tag<=143 or tag in (222,223):
+            n=tag-128 if tag<144 else integer(2 if tag==222 else 4);result={}
+            for _ in range(n):
+                key=read()
+                if not isinstance(key,str) or key in result:raise ValueError('duplicate/nonstring key')
+                result[key]=read()
+            return result
+        raise ValueError('unsupported MessagePack type')
+    value=read()
+    if offset!=len(data) or storage_owner().canonical_messagepack_bytes(value)!=data:
+        raise ValueError('noncanonical MessagePack')
+    return value
+
+
+def application_original_failures(family, candidate, bank):
+    graph,validator=context(family);source=candidate['source'];req=source['original_request']
+    records=source['application_records'];p=candidate['event']['payload'];failures=[]
+    def require(ok,code):
+        if not ok:failures.append('application_'+code)
+    members={v['role']:v for v in source['body_members']}
+    decoded={}
+    schema=load(f'Plans/filesafe_event_sources/{family.replace(".","_")}.schema.json')
+    for role,fragment in graph['application_body_roots'].items():
+        member=members.get(role)
+        if member is None:failures.append('application_body_role');continue
+        try:
+            value=decode_original(bank['bodies'][member['ref']],graph['application_body_codecs'][role])
+            selected=Draft202012Validator({'$ref':schema['$id']+fragment},
+                registry=validator('materialization')._registry,format_checker=FormatChecker())
+            if role.endswith('request'):
+                # Addressing fields are outside the original request-byte preimage.
+                expected={k:v for k,v in req.items() if k not in ('original_input_ref','original_input_sha256')}
+                checked={**value,'original_input_ref':req['original_input_ref'],'original_input_sha256':req['original_input_sha256']}
+            else:expected=records[role];checked=value
+            require(not list(selected.iter_errors(checked)),'body_schema:'+role)
+            require(value==expected,'body_value:'+role);decoded[role]=value
+        except (KeyError,ValueError,TypeError,UnicodeError,struct.error):
+            failures.append('application_body_decode:'+role)
+    if len(decoded)!=len(graph['application_body_roots']):return failures
+    def digest(value):return hashlib.sha256(storage_owner().jcs_bytes(value)).hexdigest()
+    manifests=[records[k] for k in records if 'manifest' in k and records[k] is not None]
+    inventory=records['snapshot_blobs'];blobs=inventory['blobs']
+    require(len({v['payload_id'] for v in blobs})==len(blobs),'blob_inventory_unique')
+    for record in records.values():
+        if record is not None:
+            require(record['scope']==req['scope'] and record['execution_context']==req['execution_context'],'record_context')
+    for manifest in manifests:
+        entries=manifest['entries'];paths=[e['identity']['canonical_absolute_path'] for e in entries]
+        require(paths==sorted(set(paths),key=lambda x:x.encode('utf-8')),'manifest_path_order')
+        require(manifest['entry_count']==len(entries),'manifest_entry_count')
+        require(manifest['total_bytes']==sum(e['length'] for e in entries if e['present']),'manifest_total_bytes')
+        scm=manifest['scm']
+        if scm is not None:
+            require(scm['worktree_path']==req['execution_context']['working_directory']
+                and scm['index_state_sha256']==digest(scm['index_entries']),'manifest_scm')
+        for entry in entries:
+            identity=entry['identity'];ctx=req['execution_context'];path=identity['canonical_absolute_path']
+            require(all(identity[k]==ctx[k] for k in ('root_id','root_generation','host_id','environment_id')),'entry_context')
+            # Synthetic lexical boundary. Native realpath/reparse/CAS checks stay NOT_RUN.
+            root=ctx['working_directory'].rstrip('/\\')
+            require(path.startswith(root+'/') and '..' not in path.split('/') and '/.git/' not in path,'entry_root')
+            require(not entry['ignored'] or entry['authorized_write_set'],'ignored_scope')
+            if entry['present'] and entry['kind']=='file':
+                matches=[v for v in blobs if v['payload_id']==entry['payload_id']]
+                require(len(matches)==1,'manifest_blob_inventory')
+                if matches:
+                    blob=matches[0];raw=bank['bodies'].get(blob['ref'])
+                    try:body=bytes.fromhex(raw)
+                    except (TypeError,ValueError):body=None
+                    require(body is not None and len(body)==blob['length']==entry['length']
+                        and hashlib.sha256(body).hexdigest()==blob['sha256']==entry['blob_sha256'],'blob_value')
+                    require(bank.get('payloads',{}).get(blob['payload_id'])==raw,'payload_store_selection')
+            elif entry['kind']=='symlink' and entry['present']:
+                require(entry['symlink_target_hex'] is not None and entry['payload_id'] is None,'symlink_value')
+            else:require(entry['payload_id'] is None,'nonfile_payload')
+    referenced={e['payload_id'] for mf in manifests for e in mf['entries'] if e['payload_id'] is not None}
+    require(referenced=={b['payload_id'] for b in blobs},'complete_blob_inventory')
+    sp=records['safe_point_record'];mf=records['snapshot_manifest'];mh=digest(mf)
+    require(sp['safe_point_id']==p['safe_point_id'] and sp['run_id']==p['run_id']
+        and sp['node_id'] is None and sp['attempt_id'] is None
+        and sp['worktree_path']==req['execution_context']['working_directory'],'safe_point_subject')
+    require(sp['snapshot_manifest_ref']==members['snapshot_manifest']['ref']
+        and sp['snapshot_manifest_sha256']==mh==sp['content_state_sha256']
+        and sp['entry_count']==mf['entry_count'] and sp['total_bytes']==mf['total_bytes']
+        and sp['snapshot_format_version']==mf['snapshot_format_version']
+        and sp['content_scope_version']==mf['content_scope_version'] and sp['scm']==mf['scm'],'safe_point_manifest')
+    if family=='safe_point.created':
+        require(all(sp[k]==p[k] for k in ('baseline_ref','replan_generation','snapshot_format_version','content_scope_version','snapshot_manifest_ref','snapshot_manifest_sha256','content_state_sha256','capture_status')),'capture_result')
+        require(sp['capture_operation_id']==req['operation_id'] and sp['created_at_utc']==p['ts'] and sp['created_by_actor_ref']==req['actor_ref'],'capture_origin')
+        fields=('worktree_id','worktree_path','branch_name','HEAD_sha')
+        require((mf['scm'] is None and not any(k in p for k in fields)) or
+            (mf['scm'] is not None and all(mf['scm'][k]==p.get(k) for k in fields)),'capture_scm')
+    else:
+        tx=records['restore_transaction'];eq=records['equality_result'];pre=records['pre_restore_manifest'];post=records['post_restore_manifest']
+        preh=digest(pre);posth=digest(post) if post is not None else None
+        require(all(tx.get(k)==p.get(k) for k in ('safe_point_id','restore_transaction_id','run_id','node_id','attempt_id','restore_outcome','target_state_sha256','pre_restore_state_sha256','post_restore_state_sha256','conflict_reason_code','recovered_after_restart')),'transaction_result')
+        require(tx['canonical_safe_point_key']=='application@1:'+req['scope']['server_id'].encode().hex()+':'+p['safe_point_id'].encode().hex(),'safe_point_key')
+        require(tx['target_manifest_ref']==members['snapshot_manifest']['ref'] and tx['pre_restore_manifest_ref']==members['pre_restore_manifest']['ref']
+            and tx['target_manifest_sha256']==tx['target_state_sha256']==mh
+            and tx['pre_restore_manifest_sha256']==tx['pre_restore_state_sha256']==preh
+            and tx['post_restore_state_sha256']==posth,'transaction_manifest')
+        require(eq['restore_transaction_id']==tx['restore_transaction_id'] and eq['safe_point_id']==tx['safe_point_id']
+            and eq['target_manifest_sha256']==mh and eq['pre_restore_manifest_sha256']==preh
+            and eq['post_restore_manifest_sha256']==posth,'equality_subject')
+        require(eq['scm_equal_target']==(post is not None and post['scm']==mf['scm'])
+            and eq['scm_equal_pre_restore']==(post is not None and post['scm']==pre['scm']),'equality_scm')
+        require(set(sp['hold_refs']).issubset(tx['hold_refs']) and eq['hold_refs']==tx['hold_refs']
+            and eq['fence_active']==tx['fence_active'] and eq['path_mutation_count']==tx['path_mutation_count'],'hold_join')
+        ops=tx['operations'];op_paths=[o['identity']['canonical_absolute_path'] for o in ops]
+        require(len({o['operation_id'] for o in ops})==len(ops) and len(set(op_paths))==len(op_paths)
+            and op_paths==sorted(op_paths,key=lambda x:x.encode('utf-8')),'operation_order')
+        before={e['identity']['canonical_absolute_path']:e for e in pre['entries']};target={e['identity']['canonical_absolute_path']:e for e in mf['entries']}
+        require({k for k in before.keys()|target.keys() if before.get(k)!=target.get(k)}.issubset(op_paths),'operation_coverage')
+        for op in ops:
+            path=op['identity']['canonical_absolute_path'];b=before.get(path);t=target.get(path)
+            require((b or t) is not None and op['identity']==(t or b)['identity']
+                and op['expected_before_sha256']==(b['blob_sha256'] if b else None)
+                and op['target_sha256']==(t['blob_sha256'] if t else None)
+                and op['expected_before_type']==(b['kind'] if b else None)
+                and op['target_type']==(t['kind'] if t else None),'operation_subject')
+            require((op['operation_kind'] not in ('create','replace') or bool(op['stage_ref']))
+                and (op['operation_kind']!='delete' or bool(op['tombstone_ref'])),'operation_staging')
+        require(tx['operation_cursor']<=len(ops) and tx['path_mutation_count']<=len(ops)
+            and bool(tx['mutation_lease_ref']) and tx['updated_at_utc']==p['ts']
+            and (tx['restart_count']>0)==p['recovered_after_restart'],'journal_cursor_lease')
+        outcome=p['restore_outcome'];phase=tx['phase'];count=tx['path_mutation_count']
+        valid={
+            'restored_clean':phase=='committed' and posth==mh and eq['scm_equal_target'] and tx['operation_cursor']==len(ops),
+            'restore_failed':phase=='rolled_back' and posth==preh and eq['scm_equal_pre_restore'],
+            'restore_skipped':phase=='committed' and mh==preh==posth and count==0,
+            'restore_refused':phase=='rolled_back' and posth==preh and count==0,
+            'restore_recovery_required':phase=='recovery_required' and tx['fence_active'] and bool(tx['hold_refs']) and posth not in (mh,preh),
+        }
+        require(valid.get(outcome,False),'outcome_equality')
+        require(tx['fence_active']==(outcome=='restore_recovery_required'),'outcome_fence')
+        if outcome in ('restored_clean','restore_failed'):
+            state='applied' if outcome=='restored_clean' else 'rolled_back'
+            require(all(o['state']==state for o in ops) and tx['operation_cursor']==len(ops),'outcome_operations')
+        if outcome in ('restore_skipped','restore_refused'):
+            require(tx['operation_cursor']==0 and all(o['state']=='pending' for o in ops),'no_mutation_operations')
+    return failures
 
 def materialization_failures(family, candidate, bank):
     graph,validator=context(family)
@@ -145,7 +321,8 @@ def materialization_failures(family, candidate, bank):
     key,eid=payload_owner.identity(family,p)
     require((event['idempotency_key'],event['event_id'])==(key,eid),'envelope_identity')
     members=source['body_members']
-    require(sorted(m['role'] for m in members)==sorted(graph['required_body_roles']),'body_role_set')
+    roles=graph.get('application_required_body_roles',graph['required_body_roles']) if scope['scope_kind']=='application' else graph['required_body_roles']
+    require(sorted(m['role'] for m in members)==sorted(roles),'body_role_set')
     for member in members+[{'ref':req['original_input_ref'],'sha256':req['original_input_sha256']}]:
         raw=bank['bodies'].get(member['ref'])
         require(isinstance(raw,str) and hashlib.sha256(bytes.fromhex(raw)).hexdigest()==member['sha256'],'original_body_missing_or_changed')
@@ -153,6 +330,7 @@ def materialization_failures(family, candidate, bank):
         require(all(ctx[k] for k in ('thread_id','run_id','root_id','root_generation','working_directory')),'effect_context_required')
     if scope['scope_kind']=='application' and family.startswith('safe_point.'):
         require(p['node_id'] is None and p['attempt_id'] is None,'application_orchestrator_ids')
+        failures.extend(application_original_failures(family,candidate,bank))
     if family=='filesafe.destructive_override_granted':
         granted=p['authorized_scope'];requested=req['requested_scope']
         require(payload_owner.override_scope_semantic(requested,p) and payload_owner.override_subset(granted,requested),'grant_subset')
@@ -187,6 +365,32 @@ def materialization_failures(family, candidate, bank):
     require(bank['issued'].get(event['event_id'])=={'event':event,'custody':custody},'original_issued_custody')
     return failures
 
+def issued_failures(family, value, expected):
+    """Resolve complete issued authority without reopening disposed domain controls."""
+    if not isinstance(value, dict) or set(value) != {'event', 'custody'}:
+        return ['issued_custody_missing']
+    _, validator = context(family)
+    if value != expected:
+        return ['issued_original_changed']
+    event, custody = value['event'], value['custody']
+    schema = load(f'Plans/filesafe_event_sources/{family.replace(".","_")}.schema.json')
+    # Validate the two exact imported roots, without requiring an original command/grant.
+    for key in ('event', 'custody'):
+        selected = Draft202012Validator(schema['$defs']['materialization']['properties'][key],
+            registry=validator('materialization')._registry, format_checker=FormatChecker())
+        if list(selected.iter_errors(value[key])): return ['issued_schema']
+    if (custody['event_id'] != event['event_id'] or custody['event_type'] != family
+        or custody['idempotency_key'] != event['idempotency_key']
+        or custody['producer_semantic_digest'] != storage_owner().event_producer_semantic_digest(event)
+        or custody['original_event_value_commitment']['sha256'] != full_commitment(event)
+        or custody['first_append_receipt']['event_id'] != event['event_id']
+        or custody['first_append_receipt']['sequence_id'] != event['sequence_id']
+        or custody['first_append_receipt']['durability_state'] != 'synced'
+        or custody['first_append_receipt']['durability_class'] != 'barrier'):
+        return ['issued_full_value_receipt']
+    return []
+
+
 class ProtocolOracle:
     """Finite synthetic protocol traces. No filesystem/process or actual append."""
     def __init__(self,family,candidate,bank):
@@ -194,51 +398,97 @@ class ProtocolOracle:
         self.phase='empty';self.prepared=None;self.issued=None;self.receipt=None
         self.writer_fenced=False;self.reader_fenced=False;self.rebuilt=None
         self.domain_effects=0;self.original_owner_actions=0
+        # Synthetic durable journal and independently selected retained-source boundary.
+        # Neither is reconstructed from a retry candidate or the current issued map.
+        self.durable={'phase':'empty','original':None,'pending':False,'recovery_refused':False}
+        self.boundary=copy.deepcopy(bank['retained_boundary'])
+        self.source_generation=bank['source_generation'];self.reader_generation=bank['reader_generation']
+        self.crashed=False
+    def resolve_issued(self):
+        original=self.durable['original'] or self.original
+        value=self.bank['issued'].get(original['event']['event_id'])
+        expected={k:original[k] for k in ('event','custody')}
+        return None if (self.bank['storage_instance_id']!=original['custody']['storage_instance_id']
+            or issued_failures(self.family,value,expected)) else value
+    def coverage_valid(self):
+        return (self.bank['source_generation']==self.source_generation
+            and set(self.bank['issued'])==set(self.boundary)
+            and all(not issued_failures(self.family,self.bank['issued'].get(k),v)
+                    for k,v in self.boundary.items()))
     def step(self,action,candidate=None):
         c=candidate or self.original
+        if self.crashed and action not in ('crash','recover'):
+            return 'recovery_required'
         if action=='owner_commit':
             if self.writer_fenced:return 'writer_fenced'
             if materialization_failures(self.family,c,self.bank):return 'source_unavailable'
             if self.phase!='empty':return 'already_committed'
-            self.phase='owner_committed';self.original_owner_actions+=1;return self.phase
+            self.phase='owner_committed';self.original_owner_actions+=1
+            self.durable.update(phase=self.phase,original=copy.deepcopy(c),pending=True)
+            return self.phase
         if action=='prepare':
             if self.phase!='owner_committed':return 'body_commit_required'
-            self.prepared=copy.deepcopy(c['event']);self.phase='prepared';return self.phase
+            if self.durable['recovery_refused']:return 'recovery_fenced'
+            self.prepared=copy.deepcopy(self.durable['original']['event']);self.phase='prepared'
+            self.durable['phase']=self.phase;return self.phase
         if action=='append':
             if self.phase!='prepared':return 'prepared_event_required'
-            self.issued=copy.deepcopy(self.prepared);self.phase='appended';return self.phase
+            if self.durable['recovery_refused']:return 'recovery_fenced'
+            self.issued=copy.deepcopy(self.prepared);self.phase='appended'
+            self.durable['phase']=self.phase;return self.phase
         if action=='receipt':
             if self.phase!='appended':return 'append_required'
-            if materialization_failures(self.family,c,self.bank):return 'receipt_unavailable'
-            self.receipt=copy.deepcopy(c['custody']);self.phase='receipted';return self.phase
+            if self.durable['recovery_refused'] or materialization_failures(self.family,c,self.bank) or self.resolve_issued() is None:return 'receipt_unavailable'
+            self.receipt=copy.deepcopy(self.resolve_issued()['custody']);self.phase='receipted'
+            self.durable['phase']=self.phase;return self.phase
         if action=='terminal':
+            if self.durable['recovery_refused']:return 'recovery_fenced'
             if self.receipt is None:return 'first_receipt_required'
-            self.phase='terminal';return 'original_terminal'
-        if action=='crash':return 'crashed_no_new_effect'
+            if self.resolve_issued() is None:return 'recovery_fenced'
+            self.phase='terminal';self.durable.update(phase=self.phase,pending=False)
+            return 'original_terminal'
+        if action=='crash':
+            self.phase=None;self.prepared=None;self.issued=None;self.receipt=None
+            self.rebuilt=None
+            self.crashed=True;return 'crashed_no_new_effect'
         if action=='recover':
-            # All intact original phases survive; uncertain/old-backup source is unavailable.
-            if materialization_failures(self.family,c,self.bank):return 'recovery_fenced'
+            self.crashed=False;phase=self.durable['phase']
+            original=self.durable['original'] or self.original
+            issued=self.resolve_issued()
+            failures=(issued is None if phase in ('receipted','terminal')
+                      else bool(materialization_failures(self.family,original,self.bank)))
+            if failures:
+                self.durable['recovery_refused']=True
+                return 'recovery_fenced'
+            self.durable['recovery_refused']=False;self.phase=phase
+            if phase in ('prepared','appended','receipted','terminal'):self.prepared=copy.deepcopy(original['event'])
+            if phase in ('appended','receipted','terminal'):self.issued=copy.deepcopy(issued['event'])
+            if phase in ('receipted','terminal'):self.receipt=copy.deepcopy(issued['custody'])
             return self.phase
         if action=='retry':
-            if self.issued is None:return 'original_pending'
-            if storage_owner().event_producer_semantic_digest(c['event']) != storage_owner().event_producer_semantic_digest(self.issued):return 'semantic_conflict'
-            if self.issued['event_id'] not in self.bank['issued']:return 'dedupe_unavailable'
+            if self.durable['recovery_refused']:return 'dedupe_unavailable'
+            if self.durable['phase'] not in ('appended','receipted','terminal'):return 'original_pending'
+            original=self.durable['original']['event']
+            if storage_owner().event_producer_semantic_digest(c['event']) != storage_owner().event_producer_semantic_digest(original):return 'semantic_conflict'
+            value=self.resolve_issued()
+            if value is None:return 'dedupe_unavailable'
             if self.receipt is None:return 'resolve_original_first_receipt'
-            return {'event':copy.deepcopy(self.issued),'custody':copy.deepcopy(self.receipt)}
+            return copy.deepcopy(value)
         if action=='withdraw_writer':self.writer_fenced=True;return 'writer_fenced'
         if action=='withdraw_reader':
             if not self.writer_fenced:return 'writer_cutoff_required'
-            if self.prepared and not self.receipt:return 'pending_reconciliation_required'
+            if self.durable['pending']:return 'pending_reconciliation_required'
             self.reader_fenced=True;return 'reader_fenced'
         if action=='rebuild':
             if not self.reader_fenced:return 'reader_fence_required'
-            # Full survivor set, not a guessed empty cursor or caller-chosen rows.
-            for survivor in self.bank['issued'].values():
-                sources=[s for s in self.bank['sources'].values() if s['original_result']==survivor['event']['payload']]
-                if len(sources)!=1 or materialization_failures(self.family,{'source':sources[0],**survivor},self.bank):return 'survivor_verification_failed'
+            self.rebuilt=None
+            if self.durable['pending'] or not self.coverage_valid():return 'survivor_verification_failed'
             self.rebuilt=copy.deepcopy(self.bank['issued']);return 'retained_survivors_verified'
         if action=='publish_reader':
-            if self.rebuilt != self.bank['issued']:return 'verified_rebuild_required'
+            if (not self.reader_fenced or self.rebuilt is None
+                or self.rebuilt != self.bank['issued'] or not self.coverage_valid()
+                or self.bank['reader_generation']!=self.reader_generation):return 'verified_rebuild_required'
+            self.bank['reader_generation']+=1;self.reader_generation+=1
             self.reader_fenced=False;return 'reader_generation_published'
         if action=='read':
             if self.reader_fenced:return 'reader_unavailable'
@@ -259,6 +509,10 @@ def check():
     for row in pack['families']:
         family=row['event_type'];counts[family]={'positive':0,'negative':0,'protocol':0}
         failures += [family+':'+f for f in graph_failures(family)]
+        graph,_=context(family)
+        for policy in ('PENDING_RETENTION_DECISION','RP-AUTHORITY-INDEFINITE','RP-OPERATIONAL-2555D'):
+            if policy!=graph['retention_policy_ref'] and not retention_binding_failures(family,policy):
+                failures.append(family+':wrong_retention_assignment_accepted')
         if real_admission(family)!='missing_event_registration':failures.append(family+':membership_changed')
         for case in row['positive']:
             found=materialization_failures(family,case['candidate'],case['bank'])
@@ -275,13 +529,14 @@ def check():
             if case.get('expected_error') and case['expected_error'] not in found:failures.append(case['id']+':wrong_error:'+','.join(found))
             counts[family]['negative']+=1
         for case in row['protocol']:
-            candidate,bank=copy.deepcopy((base['candidate'],base['bank']));oracle=ProtocolOracle(family,candidate,bank)
+            protocol_base=row['positive'][case.get('positive_index',0)]
+            candidate,bank=copy.deepcopy((protocol_base['candidate'],protocol_base['bank']));oracle=ProtocolOracle(family,candidate,bank)
             for step in case['steps']:
                 if 'edit' in step:
                     edit=step['edit'];mutate(candidate if edit['target']=='candidate' else bank,edit['path'],edit.get('value'),edit.get('remove',False));continue
                 result=oracle.step(step['action'],candidate)
                 expected=step['expected']
-                if expected=='ORIGINAL_FULL_RESULT':expected={'event':base['candidate']['event'],'custody':base['candidate']['custody']}
+                if expected=='ORIGINAL_FULL_RESULT':expected={k:protocol_base['candidate'][k] for k in ('event','custody')}
                 if result!=expected:failures.append(case['id']+':'+step['action']+':'+str(result))
             if oracle.domain_effects!=0 or oracle.original_owner_actions>1:failures.append(case['id']+':replayed_effect')
             counts[family]['protocol']+=1

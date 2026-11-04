@@ -7273,6 +7273,12 @@ negative_constraints:
 
 
 
+
+**Review round 1 mandatory regressions.**
+
+- `filesafe.command_denied`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+- `filesafe.destructive_override_denied`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+
 ### ATS-276 - filesafe.destructive_override_granted, filesafe.destructive_override_requested oracles
 
 ```yaml
@@ -7316,6 +7322,12 @@ negative_constraints:
 `python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
 
 
+
+
+**Review round 1 mandatory regressions.**
+
+- `filesafe.destructive_override_granted`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+- `filesafe.destructive_override_requested`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
 
 ### ATS-277 - filesafe.guard_init_failed, filesafe.path_denied oracles
 
@@ -7361,6 +7373,12 @@ negative_constraints:
 
 
 
+
+**Review round 1 mandatory regressions.**
+
+- `filesafe.guard_init_failed`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+- `filesafe.path_denied`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+
 ### ATS-278 - filesafe.policy_degraded oracles
 
 ```yaml
@@ -7403,6 +7421,11 @@ negative_constraints:
 
 
 
+
+**Review round 1 mandatory regressions.**
+
+- `filesafe.policy_degraded`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+
 ### ATS-279 - safe_point.created, safe_point.restored oracles
 
 ```yaml
@@ -7444,3 +7467,11 @@ negative_constraints:
 - `safe_point.restored`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission.
 
 `python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
+
+
+**Review round 1 mandatory regressions.**
+
+- `safe_point.created`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+- `safe_point.created` application originals: decode closed complete original request/record/manifest/blob compositions and, for restoration, full journal/pre/post manifests/equality. Rehash independently altered genuine synthetic originals, then refuse subject/count/blob/SCM/cursor/lease/hold/outcome mismatches, opaque bodies and wrong payload-store selections. Native authenticity, payload addressing, filesystem equality, durable publication and CAS remain NOT_RUN.
+- `safe_point.restored`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+- `safe_point.restored` application originals: decode closed complete original request/record/manifest/blob compositions and, for restoration, full journal/pre/post manifests/equality. Rehash independently altered genuine synthetic originals, then refuse subject/count/blob/SCM/cursor/lease/hold/outcome mismatches, opaque bodies and wrong payload-store selections. Native authenticity, payload addressing, filesystem equality, durable publication and CAS remain NOT_RUN.
