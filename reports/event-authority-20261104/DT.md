@@ -1,116 +1,90 @@
-# DT-P2 — Event Authority technical closure, 2026-11-04
+# DT-FIX1 — Event Authority review round 1
 
-Branch: `plans/ea-w2-tools-gates-approvals-20261104`. First-pass head: `713241763c90de78a7b8f8777da75d0bb05a3031`. Assessed implementation head: `d5cbc5d5d5a32a3dba2c398c158a9ac99e6b5d83`. The publication commit adds only reports; all source hashes in the self-grade identify the same final contracts. Worktree: `/home/sittingmongoose/pm-worktrees/DT-p2`, left for the lead.
+Branch: `plans/ea-w2-tools-gates-approvals-20261104`. Reviewed head: `f4dcd88acc501f57c340c0475a31e126f0740df1`. Assessed implementation head: `b20c80659d413cfe9344fdc5365beddf693b72e8`. The following publication changes reports only. Worktree `/home/sittingmongoose/pm-worktrees/DT-fix1` is removed after the push.
 
-**17 families now PASS every technical criterion.** Ten have 11/12 PASS and seven have 10/12 PASS. Every prepared family's membership stays ABSENT. The seven explicit retention markers stay PARTIAL for RT. `tool.custom_headless.skipped` stays product-blocked; DT drafts no duplicate of DS15. These are normative self-grades, not independent review, admission or native implementation evidence. Native execution is NOT_RUN throughout.
+**16/18 families pass as prepared**, with membership ABSENT throughout. `tool.denied` retains producer/transition CONFLICT for the FileSafe emission facet; its specified policy/user path is prepared. `tool.custom_headless.skipped` remains stopped. Usage retains a technical setting-driven retention adapter dependency, and requirements/worktree retention retain only the three narrow product residuals below. No recommendation is adopted. Native execution remains NOT_RUN; original-owner and SP-278 authentication remain assumed adapters in these static models.
 
-## Per-family before and after
+## Review round 1: findings and responses
 
-| Family | Before PASS/12 | After PASS/12 | Remaining non-PASS cells |
+- **F1 — stopped for Jared; permitted path fixed (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: `Plans/Contracts_V0.md:24863`, SP-590, ATS-295, route-map `tool.denied.transition` and `stopped_facets`. Cause: the draft silently selected FileSafe emission despite competing owners. Fix: independently prepare only specified policy/user refusal, with positive policy/user/headless cases and explicit non-emission for allow/schema/already-dispatched boundaries. FileSafe is `owner_conflict_stopped` with no append from the unresolved facet; that fence is not an answer about eventual product emission. Exact owner question: **Should FileSafe blocks emit tool.denied, reconciling Tools.md:1496 (do not emit tool.denied for FileSafe blocks) with FileSafe.md:2839-2846 (Align tool.denied emission with filesafe_blocked)?** Producer and transitions stay CONFLICT. Verify the full DT checker and `tool.denied.non_emission_cases`/`source_join_negatives`.
+- **F2 — fixed (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: `Plans/Contracts_V0.md:24863`, `$defs/tool_denied`, both source editions and both registry mirrors. Cause: mapping fields and original blocked episode were not preserved. Fix: closed top-level canonical blocked reason, failure class, ordered actions, headless flag, effective permission snapshot and executed-at-all flag join immutable original before together with blocked_sequence/approval_scope_key. This specified pre-dispatch population has no classified attempt outcome, so failure_class is typed null and executed_at_all is false; no transient failure is invented. Full mapped policy/user/headless positives pass. Transplanted episodes, changed/reordered/expanded actions, permission snapshot, headless flag and non-applicable transient class refuse through the full checker.
+- **F3 — fixed independently for all three gates (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: `Plans/Contracts_V0.md:24672`, CV-606/607, SP-585/586/587 and ATS-293. Cause: bare scores had no original dispatch context. Fix: reuse Executor's exact five-field tuple; source before freezes the original dispatch ref/tuple and threshold, and the authentic completed outcome supplies the numeric score. Each scalar exposure requires tuple/ref and matching node. Ref/tuple/result/threshold joins are checked separately. Positive scored cases and missing/wrong-context/bare-score regressions pass through the full checker. Gate scoring and ranking policies are unchanged.
+- **F4 — fixed (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: `Plans/Contracts_V0.md:25021`, both Usage source definitions and registry mirrors. Cause: optional identity absence could not survive the required closed before record. Fix: required nullable account_id/billing_entity_id/provider_account_ref source slots prove absence; payload omits absent identities and real identities join exactly. Project/app absent-account and unknown/no-provider-evidence/local/CLI cases pass, while fabricated and changed account identities refuse. Existing cost/quota/lineage/accounting coverage remains.
+- **F5 — fixed (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: `Plans/Contracts_V0.md:24979`, SP-593, ATS-296 and all embedded payload/source schema copies. Cause: closed web meta omitted canonical map/source/body variants and did not exercise batch lineage. Fix: preserve edges_count, sources_ref/map_ref/content_ref and current operation-specific counters/refs, source IDs, enums and required context. Original normalized structured operation_input resolves by ref; previews cannot replace it. before.web_request joins frozen request and parent/URL identity; owner_result.meta joins actual redacted result metadata. Complete map/read/extract/research and one-parent/two-URL-child positives pass. Wrong operation/tier, missing context/provider attempt, changed outcome/URL/parent, missing or duplicate child and incorrect aggregate regressions refuse. No new event family or inline full body is introduced.
+- **F6 — fixed as an adjudication/binding repair (`b20c80659d413cfe9344fdc5365beddf693b72e8`); residuals remain explicit.** Where: `Plans/storage-plan.md:29645`, SP-588/590/593/594/595/596, CV-614, route map and source registry rows. Cause: blanket retention paragraphs mislabeled technical omissions as new policy choices. Fix: bind existing operational/runtime assignments and SP-349 app counterparts; bind Usage's decided setting and permanent totals, with its remaining structured adapter explicitly technical and deletion/admission fenced. Replace the copied class menu with the review's exact per-family residuals. No duration or deletion recommendation is selected. Verify `retention_binding`, `retention_binding_oracle`, retention vectors and the source registry mirrors.
+
+## Per-family grades before and after
+
+Before uses the independent review's six-family re-grade; unsampled rows use its carried dispositions and prior exact cells. Counts are PASS cells out of twelve, not admission or native execution grades.
+
+| Family | Before | After | Remaining non-PASS cells |
 |---|---:|---:|---|
-| `approval.requested` | 8 | 11 | membership_version ABSENT |
-| `approval.granted` | 8 | 11 | membership_version ABSENT |
-| `approval.denied` | 8 | 11 | membership_version ABSENT |
-| `approval.timeout` | 8 | 11 | membership_version ABSENT |
-| `config.migrated` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
-| `gate.evaluation_started` | 8 | 11 | membership_version ABSENT |
-| `gate.failed` | 8 | 11 | membership_version ABSENT |
-| `gate.passed` | 8 | 11 | membership_version ABSENT |
-| `requirements.clarification_requested` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
-| `run.background_enqueued` | 8 | 11 | membership_version ABSENT |
-| `tool.denied` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
-| `tool.execution_completed` | 8 | 11 | membership_version ABSENT |
-| `tool.execution_started` | 8 | 11 | membership_version ABSENT |
-| `tool.invoked` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
-| `usage.event` | 5 | 10 | membership_version ABSENT; retention PARTIAL |
-| `worktree.created` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
-| `worktree.deleted` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
-| `tool.custom_headless.skipped` | 1 | 1 | Product-blocked; exact cells below |
+| `approval.requested` | 11 | 11 | membership_version ABSENT |
+| `approval.granted` | 11 | 11 | membership_version ABSENT |
+| `approval.denied` | 11 | 11 | membership_version ABSENT |
+| `approval.timeout` | 11 | 11 | membership_version ABSENT |
+| `config.migrated` | 10 | 11 | membership_version ABSENT |
+| `gate.evaluation_started` | 9 | 11 | membership_version ABSENT |
+| `gate.failed` | 9 | 11 | membership_version ABSENT |
+| `gate.passed` | 9 | 11 | membership_version ABSENT |
+| `requirements.clarification_requested` | 10 | 10 | membership_version ABSENT, retention PARTIAL |
+| `run.background_enqueued` | 11 | 11 | membership_version ABSENT |
+| `tool.denied` | 5 | 9 | membership_version ABSENT, producer CONFLICT, transitions CONFLICT |
+| `tool.execution_completed` | 11 | 11 | membership_version ABSENT |
+| `tool.execution_started` | 11 | 11 | membership_version ABSENT |
+| `tool.invoked` | 8 | 11 | membership_version ABSENT |
+| `usage.event` | 8 | 10 | membership_version ABSENT, retention PARTIAL |
+| `worktree.created` | 10 | 10 | membership_version ABSENT, retention PARTIAL |
+| `worktree.deleted` | 10 | 10 | membership_version ABSENT, retention PARTIAL |
+| `tool.custom_headless.skipped` | 1 | 1 | membership_version ABSENT, producer PARTIAL, closed_payload_schema ABSENT, scope_identity ABSENT, replay_idempotency PARTIAL, retention ABSENT, redaction_custody ABSENT, transitions PARTIAL, consumers_checkpoints ABSENT, compatibility_withdrawal ABSENT, positive_negative_oracles ABSENT |
 
-## Closed technical cells
+After counts: {'ABSENT': 25, 'PASS': 182, 'PARTIAL': 7, 'CONFLICT': 2}. All 216 current quote/line references are mechanically revalidated. Every drafted family has its own writer/retry negative for `projector_replay_only`, preserves encoded `project~` positives and CV-366 application key formatting, and refuses inline bodies over SP-337's 16 KiB boundary while retaining verified/refused payload-reference cases. The stopped Doctor family receives no invented writer/oracle.
 
-Each of the 17 families has its own exact CV/SP owner text, source schemas, physical custody rows and fixture objects. There is no sibling-derived contract or shared multi-family admission. `Plans/dt_event_contracts.json` is the per-family route map; `Plans/dt_event_contracts.schema.json` closes payload, source and checkpoint values; `Plans/dt_event_contract_fixtures.json` contains the complete values, transitions, byte oracles and expected outcomes.
+## Retention adjudication — exact populations
 
-**Original source and producer.** Each actual producer now has a named `resolve_original` request/result contract and separate immutable prepared/completed source stages, with closed `before` prerequisites and completed `owner_result`. Preparing never guesses an outcome. SP-131 defines durable promotion; same-path changed bytes fence. The original owner commits its result under the allocated identity; a missing/uncertain result is unavailable, never a repeated external effect. Completed source durability precedes append, and SP-286/CV-339 full-value v2 plus SP-336/SP-347 barrier receipt precede dependent publication. Every original source, referenced outcome/body and first receipt joins one mandatory coherent backup closure. Older/incomplete restores fence mutation and disclose unavailable. Normal append/read explicitly adopts Case L-2/SP-026/SP-236 and SP-337's payload-store boundary. Payload refs resolve before schema/identity checks and unverified/changed bodies refuse.
+| Family | Existing binding / remaining work |
+|---|---|
+| `config.migrated` | RP-OPERATIONAL-2555D: 2,555 days / 2,000,000 per Project, original terminal migration anchor. SP-349 already supplies the one Server-wide app counterpart bucket with identical limits/TTL/holds. Event and both source rows bind it. No app-counting question remains. |
+| `tool.denied` | RP-RUNTIME-365D for the drafted runtime-attributed actual-run/attempt policy/user-denial path, with existing holds and SP-349 app counterpart. FileSafe emission still requires the F1 owner answer. No independently permitted non-authority diagnostic population is invented. |
+| `tool.invoked` | RP-RUNTIME-365D for actual runtime-attributed invocation history, original run completion and existing holds; SP-349 app counterpart. No copied class menu remains. |
+| `usage.event` | SP-341/UF-108: ai.usage.usage-retention detail window (90-day default) in seglog and Parquet; permanent canonical daily account/provider/model totals committed before detail retirement and backed up. Structured `retention_binding` pins those decided terms. `PENDING_RETENTION_BINDING` is only the RT setting-driven policy-object/expiry-anchor adapter dependency; unknown binding remains materially incomplete and permits no deletion/admission. |
+| `requirements.clarification_requested` | Review residual: “Ask which class and expiry anchor govern this report request where a run-completion anchor is inapplicable; do not assume that a ref-only report request is chat content. Runtime-linked cases should reuse existing runtime minima.” Exact question: **Which class and expiry anchor govern this report request where a run-completion anchor is inapplicable?** GATE-012 is pre-execution and has no required run. |
+| `worktree.created` | Review residual: “Resolve the runless event's class/anchor and required lineage dependencies; the projection policy does not automatically register this event's retention.” Exact question: **What are the runless event's class/anchor and required lineage dependencies?** Runtime allocation history retains existing runtime minima; Project/thread operations outside an executor are distinct. |
+| `worktree.deleted` | Review residual: “Neither name alone decides whether this exact event is that authority. Ask only that event/authority distinction and applicable anchor.” Exact question: **Is this exact event deletion-tombstone authority, or runless lifecycle history, and what is its applicable anchor?** Runtime history is distinct from runless lifecycle and `worktree_lane_thread_families`; RP-WORKTREE-TOMBSTONE-365D already protects that projection's tombstones while historical links exist. |
 
-**Identity and source codecs.** Project subjects use the existing Storage `project~base64url` partition and exact string-array identity recipe; integer subjects become unsigned decimal strings to preserve u64 identity. New `pm.dt.source.json.v1` defines exact sorted UTF-8 source bytes, finite plain decimal normalization and duplicate-key/Unicode/nonfinite refusal. Applicable application sources are distinct `.application.v1` siblings and reuse current CV-366 `WorkflowScopeV2`, actual server/original-operation identity, `application@1` keys and `pm.application.physical_messagepack.v1`; they do not silently share the Project recipe or relax a frozen Project resource. Actual app graph/role admission remains mandatory; unsupported roles are unavailable. The new source files are physical custody contracts, not an installed native service.
+All pending facets preserve source/receipt/reference closure and existing holds. Retention bindings grant no family admission.
 
-**Checkpoint and consumers.** Every existing exact consumer independently adopts SP-278/DL-076. Its full schema/value, nine-field durable token, null empty prefix, globally examined cursor, exact last match, source-proof row-set/count/range join, final source/admission/lease/access/deletion checks and whole-value CAS are explicit. Fixtures distinguish globally empty source from nonempty prefixes with no family match. Failed CAS, gaps, transplanted rows, unknown versions, changed frontier/source, withdrawal and missing retained source preserve the exact old checkpoint. Governed reinstall/rebuild is explicit; held generations never authorize source eviction.
+## Doctor question and unadopted recommendation
 
-**Semantic oracles.** The static checker passes 2,981 assertions across independent family fixtures, including original source stages and bytes, wrong/missing joins, all family-specific predecessor/outcome refusals, original full-value retry/conflict, crash boundaries, restore loss, concrete checkpoint publication/refusal, deletion/permission races, withdrawal and known/pending retention gates. Prepared/completed outcome separation and explicit lifecycle tables are independently stated for every family. The original-owner and SP-278 authentication adapters are assumed by the static models. The fixtures also name each concrete native crash/race obligation; they do not execute filesystem durability, seglog wire, redb CAS, provider/Git operations or native owner authentication.
+**Exact question:** Is skipped eligible only on a Project's first-ever Doctor invocation, or on the first invocation that observes `tools.custom_headless` absent? If the first invocation has the key, may a later absence emit? What resets eligibility across a configuration revision, key removal/re-addition, Project import/clone or older restore?
 
-**usage.event.** CV-614 now carries complete closed cost, provider minor-unit, per-bucket pricing, quota/window/reset/cooldown and display-policy slots, reusing the existing cost-usage artifact definitions and tightening their extension bags for the event wire. Flat cost fields are equality mirrors, not extra charges. `usage_event_ref` equals the computed event ID; original observation/hash, provider attempt, actual runtime attempt, account/billing/provider identity and parent/retry links and the actual parent_run_id join are tested. Unknown quantities remain null. Every source class and settlement state has concrete cases, including accepted partials, adjustment replacement, separate billed retries, inclusive/exclusive buckets, BYOK/subscription suppression and missing quota/cost. UF-108/SP-341 daily totals remain canonical, committed before detail expiry and preserved after derived loss; older restore discloses totals lost after backup. No live JSONL or raw-event page scan is introduced.
+**Recommendation to Jared, requiring a new decision:** emit on the **first invocation that observes absence for the actual stable Project identity**. A present-key first invocation leaves eligibility unused. After one issued skipped event, ordinary configuration revisions and key removal/re-addition do not reset it; later Doctor checks still record their actual outcome through `doctor.custom_headless.checked`. A clone/import is eligible only if the Project owner actually creates a new Project identity. Same-identity restore preserves original issuance/eligibility coherently; missing post-backup issuance evidence fences a repeat rather than guessing that no event occurred. This is proposed behavior, explicitly **not inferred from canon**.
 
-## Newly authored bindings and per-family searches
+**Disposition:** STOPPED. The question and recommendation above are copied from the review. Neither is a recorded Jared decision. This branch changes no first-run/eligibility/reset behavior and creates no duplicate DT Doctor contract.
 
-`DT-binding-search.json` retains the first-pass search and adds an independent current-source search for every family. Scope: live top-level Plans markdown/JSON/JSONL plus exact owners; generated shards, ledgers, audits/evidence and DT companions are excluded from recovered-binding evidence. The checked source/codec/publication roles were absent outside the DT draft. Existing SP-131, SP-278, SP-286/CV-339, SP-336/337/347 and CV-366 definitions are reused by name. This search is bounded evidence, not a claim about every archived package.
+## Searches, premise checks and newly authored bindings
 
-The 17 original append/consumer/checkpoint IDs from the first pass remain exact. New original-source bindings are listed below; each resolver is the exact producer method plus `.resolve_original`, with the closed request/result signature in its SP/CV unit.
+`DT-binding-search.json` preserves first/pass-2 lineage and adds a separate round-1 search for each affected family. Scope: current live top-level owner documents before the DT units, existing schemas and current cited owner passages; generated/lineage/DT companion bindings are excluded as recovered authority. Each search records exact terms, current matches and negative evidence for the missing exact-family source join. The gates each get their own original dispatch-context binding; tool.denied gets its original runtime mapping/blocked-episode join; tool.invoked gets web request/result and batch parent/URL-child bindings; Usage gets nullable optional identity custody. These are newly authored technical bindings under DL-045 for already specified behavior, not recovered definitions or sibling inference.
 
-| Family | Original producer / resolver prefix | Project source family | Additional app source family |
-|---|---|---|---|
-| `approval.requested` | `HITLBlockedEpisodeOwner.requested` | `dt_approval_requested_source` | `—` |
-| `approval.granted` | `HITLBlockedEpisodeOwner.granted` | `dt_approval_granted_source` | `—` |
-| `approval.denied` | `HITLBlockedEpisodeOwner.denied` | `dt_approval_denied_source` | `—` |
-| `approval.timeout` | `HITLBlockedEpisodeOwner.timeout` | `dt_approval_timeout_source` | `—` |
-| `config.migrated` | `SettingsMigrationCoordinator.branch_granularity` | `dt_config_migrated_source` | `dt_config_migrated_application_source` |
-| `gate.evaluation_started` | `ProgressionGateRunner.evaluation_started` | `dt_gate_evaluation_started_source` | `—` |
-| `gate.failed` | `ProgressionGateRunner.failed` | `dt_gate_failed_source` | `—` |
-| `gate.passed` | `ProgressionGateRunner.passed` | `dt_gate_passed_source` | `—` |
-| `requirements.clarification_requested` | `RequirementsQualityGate.request_clarification` | `dt_requirements_clarification_requested_source` | `—` |
-| `run.background_enqueued` | `BackgroundRunQueue.enqueue` | `dt_run_background_enqueued_source` | `dt_run_background_enqueued_application_source` |
-| `tool.denied` | `ToolDispatcher.denied` | `dt_tool_denied_source` | `dt_tool_denied_application_source` |
-| `tool.execution_completed` | `ToolRunner.execution_completed` | `dt_tool_execution_completed_source` | `dt_tool_execution_completed_application_source` |
-| `tool.execution_started` | `ToolRunner.execution_started` | `dt_tool_execution_started_source` | `dt_tool_execution_started_application_source` |
-| `tool.invoked` | `ToolDispatcher.completed_invocation` | `dt_tool_invoked_source` | `dt_tool_invoked_application_source` |
-| `usage.event` | `UsageTracker.normalize_finish_step` | `dt_usage_event_source` | `dt_usage_event_application_source` |
-| `worktree.created` | `WorktreeLifecycleOwner.created` | `dt_worktree_created_source` | `—` |
-| `worktree.deleted` | `WorktreeLifecycleOwner.deleted` | `dt_worktree_deleted_source` | `—` |
+Sixteen cited canonical source spans match current origin/main, including Tools/FileSafe, Executor scoring, Contracts runtime mapping, Case L-3/SP-349, UF-085/UF-108, GATE-012 and runless worktree operations. The earlier blanket retention premise and FileSafe-emission premise failed and were removed. Approval identity remains distinct from app chat approvals under current CV-355/CV-366, PS-145 and DL-300. No older answer is extended, no recommendation is adopted, and no other owner decision is taken. RT coordination is a report dependency only; no pm-mail or subagent was used.
 
-Each Project file key is `storage/event-sources/dt/<exact_slug>/{event_id}/{stage}.json`, with the family's own closed source definition; each app sibling uses the separate `.../<exact_slug>/application/{event_id}/{stage}.msgpack` and its own exact schema ID. The route map records every literal key/schema. The 24 new canonical source families have independent storage-registry recovery/restore/profile rows; no event-family registry row is appended. Their retention is the same event's co-retained dependency or explicit unresolved marker. None selects a new deadline/count/deletion policy. Existing 17 checkpoint rows change only their mirrored checkpoint schema's real empty-prefix nullability; their existing policy remains RP-PROJECTION-3GEN.
-
-## Premise checks and DS15 overlap
-
-- **DL-045:** every drafted exact name remains in the current approved 285-family scope, and its live semantic owner still specifies the behavior. The new identities, custody, checkpoint and recovery mechanics are technical definitions only.
-- **CV-355/CV-366 and DL-300:** node/blocked-sequence approvals remain distinct from thread/tool/target chat-tool approvals. No duplicate chat-tool engine, alias exclusion or new approval decision is introduced.
-- **CV-366:** the first pass's generic app recipe was insufficient. This pass reuses actual server/original-operation identity and a distinct app source/physical codec. It does not change CV-366 or enroll an unsupported app graph.
-- **DL-076:** the current durable token still has nine fields; no persisted `redb_snapshot_id` is allowed.
-- **Case L-3, UF-108/SP-341:** the existing approval/runtime classes and newer Usage/JSONL rules remain controlling. No old August/September retention answer is extended. No old decision answer failed its premise and was then applied.
-
-**DS15 inspected:** `origin/plans/ea-w2-section15-newtools-20261104` at `e237aebb940767dbb323010fcf029a4df25391a5`, report `reports/event-authority-20261104/DS15.md`, contract N2-218. Its newly authored sentence selects only the first Doctor invocation per Project, including after key appearance/removal. Current `Plans/newtools.md:510` says only `Emit tool.custom_headless.skipped seglog event on first Doctor run`; the exact source phrase is backtick-quoted in canon. The per-Project reset/frequency selection is not settled by that existing sentence. N2-218 is a draft, not a recorded Jared answer. DT keeps the question and writes no second source/schema/fixture contract for this family.
-
-**Exact outstanding question:** Is skipped eligible only on a Project's first-ever Doctor invocation, or on the first invocation that observes `tools.custom_headless` absent? If the first invocation has the key, may a later absence emit? What resets eligibility across a configuration revision, key removal/re-addition, Project import/clone or older restore? This chooses user-visible emission frequency and reset semantics, reserved to Jared by DL-045.
-
-## Every remaining non-PASS cell
-
-- **membership_version — ABSENT for all 18 rows.** No membership/version admission is written. Batch integration owns it.
-- **retention — PARTIAL for seven prepared families:** `config.migrated`, `requirements.clarification_requested`, `tool.denied`, `tool.invoked`, `usage.event`, `worktree.created`, `worktree.deleted`. Each retains `PENDING_RETENTION_DECISION`; RT owns the structured event/source assignment. Usage duration is already decided by UF-108/SP-341; its missing structured mapping is not a new duration question. Other pending candidates remain those cited by the first pass; this worker selects none.
-- **tool.custom_headless.skipped — product-blocked:** `producer`, `replay_idempotency`, `transitions` remain PARTIAL; `closed_payload_schema`, `scope_identity`, `retention`, `redaction_custody`, `consumers_checkpoints`, `compatibility_withdrawal`, `positive_negative_oracles` remain ABSENT, in addition to absent membership. All depend on the single frequency/reset question above; DT does not manufacture them around an unapproved answer. `owner_doc` remains PASS. RT also owns this row's pending retention marker.
-
-There are no other non-PASS cells. Counts: 181 PASS, 10 PARTIAL, 25 ABSENT across 216 cells. All evidence quotes/line ranges were revalidated mechanically against the implementation head. The report-only publication does not change those contract hashes.
-
-## Shared-file hunks, IDs and validation
-
-- **Contracts_V0.md:** extend only DT's CV-600..616, independently per family.
-- **storage-plan.md:** extend only DT's SP-580..596 with independent custody, source codec, checkpoint, lifecycle and app sibling adoption.
-- **Automated_Testing_System.md:** extend only DT's ATS-290..298, with separate exact-family paragraphs.
-- **storage_value_registry.json:** mirror each existing DT checkpoint's legitimate null empty-prefix cursor; append 17 Project source and seven distinct app source rows plus matching physical profiles. Existing non-DT rows/profiles retain their values. No critical/MVP set or existing policy object is changed.
-- **Derived files:** regenerated via repo scripts. Only `automated_testing_system`, `contracts_v0`, `storage-plan`, `storage_value_registry` shard groups changed; the whole plan index regenerated with the 15-file ignored currentness edition SHA-256 matched first. No unrelated source shard changed.
-
-**IDs used remain SP-580..596, CV-600..616, ATS-290..298. No new PlanUnit IDs minted.** SP-597..599, CV-617..619 and ATS-299 remain unused. First-pass allocation evidence remains in the earlier report/search; no other lane's units are edited.
+## Validation and scope
 
 | Check | Exit | Result |
 |---|---:|---|
-| DT contract oracles | 0 | 2,981 assertions / 17 families PASS |
-| Storage registry JSON Schema | 0 | PASS |
-| Storage recovery self-test | 0 | PASS |
-| Storage profile checker | 1 | Same 41 pre-existing missing profiles as first-pass head; zero new errors |
-| Shard generation | 0 | PASS; four edited owner groups only |
-| Plan index generation | 0 | PASS |
-| Shard check | 0 | PASS |
-| Plan index validation | 0 | Top-level JSON status PASS |
-| Self-grade evidence check | 0 | All 216 cells' current quote/line evidence PASS |
+| `python3 scripts/pm-dt-event-contracts.py` | 0 | 3,231 assertions / 17 drafted families PASS; original-owner/SP-278 authentication assumed; native NOT_RUN |
+| DT schema + Storage registry schema + 24 exact source-schema mirrors | 0 | PASS |
+| `python3 scripts/pm-storage-recovery-contracts.py --self-test` | 0 | 22 checks PASS |
+| `python3 scripts/pm-storage-profile-check.py` | 1 | Same 41 errors as review baseline; zero new errors |
+| Currentness copy SHA-256 | 0 | All 15 files match the required shared edition |
+| Shard generation/check | 0 | Only automated_testing_system, contracts_v0, storage-plan, storage_value_registry groups change |
+| Plan index generation/validation | 0 | Top-level PASS |
+| DT PlanUnit YAML and self-grade evidence | 0 | 43 blocks parse; all 216 cell quotes/lines match |
+| Cited canonical source-span premise comparison | 0 | All 16 spans match current origin/main |
+| `git diff --check` | 0 | PASS |
 
-Evidence and SHA-256 manifest: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/`, with pass-2 logs under `pass2/`; exact paths and SHA-256 values are in `DT-evidence-sha256.json`. The first-pass report/self-grade are retained under `pass2/DT-before.*`. Aggregate landing checks, independent review and native execution are not claimed by these targeted draft checks.
+The first index generation caught indentation in nine appended ATS canonical-text blocks (exit 1). Those blocks were corrected, all 43 DT blocks parsed, and generation/validation reran successfully. The initial and corrected logs are retained in `fix1/`; no check was weakened. No aggregate governance or native execution pass is claimed.
 
-No main push, landing lock, reseal, .gitignore edit, event registry append, admission record, Decision Log entry, auto-decision change, frozen validator edit, protected evidence edit, test-file edit, pm-mail or subagent. The branch is pushed to both configured origin destinations; the worktree remains for lead integration. Generated currentness/readiness does not confer governance clearance.
+Shared-file hunks remain entirely in CV-600..616, SP-580..596, ATS-290..298 and the existing DT source registry rows. Existing non-DT registry rows/policy objects and all profile objects are unchanged. Derived shards/indexes are regenerated, never hand-merged. No PlanUnit IDs were minted: **SP-580..596, CV-600..616, ATS-290..298 remain the IDs used**; unused tails remain unused.
+
+No main push, landing lock, reseal, admission, registry append, Decision Log entry, protected governance/frozen-validator edit, .gitignore change or test-file edit. Branch push and literal-path worktree removal follow FIX-ROUND.md. Full report/self-grade copies and cited check outputs are in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/`; round-1 logs/premise/currentness records are in its `fix1/` directory. `DT-evidence-sha256.json` records each retained check's exact path and SHA-256.
