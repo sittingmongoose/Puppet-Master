@@ -151,6 +151,7 @@ def reference_controls():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--failure-probe', help=argparse.SUPPRESS)
+    parser.add_argument('--family', action='append', help='Target this family (repeatable); every checker run still validates all families')
     args = parser.parse_args()
     if args.failure_probe:
         return failure_probe(args.failure_probe)
@@ -170,10 +171,13 @@ def main():
         print(baseline.getvalue())
         return 1
     families = [c['event_type'] for c in dt.load('Plans/dt_event_contracts.json')['families']]
+    targets = families if not args.family else args.family
+    if len(set(targets)) != len(targets) or any(name not in families for name in targets):
+        parser.error('--family must name distinct drafted DT families')
     results = {}; failures = []
     controls = reference_controls()
     failures.extend('schema reference control: ' + name for name, passed in controls.items() if not passed)
-    for name in families:
+    for name in targets:
         row = {}
         for number in map(str, range(1, 11)):
             if number == '8':
@@ -223,8 +227,9 @@ def main():
                 failures.append(name + ': standing check ' + number + ' failed to reject fault')
         results[name] = row
         print(name + ': ' + ', '.join(k + '=' + v['status'] for k, v in row.items()), file=sys.stderr, flush=True)
-    print(json.dumps({'status': 'pass' if not failures else 'fail', 'families': len(families),
-                      'full_checker_runs': 1 + 15 * len(families), 'per_family': results,
+    print(json.dumps({'status': 'pass' if not failures else 'fail', 'families': len(targets),
+                      'checker_families': len(families),
+                      'full_checker_runs': 1 + 15 * len(targets), 'per_family': results,
                       'reference_controls': controls,
                       'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return int(bool(failures))
