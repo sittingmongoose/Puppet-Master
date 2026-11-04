@@ -1,116 +1,200 @@
-# DO — fix round 3, final-review response
+# DO — targeted fix round 4
 
-**Branch:** `plans/ea-w2-orchestrator-20261104`. **Assessed source tree:** `89ec4788c9612f7bbecbc1b230b47e90a0b94d07`; **code fix:** `5952a4559a5724816765783a6e702cc5bc1ee2b2`. Reviewed base: `8a002871a6858f5fd68cbf82976002edbf9dfb09`.
+**Branch:** `plans/ea-w2-orchestrator-20261104`. **Assessed source/fix commit:** `3f3641156a32fbd816d4af236cdcc328a516bf9a`. **Reviewed head:** `927b4864cd2149718e7b415695913b4e3771b031`.
 
-**24/25 prepared under the lane's intentional membership/retention exceptions; 1 stopped.** All 25 retain membership ABSENT and retention PARTIAL. Application `crew.board_message_posted` additionally retains producer/oracles PARTIAL because its selected frozen source cannot supply subject/priority. Project preparation remains. No admission or native execution is claimed.
+**25/25 prepared under the lane's membership and retention exceptions.** Every family keeps membership ABSENT and retention PARTIAL; native execution/custody/authentication/durability remain NOT_RUN. No family registry append, admission record, Decision Log entry, main push or governance reseal occurred.
 
-**Independent Astra grades before → current self-grade:** 223 PASS / 52 PARTIAL / 25 ABSENT → **248 PASS / 27 PARTIAL / 25 ABSENT**, zero conflicts. Every non-posted family moves **9 → 10 PASS** cells; posted moves **7 → 8 PASS**. Prepared count **0 → 24**. The previous branch self-grade's 250 PASS is superseded, not the before baseline.
+**Independent cycle-4 grades → current self-grade:** **224 PASS / 51 PARTIAL / 25 ABSENT → 250 PASS / 25 PARTIAL / 25 ABSENT**, zero conflicts. All 25 oracle cells and the application posted producer cell move PARTIAL → PASS. All other cells are carried after current owner reread. Prepared count **0 → 25**. The prior branch's 248 PASS claim is not the before baseline.
 
-## Review round 3: findings and responses
+## Review round 4: findings and responses
 
-- **DO-A01 — fixed (`5952a4559a5724816765783a6e702cc5bc1ee2b2`).** **Where:** `scripts/pm_orchestrator_event_oracles.py:177`, `scripts/pm_orchestrator_event_oracles.py:289`, `scripts/pm_orchestrator_event_oracles.py:302` and each OSI-680..704 independent static binding. **Why:** previous oracles omitted current append policy, recorded partition comparison, a real producer-semantic comparison and joined read/checkpoint data. **Fix:** 53 full EventRecord@2.0.0 vectors, 212 explicit retry candidates, all 25 encoded Project identity checks, compatibility-only refusal on append/retry, exact RFC8785 semantic field set and original full result on Storage-metadata-only retry. All 21 semantic members are independently varied; all ten read-token members, Storage identity, source value, index row, birth/frontier and a nonmatching frontier advance are checked. These are synthetic relational witnesses; native generic source verification/CAS/CRC/authentication remain assumed NOT_RUN. Each family's S1/S3/S6/S7 full CLI mutation exits 1; all three old board replay-only mutations also exit 1.
-- **DO-A02 — fixed (`5952a4559a5724816765783a6e702cc5bc1ee2b2`).** **Where:** `scripts/pm_orchestrator_event_oracles.py:106`, `scripts/pm_orchestrator_event_oracles.py:89` and each family's SP-337 paragraph. **Why:** the suite treated a valid logical schema as permission to inline arbitrarily large complete payloads. **Fix:** measure the complete canonical MessagePack inline payload including all strings/list/map overhead, enforce 16,384 bytes, preserve larger logical history intact behind the existing EventRecord string payload_ref plus closed pack-index byte-size/media witness. Validate exact BLAKE3 bytes, size, media, bytes/index durability and selected logical schema. Nested posted content refs remain separately enforced. Board source fixtures join full append vectors, and the selected SP-351 application physical wrapper has its own aggregate 16 KiB check. 325 vectors cover exact ASCII/multibyte boundaries, overflow, external success, missing/forged/undurable refs and typed ingest encoding. Literal data-URI text stays text; only an actual encoded-ingest witness requires decoding, with native ingest authentication NOT_RUN. All 25 S4 full CLI mutations and all eight application child-history oversized-body mutations exit 1. No retained body is truncated.
-- **DO-A03 — fixed (`5952a4559a5724816765783a6e702cc5bc1ee2b2`).** **Where:** `scripts/pm_orchestrator_event_oracles.py:136`, the selected producer_context in each event vector, and `Plans/orchestrator_event_payloads.schema.json` posted priority enum. **Why:** valid standalone helpers did not constrain the actual chosen phase/retry/truncation payload, and priority had no domain. **Fix:** require phase active/no completion signal and question_count > max_questions + 1, retry payload/source cause/lineage/counter equality plus current fences, original_length >= truncated_length, and the existing low/normal/high/urgent enum. Each of the review's four actual-payload mutations exits 1 through the full CLI.
-- **DO-A04 — stopped for Jared (application posted producer/oracle facet); source-shape fix in `5952a4559a5724816765783a6e702cc5bc1ee2b2`.** **Where:** `Plans/orchestrator-subagent-integration.md:32218`, `Plans/storage-plan.md:29491` and `scripts/pm_orchestrator_event_oracles.py:204`. **Why:** the frozen selected AgentMessageApplicationV1 is closed and has neither required header; its inline_text is already mapped to body. **Fix completed:** all three board contracts now use complete, version-correct closed application original-source/input/wrapper fixtures, original/stage/accepted-source fields, actual six-component SP-351 physical keys and digest/identity joins. Each contract's missing/foreign source/input/wrapper mutation exits 1, including all 18 full CLI source-shape mutations. The posted application source is explicitly refused as `application_post_subject_priority_unavailable`, never a prepared-producer positive. Expected stopped errors cannot mask a second error: negatives must add a distinct rejection. The frozen Project/application resources are unchanged. **Question for Jared:** Which canonical application board source and exact version must supply `subject` and `priority`: a governed successor to the SP-351 message/source/wrapper selection retaining those fields, or an existing source with an explicit mapping?
+- **DO-C4-01 — fixed (`3f3641156a32fbd816d4af236cdcc328a516bf9a`). Where:** `scripts/pm_orchestrator_event_oracles.py:166`, `scripts/pm-orchestrator-event-contracts.py`, every selected DO definition and actual coordination storage composition. **Cause:** instance-driven resolution left dormant optional refs unvisited. **Fix:** eagerly walk selected roots and every subschema/reference edge, including optional and unreachable instance branches, using the exact offline URI registry and Referencing's scoped `$id`, anchors and escaped JSON Pointer resolution. Retrieval always refuses; no basename/latest-version fallback exists. Every family has unresolved-resource and unresolved-fragment standing negatives. Source/input/wrapper/checkpoint/EventRecord roots also close eagerly. The full checker runs them; eight independent full CLI controls (diagnostic and all three board members, both missing URI and fragment) exit 1 specifically for `unresolved_schema_reference`, with board composition and optional summaries kept consistent. Nested relative-id, escaped-pointer and anchor positives plus missing-resource/fragment controls pass in ref-resolution-tests.json. Closure is of the selected DO graph; the review's unrelated immutable Goal edges remain an integration item, never silently selected or repaired.
+- **DO-C4-02 — fixed (`3f3641156a32fbd816d4af236cdcc328a516bf9a`). Where:** `scripts/pm_orchestrator_event_oracles.py:471`, `Plans/orchestrator_historical_read.schema.json`, OSI-680..704 and ATS-360. **Cause:** the generic checkpoint could not express the exact family's withdrawn reader/publication gate. **Fix:** separate historical read admission consumes an explicit supported reader/version, original admission/schema/source witness and captured original producer facts, then enforces current access/deletion/hold and actual family reader/publication fences. Current child/phase/model/board/Stop/deadline/producer permission/writer-admission changes do not recapture original validity. Every family runs changed-live-state and supported compatibility positives, forged/unproven/foreign original refusals, unsupported/wrong reader and withdrawal/publication/access/deletion/hold negatives with otherwise unchanged generic checkpoints. All 25 complete compatibility-only EventRecord vectors read successfully while current append/retry still refuses `projector_replay_only`. The independent fenced-history full CLI control exits 1 for `historical_reader_withdrawn`. All ten standing checks are now required for each family; no boolean witness is native authentication or admission.
+- **DO-A04 — fixed (`3f3641156a32fbd816d4af236cdcc328a516bf9a`), technical under DL-045/DL-085. Where:** `Plans/Contracts_V0.md:24475` (CV-740), `Plans/storage-plan.md:29619` (SP-723), OSI-247/299/440/681..683 and live successor companions. **Cause:** immutable V1 could not preserve the already required original subject/priority. **Fix:** a separately governed `AgentMessageApplicationV2@2.0.0`, original append source and physical wrapper select the new immutable URI `https://puppetmaster.local/schemas/application-board-message/2.0.0/schema.json`. The message retains all V1 fields and actual scope/Server/thread/crew/run/message, body/ref and sender/receiver identity, and preserves original subject, low/normal/high/urgent priority, platform/type/node/lane routing, execution context, reply/read/resolution. No header comes from an event, default or body reinterpretation. The whole app.coordination_append.v2 graph selects exact resources/method/source/input/output, wrapper/key/codec, canonical read and coherent backup/restore; V2 originals also have read/archive consumer positives, while V1 historical/source selections remain explicit. Full original operation/stage/accepted-source commitments, separate semantic and physical hashes, SP-337 aggregate limit and SP-286 full-value first receipt apply before publication. SP-723 defines the governed upgrader's genuine-original-field precondition and compatibility/withdrawal protocol. Six independent successor full CLI mutations exit 1 for their stated defects; 36 authored complete successor negatives run internally. No Jared card remains.
 
-No finding is disputed. The source search inspected 452 current top-level Plans Markdown/JSON files (excluding generated, pipeline, historical banks and ledgers); exact selected roots were read in full. Other textual matches do not select a successor or supply a header mapping. No header default, event-derived source or new source edition is invented.
+The per-family current-source search is retained in source-search.json (25 independent entries); new bindings are explicitly labelled. It reuses every family's existing history reader and generic SP-278 index/checkpoint rather than inventing a sibling-derived reader or family cursor. CV-740/SP-723 select only already specified board behavior. All four source/method graph resources are exact offline selections. New physical V2 storage/profile rows reuse the existing canonical coordination group, budget, codec algorithm, sole coordinator, payload store and Server counterpart policy. Every original Storage row/profile/group/policy, Project resource, V1 application resource/URI/codec and agent member is preserved.
 
-## Earlier findings rerun
+## Family grades and standing census
 
-| Finding | Retained repair | Current mutation result |
+P-count is PASS cells out of twelve; every row keeps one ABSENT membership cell and one PARTIAL retention cell after this round. Each row has its own S1..S10 cases; † the three Project-only diagnostics reject fabricated application scope for S2. No sibling supplies a pass.
+
+| Family | Unit | PASS before → after | S1..S10 | Prepared before → after |
+|---|---|---:|---|---|
+| `config.validation.failed` | OSI-680 | 9 → 10 | PASS† | no → yes |
+| `crew.board_message_posted` | OSI-681 | 8 → 10 | PASS | no → yes |
+| `crew.board_message_read` | OSI-682 | 9 → 10 | PASS | no → yes |
+| `crew.board_messages_archived` | OSI-683 | 9 → 10 | PASS | no → yes |
+| `parser.error` | OSI-684 | 9 → 10 | PASS† | no → yes |
+| `phase.force_completed` | OSI-685 | 9 → 10 | PASS† | no → yes |
+| `subagent.budget_warning` | OSI-686 | 9 → 10 | PASS | no → yes |
+| `subagent.cancelled` | OSI-687 | 9 → 10 | PASS | no → yes |
+| `subagent.completed` | OSI-688 | 9 → 10 | PASS | no → yes |
+| `subagent.context_warning` | OSI-689 | 9 → 10 | PASS | no → yes |
+| `subagent.escalated` | OSI-690 | 9 → 10 | PASS | no → yes |
+| `subagent.failed` | OSI-691 | 9 → 10 | PASS | no → yes |
+| `subagent.message_received` | OSI-692 | 9 → 10 | PASS | no → yes |
+| `subagent.message_sent` | OSI-693 | 9 → 10 | PASS | no → yes |
+| `subagent.model_switched` | OSI-694 | 9 → 10 | PASS | no → yes |
+| `subagent.output_truncated` | OSI-695 | 9 → 10 | PASS | no → yes |
+| `subagent.paused` | OSI-696 | 9 → 10 | PASS | no → yes |
+| `subagent.progress` | OSI-697 | 9 → 10 | PASS | no → yes |
+| `subagent.resumed` | OSI-698 | 9 → 10 | PASS | no → yes |
+| `subagent.retried` | OSI-699 | 9 → 10 | PASS | no → yes |
+| `subagent.spawned` | OSI-700 | 9 → 10 | PASS | no → yes |
+| `subagent.started` | OSI-701 | 9 → 10 | PASS | no → yes |
+| `subagent.timeout` | OSI-702 | 9 → 10 | PASS | no → yes |
+| `subagent.tool_called` | OSI-703 | 9 → 10 | PASS | no → yes |
+| `subagent.tool_completed` | OSI-704 | 9 → 10 | PASS | no → yes |
+
+S1 refuses compatibility-only current append/retry. S2 uses exact CV-366 application keys. S3 verifies encoded Project partitions. S4 measures complete inline MessagePack and actual external packs. S5 refuses LF-suffixed identifiers and retains the exact BLAKE3 fence. S6 compares only caller semantic fields and returns the original full result for Storage-only changes. S7 joins actual checkpoint Storage identity. S8 refuses success-labelled failures. S9 eagerly closes all selected refs. S10 enforces original-valid retained history and current exact-family withdrawal/disclosure fences. Check 11 is proved below.
+
+## Check 11 — complete guard-removal table
+
+**83 guard groups; 488 valid cases; 5,319 single-defect negatives; zero unrelated flips.** Each guard was removed only in an isolated in-memory source mutant, then restored by discarding that mutant. Production source hashes are pinned in the evidence and remain identical. No bypass flag or production guard weakening was added.
+
+A guard group is one rejection invariant; repeated enforcement sites for that same invariant are removed together and the site count is retained. Closed-schema negatives use the complete selected validator at its pure shape-validation seam; relational negatives use the complete corresponding event/read/source/transport checker with otherwise valid shapes. For the closed-schema mutation the selected schema root is replaced by `true` and still run through the validator. Source/input/wrapper, event/payload, scope pairs, physical keys, accepted-source/semantic/physical digests and checkpoint observations are kept consistent except for the one invariant under test. Unchanged pure schema leaves are memoized by held immutable input/schema/format identity; every mutant reruns every negative's relational checker. Test-harness expectation assertions are not admission predicates and are never suppressed to make a result pass.
+
+`U` is the full 5,319-case set. `N01`..`N83` are the complete explicit case-id lists in guard-removal-table.json, identified by case_set_id. Each row reports both exact sets as N / U\N; the JSON expands both into names, records source/mutant hashes and verifies unrelated rejection reasons. This notation keeps the report compact without substituting a count for an executed proof.
+
+| Removed guard | Negatives that flip | Negatives that stay rejected for their own reason |
 |---|---|---|
-| DO-01 | CV-366 exact application keys, `644a3df9c97ffc19c76924a02641cb852852f7ef` lineage | All application keys changed back to do1: full CLI exit 1; S2 separately exercised per family |
-| DO-02 | Posted body/reference, `644a3df9c97ffc19c76924a02641cb852852f7ef` lineage | Removing both representations from posted positives: exit 1 |
-| DO-03 | SP-720..722/member preparation, `644a3df9c97ffc19c76924a02641cb852852f7ef` lineage | Each of three members removed independently: DO CLI exit 1; coordination CLI exit 1 with a new coordination_event_records mismatch (3 failures versus 2 baseline) |
-| DO-04 | Failure/blockage/interruption retries, `644a3df9c97ffc19c76924a02641cb852852f7ef` lineage | Removing blockage coverage: exit 1; all six actual retry payload/context positives and 18 transition cases run |
-| DO-C2-01 | Exact BLAKE3 fence, `c886f97d8f1cf947e599571c9ff71cbd9d6b36d1` | LF appended to both referenced-body scope positives: exit 1; all 16 suffix vectors still run through payload and stored member (32 rejections) |
+| `accepted_original_source_join` | `N01` (4) | `U\N01` (5315) |
+| `anchored_identifier_fullmatch` | `N02` (1) | `U\N02` (5318) |
+| `application_*_schema` | `N03` (334) | `U\N03` (4985) |
+| `application_message_body_representation` | `N04` (1) | `U\N04` (5318) |
+| `application_wrapper_over_16k` | `N05` (1) | `U\N05` (5318) |
+| `checkpoint_identity_token` | `N06` (583) | `U\N06` (4736) |
+| `checkpoint_not_current` | `N07` (1) | `U\N07` (5318) |
+| `checkpoint_schema` | `N08` (106) | `U\N08` (5213) |
+| `checkpoint_source_storage_identity` | `N09` (1) | `U\N09` (5318) |
+| `closed_payload_schema` | `N10` (1230) | `U\N10` (4089) |
+| `envelope_*` | `N11` (10) | `U\N11` (5309) |
+| `event_join_*` | `N12` (424) | `U\N12` (4895) |
+| `event_schema` | `N13` (53) | `U\N13` (5266) |
+| `event_type_join` | `N14` (53) | `U\N14` (5266) |
+| `failure_oracle_success_code` | `N15` (25) | `U\N15` (5294) |
+| `family_current_replay_policy` | `N16` (53) | `U\N16` (5266) |
+| `historical_disclosure_fence` | `N17` (75) | `U\N17` (5244) |
+| `historical_original_admission` | `N18` (50) | `U\N18` (5269) |
+| `historical_original_source` | `N19` (50) | `U\N19` (5269) |
+| `historical_reader_identity` | `N20` (25) | `U\N20` (5294) |
+| `historical_reader_withdrawn` | `N21` (50) | `U\N21` (5269) |
+| `historical_schema_unsupported` | `N22` (25) | `U\N22` (5294) |
+| `historical_state_schema` | `N23` (689) | `U\N23` (4630) |
+| `identity` | `N24` (10) | `U\N24` (5309) |
+| `index_birth_anchor_join` | `N25` (1) | `U\N25` (5318) |
+| `index_complete_row_set` | `N26` (53) | `U\N26` (5266) |
+| `index_complete_source_coverage` | `N27` (1) | `U\N27` (5318) |
+| `index_original_source_join` | `N28` (106) | `U\N28` (5213) |
+| `index_row_*` | `N29` (424) | `U\N29` (4895) |
+| `index_row_locator_join` | `N30` (1) | `U\N30` (5318) |
+| `index_row_schema` | `N31` (1) | `U\N31` (5318) |
+| `index_source_prefix` | `N32` (1) | `U\N32` (5318) |
+| `inline_base64_body` | `N33` (25) | `U\N33` (5294) |
+| `inline_payload_join` | `N34` (1) | `U\N34` (5318) |
+| `inline_payload_over_16k` | `N35` (50) | `U\N35` (5269) |
+| `logical_payload_schema` | `N36` (53) | `U\N36` (5266) |
+| `message_*` | `N37` (23) | `U\N37` (5296) |
+| `message_content_join` | `N38` (6) | `U\N38` (5313) |
+| `message_sender` | `N39` (3) | `U\N39` (5316) |
+| `message_source` | `N40` (7) | `U\N40` (5312) |
+| `message_target` | `N41` (5) | `U\N41` (5314) |
+| `message_target_type` | `N42` (3) | `U\N42` (5316) |
+| `payload_encoding` | `N43` (1) | `U\N43` (5318) |
+| `payload_reference` | `N44` (128) | `U\N44` (5191) |
+| `phase_force_predicate` | `N45` (4) | `U\N45` (5315) |
+| `project_original_input_shape` | `N46` (4) | `U\N46` (5315) |
+| `replay_only_not_appendable` | `N47` (53) | `U\N47` (5266) |
+| `retry_attempt` | `N48` (2) | `U\N48` (5317) |
+| `retry_ceiling` | `N49` (7) | `U\N49` (5312) |
+| `retry_deadline` | `N50` (7) | `U\N50` (5312) |
+| `retry_lineage` | `N51` (7) | `U\N51` (5312) |
+| `retry_operation` | `N52` (2) | `U\N52` (5317) |
+| `retry_outcome:different_identity` | `N53` (53) | `U\N53` (5266) |
+| `retry_outcome:idempotency_conflict` | `N54` (53) | `U\N54` (5266) |
+| `retry_outcome:replay_only_not_appendable` | `N55` (53) | `U\N55` (5266) |
+| `retry_payload_source_predicate` | `N56` (1) | `U\N56` (5318) |
+| `retry_permission` | `N57` (7) | `U\N57` (5312) |
+| `retry_source_transition` | `N58` (3) | `U\N58` (5316) |
+| `retry_stop` | `N59` (7) | `U\N59` (5312) |
+| `retry_terminal` | `N60` (1) | `U\N60` (5318) |
+| `run_anchor_*` | `N61` (20) | `U\N61` (5299) |
+| `run_anchor_kind` | `N62` (10) | `U\N62` (5309) |
+| `scope_partition` | `N63` (63) | `U\N63` (5256) |
+| `source_*` | `N64` (38) | `U\N64` (5281) |
+| `source_digest` | `N65` (8) | `U\N65` (5311) |
+| `source_edition` | `N66` (8) | `U\N66` (5311) |
+| `source_input_digest` | `N67` (8) | `U\N67` (5311) |
+| `source_original_join` | `N68` (8) | `U\N68` (5311) |
+| `source_output_digest` | `N69` (6) | `U\N69` (5313) |
+| `source_stage_method` | `N70` (4) | `U\N70` (5315) |
+| `source_stage_operation` | `N71` (8) | `U\N71` (5311) |
+| `successor_complete_graph` | `N72` (1) | `U\N72` (5318) |
+| `successor_graph_digest` | `N73` (1) | `U\N73` (5318) |
+| `successor_method_selection` | `N74` (1) | `U\N74` (5318) |
+| `successor_physical_selection` | `N75` (1) | `U\N75` (5318) |
+| `successor_read_backup_restore` | `N76` (1) | `U\N76` (5318) |
+| `successor_resource_selection` | `N77` (1) | `U\N77` (5318) |
+| `successor_storage_member` | `N78` (1) | `U\N78` (5318) |
+| `successor_storage_selection` | `N79` (1) | `U\N79` (5318) |
+| `truncation_grows_output` | `N80` (2) | `U\N80` (5317) |
+| `unresolved_schema_reference` | `N81` (107) | `U\N81` (5212) |
+| `wrapper_key_join` | `N82` (6) | `U\N82` (5313) |
+| `wrapper_physical_digest` | `N83` (4) | `U\N83` (5315) |
 
-## Standing checks — every family
-
-**F = fixed in `5952a4559a5724816765783a6e702cc5bc1ee2b2`; P = pass.** Each cell has an authored negative named `<exact-family>:S<n>` in standing_cases and a separately recorded full CLI mutation with expected/actual exit **1** in delivery-probes/full-cli-probes.json. No row is inferred from a sibling. The table's final column is PASS-cell count before → after; membership ABSENT and retention PARTIAL remain outside that count.
-
-- **S1:** current append/retry with projector_replay_only refuses replay_only_not_appendable.
-- **S2:** a do1 key in application scope refuses; † the three Project-only families instead reject an application-scope payload, since CV-366 application keys do not apply to them.
-- **S3:** recorded Project partition replaced by raw Project ID refuses.
-- **S4:** the family's inline body/aggregate grows beyond the complete 16 KiB budget and refuses; explicit external boundary/reference cases also run.
-- **S5:** an actual EventRecord event_type gets a trailing LF and refuses via a full-match guard. The posted BLAKE3 source/stored copy retains its exact 71-character fences. Original coordination's 43 patterns remain an outside-lane integration item; no frozen schema was edited.
-- **S6:** change caller semantics on a retry claiming original-result success; the comparator returns conflict and the full checker refuses that positive. Metadata-only candidates return the original full result.
-- **S7:** a foreign valid-UUID Storage identity in the actual generic checkpoint refuses; every full token field has a separate internal negative.
-- **S8:** give that family's failure oracle a success exit code 0; the full checker rejects it. These payloads have no process-result exit-code member; this is explicitly checker-level failure-oracle enforcement.
-
-| Family | S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | PASS cells |
-|---|---|---|---|---|---|---|---|---|---|
-| `config.validation.failed` | F | P† | F | F | F | F | F | F | 9 → 10 |
-| `crew.board_message_posted` | F | P | F | F | F | F | F | F | 7 → 8 |
-| `crew.board_message_read` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `crew.board_messages_archived` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `parser.error` | F | P† | F | F | F | F | F | F | 9 → 10 |
-| `phase.force_completed` | F | P† | F | F | F | F | F | F | 9 → 10 |
-| `subagent.budget_warning` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.cancelled` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.completed` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.context_warning` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.escalated` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.failed` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.message_received` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.message_sent` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.model_switched` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.output_truncated` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.paused` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.progress` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.resumed` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.retried` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.spawned` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.started` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.timeout` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.tool_called` | F | P | F | F | F | F | F | F | 9 → 10 |
-| `subagent.tool_completed` | F | P | F | F | F | F | F | F | 9 → 10 |
-
-## Verification, preservation and boundaries
+## Verification and preserved repairs
 
 | Check | Exit / result |
 |---|---|
-| Full DO checker | 0; top-level pass; 25 families / 6330 reported checks; application posted source listed stopped; native NOT_RUN |
-| Frozen final full CLI sweep | 252 invocations: 4 baseline positives exit 0 and **248 negatives exit 1**, including all **200** family/standing cells and all prior-finding mutations |
-| SP-337 / SP-351 supplemental mutations | Forged external positive, undecoded ingest, three oversized physical wrappers and eight application child bodies all exit 1 |
-| Shard generation / index generation | 0 / 0, parsed top-level pass; currentness copy SHA-equal for all 15 files |
-| Shard check / index validation | 0 / 0, parsed top-level pass |
-| Full coordination checker | 1, same 2 pre-existing failures; stdout byte-identical to pinned review baseline |
-| Runtime canon checker | 1, same 161 pre-existing failures; stdout byte-identical |
-| Storage profile checker | 1, same 41 pre-existing errors; stdout byte-identical |
-| Coordination tests | 50 tests, same 14 failures; full output equal after only root-path/elapsed-time normalization |
-| Index binding tests | 14 tests, exit 0 |
-| Source/storage preservation and ID audit | pass: no new IDs, no owner Markdown deletion, no frozen resource change; registry's only semantic change is posted priority domain |
-| Self-grade quote audit | 25 families / 300 cells, every evidence quote re-located inside its own owner unit and verified |
-| Python compile / git diff --check | 0 / 0 |
+| Full DO checker | 0; **25 families / 7111 checks**, no stopped facet, native NOT_RUN |
+| Full CLI controls | 16 invocations: baseline 0; **15 negatives 1**, all expected diagnostics present |
+| Guard-removal audit | 0; **83 groups / 488 positives / 5,319 negatives**, no uncovered runtime rejection emitter, no accidental valid negative, no mixed-invariant negative |
+| Shard generation and check | 0 / 0; parsed top-level pass |
+| Index generation and validation | 0 / 0; parsed top-level pass; all 15 ignored currentness inputs SHA-equal |
+| Index binding tests | 0; 14/14 |
+| Coordination checker | 1; same 2 failures, whole output equal to prior checked baseline |
+| Runtime canon | 1; same 161 failures, whole output equal |
+| Storage profile checker | 1; same 41-error list; family/profile counts each rise by one for the new fully assigned V2 member |
+| Coordination tests | 1; 50 tests / same 14 failures; output equal after only worktree-path/elapsed normalization |
+| Quote/re-grade audit | 25 families / 300 cells; all current evidence quotations mechanically verified |
+| Preservation audit | all 344 original storage rows and all original profiles/groups/policies equal; only V2 member/profile added; frozen V1/Project resources exact |
+| Scoped-id audit | CV-740/SP-723 absent from all fetched origin owner identities before authoring; both inside DO's assigned blocks |
+| Python syntax / git diff --check | 0 / 0 |
 
-Only the four edited sources' shard directories changed: orchestrator-subagent-integration, storage-plan, automated_testing_system and storage_value_registry. Six global index files are generated normally; four JSON generated_at_utc fields are clock-dependent. No generated shard/evidence file was hand-edited. Frozen application source/contracts/graph, Contracts_V0 and all original coordination definitions/other storage families/policies/profiles remain exact. Main, governance locks/evidence, Decision Log, event-family registry and tests were not edited.
+**A01–A03 remain repaired.** Current append/retry policy, exact partition/key, semantic/Storage metadata comparison and full original read/checkpoint joins remain enforced. Complete transport/body/reference integrity and aggregate byte limits remain enforced for all families. Phase count, truncation ordering, source/payload retry cause/counter/current fences and closed priority remain enforced. The guard audit removes those actual guards individually, including each retry fence, and demonstrates their own negatives flip. DO-01..04 and DO-C2-01's source/stored byte fences, body split, exact storage members and retry source cases remain in the full checker. Native execution remains separate.
 
-**Premise checks and open integration work.** DL-084's exact 19 chat histories, DL-085's three board histories and DL-086's three Project-only diagnostics remain current; OSI-440/CV-366 application support preserves the existing lifetime boundary and Server counterpart bucket. The retention branch was inspected at `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`; its linked-successor/assignment/admission prerequisites and Q1/Q3 are still open. The three original run-completion anchors and same-source access/deletion/hold fences remain. DL-085 archived/unresolved-blocker/leave-deletes-nothing prose and both DL-087 Collaborative_Workflows lifecycle pointers remain intact. No numeric cap or retention/deletion policy was chosen. The posted source-completeness premise failed and is now stopped, explicitly replacing the earlier false PASS. Admission, native execution and any governance reseal remain separate work.
+**Shared-file scope and generated files.** Contracts: existing CV-366 selection qualification plus new CV-740. Storage: existing SP-351 selection qualification, SP-720 source replacement, SP-721/722 V2 consumer selection and new SP-723. Coordination: existing OSI-247/299/440 message selection and exact OSI-680..704 historical oracles, with posted/source consumer qualifications in 681..683. Testing: existing ATS-360. Registry: append the V2 canonical storage member and its existing-group profile only; all original rows remain exact. Only these five edited sources' shard directories change (including storage_value_registry); global indexes are generated normally. No generated shard/evidence was hand-edited. Registry admissions, locks, governance evidence and Decision Log remain untouched.
 
-**IDs used:** existing OSI-680..704, SP-720..722 and ATS-360 (29 existing lane IDs); **new IDs: none**. No registry append, admission record or Decision Log entry.
+**Open integration work.** Membership is intentionally absent. Retention remains PARTIAL until the named Storage branch integration/per-family admission and Q1/Q3 are settled; DL-084/085/086 lifetime premises and OSI-440/CV-366's application counterpart remain current. This round chooses no numeric cap, retention or deletion policy. Original coordination anchored-pattern integration and the review's unrelated frozen Goal-reference baseline remain outside DO. Native custody/authentication/durability/CAS/restore/withdrawal races remain NOT_RUN; static success grants none of those authorities.
 
-**Resource/procedure record.** Before creation: 16 GiB available RAM and 118 GiB free root disk, above the 6/50 GiB floors. Sparse detached `/home/sittingmongoose/pm-worktrees/DO-fix3` came from the named branch at the reviewed head. Checks used isolated local test directories, with no subagents, browser, server, heavy build or main push. The first source staging list omitted the renamed final generated registry shard; follow-up source commit `89ec4788c9612f7bbecbc1b230b47e90a0b94d07` includes it, and a committed-tree audit verifies every checked generated file is tracked. Two intermediate test sweeps were superseded while completing the ingest/source joins; their processes and scratch were removed and only the frozen final sweep is reported. Startup inadvertently issued read-only pm-mail inbox/who before FIX-ROUND's prohibition was loaded; no registration/send/reply and no later pm-mail occurred. The pushed task worktree and final probe scratch are removed at completion as required.
+**IDs used.** New: **CV-740, SP-723**. Existing lane IDs: **OSI-680..704, SP-720..722, ATS-360**. Existing owner qualifications: OSI-247/299/440, CV-366 and SP-351. No other PlanUnit id was minted.
 
-## External evidence
+**Procedure and cleanup.** Initial available RAM 17 GiB / root disk 126 GiB, above the 6/50 GiB floors. Sparse detached worktree DO-fix4 started at the exact reviewed head; no pm-mail, subagents, browser, server, admission, main push or reseal. The temporary input overlay is removed; source/report branches are pushed and the literal-path fix worktree is removed after final delivery preparation. No temporary checkout is retained.
 
-All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-3/`. SHA-256 is over the complete file. Report/self-grade copies also overwrite drafts/DO/DO.md and drafts/DO/DO.self-grade.json.
+## Retained evidence
 
-| Evidence (relative to that directory) | SHA-256 |
+Base path: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-4/`. Full-byte SHA-256 values below. The complete guard table includes every flipping/still-rejected case id, not a sample. Reproduction scripts are retained as result evidence; edit-generation scratch is removed.
+
+| Evidence | SHA-256 |
 |---|---|
-| `contracts-check.json` | `bdf73491682fed6bb0c5203461c408487f13a6bca17ba6546d97217d6d6cb488` |
-| `delivery-probes/full-cli-probes.json` | `e0d96d370ef8bdbf9f68d287a62f02800bf8f76af5db7a30a7755dc918dc635b` |
-| `probe-delivery-checker.py` | `d985224b2dc1fc92d1b95e2cb38d62beb644a8481d63f17a0eb34fa0364de9e4` |
-| `delivery-input-sha256.json` | `3318b60367939c7cf4f44b00c4b3a8c434796c9de209bbdb5ed5a4b428b395b7` |
-| `source-search.json` | `86e0602238f7b6f202dea3ec3001e4996de7df85bc4bffd85a7b28fc2d3dc9e9` |
-| `integrity.json` | `087577b833e8055d19d6bc9446a6d60b8259577b564bf2b192745b2274eb93f6` |
-| `committed-tree.json` | `a79e32567958f7335c736ca503b43fbac636704979ac5f900558849ad97fc77b` |
-| `regression.json` | `2925613d59c236daa1d29b4794d09712f9ff4b8f8798209d60e37d7298e6f049` |
-| `regrade.json` | `e2ba28160e709c00a5b422e19ae650407703d46afec59d73dc614a4d4e2081ca` |
-| `currentness.json` | `58c077812500478e365b9ab494e9e6b92131eb586acf86ef321b088afdff18e2` |
-| `shard-generate.json` | `0097f44a100929b5fcc967352e31e0a28f4a8974cb0027f58fdf4df24ed776d3` |
-| `index-generate.json` | `c000cb2e59a695cf7524bcf04792bf7ec330cff12c73d45f4920d947cfef97aa` |
-| `shard-check.json` | `d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc` |
-| `index-validate.json` | `dc65206a412cd93006f11af3226cfc54c01a947694ca3bc407f72311e2834dfd` |
-| `coordination-tests.stderr` | `6b9345a6b5883a967bec1b3feeea557a7e4a013dc00b47a281ad136bb8424995` |
-| `index-binding-tests.stderr` | `f0360e2c365b8e2bb060de70f84866746b96f8c0d9436d84cc1a8b0fe2c8fb5d` |
+| `contracts-check.json` | `0a2e515f0610108d820bff5b5133586d9a55429d71145d36f66451618ef912aa` |
+| `full-cli-probes.json` | `e81d9185ea32958857e6ff533c554fcbf96e1b57dbe5b895d3c2e48dad349df1` |
+| `cli_probes.py` | `74f502060fd270d287b802d6bd01dad00d3f8727cb1c86d5b8cfca254b0068dd` |
+| `guard-removal-table.json` | `cfd048a41a9adf5ca192423f4c0b41260e7500ce9ad5555d8345ba8df5695afc` |
+| `guard-diagnostics-summary.json` | `6f6244582c48a689ff501bc91493769fe211080a60b9c2e328eb75019e477ea6` |
+| `guard-bank-diagnostics.json` | `074e15170584933eefbe42e5fb4af404528bcf1809b22f1e32c5df70217294d3` |
+| `guard_audit.py` | `4dec4d857d59fbb011ff2d2a7afb47fc8b41feda7be0794349d0d98e6b24d1fb` |
+| `ref-resolution-tests.json` | `9dd4b2af9297fdc18103d10c9e640fecc2ac4dfc812c9a633ed84c283206ce84` |
+| `baseline-comparison.json` | `291f1247596ae56882d9f9d036980865fa56ee9c1834969093a89f129623a512` |
+| `preservation.json` | `ca87a8e090237848668566a3479d6aca0c0c6104b58c841281dffa3157d148c6` |
+| `source-search.json` | `362f60ba1e4cd04ba0fdd8f1c53216db8a4a55ae0082a100ef32e848f64ecf91` |
+| `new-id-audit.json` | `d20f9bcbc9a7c70cde3a07248485b9fa39f7a647077d4cb30f0580df76cf97a2` |
+| `currentness.json` | `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c` |
+| `regrade.json` | `667a0811af86732a57ff9ae61a7c856d089a600fe834144f6dda7c5d87c4ff2e` |
+| `shard-check.json` | `10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85` |
+| `index-validate.json` | `ebc81ceacb8c38a96553ed90ca2a8b1258fde62e8890d05795059da8e40e3e65` |
+| `runtime-canon.json` | `bd09795460a0685673e28093e0bf0299343bf8b5ac4c7062440eb9bac412b955` |
+| `coordination-check.json` | `a7a906d97e05afa3eec03aded40a2428d67c353bc3292400bddad104e8584b8d` |
+| `storage-check.json` | `08b2a6c5fdc6f8b053a9ab58de439ba2c9e7be70ba41f4d8a22f9b11fb25fef9` |
+| `coordination-tests.stderr` | `ff0baf26b00506ae04e23c504a39114cd73f7fc70f7280f4cac48a0682faa328` |
+| `index-tests.stderr` | `74e992098969552c4ba5002c686aa098a850105fd144b6812ed378858924f685` |
