@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33089-L33929
+Source lines: L32968-L33802
 
-Source SHA256: `0b96d40c3ed433887eb3f1a1f7fe7ffc9c1e6e407d4cb1a0f6b08eac4e3cc433`
+Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
 
 ---
 
@@ -46,11 +46,8 @@ canonical_text: 'The title-bar bell and unread stack sit between page tabs and s
   shows the bell glyph; marks hold 3:1 on severity-tinted cards. Amended 2026-10-29 (A4, D9; PM7): Keep every in-app
   kind mark beside its copy and the single title-bar notification entry. Only Friendly’s app tile and OS notification
   branding become Pip; completion notices route through this alert owner and never add a second affordance. A4 A, Jared
-  2026-10-30; joined PM7 review fix 4c49e10567: Friendly''s .pmn-tile-pip draws one decorative 24 px PMLogo mark. The
-  item''s severity maps through the existing status key and PMLogo.moodFor: info→idle, success→complete, warn→waiting,
-  error→failed. Its kind glyph remains in .pmn-kind beside the title''s text node; the tile is no additional control.
-  Other looks retain their kind-glyph tile. Toasts, banners and inbox rows repaint through the same fillTile owner in
-  src/js/19-notify.js when the look changes. F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page;
+  2026-10-30; joined PM7 review fix 4c49e10567: Friendly’s notification tile draws one decorative 24 px shared Pip mark. The item’s severity maps through the existing status/mood owner: info→idle, success→complete, warn→waiting,
+  error→failed. Its kind glyph remains beside the title; the tile is no additional control. Other looks retain their kind-glyph tile. Toasts, banners and inbox rows repaint through the same shared notification presentation owner when the look changes. F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page;
   its first card uses the theme selector menu''s resting top while the inbox is closed (#themeMenuWrap bottom plus MENU_GAP,
   6 px in 70b30f482f), not title-bar bottom plus that gap. It may cover controls and the chat head. F3-447 owns that
   anchor, the lead''s open-inbox push exception and the entry/exit click guard on every page (F3-5), including Usage''s
@@ -76,8 +73,8 @@ acceptance_criteria:
   the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -96,10 +93,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--JARED-FEEDBACK.md,
   SHA-256 8fe51092727cd7d2a319228114448e4bf8ac42e673461aff6968ac46ecf53d5a (source lineage; not native
   certification)
+- "DL-260 source lineage only (no product API or implementation obligation): .pmn-tile-pip, .pmn-kind, PMLogo.mark/moodFor and fillTile in src/js/19-notify.js were concept notification rendering adapters."
 preserved_exact_tokens:
 - "count badge"
-- "rgba(0,0,0,.72)"
-- "4%"
 negative_constraints:
 - Do not reintroduce a bottom-right standing toast stack, a status-bar notifications bell, an activity-bar
   notifications shortcut or unread dot, or a dedicated Notifications side panel affordance.
@@ -154,16 +150,13 @@ canonical_text: 'Clicking the title-bar notification stack expands a sprout inbo
   countdown ("Expires in N s", FileSafe''s 60 s hold), a folded group offers "N more" and "Show less", and an action
   that opens a page reads "Open <page>". Amended 2026-10-29 (D9; PM7): Completion delivery user uses this alert store,
   deduplicated/coalesced by work identity and completion generation, with one durable notice and its existing transient
-  treatment. Agent delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live #pmnPanel inbox
-  is explicitly a consumer of DR-079’s PM6_SPROUT lifecycle, including open/close and size changes. Alert content/acknowledgment/routing/focus
-  remain here and in F3-453; no separate per-look inbox motion owner is exempted. The retired #rsPanel is not evidence
-  of live-inbox closure. F3-1, Jared 2026-10-30, with the lead''s explicit 2026-10-30 open-inbox exception (mail 1030131044-4c44,
+  treatment. Agent delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live notification inbox consumes DR-079’s shared menu lifecycle, including open/close and size changes. Alert content/acknowledgment/routing/focus
+  remain here and in F3-453; no separate per-look inbox motion owner is exempted. A retired source panel is not evidence of live-inbox closure. F3-1, Jared 2026-10-30, with the lead''s explicit 2026-10-30 open-inbox exception (mail 1030131044-4c44,
   preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage sits under it via the existing
   --pmn-push offset. When closed the stage returns tight below the title bar at the bell, aligned to the theme menu’s
   resting top under its selector wrapper (F3-447). No chat-head or control-clearance offset is added. The existing inbox
   owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead''s ruling, not an added quote
-  from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only after PM6_SPROUT has opened
-  the inbox and restored its layout visibility, on first open and every reopen. Read its resting layout height, never
+  from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only after the shared menu owner has opened the inbox and restored its layout visibility, on first open and every reopen. Read its resting layout height, never
   the opening transform’s temporary bounding rectangle; during the owner’s height spring use its destination height.
   Recompute after content/height changes and window resize, and clear the offset on close. Preserve the existing gap
   (8 px in this concept), menu-sprout ownership and the one stage; no page-local timer, list or persisted geometry is
@@ -190,8 +183,8 @@ acceptance_criteria:
   the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -203,6 +196,7 @@ node_compile_hint:
 source_lineage:
 - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
 - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- "DL-260 source lineage only (no product API or implementation obligation): #pmnPanel, retired #rsPanel and PM6_SPROUT were concept inbox selectors/lifecycle adapters; native presentation keeps the resting-height measurement and shared menu owner."
 preserved_exact_tokens:
 - "Details"
 - "primary_route_payload"

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42597-L43293
+Source lines: L42472-L43168
 
-Source SHA256: `0b96d40c3ed433887eb3f1a1f7fe7ffc9c1e6e407d4cb1a0f6b08eac4e3cc433`
+Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
 
 ---
 
@@ -327,8 +327,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Amended 2026-10-29 (X1/X3, PC1–PC5, O8, S1–S9; DL-239): every individual agent is Pip, drawn by the one
-  PMLogo.kit-backed puppet primitive, never a second legacy figure or an avatar/initials. This supersedes DL-149
+  Amended 2026-10-29 (X1/X3, PC1–PC5, O8, S1–S9; DL-239): every individual agent is Pip, drawn by the one shared puppet primitive, never a second legacy figure or an avatar/initials. This supersedes DL-149
   card 6’s still setup sheets, old body/limb geometry and puppet-native status silhouettes. Teams, specialists,
   plates, run cards/views, Activity rows and live agent cards share the primitive; category marks at ≤16 px
   remain robot (X1). Roles match full Persona name then last word, unknown hard hat: Coordinator/chat assistant
@@ -394,8 +393,8 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-- python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: agent_mark_presentation_drift
 reasoning_tier: high
 context_scope: chat_tweaks_20261007
@@ -414,6 +413,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/nier-puppets-final-handoff.md, SHA-256 492a3bbeae1285f1dd1d55dfbdc87da3bfa9fce207c9ef01a9f2005abb0ddfa0
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PM7-COORDINATION-20261008.md, SHA-256 c31bdbf5c69cf7f3110b2bbdc63258848bba8eee69da4154f976c295e2881002
 - Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)
+- "DL-260 source lineage only (no product API or implementation obligation): PMLogo.kit was the concept’s shared Pip drawing adapter."
 preserved_exact_tokens:
 - marionette puppet
 - puppet primitive

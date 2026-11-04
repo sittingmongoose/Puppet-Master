@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L278-L1373
+Source lines: L278-L1262
 
-Source SHA256: `0b96d40c3ed433887eb3f1a1f7fe7ffc9c1e6e407d4cb1a0f6b08eac4e3cc433`
+Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
 
 ---
 
@@ -675,124 +675,11 @@ plan_unit_id: F3-503
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Home surface drag, drop, insertion, reflow, float, dock, and resize use one draft-model
-  Pointer Events transaction, shared diamond resizers, and shared four-edge scroll dissolve;
-  pointermove is preview-only and one changed end commits once. Amended 2026-08-13 - drop
-  preview is footprint-true and change-gated (the placeholder carries the pickup-time
-  footprint at the correct flex order and re-seats only on a host or insertion-index change,
-  one FLIP reflow wave per change with a 16 ms stagger); window exit is invalid_target and
-  floating is explicit-only; hosts carry visible-surface caps (left/right 3, top/bottom 2,
-  floating 4, home_main uncapped) with overflow spilling to home_main; resize is
-  adjacent-pair pixel transfer against pixel-frozen sibling bases with fair-share minimum
-  degradation (effective min = min(nominal, container/visibleCount)), unified host clamp
-  bands, a floating bottom-right corner handle driving both axes, commit without a full
-  re-render (no settle flash), and a render-time no-dead-space invariant that re-sums
-  visible home_main bases to the host width so degenerate persisted layouts self-heal.
-  Amended 2026-08-13 (tweak wave) - the drop preview projects the TARGET geometry (fair
-  share of the destination host; full width plus track thickness for row-axis docks),
-  retiring the same-day pickup-footprint preview; a pickup that never left the source
-  surface's rect resolves to the source placement and a preview-expanded host never
-  captures the hit-test for its preview growth. Row-axis docks add a full-width track
-  handle driving the dock's thickness through the persisted size.cross_basis_px field
-  (host-max semantics, host-band clamped, migrated from basis_px), alongside within-row
-  pair width transfer on the column dividers. Amended 2026-08-13 (wave 3) - target
-  adoption has a two-frame hysteresis, mid-FLIP surfaces are excluded from hit-testing
-  (data-pm-home-flip), drag auto-scroll re-applies only on actual scroll or pointer
-  movement, the placeholder previews the dragged surface's proportional projected width
-  (mirroring the normalizeMainRowBases re-sum), and the PM_EDGE band geometry defers
-  during all Home gestures (move and workgroup join resize in the
-  pm-resizing/PM_DRAGEND deferral). Amended 2026-08-14 (wave 7) - Home screen scroll
-  lock: every host locks horizontal travel via overflow-x clip, overflow-y auto, and
-  overscroll-behavior none on the attribute-doubled selector
-  .pm-home-host[data-pm-home-host]. The doubled specificity is REQUIRED, not
-  decorative: the scroll-frost enrolment stamps pm6-bottom-scroll (a base
-  overflow auto rule later in the cascade) onto every host at runtime, and a
-  single-class rule loses that fight silently. A horizontal wheel over the
-  dashboard, editors, or terminal moves zero scrollLeft anywhere in the workspace,
-  no scrollbar gutters render, and vertical scrolling stays intact. Amended
-  2026-08-13 (wave 4) - host targeting is
-  latch-based and purely geometric: buildDockLatch freezes per-dock entry and exit
-  bands at pickup (entry = the committed dock rect unioned with the 28 px edge strip;
-  exit = the anticipated opened track plus a 44 px slack), and elementsFromPoint is
-  fully retired from drop-target resolution; the wave-3 two-frame hysteresis remains
-  for slot flapping within a host. Amended 2026-08-15 (wave 8) - HOME SCROLL KILL,
-  corrected mechanism. The wave-7 claim that "overflow-x: clip" beside
-  "overflow-y: auto" forbids programmatic scrollLeft is FALSE and is retired with this
-  dated disposition: per CSS Overflow 3 section 3.1, when one axis is clip and the
-  other is neither visible nor clip, the clip value COMPUTES TO HIDDEN, so the hosts
-  remained scroll containers - programmatic scrollLeft still moved 12 px, reachable by
-  focus, scrollIntoView and find - and on Safari 15 and earlier the clip declaration is
-  dropped outright, leaving true overflow-x: auto scrollers. Wave 8 removes the
-  overflow at its three measured sources instead (all measured on the 1920 by 1080
-  default layout). (a) EMPTY DOCK BOX, 8 px: .pm-home-host.pm-home-host-empty now also
-  sets "padding: 0", because the runtime scroll-frost enrolment stamps
-  pm6-bottom-scroll on every host and that base rule carries padding var(--sm), which
-  floored an empty dock's border-box at 8 px on a 0 px grid track and laid it past the
-  grid's content edge; the (0,2,0) selector beats the stamped (0,1,0) rule regardless
-  of block order. Drop previews are unaffected - syncHostGeometry drops the empty class
-  as soon as a draft places a surface there, and the dock latch uses frozen screen
-  bands. (b) FROST BANDS, 22 px: PM_EDGE builds four 30 px .pm-edge-band divs per
-  enrolled scrollport and appends them to the host grid, including for the zero-width
-  empty dock, whose band reached 30 px past the grid edge; layoutBands() now sets
-  display none on all four bands (write-if-changed) and returns whenever the scrollport
-  measures clientWidth <= 0 or clientHeight <= 0, and the existing per-element
-  ResizeObserver revives them the moment the dock gains real size. (c) PAIRLESS LAST
-  DIVIDER, 12 px: home_main emitted a resize divider on its LAST visible surface, which
-  had no right-hand partner - beginResize found no nextId, gesture.pair stayed null and
-  updateResize fell back to the diluted single-basis path that the pair-transfer
-  rebuild retired - and its decorative 16 by 56 grab-glow pseudo overhung the host's
-  right edge by about 11 px. The row-dock last-sibling divider suppression therefore
-  extends to home_main (pairRow = rowDock || surface.host === "home_main"), so a
-  home_main with N visible surfaces renders exactly N-1 dividers; dock_left and
-  dock_right KEEP their last-surface dividers with this dated disposition, because on
-  the column docks that handle drives the dock track itself through previewResize. The
-  wave-7 diagnosis that blamed the tab silhouette for the residue is also retired: the
-  silhouette's flare box overhangs the START edge, which does not count toward
-  scrollWidth in LTR, so it contributes ZERO horizontal overflow. BELT: overflow clip
-  on BOTH axes for #pm-home-workspace, .pm-home-host-grid and
-  #panel-dashboard.pm-home-owned - none of the three needs auto on either axis, so clip
-  legally destroys them as scroll containers in Chromium and Safari 16+;
-  #panel-dashboard was previously overflow hidden and silently held 26 px of scrollable
-  overflow. SCROLLBARS: the wave-7 host declaration "scrollbar-color: var(--border-light)
-  transparent" is REMOVED with this dated disposition - it beat the scrollbar opt-in
-  list's transparent idle ink and produced an always-visible thumb - and hosts get
-  ID-anchored zeroing instead, "#pm-home-workspace .pm-home-host { scrollbar-width:
-  none; }" plus "#pm-home-workspace .pm-home-host::-webkit-scrollbar { width: 0;
-  height: 0; }". Every host had been opted into the 10 px webkit scrollbar list by the
-  same pm6-bottom-scroll stamp, and on Safari 16 and 17 scrollbar-width is unsupported,
-  so those webkit bars were exactly the space-stealing bars the user reported; the
-  (1,1,x) selectors win by specificity on every engine, order-independent, and are
-  scoped to the HOST element only, so pane-internal scrollers (.pm6-dash-scroll,
-  .pm-home-terminal-body, chat streams, bottom-panel content, and .editor-code's
-  minimap-only policy) keep their existing behaviour. The wave-7 observation that the
-  doubled attribute specificity is REQUIRED against the pm6-bottom-scroll stamp
-  SURVIVES and is reused by the empty-dock padding rule. DELIBERATE DOCUMENTED
-  EXCEPTION: inside the max-width 1320 px media block, home_main returns to
-  overflow-x auto - below that width the min-width floors intentionally stop shrinking
-  surfaces past a readable size, and without the auto about 23 px or more of pane
-  content would be clipped unreachable at 880 px and below; the zero-width scrollbar
-  rules keep even that scroll bar invisible. Verified live at 1920 by 1080:
-  #pm-home-workspace, .pm-home-host-grid, #panel-dashboard and all five hosts report
-  scrollWidth == clientWidth and scrollHeight == clientHeight; forcing scrollLeft = 50
-  on each leaves it at 0; a wheel storm of 8 horizontal plus 8 vertical wheels over the
-  dashboard, the editor tab strip and the terminal produced zero scrollLeft anywhere
-  and the workspace's x stayed 279; the empty right dock measures 0 px wide and its
-  four PM_EDGE bands report display none; home_main shows 2 dividers for 3 visible
-  surfaces. At 1180 px home_main computes overflow-x auto with a zero scrollbar gutter,
-  and returns to the clip path at 1920.
-  Amended 2026-10-09 (DL-180): the transaction, the shared resizer glow and recovery, the four-edge scroll dissolve, the
-  change-gated landing preview, the hysteresis, the latch-based geometric targeting, the invalid_target window exit and
-  the scroll lock now serve panels and tabs in the split tree (F3-630): what moves is a whole panel or a tab, the
-  targets are panel edge bands, strips, the centre's outer edge and the "+N" list, and F3-630 owns the edge bands,
-  thresholds, dwell, hysteresis and motion. Retired with this dated disposition: the five hosts, the host caps (left and
-  right 3, top and bottom 2, floating 4) and host_full, the per-kind fair-share minimums and the host clamp bands (a
-  panel's minimum is F3-635's), floating surfaces and their corner handle, the row-dock size.cross_basis_px track, and
-  the deliberate below-1320 px home_main overflow-x auto exception: the centre never scrolls sideways and narrow windows
-  follow F3-636's ladder.
-  Amended 2026-10-10 (lead ruling L13): a lost pointer capture is a cancel, as DR-066's cancel set says: it commits
-  nothing and restores the exact earlier layout. The 2026-08-12 rule that loss of pointer capture alone is not a
-  cancellation vector is retired.
+canonical_text: |-
+  Panel and tab drag, drop, insertion, reflow and resize use DR-066’s one draft-model pointer transaction and F3-630’s split-tree targets. Pointer movement is preview-only; one changed valid release commits once, without a full re-render or settle flash. An unchanged release dispatches no mutation. Escape, pointercancel, lostpointercapture and an invalid_target window exit cancel and restore the exact earlier layout. A lost pointer capture never commits (lead ruling L13, 2026-10-10).
+  Keep the shared diamond resizers and recovery, four-edge scroll dissolve, change-gated target-footprint landing preview, one reflow wave per changed host or insertion index, geometric latch-based targeting and hysteresis. A pickup that never leaves its source resolves to its original placement; preview growth and moving transforms must not capture the hit-test. Auto-scroll reapplies only when scrolling or pointer movement changes it. Shared scroll-dissolve geometry defers during a held move or resize and catches up once after the gesture.
+  F3-630 owns panel edge bands, tab strips, centre outer-edge and overflow-list targets, thresholds, dwell, hysteresis and motion. Adjacent-panel resize transfers size between the actual pair, respects F3-635’s panel minimum and leaves no dead space; no pairless divider starts a resize. The centre never scrolls sideways, empty or hidden regions create no decorative overflow, pane-internal vertical scrolling remains usable, and narrow windows follow F3-636’s ladder. Reduced Motion retains accurate previews and final geometry without travelling reflow.
+  DL-180 retires the old five-host Home model, per-host surface caps and host_full, host-specific fair-share minimums/clamp bands, floating surfaces and corner handle, row-dock size.cross_basis_px track and the below-1320 px horizontal-scroll exception. Their browser selector, cascade, scroll-band and layout-function repairs are source history, not product implementation requirements.
 gui_related: true
 gui_classification_reason: This unit owns visible layout gestures, previews, resize feedback, scrolling-edge treatment, and recovery.
 split_recommended: false
@@ -814,8 +701,8 @@ acceptance_criteria:
 - "Host scrollbars occupy zero space on every engine (scrollbar-width none plus a zero-size ::-webkit-scrollbar), and the centre never scrolls sideways at any width; the below-1320 px overflow-x exception is retired (amended 2026-10-09, DL-180; F3-636)."
 - "Panels and tabs move with this transaction: nothing dispatches during a drag, a changed release commits one command, and every cancel path restores the exact earlier layout (F3-630)."
 validation_surfaces:
-- "Verify transactional panel/tab gestures: no dispatch during preview, one changed-release command, exact cancel restoration, stable identity and reduced-motion behavior."
-- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
+- "future Verify transactional panel/tab gestures: no dispatch during preview, one changed-release command, exact cancel restoration, stable identity and reduced-motion behavior."
+- "future Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 risk_class: home_gesture_regression
 reasoning_tier: standard
 context_scope: pmconcept7_home_gestures
@@ -825,6 +712,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/01_REQUIREMENTS.jsonl
+- "DL-260 source lineage only (no product API or implementation obligation): The retired Home prototype used PM_EDGE, PM_DRAGEND, pm-resizing, data-pm-home-flip, normalizeMainRowBases, buildDockLatch, syncHostGeometry, layoutBands and .pm-home-host/pm6-bottom-scroll/.pm-edge-band selectors. The August 2026 browser fixes and measured scroll values document that retired implementation only; F3-630/635/636 and DR-066 govern current panel/tab behavior."
 preserved_exact_tokens: [pointercancel, lostpointercapture, four-edge scroll dissolve]
 negative_constraints:
 - Do not dispatch commands, events, or persistence writes on pointermove.
@@ -854,7 +742,7 @@ canonical_text: >-
   docks and in-canvas floating only, treats popup presentation as direct-user-activation
   optional degradation, and falls back honestly when blocked. Amended 2026-08-13 - PM7
   retires the base full-screen chat overlay; every non-docked chat mode routes to the
-  single in-canvas float system (PM_HOME_WORKSPACE.popOutChat), which shows no scrim,
+  single in-canvas float system (retired concept implementation), which shows no scrim,
   cannot cover the title bar, and cannot produce a second chat surface. Floating is never
   a boot state; persisted floating surfaces demote to last_docked_host at boot with a
   storage.boot_demote_floating receipt.
@@ -886,9 +774,9 @@ acceptance_criteria:
 - "In the desktop app Pop out opens the one chat in its own window and Dock back returns it to its column; no panel or tab floats (amended 2026-10-09, DL-180; F3-637)."
 - "The web client shows no Pop out for the chat, and the chat stays in its column (amended 2026-10-10, lead ruling L6; F3-637)."
 validation_surfaces:
-- "Verify the native pop-out and web-client boundaries of F3-504/F3-637, including one chat instance and no web-client Chat Pop out."
-- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
-- python3 scripts/pm-plan-index.py validate
+- "future Verify the native pop-out and web-client boundaries of F3-504/F3-637, including one chat instance and no web-client Chat Pop out."
+- "future Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
+- "scripts/pm-plan-index.py"
 risk_class: home_platform_claim_drift
 reasoning_tier: standard
 context_scope: pmconcept7_home_platform
@@ -899,6 +787,7 @@ node_compile_hint:
 source_lineage:
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/06_WEB_SLINT_FEASIBILITY.md
 - "Plans/Decision_Log.md#DL-187"
+- "DL-260 source lineage only (no product API or implementation obligation): PM_HOME_WORKSPACE.popOutChat was the old concept chat float adapter, superseded by DL-180/F3-637."
 preserved_exact_tokens: [Slint 1.17.1, Wayland, direct user activation, in-canvas floating]
 negative_constraints:
 - Do not claim OS docking or unrestricted popup placement as a web guarantee.

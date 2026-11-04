@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29339-L29804
+Source lines: L29228-L29683
 
-Source SHA256: `0b96d40c3ed433887eb3f1a1f7fe7ffc9c1e6e407d4cb1a0f6b08eac4e3cc433`
+Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
 
 ---
 
@@ -387,22 +387,9 @@ plan_unit_id: F3-417
 unit_type: decision
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia as the
-  only compiled renderer on Windows, Linux, and macOS, extended by Puppet Master's Skia renderer extensions (F3-582);
-  selection order is explicit SLINT_BACKEND override, persisted preference, Winit + Skia on the GPU, then Winit +
-  Skia CPU (winit-skia-software), and FemtoVG and Slint's separate software renderer are retired (DL-139); on a
-  software GPU adapter the Skia CPU raster is always used, even over an explicit GPU choice, with a warning that no
-  GPU was detected, and the CPU raster is a supported, tested path (F3-033). The first
-  GUI build includes native desktop plus a Rust Leptos web GUI compiled to WebAssembly, rendered in the browser with
-  browser elements and CSS, and served by the trusted local daemon, rather than React, Tauri, or TypeScript (F3-583).
-  Browser-only WASM cannot claim PTY, filesystem, process/container, CEF, tray, native-window, or raw OS drag/drop
-  authority; those OS-owned capabilities route through the trusted local daemon with authenticated local origin or
-  pairing, origin/CSRF protection, capability probe, permission request, receipt/audit event, redaction, degraded
-  reason, and deterministic agent-test hooks. Web capability state values are native_full, web_supported_direct,
-  web_supported_via_trusted_local_daemon, web_simulated_or_degraded, and web_disabled. Production GUI source uses
-  bundled SVGs through stable icon_id entries and must not use emoji, emoji-like pictographs, Unicode pseudo-icons,
-  network/CDN icons, or icon-only controls without accessible labels and non-icon state text.
+canonical_text: |-
+  Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia as the only compiled renderer on Windows, Linux, and macOS, extended by Puppet Master's Skia renderer extensions (F3-582); selection order is explicit SLINT_BACKEND override, persisted preference, Winit + Skia on the GPU, then Winit + Skia CPU (winit-skia-software), and FemtoVG and Slint's separate software renderer are retired (DL-139); on a software GPU adapter the Skia CPU raster is always used, even over an explicit GPU choice, with a warning that no GPU was detected, and the CPU raster is a supported, tested path (F3-033). The first GUI build includes native desktop plus a Rust Leptos web GUI compiled to WebAssembly, rendered in the browser with browser elements and CSS, and served by the trusted local daemon, rather than React, Tauri, or TypeScript (F3-583). Browser-only WASM cannot claim PTY, filesystem, process/container, CEF, tray, native-window, or raw OS drag/drop authority; those OS-owned capabilities route through the trusted local daemon with authenticated local origin or pairing, origin/CSRF protection, capability probe, permission request, receipt/audit event, redaction, degraded reason, and deterministic agent-test hooks. Web capability state values are native_full, web_supported_direct, web_supported_via_trusted_local_daemon, web_simulated_or_degraded, and web_disabled. Production GUI source uses bundled SVGs through stable icon_id entries and must not use emoji, emoji-like pictographs, Unicode pseudo-icons, network/CDN icons, or icon-only controls without accessible labels and non-icon state text.
+  The web GUI development workflow keeps the local trusted daemon plus static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks and fast rebuild/reload. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode.
 gui_related: true
 gui_classification_reason: This unit locks GUI platform, renderer, web GUI, visible capability, and icon policy decisions.
 split_recommended: false
@@ -414,16 +401,17 @@ depends_on:
 - ATS-023
 unblocks: []
 acceptance_criteria:
-- Active Slint toolkit references in live owner docs and Spec_Lock use Slint 1.17.1, while old versions remain only in audit/source-lineage history.
-- Native renderer fallback order is explicit and preserves SLINT_BACKEND override authority before persisted preference and compiled defaults, except that a software GPU adapter always gets the Skia CPU raster with a no-GPU warning (F3-033).
-- Web GUI capability claims use the approved capability states and route OS-owned capabilities through the trusted local daemon.
-- Production icons use bundled SVG icon_id manifest entries, accessible labels, fallback text, and non-icon state text; emoji/pictographic pseudo-icons and remote icon sources are forbidden.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this decision.
+- "Active Slint toolkit references in live owner docs and Spec_Lock use Slint 1.17.1, while old versions remain only in audit/source-lineage history."
+- "Native renderer fallback order is explicit and preserves SLINT_BACKEND override authority before persisted preference and compiled defaults, except that a software GPU adapter always gets the Skia CPU raster with a no-GPU warning (F3-033)."
+- "Web GUI capability claims use the approved capability states and route OS-owned capabilities through the trusted local daemon."
+- "Production icons use bundled SVG icon_id manifest entries, accessible labels, fallback text, and non-icon state text; emoji/pictographic pseudo-icons and remote icon sources are forbidden."
+- "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this decision."
+- "Fixture mode is present only in development/test builds beside the trusted daemon/static web route, browser smoke tests, screenshots/state capture and deterministic hooks; there is no prototype scenario picker or product run-mode switch."
+- "Fixture inputs and resulting captures are labelled test evidence, never production admission, owner state, readiness, production receipts or proof that real work ran. Production configuration cannot enable fixture mode."
 validation_surfaces:
-- python3 scripts/pm-gui-asset-policy.py
-- python3 scripts/pm-plans-verify.py validate-gui-asset-policy
-- python3 scripts/pm-plans-verify.py verify-spec-lock
-- python3 scripts/pm-plan-index.py validate
+- "scripts/pm-gui-asset-policy.py"
+- "scripts/pm-plans-verify.py"
+- "scripts/pm-plan-index.py"
 risk_class: gui_platform_currentness_drift
 reasoning_tier: high
 context_scope: fable_20260706_gui_platform_currentness_repair
@@ -460,13 +448,15 @@ preserved_exact_tokens:
 - "web_simulated_or_degraded"
 - "web_disabled"
 - "icon_id"
-- "no emoji"
+- "bundled SVGs"
 negative_constraints:
 - "Do not create WorkNodes, NodeSeeds, queues, implementation files, runtime launches, or production build artifacts."
 - "Do not allow browser-only WASM to pretend it directly owns OS capabilities."
 - "Do not use React, Tauri, or TypeScript for the Leptos web GUI."
 - "Do not compile or ship FemtoVG or Slint's separate software renderer in desktop builds."
 - "Do not use emoji, emoji-like pictographs, Unicode pseudo-icons, network/CDN icons, or icon-only state carriers in production GUI source."
+- "Do not add a prototype scenario picker or a fixture-backed product run mode."
+- "Do not admit fixture data as production state or award readiness, production receipt or real-work credit to fixtures."
 compatibility_only_notes:
 - "Slint 1.17.0, Slint 1.15.1, PMConcept terminal transcripts, and FABLE pre-repair wording are source-lineage/history only after this repair."
 stale_retired_dispositions:

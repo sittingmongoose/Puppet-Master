@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L8590-L9217
+Source lines: L8590-L9218
 
-Source SHA256: `2754b5f74923b64eac32b3be733c381bed732e178f5d6104a35300b28e12f249`
+Source SHA256: `efda79037f95a3ba233327420fed7f131b58c79ce69237f6f5c54d70d03a7d3f`
 
 ---
 
@@ -363,7 +363,7 @@ canonical_text: 'D8–D13, G5–G7/G10. UCC-210 declares cmd.work.stop, cmd.work
   and ScheduledMessageCancelResult plus the scheduling owner’s closed error code. Its admitted source_surface
   vocabulary is unchanged; Work delegates to the scheduling-owned cancellation context rather than inventing
   a source or PID target. Precise per-command profiles and fixtures bind these distinctions; no owner adopts
-  a new PM7 result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider
+  a new PM7 result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider
   gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure
   in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint
   or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At
@@ -405,7 +405,7 @@ acceptance_criteria:
 - Prompt input is current safe yes/no only, quit defaults keep-running, clear is view-local and candidate events
   remain non-emitting.
 - All declared local prefixes write no runtime state and release focus/subscriptions/copies on close.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process
   and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s
   dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning
   to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000
@@ -423,10 +423,10 @@ acceptance_criteria:
   refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
   static closure.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm7-build-check.py
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "scripts/pm7-build-check.py"
+- "scripts/pm-plans-verify.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -441,6 +441,7 @@ source_lineage:
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
 - source_ref:chat:2026-11-03-projects-pass2-approved
+- "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

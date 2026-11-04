@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33931-L34635
+Source lines: L33804-L34509
 
-Source SHA256: `0b96d40c3ed433887eb3f1a1f7fe7ffc9c1e6e407d4cb1a0f6b08eac4e3cc433`
+Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
 
 ---
 
@@ -415,7 +415,7 @@ canonical_text: >-
   Amended 2026-10-29 (D7; PM7): Its ordering, lifecycle words and stale strip are reused by F3-664’s platform
   panel and Home Agents board. The rail remains deep management; all named product owners are included, no
   Orchestrator-only narrowing. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): the
-  rail and Home board consume DR-078’s PM7_WORK_UI.list/agentGroup/agentSummary instead of a second agent list
+  rail and Home board consume DR-078’s shared owner-backed row/filter/summary renderer instead of a second agent list
   or clock. The rail keeps this deep-view lineage/queue contract and four shelves; the Home frame and filter
   keep their own layout. State words, needs-you identity and row actions are the same projection, with
   spelled-out rail ages and hidden-view teardown/catch-up.
@@ -432,8 +432,8 @@ acceptance_criteria:
 - "The panel renders no file-locks section; only declared touch sets and file-activity claims appear."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -446,6 +446,7 @@ source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
 - "Plans/orchestrator-subagent-integration.md (OSI-175, OSI-190, OSI-425..OSI-432 registry-mirror and tracking canon)"
 - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
+- "DL-260 source lineage only (no product API or implementation obligation): PM7_WORK_UI.list/agentGroup/agentSummary were concept Work renderer adapters."
 preserved_exact_tokens:
 - "queued"
 - "running"

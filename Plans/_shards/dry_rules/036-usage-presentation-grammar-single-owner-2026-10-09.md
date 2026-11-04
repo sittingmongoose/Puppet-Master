@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3421-L3499
+Source lines: L3421-L3500
 
-Source SHA256: `539b947d20d0dc8ba25b1f1f61ed1d07cd67d31d5719682ed7a0198209c20321`
+Source SHA256: `c1ad5fac7fc68a06815557967c3e4b530528cf33e5e4a8dbeb1ca56ad50f781b`
 
 ---
 
@@ -39,7 +39,7 @@ canonical_text: >-
   owner's transaction (SSYS-009, SSYS-018), and the board transaction with Widget_System WS-019.
   DR-038 and DR-039 stand: Usage admits no shared-runtime role, creates no run-out projection, and
   keeps one Usage authority, one widget-layout authority and one command language. L8 B, PM7 Step4,
-  2026-10-30: Usage PMU.menu delegates open/close/resize/keep to DR-079’s one sprout owner; it does not keep a
+  2026-10-30: Usage menus delegate their open/close, resize and retention lifecycle to DR-079’s one sprout owner; it does not keep a
   Usage-specific spring, close or NieR motion copy.
 gui_related: true
 gui_classification_reason: "Fixes one owner for the Usage page's presentation grammar and points it at the owners it reuses."
@@ -52,8 +52,8 @@ acceptance_criteria:
   - "No Usage presentation unit restates the menu, hover, motion-voice, sound, NieR or font owners' rules; each cites its owner."
   - "No Usage unit keeps a copy of an auto-switch value or of the board transaction."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: duplicate_presentation_authority
 reasoning_tier: high
 context_scope: usage_redesign_gui
@@ -70,6 +70,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-179"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md (SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/R4-plans-20261009.md section 2 (SHA-256 e485c9b971d498774b7bd9b27e85f7f007790235e323dd8a989c51d44b5edad0)"
+  - "DL-260 source lineage only (no product API or implementation obligation): PMU.menu was the Usage concept menu adapter."
 preserved_exact_tokens:
   - "F3-628"
   - "DR-043"

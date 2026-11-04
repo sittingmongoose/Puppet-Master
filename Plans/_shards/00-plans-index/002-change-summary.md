@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L76-L265
 
-Source SHA256: `1624eec0543388e6972f09757b3492a2465f01e3aab12c4f1b536699f5cc50cf`
+Source SHA256: `35dcca5cb0872c351c11326317703d71b439d9913be7f82355aa295bfc97a3be`
 
 ---
 
@@ -28,15 +28,15 @@ Source SHA256: `1624eec0543388e6972f09757b3492a2465f01e3aab12c4f1b536699f5cc50cf
 - 2026-10-30: PM7 companion review fix1 (D7/D8/D13, G4/D10, S1/S2/S6, A5/PC2) separates local owner selection from thread/page opening, closes Copy/port/schedule-cancel/Rerun dispositions, adds reverse control and preset parity guards, closes local payload branches, and names the chat Working dots face. Exact Project/System visibility tokens and the title lane’s final 1.95 s Working export manifest are reconciled; no GUI edit or native-proof promotion.
   ContractRef: ContractName:Plans/Commands_System.md#CS-105, ContractName:Plans/Commands_System.md#CS-106, ContractName:Plans/Wiring_Matrix.md#WM-097, ContractName:Plans/FinalGUISpec.md#F3-660
 
-- 2026-10-30: PM7 Step4 closes source-name alignment at final GUI e9b15abc64: D7 rail/Home Agents share PM7_WORK_UI.list, D2/D7 composer dock producers reuse Processes navigation or local Subagents selection, G4 Resources adds Time and 2 s visible-only sampling, O6/O10/O12 preserve silent hover and drawn Ready handoff, and SND1 uses the shared sound_render/sound_catalog/sound_board Pip tooling. L8 B adds shrinking-height settle and editor overflow consumers to the one sprout owner. G9/C5 records the activity lane’s actual context-ring border-tiling/clear-disc cause and isolated ring layer in ACD-506/DL-254. Native certification and governance reseal remain separate.
+- 2026-10-30: Historical source lineage only, not a product API or implementation contract: PM7 Step4 closes source-name alignment at final GUI e9b15abc64: D7 rail/Home Agents share PM7_WORK_UI.list, D2/D7 composer dock producers reuse Processes navigation or local Subagents selection, G4 Resources adds Time and 2 s visible-only sampling, O6/O10/O12 preserve silent hover and drawn Ready handoff, and SND1 uses the shared sound_render/sound_catalog/sound_board Pip tooling. L8 B adds shrinking-height settle and editor overflow consumers to the one sprout owner. G9/C5 records the activity lane’s actual context-ring border-tiling/clear-disc cause and isolated ring layer in ACD-506/DL-254. Native certification and governance reseal remain separate.
   ContractRef: ContractName:Plans/DRY_Rules.md#DR-078, ContractName:Plans/DRY_Rules.md#DR-079, ContractName:Plans/assistant-chat-design.md#ACD-476, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-663, ContractName:Plans/FinalGUISpec.md#F3-664, ContractName:Plans/Wiring_Matrix.md#WM-097
 
 
 
-- 2026-10-30: PM7 Step4 review fixes at integration 4c49e10567 align L8 B's shared sprout origin/shown/instant/fade inputs and PM6_SPROUT.morph, plus A4 A's Friendly notification Pip tile and adjacent kind mark. The loader M2 source census confirms the reported obsolete spinner selectors were removed; no remaining exception is added to DR-077.
+- 2026-10-30: Historical source lineage only, not a product API or implementation contract: PM7 Step4 review fixes at integration 4c49e10567 align L8 B's shared sprout origin/shown/instant/fade inputs and PM6_SPROUT.morph, plus A4 A's Friendly notification Pip tile and adjacent kind mark. The loader M2 source census confirms the reported obsolete spinner selectors were removed; no remaining exception is added to DR-077.
   ContractRef: ContractName:Plans/DRY_Rules.md#DR-079, ContractName:Plans/FinalGUISpec.md#F3-460, ContractName:Plans/FinalGUISpec.md#F3-660
 
-- 2026-10-30: PM7 Step4 reconciles full GUI integration bbb72b6153 with the stable Plans contracts: B5 dirty Home buffers / Unsaved changes, the read-only System status popover and owner-Settings routes, actual shared Pip/loader/project/work/editor APIs and release asset names. F3-662 records all-tier Swing ×1 / Think ×1.15 / Hop ×0.78 and accepted 14 px busy-button / 16 px thinking sizes (L-1/L-2). DR-079/F3-461 require the live inbox, PMMenu/File Manager and rail resizing to use the one sprout owner, with no inbox exemption. Source-name alignment does not certify native runtime, audio, rendering or governance.
+- 2026-10-30: PM7 Step4 reconciles full GUI integration bbb72b6153 with the stable Plans contracts: B5 dirty Home buffers / Unsaved changes, the read-only System status popover and owner-Settings routes, shared Pip/loader/project/work/editor ownership and release asset names. F3-662 records all-tier Swing ×1 / Think ×1.15 / Hop ×0.78 and accepted 14 px busy-button / 16 px thinking sizes (L-1/L-2). DR-079/F3-461 require the live inbox, File Manager menus and rail resizing to use the one sprout owner, with no inbox exemption. Source-name alignment does not certify native runtime, audio, rendering or governance.
   ContractRef: ContractName:Plans/Wiring_Matrix.md#WM-097, ContractName:Plans/FinalGUISpec.md#F3-662, ContractName:Plans/FinalGUISpec.md#F3-664, ContractName:Plans/DRY_Rules.md#DR-079
 
 
