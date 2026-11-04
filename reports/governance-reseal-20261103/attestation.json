@@ -1,0 +1,702 @@
+{
+  "authority": "Jared assigned this governance reseal in chat on 2026-11-03 (asked who should do it: \"whoever you want. Opus 5.5 xhigh is fine\"), after the PM7 small landing reported governance staleness. It was sequenced after the claude-projects-refresh landing (main 4dbe63c96c) so one reseal covers both. The bounded PNC-019 receipt registry-pin refresh follows Plans/Decision_Log.md#DL-300 ('the checkpoint evidence and the readiness receipt are refreshed by the next reseal').",
+  "baseline_commit": "8895b233be5a2c2fafd60db51b08a1d44a76b9e6",
+  "baseline_sha256": "a243b984f069871760252503900c71a210d397a67d939d8ef85318ea25133d2c",
+  "changed_locked_files": [
+    {
+      "commits": [],
+      "hash_at_previous_seal": "895c81e74f98807ec72c5e995109304f2f661c380a210fe6a0c015c8b1839559",
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+      "sealed_sha256": "11904169ccc31aa82bf3e5a5d48031cdd36061a5b414c068562d59fa529a9802"
+    },
+    {
+      "commits": [],
+      "hash_at_previous_seal": "49ce40e2816b155a738b7f9278deb8b1de105ec3f8204cfa79e8291cad4b4f29",
+      "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+      "sealed_sha256": "585827e76b2a53b74061b39e40b0734a27356cf225963da94b0e5d1020d0cc8c"
+    },
+    {
+      "commits": [
+        "672147dfc67ca9e1ed428341bc821aa09e6fe814",
+        "f41a598213d5778d541a806a4f474033e8ee476c",
+        "08011120711dd093ea3d5d3f8fcf8e4607bae025",
+        "9d31647f83a270b3434c2054a04e97a9f664f0bf",
+        "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
+        "4ebf8691fa0e570ad3747bfc5c45c32c842766e3",
+        "1d84dffe0b15028803374295627ea4433952be9b",
+        "d330725bdca3221482ee0d6d01092e0a82c7c008",
+        "a9d07f5ec71cdf8a6cefd9f785afabe5e3556d6e",
+        "84faebbb8c3ac85c7594dad2dff4511f4ae6cb16",
+        "9a205b1c162b3fa4039558f75b32017d4ed2d443",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "69d974d5557baa42ffc676b99c2ef4d15eb68be9",
+        "189e38602a513dd56438c1a7d6639ed064ec4551",
+        "afcf5a199d685ed1290dd2bdd1f2a9bc253dc210",
+        "a51a18c2e19a82d6152ac21f58310b1077407928",
+        "3d4ce5c0d35222bd1f214b80043d934c218fed74",
+        "0e16a94bc1b293f8958b7808ffb675d7d037c20d",
+        "17e87e52e091ce052bdd529606e68132dde9f7d2",
+        "a447a7c7e08b37ccebe61da95f23b12cca3c832e",
+        "b0c1a23758e52a23eeeceb921be30cbd1f939c95",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "1ec1f1f41944c28d7735aaacdc844ff917f428a5",
+        "ad73d6fe6d97ad8513760be09db962127274ed71",
+        "4be74f2f94da9b7bfd263572f542e488b1eb9b08",
+        "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "4dc74aa46f5b05ecacf22e4e959b46181cd996ac",
+        "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
+        "b3ea621573c5a4c99834a383e76ee9ec183df9e4",
+        "d0f9a0e28ceaeb380c5a462df95e5429e0ee7331",
+        "4a91fa1335374263faef1cc575c2cf32aa4b3955",
+        "8d63d284ac77b26422a5ac8211e65217dacda0ab",
+        "e2c3aceb5c5a86e5ab796bb075b3b018c98699d6",
+        "11ff2e2216fc334d83598ccbdb9a9095d25b502b",
+        "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
+        "58887ead091b89599b8089da1f976b66461d52e6",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "c0a11452b731fe08dfb98b2b77860a2dd5346414c83666e1bd5fdc1bade5a009",
+      "path": "Plans/00-plans-index.md",
+      "sealed_sha256": "07eb6191df0e1330a806aae38f3763eeb348839e8e108a5209429d81dabe8245"
+    },
+    {
+      "commits": [
+        "7a17526dc25a167c9c1a02a7a38ab6cb47ca8aa8",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec"
+      ],
+      "hash_at_previous_seal": "aabdd384375f6ff5f75eac1ad5085ed9af05a5cebcf0dcbf4b5b3462eef1935e",
+      "path": "Plans/Architecture_Invariants.md",
+      "sealed_sha256": "480fac0bed813d64ffbc35f54515ef098785f04fd1b0893cdf132bba61a93e2b"
+    },
+    {
+      "commits": [
+        "672147dfc67ca9e1ed428341bc821aa09e6fe814",
+        "f41a598213d5778d541a806a4f474033e8ee476c",
+        "4ebf8691fa0e570ad3747bfc5c45c32c842766e3",
+        "1d84dffe0b15028803374295627ea4433952be9b",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "78af23f393d730766d7a354cea57bdcf34505bea"
+      ],
+      "hash_at_previous_seal": "e225838e9aa2d5457f9f80a75fa0d5c5ec63e8cd671db59216c0de3884d65f03",
+      "path": "Plans/Automated_Testing_System.md",
+      "sealed_sha256": "38e77a608403e7e75070518a84d65993800f9cbba88822387e2f4f888cb925b2"
+    },
+    {
+      "commits": [
+        "8b2b67a7b3881c784bf9e393bdbfa06bd3b8146d",
+        "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
+        "1d84dffe0b15028803374295627ea4433952be9b",
+        "9a205b1c162b3fa4039558f75b32017d4ed2d443",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "afcf5a199d685ed1290dd2bdd1f2a9bc253dc210",
+        "3d4ce5c0d35222bd1f214b80043d934c218fed74",
+        "0e16a94bc1b293f8958b7808ffb675d7d037c20d",
+        "17e87e52e091ce052bdd529606e68132dde9f7d2",
+        "a447a7c7e08b37ccebe61da95f23b12cca3c832e",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "1ec1f1f41944c28d7735aaacdc844ff917f428a5",
+        "ad73d6fe6d97ad8513760be09db962127274ed71",
+        "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "4dc74aa46f5b05ecacf22e4e959b46181cd996ac",
+        "b3ea621573c5a4c99834a383e76ee9ec183df9e4",
+        "d0f9a0e28ceaeb380c5a462df95e5429e0ee7331",
+        "4a91fa1335374263faef1cc575c2cf32aa4b3955",
+        "8d63d284ac77b26422a5ac8211e65217dacda0ab",
+        "11ff2e2216fc334d83598ccbdb9a9095d25b502b",
+        "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
+        "d934851c079e35a5c08871ceb0f677d1edeae86c",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3",
+        "27e2c815c4d2064da312f9a9b5beda524f0a6c84",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "bf5aacea10efea280f2920c2b492f0297a15cf3f8d671787a407a41c7ec2822e",
+      "path": "Plans/Commands_System.md",
+      "sealed_sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+    },
+    {
+      "commits": [
+        "71d3588d9c58874953a4a815cf1521f016eb42ed",
+        "4e4cd030ff0453e0b0e3631cc0f360f22880ce1d"
+      ],
+      "hash_at_previous_seal": "4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae",
+      "path": "Plans/Contracts_V0.md",
+      "sealed_sha256": "dab0151af0da2451cf27ca31cecedc40607a0a6c9ab9ad880754668fe5bb5722"
+    },
+    {
+      "commits": [
+        "672147dfc67ca9e1ed428341bc821aa09e6fe814",
+        "f41a598213d5778d541a806a4f474033e8ee476c",
+        "1d84dffe0b15028803374295627ea4433952be9b",
+        "17e87e52e091ce052bdd529606e68132dde9f7d2",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3"
+      ],
+      "hash_at_previous_seal": "ac2de2788f202b57b9bd6d22b69a7406ed4d31a733f949b5dec11bd2cf041188",
+      "path": "Plans/Crosswalk.md",
+      "sealed_sha256": "14fd3cdb089efc95ee176d37639d858cfb4ec7bfd71652645985dad5bde7233b"
+    },
+    {
+      "commits": [
+        "672147dfc67ca9e1ed428341bc821aa09e6fe814",
+        "f41a598213d5778d541a806a4f474033e8ee476c",
+        "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
+        "4ebf8691fa0e570ad3747bfc5c45c32c842766e3",
+        "691f51c37fa2fe346e0579245b72c2c905de0fa0",
+        "1d84dffe0b15028803374295627ea4433952be9b",
+        "d330725bdca3221482ee0d6d01092e0a82c7c008",
+        "a9d07f5ec71cdf8a6cefd9f785afabe5e3556d6e",
+        "84faebbb8c3ac85c7594dad2dff4511f4ae6cb16",
+        "9a205b1c162b3fa4039558f75b32017d4ed2d443",
+        "4c974773cb8d0a5d958d1fdb5fb92285377fe270",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "69d974d5557baa42ffc676b99c2ef4d15eb68be9",
+        "189e38602a513dd56438c1a7d6639ed064ec4551",
+        "afcf5a199d685ed1290dd2bdd1f2a9bc253dc210",
+        "a51a18c2e19a82d6152ac21f58310b1077407928",
+        "3d4ce5c0d35222bd1f214b80043d934c218fed74",
+        "0e16a94bc1b293f8958b7808ffb675d7d037c20d",
+        "17e87e52e091ce052bdd529606e68132dde9f7d2",
+        "b0c1a23758e52a23eeeceb921be30cbd1f939c95",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "ad73d6fe6d97ad8513760be09db962127274ed71",
+        "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "8d63d284ac77b26422a5ac8211e65217dacda0ab",
+        "e2c3aceb5c5a86e5ab796bb075b3b018c98699d6",
+        "11ff2e2216fc334d83598ccbdb9a9095d25b502b",
+        "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3",
+        "27e2c815c4d2064da312f9a9b5beda524f0a6c84",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "3412358c99fb9da8e72f992c957aac928d158366ee4ec18b5af39c05e6da4328",
+      "path": "Plans/DRY_Rules.md",
+      "sealed_sha256": "90856a3fdd8655ea76d4a58848b3db3de5d72cefa503ae4d2015ac3142100a9d"
+    },
+    {
+      "commits": [
+        "7a17526dc25a167c9c1a02a7a38ab6cb47ca8aa8",
+        "4c974773cb8d0a5d958d1fdb5fb92285377fe270",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "c2a3acc3b4d4c06c9a24362b054984e8911d4a15",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "430c28b61f39db1225cbb82bb47ef813a3ad0c185cf02e337b3da89360e8303f",
+      "path": "Plans/Executor_Protocol.md",
+      "sealed_sha256": "e9b534b288cf26f8491197a8298235235d65c6627a7e4d86153934d9f313a8ca"
+    },
+    {
+      "commits": [
+        "4e4cd030ff0453e0b0e3631cc0f360f22880ce1d",
+        "08011120711dd093ea3d5d3f8fcf8e4607bae025",
+        "9d31647f83a270b3434c2054a04e97a9f664f0bf",
+        "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
+        "4ebf8691fa0e570ad3747bfc5c45c32c842766e3",
+        "691f51c37fa2fe346e0579245b72c2c905de0fa0",
+        "1d84dffe0b15028803374295627ea4433952be9b",
+        "84faebbb8c3ac85c7594dad2dff4511f4ae6cb16",
+        "9a205b1c162b3fa4039558f75b32017d4ed2d443",
+        "4c974773cb8d0a5d958d1fdb5fb92285377fe270",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "69d974d5557baa42ffc676b99c2ef4d15eb68be9",
+        "189e38602a513dd56438c1a7d6639ed064ec4551",
+        "afcf5a199d685ed1290dd2bdd1f2a9bc253dc210",
+        "a51a18c2e19a82d6152ac21f58310b1077407928",
+        "3d4ce5c0d35222bd1f214b80043d934c218fed74",
+        "0e16a94bc1b293f8958b7808ffb675d7d037c20d",
+        "17e87e52e091ce052bdd529606e68132dde9f7d2",
+        "b0c1a23758e52a23eeeceb921be30cbd1f939c95",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "ad73d6fe6d97ad8513760be09db962127274ed71",
+        "4be74f2f94da9b7bfd263572f542e488b1eb9b08",
+        "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "4dc74aa46f5b05ecacf22e4e959b46181cd996ac",
+        "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
+        "b3ea621573c5a4c99834a383e76ee9ec183df9e4",
+        "d0f9a0e28ceaeb380c5a462df95e5429e0ee7331",
+        "4a91fa1335374263faef1cc575c2cf32aa4b3955",
+        "8d63d284ac77b26422a5ac8211e65217dacda0ab",
+        "e2c3aceb5c5a86e5ab796bb075b3b018c98699d6",
+        "11ff2e2216fc334d83598ccbdb9a9095d25b502b",
+        "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
+        "c2a3acc3b4d4c06c9a24362b054984e8911d4a15",
+        "58887ead091b89599b8089da1f976b66461d52e6",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3",
+        "969e41d86845263898f0a46b5bf6d6df2f7a3ea6",
+        "27e2c815c4d2064da312f9a9b5beda524f0a6c84",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "f0e476c92bcea5670fd72f18cd221cbbe9683e184a1695ba6f4ff12823b3de74",
+      "path": "Plans/FinalGUISpec.md",
+      "sealed_sha256": "04b0e5825558c0e36a1503209d61dcf663cb47ecf0ad6728e3475b0e1f88516a"
+    },
+    {
+      "commits": [
+        "5dfbb6fb8015baf393ab80f5c21dcd2f3527ab8b"
+      ],
+      "hash_at_previous_seal": "3109298d54ea966d7161ce851efa826bbb71ce09feba86cc2cc2b79fdaa307a2",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "sealed_sha256": "d67b62830013f496d67e925f36cb00eea849875c94a5921af311ae8f29bd5271"
+    },
+    {
+      "commits": [
+        "672147dfc67ca9e1ed428341bc821aa09e6fe814",
+        "f41a598213d5778d541a806a4f474033e8ee476c",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "b03b5355b54fa0ae3150e96f1399007fe08bd4597678386f0128909868260541",
+      "path": "Plans/Glossary.md",
+      "sealed_sha256": "ffdbb0c4c8fff711775c827f315e7a474fc12cdd7fced4e34b2521c2ca5213b4"
+    },
+    {
+      "commits": [
+        "71d3588d9c58874953a4a815cf1521f016eb42ed",
+        "7a17526dc25a167c9c1a02a7a38ab6cb47ca8aa8",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "330751dd992857de46503fb4e28371689feafad50c381e37004042f8d2aa9299",
+      "path": "Plans/Goal_Runtime_System.md",
+      "sealed_sha256": "340679f1e0852d0ad5ef0345415686be14f53b12677402812d37989477a39c34"
+    },
+    {
+      "commits": [
+        "2938ccc84a097a863a27e5a278a6762288056e76",
+        "84faebbb8c3ac85c7594dad2dff4511f4ae6cb16",
+        "9a205b1c162b3fa4039558f75b32017d4ed2d443",
+        "ad73d6fe6d97ad8513760be09db962127274ed71"
+      ],
+      "hash_at_previous_seal": "704b18faa30f9444c416381a799fb68af95c88f4d36656440cb52aa6574d32ba",
+      "path": "Plans/Models_System.md",
+      "sealed_sha256": "98cedbe72059189d8dedef8480350441120a92631e6e4ef4f973487aefcf68c4"
+    },
+    {
+      "commits": [
+        "672147dfc67ca9e1ed428341bc821aa09e6fe814",
+        "2938ccc84a097a863a27e5a278a6762288056e76",
+        "9a205b1c162b3fa4039558f75b32017d4ed2d443",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "17e87e52e091ce052bdd529606e68132dde9f7d2",
+        "ad73d6fe6d97ad8513760be09db962127274ed71"
+      ],
+      "hash_at_previous_seal": "54dbff995ab89178a29785c136fa5254f53c7a5c8d52255c77d9902d84b3ca14",
+      "path": "Plans/Multi-Account.md",
+      "sealed_sha256": "c1f742b7ab190c2a0017706d121f6618049464b99258d0c9aec504c33a154b8a"
+    },
+    {
+      "commits": [
+        "7a17526dc25a167c9c1a02a7a38ab6cb47ca8aa8"
+      ],
+      "hash_at_previous_seal": "4dd841cf723c7a8898c5c3bbf8c29540623152ebc4ce61cf95a8ee2243db8c70",
+      "path": "Plans/PRD_Builder.md",
+      "sealed_sha256": "26a07a9fe4ca1c3262915145e219cd0db5151f4143bcfc1e4bab67d7b917afdb"
+    },
+    {
+      "commits": [
+        "7a17526dc25a167c9c1a02a7a38ab6cb47ca8aa8"
+      ],
+      "hash_at_previous_seal": "ffcff1df11050493627817115b7766d297f0c5cfd634baa071b510062e5405d3",
+      "path": "Plans/Plan_Document_System.md",
+      "sealed_sha256": "4fbd21cbfcd673bd63bcc2ca3802d6fb78545764dd8bd13a7fb6060e78926cf1"
+    },
+    {
+      "commits": [
+        "7a17526dc25a167c9c1a02a7a38ab6cb47ca8aa8"
+      ],
+      "hash_at_previous_seal": "244ef6d88c377b3416c039b2b877204fbb152accf376f3ac8bc21b84f30df2fd",
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "sealed_sha256": "6e6004f19709d7c9df7c211b786fbfa97cfa3e1dcf11e6befbf69fb621e7a77b"
+    },
+    {
+      "commits": [
+        "7a17526dc25a167c9c1a02a7a38ab6cb47ca8aa8",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec"
+      ],
+      "hash_at_previous_seal": "356d0b9f03bff75f1bd2b61c22d380c534a3624375c0b1868086a2122e768ffb",
+      "path": "Plans/Planning_Ledger_System.md",
+      "sealed_sha256": "ea3396b615c786f56c2d4703fe14fd76f7963eb5964e596a02fdfe015da3c5a9"
+    },
+    {
+      "commits": [
+        "672147dfc67ca9e1ed428341bc821aa09e6fe814",
+        "5dfbb6fb8015baf393ab80f5c21dcd2f3527ab8b",
+        "08011120711dd093ea3d5d3f8fcf8e4607bae025",
+        "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
+        "691f51c37fa2fe346e0579245b72c2c905de0fa0",
+        "1d84dffe0b15028803374295627ea4433952be9b",
+        "d330725bdca3221482ee0d6d01092e0a82c7c008",
+        "a9d07f5ec71cdf8a6cefd9f785afabe5e3556d6e",
+        "84faebbb8c3ac85c7594dad2dff4511f4ae6cb16",
+        "9a205b1c162b3fa4039558f75b32017d4ed2d443",
+        "69d974d5557baa42ffc676b99c2ef4d15eb68be9",
+        "189e38602a513dd56438c1a7d6639ed064ec4551",
+        "afcf5a199d685ed1290dd2bdd1f2a9bc253dc210",
+        "3d4ce5c0d35222bd1f214b80043d934c218fed74",
+        "0e16a94bc1b293f8958b7808ffb675d7d037c20d",
+        "17e87e52e091ce052bdd529606e68132dde9f7d2",
+        "a447a7c7e08b37ccebe61da95f23b12cca3c832e",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "1ec1f1f41944c28d7735aaacdc844ff917f428a5",
+        "ad73d6fe6d97ad8513760be09db962127274ed71",
+        "4be74f2f94da9b7bfd263572f542e488b1eb9b08",
+        "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "8d63d284ac77b26422a5ac8211e65217dacda0ab",
+        "11ff2e2216fc334d83598ccbdb9a9095d25b502b",
+        "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "24aaf1baf742822ec779fc6f9669a12b57f48269676e0c1a293e51b3ec9dbb2f",
+      "path": "Plans/Planning_Wizard.md",
+      "sealed_sha256": "1673bcaf914022ab37b9867009b0a76435d4bdb3f41ecbec595e56ad1353c026"
+    },
+    {
+      "commits": [
+        "8b2b67a7b3881c784bf9e393bdbfa06bd3b8146d",
+        "08011120711dd093ea3d5d3f8fcf8e4607bae025",
+        "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
+        "4ebf8691fa0e570ad3747bfc5c45c32c842766e3",
+        "1d84dffe0b15028803374295627ea4433952be9b",
+        "9a205b1c162b3fa4039558f75b32017d4ed2d443",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "afcf5a199d685ed1290dd2bdd1f2a9bc253dc210",
+        "3d4ce5c0d35222bd1f214b80043d934c218fed74",
+        "0e16a94bc1b293f8958b7808ffb675d7d037c20d",
+        "17e87e52e091ce052bdd529606e68132dde9f7d2",
+        "a447a7c7e08b37ccebe61da95f23b12cca3c832e",
+        "b0c1a23758e52a23eeeceb921be30cbd1f939c95",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "1ec1f1f41944c28d7735aaacdc844ff917f428a5",
+        "ad73d6fe6d97ad8513760be09db962127274ed71",
+        "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "d0f9a0e28ceaeb380c5a462df95e5429e0ee7331",
+        "4a91fa1335374263faef1cc575c2cf32aa4b3955",
+        "8d63d284ac77b26422a5ac8211e65217dacda0ab",
+        "11ff2e2216fc334d83598ccbdb9a9095d25b502b",
+        "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3",
+        "27e2c815c4d2064da312f9a9b5beda524f0a6c84",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "f70670e29e0201fb6370a9f8d22f35864afe18785c88ea804087eabc8d1d3abe",
+      "path": "Plans/UI_Command_Catalog.md",
+      "sealed_sha256": "682f5a4ad23735647345d7b81c7c0a4d71af3363e51a69763268dee97ab0c5e3"
+    },
+    {
+      "commits": [
+        "672147dfc67ca9e1ed428341bc821aa09e6fe814",
+        "f41a598213d5778d541a806a4f474033e8ee476c",
+        "08011120711dd093ea3d5d3f8fcf8e4607bae025",
+        "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
+        "1d84dffe0b15028803374295627ea4433952be9b",
+        "d330725bdca3221482ee0d6d01092e0a82c7c008",
+        "a9d07f5ec71cdf8a6cefd9f785afabe5e3556d6e",
+        "9a205b1c162b3fa4039558f75b32017d4ed2d443",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "69d974d5557baa42ffc676b99c2ef4d15eb68be9",
+        "189e38602a513dd56438c1a7d6639ed064ec4551",
+        "afcf5a199d685ed1290dd2bdd1f2a9bc253dc210",
+        "3d4ce5c0d35222bd1f214b80043d934c218fed74",
+        "0e16a94bc1b293f8958b7808ffb675d7d037c20d",
+        "17e87e52e091ce052bdd529606e68132dde9f7d2",
+        "a447a7c7e08b37ccebe61da95f23b12cca3c832e",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "1ec1f1f41944c28d7735aaacdc844ff917f428a5",
+        "ad73d6fe6d97ad8513760be09db962127274ed71",
+        "4be74f2f94da9b7bfd263572f542e488b1eb9b08",
+        "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "4dc74aa46f5b05ecacf22e4e959b46181cd996ac",
+        "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
+        "b3ea621573c5a4c99834a383e76ee9ec183df9e4",
+        "4a91fa1335374263faef1cc575c2cf32aa4b3955",
+        "11ff2e2216fc334d83598ccbdb9a9095d25b502b",
+        "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "bf8ea64727dfd57bc966d62258ca654aeebb021635dcdeec2260b4c212f4cb5e",
+      "path": "Plans/UI_Wiring_Rules.md",
+      "sealed_sha256": "28edb53e508961708b70c041ce43bb6a9d0cac80667419b95c8c9c470f88e8cf"
+    },
+    {
+      "commits": [
+        "672147dfc67ca9e1ed428341bc821aa09e6fe814",
+        "f41a598213d5778d541a806a4f474033e8ee476c",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "c6685913dec605acd3d5343ecaa14a1bd4b5f299714629f6454f2d6f92f56429",
+      "path": "Plans/Widget_System.md",
+      "sealed_sha256": "8b49cd774649939f9dca6f40cc75f8fd90f485e136697c78ecdf311c0f56c12b"
+    },
+    {
+      "commits": [
+        "8b2b67a7b3881c784bf9e393bdbfa06bd3b8146d",
+        "08011120711dd093ea3d5d3f8fcf8e4607bae025",
+        "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
+        "4ebf8691fa0e570ad3747bfc5c45c32c842766e3",
+        "1d84dffe0b15028803374295627ea4433952be9b",
+        "d330725bdca3221482ee0d6d01092e0a82c7c008",
+        "a9d07f5ec71cdf8a6cefd9f785afabe5e3556d6e",
+        "9a205b1c162b3fa4039558f75b32017d4ed2d443",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "69d974d5557baa42ffc676b99c2ef4d15eb68be9",
+        "189e38602a513dd56438c1a7d6639ed064ec4551",
+        "afcf5a199d685ed1290dd2bdd1f2a9bc253dc210",
+        "3d4ce5c0d35222bd1f214b80043d934c218fed74",
+        "0e16a94bc1b293f8958b7808ffb675d7d037c20d",
+        "17e87e52e091ce052bdd529606e68132dde9f7d2",
+        "a447a7c7e08b37ccebe61da95f23b12cca3c832e",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "1ec1f1f41944c28d7735aaacdc844ff917f428a5",
+        "ad73d6fe6d97ad8513760be09db962127274ed71",
+        "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "4dc74aa46f5b05ecacf22e4e959b46181cd996ac",
+        "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
+        "b3ea621573c5a4c99834a383e76ee9ec183df9e4",
+        "d0f9a0e28ceaeb380c5a462df95e5429e0ee7331",
+        "4a91fa1335374263faef1cc575c2cf32aa4b3955",
+        "8d63d284ac77b26422a5ac8211e65217dacda0ab",
+        "11ff2e2216fc334d83598ccbdb9a9095d25b502b",
+        "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
+        "58887ead091b89599b8089da1f976b66461d52e6",
+        "d934851c079e35a5c08871ceb0f677d1edeae86c",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "696557da2fc9ea9f6ea67c302a1b7a25936e13044571f3ac0c2140f3e67d1b5b",
+      "path": "Plans/Wiring_Matrix.md",
+      "sealed_sha256": "3899744314444527ed5abfa724f4abdb67822efa4d7b3852a2db461438fffebe"
+    },
+    {
+      "commits": [
+        "34b9e244614b7e2f33df49ddb9e56a0f1f691308",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec"
+      ],
+      "hash_at_previous_seal": "5ed0e3762d8572c4b2a057943888015b1e9a5369176a97f627f787d7de995a7b",
+      "path": "Plans/Working_Notebook.md",
+      "sealed_sha256": "e5c5424965d999d4785ddae7859129763b7a9f601352488ac2e868eba956a0dc"
+    },
+    {
+      "commits": [
+        "7a17526dc25a167c9c1a02a7a38ab6cb47ca8aa8",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "a51a18c2e19a82d6152ac21f58310b1077407928",
+        "3d4ce5c0d35222bd1f214b80043d934c218fed74",
+        "17e87e52e091ce052bdd529606e68132dde9f7d2",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "ad73d6fe6d97ad8513760be09db962127274ed71",
+        "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "b3ea621573c5a4c99834a383e76ee9ec183df9e4",
+        "d0f9a0e28ceaeb380c5a462df95e5429e0ee7331",
+        "4a91fa1335374263faef1cc575c2cf32aa4b3955",
+        "8d63d284ac77b26422a5ac8211e65217dacda0ab",
+        "e2c3aceb5c5a86e5ab796bb075b3b018c98699d6",
+        "11ff2e2216fc334d83598ccbdb9a9095d25b502b",
+        "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
+        "c2a3acc3b4d4c06c9a24362b054984e8911d4a15",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3",
+        "27e2c815c4d2064da312f9a9b5beda524f0a6c84",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "77302794ae93130af469993e867345584783a274d40ed03b1a46a58c0ab495ab",
+      "path": "Plans/assistant-chat-design.md",
+      "sealed_sha256": "f4e5a424ee6841b4988ce457166d26b762be0b3f0c4aa0c5d0d03132ef6be00f"
+    },
+    {
+      "commits": [
+        "102a7e99e80aa159f98e685a6730b2245056a49b"
+      ],
+      "hash_at_previous_seal": "9b4bc56168e009184bd4bf4054b5fe38f9cd9cd05ecf31c769ba886db06f54b5",
+      "path": "Plans/editor_appearance.schema.json",
+      "sealed_sha256": "868df8c0f4616c0fc719dd871ca4afa45efc97a3cba4a74884978deeee2686b3"
+    },
+    {
+      "commits": [
+        "102a7e99e80aa159f98e685a6730b2245056a49b"
+      ],
+      "hash_at_previous_seal": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+      "path": "Plans/execution_unit_context.schema.json",
+      "sealed_sha256": "79b7296860794b3671eb7a1b94d17c6504bd76f796c5ea73a493cc64fa5142b9"
+    },
+    {
+      "commits": [
+        "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+        "4a91fa1335374263faef1cc575c2cf32aa4b3955",
+        "2ef2dd40aec280f9ad013e4441456f234495473a",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3",
+        "27e2c815c4d2064da312f9a9b5beda524f0a6c84"
+      ],
+      "hash_at_previous_seal": "eae9467fc716d2b427092e15040d4fe79d7360fec823441468fa94fe14e11cf9",
+      "path": "Plans/glyph_catalog.json",
+      "sealed_sha256": "2b3ade242cd867543bbb5bf475d954f06317f416559fc324fd5f762228074f1f"
+    },
+    {
+      "commits": [
+        "7a17526dc25a167c9c1a02a7a38ab6cb47ca8aa8",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec"
+      ],
+      "hash_at_previous_seal": "f932a74573f86d7dc4a4bfa3088531138d1c22add1185e7613ed76ae56a3abe9",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "sealed_sha256": "d07e09bc0879a8662e29cc47c8fd3ef1b8d0520f0501c34823aa00caedf610b1"
+    },
+    {
+      "commits": [
+        "78af23f393d730766d7a354cea57bdcf34505bea"
+      ],
+      "hash_at_previous_seal": "85ae2be85aaaf66613024df683710c00678c8e3bd6ef428231f96e57fc03a6f5",
+      "path": "Plans/pm7_canon.fixtures.json",
+      "sealed_sha256": "b6786ce440706d889c1dc4a47df6e43bab348653708097c4f6f15277b841129f"
+    },
+    {
+      "commits": [
+        "102a7e99e80aa159f98e685a6730b2245056a49b",
+        "11ff2e2216fc334d83598ccbdb9a9095d25b502b"
+      ],
+      "hash_at_previous_seal": "1f4ed7076650843f3a3f3a75859c4d9f7dfbc569a1d74047155eb9b833f96223",
+      "path": "Plans/pm7_control_bindings.schema.json",
+      "sealed_sha256": "af1b209a521c440425b02b4ef4d0286c48b3b83e1630e7562736e94fa05fe118"
+    },
+    {
+      "commits": [
+        "27e2c815c4d2064da312f9a9b5beda524f0a6c84"
+      ],
+      "hash_at_previous_seal": "680d47fb8e6226aaa26046bcaa971d4a312da6c81949b4a7bb75208b90e97a59",
+      "path": "Plans/shared_runtime_contracts.schema.json",
+      "sealed_sha256": "5c7949d255d5be479bbc92057b66305aa803f3396494c85efd6373b2e155a9e8"
+    },
+    {
+      "commits": [
+        "71d3588d9c58874953a4a815cf1521f016eb42ed",
+        "5375bfd2a7e679378b1175378fb2e3eacf6c28a5",
+        "4e4cd030ff0453e0b0e3631cc0f360f22880ce1d",
+        "4c974773cb8d0a5d958d1fdb5fb92285377fe270",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "ad73d6fe6d97ad8513760be09db962127274ed71",
+        "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
+        "78b06ddc002ca915407e0d5a13d59484880d29d3",
+        "27e2c815c4d2064da312f9a9b5beda524f0a6c84",
+        "b5be9252d1375caa6510a594f1fb2662672e9740"
+      ],
+      "hash_at_previous_seal": "30cb4c64be6d8424e0f09067db5f646df36bb82c921e17dd62be19a2971e9ebf",
+      "path": "Plans/storage-plan.md",
+      "sealed_sha256": "e8f080cb883e483017b1b5ff48918b08ae3ce02c4c9c0d48424694fe494b5891"
+    },
+    {
+      "commits": [
+        "66111bda99a6d1b04397d3ce6a01951ca25c15ab",
+        "44b8508b53cf7e5a6f221480491ccc485bd0ca44",
+        "102a7e99e80aa159f98e685a6730b2245056a49b",
+        "d6b9619fe3fd175f4d73ac8e111c0c14fd0eb092",
+        "a9d07f5ec71cdf8a6cefd9f785afabe5e3556d6e",
+        "4c974773cb8d0a5d958d1fdb5fb92285377fe270",
+        "17e87e52e091ce052bdd529606e68132dde9f7d2",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+        "1ec1f1f41944c28d7735aaacdc844ff917f428a5",
+        "ad73d6fe6d97ad8513760be09db962127274ed71",
+        "78af23f393d730766d7a354cea57bdcf34505bea",
+        "e5d3fb2beb5873418058fa30212438d8dcd0e078"
+      ],
+      "hash_at_previous_seal": "3425c58ad4e68665339a7505a4bf27fab6d10c0a31df205e5706e92ba85cbaa9",
+      "path": "Plans/storage_value_registry.json",
+      "sealed_sha256": "ad0a82616f88d996b5506bd96662ec61c1fad5b2ba4be0a91306fc9963e32c3e"
+    },
+    {
+      "commits": [
+        "7a17526dc25a167c9c1a02a7a38ab6cb47ca8aa8",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "203455bdfa79eebf90a71ee221cafd8f98fdd041"
+      ],
+      "hash_at_previous_seal": "f65e1bd01b100393967cade7f6027e576127765da35587ffacf8b80f7f709bc2",
+      "path": "Plans/usage-feature.md",
+      "sealed_sha256": "21e1d333c93b35fe546fd2a2e3fc88eaefd32aaadcddbf447b532daa50f266fa"
+    },
+    {
+      "commits": [
+        "66111bda99a6d1b04397d3ce6a01951ca25c15ab",
+        "1b2fbe1c3d0e150e54c74aa116fd8338cf7f5bc5",
+        "44b8508b53cf7e5a6f221480491ccc485bd0ca44",
+        "102a7e99e80aa159f98e685a6730b2245056a49b"
+      ],
+      "hash_at_previous_seal": "8cefcf6ae5c4396b27a738a1ddbac27a52a01bea982e473d393b174fc6b6a43f",
+      "path": "scripts/pm-implementation-readiness.py",
+      "sealed_sha256": "411333f1491386284e369add5f116084fea8206d5f4696a044a94312ba206cc4"
+    },
+    {
+      "commits": [
+        "102a7e99e80aa159f98e685a6730b2245056a49b",
+        "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+        "09140c2ad2cb7751da88ab4ec49633138bc7523a"
+      ],
+      "hash_at_previous_seal": "9cdc15facdf79d5c5cebe36643f70a0c0c1fb6a401c95c5b3a286e0aa20ff5db",
+      "path": "scripts/pm-plans-verify.py",
+      "sealed_sha256": "7793679c45e8a352fbbe3130451a43a6bad83a5504f5c6d9303df2be2515bbd9"
+    },
+    {
+      "commits": [
+        "102a7e99e80aa159f98e685a6730b2245056a49b"
+      ],
+      "hash_at_previous_seal": "d611dd364b3034571424659577ef47d245c025fcfa2306b9fd8f09994964214a",
+      "path": "scripts/pm-prd-planning-runtime-validate.py",
+      "sealed_sha256": "2268107db1df8a38e07790ab9c4c3ec6b950734c17850d4c8a1fcfe93022bc2d"
+    },
+    {
+      "commits": [
+        "5375bfd2a7e679378b1175378fb2e3eacf6c28a5"
+      ],
+      "hash_at_previous_seal": "7542cdac292405ec0d9b7b644ad7c345cadca822d36c710cd3c6729120274f32",
+      "path": "scripts/pm_pnc019_currentness.py",
+      "sealed_sha256": "34fbf59930d68d0a45f5887a0fb507b8caaf7336e69dcc00a5ba834983747c81"
+    }
+  ],
+  "checkpoint_module_sha256": "34fbf59930d68d0a45f5887a0fb507b8caaf7336e69dcc00a5ba834983747c81",
+  "checkpoint_pin_refresh": "dl300_bounded_registry_pin",
+  "current_snapshot_run": "Plans/.plan_migration/pds-20261104-001-current-planunit-snapshot",
+  "currentness_final_manifest_sha256": "126c4309ca775ccb0d0d0b78f35044635890a8fc74d103c41a5fc2d0f87e313c",
+  "currentness_receipt_sha256": "7e54ba80e607e3384fb0862a9363f2c6abc258ae4c3cf17666560280237e5471",
+  "expected_checked_head_diff_paths": 10,
+  "expected_record_commit_paths": 16,
+  "final_aggregate_totals": {
+    "audit_governance": 230,
+    "run_gates": 230
+  },
+  "frozen_main": "4dbe63c96c464a9a90b790739d77a90bda619871",
+  "locked_entry_count": 101,
+  "main_base": "4dbe63c96c464a9a90b790739d77a90bda619871",
+  "new_auto_decision_ids": [
+    "dec-2026-11-03-governance-reseal"
+  ],
+  "owner_docs_registered": 0,
+  "previous_aggregate_totals": {
+    "audit_governance": 5950,
+    "run_gates": 5950
+  },
+  "previous_seal_commit": "40e8ccd704",
+  "receipt_complete_denominator_known": false,
+  "receipt_contract_depth_complete": false,
+  "receipt_event_authority_closed": false,
+  "receipt_evidence_valid": true,
+  "receipt_status": "UNKNOWN_OPEN",
+  "registered_kernel_rows": 46,
+  "schema_id": "pm.governance.reseal.attestation.v1",
+  "spec_lock_schema_versions_unchanged": true
+}

@@ -1,0 +1,66 @@
+{
+  "active_checkpoint": {
+    "registry_revision": "2026-11-04.1",
+    "registry_schema_id": "pm.event_family_registry.v1",
+    "registry_schema_version": "2.0.0"
+  },
+  "active_checkpoint_module_sha256": "34fbf59930d68d0a45f5887a0fb507b8caaf7336e69dcc00a5ba834983747c81",
+  "admission_pins": {
+    "Plans/event_family_registry.json": {
+      "actual": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+      "recorded": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+    },
+    "Plans/event_payloads/workspace_layout_changed_v2.schema.json": {
+      "actual": "a611ee3d41f275e7dfd349021a3d41de866849f97f0108396bf0685c41431b1a",
+      "recorded": "a611ee3d41f275e7dfd349021a3d41de866849f97f0108396bf0685c41431b1a"
+    }
+  },
+  "all_other_receipt_fields_equal": true,
+  "all_other_source_hashes_equal": true,
+  "authority": "Jared assigned this governance reseal in chat on 2026-11-03 (asked who should do it: \"whoever you want. Opus 5.5 xhigh is fine\"), after the PM7 small landing reported governance staleness. It was sequenced after the claude-projects-refresh landing (main 4dbe63c96c) so one reseal covers both. The bounded PNC-019 receipt registry-pin refresh follows Plans/Decision_Log.md#DL-300 ('the checkpoint evidence and the readiness receipt are refreshed by the next reseal').",
+  "certification_harness_run": false,
+  "changed_pin_paths": [],
+  "checked_rebased_head": "4dbe63c96c464a9a90b790739d77a90bda619871",
+  "hash_algorithm": "pm_pnc019_currentness.sha256_file",
+  "input_receipt_sha256": "49ce40e2816b155a738b7f9278deb8b1de105ec3f8204cfa79e8291cad4b4f29",
+  "main_base": "4dbe63c96c464a9a90b790739d77a90bda619871",
+  "mode": "bounded_registry_pin_refresh",
+  "output_receipt_sha256": "585827e76b2a53b74061b39e40b0734a27356cf225963da94b0e5d1020d0cc8c",
+  "refresh": {
+    "active_checkpoint": {
+      "complete_denominator_known": false,
+      "contract_depth_complete": false,
+      "registered_kernel_rows": 46,
+      "registry_revision": "2026-11-04.1",
+      "registry_schema_id": "pm.event_family_registry.v1",
+      "registry_schema_version": "2.0.0"
+    },
+    "admission_pins": {
+      "Plans/event_family_registry.json": {
+        "after": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+        "before": "4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe",
+        "live": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+      },
+      "Plans/event_payloads/workspace_layout_changed_v2.schema.json": {
+        "after": "a611ee3d41f275e7dfd349021a3d41de866849f97f0108396bf0685c41431b1a",
+        "before": "a611ee3d41f275e7dfd349021a3d41de866849f97f0108396bf0685c41431b1a",
+        "live": "a611ee3d41f275e7dfd349021a3d41de866849f97f0108396bf0685c41431b1a"
+      }
+    },
+    "approval_refs": [
+      "Plans/Decision_Log.md#DL-300",
+      "Jared chat assignment 2026-11-03 (governance reseal)"
+    ],
+    "changed_pin_paths": [
+      "Plans/event_family_registry.json"
+    ],
+    "dry_run": false,
+    "helper_sha256": "776e1deda8b65702ce5dcd84fc19ddafd467061f79a0862a5e97ddd4bfbb640d",
+    "input_receipt_sha256": "49ce40e2816b155a738b7f9278deb8b1de105ec3f8204cfa79e8291cad4b4f29",
+    "live_event_registry_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+    "output_receipt_sha256": "585827e76b2a53b74061b39e40b0734a27356cf225963da94b0e5d1020d0cc8c",
+    "schema_valid": true
+  },
+  "schema_id": "pm.governance.reseal.dl300_checkpoint_pin_refresh.v1",
+  "verify_after_refresh_changed_pin_paths": []
+}

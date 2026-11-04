@@ -1,5 +1,5 @@
 {
-  "body_reconstruction_checked": 2972,
+  "body_reconstruction_checked": 3090,
   "body_reconstruction_mismatches": 0,
   "config_path": "Plans/sharding_config.json",
   "docs": [
@@ -268,11 +268,11 @@
       "source": "Plans/Run_Modes.md"
     },
     {
-      "body_reconstruction_checked": 47,
+      "body_reconstruction_checked": 49,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/commands_system",
       "failures": [],
-      "shard_count": 47,
+      "shard_count": 49,
       "source": "Plans/Commands_System.md"
     },
     {
@@ -284,11 +284,11 @@
       "source": "Plans/Executor_Protocol.md"
     },
     {
-      "body_reconstruction_checked": 55,
+      "body_reconstruction_checked": 58,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/ui_command_catalog",
       "failures": [],
-      "shard_count": 55,
+      "shard_count": 58,
       "source": "Plans/UI_Command_Catalog.md"
     },
     {
@@ -372,11 +372,11 @@
       "source": "Plans/DRY_Rules.md"
     },
     {
-      "body_reconstruction_checked": 8,
+      "body_reconstruction_checked": 11,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/decision_log",
       "failures": [],
-      "shard_count": 8,
+      "shard_count": 11,
       "source": "Plans/Decision_Log.md"
     },
     {
@@ -556,11 +556,11 @@
       "source": "Plans/PRD_Builder.md"
     },
     {
-      "body_reconstruction_checked": 30,
+      "body_reconstruction_checked": 31,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/planning_wizard",
       "failures": [],
-      "shard_count": 30,
+      "shard_count": 31,
       "source": "Plans/Planning_Wizard.md"
     },
     {
@@ -604,11 +604,11 @@
       "source": "Plans/storage_value_registry.schema.json"
     },
     {
-      "body_reconstruction_checked": 590,
+      "body_reconstruction_checked": 627,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/storage_value_registry",
       "failures": [],
-      "shard_count": 590,
+      "shard_count": 627,
       "source": "Plans/storage_value_registry.json"
     },
     {
@@ -740,19 +740,19 @@
       "source": "Plans/web_research_run_fixtures.json"
     },
     {
-      "body_reconstruction_checked": 127,
+      "body_reconstruction_checked": 198,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/settings_inventory",
       "failures": [],
-      "shard_count": 127,
+      "shard_count": 198,
       "source": "Plans/settings_inventory.json"
     },
     {
-      "body_reconstruction_checked": 3,
+      "body_reconstruction_checked": 4,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/settings_inventory.schema",
       "failures": [],
-      "shard_count": 3,
+      "shard_count": 4,
       "source": "Plans/settings_inventory.schema.json"
     },
     {
@@ -798,13 +798,13 @@
   ],
   "docs_checked": 99,
   "failures": [],
-  "generated_at_utc": "2026-11-01T04:17:17Z",
+  "generated_at_utc": "2026-11-04T03:19:20Z",
   "mode": "check",
   "output_root": "Plans/_shards",
   "root_index_failures": [],
   "root_index_path": "Plans/00-plans-index.md",
   "schema_id": "pm.plan_shards.report.v1",
-  "shards_checked": 2972,
+  "shards_checked": 3090,
   "source_count": 99,
   "status": "pass"
 }
