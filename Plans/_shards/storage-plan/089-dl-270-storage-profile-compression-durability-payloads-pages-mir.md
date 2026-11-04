@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L28057-L29814
 
-Source SHA256: `cf8c5058535309445d16748af3ec3c6160a0403297ee125130cd7c2aab1e5452`
+Source SHA256: `650e67fc963ff79b033f7cf42c4b69142c0b3e9e2b846904e4c43e0385dd05e0`
 
 ---
 
@@ -1440,7 +1440,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "doctor.custom_headless.checked Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-217 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.doctor_custom_headless_checked:{project_id} with closed schema Plans/ds15_doctor_custom_headless_checked_checkpoint.schema.json and reader reader.ds15.doctor_custom_headless_checked.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.",
+  "canonical_text": "doctor.custom_headless.checked Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-217 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.doctor_custom_headless_checked:{project_id} with closed schema Plans/ds15_doctor_custom_headless_checked_checkpoint.schema.json and reader reader.ds15.doctor_custom_headless_checked.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -1486,9 +1486,9 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 {
   "plan_unit_id": "SP-641",
   "unit_type": "contract",
-  "status": "accepted",
+  "status": "superseded",
   "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "tool.custom_headless.skipped Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-218 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.tool_custom_headless_skipped:{project_id} with closed schema Plans/ds15_tool_custom_headless_skipped_checkpoint.schema.json and reader reader.ds15.tool_custom_headless_skipped.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.",
+  "canonical_text": "tool.custom_headless.skipped is STOPPED; DS15 withdraws its unsupported draft. DT owns the first-Doctor-run eligibility/reset/restore question at origin/plans/ea-w2-tools-gates-approvals-20261104:reports/event-authority-20261104/DT.md, Question for Jared. No DS15 producer, eligibility, identity, schema, checkpoint or prepared outcome is bound for this family. N2-066 remains the behavior source; no ruling is inferred. This unit id is retired from drafting and must not be reused.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -1496,7 +1496,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
   ],
   "unblocks": [],
   "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+    "No DS15 draft remains; DT question stays unresolved."
   ],
   "validation_surfaces": [
     "python3 scripts/pm-ds15-event-contracts.py"
@@ -1536,7 +1536,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "live.session.started Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-219 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_started:{project_id} with closed schema Plans/ds15_live_session_started_checkpoint.schema.json and reader reader.ds15.live_session_started.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.",
+  "canonical_text": "live.session.started Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-219 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_started:{project_id} with closed schema Plans/ds15_live_session_started_checkpoint.schema.json and reader reader.ds15.live_session_started.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -1584,7 +1584,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "live.step.updated Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-220 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_step_updated:{project_id} with closed schema Plans/ds15_live_step_updated_checkpoint.schema.json and reader reader.ds15.live_step_updated.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.",
+  "canonical_text": "live.step.updated Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-220 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_step_updated:{project_id} with closed schema Plans/ds15_live_step_updated_checkpoint.schema.json and reader reader.ds15.live_step_updated.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -1632,7 +1632,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "live.artifact.created Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-221 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_artifact_created:{project_id} with closed schema Plans/ds15_live_artifact_created_checkpoint.schema.json and reader reader.ds15.live_artifact_created.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.",
+  "canonical_text": "live.artifact.created Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-221 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_artifact_created:{project_id} with closed schema Plans/ds15_live_artifact_created_checkpoint.schema.json and reader reader.ds15.live_artifact_created.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -1680,7 +1680,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "live.session.completed Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-222 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_completed:{project_id} with closed schema Plans/ds15_live_session_completed_checkpoint.schema.json and reader reader.ds15.live_session_completed.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.",
+  "canonical_text": "live.session.completed Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-222 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_completed:{project_id} with closed schema Plans/ds15_live_session_completed_checkpoint.schema.json and reader reader.ds15.live_session_completed.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -1728,7 +1728,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "live.session.degraded Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-223 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_degraded:{project_id} with closed schema Plans/ds15_live_session_degraded_checkpoint.schema.json and reader reader.ds15.live_session_degraded.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.",
+  "canonical_text": "live.session.degraded Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-223 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_degraded:{project_id} with closed schema Plans/ds15_live_session_degraded_checkpoint.schema.json and reader reader.ds15.live_session_degraded.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [

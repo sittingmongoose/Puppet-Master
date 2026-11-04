@@ -22,29 +22,611 @@
         "field": "schema_version",
         "value": "9.0.0"
       }
-    ]
-  },
-  {
-    "event_type": "tool.custom_headless.skipped",
-    "positive": {
-      "schema_version": "1.0.0",
-      "project_id": "sample_project_id",
-      "reason": "custom_headless_key_absent"
+    ],
+    "semantic_base": {
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "sample_project_id",
+        "doctor_invocation_id": "sample_doctor_invocation_id",
+        "outcome": "valid"
+      },
+      "context": {
+        "scope": {
+          "kind": "project",
+          "project_id": "sample_project_id"
+        },
+        "envelope_project_id": "sample_project_id",
+        "envelope_run_id": null,
+        "session_security_class": "ordinary",
+        "config_inspected": true,
+        "doctor_invocation_id": "sample_doctor_invocation_id"
+      },
+      "original": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "sample_project_id",
+          "doctor_invocation_id": "sample_doctor_invocation_id",
+          "outcome": "valid"
+        },
+        "event_id": "event:doctor_custom_headless_checked:1",
+        "idempotency_key": "a258a73cab4844865b6aa6b590dd80144b2af906b7327d66298dcbd313abcf0b"
+      },
+      "outcome": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "sample_project_id",
+          "doctor_invocation_id": "sample_doctor_invocation_id",
+          "outcome": "valid"
+        },
+        "event_id": "event:doctor_custom_headless_checked:1",
+        "committed": true,
+        "source_ref": "source:doctor_custom_headless_checked:1"
+      },
+      "receipt": {
+        "event_id": "event:doctor_custom_headless_checked:1",
+        "idempotency_key": "a258a73cab4844865b6aa6b590dd80144b2af906b7327d66298dcbd313abcf0b",
+        "payload_sha256": "7ae76f083c99350bc87066f9e8196b408d81b1b886000a56665c37c8933fcc84",
+        "receipt_ref": "receipt:doctor_custom_headless_checked:1"
+      },
+      "receipt_retained": true,
+      "backup_closure_verified": true,
+      "permission_now": true,
+      "source_deleted_now": false,
+      "share_current": true,
+      "checkpoint": {
+        "schema_id": "pm.ds15.doctor_custom_headless_checked.checkpoint.v1",
+        "schema_version": "1.0.0",
+        "consumer_id": "reader.ds15.doctor_custom_headless_checked.v1@1.0.0",
+        "index_read_token": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+          "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+          "frontier_revision": 0,
+          "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+          "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+            "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+            "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          }
+        },
+        "through_sequence_id": 3,
+        "last_event_id": "event:doctor_custom_headless_checked:1",
+        "state": "current",
+        "project_id": "sample_project_id"
+      },
+      "selected_token": {
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+        "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+        "frontier_revision": 0,
+        "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+        "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "source_selection": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "current_ref": "storage/seglog/CURRENT",
+          "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+          "selected_segment_generation": 1,
+          "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+          "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+          "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+          "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+          "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+          "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+        }
+      },
+      "expected_previous": null,
+      "stored_previous": null,
+      "reader_installed": "reader.ds15.doctor_custom_headless_checked.v1@1.0.0",
+      "reader_withdrawn": false,
+      "live_snapshot_id": "snapshot:1",
+      "current_live_snapshot_id": "snapshot:1",
+      "scan_low": 1,
+      "scan_high": 3,
+      "selected_high": 3,
+      "retained_prefix_complete": true,
+      "admitted_sequence": 2,
+      "withdrawal_frontier": 3,
+      "selected_matches": [
+        "event:doctor_custom_headless_checked:1"
+      ],
+      "index_rows": [
+        {
+          "sequence": 1,
+          "event_type": "other.event",
+          "scope": {
+            "kind": "project",
+            "project_id": "sample_project_id"
+          },
+          "event_id": "other:1"
+        },
+        {
+          "sequence": 2,
+          "event_type": "doctor.custom_headless.checked",
+          "scope": {
+            "kind": "project",
+            "project_id": "sample_project_id"
+          },
+          "event_id": "event:doctor_custom_headless_checked:1"
+        },
+        {
+          "sequence": 3,
+          "event_type": "doctor.custom_headless.checked",
+          "scope": {
+            "kind": "project",
+            "project_id": "different_project"
+          },
+          "event_id": "other:3"
+        }
+      ]
     },
-    "negative": [
+    "semantic_cases": [
       {
-        "mutation": "extra_field",
-        "field": "unexpected",
-        "value": true
+        "id": "valid-transition",
+        "operation": "payload",
+        "changes": {},
+        "expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        }
       },
       {
-        "mutation": "missing_field",
-        "field": "project_id"
+        "id": "invalid-transition",
+        "operation": "payload",
+        "changes": {
+          "context/config_inspected": false
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
       },
       {
-        "mutation": "wrong_version",
-        "field": "schema_version",
-        "value": "9.0.0"
+        "id": "envelope-mismatch",
+        "operation": "payload",
+        "changes": {
+          "context/envelope_project_id": "different_project"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "original-retry",
+        "operation": "recover",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:doctor_custom_headless_checked:1",
+          "receipt_ref": "receipt:doctor_custom_headless_checked:1"
+        }
+      },
+      {
+        "id": "lost-ack",
+        "operation": "recover",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:doctor_custom_headless_checked:1",
+          "receipt_ref": "receipt:doctor_custom_headless_checked:1"
+        }
+      },
+      {
+        "id": "append-recovery",
+        "operation": "recover",
+        "changes": {
+          "receipt": null
+        },
+        "expected": {
+          "result": "APPEND_ORIGINAL",
+          "effects": 0,
+          "event_id": "event:doctor_custom_headless_checked:1"
+        }
+      },
+      {
+        "id": "missing-outcome",
+        "operation": "recover",
+        "changes": {
+          "outcome": null
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "corrupt-outcome",
+        "operation": "recover",
+        "changes": {
+          "outcome/event_id": "other:event"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "corrupt-receipt",
+        "operation": "recover",
+        "changes": {
+          "receipt/payload_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "changed-bytes",
+        "operation": "recover",
+        "changes": {
+          "payload/schema_version": "9.0.0"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "backup-loss",
+        "operation": "recover",
+        "changes": {
+          "backup_closure_verified": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "publish-before-receipt",
+        "operation": "publish",
+        "changes": {
+          "receipt": null
+        },
+        "expected": {
+          "result": "PENDING",
+          "effects": 0,
+          "event_id": "event:doctor_custom_headless_checked:1"
+        }
+      },
+      {
+        "id": "terminal-before-receipt",
+        "operation": "publish",
+        "changes": {
+          "receipt_retained": false
+        },
+        "expected": {
+          "result": "PENDING",
+          "effects": 0,
+          "event_id": "event:doctor_custom_headless_checked:1"
+        }
+      },
+      {
+        "id": "read-current",
+        "operation": "read",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:doctor_custom_headless_checked:1",
+          "receipt_ref": "receipt:doctor_custom_headless_checked:1"
+        }
+      },
+      {
+        "id": "read-deleted",
+        "operation": "read",
+        "changes": {
+          "source_deleted_now": true
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "read-denied",
+        "operation": "read",
+        "changes": {
+          "permission_now": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "valid-checkpoint",
+        "operation": "checkpoint",
+        "changes": {},
+        "expected": {
+          "result": "ADVANCE",
+          "effects": 0,
+          "through_sequence_id": 3,
+          "last_event_id": "event:doctor_custom_headless_checked:1"
+        }
+      },
+      {
+        "id": "coverage-gap",
+        "operation": "checkpoint",
+        "changes": {
+          "index_rows": [
+            {
+              "sequence": 2,
+              "event_type": "doctor.custom_headless.checked",
+              "scope": {
+                "kind": "project",
+                "project_id": "sample_project_id"
+              },
+              "event_id": "event:doctor_custom_headless_checked:1"
+            },
+            {
+              "sequence": 3,
+              "event_type": "doctor.custom_headless.checked",
+              "scope": {
+                "kind": "project",
+                "project_id": "different_project"
+              },
+              "event_id": "other:3"
+            }
+          ]
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "filtered-omission",
+        "operation": "checkpoint",
+        "changes": {
+          "selected_matches": []
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "cas-race",
+        "operation": "checkpoint",
+        "changes": {
+          "stored_previous": {
+            "schema_id": "pm.ds15.doctor_custom_headless_checked.checkpoint.v1",
+            "schema_version": "1.0.0",
+            "consumer_id": "reader.ds15.doctor_custom_headless_checked.v1@1.0.0",
+            "index_read_token": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+              "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+              "frontier_revision": 0,
+              "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+              "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "source_selection": {
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "current_ref": "storage/seglog/CURRENT",
+                "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+                "selected_segment_generation": 1,
+                "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+                "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+                "manifest_generation": 11,
+                "recovery_epoch": 0,
+                "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+                "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+                "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+                "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+                "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+              }
+            },
+            "through_sequence_id": 3,
+            "last_event_id": "event:doctor_custom_headless_checked:1",
+            "state": "current",
+            "project_id": "sample_project_id"
+          }
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "token-change",
+        "operation": "checkpoint",
+        "changes": {
+          "selected_token/frontier_revision": 1
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "snapshot-change",
+        "operation": "checkpoint",
+        "changes": {
+          "current_live_snapshot_id": "snapshot:2"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "source-instance-mismatch",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/index_read_token/source_selection/storage_instance_id": "22222222-2222-4222-8222-222222222222",
+          "selected_token/source_selection/storage_instance_id": "22222222-2222-4222-8222-222222222222"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-reader",
+        "operation": "checkpoint",
+        "changes": {
+          "reader_withdrawn": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-writer",
+        "operation": "withdraw_writer",
+        "changes": {
+          "admitted_sequence": null
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "drain-admitted",
+        "operation": "withdraw_writer",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:doctor_custom_headless_checked:1",
+          "receipt_ref": "receipt:doctor_custom_headless_checked:1"
+        }
+      },
+      {
+        "id": "rebuild-valid",
+        "operation": "rebuild",
+        "changes": {},
+        "expected": {
+          "result": "ADVANCE",
+          "effects": 0,
+          "through_sequence_id": 3,
+          "last_event_id": "event:doctor_custom_headless_checked:1"
+        }
+      },
+      {
+        "id": "rebuild-missing-prefix",
+        "operation": "rebuild",
+        "changes": {
+          "retained_prefix_complete": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "stale-reader-version",
+        "operation": "checkpoint",
+        "changes": {
+          "reader_installed": "reader.ds15.doctor_custom_headless_checked.v1@1.0.0-old"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "unknown-checkpoint-field",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/unexpected": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "persisted-snapshot",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/index_read_token/redb_snapshot_id": "snapshot:1"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "checkpoint-read-denied",
+        "operation": "checkpoint",
+        "changes": {
+          "permission_now": false
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "checkpoint-source-deleted",
+        "operation": "checkpoint",
+        "changes": {
+          "source_deleted_now": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-checkpoint",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/state": "withdrawn"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "last-event-is-not-global-frontier",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/last_event_id": "other:3"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "global-scan-end-required",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/through_sequence_id": 2
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
       }
     ]
   },
@@ -77,6 +659,630 @@
         "field": "schema_version",
         "value": "9.0.0"
       }
+    ],
+    "semantic_base": {
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "sample_project_id",
+        "run_id": "sample_run_id",
+        "live_session_id": "sample_live_session_id",
+        "platform": "web",
+        "provider": "sample_provider",
+        "session_id": "sample_session_id",
+        "pid": 123,
+        "display_target": "sample_display_target",
+        "artifact_root": "sample_artifact_root"
+      },
+      "context": {
+        "scope": {
+          "kind": "project",
+          "project_id": "sample_project_id"
+        },
+        "envelope_project_id": "sample_project_id",
+        "envelope_run_id": "sample_run_id",
+        "session_security_class": "ordinary",
+        "launch_outcome": "launched",
+        "driver_session_id": "sample_session_id"
+      },
+      "original": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "sample_project_id",
+          "run_id": "sample_run_id",
+          "live_session_id": "sample_live_session_id",
+          "platform": "web",
+          "provider": "sample_provider",
+          "session_id": "sample_session_id",
+          "pid": 123,
+          "display_target": "sample_display_target",
+          "artifact_root": "sample_artifact_root"
+        },
+        "event_id": "event:live_session_started:1",
+        "idempotency_key": "58cf6ba00d350c4b0714d1893de8616bf315484d7c528b5d5af657fc3564990c"
+      },
+      "outcome": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "sample_project_id",
+          "run_id": "sample_run_id",
+          "live_session_id": "sample_live_session_id",
+          "platform": "web",
+          "provider": "sample_provider",
+          "session_id": "sample_session_id",
+          "pid": 123,
+          "display_target": "sample_display_target",
+          "artifact_root": "sample_artifact_root"
+        },
+        "event_id": "event:live_session_started:1",
+        "committed": true,
+        "source_ref": "source:live_session_started:1"
+      },
+      "receipt": {
+        "event_id": "event:live_session_started:1",
+        "idempotency_key": "58cf6ba00d350c4b0714d1893de8616bf315484d7c528b5d5af657fc3564990c",
+        "payload_sha256": "4e6ee42cfd475e49392e5e9575be0a374fc9805e056959ccbd07af2073d2fde1",
+        "receipt_ref": "receipt:live_session_started:1"
+      },
+      "receipt_retained": true,
+      "backup_closure_verified": true,
+      "permission_now": true,
+      "source_deleted_now": false,
+      "share_current": true,
+      "checkpoint": {
+        "schema_id": "pm.ds15.live_session_started.checkpoint.v1",
+        "schema_version": "1.0.0",
+        "consumer_id": "reader.ds15.live_session_started.v1@1.0.0",
+        "index_read_token": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+          "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+          "frontier_revision": 0,
+          "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+          "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+            "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+            "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          }
+        },
+        "through_sequence_id": 3,
+        "last_event_id": "event:live_session_started:1",
+        "state": "current",
+        "project_id": "sample_project_id"
+      },
+      "selected_token": {
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+        "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+        "frontier_revision": 0,
+        "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+        "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "source_selection": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "current_ref": "storage/seglog/CURRENT",
+          "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+          "selected_segment_generation": 1,
+          "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+          "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+          "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+          "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+          "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+          "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+        }
+      },
+      "expected_previous": null,
+      "stored_previous": null,
+      "reader_installed": "reader.ds15.live_session_started.v1@1.0.0",
+      "reader_withdrawn": false,
+      "live_snapshot_id": "snapshot:1",
+      "current_live_snapshot_id": "snapshot:1",
+      "scan_low": 1,
+      "scan_high": 3,
+      "selected_high": 3,
+      "retained_prefix_complete": true,
+      "admitted_sequence": 2,
+      "withdrawal_frontier": 3,
+      "selected_matches": [
+        "event:live_session_started:1"
+      ],
+      "index_rows": [
+        {
+          "sequence": 1,
+          "event_type": "other.event",
+          "scope": {
+            "kind": "project",
+            "project_id": "sample_project_id"
+          },
+          "event_id": "other:1"
+        },
+        {
+          "sequence": 2,
+          "event_type": "live.session.started",
+          "scope": {
+            "kind": "project",
+            "project_id": "sample_project_id"
+          },
+          "event_id": "event:live_session_started:1"
+        },
+        {
+          "sequence": 3,
+          "event_type": "live.session.started",
+          "scope": {
+            "kind": "project",
+            "project_id": "different_project"
+          },
+          "event_id": "other:3"
+        }
+      ]
+    },
+    "semantic_cases": [
+      {
+        "id": "valid-transition",
+        "operation": "payload",
+        "changes": {},
+        "expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        }
+      },
+      {
+        "id": "invalid-transition",
+        "operation": "payload",
+        "changes": {
+          "context/launch_outcome": "failed"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "envelope-mismatch",
+        "operation": "payload",
+        "changes": {
+          "context/envelope_project_id": "different_project"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "original-retry",
+        "operation": "recover",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_started:1",
+          "receipt_ref": "receipt:live_session_started:1"
+        }
+      },
+      {
+        "id": "lost-ack",
+        "operation": "recover",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_started:1",
+          "receipt_ref": "receipt:live_session_started:1"
+        }
+      },
+      {
+        "id": "append-recovery",
+        "operation": "recover",
+        "changes": {
+          "receipt": null
+        },
+        "expected": {
+          "result": "APPEND_ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_started:1"
+        }
+      },
+      {
+        "id": "missing-outcome",
+        "operation": "recover",
+        "changes": {
+          "outcome": null
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "corrupt-outcome",
+        "operation": "recover",
+        "changes": {
+          "outcome/event_id": "other:event"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "corrupt-receipt",
+        "operation": "recover",
+        "changes": {
+          "receipt/payload_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "changed-bytes",
+        "operation": "recover",
+        "changes": {
+          "payload/schema_version": "9.0.0"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "backup-loss",
+        "operation": "recover",
+        "changes": {
+          "backup_closure_verified": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "publish-before-receipt",
+        "operation": "publish",
+        "changes": {
+          "receipt": null
+        },
+        "expected": {
+          "result": "PENDING",
+          "effects": 0,
+          "event_id": "event:live_session_started:1"
+        }
+      },
+      {
+        "id": "terminal-before-receipt",
+        "operation": "publish",
+        "changes": {
+          "receipt_retained": false
+        },
+        "expected": {
+          "result": "PENDING",
+          "effects": 0,
+          "event_id": "event:live_session_started:1"
+        }
+      },
+      {
+        "id": "read-current",
+        "operation": "read",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_started:1",
+          "receipt_ref": "receipt:live_session_started:1"
+        }
+      },
+      {
+        "id": "read-deleted",
+        "operation": "read",
+        "changes": {
+          "source_deleted_now": true
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "read-denied",
+        "operation": "read",
+        "changes": {
+          "permission_now": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "valid-checkpoint",
+        "operation": "checkpoint",
+        "changes": {},
+        "expected": {
+          "result": "ADVANCE",
+          "effects": 0,
+          "through_sequence_id": 3,
+          "last_event_id": "event:live_session_started:1"
+        }
+      },
+      {
+        "id": "coverage-gap",
+        "operation": "checkpoint",
+        "changes": {
+          "index_rows": [
+            {
+              "sequence": 2,
+              "event_type": "live.session.started",
+              "scope": {
+                "kind": "project",
+                "project_id": "sample_project_id"
+              },
+              "event_id": "event:live_session_started:1"
+            },
+            {
+              "sequence": 3,
+              "event_type": "live.session.started",
+              "scope": {
+                "kind": "project",
+                "project_id": "different_project"
+              },
+              "event_id": "other:3"
+            }
+          ]
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "filtered-omission",
+        "operation": "checkpoint",
+        "changes": {
+          "selected_matches": []
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "cas-race",
+        "operation": "checkpoint",
+        "changes": {
+          "stored_previous": {
+            "schema_id": "pm.ds15.live_session_started.checkpoint.v1",
+            "schema_version": "1.0.0",
+            "consumer_id": "reader.ds15.live_session_started.v1@1.0.0",
+            "index_read_token": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+              "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+              "frontier_revision": 0,
+              "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+              "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "source_selection": {
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "current_ref": "storage/seglog/CURRENT",
+                "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+                "selected_segment_generation": 1,
+                "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+                "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+                "manifest_generation": 11,
+                "recovery_epoch": 0,
+                "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+                "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+                "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+                "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+                "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+              }
+            },
+            "through_sequence_id": 3,
+            "last_event_id": "event:live_session_started:1",
+            "state": "current",
+            "project_id": "sample_project_id"
+          }
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "token-change",
+        "operation": "checkpoint",
+        "changes": {
+          "selected_token/frontier_revision": 1
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "snapshot-change",
+        "operation": "checkpoint",
+        "changes": {
+          "current_live_snapshot_id": "snapshot:2"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "source-instance-mismatch",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/index_read_token/source_selection/storage_instance_id": "22222222-2222-4222-8222-222222222222",
+          "selected_token/source_selection/storage_instance_id": "22222222-2222-4222-8222-222222222222"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-reader",
+        "operation": "checkpoint",
+        "changes": {
+          "reader_withdrawn": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-writer",
+        "operation": "withdraw_writer",
+        "changes": {
+          "admitted_sequence": null
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "drain-admitted",
+        "operation": "withdraw_writer",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_started:1",
+          "receipt_ref": "receipt:live_session_started:1"
+        }
+      },
+      {
+        "id": "rebuild-valid",
+        "operation": "rebuild",
+        "changes": {},
+        "expected": {
+          "result": "ADVANCE",
+          "effects": 0,
+          "through_sequence_id": 3,
+          "last_event_id": "event:live_session_started:1"
+        }
+      },
+      {
+        "id": "rebuild-missing-prefix",
+        "operation": "rebuild",
+        "changes": {
+          "retained_prefix_complete": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "stale-reader-version",
+        "operation": "checkpoint",
+        "changes": {
+          "reader_installed": "reader.ds15.live_session_started.v1@1.0.0-old"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "unknown-checkpoint-field",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/unexpected": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "persisted-snapshot",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/index_read_token/redb_snapshot_id": "snapshot:1"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "checkpoint-read-denied",
+        "operation": "checkpoint",
+        "changes": {
+          "permission_now": false
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "checkpoint-source-deleted",
+        "operation": "checkpoint",
+        "changes": {
+          "source_deleted_now": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-checkpoint",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/state": "withdrawn"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "last-event-is-not-global-frontier",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/last_event_id": "other:3"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "global-scan-end-required",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/through_sequence_id": 2
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      }
     ]
   },
   {
@@ -104,6 +1310,621 @@
         "mutation": "wrong_version",
         "field": "schema_version",
         "value": "9.0.0"
+      }
+    ],
+    "semantic_base": {
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "sample_project_id",
+        "run_id": "sample_run_id",
+        "live_session_id": "sample_live_session_id",
+        "step_id": "sample_step_id",
+        "step_revision": 1,
+        "status": "running"
+      },
+      "context": {
+        "scope": {
+          "kind": "project",
+          "project_id": "sample_project_id"
+        },
+        "envelope_project_id": "sample_project_id",
+        "envelope_run_id": "sample_run_id",
+        "session_security_class": "ordinary",
+        "session_state": "running",
+        "previous_revision": 0
+      },
+      "original": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "sample_project_id",
+          "run_id": "sample_run_id",
+          "live_session_id": "sample_live_session_id",
+          "step_id": "sample_step_id",
+          "step_revision": 1,
+          "status": "running"
+        },
+        "event_id": "event:live_step_updated:1",
+        "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6"
+      },
+      "outcome": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "sample_project_id",
+          "run_id": "sample_run_id",
+          "live_session_id": "sample_live_session_id",
+          "step_id": "sample_step_id",
+          "step_revision": 1,
+          "status": "running"
+        },
+        "event_id": "event:live_step_updated:1",
+        "committed": true,
+        "source_ref": "source:live_step_updated:1"
+      },
+      "receipt": {
+        "event_id": "event:live_step_updated:1",
+        "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+        "payload_sha256": "5279dd5cf987fc6dba49c5e080364e741311f5febb616996dc4afcdc5c1654a9",
+        "receipt_ref": "receipt:live_step_updated:1"
+      },
+      "receipt_retained": true,
+      "backup_closure_verified": true,
+      "permission_now": true,
+      "source_deleted_now": false,
+      "share_current": true,
+      "checkpoint": {
+        "schema_id": "pm.ds15.live_step_updated.checkpoint.v1",
+        "schema_version": "1.0.0",
+        "consumer_id": "reader.ds15.live_step_updated.v1@1.0.0",
+        "index_read_token": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+          "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+          "frontier_revision": 0,
+          "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+          "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+            "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+            "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          }
+        },
+        "through_sequence_id": 3,
+        "last_event_id": "event:live_step_updated:1",
+        "state": "current",
+        "project_id": "sample_project_id"
+      },
+      "selected_token": {
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+        "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+        "frontier_revision": 0,
+        "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+        "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "source_selection": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "current_ref": "storage/seglog/CURRENT",
+          "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+          "selected_segment_generation": 1,
+          "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+          "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+          "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+          "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+          "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+          "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+        }
+      },
+      "expected_previous": null,
+      "stored_previous": null,
+      "reader_installed": "reader.ds15.live_step_updated.v1@1.0.0",
+      "reader_withdrawn": false,
+      "live_snapshot_id": "snapshot:1",
+      "current_live_snapshot_id": "snapshot:1",
+      "scan_low": 1,
+      "scan_high": 3,
+      "selected_high": 3,
+      "retained_prefix_complete": true,
+      "admitted_sequence": 2,
+      "withdrawal_frontier": 3,
+      "selected_matches": [
+        "event:live_step_updated:1"
+      ],
+      "index_rows": [
+        {
+          "sequence": 1,
+          "event_type": "other.event",
+          "scope": {
+            "kind": "project",
+            "project_id": "sample_project_id"
+          },
+          "event_id": "other:1"
+        },
+        {
+          "sequence": 2,
+          "event_type": "live.step.updated",
+          "scope": {
+            "kind": "project",
+            "project_id": "sample_project_id"
+          },
+          "event_id": "event:live_step_updated:1"
+        },
+        {
+          "sequence": 3,
+          "event_type": "live.step.updated",
+          "scope": {
+            "kind": "project",
+            "project_id": "different_project"
+          },
+          "event_id": "other:3"
+        }
+      ]
+    },
+    "semantic_cases": [
+      {
+        "id": "valid-transition",
+        "operation": "payload",
+        "changes": {},
+        "expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        }
+      },
+      {
+        "id": "invalid-transition",
+        "operation": "payload",
+        "changes": {
+          "context/session_state": "completed"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "envelope-mismatch",
+        "operation": "payload",
+        "changes": {
+          "context/envelope_project_id": "different_project"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "original-retry",
+        "operation": "recover",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_step_updated:1",
+          "receipt_ref": "receipt:live_step_updated:1"
+        }
+      },
+      {
+        "id": "lost-ack",
+        "operation": "recover",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_step_updated:1",
+          "receipt_ref": "receipt:live_step_updated:1"
+        }
+      },
+      {
+        "id": "append-recovery",
+        "operation": "recover",
+        "changes": {
+          "receipt": null
+        },
+        "expected": {
+          "result": "APPEND_ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_step_updated:1"
+        }
+      },
+      {
+        "id": "missing-outcome",
+        "operation": "recover",
+        "changes": {
+          "outcome": null
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "corrupt-outcome",
+        "operation": "recover",
+        "changes": {
+          "outcome/event_id": "other:event"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "corrupt-receipt",
+        "operation": "recover",
+        "changes": {
+          "receipt/payload_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "changed-bytes",
+        "operation": "recover",
+        "changes": {
+          "payload/schema_version": "9.0.0"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "backup-loss",
+        "operation": "recover",
+        "changes": {
+          "backup_closure_verified": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "publish-before-receipt",
+        "operation": "publish",
+        "changes": {
+          "receipt": null
+        },
+        "expected": {
+          "result": "PENDING",
+          "effects": 0,
+          "event_id": "event:live_step_updated:1"
+        }
+      },
+      {
+        "id": "terminal-before-receipt",
+        "operation": "publish",
+        "changes": {
+          "receipt_retained": false
+        },
+        "expected": {
+          "result": "PENDING",
+          "effects": 0,
+          "event_id": "event:live_step_updated:1"
+        }
+      },
+      {
+        "id": "read-current",
+        "operation": "read",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_step_updated:1",
+          "receipt_ref": "receipt:live_step_updated:1"
+        }
+      },
+      {
+        "id": "read-deleted",
+        "operation": "read",
+        "changes": {
+          "source_deleted_now": true
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "read-denied",
+        "operation": "read",
+        "changes": {
+          "permission_now": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "valid-checkpoint",
+        "operation": "checkpoint",
+        "changes": {},
+        "expected": {
+          "result": "ADVANCE",
+          "effects": 0,
+          "through_sequence_id": 3,
+          "last_event_id": "event:live_step_updated:1"
+        }
+      },
+      {
+        "id": "coverage-gap",
+        "operation": "checkpoint",
+        "changes": {
+          "index_rows": [
+            {
+              "sequence": 2,
+              "event_type": "live.step.updated",
+              "scope": {
+                "kind": "project",
+                "project_id": "sample_project_id"
+              },
+              "event_id": "event:live_step_updated:1"
+            },
+            {
+              "sequence": 3,
+              "event_type": "live.step.updated",
+              "scope": {
+                "kind": "project",
+                "project_id": "different_project"
+              },
+              "event_id": "other:3"
+            }
+          ]
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "filtered-omission",
+        "operation": "checkpoint",
+        "changes": {
+          "selected_matches": []
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "cas-race",
+        "operation": "checkpoint",
+        "changes": {
+          "stored_previous": {
+            "schema_id": "pm.ds15.live_step_updated.checkpoint.v1",
+            "schema_version": "1.0.0",
+            "consumer_id": "reader.ds15.live_step_updated.v1@1.0.0",
+            "index_read_token": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+              "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+              "frontier_revision": 0,
+              "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+              "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "source_selection": {
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "current_ref": "storage/seglog/CURRENT",
+                "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+                "selected_segment_generation": 1,
+                "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+                "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+                "manifest_generation": 11,
+                "recovery_epoch": 0,
+                "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+                "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+                "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+                "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+                "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+              }
+            },
+            "through_sequence_id": 3,
+            "last_event_id": "event:live_step_updated:1",
+            "state": "current",
+            "project_id": "sample_project_id"
+          }
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "token-change",
+        "operation": "checkpoint",
+        "changes": {
+          "selected_token/frontier_revision": 1
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "snapshot-change",
+        "operation": "checkpoint",
+        "changes": {
+          "current_live_snapshot_id": "snapshot:2"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "source-instance-mismatch",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/index_read_token/source_selection/storage_instance_id": "22222222-2222-4222-8222-222222222222",
+          "selected_token/source_selection/storage_instance_id": "22222222-2222-4222-8222-222222222222"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-reader",
+        "operation": "checkpoint",
+        "changes": {
+          "reader_withdrawn": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-writer",
+        "operation": "withdraw_writer",
+        "changes": {
+          "admitted_sequence": null
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "drain-admitted",
+        "operation": "withdraw_writer",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_step_updated:1",
+          "receipt_ref": "receipt:live_step_updated:1"
+        }
+      },
+      {
+        "id": "rebuild-valid",
+        "operation": "rebuild",
+        "changes": {},
+        "expected": {
+          "result": "ADVANCE",
+          "effects": 0,
+          "through_sequence_id": 3,
+          "last_event_id": "event:live_step_updated:1"
+        }
+      },
+      {
+        "id": "rebuild-missing-prefix",
+        "operation": "rebuild",
+        "changes": {
+          "retained_prefix_complete": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "stale-reader-version",
+        "operation": "checkpoint",
+        "changes": {
+          "reader_installed": "reader.ds15.live_step_updated.v1@1.0.0-old"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "unknown-checkpoint-field",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/unexpected": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "persisted-snapshot",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/index_read_token/redb_snapshot_id": "snapshot:1"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "checkpoint-read-denied",
+        "operation": "checkpoint",
+        "changes": {
+          "permission_now": false
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "checkpoint-source-deleted",
+        "operation": "checkpoint",
+        "changes": {
+          "source_deleted_now": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-checkpoint",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/state": "withdrawn"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "last-event-is-not-global-frontier",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/last_event_id": "other:3"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "global-scan-end-required",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/through_sequence_id": 2
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
       }
     ]
   },
@@ -133,6 +1954,625 @@
         "field": "schema_version",
         "value": "9.0.0"
       }
+    ],
+    "semantic_base": {
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "sample_project_id",
+        "run_id": "sample_run_id",
+        "live_session_id": "sample_live_session_id",
+        "artifact_id": "sample_artifact_id",
+        "artifact_ref": "sample_artifact_ref",
+        "artifact_receipt_ref": "sample_artifact_receipt_ref"
+      },
+      "context": {
+        "scope": {
+          "kind": "project",
+          "project_id": "sample_project_id"
+        },
+        "envelope_project_id": "sample_project_id",
+        "envelope_run_id": "sample_run_id",
+        "session_security_class": "ordinary",
+        "artifact": {
+          "id": "sample_artifact_id",
+          "ref": "sample_artifact_ref",
+          "receipt_ref": "sample_artifact_receipt_ref",
+          "committed": true
+        }
+      },
+      "original": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "sample_project_id",
+          "run_id": "sample_run_id",
+          "live_session_id": "sample_live_session_id",
+          "artifact_id": "sample_artifact_id",
+          "artifact_ref": "sample_artifact_ref",
+          "artifact_receipt_ref": "sample_artifact_receipt_ref"
+        },
+        "event_id": "event:live_artifact_created:1",
+        "idempotency_key": "27ea26b2c3f73d63fb953b149076cf739915f0575f1400d9ed0c4f8fdecf1afb"
+      },
+      "outcome": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "sample_project_id",
+          "run_id": "sample_run_id",
+          "live_session_id": "sample_live_session_id",
+          "artifact_id": "sample_artifact_id",
+          "artifact_ref": "sample_artifact_ref",
+          "artifact_receipt_ref": "sample_artifact_receipt_ref"
+        },
+        "event_id": "event:live_artifact_created:1",
+        "committed": true,
+        "source_ref": "source:live_artifact_created:1"
+      },
+      "receipt": {
+        "event_id": "event:live_artifact_created:1",
+        "idempotency_key": "27ea26b2c3f73d63fb953b149076cf739915f0575f1400d9ed0c4f8fdecf1afb",
+        "payload_sha256": "86a67e0f36d2825ba99e388c43da91513d6397b39fef81485a076d911aaab820",
+        "receipt_ref": "receipt:live_artifact_created:1"
+      },
+      "receipt_retained": true,
+      "backup_closure_verified": true,
+      "permission_now": true,
+      "source_deleted_now": false,
+      "share_current": true,
+      "checkpoint": {
+        "schema_id": "pm.ds15.live_artifact_created.checkpoint.v1",
+        "schema_version": "1.0.0",
+        "consumer_id": "reader.ds15.live_artifact_created.v1@1.0.0",
+        "index_read_token": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+          "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+          "frontier_revision": 0,
+          "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+          "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+            "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+            "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          }
+        },
+        "through_sequence_id": 3,
+        "last_event_id": "event:live_artifact_created:1",
+        "state": "current",
+        "project_id": "sample_project_id"
+      },
+      "selected_token": {
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+        "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+        "frontier_revision": 0,
+        "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+        "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "source_selection": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "current_ref": "storage/seglog/CURRENT",
+          "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+          "selected_segment_generation": 1,
+          "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+          "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+          "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+          "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+          "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+          "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+        }
+      },
+      "expected_previous": null,
+      "stored_previous": null,
+      "reader_installed": "reader.ds15.live_artifact_created.v1@1.0.0",
+      "reader_withdrawn": false,
+      "live_snapshot_id": "snapshot:1",
+      "current_live_snapshot_id": "snapshot:1",
+      "scan_low": 1,
+      "scan_high": 3,
+      "selected_high": 3,
+      "retained_prefix_complete": true,
+      "admitted_sequence": 2,
+      "withdrawal_frontier": 3,
+      "selected_matches": [
+        "event:live_artifact_created:1"
+      ],
+      "index_rows": [
+        {
+          "sequence": 1,
+          "event_type": "other.event",
+          "scope": {
+            "kind": "project",
+            "project_id": "sample_project_id"
+          },
+          "event_id": "other:1"
+        },
+        {
+          "sequence": 2,
+          "event_type": "live.artifact.created",
+          "scope": {
+            "kind": "project",
+            "project_id": "sample_project_id"
+          },
+          "event_id": "event:live_artifact_created:1"
+        },
+        {
+          "sequence": 3,
+          "event_type": "live.artifact.created",
+          "scope": {
+            "kind": "project",
+            "project_id": "different_project"
+          },
+          "event_id": "other:3"
+        }
+      ]
+    },
+    "semantic_cases": [
+      {
+        "id": "valid-transition",
+        "operation": "payload",
+        "changes": {},
+        "expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        }
+      },
+      {
+        "id": "invalid-transition",
+        "operation": "payload",
+        "changes": {
+          "context/artifact/committed": false
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "envelope-mismatch",
+        "operation": "payload",
+        "changes": {
+          "context/envelope_project_id": "different_project"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "original-retry",
+        "operation": "recover",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_artifact_created:1",
+          "receipt_ref": "receipt:live_artifact_created:1"
+        }
+      },
+      {
+        "id": "lost-ack",
+        "operation": "recover",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_artifact_created:1",
+          "receipt_ref": "receipt:live_artifact_created:1"
+        }
+      },
+      {
+        "id": "append-recovery",
+        "operation": "recover",
+        "changes": {
+          "receipt": null
+        },
+        "expected": {
+          "result": "APPEND_ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_artifact_created:1"
+        }
+      },
+      {
+        "id": "missing-outcome",
+        "operation": "recover",
+        "changes": {
+          "outcome": null
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "corrupt-outcome",
+        "operation": "recover",
+        "changes": {
+          "outcome/event_id": "other:event"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "corrupt-receipt",
+        "operation": "recover",
+        "changes": {
+          "receipt/payload_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "changed-bytes",
+        "operation": "recover",
+        "changes": {
+          "payload/schema_version": "9.0.0"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "backup-loss",
+        "operation": "recover",
+        "changes": {
+          "backup_closure_verified": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "publish-before-receipt",
+        "operation": "publish",
+        "changes": {
+          "receipt": null
+        },
+        "expected": {
+          "result": "PENDING",
+          "effects": 0,
+          "event_id": "event:live_artifact_created:1"
+        }
+      },
+      {
+        "id": "terminal-before-receipt",
+        "operation": "publish",
+        "changes": {
+          "receipt_retained": false
+        },
+        "expected": {
+          "result": "PENDING",
+          "effects": 0,
+          "event_id": "event:live_artifact_created:1"
+        }
+      },
+      {
+        "id": "read-current",
+        "operation": "read",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_artifact_created:1",
+          "receipt_ref": "receipt:live_artifact_created:1"
+        }
+      },
+      {
+        "id": "read-deleted",
+        "operation": "read",
+        "changes": {
+          "source_deleted_now": true
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "read-denied",
+        "operation": "read",
+        "changes": {
+          "permission_now": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "valid-checkpoint",
+        "operation": "checkpoint",
+        "changes": {},
+        "expected": {
+          "result": "ADVANCE",
+          "effects": 0,
+          "through_sequence_id": 3,
+          "last_event_id": "event:live_artifact_created:1"
+        }
+      },
+      {
+        "id": "coverage-gap",
+        "operation": "checkpoint",
+        "changes": {
+          "index_rows": [
+            {
+              "sequence": 2,
+              "event_type": "live.artifact.created",
+              "scope": {
+                "kind": "project",
+                "project_id": "sample_project_id"
+              },
+              "event_id": "event:live_artifact_created:1"
+            },
+            {
+              "sequence": 3,
+              "event_type": "live.artifact.created",
+              "scope": {
+                "kind": "project",
+                "project_id": "different_project"
+              },
+              "event_id": "other:3"
+            }
+          ]
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "filtered-omission",
+        "operation": "checkpoint",
+        "changes": {
+          "selected_matches": []
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "cas-race",
+        "operation": "checkpoint",
+        "changes": {
+          "stored_previous": {
+            "schema_id": "pm.ds15.live_artifact_created.checkpoint.v1",
+            "schema_version": "1.0.0",
+            "consumer_id": "reader.ds15.live_artifact_created.v1@1.0.0",
+            "index_read_token": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+              "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+              "frontier_revision": 0,
+              "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+              "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "source_selection": {
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "current_ref": "storage/seglog/CURRENT",
+                "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+                "selected_segment_generation": 1,
+                "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+                "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+                "manifest_generation": 11,
+                "recovery_epoch": 0,
+                "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+                "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+                "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+                "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+                "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+              }
+            },
+            "through_sequence_id": 3,
+            "last_event_id": "event:live_artifact_created:1",
+            "state": "current",
+            "project_id": "sample_project_id"
+          }
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "token-change",
+        "operation": "checkpoint",
+        "changes": {
+          "selected_token/frontier_revision": 1
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "snapshot-change",
+        "operation": "checkpoint",
+        "changes": {
+          "current_live_snapshot_id": "snapshot:2"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "source-instance-mismatch",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/index_read_token/source_selection/storage_instance_id": "22222222-2222-4222-8222-222222222222",
+          "selected_token/source_selection/storage_instance_id": "22222222-2222-4222-8222-222222222222"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-reader",
+        "operation": "checkpoint",
+        "changes": {
+          "reader_withdrawn": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-writer",
+        "operation": "withdraw_writer",
+        "changes": {
+          "admitted_sequence": null
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "drain-admitted",
+        "operation": "withdraw_writer",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_artifact_created:1",
+          "receipt_ref": "receipt:live_artifact_created:1"
+        }
+      },
+      {
+        "id": "rebuild-valid",
+        "operation": "rebuild",
+        "changes": {},
+        "expected": {
+          "result": "ADVANCE",
+          "effects": 0,
+          "through_sequence_id": 3,
+          "last_event_id": "event:live_artifact_created:1"
+        }
+      },
+      {
+        "id": "rebuild-missing-prefix",
+        "operation": "rebuild",
+        "changes": {
+          "retained_prefix_complete": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "stale-reader-version",
+        "operation": "checkpoint",
+        "changes": {
+          "reader_installed": "reader.ds15.live_artifact_created.v1@1.0.0-old"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "unknown-checkpoint-field",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/unexpected": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "persisted-snapshot",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/index_read_token/redb_snapshot_id": "snapshot:1"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "checkpoint-read-denied",
+        "operation": "checkpoint",
+        "changes": {
+          "permission_now": false
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "checkpoint-source-deleted",
+        "operation": "checkpoint",
+        "changes": {
+          "source_deleted_now": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-checkpoint",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/state": "withdrawn"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "last-event-is-not-global-frontier",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/last_event_id": "other:3"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "global-scan-end-required",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/through_sequence_id": 2
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      }
     ]
   },
   {
@@ -161,6 +2601,626 @@
         "field": "schema_version",
         "value": "9.0.0"
       }
+    ],
+    "semantic_base": {
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "sample_project_id",
+        "run_id": "sample_run_id",
+        "live_session_id": "sample_live_session_id",
+        "manifest_ref": "sample_manifest_ref",
+        "summary_ref": "sample_summary_ref",
+        "checks_ref": "sample_checks_ref"
+      },
+      "context": {
+        "scope": {
+          "kind": "project",
+          "project_id": "sample_project_id"
+        },
+        "envelope_project_id": "sample_project_id",
+        "envelope_run_id": "sample_run_id",
+        "session_security_class": "ordinary",
+        "session_state": "running",
+        "finalization": {
+          "committed": true,
+          "manifest_ref": "sample_manifest_ref",
+          "summary_ref": "sample_summary_ref",
+          "checks_ref": "sample_checks_ref"
+        }
+      },
+      "original": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "sample_project_id",
+          "run_id": "sample_run_id",
+          "live_session_id": "sample_live_session_id",
+          "manifest_ref": "sample_manifest_ref",
+          "summary_ref": "sample_summary_ref",
+          "checks_ref": "sample_checks_ref"
+        },
+        "event_id": "event:live_session_completed:1",
+        "idempotency_key": "2d653a3adf04fee0907680fbe34b170746610b517ff5cb24d1fd57fada74f458"
+      },
+      "outcome": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "sample_project_id",
+          "run_id": "sample_run_id",
+          "live_session_id": "sample_live_session_id",
+          "manifest_ref": "sample_manifest_ref",
+          "summary_ref": "sample_summary_ref",
+          "checks_ref": "sample_checks_ref"
+        },
+        "event_id": "event:live_session_completed:1",
+        "committed": true,
+        "source_ref": "source:live_session_completed:1"
+      },
+      "receipt": {
+        "event_id": "event:live_session_completed:1",
+        "idempotency_key": "2d653a3adf04fee0907680fbe34b170746610b517ff5cb24d1fd57fada74f458",
+        "payload_sha256": "1cbfe792af10f903ec0235bd3bdc91d118c06de890d403becf84718f4e304a48",
+        "receipt_ref": "receipt:live_session_completed:1"
+      },
+      "receipt_retained": true,
+      "backup_closure_verified": true,
+      "permission_now": true,
+      "source_deleted_now": false,
+      "share_current": true,
+      "checkpoint": {
+        "schema_id": "pm.ds15.live_session_completed.checkpoint.v1",
+        "schema_version": "1.0.0",
+        "consumer_id": "reader.ds15.live_session_completed.v1@1.0.0",
+        "index_read_token": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+          "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+          "frontier_revision": 0,
+          "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+          "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+            "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+            "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          }
+        },
+        "through_sequence_id": 3,
+        "last_event_id": "event:live_session_completed:1",
+        "state": "current",
+        "project_id": "sample_project_id"
+      },
+      "selected_token": {
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+        "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+        "frontier_revision": 0,
+        "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+        "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "source_selection": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "current_ref": "storage/seglog/CURRENT",
+          "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+          "selected_segment_generation": 1,
+          "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+          "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+          "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+          "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+          "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+          "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+        }
+      },
+      "expected_previous": null,
+      "stored_previous": null,
+      "reader_installed": "reader.ds15.live_session_completed.v1@1.0.0",
+      "reader_withdrawn": false,
+      "live_snapshot_id": "snapshot:1",
+      "current_live_snapshot_id": "snapshot:1",
+      "scan_low": 1,
+      "scan_high": 3,
+      "selected_high": 3,
+      "retained_prefix_complete": true,
+      "admitted_sequence": 2,
+      "withdrawal_frontier": 3,
+      "selected_matches": [
+        "event:live_session_completed:1"
+      ],
+      "index_rows": [
+        {
+          "sequence": 1,
+          "event_type": "other.event",
+          "scope": {
+            "kind": "project",
+            "project_id": "sample_project_id"
+          },
+          "event_id": "other:1"
+        },
+        {
+          "sequence": 2,
+          "event_type": "live.session.completed",
+          "scope": {
+            "kind": "project",
+            "project_id": "sample_project_id"
+          },
+          "event_id": "event:live_session_completed:1"
+        },
+        {
+          "sequence": 3,
+          "event_type": "live.session.completed",
+          "scope": {
+            "kind": "project",
+            "project_id": "different_project"
+          },
+          "event_id": "other:3"
+        }
+      ]
+    },
+    "semantic_cases": [
+      {
+        "id": "valid-transition",
+        "operation": "payload",
+        "changes": {},
+        "expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        }
+      },
+      {
+        "id": "invalid-transition",
+        "operation": "payload",
+        "changes": {
+          "context/finalization/committed": false
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "envelope-mismatch",
+        "operation": "payload",
+        "changes": {
+          "context/envelope_project_id": "different_project"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "original-retry",
+        "operation": "recover",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_completed:1",
+          "receipt_ref": "receipt:live_session_completed:1"
+        }
+      },
+      {
+        "id": "lost-ack",
+        "operation": "recover",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_completed:1",
+          "receipt_ref": "receipt:live_session_completed:1"
+        }
+      },
+      {
+        "id": "append-recovery",
+        "operation": "recover",
+        "changes": {
+          "receipt": null
+        },
+        "expected": {
+          "result": "APPEND_ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_completed:1"
+        }
+      },
+      {
+        "id": "missing-outcome",
+        "operation": "recover",
+        "changes": {
+          "outcome": null
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "corrupt-outcome",
+        "operation": "recover",
+        "changes": {
+          "outcome/event_id": "other:event"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "corrupt-receipt",
+        "operation": "recover",
+        "changes": {
+          "receipt/payload_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "changed-bytes",
+        "operation": "recover",
+        "changes": {
+          "payload/schema_version": "9.0.0"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "backup-loss",
+        "operation": "recover",
+        "changes": {
+          "backup_closure_verified": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "publish-before-receipt",
+        "operation": "publish",
+        "changes": {
+          "receipt": null
+        },
+        "expected": {
+          "result": "PENDING",
+          "effects": 0,
+          "event_id": "event:live_session_completed:1"
+        }
+      },
+      {
+        "id": "terminal-before-receipt",
+        "operation": "publish",
+        "changes": {
+          "receipt_retained": false
+        },
+        "expected": {
+          "result": "PENDING",
+          "effects": 0,
+          "event_id": "event:live_session_completed:1"
+        }
+      },
+      {
+        "id": "read-current",
+        "operation": "read",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_completed:1",
+          "receipt_ref": "receipt:live_session_completed:1"
+        }
+      },
+      {
+        "id": "read-deleted",
+        "operation": "read",
+        "changes": {
+          "source_deleted_now": true
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "read-denied",
+        "operation": "read",
+        "changes": {
+          "permission_now": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "valid-checkpoint",
+        "operation": "checkpoint",
+        "changes": {},
+        "expected": {
+          "result": "ADVANCE",
+          "effects": 0,
+          "through_sequence_id": 3,
+          "last_event_id": "event:live_session_completed:1"
+        }
+      },
+      {
+        "id": "coverage-gap",
+        "operation": "checkpoint",
+        "changes": {
+          "index_rows": [
+            {
+              "sequence": 2,
+              "event_type": "live.session.completed",
+              "scope": {
+                "kind": "project",
+                "project_id": "sample_project_id"
+              },
+              "event_id": "event:live_session_completed:1"
+            },
+            {
+              "sequence": 3,
+              "event_type": "live.session.completed",
+              "scope": {
+                "kind": "project",
+                "project_id": "different_project"
+              },
+              "event_id": "other:3"
+            }
+          ]
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "filtered-omission",
+        "operation": "checkpoint",
+        "changes": {
+          "selected_matches": []
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "cas-race",
+        "operation": "checkpoint",
+        "changes": {
+          "stored_previous": {
+            "schema_id": "pm.ds15.live_session_completed.checkpoint.v1",
+            "schema_version": "1.0.0",
+            "consumer_id": "reader.ds15.live_session_completed.v1@1.0.0",
+            "index_read_token": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+              "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+              "frontier_revision": 0,
+              "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+              "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "source_selection": {
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "current_ref": "storage/seglog/CURRENT",
+                "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+                "selected_segment_generation": 1,
+                "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+                "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+                "manifest_generation": 11,
+                "recovery_epoch": 0,
+                "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+                "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+                "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+                "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+                "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+              }
+            },
+            "through_sequence_id": 3,
+            "last_event_id": "event:live_session_completed:1",
+            "state": "current",
+            "project_id": "sample_project_id"
+          }
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "token-change",
+        "operation": "checkpoint",
+        "changes": {
+          "selected_token/frontier_revision": 1
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "snapshot-change",
+        "operation": "checkpoint",
+        "changes": {
+          "current_live_snapshot_id": "snapshot:2"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "source-instance-mismatch",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/index_read_token/source_selection/storage_instance_id": "22222222-2222-4222-8222-222222222222",
+          "selected_token/source_selection/storage_instance_id": "22222222-2222-4222-8222-222222222222"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-reader",
+        "operation": "checkpoint",
+        "changes": {
+          "reader_withdrawn": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-writer",
+        "operation": "withdraw_writer",
+        "changes": {
+          "admitted_sequence": null
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "drain-admitted",
+        "operation": "withdraw_writer",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_completed:1",
+          "receipt_ref": "receipt:live_session_completed:1"
+        }
+      },
+      {
+        "id": "rebuild-valid",
+        "operation": "rebuild",
+        "changes": {},
+        "expected": {
+          "result": "ADVANCE",
+          "effects": 0,
+          "through_sequence_id": 3,
+          "last_event_id": "event:live_session_completed:1"
+        }
+      },
+      {
+        "id": "rebuild-missing-prefix",
+        "operation": "rebuild",
+        "changes": {
+          "retained_prefix_complete": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "stale-reader-version",
+        "operation": "checkpoint",
+        "changes": {
+          "reader_installed": "reader.ds15.live_session_completed.v1@1.0.0-old"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "unknown-checkpoint-field",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/unexpected": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "persisted-snapshot",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/index_read_token/redb_snapshot_id": "snapshot:1"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "checkpoint-read-denied",
+        "operation": "checkpoint",
+        "changes": {
+          "permission_now": false
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "checkpoint-source-deleted",
+        "operation": "checkpoint",
+        "changes": {
+          "source_deleted_now": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-checkpoint",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/state": "withdrawn"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "last-event-is-not-global-frontier",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/last_event_id": "other:3"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "global-scan-end-required",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/through_sequence_id": 2
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      }
     ]
   },
   {
@@ -172,7 +3232,7 @@
       "live_session_id": "sample_live_session_id",
       "degradation_revision": 1,
       "requested_visual_mode": "auto",
-      "effective_visual_mode": "visible",
+      "effective_visual_mode": "headless",
       "fallback_reason": "missing_display"
     },
     "negative": [
@@ -189,6 +3249,662 @@
         "mutation": "wrong_version",
         "field": "schema_version",
         "value": "9.0.0"
+      }
+    ],
+    "semantic_base": {
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "sample_project_id",
+        "run_id": "sample_run_id",
+        "live_session_id": "sample_live_session_id",
+        "degradation_revision": 1,
+        "requested_visual_mode": "auto",
+        "effective_visual_mode": "headless",
+        "fallback_reason": "missing_display"
+      },
+      "context": {
+        "scope": {
+          "kind": "project",
+          "project_id": "sample_project_id"
+        },
+        "envelope_project_id": "sample_project_id",
+        "envelope_run_id": "sample_run_id",
+        "session_security_class": "ordinary",
+        "previous_revision": 0,
+        "visible_dependency_available": false,
+        "launch_outcome": "headless"
+      },
+      "original": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "sample_project_id",
+          "run_id": "sample_run_id",
+          "live_session_id": "sample_live_session_id",
+          "degradation_revision": 1,
+          "requested_visual_mode": "auto",
+          "effective_visual_mode": "headless",
+          "fallback_reason": "missing_display"
+        },
+        "event_id": "event:live_session_degraded:1",
+        "idempotency_key": "294ae1851940375aca5d3141bbfe58c591f80bcc93baf4f772f3143701a459ff"
+      },
+      "outcome": {
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "sample_project_id",
+          "run_id": "sample_run_id",
+          "live_session_id": "sample_live_session_id",
+          "degradation_revision": 1,
+          "requested_visual_mode": "auto",
+          "effective_visual_mode": "headless",
+          "fallback_reason": "missing_display"
+        },
+        "event_id": "event:live_session_degraded:1",
+        "committed": true,
+        "source_ref": "source:live_session_degraded:1"
+      },
+      "receipt": {
+        "event_id": "event:live_session_degraded:1",
+        "idempotency_key": "294ae1851940375aca5d3141bbfe58c591f80bcc93baf4f772f3143701a459ff",
+        "payload_sha256": "3a7093b0862176c432eaeec5ea6d41926e19c73bfcbd1af7354ca6a772c5c741",
+        "receipt_ref": "receipt:live_session_degraded:1"
+      },
+      "receipt_retained": true,
+      "backup_closure_verified": true,
+      "permission_now": true,
+      "source_deleted_now": false,
+      "share_current": true,
+      "checkpoint": {
+        "schema_id": "pm.ds15.live_session_degraded.checkpoint.v1",
+        "schema_version": "1.0.0",
+        "consumer_id": "reader.ds15.live_session_degraded.v1@1.0.0",
+        "index_read_token": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+          "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+          "frontier_revision": 0,
+          "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+          "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+            "selected_segment_generation": 1,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+            "manifest_generation": 11,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+            "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+            "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          }
+        },
+        "through_sequence_id": 3,
+        "last_event_id": "event:live_session_degraded:1",
+        "state": "current",
+        "project_id": "sample_project_id"
+      },
+      "selected_token": {
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+        "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+        "frontier_revision": 0,
+        "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+        "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+        "source_selection": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "current_ref": "storage/seglog/CURRENT",
+          "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+          "selected_segment_generation": 1,
+          "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+          "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+          "manifest_generation": 11,
+          "recovery_epoch": 0,
+          "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+          "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+          "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+          "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+          "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+        }
+      },
+      "expected_previous": null,
+      "stored_previous": null,
+      "reader_installed": "reader.ds15.live_session_degraded.v1@1.0.0",
+      "reader_withdrawn": false,
+      "live_snapshot_id": "snapshot:1",
+      "current_live_snapshot_id": "snapshot:1",
+      "scan_low": 1,
+      "scan_high": 3,
+      "selected_high": 3,
+      "retained_prefix_complete": true,
+      "admitted_sequence": 2,
+      "withdrawal_frontier": 3,
+      "selected_matches": [
+        "event:live_session_degraded:1"
+      ],
+      "index_rows": [
+        {
+          "sequence": 1,
+          "event_type": "other.event",
+          "scope": {
+            "kind": "project",
+            "project_id": "sample_project_id"
+          },
+          "event_id": "other:1"
+        },
+        {
+          "sequence": 2,
+          "event_type": "live.session.degraded",
+          "scope": {
+            "kind": "project",
+            "project_id": "sample_project_id"
+          },
+          "event_id": "event:live_session_degraded:1"
+        },
+        {
+          "sequence": 3,
+          "event_type": "live.session.degraded",
+          "scope": {
+            "kind": "project",
+            "project_id": "different_project"
+          },
+          "event_id": "other:3"
+        }
+      ]
+    },
+    "semantic_cases": [
+      {
+        "id": "valid-transition",
+        "operation": "payload",
+        "changes": {},
+        "expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        }
+      },
+      {
+        "id": "invalid-transition",
+        "operation": "payload",
+        "changes": {
+          "payload/effective_visual_mode": "visible"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "envelope-mismatch",
+        "operation": "payload",
+        "changes": {
+          "context/envelope_project_id": "different_project"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "original-retry",
+        "operation": "recover",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_degraded:1",
+          "receipt_ref": "receipt:live_session_degraded:1"
+        }
+      },
+      {
+        "id": "lost-ack",
+        "operation": "recover",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_degraded:1",
+          "receipt_ref": "receipt:live_session_degraded:1"
+        }
+      },
+      {
+        "id": "append-recovery",
+        "operation": "recover",
+        "changes": {
+          "receipt": null
+        },
+        "expected": {
+          "result": "APPEND_ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_degraded:1"
+        }
+      },
+      {
+        "id": "missing-outcome",
+        "operation": "recover",
+        "changes": {
+          "outcome": null
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "corrupt-outcome",
+        "operation": "recover",
+        "changes": {
+          "outcome/event_id": "other:event"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "corrupt-receipt",
+        "operation": "recover",
+        "changes": {
+          "receipt/payload_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "changed-bytes",
+        "operation": "recover",
+        "changes": {
+          "payload/schema_version": "9.0.0"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "backup-loss",
+        "operation": "recover",
+        "changes": {
+          "backup_closure_verified": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "publish-before-receipt",
+        "operation": "publish",
+        "changes": {
+          "receipt": null
+        },
+        "expected": {
+          "result": "PENDING",
+          "effects": 0,
+          "event_id": "event:live_session_degraded:1"
+        }
+      },
+      {
+        "id": "terminal-before-receipt",
+        "operation": "publish",
+        "changes": {
+          "receipt_retained": false
+        },
+        "expected": {
+          "result": "PENDING",
+          "effects": 0,
+          "event_id": "event:live_session_degraded:1"
+        }
+      },
+      {
+        "id": "read-current",
+        "operation": "read",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_degraded:1",
+          "receipt_ref": "receipt:live_session_degraded:1"
+        }
+      },
+      {
+        "id": "read-deleted",
+        "operation": "read",
+        "changes": {
+          "source_deleted_now": true
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "read-denied",
+        "operation": "read",
+        "changes": {
+          "permission_now": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "valid-checkpoint",
+        "operation": "checkpoint",
+        "changes": {},
+        "expected": {
+          "result": "ADVANCE",
+          "effects": 0,
+          "through_sequence_id": 3,
+          "last_event_id": "event:live_session_degraded:1"
+        }
+      },
+      {
+        "id": "coverage-gap",
+        "operation": "checkpoint",
+        "changes": {
+          "index_rows": [
+            {
+              "sequence": 2,
+              "event_type": "live.session.degraded",
+              "scope": {
+                "kind": "project",
+                "project_id": "sample_project_id"
+              },
+              "event_id": "event:live_session_degraded:1"
+            },
+            {
+              "sequence": 3,
+              "event_type": "live.session.degraded",
+              "scope": {
+                "kind": "project",
+                "project_id": "different_project"
+              },
+              "event_id": "other:3"
+            }
+          ]
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "filtered-omission",
+        "operation": "checkpoint",
+        "changes": {
+          "selected_matches": []
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "cas-race",
+        "operation": "checkpoint",
+        "changes": {
+          "stored_previous": {
+            "schema_id": "pm.ds15.live_session_degraded.checkpoint.v1",
+            "schema_version": "1.0.0",
+            "consumer_id": "reader.ds15.live_session_degraded.v1@1.0.0",
+            "index_read_token": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+              "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+              "frontier_revision": 0,
+              "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+              "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+              "source_selection": {
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "current_ref": "storage/seglog/CURRENT",
+                "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+                "selected_segment_generation": 1,
+                "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+                "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+                "manifest_generation": 11,
+                "recovery_epoch": 0,
+                "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+                "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+                "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+                "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+                "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+              }
+            },
+            "through_sequence_id": 3,
+            "last_event_id": "event:live_session_degraded:1",
+            "state": "current",
+            "project_id": "sample_project_id"
+          }
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "token-change",
+        "operation": "checkpoint",
+        "changes": {
+          "selected_token/frontier_revision": 1
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "snapshot-change",
+        "operation": "checkpoint",
+        "changes": {
+          "current_live_snapshot_id": "snapshot:2"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "source-instance-mismatch",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/index_read_token/source_selection/storage_instance_id": "22222222-2222-4222-8222-222222222222",
+          "selected_token/source_selection/storage_instance_id": "22222222-2222-4222-8222-222222222222"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-reader",
+        "operation": "checkpoint",
+        "changes": {
+          "reader_withdrawn": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-writer",
+        "operation": "withdraw_writer",
+        "changes": {
+          "admitted_sequence": null
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "drain-admitted",
+        "operation": "withdraw_writer",
+        "changes": {},
+        "expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_degraded:1",
+          "receipt_ref": "receipt:live_session_degraded:1"
+        }
+      },
+      {
+        "id": "rebuild-valid",
+        "operation": "rebuild",
+        "changes": {},
+        "expected": {
+          "result": "ADVANCE",
+          "effects": 0,
+          "through_sequence_id": 3,
+          "last_event_id": "event:live_session_degraded:1"
+        }
+      },
+      {
+        "id": "rebuild-missing-prefix",
+        "operation": "rebuild",
+        "changes": {
+          "retained_prefix_complete": false
+        },
+        "expected": {
+          "result": "UNAVAILABLE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "stale-reader-version",
+        "operation": "checkpoint",
+        "changes": {
+          "reader_installed": "reader.ds15.live_session_degraded.v1@1.0.0-old"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "unknown-checkpoint-field",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/unexpected": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "persisted-snapshot",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/index_read_token/redb_snapshot_id": "snapshot:1"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "checkpoint-read-denied",
+        "operation": "checkpoint",
+        "changes": {
+          "permission_now": false
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "checkpoint-source-deleted",
+        "operation": "checkpoint",
+        "changes": {
+          "source_deleted_now": true
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "withdrawn-checkpoint",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/state": "withdrawn"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "last-event-is-not-global-frontier",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/last_event_id": "other:3"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "global-scan-end-required",
+        "operation": "checkpoint",
+        "changes": {
+          "checkpoint/through_sequence_id": 2
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "auto-missing-dependency-visible-forbidden",
+        "operation": "payload",
+        "changes": {
+          "payload/effective_visual_mode": "visible"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
+      },
+      {
+        "id": "forced-visible-no-fallback",
+        "operation": "payload",
+        "changes": {
+          "payload/requested_visual_mode": "forced_visible",
+          "payload/effective_visual_mode": null,
+          "context/launch_outcome": "refused"
+        },
+        "expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        }
+      },
+      {
+        "id": "forced-visible-headless-forbidden",
+        "operation": "payload",
+        "changes": {
+          "payload/requested_visual_mode": "forced_visible",
+          "payload/effective_visual_mode": "headless",
+          "context/launch_outcome": "headless"
+        },
+        "expected": {
+          "result": "REFUSE",
+          "effects": 0
+        }
       }
     ]
   }
