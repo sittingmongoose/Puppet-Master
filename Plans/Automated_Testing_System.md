@@ -7245,6 +7245,15 @@ positive/negative model cases. Every added checker rule runs through this full c
 cases include internally consistent changed payloads so earlier equality guards cannot mask identity
 failures. Native filesystem, original receipt, crash/restore and shared Storage execution obligations remain NOT_RUN. No admission or retention policy is inferred from a static pass.
 
+Each family's own boundary_cases additionally runs coherent current-writer and retry
+projector_replay_only negatives; 16383/16384/16385-byte canonical MessagePack event-body and both
+physical companion boundaries; packed positive payload/operation/control cases; oversized-inline,
+missing/changed/hash/size/backup/late-referent refusals; exact-original terminal CAS substitutions and
+missing/semantic/wrong full-value proof; trailing-LF identifiers; encoded Project partitions; semantic
+retry changes versus accepted Storage-metadata-only retry changes; and matching versus foreign
+transient SP-278 delivery identities. Failure-oracle verification injects a false success and requires
+the complete checker to fail. These remain static model checks, not native pack/CAS/filesystem proof.
+
 ```yaml
 plan_unit_id: ATS-280
 unit_type: contract

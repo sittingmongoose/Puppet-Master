@@ -24511,6 +24511,18 @@ resolve.v2 is semantic replay only and cannot establish full-value equality. SP-
 physical keys, resolvers, transaction fences, activation and coherent backup/restore; the generic
 receipt_record_baseline supplies none of this authority. No admission is granted.
 
+SP-560 also owns the closed physical operation_custody_value/family_control_value union and its
+SP-337 whole-value reference branches; operation_custody/family_control remain resolved logical
+contracts. Both physical profiles use canonical redb, coordination_and_storage and max_value_bytes=16384.
+The BLAKE3/size/media reference spelling and canonical MessagePack boundary are explicit in SP-560.
+A large event uses payload={} and payload_ref, resolving the complete closed family payload before
+settlement joins while strict full-value proof keeps the original stored representation. Missing or
+changed original pack bytes refuse reading, CAS and terminal publication. Terminal history_settled
+binds the exact immutable settlement, original complete EventRecord, original receipt and strict
+resolve_full_value.v1 request/result/v2 witness, not merely individually valid shapes. Current writer
+and retry reject projector_replay_only with replay_only_not_appendable. CV-339 semantic retry equality
+excludes Storage-assigned sequence_id/observed_at_utc/persisted_at_utc; original-value recovery does not.
+
 ```yaml
 plan_unit_id: CV-560
 unit_type: contract

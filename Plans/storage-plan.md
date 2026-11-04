@@ -29705,6 +29705,68 @@ joins exact current control/version, final cutoff when withdrawn (otherwise curr
 current SP-278 token/snapshot, access and retained original, and rechecks revision before disclosure.
 Retirement or any concurrent change retries/refuses the delivery. SP-278 rebuild changes no cutoff.
 
+**SP-337/SP-340 physical profiles and bounded values (new technical binding).** Both
+filemanager_operation_custody and filemanager_family_control have explicit family_profiles:
+redb_file=canonical, storage_group=coordination_and_storage, encoding_target=messagepack_canonical,
+max_value_bytes=16384. They use that existing group's 2147483648-byte advisory canonical budget;
+SP-340 budget notices/reclaim apply without pruning or refusing canonical writes. SP-339 canonical
+MessagePack byte length, not JSON character count, selects the representation. The literal tables
+and keys above are unchanged. The closed operation_custody and family_control are LOGICAL values.
+The actual redb value validates operation_custody_value or family_control_value: either that exact
+logical value at <=16384 bytes, or its closed reference alternative at <=16384 bytes. A reference has
+exactly the same literal family schema_id (pm.storage_value.filemanager_operation_custody.v1 or
+pm.storage_value.filemanager_family_control.v1), schema_version=1.0.0 and value_ref. Closed field sets
+distinguish the inline and reference branches; the reference is not a logical original. The referenced
+complete logical value must exceed 16384 bytes and independently validate its original closed schema.
+This avoids imposing an arbitrary cap on accepted path evidence or the frozen drain membership.
+
+The newly authored reference spelling, reused for both value_ref and EventRecord.payload_ref, is
+pm-payload-ref:v1:blake3:<64 lowercase hex digits>:<positive unpadded decimal byte size>:application/vnd.msgpack.
+It denotes SP-337's exact canonical MessagePack bytes, BLAKE3 content identity and media type; it is
+not a path, URL, base64 body or caller assertion of origin. The actual selected SP-337
+payload_pack_index entry at payload:v1:<blake3_hex> in canonical redb resolves the original pack,
+offset, length, media type and reference count to durable pack bytes. It must resolve those exact
+bytes and size under current permission/deletion/retention; a caller's supplied row is not origin. Verify BLAKE3,
+length, canonical decoding and type-sensitive equality before using the resolved original. Missing,
+changed, oversized-inline, wrong-media, wrong-size or unauthenticated pack values fence, without
+reconstructing custody from current disk or events. Each identifier pattern uses a full-match tail;
+trailing LF is never normalized away as part of an identity.
+
+An EventRecord's canonical MessagePack payload body at <=16384 bytes remains the complete closed
+family payload with payload_ref=null. A larger body has payload={} and that exact payload_ref;
+resolve the pack bytes to the complete family payload for its closed schema and settlement joins.
+The strict CV-339 full-value commitment still covers the ORIGINAL stored EventRecord including its
+empty inline body and reference, never an expanded/re-encoded substitute. Operation originals may
+therefore refer both to the packed event body and to a packed complete logical operation value.
+Content-addressed identical bytes are stored once. The resolver returns the original logical row only
+after proving the actual table/key/physical reference and every original join; a caller-provided
+logical row is not its source. A large family-control drain set uses the same complete-value reference
+alternative. CAS compares the actual selected physical value plus the resolved logical revision under
+the same writer/coordinator gate, verifies both before/after representations, and atomically publishes
+the next bounded physical value. A missing pack or changed pointer/referent refuses CAS.
+
+SP-337 pack bytes/index/refcounts are durable before any referencing redb CAS or event acknowledgement.
+Coherent backup includes both tables and every transitively referenced pack/index value, original
+EventRecord and append custody at the same boundary. Restore verifies this complete graph before
+writers/readers enable; lost pack data stays unavailable, never a smaller drain set or empty payload.
+Currentness/access, selected physical values and resolved bytes are rechecked after copying and
+immediately before CAS/terminal publication/disclosure. Retention/holds and garbage collection remain
+SP-337 and the original owners' rules; no new deletion or event-history policy is selected.
+
+For every exact family, history_settled additionally proves EventRecord event_type/scope/Project,
+operation identity, command correlation, original completion time, payload schema, decoded complete
+payload and event/idempotency IDs against the immutable settlement/acceptance. Its first receipt
+must equal the selected v2 original and the complete event's sequence/event IDs. The terminal CAS
+selects the actual effect_settled pre-CAS row and compares it exactly to before; its uncommitted
+history_settled candidate cannot stand in for that original. It validates the candidate against the
+frozen pre-CAS acceptance/settlement and runs the same separate resolve_full_value.v1 request/result,
+strict v2 witness/commitment, original
+source/control/access/currentness and final equality checks as recovery; shape validity alone or an
+unrelated complete EventRecord is insufficient. Current append and retry both refuse
+projector_replay_only as replay_only_not_appendable. Retry/idempotency equality uses only CV-339's
+explicit producer semantic fields; Storage-assigned metadata is excluded from that comparison and
+retained unchanged in the independently verified ORIGINAL full-value request.
+
 **Activation, backup, restore and retention boundary.** StorageMigrationCoordinator installs both
 literal tables, exact schemas/codecs, resolvers, CAS gates and mandatory backup membership together
 through protected preflight/backup/verification/version-last activation. Old generic receipts have no

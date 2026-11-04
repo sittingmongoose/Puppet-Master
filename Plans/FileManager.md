@@ -5601,6 +5601,28 @@ must prove its own version/schema and SP-278 current coverage. No family project
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
 
+**Bounded storage and current-writer refusal.** file.copied@1.0.0 independently adopts
+SP-337/SP-340 and SP-560's physical operation_custody_value/family_control_value alternatives.
+Both companions use canonical redb, coordination_and_storage, the existing advisory 2147483648-byte
+canonical group budget and a 16384-byte canonical MessagePack physical-value limit. Above that limit,
+store the complete logical value through the closed SP-337 reference alternative; no truncation,
+inline oversized receipt or cap on legitimate drain membership. Event bodies through 16384 bytes
+stay inline; larger bodies use empty payload={} and the SP-560 BLAKE3/size/media payload_ref.
+Resolve and validate the exact closed file.copied payload before semantic checks; compare the ORIGINAL
+stored EventRecord representation for full-value proof. Referents are durable before reference
+publication, included in coherent backup and rechecked for exact bytes/hash/size, current access and
+retention before use. Missing or changed referents fence. This family's current append AND retry
+refuse replay_policy=projector_replay_only as replay_only_not_appendable; its writer uses
+replay_policy=dedupe_by_idempotency_key. Compatibility replay never grants writer authority.
+Retry equality selects exactly CV-339's caller-owned semantic fields, excluding Storage-assigned
+sequence_id, observed_at_utc and persisted_at_utc; fetching the original complete value remains a
+separate strict proof. This family's transient SP-278 delivery binding joins the exact original
+storage_instance_id, recovery_epoch, event_id and encoded Project partition; a foreign checkpoint
+identity fences. No family checkpoint or durable snapshot ID is introduced. Its history_settled CAS
+requires the exact original settled payload, original complete EventRecord and original first receipt,
+together with the strict full-value request/result/v2 witness and final equality/currentness checks.
+An unrelated well-formed event or semantic-only proof cannot terminalize this operation.
+
 **Oracles.** Plans/filemanager_event_contract_fixtures.json and
 scripts/pm-filemanager-event-contracts.py cover this exact family's positive completed payload,
 extra-field/missing-field/kind/scope refusals, original-identity retry and unequal retry conflict,
@@ -5755,6 +5777,28 @@ must prove its own version/schema and SP-278 current coverage. No family project
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
 
+**Bounded storage and current-writer refusal.** file.created@1.0.0 independently adopts
+SP-337/SP-340 and SP-560's physical operation_custody_value/family_control_value alternatives.
+Both companions use canonical redb, coordination_and_storage, the existing advisory 2147483648-byte
+canonical group budget and a 16384-byte canonical MessagePack physical-value limit. Above that limit,
+store the complete logical value through the closed SP-337 reference alternative; no truncation,
+inline oversized receipt or cap on legitimate drain membership. Event bodies through 16384 bytes
+stay inline; larger bodies use empty payload={} and the SP-560 BLAKE3/size/media payload_ref.
+Resolve and validate the exact closed file.created payload before semantic checks; compare the ORIGINAL
+stored EventRecord representation for full-value proof. Referents are durable before reference
+publication, included in coherent backup and rechecked for exact bytes/hash/size, current access and
+retention before use. Missing or changed referents fence. This family's current append AND retry
+refuse replay_policy=projector_replay_only as replay_only_not_appendable; its writer uses
+replay_policy=dedupe_by_idempotency_key. Compatibility replay never grants writer authority.
+Retry equality selects exactly CV-339's caller-owned semantic fields, excluding Storage-assigned
+sequence_id, observed_at_utc and persisted_at_utc; fetching the original complete value remains a
+separate strict proof. This family's transient SP-278 delivery binding joins the exact original
+storage_instance_id, recovery_epoch, event_id and encoded Project partition; a foreign checkpoint
+identity fences. No family checkpoint or durable snapshot ID is introduced. Its history_settled CAS
+requires the exact original settled payload, original complete EventRecord and original first receipt,
+together with the strict full-value request/result/v2 witness and final equality/currentness checks.
+An unrelated well-formed event or semantic-only proof cannot terminalize this operation.
+
 **Oracles.** Plans/filemanager_event_contract_fixtures.json and
 scripts/pm-filemanager-event-contracts.py cover this exact family's positive completed payload,
 extra-field/missing-field/kind/scope refusals, original-identity retry and unequal retry conflict,
@@ -5906,6 +5950,28 @@ reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
+
+**Bounded storage and current-writer refusal.** file.deleted@1.0.0 independently adopts
+SP-337/SP-340 and SP-560's physical operation_custody_value/family_control_value alternatives.
+Both companions use canonical redb, coordination_and_storage, the existing advisory 2147483648-byte
+canonical group budget and a 16384-byte canonical MessagePack physical-value limit. Above that limit,
+store the complete logical value through the closed SP-337 reference alternative; no truncation,
+inline oversized receipt or cap on legitimate drain membership. Event bodies through 16384 bytes
+stay inline; larger bodies use empty payload={} and the SP-560 BLAKE3/size/media payload_ref.
+Resolve and validate the exact closed file.deleted payload before semantic checks; compare the ORIGINAL
+stored EventRecord representation for full-value proof. Referents are durable before reference
+publication, included in coherent backup and rechecked for exact bytes/hash/size, current access and
+retention before use. Missing or changed referents fence. This family's current append AND retry
+refuse replay_policy=projector_replay_only as replay_only_not_appendable; its writer uses
+replay_policy=dedupe_by_idempotency_key. Compatibility replay never grants writer authority.
+Retry equality selects exactly CV-339's caller-owned semantic fields, excluding Storage-assigned
+sequence_id, observed_at_utc and persisted_at_utc; fetching the original complete value remains a
+separate strict proof. This family's transient SP-278 delivery binding joins the exact original
+storage_instance_id, recovery_epoch, event_id and encoded Project partition; a foreign checkpoint
+identity fences. No family checkpoint or durable snapshot ID is introduced. Its history_settled CAS
+requires the exact original settled payload, original complete EventRecord and original first receipt,
+together with the strict full-value request/result/v2 witness and final equality/currentness checks.
+An unrelated well-formed event or semantic-only proof cannot terminalize this operation.
 
 **Oracles.** Plans/filemanager_event_contract_fixtures.json and
 scripts/pm-filemanager-event-contracts.py cover this exact family's positive completed payload,
@@ -6059,6 +6125,28 @@ must prove its own version/schema and SP-278 current coverage. No family project
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
 
+**Bounded storage and current-writer refusal.** file.exported@1.0.0 independently adopts
+SP-337/SP-340 and SP-560's physical operation_custody_value/family_control_value alternatives.
+Both companions use canonical redb, coordination_and_storage, the existing advisory 2147483648-byte
+canonical group budget and a 16384-byte canonical MessagePack physical-value limit. Above that limit,
+store the complete logical value through the closed SP-337 reference alternative; no truncation,
+inline oversized receipt or cap on legitimate drain membership. Event bodies through 16384 bytes
+stay inline; larger bodies use empty payload={} and the SP-560 BLAKE3/size/media payload_ref.
+Resolve and validate the exact closed file.exported payload before semantic checks; compare the ORIGINAL
+stored EventRecord representation for full-value proof. Referents are durable before reference
+publication, included in coherent backup and rechecked for exact bytes/hash/size, current access and
+retention before use. Missing or changed referents fence. This family's current append AND retry
+refuse replay_policy=projector_replay_only as replay_only_not_appendable; its writer uses
+replay_policy=dedupe_by_idempotency_key. Compatibility replay never grants writer authority.
+Retry equality selects exactly CV-339's caller-owned semantic fields, excluding Storage-assigned
+sequence_id, observed_at_utc and persisted_at_utc; fetching the original complete value remains a
+separate strict proof. This family's transient SP-278 delivery binding joins the exact original
+storage_instance_id, recovery_epoch, event_id and encoded Project partition; a foreign checkpoint
+identity fences. No family checkpoint or durable snapshot ID is introduced. Its history_settled CAS
+requires the exact original settled payload, original complete EventRecord and original first receipt,
+together with the strict full-value request/result/v2 witness and final equality/currentness checks.
+An unrelated well-formed event or semantic-only proof cannot terminalize this operation.
+
 **Oracles.** Plans/filemanager_event_contract_fixtures.json and
 scripts/pm-filemanager-event-contracts.py cover this exact family's positive completed payload,
 extra-field/missing-field/kind/scope refusals, original-identity retry and unequal retry conflict,
@@ -6211,6 +6299,28 @@ must prove its own version/schema and SP-278 current coverage. No family project
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
 
+**Bounded storage and current-writer refusal.** file.moved@1.0.0 independently adopts
+SP-337/SP-340 and SP-560's physical operation_custody_value/family_control_value alternatives.
+Both companions use canonical redb, coordination_and_storage, the existing advisory 2147483648-byte
+canonical group budget and a 16384-byte canonical MessagePack physical-value limit. Above that limit,
+store the complete logical value through the closed SP-337 reference alternative; no truncation,
+inline oversized receipt or cap on legitimate drain membership. Event bodies through 16384 bytes
+stay inline; larger bodies use empty payload={} and the SP-560 BLAKE3/size/media payload_ref.
+Resolve and validate the exact closed file.moved payload before semantic checks; compare the ORIGINAL
+stored EventRecord representation for full-value proof. Referents are durable before reference
+publication, included in coherent backup and rechecked for exact bytes/hash/size, current access and
+retention before use. Missing or changed referents fence. This family's current append AND retry
+refuse replay_policy=projector_replay_only as replay_only_not_appendable; its writer uses
+replay_policy=dedupe_by_idempotency_key. Compatibility replay never grants writer authority.
+Retry equality selects exactly CV-339's caller-owned semantic fields, excluding Storage-assigned
+sequence_id, observed_at_utc and persisted_at_utc; fetching the original complete value remains a
+separate strict proof. This family's transient SP-278 delivery binding joins the exact original
+storage_instance_id, recovery_epoch, event_id and encoded Project partition; a foreign checkpoint
+identity fences. No family checkpoint or durable snapshot ID is introduced. Its history_settled CAS
+requires the exact original settled payload, original complete EventRecord and original first receipt,
+together with the strict full-value request/result/v2 witness and final equality/currentness checks.
+An unrelated well-formed event or semantic-only proof cannot terminalize this operation.
+
 **Oracles.** Plans/filemanager_event_contract_fixtures.json and
 scripts/pm-filemanager-event-contracts.py cover this exact family's positive completed payload,
 extra-field/missing-field/kind/scope refusals, original-identity retry and unequal retry conflict,
@@ -6362,6 +6472,28 @@ reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
+
+**Bounded storage and current-writer refusal.** file.renamed@1.0.0 independently adopts
+SP-337/SP-340 and SP-560's physical operation_custody_value/family_control_value alternatives.
+Both companions use canonical redb, coordination_and_storage, the existing advisory 2147483648-byte
+canonical group budget and a 16384-byte canonical MessagePack physical-value limit. Above that limit,
+store the complete logical value through the closed SP-337 reference alternative; no truncation,
+inline oversized receipt or cap on legitimate drain membership. Event bodies through 16384 bytes
+stay inline; larger bodies use empty payload={} and the SP-560 BLAKE3/size/media payload_ref.
+Resolve and validate the exact closed file.renamed payload before semantic checks; compare the ORIGINAL
+stored EventRecord representation for full-value proof. Referents are durable before reference
+publication, included in coherent backup and rechecked for exact bytes/hash/size, current access and
+retention before use. Missing or changed referents fence. This family's current append AND retry
+refuse replay_policy=projector_replay_only as replay_only_not_appendable; its writer uses
+replay_policy=dedupe_by_idempotency_key. Compatibility replay never grants writer authority.
+Retry equality selects exactly CV-339's caller-owned semantic fields, excluding Storage-assigned
+sequence_id, observed_at_utc and persisted_at_utc; fetching the original complete value remains a
+separate strict proof. This family's transient SP-278 delivery binding joins the exact original
+storage_instance_id, recovery_epoch, event_id and encoded Project partition; a foreign checkpoint
+identity fences. No family checkpoint or durable snapshot ID is introduced. Its history_settled CAS
+requires the exact original settled payload, original complete EventRecord and original first receipt,
+together with the strict full-value request/result/v2 witness and final equality/currentness checks.
+An unrelated well-formed event or semantic-only proof cannot terminalize this operation.
 
 **Oracles.** Plans/filemanager_event_contract_fixtures.json and
 scripts/pm-filemanager-event-contracts.py cover this exact family's positive completed payload,
@@ -6517,6 +6649,28 @@ must prove its own version/schema and SP-278 current coverage. No family project
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
 
+**Bounded storage and current-writer refusal.** folder.copied@1.0.0 independently adopts
+SP-337/SP-340 and SP-560's physical operation_custody_value/family_control_value alternatives.
+Both companions use canonical redb, coordination_and_storage, the existing advisory 2147483648-byte
+canonical group budget and a 16384-byte canonical MessagePack physical-value limit. Above that limit,
+store the complete logical value through the closed SP-337 reference alternative; no truncation,
+inline oversized receipt or cap on legitimate drain membership. Event bodies through 16384 bytes
+stay inline; larger bodies use empty payload={} and the SP-560 BLAKE3/size/media payload_ref.
+Resolve and validate the exact closed folder.copied payload before semantic checks; compare the ORIGINAL
+stored EventRecord representation for full-value proof. Referents are durable before reference
+publication, included in coherent backup and rechecked for exact bytes/hash/size, current access and
+retention before use. Missing or changed referents fence. This family's current append AND retry
+refuse replay_policy=projector_replay_only as replay_only_not_appendable; its writer uses
+replay_policy=dedupe_by_idempotency_key. Compatibility replay never grants writer authority.
+Retry equality selects exactly CV-339's caller-owned semantic fields, excluding Storage-assigned
+sequence_id, observed_at_utc and persisted_at_utc; fetching the original complete value remains a
+separate strict proof. This family's transient SP-278 delivery binding joins the exact original
+storage_instance_id, recovery_epoch, event_id and encoded Project partition; a foreign checkpoint
+identity fences. No family checkpoint or durable snapshot ID is introduced. Its history_settled CAS
+requires the exact original settled payload, original complete EventRecord and original first receipt,
+together with the strict full-value request/result/v2 witness and final equality/currentness checks.
+An unrelated well-formed event or semantic-only proof cannot terminalize this operation.
+
 **Oracles.** Plans/filemanager_event_contract_fixtures.json and
 scripts/pm-filemanager-event-contracts.py cover this exact family's positive completed payload,
 extra-field/missing-field/kind/scope refusals, original-identity retry and unequal retry conflict,
@@ -6671,6 +6825,28 @@ must prove its own version/schema and SP-278 current coverage. No family project
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
 
+**Bounded storage and current-writer refusal.** folder.created@1.0.0 independently adopts
+SP-337/SP-340 and SP-560's physical operation_custody_value/family_control_value alternatives.
+Both companions use canonical redb, coordination_and_storage, the existing advisory 2147483648-byte
+canonical group budget and a 16384-byte canonical MessagePack physical-value limit. Above that limit,
+store the complete logical value through the closed SP-337 reference alternative; no truncation,
+inline oversized receipt or cap on legitimate drain membership. Event bodies through 16384 bytes
+stay inline; larger bodies use empty payload={} and the SP-560 BLAKE3/size/media payload_ref.
+Resolve and validate the exact closed folder.created payload before semantic checks; compare the ORIGINAL
+stored EventRecord representation for full-value proof. Referents are durable before reference
+publication, included in coherent backup and rechecked for exact bytes/hash/size, current access and
+retention before use. Missing or changed referents fence. This family's current append AND retry
+refuse replay_policy=projector_replay_only as replay_only_not_appendable; its writer uses
+replay_policy=dedupe_by_idempotency_key. Compatibility replay never grants writer authority.
+Retry equality selects exactly CV-339's caller-owned semantic fields, excluding Storage-assigned
+sequence_id, observed_at_utc and persisted_at_utc; fetching the original complete value remains a
+separate strict proof. This family's transient SP-278 delivery binding joins the exact original
+storage_instance_id, recovery_epoch, event_id and encoded Project partition; a foreign checkpoint
+identity fences. No family checkpoint or durable snapshot ID is introduced. Its history_settled CAS
+requires the exact original settled payload, original complete EventRecord and original first receipt,
+together with the strict full-value request/result/v2 witness and final equality/currentness checks.
+An unrelated well-formed event or semantic-only proof cannot terminalize this operation.
+
 **Oracles.** Plans/filemanager_event_contract_fixtures.json and
 scripts/pm-filemanager-event-contracts.py cover this exact family's positive completed payload,
 extra-field/missing-field/kind/scope refusals, original-identity retry and unequal retry conflict,
@@ -6822,6 +6998,28 @@ reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
+
+**Bounded storage and current-writer refusal.** folder.deleted@1.0.0 independently adopts
+SP-337/SP-340 and SP-560's physical operation_custody_value/family_control_value alternatives.
+Both companions use canonical redb, coordination_and_storage, the existing advisory 2147483648-byte
+canonical group budget and a 16384-byte canonical MessagePack physical-value limit. Above that limit,
+store the complete logical value through the closed SP-337 reference alternative; no truncation,
+inline oversized receipt or cap on legitimate drain membership. Event bodies through 16384 bytes
+stay inline; larger bodies use empty payload={} and the SP-560 BLAKE3/size/media payload_ref.
+Resolve and validate the exact closed folder.deleted payload before semantic checks; compare the ORIGINAL
+stored EventRecord representation for full-value proof. Referents are durable before reference
+publication, included in coherent backup and rechecked for exact bytes/hash/size, current access and
+retention before use. Missing or changed referents fence. This family's current append AND retry
+refuse replay_policy=projector_replay_only as replay_only_not_appendable; its writer uses
+replay_policy=dedupe_by_idempotency_key. Compatibility replay never grants writer authority.
+Retry equality selects exactly CV-339's caller-owned semantic fields, excluding Storage-assigned
+sequence_id, observed_at_utc and persisted_at_utc; fetching the original complete value remains a
+separate strict proof. This family's transient SP-278 delivery binding joins the exact original
+storage_instance_id, recovery_epoch, event_id and encoded Project partition; a foreign checkpoint
+identity fences. No family checkpoint or durable snapshot ID is introduced. Its history_settled CAS
+requires the exact original settled payload, original complete EventRecord and original first receipt,
+together with the strict full-value request/result/v2 witness and final equality/currentness checks.
+An unrelated well-formed event or semantic-only proof cannot terminalize this operation.
 
 **Oracles.** Plans/filemanager_event_contract_fixtures.json and
 scripts/pm-filemanager-event-contracts.py cover this exact family's positive completed payload,
@@ -6975,6 +7173,28 @@ must prove its own version/schema and SP-278 current coverage. No family project
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
 
+**Bounded storage and current-writer refusal.** folder.exported@1.0.0 independently adopts
+SP-337/SP-340 and SP-560's physical operation_custody_value/family_control_value alternatives.
+Both companions use canonical redb, coordination_and_storage, the existing advisory 2147483648-byte
+canonical group budget and a 16384-byte canonical MessagePack physical-value limit. Above that limit,
+store the complete logical value through the closed SP-337 reference alternative; no truncation,
+inline oversized receipt or cap on legitimate drain membership. Event bodies through 16384 bytes
+stay inline; larger bodies use empty payload={} and the SP-560 BLAKE3/size/media payload_ref.
+Resolve and validate the exact closed folder.exported payload before semantic checks; compare the ORIGINAL
+stored EventRecord representation for full-value proof. Referents are durable before reference
+publication, included in coherent backup and rechecked for exact bytes/hash/size, current access and
+retention before use. Missing or changed referents fence. This family's current append AND retry
+refuse replay_policy=projector_replay_only as replay_only_not_appendable; its writer uses
+replay_policy=dedupe_by_idempotency_key. Compatibility replay never grants writer authority.
+Retry equality selects exactly CV-339's caller-owned semantic fields, excluding Storage-assigned
+sequence_id, observed_at_utc and persisted_at_utc; fetching the original complete value remains a
+separate strict proof. This family's transient SP-278 delivery binding joins the exact original
+storage_instance_id, recovery_epoch, event_id and encoded Project partition; a foreign checkpoint
+identity fences. No family checkpoint or durable snapshot ID is introduced. Its history_settled CAS
+requires the exact original settled payload, original complete EventRecord and original first receipt,
+together with the strict full-value request/result/v2 witness and final equality/currentness checks.
+An unrelated well-formed event or semantic-only proof cannot terminalize this operation.
+
 **Oracles.** Plans/filemanager_event_contract_fixtures.json and
 scripts/pm-filemanager-event-contracts.py cover this exact family's positive completed payload,
 extra-field/missing-field/kind/scope refusals, original-identity retry and unequal retry conflict,
@@ -7127,6 +7347,28 @@ must prove its own version/schema and SP-278 current coverage. No family project
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
 
+**Bounded storage and current-writer refusal.** folder.moved@1.0.0 independently adopts
+SP-337/SP-340 and SP-560's physical operation_custody_value/family_control_value alternatives.
+Both companions use canonical redb, coordination_and_storage, the existing advisory 2147483648-byte
+canonical group budget and a 16384-byte canonical MessagePack physical-value limit. Above that limit,
+store the complete logical value through the closed SP-337 reference alternative; no truncation,
+inline oversized receipt or cap on legitimate drain membership. Event bodies through 16384 bytes
+stay inline; larger bodies use empty payload={} and the SP-560 BLAKE3/size/media payload_ref.
+Resolve and validate the exact closed folder.moved payload before semantic checks; compare the ORIGINAL
+stored EventRecord representation for full-value proof. Referents are durable before reference
+publication, included in coherent backup and rechecked for exact bytes/hash/size, current access and
+retention before use. Missing or changed referents fence. This family's current append AND retry
+refuse replay_policy=projector_replay_only as replay_only_not_appendable; its writer uses
+replay_policy=dedupe_by_idempotency_key. Compatibility replay never grants writer authority.
+Retry equality selects exactly CV-339's caller-owned semantic fields, excluding Storage-assigned
+sequence_id, observed_at_utc and persisted_at_utc; fetching the original complete value remains a
+separate strict proof. This family's transient SP-278 delivery binding joins the exact original
+storage_instance_id, recovery_epoch, event_id and encoded Project partition; a foreign checkpoint
+identity fences. No family checkpoint or durable snapshot ID is introduced. Its history_settled CAS
+requires the exact original settled payload, original complete EventRecord and original first receipt,
+together with the strict full-value request/result/v2 witness and final equality/currentness checks.
+An unrelated well-formed event or semantic-only proof cannot terminalize this operation.
+
 **Oracles.** Plans/filemanager_event_contract_fixtures.json and
 scripts/pm-filemanager-event-contracts.py cover this exact family's positive completed payload,
 extra-field/missing-field/kind/scope refusals, original-identity retry and unequal retry conflict,
@@ -7278,6 +7520,28 @@ reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
+
+**Bounded storage and current-writer refusal.** folder.renamed@1.0.0 independently adopts
+SP-337/SP-340 and SP-560's physical operation_custody_value/family_control_value alternatives.
+Both companions use canonical redb, coordination_and_storage, the existing advisory 2147483648-byte
+canonical group budget and a 16384-byte canonical MessagePack physical-value limit. Above that limit,
+store the complete logical value through the closed SP-337 reference alternative; no truncation,
+inline oversized receipt or cap on legitimate drain membership. Event bodies through 16384 bytes
+stay inline; larger bodies use empty payload={} and the SP-560 BLAKE3/size/media payload_ref.
+Resolve and validate the exact closed folder.renamed payload before semantic checks; compare the ORIGINAL
+stored EventRecord representation for full-value proof. Referents are durable before reference
+publication, included in coherent backup and rechecked for exact bytes/hash/size, current access and
+retention before use. Missing or changed referents fence. This family's current append AND retry
+refuse replay_policy=projector_replay_only as replay_only_not_appendable; its writer uses
+replay_policy=dedupe_by_idempotency_key. Compatibility replay never grants writer authority.
+Retry equality selects exactly CV-339's caller-owned semantic fields, excluding Storage-assigned
+sequence_id, observed_at_utc and persisted_at_utc; fetching the original complete value remains a
+separate strict proof. This family's transient SP-278 delivery binding joins the exact original
+storage_instance_id, recovery_epoch, event_id and encoded Project partition; a foreign checkpoint
+identity fences. No family checkpoint or durable snapshot ID is introduced. Its history_settled CAS
+requires the exact original settled payload, original complete EventRecord and original first receipt,
+together with the strict full-value request/result/v2 witness and final equality/currentness checks.
+An unrelated well-formed event or semantic-only proof cannot terminalize this operation.
 
 **Oracles.** Plans/filemanager_event_contract_fixtures.json and
 scripts/pm-filemanager-event-contracts.py cover this exact family's positive completed payload,
