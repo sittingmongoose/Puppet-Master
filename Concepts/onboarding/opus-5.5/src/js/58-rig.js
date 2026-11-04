@@ -510,14 +510,8 @@
       /* (up and down too, for a prop at rest: one coming in or going out passes the top edge on its strings, and Creating's
          blocks stand on the floor) */
       const rest = pr.state !== 'out' && pr.spec.stack == null, dxEdge = dx;
-      if (rest) {
-        if (hy + bt > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
-        if (pr.op > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
-        /* off what it must not touch: a speech box that cannot move (keepOff) and the props already placed this frame
-           (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
-           inside the pane, and is drawn a little smaller only when no way does */
-        const obs = []; if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
-        this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
+      /* the least move (inside the pane) that clears every box in obs, or drawn a little smaller only when no way does */
+      const clear = (obs) => {
         const L0 = lo, H0 = hi, T0 = tp, B0 = bt, f0 = f; let g = 1;
         for (let it = 0; it < 6 && obs.length; it++) {
           const X0 = hx + lo + dx, X1 = hx + hi + dx, Y0 = hy + tp + dy, Y1 = hy + bt + dy;
@@ -530,11 +524,27 @@
           if (g <= .66) break;
           g *= .9; f = f0 * g; lo = L0 * g; hi = H0 * g; tp = T0 * g; bt = B0 * g;
         }
+        return g;
+      };
+      if (rest) {
+        if (hy + bt > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
+        if (pr.op > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
+        /* off what it must not touch: a speech box that cannot move (keepOff) and the props already placed this frame
+           (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
+           inside the pane, and is drawn a little smaller only when no way does */
+        const obs = []; if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
+        const g = clear(obs);
         pr.restOff = { dx: dx - dxEdge, dy, g };
       } else if (pr.state === 'out' && pr.restOff) {
         /* a prop that leaves keeps the way it was moved off the box and its neighbours at rest: dropping it at once made the
            prop jump up to 8 px in the frame it began to leave, into NieR's box at 740 (FO-34 kind) */
         const o = pr.restOff; f *= o.g; lo *= o.g; hi *= o.g; tp *= o.g; bt *= o.g; dx += o.dx; dy = o.dy;
+        /* ...and makes way, as a prop at rest does, for a speech box that cannot move: a bubble that found nowhere clear
+           and claimed a place over it (Retro's 740 banner on Name > Safe: between Pip's face and the leaving sign there
+           was no room, so the bubble claimed the sign's place and the sign faded out under it for 8-13 frames), or NieR's
+           box. The move is kept for the rest of its way out, which holdUnder then keeps below the box */
+        if (this.keepOff && pr.op > .05) { const g = clear([this.keepOff]); pr.restOff = { dx: dx - dxEdge, dy, g: o.g * g }; }
       }
       return { dx, dy, f, box: [hx + lo + dx, hy + tp + dy, hx + hi + dx, hy + bt + dy] };
     }
