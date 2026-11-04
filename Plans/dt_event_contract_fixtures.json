@@ -8170,7 +8170,155 @@
         }
       ],
       "source_join_negatives": [],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a4849544c426c6f636b6564457069736f64654f776e65722e726571756573746564222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22617070726f76616c2e726571756573746564222c226964656d706f74656e63795f6b6579223a2264743a63343761383539626162336561616136633432323135386630373932316139353034626635336562353835623433366663333332313963323463396533656435222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a226e6f64652d31222c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b22616c6c6f7765645f616374696f6e5f696473223a5b22617070726f7665222c2264656e79225d2c22617070726f76616c5f73636f70655f6b6579223a2273636f70652d31222c22626c6f636b65645f73657175656e6365223a312c226e6f64655f6964223a226e6f64652d31222c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e617070726f76616c5f7265717565737465642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c22746f6f6c5f7573655f6964223a22746f6f6c2d31222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e617070726f76616c5f7265717565737465642e7631222c2270726f64756365725f73657175656e63655f6964223a312c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "be977f69cdf90e0f89f918f17a4fde8361bd58661f54483527ebf6675b105eed",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 101,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "approval.requested-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "node-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:HITLBlockedEpisodeOwner.requested-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 2,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:c47a859bab3eaaa6c422158f07921a9504bf53eb585b436fc33219c24c9e3ed5-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.approval_requested.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.approval_requested.v1",
+              "schema_version": "1.0.0",
+              "run_id": "run-1",
+              "node_id": "node-1",
+              "blocked_sequence": 1,
+              "approval_scope_key": "scope-1",
+              "ts": "2026-11-04T00:00:00Z",
+              "allowed_action_ids": [
+                "approve",
+                "deny"
+              ],
+              "tool_use_id": "tool-1",
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     },
     {
       "event_type": "approval.granted",
@@ -16384,7 +16532,154 @@
         }
       ],
       "source_join_negatives": [],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a4849544c426c6f636b6564457069736f64654f776e65722e6772616e746564222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22617070726f76616c2e6772616e746564222c226964656d706f74656e63795f6b6579223a2264743a34636139396638616636333764613134323932643138316232616165653362646638653031366132623134336434333930363330346564393265353037653065222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a226e6f64652d31222c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b22616c6c6f7765645f616374696f6e5f6964223a22617070726f7665222c22617070726f76616c5f73636f70655f6b6579223a2273636f70652d31222c22617070726f7665725f6964656e74697479223a2268756d616e2d31222c22626c6f636b65645f73657175656e6365223a312c226e6f64655f6964223a226e6f64652d31222c22726174696f6e616c655f726566223a22666978747572652d6964222c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e617070726f76616c5f6772616e7465642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c22746f6f6c5f7573655f6964223a22746f6f6c2d31222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e617070726f76616c5f6772616e7465642e7631222c2270726f64756365725f73657175656e63655f6964223a322c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "b35a08f5cf9adb9213145600e6099c299f2fe5a9af36d6dcb69ea34ea0abc1e5",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 102,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "approval.granted-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "node-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:HITLBlockedEpisodeOwner.granted-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 3,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:4ca99f8af637da14292d181b2aaee3bdf8e016a2b143d43906304ed92e507e0e-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.approval_granted.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.approval_granted.v1",
+              "schema_version": "1.0.0",
+              "run_id": "run-1",
+              "node_id": "node-1",
+              "blocked_sequence": 1,
+              "approval_scope_key": "scope-1",
+              "ts": "2026-11-04T00:00:00Z",
+              "approver_identity": "human-1",
+              "allowed_action_id": "approve",
+              "rationale_ref": "fixture-id",
+              "tool_use_id": "tool-1",
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     },
     {
       "event_type": "approval.denied",
@@ -24507,7 +24802,152 @@
         }
       ],
       "source_join_negatives": [],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a4849544c426c6f636b6564457069736f64654f776e65722e64656e696564222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22617070726f76616c2e64656e696564222c226964656d706f74656e63795f6b6579223a2264743a61626539323139663339626163666632323233616537303537386264386639653736353264346365303563633835326136383032666365343837313439373263222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a226e6f64652d31222c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b22617070726f76616c5f73636f70655f6b6579223a2273636f70652d31222c22626c6f636b65645f73657175656e6365223a312c2264656e69616c5f726561736f6e223a22666978747572652d6964222c226e6f64655f6964223a226e6f64652d31222c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e617070726f76616c5f64656e6965642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c22746f6f6c5f7573655f6964223a22746f6f6c2d31222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e617070726f76616c5f64656e6965642e7631222c2270726f64756365725f73657175656e63655f6964223a332c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "5335d199995d92f4019dc65f9b9598baaf06f7f6e2919ba4b8a3cae1f708ffde",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 103,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "approval.denied-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "node-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:HITLBlockedEpisodeOwner.denied-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 4,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:abe9219f39bacff2223ae70578bd8f9e7652d4ce05cc852a6802fce48714972c-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.approval_denied.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.approval_denied.v1",
+              "schema_version": "1.0.0",
+              "run_id": "run-1",
+              "node_id": "node-1",
+              "blocked_sequence": 1,
+              "approval_scope_key": "scope-1",
+              "ts": "2026-11-04T00:00:00Z",
+              "denial_reason": "fixture-id",
+              "tool_use_id": "tool-1",
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     },
     {
       "event_type": "approval.timeout",
@@ -32635,7 +33075,151 @@
         }
       ],
       "source_join_negatives": [],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a4849544c426c6f636b6564457069736f64654f776e65722e74696d656f7574222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22617070726f76616c2e74696d656f7574222c226964656d706f74656e63795f6b6579223a2264743a33396662636662343931626335326639336130626564356262353934656334306334623263346231353935336265383265333538316238346638643438326666222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a226e6f64652d31222c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b22617070726f76616c5f73636f70655f6b6579223a2273636f70652d31222c22626c6f636b65645f73657175656e6365223a312c226e6f64655f6964223a226e6f64652d31222c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e617070726f76616c5f74696d656f75742e7631222c22736368656d615f76657273696f6e223a22312e302e30222c22746f6f6c5f7573655f6964223a22746f6f6c2d31222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e617070726f76616c5f74696d656f75742e7631222c2270726f64756365725f73657175656e63655f6964223a342c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "c1146e4fe02864e5d4fe6ae1fd8de8631cf611bf76bdbf8f0b96a2a499883cea",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 104,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "approval.timeout-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "node-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:HITLBlockedEpisodeOwner.timeout-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 5,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:39fbcfb491bc52f93a0bed5bb594ec40c4b2c4b15953be82e3581b84f8d482ff-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.approval_timeout.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.approval_timeout.v1",
+              "schema_version": "1.0.0",
+              "run_id": "run-1",
+              "node_id": "node-1",
+              "blocked_sequence": 1,
+              "approval_scope_key": "scope-1",
+              "ts": "2026-11-04T00:00:00Z",
+              "tool_use_id": "tool-1",
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     },
     {
       "event_type": "config.migrated",
@@ -41118,6 +41702,150 @@
         "anchor": "original terminal migration transition",
         "ttl_seconds": 220752000,
         "holds": "all existing legal/recovery/live-ref/backup/rollback/maintenance holds"
+      },
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a53657474696e67734d6967726174696f6e436f6f7264696e61746f722e6272616e63685f6772616e756c6172697479222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22636f6e6669672e6d69677261746564222c226964656d706f74656e63795f6b6579223a2264743a32633364356562376639663837616366613331326132353835353163323531663138633137643463643366666162363962366539343265313632323063616461222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b22656e756d5f76616c7565223a224e6f6e65222c226c65676163795f76616c7565223a2273696e676c65222c22726573756c745f726566223a2273657474696e67732d7265766973696f6e2d32222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e636f6e6669675f6d696772617465642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c22736f757263655f726566223a226c65676163792d636f6e6669672d31222c22736f757263655f736861323536223a2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e636f6e6669675f6d696772617465642e7631222c2270726f64756365725f73657175656e63655f6964223a352c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a6e756c6c2c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "5a5c4693b1e2f636801a8936bd9927474de0589fd99de28251af3a63d6b6c4b2",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 105,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "config.migrated-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:SettingsMigrationCoordinator.branch_granularity-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 6,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:2c3d5eb7f9f87acfa312a258551c251f18c17d4cd3ffab69b6e942e16220cada-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.config_migrated.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.config_migrated.v1",
+              "schema_version": "1.0.0",
+              "source_ref": "legacy-config-1",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "legacy_value": "single",
+              "enum_value": "None",
+              "result_ref": "settings-revision-2",
+              "ts": "2026-11-04T00:00:00Z",
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
       }
     },
     {
@@ -50686,7 +51414,149 @@
           "expected": "schema_refused"
         }
       ],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a50726f6772657373696f6e4761746552756e6e65722e6576616c756174696f6e5f73746172746564222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22676174652e6576616c756174696f6e5f73746172746564222c226964656d706f74656e63795f6b6579223a2264743a36646637363563396334643366653735383062373235353036363464613337386539363665336436623330623565633661316162383335336535313031656565222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b226576616c756174696f6e5f6964223a226576616c756174696f6e2d31222c22676174655f6964223a22474154452d303132222c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e676174655f6576616c756174696f6e5f737461727465642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e676174655f6576616c756174696f6e5f737461727465642e7631222c2270726f64756365725f73657175656e63655f6964223a362c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "5ee1241f04caada2b6c92cb6257ffdaa71b36e2be31c905240691d9a8aa08760",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 106,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "gate.evaluation_started-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:ProgressionGateRunner.evaluation_started-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 7,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:6df765c9c4d3fe7580b72550664da378e966e3d6b30b5ec6a1ab8353e5101eee-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.gate_evaluation_started.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.gate_evaluation_started.v1",
+              "schema_version": "1.0.0",
+              "gate_id": "GATE-012",
+              "run_id": "run-1",
+              "evaluation_id": "evaluation-1",
+              "ts": "2026-11-04T00:00:00Z",
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     },
     {
       "event_type": "gate.failed",
@@ -60416,7 +61286,153 @@
           "expected": "schema_refused"
         }
       ],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a50726f6772657373696f6e4761746552756e6e65722e6661696c6564222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22676174652e6661696c6564222c226964656d706f74656e63795f6b6579223a2264743a61386235386235313538656432616431646433343839393237373636656633383361313561616662343264323231373335396165326335613735336538636462222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b226576616c756174696f6e5f6964223a226576616c756174696f6e2d31222c2265766964656e63655f72656673223a5b227265706f72742d31225d2c226661696c7572655f726561736f6e5f636f6465223a227072656469636174655f6661696c6564222c22676174655f6964223a22474154452d303132222c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e676174655f6661696c65642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e676174655f6661696c65642e7631222c2270726f64756365725f73657175656e63655f6964223a372c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "6e31cfb4c73d84cf10a59a3da8382c045865c72975128f8f0715d291fb55cf00",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 107,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "gate.failed-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:ProgressionGateRunner.failed-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 8,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:a8b58b5158ed2ad1dd3489927766ef383a15aafb42d2217359ae2c5a753e8cdb-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.gate_failed.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.gate_failed.v1",
+              "schema_version": "1.0.0",
+              "gate_id": "GATE-012",
+              "run_id": "run-1",
+              "evaluation_id": "evaluation-1",
+              "ts": "2026-11-04T00:00:00Z",
+              "evidence_refs": [
+                "report-1"
+              ],
+              "failure_reason_code": "predicate_failed",
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     },
     {
       "event_type": "gate.passed",
@@ -70132,7 +71148,152 @@
           "expected": "schema_refused"
         }
       ],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a50726f6772657373696f6e4761746552756e6e65722e706173736564222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22676174652e706173736564222c226964656d706f74656e63795f6b6579223a2264743a65373736393862393764313632383039646365636363623337653062636265333637333263346465636233663535613862333664646362356231303661306334222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b226576616c756174696f6e5f6964223a226576616c756174696f6e2d31222c2265766964656e63655f72656673223a5b227265706f72742d31225d2c22676174655f6964223a22474154452d303132222c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e676174655f7061737365642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e676174655f7061737365642e7631222c2270726f64756365725f73657175656e63655f6964223a382c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "3156abdc29b343f4fbc56c57fe151feef60ab24d32a0093d7440916e801f6445",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 108,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "gate.passed-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:ProgressionGateRunner.passed-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 9,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:e77698b97d162809dcecccb37e0bcbe36732c4decb3f55a8b36ddcb5b106a0c4-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.gate_passed.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.gate_passed.v1",
+              "schema_version": "1.0.0",
+              "gate_id": "GATE-012",
+              "run_id": "run-1",
+              "evaluation_id": "evaluation-1",
+              "ts": "2026-11-04T00:00:00Z",
+              "evidence_refs": [
+                "report-1"
+              ],
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     },
     {
       "event_type": "requirements.clarification_requested",
@@ -78142,7 +79303,153 @@
         }
       ],
       "source_join_negatives": [],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a526571756972656d656e74735175616c697479476174652e726571756573745f636c6172696669636174696f6e222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22726571756972656d656e74732e636c6172696669636174696f6e5f726571756573746564222c226964656d706f74656e63795f6b6579223a2264743a62626632653739663832346334393235633330633639356538636562616135623238353530376537303839643132323236363531633630623066346566643335222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b227175657374696f6e5f696473223a5b22712d31222c22712d32225d2c227265706f72745f726566223a227265706f72742d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e726571756972656d656e74735f636c6172696669636174696f6e5f7265717565737465642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c227468726561645f6964223a227468726561642d31222c227473223a22323032362d31312d30345430303a30303a30305a222c2277697a6172645f6964223a2277697a6172642d31227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e726571756972656d656e74735f636c6172696669636174696f6e5f7265717565737465642e7631222c2270726f64756365725f73657175656e63655f6964223a392c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a6e756c6c2c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a227468726561642d31227d",
+        "producer_semantic_digest": "b5f1c867432f98800f46cb5225b00dfecce0a66d5e8347139a73d05f37e8bef5",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 109,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "requirements.clarification_requested-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "thread-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:RequirementsQualityGate.request_clarification-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 10,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:bbf2e79f824c4925c30c695e8cebaa5b285507e7089d12226651c60b0f4efd35-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.requirements_clarification_requested.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.requirements_clarification_requested.v1",
+              "schema_version": "1.0.0",
+              "wizard_id": "wizard-1",
+              "thread_id": "thread-1",
+              "report_ref": "report-1",
+              "question_ids": [
+                "q-1",
+                "q-2"
+              ],
+              "ts": "2026-11-04T00:00:00Z",
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     },
     {
       "event_type": "run.background_enqueued",
@@ -86352,7 +87659,152 @@
         }
       ],
       "source_join_negatives": [],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a4261636b67726f756e6452756e51756575652e656e7175657565222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a2272756e2e6261636b67726f756e645f656e717565756564222c226964656d706f74656e63795f6b6579223a2264743a37616638373865363136323736306134386632613730383735646130346334336536323637343563623161613336613231326666636434633162313136643061222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b22656e71756575655f6964223a22656e71756575652d31222c22686f73745f726566223a22686f73742d31222c2271756575655f7265636f72645f726566223a2271756575652d31222c22726f6f745f726566223a22726f6f742d31222c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e72756e5f6261636b67726f756e645f656e7175657565642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c2273636f70655f726566223a2273636f70652d31222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e72756e5f6261636b67726f756e645f656e7175657565642e7631222c2270726f64756365725f73657175656e63655f6964223a31302c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "bacb547fef45a9265f2a70fb21adc7993316b6749ec40e944ea600f65e1b8ee9",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 110,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "run.background_enqueued-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:BackgroundRunQueue.enqueue-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 11,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:7af878e6162760a48f2a70875da04c43e626745cb1aa36a212ffcd4c1b116d0a-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.run_background_enqueued.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.run_background_enqueued.v1",
+              "schema_version": "1.0.0",
+              "run_id": "run-1",
+              "enqueue_id": "enqueue-1",
+              "scope_ref": "scope-1",
+              "host_ref": "host-1",
+              "root_ref": "root-1",
+              "queue_record_ref": "queue-1",
+              "ts": "2026-11-04T00:00:00Z",
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     },
     {
       "event_type": "tool.denied",
@@ -98136,6 +99588,163 @@
         "anchor": "actual run completion",
         "ttl_seconds": 31536000,
         "holds": "all existing legal/recovery/recent-run/live-ref/backup/rollback/maintenance holds"
+      },
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a546f6f6c446973706174636865722e64656e696564222c22617474656d70745f6964223a22617474656d70742d31222c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22746f6f6c2e64656e696564222c226964656d706f74656e63795f6b6579223a2264743a66393233303737653838346233343331626631636464643763383263306365356166646665623532373431333164663236356630313562346633343461616537222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b22616374696f6e5f617661696c61626c65223a747275652c22616c6c6f7765645f616374696f6e5f696473223a5b226f70656e5f64657461696c73222c2261626f72745f72756e225d2c22617070726f76616c5f73636f70655f6b6579223a22666978747572652d6964222c22617474656d70745f6964223a22617474656d70742d31222c22626c6f636b65645f726561736f6e5f636f6465223a227065726d697373696f6e5f64656e696564222c22626c6f636b65645f73657175656e6365223a312c2264656e69616c5f726561736f6e5f636f6465223a22706f6c6963795f64656e696564222c22657363616c6174696f6e5f6c6576656c223a22696e666f222c2265786563757465645f61745f616c6c223a66616c73652c226661696c7572655f636c617373223a6e756c6c2c22686561646c6573735f64656e696564223a66616c73652c227065726d697373696f6e5f736e617073686f745f6964223a227065726d697373696f6e2d736e617073686f742d31222c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e746f6f6c5f64656e6965642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c22746f6f6c5f6e616d65223a22666978747572652d6964222c22746f6f6c5f7573655f6964223a22746f6f6c2d7573652d31222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e746f6f6c5f64656e6965642e7631222c2270726f64756365725f73657175656e63655f6964223a31312c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "adc41858b6ae79d17050c9606b8a0cb74c934b542b12a2cc78fe71f3626b8df4",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 111,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "tool.denied-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "attempt-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:ToolDispatcher.denied-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 12,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:f923077e884b3431bf1cddd7c82c0ce5afdfeb5274131df265f015b4f344aae7-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.tool_denied.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.tool_denied.v1",
+              "schema_version": "1.0.0",
+              "run_id": "run-1",
+              "tool_use_id": "tool-use-1",
+              "tool_name": "fixture-id",
+              "attempt_id": "attempt-1",
+              "blocked_sequence": 1,
+              "approval_scope_key": "fixture-id",
+              "action_available": true,
+              "escalation_level": "info",
+              "denial_reason_code": "policy_denied",
+              "ts": "2026-11-04T00:00:00Z",
+              "blocked_reason_code": "permission_denied",
+              "failure_class": null,
+              "allowed_action_ids": [
+                "open_details",
+                "abort_run"
+              ],
+              "headless_denied": false,
+              "permission_snapshot_id": "permission-snapshot-1",
+              "executed_at_all": false,
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
       }
     },
     {
@@ -106756,7 +108365,152 @@
         }
       ],
       "source_join_negatives": [],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a546f6f6c52756e6e65722e657865637574696f6e5f636f6d706c65746564222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22746f6f6c2e657865637574696f6e5f636f6d706c65746564222c226964656d706f74656e63795f6b6579223a2264743a62383035356163313330393233383432343031623966393738316539396563303631363735393537386333366565663530316632306230656136646462653737222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b226475726174696f6e5f6d73223a34322c226f7574636f6d65223a2273756363657373222c22726573756c745f726566223a22726573756c742d31222c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e746f6f6c5f657865637574696f6e5f636f6d706c657465642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c22746f6f6c5f6e616d65223a22666978747572652d6964222c22746f6f6c5f7573655f6964223a22746f6f6c2d7573652d31222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e746f6f6c5f657865637574696f6e5f636f6d706c657465642e7631222c2270726f64756365725f73657175656e63655f6964223a31322c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "b2cb5caa39956fbe53e1fde007bcc57a86152ca0617223b8f5fc5825528202b1",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 112,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "tool.execution_completed-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:ToolRunner.execution_completed-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 13,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:b8055ac130923842401b9f9781e99ec0616759578c36eef501f20b0ea6ddbe77-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.tool_execution_completed.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.tool_execution_completed.v1",
+              "schema_version": "1.0.0",
+              "run_id": "run-1",
+              "tool_use_id": "tool-use-1",
+              "tool_name": "fixture-id",
+              "ts": "2026-11-04T00:00:00Z",
+              "outcome": "success",
+              "result_ref": "result-1",
+              "duration_ms": 42,
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     },
     {
       "event_type": "tool.execution_started",
@@ -114938,7 +116692,149 @@
         }
       ],
       "source_join_negatives": [],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a546f6f6c52756e6e65722e657865637574696f6e5f73746172746564222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22746f6f6c2e657865637574696f6e5f73746172746564222c226964656d706f74656e63795f6b6579223a2264743a62613834656436653266633636646265613263333038393135316635656461663461633631316636343034613364353134323837626435353537343865613332222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e746f6f6c5f657865637574696f6e5f737461727465642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c22746f6f6c5f6e616d65223a22666978747572652d6964222c22746f6f6c5f7573655f6964223a22746f6f6c2d7573652d31222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e746f6f6c5f657865637574696f6e5f737461727465642e7631222c2270726f64756365725f73657175656e63655f6964223a31332c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "c45a2d45757e0595c24fee96845a9dfacfba4a8223384076c7aca6ed9639731d",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 113,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "tool.execution_started-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:ToolRunner.execution_started-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 14,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:ba84ed6e2fc66dbea2c3089151f5edaf4ac611f6404a3d514287bd555748ea32-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.tool_execution_started.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.tool_execution_started.v1",
+              "schema_version": "1.0.0",
+              "run_id": "run-1",
+              "tool_use_id": "tool-use-1",
+              "tool_name": "fixture-id",
+              "ts": "2026-11-04T00:00:00Z",
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     },
     {
       "event_type": "tool.invoked",
@@ -128776,6 +130672,152 @@
         "anchor": "actual run completion",
         "ttl_seconds": 31536000,
         "holds": "all existing legal/recovery/recent-run/live-ref/backup/rollback/maintenance holds"
+      },
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a546f6f6c446973706174636865722e636f6d706c657465645f696e766f636174696f6e222c22617474656d70745f6964223a22617474656d70742d31222c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22746f6f6c2e696e766f6b6564222c226964656d706f74656e63795f6b6579223a2264743a64353561373761643432383061373866313563386461376563636433373436646466626365386264396238636534336632383330626464333839633566326161222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b22617474656d70745f6964223a22617474656d70742d31222c22696e6465785f75736564223a66616c73652c226c6174656e63795f6d73223a34322c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e746f6f6c5f696e766f6b65642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c2273756363657373223a747275652c22746f6f6c5f6e616d65223a22666978747572652d6964222c22746f6f6c5f7573655f6964223a22746f6f6c2d7573652d31222c227473223a22323032362d31312d30345430303a30303a30305a227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e746f6f6c5f696e766f6b65642e7631222c2270726f64756365725f73657175656e63655f6964223a31342c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "eff558e25942df72c41df671e8fee6d23f1b3751a7f2108654fe86f869d1214c",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 114,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "tool.invoked-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "attempt-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:ToolDispatcher.completed_invocation-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 15,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:d55a77ad4280a78f15c8da7eccd3746ddfbce8bd9b8ce43f2830bdd389c5f2aa-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.tool_invoked.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.tool_invoked.v1",
+              "schema_version": "1.0.0",
+              "run_id": "run-1",
+              "tool_use_id": "tool-use-1",
+              "tool_name": "fixture-id",
+              "attempt_id": "attempt-1",
+              "success": true,
+              "latency_ms": 42,
+              "ts": "2026-11-04T00:00:00Z",
+              "index_used": false,
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
       }
     },
     {
@@ -149502,6 +151544,222 @@
         "missing_dependency": "RT structured setting-driven policy object/expiry-anchor adapter; no new duration choice",
         "deletion_enabled": false,
         "admission_enabled": false
+      },
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a5573616765547261636b65722e6e6f726d616c697a655f66696e6973685f73746570222c22617474656d70745f6964223a22617474656d70742d31222c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a2275736167652e6576656e74222c226964656d706f74656e63795f6b6579223a2264743a32346432633630643533326533643635363236623866363733346532663039343334616533316264663065626533356637313464343261343336356134656362222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b226163636f756e745f6964223a226163636f756e742d31222c22617474656d70745f6964223a22617474656d70742d31222c2262696c6c696e675f656e746974795f6964223a2262696c6c696e672d31222c2263616368655f72656164223a33302c2263616368655f7772697465223a31302c2263616368655f77726974655f3168223a302c22636f6e746578745f657374696d617465223a6e756c6c2c22636f7374223a7b226275636b65745f636f7374735f6d6963726f646f6c6c617273223a7b2263616368655f72656164223a302c2263616368655f7772697465223a302c2263616368655f77726974655f3168223a302c22696e7075745f6e6f6e5f636163686564223a3630302c226f75747075745f76697369626c65223a3330302c22726561736f6e696e67223a3130307d2c22636f73745f6d6963726f646f6c6c617273223a313030302c22636f73745f6d696e6f725f756e697473223a7b22616d6f756e74223a312c2263757272656e6379223a22555344222c226d696e6f725f756e69745f6578706f6e656e74223a327d2c22636f73745f737461747573223a2270726f76696465725f7265706f72746564222c2263757272656e6379223a22555344222c22637573746f6d5f70726f76696465725f70726963655f726f775f726566223a6e756c6c2c2270726963696e675f6566666563746976655f6174223a22323032362d31312d30315430303a30303a30305a222c2270726963696e675f736e617073686f745f6964223a2270726963652d31222c2270726963696e675f736f75726365223a2270726f7669646572222c2270726963696e675f76657273696f6e223a2270726963652d7631227d2c22636f73745f6d6963726f646f6c6c617273223a313030302c22636f73745f737461747573223a2270726f76696465725f7265706f72746564222c22636f756e74696e675f73656d616e74696373223a7b2263616368655f69735f696e7075745f737562736574223a747275652c22726561736f6e696e675f69735f6f75747075745f737562736574223a747275657d2c2263757272656e6379223a22555344222c226465647570655f6b6579223a2270726f76696465722d726573706f6e73652d31222c22646973706c61795f636f73745f706f6c696379223a2273686f77222c22696e7075745f6e6f6e5f636163686564223a36302c22696e7075745f746f74616c223a3130302c226d6f64656c5f6964223a226d6f64656c2d31222c226f627365727665645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c226f75747075745f746f74616c223a35302c226f75747075745f76697369626c65223a34302c2270726963696e675f6566666563746976655f6174223a22323032362d31312d30315430303a30303a30305a222c2270726963696e675f736e617073686f745f6964223a2270726963652d31222c2270726963696e675f736f75726365223a2270726f7669646572222c2270726963696e675f76657273696f6e223a2270726963652d7631222c2270726f76696465725f6163636f756e745f726566223a2270726f76696465722d6163636f756e742d31222c2270726f76696465725f617474656d70745f726566223a2270726f76696465722d617474656d70742d31222c2270726f76696465725f6964223a2270726f76696465722d31222c2270726f76696465725f7061796c6f61645f68617368223a2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161222c2270726f76696465725f726f7574655f6b696e64223a22666978747572652d6964222c2270726f76696465725f746f74616c223a3135302c2271756f7461223a7b22636f6f6c646f776e5f756e74696c223a6e756c6c2c22637265646974735f72656d61696e696e67223a6e756c6c2c22637265646974735f737461747573223a226e6f745f6578706f736564222c2265766964656e63655f736f75726365223a2270726f76696465725f617069222c2271756f74615f6c696d6974223a3130302c2271756f74615f72656d61696e696e67223a38302c2271756f74615f737461747573223a227265706f72746564222c2271756f74615f75736564223a32302c2272657365745f6174223a6e756c6c2c2277696e646f775f6b696e64223a22726f6c6c696e67222c2277696e646f775f73636f7065223a226163636f756e742d31227d2c227261775f7061796c6f61645f726566223a2270726f76696465722d6f62736572766174696f6e2d31222c22726561736f6e696e67223a31302c22726564616374696f6e5f737461747573223a227265646163746564222c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e75736167655f6576656e742e7631222c22736368656d615f76657273696f6e223a22312e302e30222c22736574746c656d656e745f737461747573223a226f62736572766564222c22736f757263655f617574686f72697479223a2270726f76696465722d726573706f6e7365222c22736f757263655f636c617373223a2270726f76696465725f7265706f72746564222c22736f757263655f636f6e666964656e6365223a2268696768222c2275736167655f6576656e745f726566223a226576745f64745f64303666633635656262626432626661323063656233316365633133393062613263343136616134363933313633383638386330333333396239323833613431222c2275736167655f7265636f72645f6964223a2275736167652d31227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e75736167655f6576656e742e7631222c2270726f64756365725f73657175656e63655f6964223a31352c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "254357fd3346f20821dfb45d310dd4aad1793f0c4d3df688c6ef2787f085a4d9",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 115,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "usage.event-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "attempt-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:UsageTracker.normalize_finish_step-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 16,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:24d2c60d532e3d65626b8f6734e2f09434ae31bdf0ebe35f714d42a4365a4ecb-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.usage_event.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.usage_event.v1",
+              "schema_version": "1.0.0",
+              "usage_record_id": "usage-1",
+              "usage_event_ref": "evt_dt_d06fc65ebbbd2bfa20ceb31cec1390ba2c416aa46931638688c03339b9283a41",
+              "dedupe_key": "provider-response-1",
+              "run_id": "run-1",
+              "attempt_id": "attempt-1",
+              "provider_id": "provider-1",
+              "provider_route_kind": "fixture-id",
+              "model_id": "model-1",
+              "source_class": "provider_reported",
+              "source_confidence": "high",
+              "source_authority": "provider-response",
+              "settlement_status": "observed",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "redaction_status": "redacted",
+              "provider_payload_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "counting_semantics": {
+                "cache_is_input_subset": true,
+                "reasoning_is_output_subset": true
+              },
+              "input_total": 100,
+              "input_non_cached": 60,
+              "cache_read": 30,
+              "cache_write": 10,
+              "cache_write_1h": 0,
+              "output_total": 50,
+              "output_visible": 40,
+              "reasoning": 10,
+              "provider_total": 150,
+              "context_estimate": null,
+              "cost_microdollars": 1000,
+              "provider_attempt_ref": "provider-attempt-1",
+              "account_id": "account-1",
+              "billing_entity_id": "billing-1",
+              "provider_account_ref": "provider-account-1",
+              "raw_payload_ref": "provider-observation-1",
+              "display_cost_policy": "show",
+              "cost": {
+                "cost_status": "provider_reported",
+                "cost_microdollars": 1000,
+                "cost_minor_units": {
+                  "amount": 1,
+                  "currency": "USD",
+                  "minor_unit_exponent": 2
+                },
+                "currency": "USD",
+                "pricing_snapshot_id": "price-1",
+                "pricing_source": "provider",
+                "pricing_effective_at": "2026-11-01T00:00:00Z",
+                "pricing_version": "price-v1",
+                "bucket_costs_microdollars": {
+                  "input_non_cached": 600,
+                  "cache_read": 0,
+                  "cache_write": 0,
+                  "cache_write_1h": 0,
+                  "output_visible": 300,
+                  "reasoning": 100
+                },
+                "custom_provider_price_row_ref": null
+              },
+              "quota": {
+                "window_kind": "rolling",
+                "window_scope": "account-1",
+                "quota_status": "reported",
+                "evidence_source": "provider_api",
+                "reset_at": null,
+                "cooldown_until": null,
+                "quota_remaining": 80,
+                "quota_used": 20,
+                "quota_limit": 100,
+                "credits_remaining": null,
+                "credits_status": "not_exposed"
+              },
+              "currency": "USD",
+              "cost_status": "provider_reported",
+              "pricing_snapshot_id": "price-1",
+              "pricing_source": "provider",
+              "pricing_effective_at": "2026-11-01T00:00:00Z",
+              "pricing_version": "price-v1",
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
       }
     },
     {
@@ -157522,7 +159780,154 @@
         }
       ],
       "source_join_negatives": [],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a576f726b747265654c6966656379636c654f776e65722e63726561746564222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22776f726b747265652e63726561746564222c226964656d706f74656e63795f6b6579223a2264743a37313761323939383734666130343535653332306235353765353231653335396135643537613366393837376461366637363765396335376465383265323836222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b226272616e63685f6e616d65223a22776f726b2f66697874757265222c226c616e655f6964223a226c616e652d31222c227061636b6167655f6964223a227061636b6167652d31222c2270726f6a6563745f6964223a2270726f6a6563742d31222c227265706f5f6964223a227265706f2d31222c2272756e5f6964223a2272756e2d31222c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e776f726b747265655f637265617465642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c227473223a22323032362d31312d30345430303a30303a30305a222c22776f726b747265655f6964223a22776f726b747265652d31222c22776f726b747265655f70617468223a22776f726b74726565732f66697874757265227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e776f726b747265655f637265617465642e7631222c2270726f64756365725f73657175656e63655f6964223a31362c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "6e664227730ba54c1b4530659d51a22fccbc9c4a59e3d3c179ff0a08fe33993e",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 116,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "worktree.created-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:WorktreeLifecycleOwner.created-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 17,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:717a299874fa0455e320b557e521e359a5d57a3f9877da6f767e9c57de82e286-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.worktree_created.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.worktree_created.v1",
+              "schema_version": "1.0.0",
+              "project_id": "project-1",
+              "worktree_id": "worktree-1",
+              "ts": "2026-11-04T00:00:00Z",
+              "branch_name": "work/fixture",
+              "worktree_path": "worktrees/fixture",
+              "repo_id": "repo-1",
+              "lane_id": "lane-1",
+              "package_id": "package-1",
+              "run_id": "run-1",
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     },
     {
       "event_type": "worktree.deleted",
@@ -165631,7 +168036,157 @@
         }
       ],
       "source_join_negatives": [],
-      "retention_binding_oracle": null
+      "retention_binding_oracle": null,
+      "retry_oracle": {
+        "owner_ref": "Plans/Contracts_V0.md#EventRecord",
+        "producer_semantic_bytes_hex": "7b226163746f725f726566223a226f776e65723a576f726b747265654c6966656379636c654f776e65722e64656c65746564222c22617474656d70745f6964223a6e756c6c2c22636175736174696f6e5f6576656e745f6964223a6e756c6c2c22636f7272656c6174696f6e5f6964223a22636f7272656c6174696f6e2d3531222c226566666563746976655f6163636f756e745f726566223a6e756c6c2c226576656e745f74797065223a22776f726b747265652e64656c65746564222c226964656d706f74656e63795f6b6579223a2264743a30366633303366623033323333666131353338333032373739306239666435343631626233393163613037653939383531333235373732643635393535656162222c226d6967726174696f6e223a7b22636f6d7061746962696c6974795f6576656e745f74797065223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f6964223a6e756c6c2c226d696772617465645f66726f6d5f736368656d615f76657273696f6e223a6e756c6c2c226d6967726174696f6e5f6964223a6e756c6c7d2c226e6f64655f6964223a6e756c6c2c226f636375727265645f61745f757463223a22323032362d31312d30345430303a30303a30305a222c22706172656e745f6576656e745f6964223a6e756c6c2c227061796c6f6164223a7b226163746976655f6c6f636b5f72656673223a5b5d2c22636c65616e75705f726561736f6e223a22636f6d706c65746564222c2266696c655f6c6f636b5f636865636b6564223a747275652c2267726163655f706572696f645f6d73223a33303030302c226c616e655f6964223a226c616e652d31222c227061636b6167655f6964223a227061636b6167652d31222c2270726f6a6563745f6964223a2270726f6a6563742d31222c227265706f5f6964223a227265706f2d31222c2272756e5f6964223a2272756e2d31222c22736166655f706f696e745f72656673223a5b5d2c22736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e776f726b747265655f64656c657465642e7631222c22736368656d615f76657273696f6e223a22312e302e30222c227473223a22323032362d31312d30345430303a30303a30305a222c22776f726b747265655f6964223a22776f726b747265652d31227d2c227061796c6f61645f726566223a6e756c6c2c227061796c6f61645f736368656d615f6964223a22706d2e6576656e745f7061796c6f61642e776f726b747265655f64656c657465642e7631222c2270726f64756365725f73657175656e63655f6964223a31372c2270726f6a6563745f6964223a2270726f6a6563742d31222c22726564616374696f6e5f70726f66696c65223a226e6f5f73656372657473222c227265717565737465645f6163636f756e745f726566223a6e756c6c2c2272756e5f6964223a2272756e2d31222c2273636f70655f6b696e64223a2270726f6a656374222c227468726561645f6964223a6e756c6c7d",
+        "producer_semantic_digest": "9054332c7f9ae2b49b190cbd7408cc6237313461721dd5bb715628fd4f55d436",
+        "storage_metadata_mutations": [
+          {
+            "field": "sequence_id",
+            "value": 117,
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "observed_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          },
+          {
+            "field": "persisted_at_utc",
+            "value": "2026-11-04T00:05:00Z",
+            "expected": "original_full_event_and_receipt"
+          }
+        ],
+        "producer_mutations": [
+          {
+            "field": "event_type",
+            "value": "worktree.deleted-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "scope_kind",
+            "value": "application",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "project_id",
+            "value": "project-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "thread_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "run_id",
+            "value": "run-1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "node_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "attempt_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "actor_ref",
+            "value": "owner:WorktreeLifecycleOwner.deleted-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "requested_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "effective_account_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "occurred_at_utc",
+            "value": "2026-11-04T00:09:00Z",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "producer_sequence_id",
+            "value": 18,
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "correlation_id",
+            "value": "correlation-51-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "causation_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "parent_event_id",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "idempotency_key",
+            "value": "dt:06f303fb03233fa15383027790b9fd5461bb391ca07e99851325772d65955eab-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_schema_id",
+            "value": "pm.event_payload.worktree_deleted.v1-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload",
+            "value": {
+              "schema_id": "pm.event_payload.worktree_deleted.v1",
+              "schema_version": "1.0.0",
+              "project_id": "project-1",
+              "worktree_id": "worktree-1",
+              "ts": "2026-11-04T00:00:00Z",
+              "cleanup_reason": "completed",
+              "grace_period_ms": 30000,
+              "file_lock_checked": true,
+              "repo_id": "repo-1",
+              "lane_id": "lane-1",
+              "package_id": "package-1",
+              "run_id": "run-1",
+              "active_lock_refs": [],
+              "safe_point_refs": [],
+              "semantic_retry_probe": "changed"
+            },
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "payload_ref",
+            "value": "producer-changed",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "redaction_profile",
+            "value": "redacted",
+            "expected": "idempotency_conflict"
+          },
+          {
+            "field": "migration",
+            "value": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "changed",
+              "compatibility_event_type": null
+            },
+            "expected": "idempotency_conflict"
+          }
+        ]
+      }
     }
   ],
   "source_codec_vectors": [
@@ -165647,7 +168202,7 @@
     },
     {
       "case": "non_bmp",
-      "bytes": "{\"value\":\"😀\"}",
+      "bytes": "{\"value\":\"\ud83d\ude00\"}",
       "accepted": true
     },
     {
@@ -165672,7 +168227,7 @@
     },
     {
       "case": "bom",
-      "bytes": "﻿{\"n\":1}",
+      "bytes": "\ufeff{\"n\":1}",
       "accepted": false
     },
     {

@@ -9,12 +9,20 @@ import copy
 import hashlib
 import json
 import struct
+import rfc8785
 from pm_event_index_binding import binding_bytes
 from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
 ROOT = Path(__file__).resolve().parents[1]
+PRODUCER_FIELDS = (
+    'event_type', 'scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id',
+    'attempt_id', 'actor_ref', 'requested_account_ref', 'effective_account_ref',
+    'occurred_at_utc', 'producer_sequence_id', 'correlation_id', 'causation_event_id',
+    'parent_event_id', 'idempotency_key', 'payload_schema_id', 'payload', 'payload_ref',
+    'redaction_profile', 'migration',
+)
 
 
 def load(path):
@@ -66,6 +74,19 @@ def decode_source(raw):
 
 def sha(value):
     return hashlib.sha256(canonical(value)).hexdigest()
+
+
+def producer_semantic_bytes(event):
+    """CV-EventRecord's exact caller-owned projection and RFC 8785 hash domain.
+
+    This retry oracle's fixtures use RFC 8785's representable numeric domain;
+    pm.dt.source.json.v1 remains the separate exact-u64 source custody codec.
+    """
+    return rfc8785.dumps({key: event[key] for key in PRODUCER_FIELDS})
+
+
+def producer_semantic_digest(event):
+    return hashlib.sha256(producer_semantic_bytes(event)).hexdigest()
 
 
 def patterned_values(schema, value, path=()):
@@ -544,8 +565,22 @@ def main():
         key, eid = identity(c, p, done['scope_partition']); seen = {}; result = {'event': event, 'receipt': f['first_append_receipt']}
         check((key, eid) == (f['identity_oracle']['idempotency_key'], f['identity_oracle']['event_id']), name + ': pinned identity')
         check(identity(c, p, 'project~b3RoZXI') != (key, eid), name + ': scope identity isolation')
-        check(append_model(seen, key, sha(event), result) == ('appended', result), name + ': first append')
-        check(append_model(seen, key, sha(event), None) == ('original', result) and len(seen) == 1, name + ': duplicate returns original full value and receipt')
+        digest = producer_semantic_digest(event)
+        oracle = f['retry_oracle']
+        check(producer_semantic_bytes(event).hex() == oracle['producer_semantic_bytes_hex'] and digest == oracle['producer_semantic_digest'], name + ': pinned caller semantic bytes/digest')
+        check(append_model(seen, key, digest, result) == ('appended', result), name + ': first append')
+        check(append_model(seen, key, digest, None) == ('original', result) and len(seen) == 1, name + ': duplicate returns original full value and receipt')
+        for case in oracle['storage_metadata_mutations']:
+            changed = copy.deepcopy(event); changed[case['field']] = case['value']
+            check(event_validator.is_valid(changed), name + ': metadata retry valid envelope ' + case['field'])
+            check(producer_semantic_digest(changed) == digest, name + ': metadata excluded from semantic digest ' + case['field'])
+            check(append_model(seen, key, producer_semantic_digest(changed), None) == ('original', result) and len(seen) == 1,
+                  name + ': metadata retry returns original full event/receipt ' + case['field'])
+        for case in oracle['producer_mutations']:
+            changed = copy.deepcopy(event); changed[case['field']] = case['value']
+            check(producer_semantic_digest(changed) != digest, name + ': producer field in semantic digest ' + case['field'])
+            check(append_model(seen, key, producer_semantic_digest(changed), None) == ('idempotency_conflict', None) and len(seen) == 1,
+                  name + ': changed producer field conflicts ' + case['field'])
         check(append_model(seen, key, 'different', None) == ('idempotency_conflict', None), name + ': semantic conflict')
         for case in f['recovery_cases']:
             got = recovery(c, f, case['input'])
