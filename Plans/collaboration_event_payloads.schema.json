@@ -1,0 +1,4760 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json",
+  "title": "Closed collaborative workflow event payloads",
+  "description": "Newly authored owner contract under DL-090 (DL-091 for collaboration.failed): CV-460 to CV-478 in Plans/Contracts_V0.md, backed by the per-family search reports/event-authority-20261104/DC-binding-search.md. One closed definition per family and scope edition, each with its own schema ID: pm.collaboration_event.<token>.v1 for project scope and pm.collaboration_event.<token>.application.v1 for application scope. The semantic owner is Plans/Collaborative_Workflows.md (CW-100 to CW-118); Storage persistence, identity and transitions are SP-460 to SP-478. Closed enumerations owned by CW section 12 are referenced from Plans/collaborative_workflows_contracts.schema.json. Nothing here admits a family: each stays quarantined before append or projection until its own Storage admission landing, one family per landing.",
+  "$defs": {
+    "identifier": {
+      "description": "CV-460: a bounded identifier, 1 to 256 characters, no whitespace.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^\\S+$"
+    },
+    "non_secret_ref": {
+      "description": "CV-460 adopts CV-353 rule 6's reference form by name: kind:value, lowercase kind, at most 256 characters, no whitespace; it names an object, grants no access and holds no credential, account identifier, local absolute path or content.",
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 256,
+      "pattern": "^(?![\\s\\S]*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[a-z][a-z0-9_]*:(?![A-Za-z]:[\\\\/])(?![/\\\\~])(?!file:)(?!sk-[A-Za-z0-9_-]{8,})\\S+$"
+    },
+    "utc_timestamp": {
+      "description": "CV-460: RFC 3339 UTC ending in Z; calendar validity is the checker's valid_utc_datetime rule.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+    },
+    "sha256_hex": {
+      "description": "Lowercase hex SHA-256.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "reconfigure_change_kind": {
+      "description": "CV-460: the change_kind constants of the CW section 10 / CWR-031 reconfigure_change union in Plans/collaborative_workflows_contracts.schema.json, listed by value; the checker compares the two sets.",
+      "enum": [
+        "retry_participant",
+        "replace_participant",
+        "waive_participant",
+        "replace_coordinator",
+        "add_rounds",
+        "add_participant",
+        "remove_participant",
+        "add_grill_me",
+        "set_pause_between_rounds"
+      ]
+    },
+    "collaboration_created": {
+      "$id": "pm.collaboration_event.collaboration_created.v1",
+      "title": "collaboration.created payload, project scope",
+      "description": "CV-461: closed payload of collaboration.created in project scope. Records the first committed revision of a `Collaboration` definition, `pm.collaboration.definition.v1` (or its application edition `pm.collaboration.definition.application.v1`), at revision 1. Semantic owner CW-101, Storage binding SP-461, oracles ATS-231. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "created_at_utc",
+        "admission_source",
+        "participant_slot_ids",
+        "coordinator_kind",
+        "definition_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "const": 1,
+          "description": "always 1"
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "created_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when revision 1 was committed"
+        },
+        "admission_source": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/admission_source",
+          "description": "the admission that committed it (CWR-021)"
+        },
+        "participant_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "the slot IDs of the committed participant specs"
+        },
+        "coordinator_kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/coordinator_kind",
+          "description": "the committed coordinator_spec kind (CWR-037)"
+        },
+        "definition_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the committed definition record, kind collaboration_definition"
+        }
+      }
+    },
+    "collaboration_created_application": {
+      "$id": "pm.collaboration_event.collaboration_created.application.v1",
+      "title": "collaboration.created payload, application scope",
+      "description": "CV-461: closed payload of collaboration.created in application scope. Records the first committed revision of a `Collaboration` definition, `pm.collaboration.definition.v1` (or its application edition `pm.collaboration.definition.application.v1`), at revision 1. Semantic owner CW-101, Storage binding SP-461, oracles ATS-231. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "created_at_utc",
+        "admission_source",
+        "participant_slot_ids",
+        "coordinator_kind",
+        "definition_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "const": 1,
+          "description": "always 1"
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "created_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when revision 1 was committed"
+        },
+        "admission_source": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/admission_source",
+          "description": "the admission that committed it (CWR-021)"
+        },
+        "participant_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "the slot IDs of the committed participant specs"
+        },
+        "coordinator_kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/coordinator_kind",
+          "description": "the committed coordinator_spec kind (CWR-037)"
+        },
+        "definition_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the committed definition record, kind collaboration_definition"
+        }
+      }
+    },
+    "collaboration_started": {
+      "$id": "pm.collaboration_event.collaboration_started.v1",
+      "title": "collaboration.started payload, project scope",
+      "description": "CV-462: closed payload of collaboration.started in project scope. Records the admission of one `CollaborativeRun` (`pm.collaboration.run.v1` or `pm.collaboration.run.application.v1`) with its frozen roster. Semantic owner CW-102, Storage binding SP-462, oracles ATS-232. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "lifecycle_seq",
+        "started_at_utc",
+        "admission_source",
+        "participant_slot_ids",
+        "state_after",
+        "requested_effective_snapshot_ref",
+        "run_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "lifecycle_seq": {
+          "const": 1,
+          "description": "always 1"
+        },
+        "started_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the run was admitted"
+        },
+        "admission_source": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/admission_source",
+          "description": "CWR-021"
+        },
+        "crew_auto_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "present exactly when admission_source is crew_auto"
+        },
+        "assistant_plan_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "present with plan_version for a Plan-bound run; required for build_with_crew"
+        },
+        "plan_version": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "present exactly when assistant_plan_id is present"
+        },
+        "goal_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "a Goal that drives the run by reference"
+        },
+        "parent_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the parent run, when the run has one"
+        },
+        "participant_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "the frozen roster's slot IDs"
+        },
+        "state_after": {
+          "enum": [
+            "running",
+            "waiting",
+            "blocked"
+          ],
+          "description": "the run state right after admission"
+        },
+        "requested_effective_snapshot_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the requested/effective snapshot of the frozen roster"
+        },
+        "target_pack_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "Review only: the frozen ReviewTargetPack"
+        },
+        "target_hashes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+          },
+          "description": "Review only: the frozen pack's target_hashes, in pack order"
+        },
+        "run_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the committed run record"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "admission_source": {
+                "const": "crew_auto"
+              }
+            },
+            "required": [
+              "admission_source"
+            ]
+          },
+          "then": {
+            "required": [
+              "crew_auto_revision"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "crew_auto_revision"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "assistant_plan_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "plan_version"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "plan_version"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "admission_source": {
+                "const": "build_with_crew"
+              }
+            },
+            "required": [
+              "admission_source"
+            ]
+          },
+          "then": {
+            "required": [
+              "assistant_plan_id"
+            ],
+            "properties": {
+              "kind": {
+                "const": "crew"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "review"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "target_pack_ref",
+              "target_hashes"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "target_pack_ref"
+                  ]
+                },
+                {
+                  "required": [
+                    "target_hashes"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "collaboration_started_application": {
+      "$id": "pm.collaboration_event.collaboration_started.application.v1",
+      "title": "collaboration.started payload, application scope",
+      "description": "CV-462: closed payload of collaboration.started in application scope. Records the admission of one `CollaborativeRun` (`pm.collaboration.run.v1` or `pm.collaboration.run.application.v1`) with its frozen roster. Semantic owner CW-102, Storage binding SP-462, oracles ATS-232. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "lifecycle_seq",
+        "started_at_utc",
+        "admission_source",
+        "participant_slot_ids",
+        "state_after",
+        "requested_effective_snapshot_ref",
+        "run_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "lifecycle_seq": {
+          "const": 1,
+          "description": "always 1"
+        },
+        "started_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the run was admitted"
+        },
+        "admission_source": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/admission_source",
+          "description": "CWR-021"
+        },
+        "crew_auto_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "present exactly when admission_source is crew_auto"
+        },
+        "assistant_plan_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "present with plan_version for a Plan-bound run; required for build_with_crew"
+        },
+        "plan_version": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "present exactly when assistant_plan_id is present"
+        },
+        "goal_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "a Goal that drives the run by reference"
+        },
+        "parent_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the parent run, when the run has one"
+        },
+        "participant_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "the frozen roster's slot IDs"
+        },
+        "state_after": {
+          "enum": [
+            "running",
+            "waiting",
+            "blocked"
+          ],
+          "description": "the run state right after admission"
+        },
+        "requested_effective_snapshot_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the requested/effective snapshot of the frozen roster"
+        },
+        "target_pack_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "Review only: the frozen ReviewTargetPack"
+        },
+        "target_hashes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+          },
+          "description": "Review only: the frozen pack's target_hashes, in pack order"
+        },
+        "run_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the committed run record"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "admission_source": {
+                "const": "crew_auto"
+              }
+            },
+            "required": [
+              "admission_source"
+            ]
+          },
+          "then": {
+            "required": [
+              "crew_auto_revision"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "crew_auto_revision"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "assistant_plan_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "plan_version"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "plan_version"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "admission_source": {
+                "const": "build_with_crew"
+              }
+            },
+            "required": [
+              "admission_source"
+            ]
+          },
+          "then": {
+            "required": [
+              "assistant_plan_id"
+            ],
+            "properties": {
+              "kind": {
+                "const": "crew"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "review"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "target_pack_ref",
+              "target_hashes"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "target_pack_ref"
+                  ]
+                },
+                {
+                  "required": [
+                    "target_hashes"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "collaboration_paused": {
+      "$id": "pm.collaboration_event.collaboration_paused.v1",
+      "title": "collaboration.paused payload, project scope",
+      "description": "CV-463: closed payload of collaboration.paused in project scope. Records the run reaching the `paused` state at a safe boundary after a user's `cmd.collaboration.pause`. Semantic owner CW-103, Storage binding SP-463, oracles ATS-233. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "lifecycle_seq",
+        "paused_at_utc",
+        "state_before",
+        "command_instance_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "lifecycle_seq": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "one more than the run's previous lifecycle event"
+        },
+        "paused_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the safe boundary was reached"
+        },
+        "state_before": {
+          "enum": [
+            "running",
+            "waiting",
+            "blocked"
+          ],
+          "description": "the owner-reported state the pause left"
+        },
+        "command_instance_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the cmd.collaboration.pause instance that asked for it"
+        }
+      }
+    },
+    "collaboration_paused_application": {
+      "$id": "pm.collaboration_event.collaboration_paused.application.v1",
+      "title": "collaboration.paused payload, application scope",
+      "description": "CV-463: closed payload of collaboration.paused in application scope. Records the run reaching the `paused` state at a safe boundary after a user's `cmd.collaboration.pause`. Semantic owner CW-103, Storage binding SP-463, oracles ATS-233. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "lifecycle_seq",
+        "paused_at_utc",
+        "state_before",
+        "command_instance_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "lifecycle_seq": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "one more than the run's previous lifecycle event"
+        },
+        "paused_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the safe boundary was reached"
+        },
+        "state_before": {
+          "enum": [
+            "running",
+            "waiting",
+            "blocked"
+          ],
+          "description": "the owner-reported state the pause left"
+        },
+        "command_instance_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the cmd.collaboration.pause instance that asked for it"
+        }
+      }
+    },
+    "collaboration_resumed": {
+      "$id": "pm.collaboration_event.collaboration_resumed.v1",
+      "title": "collaboration.resumed payload, project scope",
+      "description": "CV-464: closed payload of collaboration.resumed in project scope. Records a paused run continuing as the same run after a user's `cmd.collaboration.resume`. Semantic owner CW-104, Storage binding SP-464, oracles ATS-234. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "lifecycle_seq",
+        "resumed_at_utc",
+        "state_after",
+        "command_instance_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "lifecycle_seq": {
+          "type": "integer",
+          "minimum": 3,
+          "description": "one more than the run's previous lifecycle event"
+        },
+        "resumed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the run left paused"
+        },
+        "state_after": {
+          "enum": [
+            "running",
+            "waiting",
+            "blocked"
+          ],
+          "description": "the owner-reported state after resuming"
+        },
+        "command_instance_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the cmd.collaboration.resume instance"
+        }
+      }
+    },
+    "collaboration_resumed_application": {
+      "$id": "pm.collaboration_event.collaboration_resumed.application.v1",
+      "title": "collaboration.resumed payload, application scope",
+      "description": "CV-464: closed payload of collaboration.resumed in application scope. Records a paused run continuing as the same run after a user's `cmd.collaboration.resume`. Semantic owner CW-104, Storage binding SP-464, oracles ATS-234. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "lifecycle_seq",
+        "resumed_at_utc",
+        "state_after",
+        "command_instance_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "lifecycle_seq": {
+          "type": "integer",
+          "minimum": 3,
+          "description": "one more than the run's previous lifecycle event"
+        },
+        "resumed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the run left paused"
+        },
+        "state_after": {
+          "enum": [
+            "running",
+            "waiting",
+            "blocked"
+          ],
+          "description": "the owner-reported state after resuming"
+        },
+        "command_instance_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the cmd.collaboration.resume instance"
+        }
+      }
+    },
+    "collaboration_cancelled": {
+      "$id": "pm.collaboration_event.collaboration_cancelled.v1",
+      "title": "collaboration.cancelled payload, project scope",
+      "description": "CV-465: closed payload of collaboration.cancelled in project scope. Records a run ending `cancelled`: by the user's `cmd.collaboration.cancel` (`stop_reason` `user_cancel`) or by reaching its own time, cost or token limit (`limit_time`, `limit_cost`, `limit_tokens`, CWR-029, DL-131). Semantic owner CW-105, Storage binding SP-465, oracles ATS-235. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "lifecycle_seq",
+        "cancelled_at_utc",
+        "stop_reason",
+        "state_before",
+        "fenced_attempt_count",
+        "cancellation_receipt_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "lifecycle_seq": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "one more than the run's previous lifecycle event"
+        },
+        "cancelled_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the run settled cancelled"
+        },
+        "stop_reason": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/stop_reason",
+          "description": "CWR-029"
+        },
+        "state_before": {
+          "enum": [
+            "running",
+            "paused",
+            "waiting",
+            "blocked"
+          ],
+          "description": "the state the cancel ended"
+        },
+        "command_instance_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "present exactly when stop_reason is user_cancel"
+        },
+        "fenced_attempt_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "how many open attempts the fence closed as canceled"
+        },
+        "cancellation_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the cancellation receipt of section 2.6"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "stop_reason": {
+                "const": "user_cancel"
+              }
+            },
+            "required": [
+              "stop_reason"
+            ]
+          },
+          "then": {
+            "required": [
+              "command_instance_ref"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "command_instance_ref"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "collaboration_cancelled_application": {
+      "$id": "pm.collaboration_event.collaboration_cancelled.application.v1",
+      "title": "collaboration.cancelled payload, application scope",
+      "description": "CV-465: closed payload of collaboration.cancelled in application scope. Records a run ending `cancelled`: by the user's `cmd.collaboration.cancel` (`stop_reason` `user_cancel`) or by reaching its own time, cost or token limit (`limit_time`, `limit_cost`, `limit_tokens`, CWR-029, DL-131). Semantic owner CW-105, Storage binding SP-465, oracles ATS-235. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "lifecycle_seq",
+        "cancelled_at_utc",
+        "stop_reason",
+        "state_before",
+        "fenced_attempt_count",
+        "cancellation_receipt_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "lifecycle_seq": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "one more than the run's previous lifecycle event"
+        },
+        "cancelled_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the run settled cancelled"
+        },
+        "stop_reason": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/stop_reason",
+          "description": "CWR-029"
+        },
+        "state_before": {
+          "enum": [
+            "running",
+            "paused",
+            "waiting",
+            "blocked"
+          ],
+          "description": "the state the cancel ended"
+        },
+        "command_instance_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "present exactly when stop_reason is user_cancel"
+        },
+        "fenced_attempt_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "how many open attempts the fence closed as canceled"
+        },
+        "cancellation_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the cancellation receipt of section 2.6"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "stop_reason": {
+                "const": "user_cancel"
+              }
+            },
+            "required": [
+              "stop_reason"
+            ]
+          },
+          "then": {
+            "required": [
+              "command_instance_ref"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "command_instance_ref"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "collaboration_completed": {
+      "$id": "pm.collaboration_event.collaboration_completed.v1",
+      "title": "collaboration.completed payload, project scope",
+      "description": "CV-466: closed payload of collaboration.completed in project scope. Records a run ending `completed`. Semantic owner CW-106, Storage binding SP-466, oracles ATS-236. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "lifecycle_seq",
+        "completed_at_utc",
+        "completion_trigger",
+        "state_before",
+        "required_slot_ids",
+        "waived_slot_ids",
+        "output_refs"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "lifecycle_seq": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "one more than the run's previous lifecycle event"
+        },
+        "completed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the run settled completed"
+        },
+        "completion_trigger": {
+          "enum": [
+            "predicate_met",
+            "chat_room_end"
+          ],
+          "description": "chat_room_end only for a Chat Room"
+        },
+        "state_before": {
+          "enum": [
+            "running",
+            "paused",
+            "waiting",
+            "blocked"
+          ],
+          "description": "the state the completion ended"
+        },
+        "required_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "the run's required slots"
+        },
+        "waived_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "the required or optional slots whose outcome is explicitly_waived"
+        },
+        "output_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 64,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref"
+          },
+          "description": "the run's final outputs: the Review artifact, the BrainStorm Plan, the Crew result or the room's summary"
+        },
+        "command_instance_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "present exactly when completion_trigger is chat_room_end"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "completion_trigger": {
+                "const": "chat_room_end"
+              }
+            },
+            "required": [
+              "completion_trigger"
+            ]
+          },
+          "then": {
+            "required": [
+              "command_instance_ref"
+            ],
+            "properties": {
+              "kind": {
+                "const": "chat_room"
+              }
+            }
+          },
+          "else": {
+            "allOf": [
+              {
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "command_instance_ref"
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "state_before": {
+                    "enum": [
+                      "running",
+                      "waiting",
+                      "blocked"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "collaboration_completed_application": {
+      "$id": "pm.collaboration_event.collaboration_completed.application.v1",
+      "title": "collaboration.completed payload, application scope",
+      "description": "CV-466: closed payload of collaboration.completed in application scope. Records a run ending `completed`. Semantic owner CW-106, Storage binding SP-466, oracles ATS-236. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "lifecycle_seq",
+        "completed_at_utc",
+        "completion_trigger",
+        "state_before",
+        "required_slot_ids",
+        "waived_slot_ids",
+        "output_refs"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "lifecycle_seq": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "one more than the run's previous lifecycle event"
+        },
+        "completed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the run settled completed"
+        },
+        "completion_trigger": {
+          "enum": [
+            "predicate_met",
+            "chat_room_end"
+          ],
+          "description": "chat_room_end only for a Chat Room"
+        },
+        "state_before": {
+          "enum": [
+            "running",
+            "paused",
+            "waiting",
+            "blocked"
+          ],
+          "description": "the state the completion ended"
+        },
+        "required_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "the run's required slots"
+        },
+        "waived_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "the required or optional slots whose outcome is explicitly_waived"
+        },
+        "output_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 64,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref"
+          },
+          "description": "the run's final outputs: the Review artifact, the BrainStorm Plan, the Crew result or the room's summary"
+        },
+        "command_instance_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "present exactly when completion_trigger is chat_room_end"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "completion_trigger": {
+                "const": "chat_room_end"
+              }
+            },
+            "required": [
+              "completion_trigger"
+            ]
+          },
+          "then": {
+            "required": [
+              "command_instance_ref"
+            ],
+            "properties": {
+              "kind": {
+                "const": "chat_room"
+              }
+            }
+          },
+          "else": {
+            "allOf": [
+              {
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "command_instance_ref"
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "state_before": {
+                    "enum": [
+                      "running",
+                      "waiting",
+                      "blocked"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "collaboration_failed": {
+      "$id": "pm.collaboration_event.collaboration_failed.v1",
+      "title": "collaboration.failed payload, project scope",
+      "description": "CV-467: closed payload of collaboration.failed in project scope. Records a run ending in the closed run state `failed`, with its reason (DL-091). Semantic owner CW-107, Storage binding SP-467, oracles ATS-237. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "lifecycle_seq",
+        "failed_at_utc",
+        "failure_reason",
+        "state_before"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "lifecycle_seq": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "one more than the run's previous lifecycle event"
+        },
+        "failed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the run settled failed"
+        },
+        "failure_reason": {
+          "enum": [
+            "invalid_request",
+            "project_not_found",
+            "thread_not_found",
+            "collaboration_not_found",
+            "collaboration_run_not_found",
+            "participant_not_found",
+            "stale_definition_revision",
+            "stale_currentness",
+            "configuration_required",
+            "configuration_not_committed",
+            "duplicate_id_conflict",
+            "command_not_registered",
+            "permission_denied",
+            "permission_ceiling_exceeded",
+            "model_unavailable",
+            "persona_unavailable",
+            "account_unavailable",
+            "substitution_not_permitted",
+            "concurrency_ceiling_exceeded",
+            "target_pack_stale",
+            "target_hash_mismatch",
+            "question_limit_reached",
+            "provisioning_approval_required",
+            "read_only_violation",
+            "destination_generation_stale",
+            "destination_target_ended",
+            "run_state_invalid",
+            "owner_unavailable",
+            "lead_admission_closed"
+          ],
+          "description": "the section 11 typed error that ended the run; never cancelled"
+        },
+        "state_before": {
+          "enum": [
+            "running",
+            "paused",
+            "waiting",
+            "blocked"
+          ],
+          "description": "the state the failure ended"
+        },
+        "failure_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the run's failure record, when its owner keeps one"
+        }
+      }
+    },
+    "collaboration_failed_application": {
+      "$id": "pm.collaboration_event.collaboration_failed.application.v1",
+      "title": "collaboration.failed payload, application scope",
+      "description": "CV-467: closed payload of collaboration.failed in application scope. Records a run ending in the closed run state `failed`, with its reason (DL-091). Semantic owner CW-107, Storage binding SP-467, oracles ATS-237. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "lifecycle_seq",
+        "failed_at_utc",
+        "failure_reason",
+        "state_before"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "lifecycle_seq": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "one more than the run's previous lifecycle event"
+        },
+        "failed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the run settled failed"
+        },
+        "failure_reason": {
+          "enum": [
+            "invalid_request",
+            "project_not_found",
+            "thread_not_found",
+            "collaboration_not_found",
+            "collaboration_run_not_found",
+            "participant_not_found",
+            "stale_definition_revision",
+            "stale_currentness",
+            "configuration_required",
+            "configuration_not_committed",
+            "duplicate_id_conflict",
+            "command_not_registered",
+            "permission_denied",
+            "permission_ceiling_exceeded",
+            "model_unavailable",
+            "persona_unavailable",
+            "account_unavailable",
+            "substitution_not_permitted",
+            "concurrency_ceiling_exceeded",
+            "target_pack_stale",
+            "target_hash_mismatch",
+            "question_limit_reached",
+            "provisioning_approval_required",
+            "read_only_violation",
+            "destination_generation_stale",
+            "destination_target_ended",
+            "run_state_invalid",
+            "owner_unavailable",
+            "lead_admission_closed"
+          ],
+          "description": "the section 11 typed error that ended the run; never cancelled"
+        },
+        "state_before": {
+          "enum": [
+            "running",
+            "paused",
+            "waiting",
+            "blocked"
+          ],
+          "description": "the state the failure ended"
+        },
+        "failure_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the run's failure record, when its owner keeps one"
+        }
+      }
+    },
+    "collaboration_participant_started": {
+      "$id": "pm.collaboration_event.collaboration_participant_started.v1",
+      "title": "collaboration.participant_started payload, project scope",
+      "description": "CV-468: closed payload of collaboration.participant_started in project scope. Records the admission of one participant attempt for one slot of a started run. Semantic owner CW-108, Storage binding SP-468, oracles ATS-238. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "started_at_utc",
+        "participant_slot_id",
+        "assignment_revision",
+        "attempt_id",
+        "additive_role_kind",
+        "required",
+        "requested_identity_ref",
+        "effective_identity_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "started_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the attempt was admitted"
+        },
+        "participant_slot_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the roster slot"
+        },
+        "assignment_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "PART-001..006: replacement creates a new assignment revision"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "a new attempt identity"
+        },
+        "additive_role_kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/additive_role_kind",
+          "description": "none or wonderer"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "the slot's definition property (PART-001..006)"
+        },
+        "requested_identity_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the slot's requested provider/account/model/Persona"
+        },
+        "effective_identity_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the effective assignment"
+        },
+        "retry_of_attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the earlier attempt this retry follows"
+        },
+        "child_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the child run that realizes the attempt, when there is one"
+        }
+      }
+    },
+    "collaboration_participant_started_application": {
+      "$id": "pm.collaboration_event.collaboration_participant_started.application.v1",
+      "title": "collaboration.participant_started payload, application scope",
+      "description": "CV-468: closed payload of collaboration.participant_started in application scope. Records the admission of one participant attempt for one slot of a started run. Semantic owner CW-108, Storage binding SP-468, oracles ATS-238. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "started_at_utc",
+        "participant_slot_id",
+        "assignment_revision",
+        "attempt_id",
+        "additive_role_kind",
+        "required",
+        "requested_identity_ref",
+        "effective_identity_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "started_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the attempt was admitted"
+        },
+        "participant_slot_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the roster slot"
+        },
+        "assignment_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "PART-001..006: replacement creates a new assignment revision"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "a new attempt identity"
+        },
+        "additive_role_kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/additive_role_kind",
+          "description": "none or wonderer"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "the slot's definition property (PART-001..006)"
+        },
+        "requested_identity_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the slot's requested provider/account/model/Persona"
+        },
+        "effective_identity_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the effective assignment"
+        },
+        "retry_of_attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the earlier attempt this retry follows"
+        },
+        "child_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the child run that realizes the attempt, when there is one"
+        }
+      }
+    },
+    "collaboration_participant_completed": {
+      "$id": "pm.collaboration_event.collaboration_participant_completed.v1",
+      "title": "collaboration.participant_completed payload, project scope",
+      "description": "CV-469: closed payload of collaboration.participant_completed in project scope. Records one terminal outcome: of one attempt (`completed`, `failed`, `timed_out`, `canceled`, or `explicitly_waived` of a started attempt), or of a slot with no attempt under its assignment revision (`unavailable`, or `explicitly_waived` before any attempt). Semantic owner CW-109, Storage binding SP-469, oracles ATS-239. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "finished_at_utc",
+        "participant_slot_id",
+        "assignment_revision",
+        "outcome",
+        "required",
+        "disposition_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "finished_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the outcome was settled"
+        },
+        "participant_slot_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the roster slot"
+        },
+        "assignment_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "the assignment revision the outcome closes"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "absent exactly for unavailable and for a waiver of a slot with no attempt"
+        },
+        "outcome": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/participant_outcome",
+          "description": "PART-001..006"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "the slot's definition property"
+        },
+        "outcome_reason": {
+          "enum": [
+            "invalid_request",
+            "project_not_found",
+            "thread_not_found",
+            "collaboration_not_found",
+            "collaboration_run_not_found",
+            "participant_not_found",
+            "stale_definition_revision",
+            "stale_currentness",
+            "configuration_required",
+            "configuration_not_committed",
+            "duplicate_id_conflict",
+            "command_not_registered",
+            "permission_denied",
+            "permission_ceiling_exceeded",
+            "model_unavailable",
+            "persona_unavailable",
+            "account_unavailable",
+            "substitution_not_permitted",
+            "concurrency_ceiling_exceeded",
+            "target_pack_stale",
+            "target_hash_mismatch",
+            "question_limit_reached",
+            "provisioning_approval_required",
+            "read_only_violation",
+            "destination_generation_stale",
+            "destination_target_ended",
+            "run_state_invalid",
+            "owner_unavailable",
+            "lead_admission_closed"
+          ],
+          "description": "required for failed, timed_out and unavailable: the owner's typed reason"
+        },
+        "waiver_actor_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "present exactly when outcome is explicitly_waived"
+        },
+        "waiver_currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex",
+          "description": "present exactly when outcome is explicitly_waived"
+        },
+        "effective_identity_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the effective assignment, when one ran"
+        },
+        "disposition_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the committed participant disposition record"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "unavailable"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "attempt_id"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "completed",
+                  "failed",
+                  "timed_out",
+                  "canceled"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "attempt_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "explicitly_waived"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "waiver_actor_ref",
+              "waiver_currentness_hash"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "waiver_actor_ref"
+                  ]
+                },
+                {
+                  "required": [
+                    "waiver_currentness_hash"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "failed",
+                  "timed_out",
+                  "unavailable"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "outcome_reason"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "outcome_reason"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "collaboration_participant_completed_application": {
+      "$id": "pm.collaboration_event.collaboration_participant_completed.application.v1",
+      "title": "collaboration.participant_completed payload, application scope",
+      "description": "CV-469: closed payload of collaboration.participant_completed in application scope. Records one terminal outcome: of one attempt (`completed`, `failed`, `timed_out`, `canceled`, or `explicitly_waived` of a started attempt), or of a slot with no attempt under its assignment revision (`unavailable`, or `explicitly_waived` before any attempt). Semantic owner CW-109, Storage binding SP-469, oracles ATS-239. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "finished_at_utc",
+        "participant_slot_id",
+        "assignment_revision",
+        "outcome",
+        "required",
+        "disposition_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "finished_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the outcome was settled"
+        },
+        "participant_slot_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the roster slot"
+        },
+        "assignment_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "the assignment revision the outcome closes"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "absent exactly for unavailable and for a waiver of a slot with no attempt"
+        },
+        "outcome": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/participant_outcome",
+          "description": "PART-001..006"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "the slot's definition property"
+        },
+        "outcome_reason": {
+          "enum": [
+            "invalid_request",
+            "project_not_found",
+            "thread_not_found",
+            "collaboration_not_found",
+            "collaboration_run_not_found",
+            "participant_not_found",
+            "stale_definition_revision",
+            "stale_currentness",
+            "configuration_required",
+            "configuration_not_committed",
+            "duplicate_id_conflict",
+            "command_not_registered",
+            "permission_denied",
+            "permission_ceiling_exceeded",
+            "model_unavailable",
+            "persona_unavailable",
+            "account_unavailable",
+            "substitution_not_permitted",
+            "concurrency_ceiling_exceeded",
+            "target_pack_stale",
+            "target_hash_mismatch",
+            "question_limit_reached",
+            "provisioning_approval_required",
+            "read_only_violation",
+            "destination_generation_stale",
+            "destination_target_ended",
+            "run_state_invalid",
+            "owner_unavailable",
+            "lead_admission_closed"
+          ],
+          "description": "required for failed, timed_out and unavailable: the owner's typed reason"
+        },
+        "waiver_actor_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "present exactly when outcome is explicitly_waived"
+        },
+        "waiver_currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex",
+          "description": "present exactly when outcome is explicitly_waived"
+        },
+        "effective_identity_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the effective assignment, when one ran"
+        },
+        "disposition_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the committed participant disposition record"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "unavailable"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "attempt_id"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "completed",
+                  "failed",
+                  "timed_out",
+                  "canceled"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "attempt_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "explicitly_waived"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "waiver_actor_ref",
+              "waiver_currentness_hash"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "waiver_actor_ref"
+                  ]
+                },
+                {
+                  "required": [
+                    "waiver_currentness_hash"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "failed",
+                  "timed_out",
+                  "unavailable"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "outcome_reason"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "outcome_reason"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "collaboration_message_added": {
+      "$id": "pm.collaboration_event.collaboration_message_added.v1",
+      "title": "collaboration.message_added payload, project scope",
+      "description": "CV-470: closed payload of collaboration.message_added in project scope. Records one `CollaborationMessage` written to a run's transcript, with its `sequence`. Semantic owner CW-110, Storage binding SP-470, oracles ATS-240. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "written_at_utc",
+        "collaboration_message_id",
+        "sequence",
+        "sender_kind",
+        "sender_id",
+        "message_type",
+        "recipient_ids",
+        "body_ref",
+        "attachment_refs"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "written_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the record was written"
+        },
+        "collaboration_message_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the allocated message ID"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "the run's monotonic sequence, assigned at the write"
+        },
+        "sender_kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/sender_kind",
+          "description": "section 2.3"
+        },
+        "sender_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the slot ID, coordinator run ref, user actor ID or system component ID"
+        },
+        "message_type": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/message_type",
+          "description": "section 2.3"
+        },
+        "recipient_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "the addressed recipients; empty for the whole run"
+        },
+        "reply_to": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the message this one replies to"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the writer's attempt, for a participant or coordinator message"
+        },
+        "body_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the message body, which stays in the record"
+        },
+        "attachment_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 64,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref"
+          },
+          "description": "attachment references, never content"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "sender_kind": {
+                "enum": [
+                  "user",
+                  "system"
+                ]
+              }
+            },
+            "required": [
+              "sender_kind"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "attempt_id"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "collaboration_message_added_application": {
+      "$id": "pm.collaboration_event.collaboration_message_added.application.v1",
+      "title": "collaboration.message_added payload, application scope",
+      "description": "CV-470: closed payload of collaboration.message_added in application scope. Records one `CollaborationMessage` written to a run's transcript, with its `sequence`. Semantic owner CW-110, Storage binding SP-470, oracles ATS-240. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "written_at_utc",
+        "collaboration_message_id",
+        "sequence",
+        "sender_kind",
+        "sender_id",
+        "message_type",
+        "recipient_ids",
+        "body_ref",
+        "attachment_refs"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "written_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the record was written"
+        },
+        "collaboration_message_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the allocated message ID"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "the run's monotonic sequence, assigned at the write"
+        },
+        "sender_kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/sender_kind",
+          "description": "section 2.3"
+        },
+        "sender_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the slot ID, coordinator run ref, user actor ID or system component ID"
+        },
+        "message_type": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/message_type",
+          "description": "section 2.3"
+        },
+        "recipient_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "the addressed recipients; empty for the whole run"
+        },
+        "reply_to": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the message this one replies to"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the writer's attempt, for a participant or coordinator message"
+        },
+        "body_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the message body, which stays in the record"
+        },
+        "attachment_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 64,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref"
+          },
+          "description": "attachment references, never content"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "sender_kind": {
+                "enum": [
+                  "user",
+                  "system"
+                ]
+              }
+            },
+            "required": [
+              "sender_kind"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "attempt_id"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "collaboration_artifact_added": {
+      "$id": "pm.collaboration_event.collaboration_artifact_added.v1",
+      "title": "collaboration.artifact_added payload, project scope",
+      "description": "CV-471: closed payload of collaboration.artifact_added in project scope. Records a run's `artifact_refs` gaining one version of an ordinary Puppet Master artifact that the artifact owner created. Semantic owner CW-111, Storage binding SP-471, oracles ATS-241. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "added_at_utc",
+        "artifact_ref",
+        "artifact_version_ref",
+        "added_by_kind",
+        "added_by_id"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "added_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the reference was committed"
+        },
+        "artifact_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the artifact"
+        },
+        "artifact_version_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the exact version"
+        },
+        "added_by_kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/sender_kind",
+          "description": "who produced it"
+        },
+        "added_by_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "its slot, coordinator, user or system ID"
+        },
+        "source_message_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the message that delivered or references it"
+        }
+      }
+    },
+    "collaboration_artifact_added_application": {
+      "$id": "pm.collaboration_event.collaboration_artifact_added.application.v1",
+      "title": "collaboration.artifact_added payload, application scope",
+      "description": "CV-471: closed payload of collaboration.artifact_added in application scope. Records a run's `artifact_refs` gaining one version of an ordinary Puppet Master artifact that the artifact owner created. Semantic owner CW-111, Storage binding SP-471, oracles ATS-241. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "added_at_utc",
+        "artifact_ref",
+        "artifact_version_ref",
+        "added_by_kind",
+        "added_by_id"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "added_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the reference was committed"
+        },
+        "artifact_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the artifact"
+        },
+        "artifact_version_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the exact version"
+        },
+        "added_by_kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/sender_kind",
+          "description": "who produced it"
+        },
+        "added_by_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "its slot, coordinator, user or system ID"
+        },
+        "source_message_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the message that delivered or references it"
+        }
+      }
+    },
+    "collaboration_configuration_changed": {
+      "$id": "pm.collaboration_event.collaboration_configuration_changed.v1",
+      "title": "collaboration.configuration_changed payload, project scope",
+      "description": "CV-472: closed payload of collaboration.configuration_changed in project scope. Records a committed definition revision after the first: a mid-run `cmd.collaboration.reconfigure` (`change_source` `reconfigure`) or a Start that commits a bumped revision of an existing `collaboration_id` (`start_commit`). Semantic owner CW-112, Storage binding SP-472, oracles ATS-242. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "previous_definition_revision",
+        "changed_at_utc",
+        "change_source",
+        "change_kinds",
+        "affected_slot_ids",
+        "accept_stale_target",
+        "command_instance_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "the new revision"
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "previous_definition_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "exactly one less"
+        },
+        "changed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the revision was committed"
+        },
+        "change_source": {
+          "enum": [
+            "reconfigure",
+            "start_commit"
+          ],
+          "description": "a mid-run reconfigure or a Start that bumps the revision"
+        },
+        "change_kinds": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 64,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/reconfigure_change_kind"
+          },
+          "description": "reconfigure: the change_kind of each change, in request order (CWR-031); start_commit: empty"
+        },
+        "affected_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "the slots a change names"
+        },
+        "accept_stale_target": {
+          "type": "boolean",
+          "description": "reconfigure only: finish_stale on a Review (CWR-031); false for start_commit"
+        },
+        "command_instance_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the reconfigure or Start command instance"
+        },
+        "system_message_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "reconfigure: the system transcript entry's message ID"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "change_source": {
+                "const": "start_commit"
+              }
+            },
+            "required": [
+              "change_source"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "system_message_id"
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "change_kinds": {
+                    "maxItems": 0
+                  },
+                  "affected_slot_ids": {
+                    "maxItems": 0
+                  },
+                  "accept_stale_target": {
+                    "const": false
+                  }
+                }
+              }
+            ]
+          },
+          "else": {
+            "required": [
+              "system_message_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "change_source": {
+                "const": "reconfigure"
+              },
+              "accept_stale_target": {
+                "const": false
+              }
+            },
+            "required": [
+              "change_source",
+              "accept_stale_target"
+            ]
+          },
+          "then": {
+            "properties": {
+              "change_kinds": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "collaboration_configuration_changed_application": {
+      "$id": "pm.collaboration_event.collaboration_configuration_changed.application.v1",
+      "title": "collaboration.configuration_changed payload, application scope",
+      "description": "CV-472: closed payload of collaboration.configuration_changed in application scope. Records a committed definition revision after the first: a mid-run `cmd.collaboration.reconfigure` (`change_source` `reconfigure`) or a Start that commits a bumped revision of an existing `collaboration_id` (`start_commit`). Semantic owner CW-112, Storage binding SP-472, oracles ATS-242. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "previous_definition_revision",
+        "changed_at_utc",
+        "change_source",
+        "change_kinds",
+        "affected_slot_ids",
+        "accept_stale_target",
+        "command_instance_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/collaboration_kind"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "the new revision"
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "previous_definition_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "exactly one less"
+        },
+        "changed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the revision was committed"
+        },
+        "change_source": {
+          "enum": [
+            "reconfigure",
+            "start_commit"
+          ],
+          "description": "a mid-run reconfigure or a Start that bumps the revision"
+        },
+        "change_kinds": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 64,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/reconfigure_change_kind"
+          },
+          "description": "reconfigure: the change_kind of each change, in request order (CWR-031); start_commit: empty"
+        },
+        "affected_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "the slots a change names"
+        },
+        "accept_stale_target": {
+          "type": "boolean",
+          "description": "reconfigure only: finish_stale on a Review (CWR-031); false for start_commit"
+        },
+        "command_instance_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the reconfigure or Start command instance"
+        },
+        "system_message_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "reconfigure: the system transcript entry's message ID"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "change_source": {
+                "const": "start_commit"
+              }
+            },
+            "required": [
+              "change_source"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "system_message_id"
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "change_kinds": {
+                    "maxItems": 0
+                  },
+                  "affected_slot_ids": {
+                    "maxItems": 0
+                  },
+                  "accept_stale_target": {
+                    "const": false
+                  }
+                }
+              }
+            ]
+          },
+          "else": {
+            "required": [
+              "system_message_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "change_source": {
+                "const": "reconfigure"
+              },
+              "accept_stale_target": {
+                "const": false
+              }
+            },
+            "required": [
+              "change_source",
+              "accept_stale_target"
+            ]
+          },
+          "then": {
+            "properties": {
+              "change_kinds": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "brainstorm_proposal_added": {
+      "$id": "pm.collaboration_event.brainstorm_proposal_added.v1",
+      "title": "brainstorm.proposal_added payload, project scope",
+      "description": "CV-473: closed payload of brainstorm.proposal_added in project scope. Records one normalized `BrainstormProposal` record committed in a BrainStorm run. Semantic owner CW-113, Storage binding SP-473, oracles ATS-243. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "added_at_utc",
+        "proposal_id",
+        "participant_slot_id",
+        "attempt_id",
+        "proposal_round",
+        "blind_round",
+        "proposal_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "const": "brainstorm"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "added_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the normalized record was committed"
+        },
+        "proposal_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the proposal"
+        },
+        "participant_slot_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the core proposer"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the proposer's attempt"
+        },
+        "proposal_round": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "section 12"
+        },
+        "blind_round": {
+          "type": "boolean",
+          "description": "true for a blind-phase proposal"
+        },
+        "proposal_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the normalized proposal record"
+        }
+      }
+    },
+    "brainstorm_proposal_added_application": {
+      "$id": "pm.collaboration_event.brainstorm_proposal_added.application.v1",
+      "title": "brainstorm.proposal_added payload, application scope",
+      "description": "CV-473: closed payload of brainstorm.proposal_added in application scope. Records one normalized `BrainstormProposal` record committed in a BrainStorm run. Semantic owner CW-113, Storage binding SP-473, oracles ATS-243. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "added_at_utc",
+        "proposal_id",
+        "participant_slot_id",
+        "attempt_id",
+        "proposal_round",
+        "blind_round",
+        "proposal_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "const": "brainstorm"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "added_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the normalized record was committed"
+        },
+        "proposal_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the proposal"
+        },
+        "participant_slot_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the core proposer"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the proposer's attempt"
+        },
+        "proposal_round": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "section 12"
+        },
+        "blind_round": {
+          "type": "boolean",
+          "description": "true for a blind-phase proposal"
+        },
+        "proposal_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the normalized proposal record"
+        }
+      }
+    },
+    "brainstorm_vote_added": {
+      "$id": "pm.collaboration_event.brainstorm_vote_added.v1",
+      "title": "brainstorm.vote_added payload, project scope",
+      "description": "CV-474: closed payload of brainstorm.vote_added in project scope. Records one `BrainstormVote` record committed in the Vote phase. Semantic owner CW-114, Storage binding SP-474, oracles ATS-244. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "cast_at_utc",
+        "vote_id",
+        "proposal_id",
+        "participant_slot_id",
+        "attempt_id",
+        "position",
+        "confidence",
+        "hard_constraint_conflict_ids",
+        "vote_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "const": "brainstorm"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "cast_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the vote record was committed"
+        },
+        "vote_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the vote"
+        },
+        "proposal_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the proposal voted on"
+        },
+        "participant_slot_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the voter"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the voter's current attempt"
+        },
+        "position": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/vote_position",
+          "description": "support, oppose or abstain"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 to 1"
+        },
+        "hard_constraint_conflict_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "hard_constraints[] ids (CWR-027)"
+        },
+        "vote_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the vote record"
+        }
+      }
+    },
+    "brainstorm_vote_added_application": {
+      "$id": "pm.collaboration_event.brainstorm_vote_added.application.v1",
+      "title": "brainstorm.vote_added payload, application scope",
+      "description": "CV-474: closed payload of brainstorm.vote_added in application scope. Records one `BrainstormVote` record committed in the Vote phase. Semantic owner CW-114, Storage binding SP-474, oracles ATS-244. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "cast_at_utc",
+        "vote_id",
+        "proposal_id",
+        "participant_slot_id",
+        "attempt_id",
+        "position",
+        "confidence",
+        "hard_constraint_conflict_ids",
+        "vote_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "const": "brainstorm"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "cast_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the vote record was committed"
+        },
+        "vote_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the vote"
+        },
+        "proposal_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the proposal voted on"
+        },
+        "participant_slot_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the voter"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the voter's current attempt"
+        },
+        "position": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/vote_position",
+          "description": "support, oppose or abstain"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 to 1"
+        },
+        "hard_constraint_conflict_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "hard_constraints[] ids (CWR-027)"
+        },
+        "vote_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the vote record"
+        }
+      }
+    },
+    "brainstorm_plan_synthesized": {
+      "$id": "pm.collaboration_event.brainstorm_plan_synthesized.v1",
+      "title": "brainstorm.plan_synthesized payload, project scope",
+      "description": "CV-475: closed payload of brainstorm.plan_synthesized in project scope. Records the one Deep Plan a BrainStorm run produced, as the Plan owner created it. Semantic owner CW-115, Storage binding SP-475, oracles ATS-245. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "synthesized_at_utc",
+        "assistant_plan_id",
+        "plan_version",
+        "plan_hash",
+        "plan_create_receipt_ref",
+        "dissent_count",
+        "rejected_alternative_count",
+        "lead_count"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "const": "brainstorm"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "synthesized_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the binding was committed"
+        },
+        "assistant_plan_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the Plan owner's identity"
+        },
+        "plan_version": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "the created version"
+        },
+        "plan_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the Plan owner's version hash"
+        },
+        "plan_create_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the Plan owner's create receipt"
+        },
+        "tie_resolution": {
+          "enum": [
+            "coordinator"
+          ],
+          "description": "present when a tied vote was resolved by the coordinator"
+        },
+        "dissent_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "dissent entries preserved in the synthesis"
+        },
+        "rejected_alternative_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "rejected or disqualified alternatives listed"
+        },
+        "lead_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Wonderer leads listed with their dispositions"
+        }
+      }
+    },
+    "brainstorm_plan_synthesized_application": {
+      "$id": "pm.collaboration_event.brainstorm_plan_synthesized.application.v1",
+      "title": "brainstorm.plan_synthesized payload, application scope",
+      "description": "CV-475: closed payload of brainstorm.plan_synthesized in application scope. Records the one Deep Plan a BrainStorm run produced, as the Plan owner created it. Semantic owner CW-115, Storage binding SP-475, oracles ATS-245. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "synthesized_at_utc",
+        "assistant_plan_id",
+        "plan_version",
+        "plan_hash",
+        "plan_create_receipt_ref",
+        "dissent_count",
+        "rejected_alternative_count",
+        "lead_count"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "const": "brainstorm"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "synthesized_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the binding was committed"
+        },
+        "assistant_plan_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the Plan owner's identity"
+        },
+        "plan_version": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "the created version"
+        },
+        "plan_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the Plan owner's version hash"
+        },
+        "plan_create_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the Plan owner's create receipt"
+        },
+        "tie_resolution": {
+          "enum": [
+            "coordinator"
+          ],
+          "description": "present when a tied vote was resolved by the coordinator"
+        },
+        "dissent_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "dissent entries preserved in the synthesis"
+        },
+        "rejected_alternative_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "rejected or disqualified alternatives listed"
+        },
+        "lead_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Wonderer leads listed with their dispositions"
+        }
+      }
+    },
+    "review_finding_added": {
+      "$id": "pm.collaboration_event.review_finding_added.v1",
+      "title": "review.finding_added payload, project scope",
+      "description": "CV-476: closed payload of review.finding_added in project scope. Records one normalized `ReviewFinding` record committed in a Review run. Semantic owner CW-116, Storage binding SP-476, oracles ATS-246. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "added_at_utc",
+        "finding_id",
+        "finding_key",
+        "severity",
+        "originating_reviewer_ids",
+        "target_hashes",
+        "finding_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "const": "review"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "added_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the normalized record was committed"
+        },
+        "finding_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the finding"
+        },
+        "finding_key": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the normalization key"
+        },
+        "severity": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/review_severity",
+          "description": "section 7.5"
+        },
+        "originating_reviewer_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "every originating reviewer slot"
+        },
+        "target_hashes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+          },
+          "description": "the run's frozen pack hashes"
+        },
+        "finding_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the finding record"
+        }
+      }
+    },
+    "review_finding_added_application": {
+      "$id": "pm.collaboration_event.review_finding_added.application.v1",
+      "title": "review.finding_added payload, application scope",
+      "description": "CV-476: closed payload of review.finding_added in application scope. Records one normalized `ReviewFinding` record committed in a Review run. Semantic owner CW-116, Storage binding SP-476, oracles ATS-246. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "added_at_utc",
+        "finding_id",
+        "finding_key",
+        "severity",
+        "originating_reviewer_ids",
+        "target_hashes",
+        "finding_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "const": "review"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "added_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the normalized record was committed"
+        },
+        "finding_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the finding"
+        },
+        "finding_key": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the normalization key"
+        },
+        "severity": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/review_severity",
+          "description": "section 7.5"
+        },
+        "originating_reviewer_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "every originating reviewer slot"
+        },
+        "target_hashes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+          },
+          "description": "the run's frozen pack hashes"
+        },
+        "finding_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the finding record"
+        }
+      }
+    },
+    "review_finding_dispositioned": {
+      "$id": "pm.collaboration_event.review_finding_dispositioned.v1",
+      "title": "review.finding_dispositioned payload, project scope",
+      "description": "CV-477: closed payload of review.finding_dispositioned in project scope. Records the coordinator's or adjudicator's final disposition of one finding. Semantic owner CW-117, Storage binding SP-477, oracles ATS-247. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "dispositioned_at_utc",
+        "finding_id",
+        "finding_key",
+        "disposition",
+        "confidence",
+        "counted_vote_count",
+        "dissent_count",
+        "target_hashes",
+        "adjudicator_ref",
+        "finding_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "const": "review"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "dispositioned_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the final disposition was committed"
+        },
+        "finding_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the finding"
+        },
+        "finding_key": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "its normalization key"
+        },
+        "disposition": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/review_disposition",
+          "description": "section 7.5"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 to 1"
+        },
+        "counted_vote_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "corroborating votes from current completed attempts on the same pack"
+        },
+        "dissent_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "preserved dissent entries"
+        },
+        "target_hashes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+          },
+          "description": "the finding's frozen pack hashes"
+        },
+        "adjudicator_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the coordinator or adjudicator"
+        },
+        "finding_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the finding record"
+        }
+      }
+    },
+    "review_finding_dispositioned_application": {
+      "$id": "pm.collaboration_event.review_finding_dispositioned.application.v1",
+      "title": "review.finding_dispositioned payload, application scope",
+      "description": "CV-477: closed payload of review.finding_dispositioned in application scope. Records the coordinator's or adjudicator's final disposition of one finding. Semantic owner CW-117, Storage binding SP-477, oracles ATS-247. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "dispositioned_at_utc",
+        "finding_id",
+        "finding_key",
+        "disposition",
+        "confidence",
+        "counted_vote_count",
+        "dissent_count",
+        "target_hashes",
+        "adjudicator_ref",
+        "finding_record_ref"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "const": "review"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "dispositioned_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the final disposition was committed"
+        },
+        "finding_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "the finding"
+        },
+        "finding_key": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
+          "description": "its normalization key"
+        },
+        "disposition": {
+          "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/review_disposition",
+          "description": "section 7.5"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 to 1"
+        },
+        "counted_vote_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "corroborating votes from current completed attempts on the same pack"
+        },
+        "dissent_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "preserved dissent entries"
+        },
+        "target_hashes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+          },
+          "description": "the finding's frozen pack hashes"
+        },
+        "adjudicator_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the coordinator or adjudicator"
+        },
+        "finding_record_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the finding record"
+        }
+      }
+    },
+    "review_artifact_finalized": {
+      "$id": "pm.collaboration_event.review_artifact_finalized.v1",
+      "title": "review.artifact_finalized payload, project scope",
+      "description": "CV-478: closed payload of review.artifact_finalized in project scope. Records the publication of a Review run's one versioned, read-only Review artifact. Semantic owner CW-118, Storage binding SP-478, oracles ATS-248. Optional fields are omitted, never null. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "finalized_at_utc",
+        "artifact_ref",
+        "artifact_version_ref",
+        "target_pack_ref",
+        "target_hashes",
+        "requested_reviewer_count",
+        "completed_reviewer_count",
+        "failed_reviewer_count",
+        "single_reviewer",
+        "partial_coverage_accepted",
+        "stale_target_accepted",
+        "confirmed_count",
+        "rejected_count",
+        "duplicate_count",
+        "uncertain_count"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "const": "review"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+        },
+        "finalized_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the finalization was committed"
+        },
+        "artifact_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the Review artifact"
+        },
+        "artifact_version_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "its finalized version"
+        },
+        "target_pack_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the frozen ReviewTargetPack"
+        },
+        "target_hashes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+          },
+          "description": "its target hashes"
+        },
+        "requested_reviewer_count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "reviewers configured"
+        },
+        "completed_reviewer_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "reviewers whose pass completed"
+        },
+        "failed_reviewer_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "reviewers whose pass did not complete"
+        },
+        "single_reviewer": {
+          "type": "boolean",
+          "description": "true when one reviewer was configured: a single-pass result"
+        },
+        "partial_coverage_accepted": {
+          "type": "boolean",
+          "description": "true when fewer passes completed and the user accepted it"
+        },
+        "stale_target_accepted": {
+          "type": "boolean",
+          "description": "true when finished on a stale pack (finish_stale)"
+        },
+        "confirmed_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "findings disposed confirmed"
+        },
+        "rejected_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "findings disposed rejected"
+        },
+        "duplicate_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "findings disposed duplicate"
+        },
+        "uncertain_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "findings disposed uncertain"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "single_reviewer": {
+                "const": true
+              }
+            },
+            "required": [
+              "single_reviewer"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_reviewer_count": {
+                "const": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "requested_reviewer_count": {
+                "minimum": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    "review_artifact_finalized_application": {
+      "$id": "pm.collaboration_event.review_artifact_finalized.application.v1",
+      "title": "review.artifact_finalized payload, application scope",
+      "description": "CV-478: closed payload of review.artifact_finalized in application scope. Records the publication of a Review run's one versioned, read-only Review artifact. Semantic owner CW-118, Storage binding SP-478, oracles ATS-248. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "collaboration_id",
+        "collaboration_run_id",
+        "kind",
+        "definition_revision",
+        "currentness_hash",
+        "idempotency_key",
+        "finalized_at_utc",
+        "artifact_ref",
+        "artifact_version_ref",
+        "target_pack_ref",
+        "target_hashes",
+        "requested_reviewer_count",
+        "completed_reviewer_count",
+        "failed_reviewer_count",
+        "single_reviewer",
+        "partial_coverage_accepted",
+        "stale_target_accepted",
+        "confirmed_count",
+        "rejected_count",
+        "duplicate_count",
+        "uncertain_count"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "const": "application"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "collaboration_run_id": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "const": "review"
+        },
+        "definition_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+        },
+        "finalized_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
+          "description": "when the finalization was committed"
+        },
+        "artifact_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the Review artifact"
+        },
+        "artifact_version_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "its finalized version"
+        },
+        "target_pack_ref": {
+          "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
+          "description": "the frozen ReviewTargetPack"
+        },
+        "target_hashes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/sha256_hex"
+          },
+          "description": "its target hashes"
+        },
+        "requested_reviewer_count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "reviewers configured"
+        },
+        "completed_reviewer_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "reviewers whose pass completed"
+        },
+        "failed_reviewer_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "reviewers whose pass did not complete"
+        },
+        "single_reviewer": {
+          "type": "boolean",
+          "description": "true when one reviewer was configured: a single-pass result"
+        },
+        "partial_coverage_accepted": {
+          "type": "boolean",
+          "description": "true when fewer passes completed and the user accepted it"
+        },
+        "stale_target_accepted": {
+          "type": "boolean",
+          "description": "true when finished on a stale pack (finish_stale)"
+        },
+        "confirmed_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "findings disposed confirmed"
+        },
+        "rejected_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "findings disposed rejected"
+        },
+        "duplicate_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "findings disposed duplicate"
+        },
+        "uncertain_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "findings disposed uncertain"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "single_reviewer": {
+                "const": true
+              }
+            },
+            "required": [
+              "single_reviewer"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_reviewer_count": {
+                "const": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "requested_reviewer_count": {
+                "minimum": 2
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
