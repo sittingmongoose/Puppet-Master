@@ -8,7 +8,7 @@
  },
  "assessed_tree": {
   "branch": "plans/ea-b1-seal-blockers-20261104",
-  "commit": "43d1ab55553489dad8d98fd01aa9a256e621f6cb"
+  "commit": "af9bff39aed195c0e8b05d909e4143fb3746a6ef"
  },
  "registry": {
   "path": "Plans/event_family_registry.json",
@@ -23,12 +23,12 @@
   "CONFLICT": "The only exact contract conflicts with current owner precedence, and no current disposition resolves it."
  },
  "status_counts": {
-  "PASS": 57,
-  "PARTIAL": 3
+  "PASS": 59,
+  "PARTIAL": 1
  },
  "native_execution": "NOT_RUN",
  "static_suites_run_by_grader": true,
- "note": "Self-grade by the drafter (lane DS); an independent grader and the Sol and Astra reviewers check it later. The three seal-family rows are the rows of reports/event-authority-20261104/depth-b1-seal-families.json. The two August rows are graded on the Step 8 rubric at this head from the exact-quote citations the step 5 ledger write recorded; ledger FAIL/UNKNOWN cells are PARTIAL here. Membership is PASS for all five: every family is registered.",
+ "note": "Self-grade by the drafter (lane DS, second pass DS-P2); an independent grader and the Sol and Astra reviewers check it later. The three seal-family rows are the rows of reports/event-authority-20261104/depth-b1-seal-families.json, unchanged; every quote of theirs was re-checked at this commit and still holds. The two August rows are rebuilt from the exact-quote cell evidence of reports/event-authority-20261104/ds-p2-august-regrade-application.json at this commit; ledger FAIL/UNKNOWN cells are PARTIAL here. Membership is PASS for all five: every family is registered.",
  "rows": [
   {
    "event_type": "context.compaction.completed",
@@ -2311,24 +2311,26 @@
    "family_revision": "2.0.0",
    "registry_pointer": "#/families/37",
    "disposition": "CURRENT_WRITER",
-   "pass_count": 10,
-   "normative_depth_complete": false,
+   "pass_count": 12,
+   "normative_depth_complete": true,
    "native_execution": "NOT_RUN",
    "current_owner_units": [
-    "F3-515",
     "CV-361",
-    "SP-273",
-    "SP-330",
+    "DL-045",
+    "DL-076",
     "DL-180",
     "DL-188",
-    "DL-076",
-    "SP-278"
+    "F3-515",
+    "SP-273",
+    "SP-278",
+    "SP-330",
+    "SP-400"
    ],
    "remaining_gaps": [
-    "SP-330: author the v2 transaction-slot and operation-receipt schema (SP-273 amendment: \"an open item of SP-330\"); until then no native v2 writer is admitted (producer).",
-    "SP-273: re-freeze and repin the external frozen suites (v4 manifest 60f1c8ad..., full-value v3 7ab4fb00...) under the nine-field token of DL-076 (oracles)."
+    "Native installation of the Home4 4.0.0 slot and receipt family edges, readers, pending resolver and owner activation, and every native oracle pair, remain NOT_RUN (SP-400, SP-273).",
+    "The full-value suite (7ab4fb00...) is not re-frozen; SP-273's 2026-11-04 amendment supersedes its pre-DL-076 stored-token copies instead."
    ],
-   "grading_batch": "DS-B1-selfgrade",
+   "grading_batch": "DS-P2-selfgrade",
    "cells": {
     "membership_version": {
      "status": "PASS",
@@ -2337,47 +2339,47 @@
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
-       "unit": null,
        "line_start": 2795,
        "line_end": 2795,
        "quote": "\"event_type\": \"workspace.layout_changed\",",
        "excerpt_sha256": "151e56879d5dce0cde2d1ef6db8245b80ae4688e4f4fdaf3f689550874e9f139",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/event_family_registry.json",
-       "unit": null,
        "line_start": 2794,
        "line_end": 2794,
        "quote": "\"family_revision\": \"2.0.0\",",
        "excerpt_sha256": "111cd773b758e128c7f05e5c41e27c77e807384fd855eaa1cc7533244e50d7a0",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
-       "unit": null,
        "line_start": 3,
        "line_end": 3,
        "quote": "\"$id\": \"https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0\",",
        "excerpt_sha256": "c0d46c0bf7d877e7128cc46275482ca04358f757d313731299acbaed4d874b8a",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
-       "unit": null,
        "line_start": 43,
        "line_end": 43,
        "quote": "\"const\": \"2.0.0\"",
        "excerpt_sha256": "f206a78b368b345c07bb0096277e6754e4c89c3f0d5dc5e3dfb56ee190b33edf",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "owner_doc": {
      "status": "PASS",
@@ -2386,78 +2388,114 @@
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
-       "unit": null,
        "line_start": 2797,
        "line_end": 2797,
        "quote": "\"semantic_owner_doc\": \"Plans/FinalGUISpec.md#f3-515---settled-interaction-event-and-persistence-boundary\",",
        "excerpt_sha256": "5afcbc6a97db2691a9b25a4c959a8b038bc19e1364442ae24087bd479eae756e",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/event_family_registry.json",
-       "unit": null,
        "line_start": 2798,
        "line_end": 2798,
        "quote": "\"payload_owner_doc\": \"Plans/Contracts_V0.md#CV-361\",",
        "excerpt_sha256": "e351d378bfd6a9b77f37fd6af4b83a00120de5bb905204790d633fc9c86399a8",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/Contracts_V0.md",
-       "unit": null,
        "line_start": 23690,
        "line_end": 23690,
        "quote": "### CV-361 - The workspace.layout_changed 2.0.0 Payload",
        "excerpt_sha256": "0931823bae0267c6935311c56a4a1b1714cbcaa423838909612675d7d695e8a3",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "producer": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "DEPTH GAP found by the 2026-11-04 refresh (was PASS against the 1.1.0-era text). The writer is named (SP-273), but SP-273's 2026-10-09 amendment leaves the v2 writer's slot and receipt schema open in SP-330, and SP-330 says it is not written and no native v2 writer is admitted through those families until it exists, while the registry admits only 2.0.0 appends. Closable under DL-045 (workspace.layout_changed is in its 285 names): author the v2 slot and receipt schema in SP-330. Matches D1b's 2026-11-04 grade (PARTIAL).",
+     "finding": "Writer home.workspace_layout_commit.v1 (SP-273) with its ordering: validate, prepared slot, canonical write and readback, prepared receipt, append, terminal receipt and slot release, publication; SP-286/CV-339 writer 2.0.0 and resolve_full_value.v1 adopted. SP-330's open v2 slot/receipt item is closed by SP-400 (Home4 4.0.0, newly authored under DL-045, v2 layout and CV-361 by $ref). Native installation NOT_RUN.",
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21843,
-       "line_end": 21843,
+       "line_start": 21845,
+       "line_end": 21845,
        "quote": "The current writer is `home.workspace_layout_commit.v1@3.0.0`",
        "excerpt_sha256": "8c7e4da591c7c4b04c8891c3e4d7a93f9d338e13e76e827d99966b8f9a65a429",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21825,
-       "line_end": 21825,
-       "quote": "the v2 writer's slot and receipt schema is an open item of SP-330",
-       "excerpt_sha256": "490ad2373e2fb1ccee582818e4e0f2e0fdcc180bca7829033cbc1b226fcd870c",
-       "quote_check": "exact"
+       "line_start": 21872,
+       "line_end": 21872,
+       "quote": "Append `workspace.layout_changed` through normal schema/redaction/scope/dedupe admission using those exact frozen bytes.",
+       "excerpt_sha256": "1439f0af034c54d838b6d5f15b01a14f369186c871ead5feef593ac73e57bf89",
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 27503,
-       "line_end": 27503,
-       "quote": "The successor slot and receipt schema for v2 writes is not written in this addendum",
-       "excerpt_sha256": "d9b10251b537e70302c2c678646e7474b14413c14bb80be041eefb5368f2cab4",
-       "quote_check": "exact"
+       "line_start": 21975,
+       "line_end": 21975,
+       "quote": "Require SP-286/CV-339's actual strict shared receipt writer 2.0.0",
+       "excerpt_sha256": "ce6d6d62d08f2ff16262e320cee0f71afbd239aadbb5805c5f21446dbf60615e",
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 21829,
+       "line_end": 21829,
+       "quote": "Amended 2026-11-04 (DL-045): SP-400 closes the SP-330 open item named above.",
+       "excerpt_sha256": "1c678a817b38ffd542fb9d00e7f372566eb3dd3f1924dedea8181d9280f8e7d2",
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27512,
+       "line_end": 27512,
+       "quote": "Amended 2026-11-04 (DL-045): SP-400 writes that successor",
+       "excerpt_sha256": "494171c80241fbbbfa08c9d0157e38e2dc6f22826ff14f7d43fa6bb84a1d7693",
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 29526,
+       "line_end": 29526,
+       "quote": "v2 Home layout writes use the Home4 slot and receipt contract Plans/home_layout_v2_slot_receipt.schema.json",
+       "excerpt_sha256": "b891051e0ed04ed8f8f072bf00670a960a0bb2a9deddbc010d015b1e372f4004",
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/home_layout_v2_slot_receipt.schema.json",
+       "line_start": 3,
+       "line_end": 3,
+       "quote": "\"$id\": \"https://puppetmaster.local/schemas/home_layout_v2_slot_receipt/4.0.0\",",
+       "excerpt_sha256": "ae815b2eb62f7d67a8f865b7692a7fdc16177970b10aa50cc924be270552525c",
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PARTIAL"
      },
-     "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change": "upgraded",
+     "change_reason": "SP-400 (2e5801d7df) writes the v2 slot and receipt contract that SP-330 required."
     },
     "closed_payload_schema": {
      "status": "PASS",
@@ -2466,29 +2504,29 @@
      "evidence": [
       {
        "path": "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
-       "unit": null,
        "line_start": 7,
        "line_end": 7,
        "quote": "\"additionalProperties\": false,",
        "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/Contracts_V0.md",
-       "unit": null,
        "line_start": 23690,
        "line_end": 23690,
        "quote": "### CV-361 - The workspace.layout_changed 2.0.0 Payload",
        "excerpt_sha256": "0931823bae0267c6935311c56a4a1b1714cbcaa423838909612675d7d695e8a3",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "scope_identity": {
      "status": "PASS",
@@ -2497,47 +2535,47 @@
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
-       "unit": null,
        "line_start": 2796,
        "line_end": 2796,
        "quote": "\"scope_policy\": \"project_only\",",
        "excerpt_sha256": "8472a5d51eb53462551949130f1f8bd4f09280814f6c7f854cccadb4de30bc95",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21845,
-       "line_end": 21845,
+       "line_start": 21847,
+       "line_end": 21847,
        "quote": "Define `operation_digest = lowerhex(SHA256(RFC8785([storage_instance_id,project_id,workspace_tab_id,command_instance_id])))`",
        "excerpt_sha256": "84f641c3d7a4873b8b0e26c1f77f0b8a8b79cbe3af0a79e9095e7f52ed33c916",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21849,
-       "line_end": 21849,
+       "line_start": 21851,
+       "line_end": 21851,
        "quote": "Envelope project_id equals payload project_id and the actual layout project; scope_kind=project.",
        "excerpt_sha256": "3123f88d1727a9bf66f7d79d238343756f35af6576cfc616b86b1f790f1607b3",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
        "line_start": 21825,
        "line_end": 21825,
-       "quote": "the v2 writer's slot and receipt schema is an open item of SP-330",
+       "quote": "The custody below (transaction slot, operation receipt, reader checkpoint), the transaction, crash convergence, retention and read rules carry over to v2 writes",
        "excerpt_sha256": "490ad2373e2fb1ccee582818e4e0f2e0fdcc180bca7829033cbc1b226fcd870c",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "replay_idempotency": {
      "status": "PASS",
@@ -2546,38 +2584,38 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21847,
-       "line_end": 21847,
+       "line_start": 21849,
+       "line_end": 21849,
        "quote": "Keep the actual command idempotency key and the NEW Home domain-request RFC8785 binding digest request_sha256 in the operation receipt.",
        "excerpt_sha256": "c119ab2acb384b7043ed036f767eefbb5777700b6853090e248f42c928d99852",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21875,
-       "line_end": 21875,
-       "quote": "Crash before candidate write resumes or cancels only the same admitted operation; it cannot invent a new command.",
-       "excerpt_sha256": "02e5035a3fa392dd63e266cdd7a90d22f5d58d44ffd25066e8206d3c93d30280",
-       "quote_check": "exact"
-      },
-      {
-       "path": "Plans/storage-plan.md",
-       "unit": null,
        "line_start": 21877,
        "line_end": 21877,
+       "quote": "Crash before candidate write resumes or cancels only the same admitted operation; it cannot invent a new command.",
+       "excerpt_sha256": "02e5035a3fa392dd63e266cdd7a90d22f5d58d44ffd25066e8206d3c93d30280",
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 21879,
+       "line_end": 21879,
        "quote": "A missing event for an old layout is never enough to create one.",
        "excerpt_sha256": "b1439c433e27273b6ab71dd2cc5a5beacbba91549738df3a2a2f9e9faa74382f",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "retention": {
      "status": "PASS",
@@ -2586,38 +2624,38 @@
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
-       "unit": null,
        "line_start": 2832,
        "line_end": 2832,
        "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
        "excerpt_sha256": "218a403b240aa548ad151a5d5401bf2a73e2a57cbfe0c0ceb2f649d6f0ebc652",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21897,
-       "line_end": 21897,
+       "line_start": 21899,
+       "line_end": 21899,
        "quote": "The event remains indefinite metadata under its exact registered policy.",
        "excerpt_sha256": "76b2aa5be4e5dc607a69f30892d1df614bc8453ea32076be8fa39697b07ac6f4",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21857,
-       "line_end": 21857,
+       "line_start": 21859,
+       "line_end": 21859,
        "quote": "`home_layout_event_reader_checkpoint`, key `home_layout_event_reader_checkpoint.v1:{storage_instance_id}:{project_id}:{workspace_tab_id}`",
        "excerpt_sha256": "4b1a7623a9bf60a20aa144c8d0c8760bb60dc62bd5646c5f5059abf6cbb8b5c0",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -2626,38 +2664,38 @@
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
-       "unit": null,
        "line_start": 2815,
        "line_end": 2815,
        "quote": "\"mode\": \"reject_unhandled_secrets\",",
        "excerpt_sha256": "91c21aae18a31744144bca6d3504227098463bc391436ab5b9042a5b03d04763",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21901,
-       "line_end": 21901,
+       "line_start": 21903,
+       "line_end": 21903,
        "quote": "Apply current project/workspace access, deletion tombstones, quarantine and backup custody before every ref resolution and disclosure.",
        "excerpt_sha256": "69d65b3b032e7932f3e26850c5c36973f19465d6cc2734c7ef1ff9ab374592ba",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21856,
-       "line_end": 21856,
+       "line_start": 21858,
+       "line_end": 21858,
        "quote": "`home_layout_operation_receipt`, key `home_layout_operation_receipt.v1:{project_id}:{workspace_tab_id}:{operation_digest}`",
        "excerpt_sha256": "40c1e748af8fee4b02fb44cd7243a423bd8e75132c65d283d4cf27fcc719dd52",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "transitions": {
      "status": "PASS",
@@ -2666,29 +2704,29 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 27503,
-       "line_end": 27503,
-       "quote": "The successor slot and receipt schema for v2 writes is not written in this addendum",
-       "excerpt_sha256": "d9b10251b537e70302c2c678646e7474b14413c14bb80be041eefb5368f2cab4",
-       "quote_check": "exact"
+       "line_start": 27512,
+       "line_end": 27512,
+       "quote": "**Transaction and receipt.** Every committed structural change is one admitted command",
+       "excerpt_sha256": "494171c80241fbbbfa08c9d0157e38e2dc6f22826ff14f7d43fa6bb84a1d7693",
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/Contracts_V0.md",
-       "unit": null,
        "line_start": 23706,
        "line_end": 23706,
        "quote": "Every committed structural change appends exactly one workspace.layout_changed",
        "excerpt_sha256": "66d8412446c79fdf8dbbd6aa1b834cf4cdae1ed3656019f3291ac4f4ddedefb5",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "consumers_checkpoints": {
      "status": "PASS",
@@ -2697,83 +2735,83 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21889,
-       "line_end": 21889,
-       "quote": "Define NEW `home.workspace_layout_event_reader.v1@1.0.0` over existing `event_record_index.v2`",
-       "excerpt_sha256": "23fd74ea1d3131f688ef596d1c6d574c2476c7e6040b3d1a0ff4ab1c6d74102b",
-       "quote_check": "exact"
-      },
-      {
-       "path": "Plans/storage-plan.md",
-       "unit": null,
        "line_start": 21891,
        "line_end": 21891,
-       "quote": "Three NEW read consumers share the verified token: `home.workspace_layout_home_view.v1`, `home.workspace_layout_editor_routing.v1`, and `home.workspace_layout_t",
-       "excerpt_sha256": "e38f302d9a027eccc0044b6aa4c70ba2720e885d69f914eed228423374504f91",
-       "quote_check": "exact"
+       "quote": "Define NEW `home.workspace_layout_event_reader.v1@1.0.0` over existing `event_record_index.v2`",
+       "excerpt_sha256": "23fd74ea1d3131f688ef596d1c6d574c2476c7e6040b3d1a0ff4ab1c6d74102b",
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21857,
-       "line_end": 21857,
-       "quote": "`home_layout_event_reader_checkpoint`, key `home_layout_event_reader_checkpoint.v1:{storage_instance_id}:{project_id}:{workspace_tab_id}`",
-       "excerpt_sha256": "4b1a7623a9bf60a20aa144c8d0c8760bb60dc62bd5646c5f5059abf6cbb8b5c0",
-       "quote_check": "exact"
-      },
-      {
-       "path": "Plans/storage-plan.md",
-       "unit": null,
        "line_start": 21893,
        "line_end": 21893,
+       "quote": "Three NEW read consumers share the verified token: `home.workspace_layout_home_view.v1`, `home.workspace_layout_editor_routing.v1`, and `home.workspace_layout_terminal_presentation.v1`",
+       "excerpt_sha256": "e38f302d9a027eccc0044b6aa4c70ba2720e885d69f914eed228423374504f91",
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 21859,
+       "line_end": 21859,
+       "quote": "`home_layout_event_reader_checkpoint`, key `home_layout_event_reader_checkpoint.v1:{storage_instance_id}:{project_id}:{workspace_tab_id}`",
+       "excerpt_sha256": "4b1a7623a9bf60a20aa144c8d0c8760bb60dc62bd5646c5f5059abf6cbb8b5c0",
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 21895,
+       "line_end": 21895,
        "quote": "In one redb transaction it writes only the filtered checkpoint",
        "excerpt_sha256": "d4d212e21f2e17d36fb5d1ed7aa5db3cda077ded9460737823bf70a8415b5494",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21936,
-       "line_end": 21936,
+       "line_start": 21938,
+       "line_end": 21938,
        "quote": "Adopt actual canonical SP-278, not an opaque generic-index pointer.",
        "excerpt_sha256": "55ce2fc0be3fd3f71dd47fde0565227c0ee40ff61a9272289a23e84250880593",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21942,
-       "line_end": 21942,
+       "line_start": 21944,
+       "line_end": 21944,
        "quote": "stores the nine-field durable read token that SP-278 defines on 2026-09-24; `redb_snapshot_id` is not stored.",
        "excerpt_sha256": "de18a33f14208ec37cec7dfcb9f97408b8ee1840acaa829bcac751252145b8ca",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21899,
-       "line_end": 21899,
+       "line_start": 21901,
+       "line_end": 21901,
        "quote": "The filtered checkpoint now materializes RP-PROJECTION-3GEN",
        "excerpt_sha256": "c3a0f306a24c013dedba7fa0d3a30eb7adb9c2c1d43cff163e6954ede6bca1a0",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
        "line_start": 21825,
        "line_end": 21825,
-       "quote": "the v2 writer's slot and receipt schema is an open item of SP-330",
+       "quote": "The custody below (transaction slot, operation receipt, reader checkpoint), the transaction, crash convergence, retention and read rules carry over to v2 writes",
        "excerpt_sha256": "490ad2373e2fb1ccee582818e4e0f2e0fdcc180bca7829033cbc1b226fcd870c",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "compatibility_withdrawal": {
      "status": "PASS",
@@ -2782,80 +2820,108 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21903,
-       "line_end": 21903,
-       "quote": "Payload 1.0.0 history is read-only compatibility using actual frozen source contracts where available",
-       "excerpt_sha256": "d2c7c6deef78f8d867ca069d902ba826ed0d1f896211da90a629518d1b3149f6",
-       "quote_check": "exact"
-      },
-      {
-       "path": "Plans/storage-plan.md",
-       "unit": null,
        "line_start": 21905,
        "line_end": 21905,
-       "quote": "Withdrawing a read consumer invalidates only its token/publication.",
-       "excerpt_sha256": "18e40f04bb56292bf09a1c5af235830b6ea1691e7973d2fac3e7a983b565934a",
-       "quote_check": "exact"
+       "quote": "Payload 1.0.0 history is read-only compatibility using actual frozen source contracts where available",
+       "excerpt_sha256": "d2c7c6deef78f8d867ca069d902ba826ed0d1f896211da90a629518d1b3149f6",
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
+       "line_start": 21907,
+       "line_end": 21907,
+       "quote": "Withdrawing a read consumer invalidates only its token/publication.",
+       "excerpt_sha256": "18e40f04bb56292bf09a1c5af235830b6ea1691e7973d2fac3e7a983b565934a",
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/storage-plan.md",
        "line_start": 21825,
        "line_end": 21825,
-       "quote": "the v2 writer's slot and receipt schema is an open item of SP-330",
+       "quote": "whose compatibility reader keeps 1.1.0 events readable",
        "excerpt_sha256": "490ad2373e2fb1ccee582818e4e0f2e0fdcc180bca7829033cbc1b226fcd870c",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "positive_negative_oracles": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Cannot be confirmed PASS at the 2026-11-04 refresh (was PASS against the 1.1.0-era text). In-repo oracles exist and the PM7 checker validates the workspace event fixtures against 2.0.0, but SP-273's oracle set pins an external frozen suite (v4 manifest 60f1c8ad...) that the 2026-09-24 Step 8 assessment found stores redb_snapshot_id in the persisted reader-checkpoint token, contradicting DL-076; that suite is not reachable from this grader. Closable under DL-045: re-freeze and repin the suites under the nine-field token. Matches D1b's 2026-11-04 grade (PARTIAL).",
+     "finding": "SP-273's pinned suite is re-frozen as v5 under DL-076 (manifest 62823e0a..., 0 stored redb_snapshot_id, all cases kept) and repinned; SP-273 records the full-value suite's stored-token copies as superseded. ATS-040's 2.0.0 payload fixtures pass the PM7 checker; SP-400's Home4 fixtures (5 valid, 12 schema, 14 joined-value negatives) pass scripts/pm_home_layout_v2_slot_receipt.py. Native pairs NOT_RUN.",
      "evidence": [
       {
        "path": "Plans/Automated_Testing_System.md",
-       "unit": null,
        "line_start": 3914,
        "line_end": 3914,
        "quote": "valid workspace-event fixtures satisfy the 2.0.0 payload",
        "excerpt_sha256": "d013736c395fac4dec18125e0e2419e0f89594e4bae270c95d9e50c4e4a60953",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/home_layout_event_contract_fixtures.json",
-       "unit": null,
        "line_start": 6,
        "line_end": 6,
-       "quote": "\"path\": \"/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v4/manifest.json\",",
-       "excerpt_sha256": "d4f65ed6e1e374b533af45f3937fb6a65fa448d3615832d6994f2459be2ac0b3",
-       "quote_check": "exact"
+       "quote": "\"path\": \"/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v5/manifest.json\",",
+       "excerpt_sha256": "5b9ff0d675d8e56e175896db6e606eb65334ea54fec7d542b7539ab701f560ca",
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 21942,
-       "line_end": 21942,
+       "line_start": 22027,
+       "line_end": 22027,
+       "quote": "Amended 2026-11-04 (DL-076): the frozen joined subject is re-frozen as v5",
+       "excerpt_sha256": "91869508a2ee7aecf80f62342873b80942c4e83f289abc52b142aff5a5a9246d",
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 21944,
+       "line_end": 21944,
        "quote": "stores the nine-field durable read token that SP-278 defines on 2026-09-24; `redb_snapshot_id` is not stored.",
        "excerpt_sha256": "de18a33f14208ec37cec7dfcb9f97408b8ee1840acaa829bcac751252145b8ca",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 29516,
+       "line_end": 29516,
+       "quote": "**Static oracles.** `Plans/home_layout_v2_slot_receipt_fixtures.json` holds 5 valid values",
+       "excerpt_sha256": "35c98d395e02d61c863eb76bd6c0346101f04357a91002b53e9aa5eb98f11839",
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/home_layout_v2_slot_receipt_fixtures.json",
+       "line_start": 6,
+       "line_end": 6,
+       "quote": "\"checker\": \"python3 scripts/pm_home_layout_v2_slot_receipt.py\",",
+       "excerpt_sha256": "fd0d5e0ae16bc3f27ef23fec79677f03c06640d72a68dca0c50dbb97572a410a",
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PARTIAL"
      },
-     "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change": "upgraded",
+     "change_reason": "The pinned suite is re-frozen under DL-076 (bef4342ecc) and SP-400 adds Home4 fixtures with a passing checker."
     }
-   }
+   },
+   "notes": "Re-graded by lane DS-P2 at af9bff39ae: producer and oracles upgraded on SP-400 and the DL-076 suite re-freeze; the ledger row says the same (ds-p2-august-regrade-application.json)."
   },
   {
    "event_type": "terminal.workgroup_moved",
@@ -2876,9 +2942,9 @@
     "SP-278"
    ],
    "remaining_gaps": [
-    "SP-319: author the closed read-result companion and paired static fixtures for the historical read only (oracles)."
+    "OWNER QUESTION (lane DS-P2, see DS.md): which oracle set SP-319 requires for this withdrawn family whose producer never activated; until answered, the read-result companion and paired fixtures are not written (positive_negative_oracles)."
    ],
-   "grading_batch": "DS-B1-selfgrade",
+   "grading_batch": "DS-P2-selfgrade",
    "cells": {
     "membership_version": {
      "status": "PASS",
@@ -2887,29 +2953,29 @@
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
-       "unit": null,
        "line_start": 2839,
        "line_end": 2839,
        "quote": "\"event_type\": \"terminal.workgroup_moved\",",
        "excerpt_sha256": "065a95725d771fe75b27cadbdec977d1c9b8621239ce2af4fe7375e10b98aecd",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/event_payloads/terminal_workgroup_moved.schema.json",
-       "unit": null,
        "line_start": 3,
        "line_end": 3,
        "quote": "\"$id\": \"https://puppetmaster.local/schemas/event_payloads/terminal_workgroup_moved/1.0.0\",",
        "excerpt_sha256": "9786a9ccb852760ebaa157879a5573af380e35981674e723f4ea0f057f872173",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "owner_doc": {
      "status": "PASS",
@@ -2918,38 +2984,38 @@
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
-       "unit": null,
        "line_start": 2841,
        "line_end": 2841,
        "quote": "\"semantic_owner_doc\": \"Plans/Section15_MVP_Promoted_Features_Spec.md#pmconcept7-home-workspace-terminal-reconciliation\",",
        "excerpt_sha256": "4340250800fa2ec7268dd1939c0df599f41de1a22f400684cee4f1bd48b4eacf",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-       "unit": null,
        "line_start": 12593,
        "line_end": 12593,
        "quote": "### SMPFS-170 - Terminal workgroup moved original operation and historical consumer",
        "excerpt_sha256": "3940d27c22c844a27370c41c38ea6468001b83f70c724e3fec216f4d2572eab2",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 27051,
-       "line_end": 27051,
+       "line_start": 27060,
+       "line_end": 27060,
        "quote": "### SP-319 - Terminal workgroup moved passive source and checkpoint disposition",
        "excerpt_sha256": "35745e7aece14a8a1136efc4877e86df17067c9415aadd8e33c02ddabbb97888",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "producer": {
      "status": "PASS",
@@ -2958,29 +3024,29 @@
      "evidence": [
       {
        "path": "Plans/Contracts_V0.md",
-       "unit": null,
        "line_start": 23713,
        "line_end": 23713,
        "quote": "No producer writes terminal.workgroup_moved; recorded events stay readable at 1.0.0",
        "excerpt_sha256": "9ef4794e1163fe65cc90ebd59ece6521dcbfcb9388f28039b8f01a7b0904fda7",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-       "unit": null,
        "line_start": 12604,
        "line_end": 12604,
        "quote": "terminal.workgroup_move_commit.v1 never activates and the passive reader admits no new disclosure; no operation was",
        "excerpt_sha256": "53f9f4d06803c34abbe81b40c63416ef341feef0baba1adbc08e419258a9f277",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "closed_payload_schema": {
      "status": "PASS",
@@ -2989,20 +3055,20 @@
      "evidence": [
       {
        "path": "Plans/event_payloads/terminal_workgroup_moved.schema.json",
-       "unit": null,
        "line_start": 6,
        "line_end": 6,
        "quote": "\"additionalProperties\": false,",
        "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "scope_identity": {
      "status": "PASS",
@@ -3011,29 +3077,29 @@
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
-       "unit": null,
        "line_start": 2840,
        "line_end": 2840,
        "quote": "\"scope_policy\": \"project_only\",",
        "excerpt_sha256": "8472a5d51eb53462551949130f1f8bd4f09280814f6c7f854cccadb4de30bc95",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 26916,
-       "line_end": 26916,
+       "line_start": 26925,
+       "line_end": 26925,
        "quote": "Storage instance, Project, workgroup, exact event ID, original global sequence and",
        "excerpt_sha256": "82ed41301c48015b7d9037be667f676d23f851ef094d7beb8f8f36e22c70bc32",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "replay_idempotency": {
      "status": "PASS",
@@ -3042,29 +3108,29 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 26919,
-       "line_end": 26919,
+       "line_start": 26928,
+       "line_end": 26928,
        "quote": "has no pagination, durable cursor, acknowledgement or reconstructed live state.",
        "excerpt_sha256": "91fc9398ed7b4620ab296affc13ae463a4e636fad23377e373ee44b82d449c55",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 26921,
-       "line_end": 26921,
+       "line_start": 26930,
+       "line_end": 26930,
        "quote": "this owner assigns only a fresh one-event historical observation with zero durable",
        "excerpt_sha256": "fa24510cc18045ca15b110ca2c42091d29ac9d36ca5611061d1d170214302b12",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "retention": {
      "status": "PASS",
@@ -3073,29 +3139,29 @@
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
-       "unit": null,
        "line_start": 2870,
        "line_end": 2870,
        "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
        "excerpt_sha256": "218a403b240aa548ad151a5d5401bf2a73e2a57cbfe0c0ceb2f649d6f0ebc652",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 27021,
-       "line_end": 27021,
+       "line_start": 27030,
+       "line_end": 27030,
        "quote": "The event retains `RP-AUTHORITY-INDEFINITE@1.0.0`; source/index/ref and original",
        "excerpt_sha256": "bbb20b754aa01ea6f1fcb4c5b7972c7249401454c24c7e98c113a7ec4ae1fea6",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -3104,29 +3170,29 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 27003,
-       "line_end": 27003,
+       "line_start": 27012,
+       "line_end": 27012,
        "quote": "Current Project/access/deletion/maintenance permission must authorize every original",
        "excerpt_sha256": "08618e22ef1873a4455cbf32d870e406a2c4feb3d53885ee37a3f02c6bdc1d90",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 27009,
-       "line_end": 27009,
+       "line_start": 27018,
+       "line_end": 27018,
        "quote": "The existing `reject_unhandled_secrets` rule remains. A retained event never grants",
        "excerpt_sha256": "750a756c78f9ff9937d56713c0694b36a475e24a1c6d56acd3502f2c494ef3b1",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "transitions": {
      "status": "PASS",
@@ -3135,29 +3201,29 @@
      "evidence": [
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-       "unit": null,
        "line_start": 12605,
        "line_end": 12605,
        "quote": "ever admitted, and an event already recorded, if any, keeps its exact 1.0.0 interpretation and",
        "excerpt_sha256": "03c8156505e604db4254cfe20caf6ede1c004f810103ed79e4e156f2470a42fa",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/Contracts_V0.md",
-       "unit": null,
        "line_start": 23713,
        "line_end": 23713,
        "quote": "No producer writes terminal.workgroup_moved; recorded events stay readable at 1.0.0",
        "excerpt_sha256": "9ef4794e1163fe65cc90ebd59ece6521dcbfcb9388f28039b8f01a7b0904fda7",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "consumers_checkpoints": {
      "status": "PASS",
@@ -3166,56 +3232,56 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 26912,
-       "line_end": 26912,
+       "line_start": 26921,
+       "line_end": 26921,
        "quote": "Define `storage.terminal_workgroup_move.inspect_current.v1@1.0.0`, a private",
        "excerpt_sha256": "5db8e4df727e0c4b566b45a16492148fdfa3d39967271eed81439b08d710a789",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 26920,
-       "line_end": 26920,
+       "line_start": 26929,
+       "line_end": 26929,
        "quote": "The exact family projection/checkpoint disposition is **`none_required`**, because",
        "excerpt_sha256": "ea7830a91ca7618f8b53cab6e4b1d7c6190eed209144dc2a676d3bcb2c47d7a6",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 26923,
-       "line_end": 26923,
+       "line_start": 26932,
+       "line_end": 26932,
        "quote": "closure. SP-278's generic projector/checkpoint remains independently mandatory.",
        "excerpt_sha256": "9b4083e36c197ad94815ff8e7989a8fd32275c1746df7cc04ec4fe3ad449950e",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 27064,
-       "line_end": 27064,
+       "line_start": 27073,
+       "line_end": 27073,
        "quote": "No consumer operates on terminal.workgroup_moved, because its producer",
        "excerpt_sha256": "295276183ad9ed8c065c16598ef9d3268f5a67eeb794dcc6a440013f383e7f5e",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 27063,
-       "line_end": 27063,
+       "line_start": 27072,
+       "line_end": 27072,
        "quote": "The binding stores no read token, and any stored copy of its token is the nine-field durable token",
        "excerpt_sha256": "545bbaa7b19a788ad31df271b479cede5a8064ec2223530c859697e0dd0be100",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
-      "status": "PARTIAL"
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
+      "status": "PASS"
      },
-     "change": "upgraded",
-     "change_reason": "SP-319 now states no consumer operates (f86b68e982)"
+     "change": "carried",
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "compatibility_withdrawal": {
      "status": "PASS",
@@ -3224,53 +3290,81 @@
      "evidence": [
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-       "unit": null,
        "line_start": 12603,
        "line_end": 12603,
        "quote": "terminal.workgroup_moved is withdrawn under this unit's own withdrawal rule",
        "excerpt_sha256": "bd1ce7f88d084d6f384f0fd8cedf1f987faa335a9458ddaa65715b78d4eb630d",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 26903,
-       "line_end": 26903,
+       "line_start": 26912,
+       "line_end": 26912,
        "quote": "no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written.",
        "excerpt_sha256": "4665daa34ee5f8bebade4183948ff594b27dd534eb78bb254e624636a5621d50",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Re-anchored at af9bff39ae; unchanged in substance."
     },
     "positive_negative_oracles": {
      "status": "PARTIAL",
      "representation": "historical_only_disposition",
-     "finding": "DEPTH GAP found by the 2026-11-04 refresh (was PASS against 1.0.0-era SMPFS move criteria, now superseded). SP-319 says its paired static oracles and closed original/read-result companions remain required; no fixture, checker or test names storage.terminal_workgroup_move.inspect_current.v1 (searched Plans/*.json, scripts/, tests/ at this revision). Closable under DL-045 (terminal.workgroup_moved is in its 285 names): author the read-result companion and paired fixtures for the historical read only. Matches D1b's 2026-11-04 grade (PARTIAL).",
+     "finding": "SP-319 still requires paired oracles and closed original/read-result companions, but canon leaves open what a withdrawn family whose producer never activated owes: SMPFS-170 admits no new reader disclosure while SP-319 keeps the reader for recorded 1.0.0 events, and SP-319's original-move oracles need a companion for an operation never admitted. Question in DS.md.",
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "unit": null,
-       "line_start": 27081,
-       "line_end": 27081,
+       "line_start": 27090,
+       "line_end": 27090,
        "quote": "Paired static oracles and closed original/read-result companions remain required, distinct from native proof.",
        "excerpt_sha256": "36d4a038f1280b6ab051c83fab30d37b0b0f495aa8b92b7669826a954fe68b36",
-       "quote_check": "exact"
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 26912,
+       "line_end": 26912,
+       "quote": "no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written.",
+       "excerpt_sha256": "4665daa34ee5f8bebade4183948ff594b27dd534eb78bb254e624636a5621d50",
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "line_start": 12413,
+       "line_end": 12413,
+       "quote": "no new producer admission and no new reader disclosure",
+       "excerpt_sha256": "1241f27288e083d3e8c31ebbda018cd5fdf3d831049e13a88db099809032cfe2",
+       "quote_check": "exact",
+       "unit": null
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27057,
+       "line_end": 27057,
+       "quote": "new disclosure. These are required paired oracles for the companion task, not",
+       "excerpt_sha256": "1053fea55a784d910b2081def4a72f59780b4fb988baeadb8f0ee88023e89fc2",
+       "quote_check": "exact",
+       "unit": null
       }
      ],
      "prior": {
-      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl (main be4766513f)",
+      "source": "reports/event-authority-20261104/DS.selfgrade.json at 600575221d (lane DS first pass)",
       "status": "PARTIAL"
      },
      "change": "carried",
-     "change_reason": "Re-read at this head; same grade as D1b."
+     "change_reason": "Stopped on an owner question; no fixture written."
     }
-   }
+   },
+   "notes": "Re-anchored by lane DS-P2 at af9bff39ae; the oracle cell is stopped on an owner question."
   }
  ]
 }
