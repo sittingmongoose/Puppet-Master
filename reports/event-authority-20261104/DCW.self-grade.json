@@ -1,12 +1,12 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DCW-FIX4-20261104",
+  "assessment_id": "EA-W2-DCW-FIX5-20261104",
   "assessment_kind": "worker_self_grade_after_blind_review",
   "assessed_tree": {
     "branch": "plans/ea-w2-chain-wizard-20261104",
-    "commit": "1e9ca78cc51fafd184cb8e86e69fe333d54e7f0e",
-    "reviewed_head": "3f91eece872b0c2266172c9204e842e9e66ecc21",
-    "read_method": "Current exact-family owner/schema/fixture/checker evidence at the round-four implementation commit; report/self-grade follow-up changes no implementation. All eleven standing checks run per prepared family and earlier mutation recipes are replayed."
+    "commit": "de555ce0387eb3875e52a174e61fed6e97a2564a",
+    "reviewed_head": "a40804394229feeed0719be388bec80cf16a9561",
+    "read_method": "Exact current owner units, unchanged schemas and production predicates, complete authored/generated/legacy guard-removal matrices, standing checks and fresh Astra-class mutations. Report follow-up changes no implementation."
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -72,11 +72,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -99,16 +99,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact SP-286 original source/receipt ordering and independently durable SP-337 event pack/index transport use actual canonical MessagePack bytes: 16,384 inline accepts, 16,385 inline refuses, verified overflow references accept. Source overflow remains independent.",
+          "finding": "PASS: exact-family SP-286 original ordering and independent SP-337 event/source transport. Inline/reference alternatives solely govern payload_ref; actual canonical byte boundaries and custody/reference paths pass.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -137,14 +137,21 @@
               "line_start": 24516,
               "line_end": 24516,
               "quote": "NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size."
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-590",
+              "line_start": 24516,
+              "line_end": 24516,
+              "quote": "NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -174,11 +181,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -201,11 +208,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -228,11 +235,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -248,11 +255,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -289,11 +296,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -309,11 +316,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -336,11 +343,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -370,16 +377,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "This exact family passes all eleven standing checks, isolated negative/guard-ablation witnesses, forged compatibility views, encoded-byte boundaries, SP-337 event references, retry/read/rebuild/restore and complete-CLI failure/ref preflight mutations. Earlier finding mutations pass; native adapters remain NOT_RUN.",
+          "finding": "PASS: complete static whole-checker proof, 131 require sites, all 1544 authored/generated negatives and 15 legacy semantic assertions; zero unrelated cross-acceptances. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -412,38 +419,45 @@
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 148,
-              "line_end": 148,
+              "line_start": 150,
+              "line_end": 150,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_requested",
-              "line_start": 4417,
-              "line_end": 4423,
+              "line_start": 6283,
+              "line_end": 6289,
               "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/event/replay_policy\",\n  "
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_requested",
-              "line_start": 4716,
-              "line_end": 4723,
+              "line_start": 6646,
+              "line_end": 6653,
               "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n        {\n          \"case_"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_requested",
-              "line_start": 5001,
-              "line_end": 5006,
+              "line_start": 7086,
+              "line_end": 7091,
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n          \"operation\": \"r"
+            },
+            {
+              "path": "scripts/pm_dcw_event_isolation.py",
+              "unit": "whole-pool counterfactual checker",
+              "line_start": 2,
+              "line_end": 5,
+              "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         }
       },
       "remaining_gaps": [
@@ -495,8 +509,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-591",
-          "line_start": 24551,
-          "line_end": 24552,
+          "line_start": 24555,
+          "line_end": 24556,
           "quote": "bundle.revision_started` has payload schema Plans/event_payloads/bundle_revision/revision_started.schema.json,\n  schema_id pm.event_payload.bundle.revision_started.v1, schema_version 1."
         }
       ],
@@ -521,11 +535,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -548,16 +562,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact SP-286 original source/receipt ordering and independently durable SP-337 event pack/index transport use actual canonical MessagePack bytes: 16,384 inline accepts, 16,385 inline refuses, verified overflow references accept. Source overflow remains independent.",
+          "finding": "PASS: exact-family SP-286 original ordering and independent SP-337 event/source transport. Inline/reference alternatives solely govern payload_ref; actual canonical byte boundaries and custody/reference paths pass.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -586,14 +600,21 @@
               "line_start": 24593,
               "line_end": 24593,
               "quote": "NEW SP-337 event-body binding for bundle.revision_started under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. A"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-591",
+              "line_start": 24593,
+              "line_end": 24593,
+              "quote": "NEW SP-337 event-body binding for bundle.revision_started under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never J"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -623,11 +644,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -644,17 +665,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24563,
-              "line_end": 24564,
+              "line_start": 24486,
+              "line_end": 24487,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -671,17 +692,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24583,
-              "line_end": 24585,
+              "line_start": 24506,
+              "line_end": 24508,
               "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -691,17 +712,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29620,
-              "line_end": 29621,
+              "line_start": 29522,
+              "line_end": 29523,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -738,11 +759,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -758,11 +779,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -772,24 +793,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29600,
-              "line_end": 29602,
+              "line_start": 29502,
+              "line_end": 29504,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29602,
-              "line_end": 29603,
+              "line_start": 29504,
+              "line_end": 29505,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -806,8 +827,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29628,
-              "line_end": 29630,
+              "line_start": 29530,
+              "line_end": 29532,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
@@ -819,16 +840,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "This exact family passes all eleven standing checks, isolated negative/guard-ablation witnesses, forged compatibility views, encoded-byte boundaries, SP-337 event references, retry/read/rebuild/restore and complete-CLI failure/ref preflight mutations. Earlier finding mutations pass; native adapters remain NOT_RUN.",
+          "finding": "PASS: complete static whole-checker proof, 131 require sites, all 1544 authored/generated negatives and 15 legacy semantic assertions; zero unrelated cross-acceptances. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -861,38 +882,45 @@
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 148,
-              "line_end": 148,
+              "line_start": 150,
+              "line_end": 150,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_started",
-              "line_start": 4417,
-              "line_end": 4423,
+              "line_start": 6283,
+              "line_end": 6289,
               "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/event/replay_policy\",\n  "
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_started",
-              "line_start": 4716,
-              "line_end": 4723,
+              "line_start": 6646,
+              "line_end": 6653,
               "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n        {\n          \"case_"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_started",
-              "line_start": 5001,
-              "line_end": 5006,
+              "line_start": 7086,
+              "line_end": 7091,
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n          \"operation\": \"r"
+            },
+            {
+              "path": "scripts/pm_dcw_event_isolation.py",
+              "unit": "whole-pool counterfactual checker",
+              "line_start": 2,
+              "line_end": 5,
+              "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         }
       },
       "remaining_gaps": [
@@ -944,8 +972,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-592",
-          "line_start": 24624,
-          "line_end": 24625,
+          "line_start": 24632,
+          "line_end": 24633,
           "quote": "bundle.revision_completed` has payload schema Plans/event_payloads/bundle_revision/revision_completed.schema.json,\n  schema_id pm.event_payload.bundle.revision_completed.v1, schema_vers"
         }
       ],
@@ -970,11 +998,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -997,16 +1025,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact SP-286 original source/receipt ordering and independently durable SP-337 event pack/index transport use actual canonical MessagePack bytes: 16,384 inline accepts, 16,385 inline refuses, verified overflow references accept. Source overflow remains independent.",
+          "finding": "PASS: exact-family SP-286 original ordering and independent SP-337 event/source transport. Inline/reference alternatives solely govern payload_ref; actual canonical byte boundaries and custody/reference paths pass.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1018,8 +1046,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29684,
-              "line_end": 29686,
+              "line_start": 29487,
+              "line_end": 29489,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
             },
             {
@@ -1035,14 +1063,21 @@
               "line_start": 24670,
               "line_end": 24670,
               "quote": "NEW SP-337 event-body binding for bundle.revision_completed under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size."
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-592",
+              "line_start": 24670,
+              "line_end": 24670,
+              "quote": "NEW SP-337 event-body binding for bundle.revision_completed under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1072,11 +1107,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1093,17 +1128,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24640,
-              "line_end": 24641,
+              "line_start": 24486,
+              "line_end": 24487,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1120,17 +1155,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24660,
-              "line_end": 24662,
+              "line_start": 24506,
+              "line_end": 24508,
               "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1140,17 +1175,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29719,
-              "line_end": 29720,
+              "line_start": 29522,
+              "line_end": 29523,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1187,11 +1222,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1207,11 +1242,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1221,24 +1256,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29699,
-              "line_end": 29701,
+              "line_start": 29502,
+              "line_end": 29504,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29701,
-              "line_end": 29702,
+              "line_start": 29504,
+              "line_end": 29505,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1255,8 +1290,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29727,
-              "line_end": 29729,
+              "line_start": 29530,
+              "line_end": 29532,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
@@ -1268,16 +1303,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "This exact family passes all eleven standing checks, isolated negative/guard-ablation witnesses, forged compatibility views, encoded-byte boundaries, SP-337 event references, retry/read/rebuild/restore and complete-CLI failure/ref preflight mutations. Earlier finding mutations pass; native adapters remain NOT_RUN.",
+          "finding": "PASS: complete static whole-checker proof, 131 require sites, all 1544 authored/generated negatives and 15 legacy semantic assertions; zero unrelated cross-acceptances. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -1310,38 +1345,45 @@
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 148,
-              "line_end": 148,
+              "line_start": 150,
+              "line_end": 150,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_completed",
-              "line_start": 4417,
-              "line_end": 4423,
+              "line_start": 6283,
+              "line_end": 6289,
               "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/event/replay_policy\",\n  "
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_completed",
-              "line_start": 4716,
-              "line_end": 4723,
+              "line_start": 6646,
+              "line_end": 6653,
               "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n        {\n          \"case_"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_completed",
-              "line_start": 5001,
-              "line_end": 5006,
+              "line_start": 7086,
+              "line_end": 7091,
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n          \"operation\": \"r"
+            },
+            {
+              "path": "scripts/pm_dcw_event_isolation.py",
+              "unit": "whole-pool counterfactual checker",
+              "line_start": 2,
+              "line_end": 5,
+              "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         }
       },
       "remaining_gaps": [
@@ -1393,8 +1435,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-593",
-          "line_start": 24697,
-          "line_end": 24698,
+          "line_start": 24709,
+          "line_end": 24710,
           "quote": "bundle.revision_interrupted` has payload schema Plans/event_payloads/bundle_revision/revision_interrupted.schema.json,\n  schema_id pm.event_payload.bundle.revision_interrupted.v1, schem"
         }
       ],
@@ -1419,11 +1461,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1446,16 +1488,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact SP-286 original source/receipt ordering and independently durable SP-337 event pack/index transport use actual canonical MessagePack bytes: 16,384 inline accepts, 16,385 inline refuses, verified overflow references accept. Source overflow remains independent.",
+          "finding": "PASS: exact-family SP-286 original ordering and independent SP-337 event/source transport. Inline/reference alternatives solely govern payload_ref; actual canonical byte boundaries and custody/reference paths pass.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1467,8 +1509,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29783,
-              "line_end": 29785,
+              "line_start": 29487,
+              "line_end": 29489,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
             },
             {
@@ -1484,14 +1526,21 @@
               "line_start": 24747,
               "line_end": 24747,
               "quote": "NEW SP-337 event-body binding for bundle.revision_interrupted under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON siz"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-593",
+              "line_start": 24747,
+              "line_end": 24747,
+              "quote": "NEW SP-337 event-body binding for bundle.revision_interrupted under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, nev"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1521,11 +1570,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1542,17 +1591,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24717,
-              "line_end": 24718,
+              "line_start": 24486,
+              "line_end": 24487,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1575,11 +1624,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1589,17 +1638,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29818,
-              "line_end": 29819,
+              "line_start": 29522,
+              "line_end": 29523,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1636,11 +1685,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1656,11 +1705,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1670,24 +1719,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29798,
-              "line_end": 29800,
+              "line_start": 29502,
+              "line_end": 29504,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29800,
-              "line_end": 29801,
+              "line_start": 29504,
+              "line_end": 29505,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1704,8 +1753,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29826,
-              "line_end": 29828,
+              "line_start": 29530,
+              "line_end": 29532,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
@@ -1717,16 +1766,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "This exact family passes all eleven standing checks, isolated negative/guard-ablation witnesses, forged compatibility views, encoded-byte boundaries, SP-337 event references, retry/read/rebuild/restore and complete-CLI failure/ref preflight mutations. Earlier finding mutations pass; native adapters remain NOT_RUN.",
+          "finding": "PASS: complete static whole-checker proof, 131 require sites, all 1544 authored/generated negatives and 15 legacy semantic assertions; zero unrelated cross-acceptances. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -1759,38 +1808,45 @@
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 148,
-              "line_end": 148,
+              "line_start": 150,
+              "line_end": 150,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_interrupted",
-              "line_start": 11650,
-              "line_end": 11656,
+              "line_start": 6283,
+              "line_end": 6289,
               "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/event/replay_policy\",\n  "
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_interrupted",
-              "line_start": 11949,
-              "line_end": 11956,
+              "line_start": 6646,
+              "line_end": 6653,
               "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n        {\n          \"case_"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_interrupted",
-              "line_start": 12234,
-              "line_end": 12239,
+              "line_start": 7086,
+              "line_end": 7091,
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n          \"operation\": \"r"
+            },
+            {
+              "path": "scripts/pm_dcw_event_isolation.py",
+              "unit": "whole-pool counterfactual checker",
+              "line_start": 2,
+              "line_end": 5,
+              "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         }
       },
       "remaining_gaps": [
@@ -1843,11 +1899,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "owner_doc": {
           "status": "PARTIAL",
@@ -1870,11 +1926,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "producer": {
           "status": "PARTIAL",
@@ -1897,11 +1953,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "closed_payload_schema": {
           "status": "ABSENT",
@@ -1924,11 +1980,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "scope_identity": {
           "status": "PARTIAL",
@@ -1951,11 +2007,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "replay_idempotency": {
           "status": "ABSENT",
@@ -1978,11 +2034,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2005,11 +2061,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "redaction_custody": {
           "status": "PARTIAL",
@@ -2032,11 +2088,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "transitions": {
           "status": "PARTIAL",
@@ -2059,11 +2115,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "ABSENT",
@@ -2086,11 +2142,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "ABSENT",
@@ -2113,11 +2169,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "ABSENT",
@@ -2140,11 +2196,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         }
       },
       "prepared_pass": false,
@@ -2173,8 +2229,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-595",
-          "line_start": 24833,
-          "line_end": 24840,
+          "line_start": 24853,
+          "line_end": 24860,
           "quote": "wizard.deferred_payload.loaded Payload And Identity\n\n```yaml\nplan_unit_id: CV-595\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: 'wizard.deferr"
         }
       ],
@@ -2198,11 +2254,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2225,16 +2281,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact SP-286 original source/receipt ordering and independently durable SP-337 event pack/index transport use actual canonical MessagePack bytes: 16,384 inline accepts, 16,385 inline refuses, verified overflow references accept. Source overflow remains independent.",
+          "finding": "PASS: exact-family SP-286 original ordering and independent SP-337 event/source transport. Inline/reference alternatives solely govern payload_ref; actual canonical byte boundaries and custody/reference paths pass.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -2246,15 +2302,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30028,
-              "line_end": 30028,
+              "line_start": 30011,
+              "line_end": 30011,
               "quote": "SP-286/CV-339 full-value v2 receipt resolution, SP-336/SP-347 durability and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. Order is exact-family admission/current owner guards, original s"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30024,
-              "line_end": 30024,
+              "line_start": 30007,
+              "line_end": 30007,
               "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
             },
             {
@@ -2263,14 +2319,21 @@
               "line_start": 24896,
               "line_end": 24896,
               "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON "
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-595",
+              "line_start": 24896,
+              "line_end": 24896,
+              "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
-            "status": "PARTIAL"
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "status": "PASS"
           },
-          "change": "repaired",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change": "carried",
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2307,11 +2370,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2334,11 +2397,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2361,11 +2424,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2375,17 +2438,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30030,
-              "line_end": 30032,
+              "line_start": 30013,
+              "line_end": 30015,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION, with Case L-3 receipt/audit/source-lineage versus planning/chat-content candidates.\n\nThe independent passive consumer is `reader.wizard_"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2395,8 +2458,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30030,
-              "line_end": 30030,
+              "line_start": 30013,
+              "line_end": 30013,
               "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody "
             },
             {
@@ -2409,8 +2472,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30024,
-              "line_end": 30024,
+              "line_start": 30007,
+              "line_end": 30007,
               "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
             },
             {
@@ -2422,11 +2485,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -2442,11 +2505,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2456,24 +2519,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30032,
-              "line_end": 30032,
+              "line_start": 30015,
+              "line_end": 30015,
               "quote": "SP-278, `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_rec"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30032,
-              "line_end": 30032,
+              "line_start": 30015,
+              "line_end": 30015,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_record_index_checkpoint.v1@1.0.0`. The generic projector atomically commits index rows and its prior-"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2490,8 +2553,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30034,
-              "line_end": 30034,
+              "line_start": 30017,
+              "line_end": 30017,
               "quote": "replacement reader explicitly supports retained schemas and authenticates complete SP-278 coverage/current root/generation/frontier before publication; gaps, stale CAS/tokens, unsupport"
             },
             {
@@ -2503,16 +2566,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "This exact family passes all eleven standing checks, isolated negative/guard-ablation witnesses, forged compatibility views, encoded-byte boundaries, SP-337 event references, retry/read/rebuild/restore and complete-CLI failure/ref preflight mutations. Earlier finding mutations pass; native adapters remain NOT_RUN.",
+          "finding": "PASS: complete static whole-checker proof, 131 require sites, all 1544 authored/generated negatives and 15 legacy semantic assertions; zero unrelated cross-acceptances. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -2545,38 +2608,45 @@
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 148,
-              "line_end": 148,
+              "line_start": 150,
+              "line_end": 150,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 37133,
-              "line_end": 37139,
+              "line_start": 6283,
+              "line_end": 6289,
               "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/event/replay_policy\",\n  "
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 37432,
-              "line_end": 37439,
+              "line_start": 6646,
+              "line_end": 6653,
               "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n        {\n          \"case_"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 37717,
-              "line_end": 37722,
+              "line_start": 7086,
+              "line_end": 7091,
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n          \"operation\": \"r"
+            },
+            {
+              "path": "scripts/pm_dcw_event_isolation.py",
+              "unit": "whole-pool counterfactual checker",
+              "line_start": 2,
+              "line_end": 5,
+              "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         }
       },
       "remaining_gaps": [
@@ -2628,8 +2698,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-594",
-          "line_start": 24764,
-          "line_end": 24771,
+          "line_start": 24780,
+          "line_end": 24787,
           "quote": "wizard.opened Payload And Identity\n\n```yaml\nplan_unit_id: CV-594\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: 'wizard.opened has the closed p"
         }
       ],
@@ -2653,11 +2723,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2680,16 +2750,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact SP-286 original source/receipt ordering and independently durable SP-337 event pack/index transport use actual canonical MessagePack bytes: 16,384 inline accepts, 16,385 inline refuses, verified overflow references accept. Source overflow remains independent.",
+          "finding": "PASS: exact-family SP-286 original ordering and independent SP-337 event/source transport. Inline/reference alternatives solely govern payload_ref; actual canonical byte boundaries and custody/reference paths pass.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -2718,14 +2788,21 @@
               "line_start": 24821,
               "line_end": 24821,
               "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-594",
+              "line_start": 24821,
+              "line_end": 24821,
+              "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON charac"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
-            "status": "PARTIAL"
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "status": "PASS"
           },
-          "change": "repaired",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change": "carried",
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2762,11 +2839,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2789,11 +2866,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2816,11 +2893,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2836,11 +2913,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2877,11 +2954,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -2897,11 +2974,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2924,11 +3001,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2958,16 +3035,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "This exact family passes all eleven standing checks, isolated negative/guard-ablation witnesses, forged compatibility views, encoded-byte boundaries, SP-337 event references, retry/read/rebuild/restore and complete-CLI failure/ref preflight mutations. Earlier finding mutations pass; native adapters remain NOT_RUN.",
+          "finding": "PASS: complete static whole-checker proof, 131 require sites, all 1544 authored/generated negatives and 15 legacy semantic assertions; zero unrelated cross-acceptances. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -3000,38 +3077,45 @@
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 148,
-              "line_end": 148,
+              "line_start": 150,
+              "line_end": 150,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "wizard.opened",
-              "line_start": 30073,
-              "line_end": 30079,
+              "line_start": 6283,
+              "line_end": 6289,
               "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/event/replay_policy\",\n  "
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "wizard.opened",
-              "line_start": 30372,
-              "line_end": 30379,
+              "line_start": 6646,
+              "line_end": 6653,
               "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n        {\n          \"case_"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "wizard.opened",
-              "line_start": 30657,
-              "line_end": 30662,
+              "line_start": 7086,
+              "line_end": 7091,
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n          \"operation\": \"r"
+            },
+            {
+              "path": "scripts/pm_dcw_event_isolation.py",
+              "unit": "whole-pool counterfactual checker",
+              "line_start": 2,
+              "line_end": 5,
+              "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         }
       },
       "remaining_gaps": [
@@ -3084,11 +3168,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "owner_doc": {
           "status": "PARTIAL",
@@ -3111,11 +3195,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "producer": {
           "status": "PARTIAL",
@@ -3138,11 +3222,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "closed_payload_schema": {
           "status": "ABSENT",
@@ -3165,11 +3249,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "scope_identity": {
           "status": "PARTIAL",
@@ -3192,11 +3276,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "replay_idempotency": {
           "status": "ABSENT",
@@ -3219,11 +3303,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3246,11 +3330,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "redaction_custody": {
           "status": "PARTIAL",
@@ -3273,11 +3357,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "transitions": {
           "status": "PARTIAL",
@@ -3300,11 +3384,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "ABSENT",
@@ -3327,11 +3411,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "ABSENT",
@@ -3354,11 +3438,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "ABSENT",
@@ -3381,11 +3465,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
+          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
         }
       },
       "prepared_pass": false,
@@ -3403,22 +3487,39 @@
     "stopped_for_Jared": 2,
     "admissions": 0,
     "native_execution": "NOT_RUN",
-    "full_contract_cases": 1647,
-    "total_static_cases": 1826,
-    "independent_mutations": 1105,
+    "full_contract_cases": 1904,
+    "total_static_cases": 2083,
     "standing_checks_per_drafted_family": 11,
     "standing_regression_cases": 1328,
     "storage_profile_new_failures": 0,
     "checks_fixed_this_round": [
       4,
-      10,
       11
     ],
-    "guard_ablation_witnesses": 264,
-    "earlier_cycle_one_cases": 119,
-    "earlier_cycle_two_cases": 575,
-    "exact_cycle_two_recipes": 36,
+    "guard_ablation_witnesses": 1544,
     "astra_exact_cases": 183,
-    "independent_event_byte_cases": 300
+    "independent_event_byte_cases": 306,
+    "standing_guard_ablation_witnesses": 264,
+    "require_sites_proved": 131,
+    "legacy_semantic_assertions": 15,
+    "legacy_negative_cases": 182,
+    "full_guard_cross_tests": 249745,
+    "legacy_cross_tests": 8356,
+    "astra_class_cases": 168,
+    "current_evidence_quotes": 270,
+    "grade_mutants_rejected": 10
+  },
+  "round5_verification": {
+    "require_sites": 131,
+    "full_negatives": 1544,
+    "full_cross_tests": 249745,
+    "legacy_assertions": 15,
+    "legacy_negatives": 182,
+    "legacy_cross_tests": 8356,
+    "unrelated_acceptances": 0,
+    "unrelated_refusal_changes": 0,
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix5",
+    "native": "NOT_RUN",
+    "ids_added": []
   }
 }
