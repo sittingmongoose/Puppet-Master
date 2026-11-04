@@ -1,0 +1,2590 @@
+{
+  "schema_id": "pm.developer_session_application_contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "evidence_level": "schema_fixture_only",
+  "native_runtime_executed": false,
+  "developer_session_owner_sources": {
+    "debug": {
+      "schema_id": "pm.debug_session.record.application.v1",
+      "schema_version": "1.0.0",
+      "project_id": null,
+      "application_context": {
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "storage_instance_id": "storage-a",
+        "thread_id": "thread-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "roots": [
+          {
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "root_ref": "root-root_ref",
+            "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "grant_ref": "root-grant_ref",
+            "kind": "granted_directory"
+          }
+        ],
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor_ref": "actor-a",
+        "permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "scope_stop_epoch": 1,
+        "task_stop_epoch": 1,
+        "expected_generation": 1,
+        "return_context_ref": "return-a"
+      },
+      "source_location_id": "source-location-a",
+      "root_ref": {
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "root_ref": "root-root_ref",
+        "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_ref": "root-grant_ref",
+        "kind": "granted_directory"
+      },
+      "worktree_ref": null,
+      "goal_id": null,
+      "run_id": null,
+      "owner_ref": "ref-owner_ref",
+      "lease_ref": "ref-lease_ref",
+      "session_generation": 1,
+      "permission_snapshot_ref": "ref-permission_snapshot_ref",
+      "policy_ref": "ref-policy_ref",
+      "created_at_utc": "2026-11-04T00:00:00Z",
+      "updated_at_utc": "2026-11-04T00:00:00Z",
+      "terminal_at_utc": null,
+      "dev_session_id": "ref-dev_session_id",
+      "dap_session_id": "ref-dap_session_id",
+      "adapter_installation_ref": "ref-adapter_installation_ref",
+      "adapter_capability_snapshot_ref": "ref-adapter_capability_snapshot_ref",
+      "launch_kind": "launch",
+      "launch_or_attach_target_ref": "ref-launch_or_attach_target_ref",
+      "state": "created",
+      "waiter_arm_ref": null,
+      "waiter_armed_at_utc": null,
+      "triggered_at_utc": null,
+      "log_refs": [],
+      "artifact_refs": [],
+      "cleanup_ref": null
+    },
+    "eval": {
+      "schema_id": "pm.eval_session.record.application.v1",
+      "schema_version": "1.0.0",
+      "project_id": null,
+      "application_context": {
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "storage_instance_id": "storage-a",
+        "thread_id": "thread-a",
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "roots": [
+          {
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "root_ref": "root-root_ref",
+            "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "grant_ref": "root-grant_ref",
+            "kind": "granted_directory"
+          }
+        ],
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor_ref": "actor-a",
+        "permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "scope_stop_epoch": 1,
+        "task_stop_epoch": 1,
+        "expected_generation": 1,
+        "return_context_ref": "return-a"
+      },
+      "source_location_id": "source-location-a",
+      "root_ref": {
+        "execution_host_id": "host-a",
+        "execution_environment_id": "environment-a",
+        "root_ref": "root-root_ref",
+        "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "grant_ref": "root-grant_ref",
+        "kind": "granted_directory"
+      },
+      "worktree_ref": null,
+      "goal_id": null,
+      "run_id": null,
+      "owner_ref": "ref-owner_ref",
+      "lease_ref": "ref-lease_ref",
+      "session_generation": 1,
+      "permission_snapshot_ref": "ref-permission_snapshot_ref",
+      "policy_ref": "ref-policy_ref",
+      "created_at_utc": "2026-11-04T00:00:00Z",
+      "updated_at_utc": "2026-11-04T00:00:00Z",
+      "terminal_at_utc": null,
+      "eval_session_id": "ref-eval_session_id",
+      "kernel_id": "ref-kernel_id",
+      "runtime_installation_ref": "ref-runtime_installation_ref",
+      "language": "python",
+      "state": "created",
+      "variable_scope": "session",
+      "variable_disposition": "preserved",
+      "output_cursor": 0,
+      "bounded_output_ref": null,
+      "full_output_artifact_ref": null,
+      "nested_dispatch_receipt_refs": [],
+      "artifact_root_ref": "ref-artifact_root_ref",
+      "cleanup_ref": null
+    }
+  },
+  "projects_refresh_cases": [
+    {
+      "case_id": "fix-a-debug-app-record",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+      "record": {
+        "schema_id": "pm.debug_session.record.application.v1",
+        "schema_version": "1.0.0",
+        "project_id": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [
+            {
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "root_ref": "root-root_ref",
+              "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "grant_ref": "root-grant_ref",
+              "kind": "granted_directory"
+            }
+          ],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "source_location_id": "source-location-a",
+        "root_ref": {
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "root_ref": "root-root_ref",
+          "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "grant_ref": "root-grant_ref",
+          "kind": "granted_directory"
+        },
+        "worktree_ref": null,
+        "goal_id": null,
+        "run_id": null,
+        "owner_ref": "ref-owner_ref",
+        "lease_ref": "ref-lease_ref",
+        "session_generation": 1,
+        "permission_snapshot_ref": "ref-permission_snapshot_ref",
+        "policy_ref": "ref-policy_ref",
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:00Z",
+        "terminal_at_utc": null,
+        "dev_session_id": "ref-dev_session_id",
+        "dap_session_id": "ref-dap_session_id",
+        "adapter_installation_ref": "ref-adapter_installation_ref",
+        "adapter_capability_snapshot_ref": "ref-adapter_capability_snapshot_ref",
+        "launch_kind": "launch",
+        "launch_or_attach_target_ref": "ref-launch_or_attach_target_ref",
+        "state": "created",
+        "waiter_arm_ref": null,
+        "waiter_armed_at_utc": null,
+        "triggered_at_utc": null,
+        "log_refs": [],
+        "artifact_refs": [],
+        "cleanup_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "developer_session.exact_owner",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "debug"
+    },
+    {
+      "case_id": "fix-a-debug-reject-browser-profile",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+      "record": {
+        "schema_id": "pm.debug_session.record.application.v1",
+        "schema_version": "1.0.0",
+        "project_id": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [
+            {
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "root_ref": "root-root_ref",
+              "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "grant_ref": "root-grant_ref",
+              "kind": "granted_directory"
+            }
+          ],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "source_location_id": "source-location-a",
+        "root_ref": {
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "root_ref": "root-root_ref",
+          "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "grant_ref": "root-grant_ref",
+          "kind": "granted_directory"
+        },
+        "worktree_ref": null,
+        "goal_id": null,
+        "run_id": null,
+        "owner_ref": "ref-owner_ref",
+        "lease_ref": "ref-lease_ref",
+        "session_generation": 1,
+        "permission_snapshot_ref": "ref-permission_snapshot_ref",
+        "policy_ref": "ref-policy_ref",
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:00Z",
+        "terminal_at_utc": null,
+        "dev_session_id": "ref-dev_session_id",
+        "dap_session_id": "ref-dap_session_id",
+        "adapter_installation_ref": "ref-adapter_installation_ref",
+        "adapter_capability_snapshot_ref": "ref-adapter_capability_snapshot_ref",
+        "launch_kind": "launch",
+        "launch_or_attach_target_ref": "ref-launch_or_attach_target_ref",
+        "state": "created",
+        "waiter_arm_ref": null,
+        "waiter_armed_at_utc": null,
+        "triggered_at_utc": null,
+        "log_refs": [],
+        "artifact_refs": [],
+        "cleanup_ref": null,
+        "profile_id": "browser-profile"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-debug-reject-project-record",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+      "record": {
+        "schema_id": "pm.debug_session.record.application.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-a",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [
+            {
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "root_ref": "root-root_ref",
+              "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "grant_ref": "root-grant_ref",
+              "kind": "granted_directory"
+            }
+          ],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "source_location_id": "source-location-a",
+        "root_ref": {
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "root_ref": "root-root_ref",
+          "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "grant_ref": "root-grant_ref",
+          "kind": "granted_directory"
+        },
+        "worktree_ref": null,
+        "goal_id": null,
+        "run_id": null,
+        "owner_ref": "ref-owner_ref",
+        "lease_ref": "ref-lease_ref",
+        "session_generation": 1,
+        "permission_snapshot_ref": "ref-permission_snapshot_ref",
+        "policy_ref": "ref-policy_ref",
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:00Z",
+        "terminal_at_utc": null,
+        "dev_session_id": "ref-dev_session_id",
+        "dap_session_id": "ref-dap_session_id",
+        "adapter_installation_ref": "ref-adapter_installation_ref",
+        "adapter_capability_snapshot_ref": "ref-adapter_capability_snapshot_ref",
+        "launch_kind": "launch",
+        "launch_or_attach_target_ref": "ref-launch_or_attach_target_ref",
+        "state": "created",
+        "waiter_arm_ref": null,
+        "waiter_armed_at_utc": null,
+        "triggered_at_utc": null,
+        "log_refs": [],
+        "artifact_refs": [],
+        "cleanup_ref": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-debug-app-custody",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordStorageApplicationV1",
+      "record": {
+        "schema_id": "pm.storage_value.dev_session_record.application.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "storage-a",
+        "server_id": "server-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "record": {
+          "schema_id": "pm.debug_session.record.application.v1",
+          "schema_version": "1.0.0",
+          "project_id": null,
+          "application_context": {
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server-a"
+            },
+            "storage_instance_id": "storage-a",
+            "thread_id": "thread-a",
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "roots": [
+              {
+                "execution_host_id": "host-a",
+                "execution_environment_id": "environment-a",
+                "root_ref": "root-root_ref",
+                "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "grant_ref": "root-grant_ref",
+                "kind": "granted_directory"
+              }
+            ],
+            "command_instance_id": "command-a",
+            "idempotency_key": "idempotency-a",
+            "actor_ref": "actor-a",
+            "permission_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "writer_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "scope_stop_epoch": 1,
+            "task_stop_epoch": 1,
+            "expected_generation": 1,
+            "return_context_ref": "return-a"
+          },
+          "source_location_id": "source-location-a",
+          "root_ref": {
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "root_ref": "root-root_ref",
+            "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "grant_ref": "root-grant_ref",
+            "kind": "granted_directory"
+          },
+          "worktree_ref": null,
+          "goal_id": null,
+          "run_id": null,
+          "owner_ref": "ref-owner_ref",
+          "lease_ref": "ref-lease_ref",
+          "session_generation": 1,
+          "permission_snapshot_ref": "ref-permission_snapshot_ref",
+          "policy_ref": "ref-policy_ref",
+          "created_at_utc": "2026-11-04T00:00:00Z",
+          "updated_at_utc": "2026-11-04T00:00:00Z",
+          "terminal_at_utc": null,
+          "dev_session_id": "ref-dev_session_id",
+          "dap_session_id": "ref-dap_session_id",
+          "adapter_installation_ref": "ref-adapter_installation_ref",
+          "adapter_capability_snapshot_ref": "ref-adapter_capability_snapshot_ref",
+          "launch_kind": "launch",
+          "launch_or_attach_target_ref": "ref-launch_or_attach_target_ref",
+          "state": "created",
+          "waiter_arm_ref": null,
+          "waiter_armed_at_utc": null,
+          "triggered_at_utc": null,
+          "log_refs": [],
+          "artifact_refs": [],
+          "cleanup_ref": null
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-debug-reject-wrong-custody",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordStorageApplicationV1",
+      "record": {
+        "schema_id": "pm.storage_value.dev_session_record.application.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "storage-a",
+        "server_id": "other-server",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "record": {
+          "schema_id": "pm.debug_session.record.application.v1",
+          "schema_version": "1.0.0",
+          "project_id": null,
+          "application_context": {
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server-a"
+            },
+            "storage_instance_id": "storage-a",
+            "thread_id": "thread-a",
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "roots": [
+              {
+                "execution_host_id": "host-a",
+                "execution_environment_id": "environment-a",
+                "root_ref": "root-root_ref",
+                "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "grant_ref": "root-grant_ref",
+                "kind": "granted_directory"
+              }
+            ],
+            "command_instance_id": "command-a",
+            "idempotency_key": "idempotency-a",
+            "actor_ref": "actor-a",
+            "permission_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "writer_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "scope_stop_epoch": 1,
+            "task_stop_epoch": 1,
+            "expected_generation": 1,
+            "return_context_ref": "return-a"
+          },
+          "source_location_id": "source-location-a",
+          "root_ref": {
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "root_ref": "root-root_ref",
+            "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "grant_ref": "root-grant_ref",
+            "kind": "granted_directory"
+          },
+          "worktree_ref": null,
+          "goal_id": null,
+          "run_id": null,
+          "owner_ref": "ref-owner_ref",
+          "lease_ref": "ref-lease_ref",
+          "session_generation": 1,
+          "permission_snapshot_ref": "ref-permission_snapshot_ref",
+          "policy_ref": "ref-policy_ref",
+          "created_at_utc": "2026-11-04T00:00:00Z",
+          "updated_at_utc": "2026-11-04T00:00:00Z",
+          "terminal_at_utc": null,
+          "dev_session_id": "ref-dev_session_id",
+          "dap_session_id": "ref-dap_session_id",
+          "adapter_installation_ref": "ref-adapter_installation_ref",
+          "adapter_capability_snapshot_ref": "ref-adapter_capability_snapshot_ref",
+          "launch_kind": "launch",
+          "launch_or_attach_target_ref": "ref-launch_or_attach_target_ref",
+          "state": "created",
+          "waiter_arm_ref": null,
+          "waiter_armed_at_utc": null,
+          "triggered_at_utc": null,
+          "log_refs": [],
+          "artifact_refs": [],
+          "cleanup_ref": null
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "refuse_scope_join"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-debug-reject-other-lease",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+      "record": {
+        "schema_id": "pm.debug_session.record.application.v1",
+        "schema_version": "1.0.0",
+        "project_id": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [
+            {
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "root_ref": "root-root_ref",
+              "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "grant_ref": "root-grant_ref",
+              "kind": "granted_directory"
+            }
+          ],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "source_location_id": "source-location-a",
+        "root_ref": {
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "root_ref": "root-root_ref",
+          "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "grant_ref": "root-grant_ref",
+          "kind": "granted_directory"
+        },
+        "worktree_ref": null,
+        "goal_id": null,
+        "run_id": null,
+        "owner_ref": "ref-owner_ref",
+        "lease_ref": "other-lease",
+        "session_generation": 1,
+        "permission_snapshot_ref": "ref-permission_snapshot_ref",
+        "policy_ref": "ref-policy_ref",
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:00Z",
+        "terminal_at_utc": null,
+        "dev_session_id": "ref-dev_session_id",
+        "dap_session_id": "ref-dap_session_id",
+        "adapter_installation_ref": "ref-adapter_installation_ref",
+        "adapter_capability_snapshot_ref": "ref-adapter_capability_snapshot_ref",
+        "launch_kind": "launch",
+        "launch_or_attach_target_ref": "ref-launch_or_attach_target_ref",
+        "state": "created",
+        "waiter_arm_ref": null,
+        "waiter_armed_at_utc": null,
+        "triggered_at_utc": null,
+        "log_refs": [],
+        "artifact_refs": [],
+        "cleanup_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "developer_session.exact_owner",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "debug"
+    },
+    {
+      "case_id": "fix-a-debug-app-source",
+      "schema_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalDebugSessionSource",
+      "record": {
+        "schema_id": "pm.application_source.debug_session.v1",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "storage_instance_id": "storage-a",
+        "server_id": "server-a",
+        "thread_id": "thread-a",
+        "original_operation_id": "operation-a",
+        "interface_id": "owner.debug.session.application@1.0.0",
+        "original_input": {
+          "schema_id": "pm.debug_session.record.application.v1",
+          "schema_version": "1.0.0",
+          "project_id": null,
+          "application_context": {
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server-a"
+            },
+            "storage_instance_id": "storage-a",
+            "thread_id": "thread-a",
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "roots": [
+              {
+                "execution_host_id": "host-a",
+                "execution_environment_id": "environment-a",
+                "root_ref": "root-root_ref",
+                "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "grant_ref": "root-grant_ref",
+                "kind": "granted_directory"
+              }
+            ],
+            "command_instance_id": "command-a",
+            "idempotency_key": "idempotency-a",
+            "actor_ref": "actor-a",
+            "permission_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "writer_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "scope_stop_epoch": 1,
+            "task_stop_epoch": 1,
+            "expected_generation": 1,
+            "return_context_ref": "return-a"
+          },
+          "source_location_id": "source-location-a",
+          "root_ref": {
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "root_ref": "root-root_ref",
+            "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "grant_ref": "root-grant_ref",
+            "kind": "granted_directory"
+          },
+          "worktree_ref": null,
+          "goal_id": null,
+          "run_id": null,
+          "owner_ref": "ref-owner_ref",
+          "lease_ref": "ref-lease_ref",
+          "session_generation": 1,
+          "permission_snapshot_ref": "ref-permission_snapshot_ref",
+          "policy_ref": "ref-policy_ref",
+          "created_at_utc": "2026-11-04T00:00:00Z",
+          "updated_at_utc": "2026-11-04T00:00:00Z",
+          "terminal_at_utc": null,
+          "dev_session_id": "ref-dev_session_id",
+          "dap_session_id": "ref-dap_session_id",
+          "adapter_installation_ref": "ref-adapter_installation_ref",
+          "adapter_capability_snapshot_ref": "ref-adapter_capability_snapshot_ref",
+          "launch_kind": "launch",
+          "launch_or_attach_target_ref": "ref-launch_or_attach_target_ref",
+          "state": "created",
+          "waiter_arm_ref": null,
+          "waiter_armed_at_utc": null,
+          "triggered_at_utc": null,
+          "log_refs": [],
+          "artifact_refs": [],
+          "cleanup_ref": null
+        },
+        "original_input_semantic_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_output": null,
+        "original_output_semantic_sha256": null,
+        "accepted_source_ref": null,
+        "accepted_source_sha256": null,
+        "stage_custody": {
+          "original_intent": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "accepted_original_source": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "current_owner_and_stop_fence": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "canonical_pending_or_reservation": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "owner_commit": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "event_append_if_admitted": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "first_receipt_custody": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "immutable_terminal_result": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "canonical_or_derived_read": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "coherent_backup_restore": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "retention_release": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          }
+        },
+        "source_codec_id": "pm.application.physical_messagepack.v1",
+        "semantic_hash_kind": "accepted_source",
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-debug-reject-browser-source",
+      "schema_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalDebugSessionSource",
+      "record": {
+        "schema_id": "pm.application_source.debug_session.v1",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "storage_instance_id": "storage-a",
+        "server_id": "server-a",
+        "thread_id": "thread-a",
+        "original_operation_id": "operation-a",
+        "interface_id": "owner.browser.transition.application@1.0.0",
+        "original_input": {
+          "schema_id": "pm.debug_session.record.application.v1",
+          "schema_version": "1.0.0",
+          "project_id": null,
+          "application_context": {
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server-a"
+            },
+            "storage_instance_id": "storage-a",
+            "thread_id": "thread-a",
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "roots": [
+              {
+                "execution_host_id": "host-a",
+                "execution_environment_id": "environment-a",
+                "root_ref": "root-root_ref",
+                "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "grant_ref": "root-grant_ref",
+                "kind": "granted_directory"
+              }
+            ],
+            "command_instance_id": "command-a",
+            "idempotency_key": "idempotency-a",
+            "actor_ref": "actor-a",
+            "permission_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "writer_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "scope_stop_epoch": 1,
+            "task_stop_epoch": 1,
+            "expected_generation": 1,
+            "return_context_ref": "return-a"
+          },
+          "source_location_id": "source-location-a",
+          "root_ref": {
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "root_ref": "root-root_ref",
+            "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "grant_ref": "root-grant_ref",
+            "kind": "granted_directory"
+          },
+          "worktree_ref": null,
+          "goal_id": null,
+          "run_id": null,
+          "owner_ref": "ref-owner_ref",
+          "lease_ref": "ref-lease_ref",
+          "session_generation": 1,
+          "permission_snapshot_ref": "ref-permission_snapshot_ref",
+          "policy_ref": "ref-policy_ref",
+          "created_at_utc": "2026-11-04T00:00:00Z",
+          "updated_at_utc": "2026-11-04T00:00:00Z",
+          "terminal_at_utc": null,
+          "dev_session_id": "ref-dev_session_id",
+          "dap_session_id": "ref-dap_session_id",
+          "adapter_installation_ref": "ref-adapter_installation_ref",
+          "adapter_capability_snapshot_ref": "ref-adapter_capability_snapshot_ref",
+          "launch_kind": "launch",
+          "launch_or_attach_target_ref": "ref-launch_or_attach_target_ref",
+          "state": "created",
+          "waiter_arm_ref": null,
+          "waiter_armed_at_utc": null,
+          "triggered_at_utc": null,
+          "log_refs": [],
+          "artifact_refs": [],
+          "cleanup_ref": null
+        },
+        "original_input_semantic_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_output": null,
+        "original_output_semantic_sha256": null,
+        "accepted_source_ref": null,
+        "accepted_source_sha256": null,
+        "stage_custody": {
+          "original_intent": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "accepted_original_source": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "current_owner_and_stop_fence": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "canonical_pending_or_reservation": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "owner_commit": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "event_append_if_admitted": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "first_receipt_custody": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "immutable_terminal_result": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "canonical_or_derived_read": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "coherent_backup_restore": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "retention_release": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.debug.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          }
+        },
+        "source_codec_id": "pm.application_source.debug_session.v1",
+        "semantic_hash_kind": "operation_intent",
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-eval-app-record",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+      "record": {
+        "schema_id": "pm.eval_session.record.application.v1",
+        "schema_version": "1.0.0",
+        "project_id": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [
+            {
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "root_ref": "root-root_ref",
+              "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "grant_ref": "root-grant_ref",
+              "kind": "granted_directory"
+            }
+          ],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "source_location_id": "source-location-a",
+        "root_ref": {
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "root_ref": "root-root_ref",
+          "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "grant_ref": "root-grant_ref",
+          "kind": "granted_directory"
+        },
+        "worktree_ref": null,
+        "goal_id": null,
+        "run_id": null,
+        "owner_ref": "ref-owner_ref",
+        "lease_ref": "ref-lease_ref",
+        "session_generation": 1,
+        "permission_snapshot_ref": "ref-permission_snapshot_ref",
+        "policy_ref": "ref-policy_ref",
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:00Z",
+        "terminal_at_utc": null,
+        "eval_session_id": "ref-eval_session_id",
+        "kernel_id": "ref-kernel_id",
+        "runtime_installation_ref": "ref-runtime_installation_ref",
+        "language": "python",
+        "state": "created",
+        "variable_scope": "session",
+        "variable_disposition": "preserved",
+        "output_cursor": 0,
+        "bounded_output_ref": null,
+        "full_output_artifact_ref": null,
+        "nested_dispatch_receipt_refs": [],
+        "artifact_root_ref": "ref-artifact_root_ref",
+        "cleanup_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "developer_session.exact_owner",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "eval"
+    },
+    {
+      "case_id": "fix-a-eval-reject-browser-profile",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+      "record": {
+        "schema_id": "pm.eval_session.record.application.v1",
+        "schema_version": "1.0.0",
+        "project_id": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [
+            {
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "root_ref": "root-root_ref",
+              "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "grant_ref": "root-grant_ref",
+              "kind": "granted_directory"
+            }
+          ],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "source_location_id": "source-location-a",
+        "root_ref": {
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "root_ref": "root-root_ref",
+          "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "grant_ref": "root-grant_ref",
+          "kind": "granted_directory"
+        },
+        "worktree_ref": null,
+        "goal_id": null,
+        "run_id": null,
+        "owner_ref": "ref-owner_ref",
+        "lease_ref": "ref-lease_ref",
+        "session_generation": 1,
+        "permission_snapshot_ref": "ref-permission_snapshot_ref",
+        "policy_ref": "ref-policy_ref",
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:00Z",
+        "terminal_at_utc": null,
+        "eval_session_id": "ref-eval_session_id",
+        "kernel_id": "ref-kernel_id",
+        "runtime_installation_ref": "ref-runtime_installation_ref",
+        "language": "python",
+        "state": "created",
+        "variable_scope": "session",
+        "variable_disposition": "preserved",
+        "output_cursor": 0,
+        "bounded_output_ref": null,
+        "full_output_artifact_ref": null,
+        "nested_dispatch_receipt_refs": [],
+        "artifact_root_ref": "ref-artifact_root_ref",
+        "cleanup_ref": null,
+        "profile_id": "browser-profile"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-eval-reject-project-record",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+      "record": {
+        "schema_id": "pm.eval_session.record.application.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-a",
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [
+            {
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "root_ref": "root-root_ref",
+              "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "grant_ref": "root-grant_ref",
+              "kind": "granted_directory"
+            }
+          ],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "source_location_id": "source-location-a",
+        "root_ref": {
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "root_ref": "root-root_ref",
+          "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "grant_ref": "root-grant_ref",
+          "kind": "granted_directory"
+        },
+        "worktree_ref": null,
+        "goal_id": null,
+        "run_id": null,
+        "owner_ref": "ref-owner_ref",
+        "lease_ref": "ref-lease_ref",
+        "session_generation": 1,
+        "permission_snapshot_ref": "ref-permission_snapshot_ref",
+        "policy_ref": "ref-policy_ref",
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:00Z",
+        "terminal_at_utc": null,
+        "eval_session_id": "ref-eval_session_id",
+        "kernel_id": "ref-kernel_id",
+        "runtime_installation_ref": "ref-runtime_installation_ref",
+        "language": "python",
+        "state": "created",
+        "variable_scope": "session",
+        "variable_disposition": "preserved",
+        "output_cursor": 0,
+        "bounded_output_ref": null,
+        "full_output_artifact_ref": null,
+        "nested_dispatch_receipt_refs": [],
+        "artifact_root_ref": "ref-artifact_root_ref",
+        "cleanup_ref": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-eval-kernel-javascript",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+      "record": {
+        "schema_id": "pm.eval_session.record.application.v1",
+        "schema_version": "1.0.0",
+        "project_id": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [
+            {
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "root_ref": "root-root_ref",
+              "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "grant_ref": "root-grant_ref",
+              "kind": "granted_directory"
+            }
+          ],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "source_location_id": "source-location-a",
+        "root_ref": {
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "root_ref": "root-root_ref",
+          "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "grant_ref": "root-grant_ref",
+          "kind": "granted_directory"
+        },
+        "worktree_ref": null,
+        "goal_id": null,
+        "run_id": null,
+        "owner_ref": "ref-owner_ref",
+        "lease_ref": "ref-lease_ref",
+        "session_generation": 1,
+        "permission_snapshot_ref": "ref-permission_snapshot_ref",
+        "policy_ref": "ref-policy_ref",
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:00Z",
+        "terminal_at_utc": null,
+        "eval_session_id": "ref-eval_session_id",
+        "kernel_id": "ref-kernel_id",
+        "runtime_installation_ref": "ref-runtime_installation_ref",
+        "language": "javascript",
+        "state": "created",
+        "variable_scope": "session",
+        "variable_disposition": "preserved",
+        "output_cursor": 0,
+        "bounded_output_ref": null,
+        "full_output_artifact_ref": null,
+        "nested_dispatch_receipt_refs": [],
+        "artifact_root_ref": "ref-artifact_root_ref",
+        "cleanup_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-eval-kernel-ruby",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+      "record": {
+        "schema_id": "pm.eval_session.record.application.v1",
+        "schema_version": "1.0.0",
+        "project_id": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [
+            {
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "root_ref": "root-root_ref",
+              "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "grant_ref": "root-grant_ref",
+              "kind": "granted_directory"
+            }
+          ],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "source_location_id": "source-location-a",
+        "root_ref": {
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "root_ref": "root-root_ref",
+          "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "grant_ref": "root-grant_ref",
+          "kind": "granted_directory"
+        },
+        "worktree_ref": null,
+        "goal_id": null,
+        "run_id": null,
+        "owner_ref": "ref-owner_ref",
+        "lease_ref": "ref-lease_ref",
+        "session_generation": 1,
+        "permission_snapshot_ref": "ref-permission_snapshot_ref",
+        "policy_ref": "ref-policy_ref",
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:00Z",
+        "terminal_at_utc": null,
+        "eval_session_id": "ref-eval_session_id",
+        "kernel_id": "ref-kernel_id",
+        "runtime_installation_ref": "ref-runtime_installation_ref",
+        "language": "ruby",
+        "state": "created",
+        "variable_scope": "session",
+        "variable_disposition": "preserved",
+        "output_cursor": 0,
+        "bounded_output_ref": null,
+        "full_output_artifact_ref": null,
+        "nested_dispatch_receipt_refs": [],
+        "artifact_root_ref": "ref-artifact_root_ref",
+        "cleanup_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-eval-kernel-julia",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+      "record": {
+        "schema_id": "pm.eval_session.record.application.v1",
+        "schema_version": "1.0.0",
+        "project_id": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [
+            {
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "root_ref": "root-root_ref",
+              "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "grant_ref": "root-grant_ref",
+              "kind": "granted_directory"
+            }
+          ],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "source_location_id": "source-location-a",
+        "root_ref": {
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "root_ref": "root-root_ref",
+          "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "grant_ref": "root-grant_ref",
+          "kind": "granted_directory"
+        },
+        "worktree_ref": null,
+        "goal_id": null,
+        "run_id": null,
+        "owner_ref": "ref-owner_ref",
+        "lease_ref": "ref-lease_ref",
+        "session_generation": 1,
+        "permission_snapshot_ref": "ref-permission_snapshot_ref",
+        "policy_ref": "ref-policy_ref",
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:00Z",
+        "terminal_at_utc": null,
+        "eval_session_id": "ref-eval_session_id",
+        "kernel_id": "ref-kernel_id",
+        "runtime_installation_ref": "ref-runtime_installation_ref",
+        "language": "julia",
+        "state": "created",
+        "variable_scope": "session",
+        "variable_disposition": "preserved",
+        "output_cursor": 0,
+        "bounded_output_ref": null,
+        "full_output_artifact_ref": null,
+        "nested_dispatch_receipt_refs": [],
+        "artifact_root_ref": "ref-artifact_root_ref",
+        "cleanup_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-eval-app-custody",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordStorageApplicationV1",
+      "record": {
+        "schema_id": "pm.storage_value.eval_session_record.application.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "storage-a",
+        "server_id": "server-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "record": {
+          "schema_id": "pm.eval_session.record.application.v1",
+          "schema_version": "1.0.0",
+          "project_id": null,
+          "application_context": {
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server-a"
+            },
+            "storage_instance_id": "storage-a",
+            "thread_id": "thread-a",
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "roots": [
+              {
+                "execution_host_id": "host-a",
+                "execution_environment_id": "environment-a",
+                "root_ref": "root-root_ref",
+                "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "grant_ref": "root-grant_ref",
+                "kind": "granted_directory"
+              }
+            ],
+            "command_instance_id": "command-a",
+            "idempotency_key": "idempotency-a",
+            "actor_ref": "actor-a",
+            "permission_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "writer_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "scope_stop_epoch": 1,
+            "task_stop_epoch": 1,
+            "expected_generation": 1,
+            "return_context_ref": "return-a"
+          },
+          "source_location_id": "source-location-a",
+          "root_ref": {
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "root_ref": "root-root_ref",
+            "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "grant_ref": "root-grant_ref",
+            "kind": "granted_directory"
+          },
+          "worktree_ref": null,
+          "goal_id": null,
+          "run_id": null,
+          "owner_ref": "ref-owner_ref",
+          "lease_ref": "ref-lease_ref",
+          "session_generation": 1,
+          "permission_snapshot_ref": "ref-permission_snapshot_ref",
+          "policy_ref": "ref-policy_ref",
+          "created_at_utc": "2026-11-04T00:00:00Z",
+          "updated_at_utc": "2026-11-04T00:00:00Z",
+          "terminal_at_utc": null,
+          "eval_session_id": "ref-eval_session_id",
+          "kernel_id": "ref-kernel_id",
+          "runtime_installation_ref": "ref-runtime_installation_ref",
+          "language": "python",
+          "state": "created",
+          "variable_scope": "session",
+          "variable_disposition": "preserved",
+          "output_cursor": 0,
+          "bounded_output_ref": null,
+          "full_output_artifact_ref": null,
+          "nested_dispatch_receipt_refs": [],
+          "artifact_root_ref": "ref-artifact_root_ref",
+          "cleanup_ref": null
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-eval-reject-wrong-custody",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordStorageApplicationV1",
+      "record": {
+        "schema_id": "pm.storage_value.eval_session_record.application.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "storage-a",
+        "server_id": "other-server",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "record": {
+          "schema_id": "pm.eval_session.record.application.v1",
+          "schema_version": "1.0.0",
+          "project_id": null,
+          "application_context": {
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server-a"
+            },
+            "storage_instance_id": "storage-a",
+            "thread_id": "thread-a",
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "roots": [
+              {
+                "execution_host_id": "host-a",
+                "execution_environment_id": "environment-a",
+                "root_ref": "root-root_ref",
+                "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "grant_ref": "root-grant_ref",
+                "kind": "granted_directory"
+              }
+            ],
+            "command_instance_id": "command-a",
+            "idempotency_key": "idempotency-a",
+            "actor_ref": "actor-a",
+            "permission_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "writer_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "scope_stop_epoch": 1,
+            "task_stop_epoch": 1,
+            "expected_generation": 1,
+            "return_context_ref": "return-a"
+          },
+          "source_location_id": "source-location-a",
+          "root_ref": {
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "root_ref": "root-root_ref",
+            "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "grant_ref": "root-grant_ref",
+            "kind": "granted_directory"
+          },
+          "worktree_ref": null,
+          "goal_id": null,
+          "run_id": null,
+          "owner_ref": "ref-owner_ref",
+          "lease_ref": "ref-lease_ref",
+          "session_generation": 1,
+          "permission_snapshot_ref": "ref-permission_snapshot_ref",
+          "policy_ref": "ref-policy_ref",
+          "created_at_utc": "2026-11-04T00:00:00Z",
+          "updated_at_utc": "2026-11-04T00:00:00Z",
+          "terminal_at_utc": null,
+          "eval_session_id": "ref-eval_session_id",
+          "kernel_id": "ref-kernel_id",
+          "runtime_installation_ref": "ref-runtime_installation_ref",
+          "language": "python",
+          "state": "created",
+          "variable_scope": "session",
+          "variable_disposition": "preserved",
+          "output_cursor": 0,
+          "bounded_output_ref": null,
+          "full_output_artifact_ref": null,
+          "nested_dispatch_receipt_refs": [],
+          "artifact_root_ref": "ref-artifact_root_ref",
+          "cleanup_ref": null
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "refuse_scope_join"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-eval-reject-other-lease",
+      "schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+      "record": {
+        "schema_id": "pm.eval_session.record.application.v1",
+        "schema_version": "1.0.0",
+        "project_id": null,
+        "application_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [
+            {
+              "execution_host_id": "host-a",
+              "execution_environment_id": "environment-a",
+              "root_ref": "root-root_ref",
+              "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "grant_ref": "root-grant_ref",
+              "kind": "granted_directory"
+            }
+          ],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "source_location_id": "source-location-a",
+        "root_ref": {
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "root_ref": "root-root_ref",
+          "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "grant_ref": "root-grant_ref",
+          "kind": "granted_directory"
+        },
+        "worktree_ref": null,
+        "goal_id": null,
+        "run_id": null,
+        "owner_ref": "ref-owner_ref",
+        "lease_ref": "other-lease",
+        "session_generation": 1,
+        "permission_snapshot_ref": "ref-permission_snapshot_ref",
+        "policy_ref": "ref-policy_ref",
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:00Z",
+        "terminal_at_utc": null,
+        "eval_session_id": "ref-eval_session_id",
+        "kernel_id": "ref-kernel_id",
+        "runtime_installation_ref": "ref-runtime_installation_ref",
+        "language": "python",
+        "state": "created",
+        "variable_scope": "session",
+        "variable_disposition": "preserved",
+        "output_cursor": 0,
+        "bounded_output_ref": null,
+        "full_output_artifact_ref": null,
+        "nested_dispatch_receipt_refs": [],
+        "artifact_root_ref": "ref-artifact_root_ref",
+        "cleanup_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "developer_session.exact_owner",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "eval"
+    },
+    {
+      "case_id": "fix-a-eval-app-source",
+      "schema_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalEvalSessionSource",
+      "record": {
+        "schema_id": "pm.application_source.eval_session.v1",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "storage_instance_id": "storage-a",
+        "server_id": "server-a",
+        "thread_id": "thread-a",
+        "original_operation_id": "operation-a",
+        "interface_id": "owner.eval.session.application@1.0.0",
+        "original_input": {
+          "schema_id": "pm.eval_session.record.application.v1",
+          "schema_version": "1.0.0",
+          "project_id": null,
+          "application_context": {
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server-a"
+            },
+            "storage_instance_id": "storage-a",
+            "thread_id": "thread-a",
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "roots": [
+              {
+                "execution_host_id": "host-a",
+                "execution_environment_id": "environment-a",
+                "root_ref": "root-root_ref",
+                "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "grant_ref": "root-grant_ref",
+                "kind": "granted_directory"
+              }
+            ],
+            "command_instance_id": "command-a",
+            "idempotency_key": "idempotency-a",
+            "actor_ref": "actor-a",
+            "permission_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "writer_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "scope_stop_epoch": 1,
+            "task_stop_epoch": 1,
+            "expected_generation": 1,
+            "return_context_ref": "return-a"
+          },
+          "source_location_id": "source-location-a",
+          "root_ref": {
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "root_ref": "root-root_ref",
+            "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "grant_ref": "root-grant_ref",
+            "kind": "granted_directory"
+          },
+          "worktree_ref": null,
+          "goal_id": null,
+          "run_id": null,
+          "owner_ref": "ref-owner_ref",
+          "lease_ref": "ref-lease_ref",
+          "session_generation": 1,
+          "permission_snapshot_ref": "ref-permission_snapshot_ref",
+          "policy_ref": "ref-policy_ref",
+          "created_at_utc": "2026-11-04T00:00:00Z",
+          "updated_at_utc": "2026-11-04T00:00:00Z",
+          "terminal_at_utc": null,
+          "eval_session_id": "ref-eval_session_id",
+          "kernel_id": "ref-kernel_id",
+          "runtime_installation_ref": "ref-runtime_installation_ref",
+          "language": "python",
+          "state": "created",
+          "variable_scope": "session",
+          "variable_disposition": "preserved",
+          "output_cursor": 0,
+          "bounded_output_ref": null,
+          "full_output_artifact_ref": null,
+          "nested_dispatch_receipt_refs": [],
+          "artifact_root_ref": "ref-artifact_root_ref",
+          "cleanup_ref": null
+        },
+        "original_input_semantic_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_output": null,
+        "original_output_semantic_sha256": null,
+        "accepted_source_ref": null,
+        "accepted_source_sha256": null,
+        "stage_custody": {
+          "original_intent": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "accepted_original_source": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "current_owner_and_stop_fence": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "canonical_pending_or_reservation": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "owner_commit": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "event_append_if_admitted": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "first_receipt_custody": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "immutable_terminal_result": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "canonical_or_derived_read": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "coherent_backup_restore": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "retention_release": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          }
+        },
+        "source_codec_id": "pm.application.physical_messagepack.v1",
+        "semantic_hash_kind": "accepted_source",
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-eval-reject-browser-source",
+      "schema_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalEvalSessionSource",
+      "record": {
+        "schema_id": "pm.application_source.eval_session.v1",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "storage_instance_id": "storage-a",
+        "server_id": "server-a",
+        "thread_id": "thread-a",
+        "original_operation_id": "operation-a",
+        "interface_id": "owner.browser.transition.application@1.0.0",
+        "original_input": {
+          "schema_id": "pm.eval_session.record.application.v1",
+          "schema_version": "1.0.0",
+          "project_id": null,
+          "application_context": {
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server-a"
+            },
+            "storage_instance_id": "storage-a",
+            "thread_id": "thread-a",
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "roots": [
+              {
+                "execution_host_id": "host-a",
+                "execution_environment_id": "environment-a",
+                "root_ref": "root-root_ref",
+                "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "grant_ref": "root-grant_ref",
+                "kind": "granted_directory"
+              }
+            ],
+            "command_instance_id": "command-a",
+            "idempotency_key": "idempotency-a",
+            "actor_ref": "actor-a",
+            "permission_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "writer_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "scope_stop_epoch": 1,
+            "task_stop_epoch": 1,
+            "expected_generation": 1,
+            "return_context_ref": "return-a"
+          },
+          "source_location_id": "source-location-a",
+          "root_ref": {
+            "execution_host_id": "host-a",
+            "execution_environment_id": "environment-a",
+            "root_ref": "root-root_ref",
+            "root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "grant_ref": "root-grant_ref",
+            "kind": "granted_directory"
+          },
+          "worktree_ref": null,
+          "goal_id": null,
+          "run_id": null,
+          "owner_ref": "ref-owner_ref",
+          "lease_ref": "ref-lease_ref",
+          "session_generation": 1,
+          "permission_snapshot_ref": "ref-permission_snapshot_ref",
+          "policy_ref": "ref-policy_ref",
+          "created_at_utc": "2026-11-04T00:00:00Z",
+          "updated_at_utc": "2026-11-04T00:00:00Z",
+          "terminal_at_utc": null,
+          "eval_session_id": "ref-eval_session_id",
+          "kernel_id": "ref-kernel_id",
+          "runtime_installation_ref": "ref-runtime_installation_ref",
+          "language": "python",
+          "state": "created",
+          "variable_scope": "session",
+          "variable_disposition": "preserved",
+          "output_cursor": 0,
+          "bounded_output_ref": null,
+          "full_output_artifact_ref": null,
+          "nested_dispatch_receipt_refs": [],
+          "artifact_root_ref": "ref-artifact_root_ref",
+          "cleanup_ref": null
+        },
+        "original_input_semantic_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "original_output": null,
+        "original_output_semantic_sha256": null,
+        "accepted_source_ref": null,
+        "accepted_source_sha256": null,
+        "stage_custody": {
+          "original_intent": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "accepted_original_source": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "current_owner_and_stop_fence": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "canonical_pending_or_reservation": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "owner_commit": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "event_append_if_admitted": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "first_receipt_custody": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "immutable_terminal_result": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "canonical_or_derived_read": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "coherent_backup_restore": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          },
+          "retention_release": {
+            "status": "not_reached",
+            "original_operation_id": "operation-a",
+            "owner_method_id": "owner.eval.session.application@1.0.0",
+            "request_ref": null,
+            "result_ref": null,
+            "custody_evidence": null
+          }
+        },
+        "source_codec_id": "pm.application_source.eval_session.v1",
+        "semantic_hash_kind": "operation_intent",
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    }
+  ]
+}

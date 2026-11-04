@@ -1,0 +1,637 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/Plans/developer_session_application_contracts.schema.json",
+  "$defs": {
+    "DebugSessionRecordApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "application_context",
+        "source_location_id",
+        "root_ref",
+        "worktree_ref",
+        "goal_id",
+        "run_id",
+        "owner_ref",
+        "lease_ref",
+        "session_generation",
+        "permission_snapshot_ref",
+        "policy_ref",
+        "created_at_utc",
+        "updated_at_utc",
+        "terminal_at_utc",
+        "dev_session_id",
+        "dap_session_id",
+        "adapter_installation_ref",
+        "adapter_capability_snapshot_ref",
+        "launch_kind",
+        "launch_or_attach_target_ref",
+        "state",
+        "waiter_arm_ref",
+        "waiter_armed_at_utc",
+        "triggered_at_utc",
+        "log_refs",
+        "artifact_refs",
+        "cleanup_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.debug_session.record.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "const": null
+        },
+        "application_context": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+            },
+            {
+              "properties": {
+                "scope": {
+                  "allOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+                    },
+                    {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "source_location_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "root_ref": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowRootRefV1"
+        },
+        "worktree_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "goal_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "lease_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "session_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "policy_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "terminal_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dev_session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "dap_session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "adapter_installation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "adapter_capability_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "launch_kind": {
+          "enum": [
+            "launch",
+            "attach"
+          ]
+        },
+        "launch_or_attach_target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "state": {
+          "enum": [
+            "created",
+            "awaiting_lease",
+            "launching",
+            "attaching",
+            "running",
+            "paused",
+            "terminating",
+            "terminated",
+            "failed",
+            "reconciling",
+            "recovery_required"
+          ]
+        },
+        "waiter_arm_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "waiter_armed_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "triggered_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "log_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "cleanup_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "EvalSessionRecordApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "application_context",
+        "source_location_id",
+        "root_ref",
+        "worktree_ref",
+        "goal_id",
+        "run_id",
+        "owner_ref",
+        "lease_ref",
+        "session_generation",
+        "permission_snapshot_ref",
+        "policy_ref",
+        "created_at_utc",
+        "updated_at_utc",
+        "terminal_at_utc",
+        "eval_session_id",
+        "kernel_id",
+        "runtime_installation_ref",
+        "language",
+        "state",
+        "variable_scope",
+        "variable_disposition",
+        "output_cursor",
+        "bounded_output_ref",
+        "full_output_artifact_ref",
+        "nested_dispatch_receipt_refs",
+        "artifact_root_ref",
+        "cleanup_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.eval_session.record.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "const": null
+        },
+        "application_context": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+            },
+            {
+              "properties": {
+                "scope": {
+                  "allOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+                    },
+                    {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "source_location_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "root_ref": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowRootRefV1"
+        },
+        "worktree_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "goal_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "lease_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "session_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "policy_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "terminal_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eval_session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "kernel_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "runtime_installation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "language": {
+          "enum": [
+            "python",
+            "javascript",
+            "ruby",
+            "julia"
+          ]
+        },
+        "state": {
+          "enum": [
+            "created",
+            "awaiting_lease",
+            "starting",
+            "ready",
+            "executing",
+            "interrupting",
+            "restarting",
+            "stopping",
+            "stopped",
+            "failed",
+            "reconciling",
+            "recovery_required"
+          ]
+        },
+        "variable_scope": {
+          "enum": [
+            "session",
+            "thread",
+            "goal"
+          ]
+        },
+        "variable_disposition": {
+          "enum": [
+            "preserved",
+            "cleared",
+            "exported_redacted_artifact",
+            "quarantined",
+            "manual_recovery_required"
+          ]
+        },
+        "output_cursor": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bounded_output_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "full_output_artifact_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nested_dispatch_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "artifact_root_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "cleanup_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "DebugSessionRecordStorageApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.dev_session_record.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1"
+        }
+      }
+    },
+    "EvalSessionRecordStorageApplicationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.eval_session_record.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1"
+        }
+      }
+    }
+  }
+}

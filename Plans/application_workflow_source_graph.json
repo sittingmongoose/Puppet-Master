@@ -14,6 +14,18 @@
       ]
     },
     {
+      "retrieval_uri": "https://puppetmaster.local/Plans/developer_session_application_contracts.schema.json",
+      "path": "Plans/developer_session_application_contracts.schema.json",
+      "whole_resource_sha256": "f8fc3fb99b69da8bb0daffc5fd59098830a7731dd0d4e2ac92c29e25adb4c999",
+      "resource_role": "selected_application_developer_sessions",
+      "literal_root_pointers": [
+        "#/$defs/DebugSessionRecordApplicationV1",
+        "#/$defs/DebugSessionRecordStorageApplicationV1",
+        "#/$defs/EvalSessionRecordApplicationV1",
+        "#/$defs/EvalSessionRecordStorageApplicationV1"
+      ]
+    },
+    {
       "retrieval_uri": "https://puppetmaster.local/Plans/section15_browser_program_contracts.schema.json",
       "path": "Plans/section15_browser_program_contracts.schema.json",
       "whole_resource_sha256": "53bd77453d0a4d2d941bad5f36f6ac1b0beef16b769a00f31870a1085688a534",
@@ -121,7 +133,7 @@
     {
       "retrieval_uri": "https://puppetmaster.local/schemas/application-workflows/1.0.0/sources.schema.json",
       "path": "Plans/application_workflow_sources.schema.json",
-      "whole_resource_sha256": "fa33642578d7ed29fa2edda2b9b5e7615749bdd660ad5db03f6057b5925d2c08",
+      "whole_resource_sha256": "f6a9d30395bc38e15b1fb3cc4545f1f808a31ed01da2cc47e5b2fd1239979301",
       "resource_role": "selected_application_or_current_aggregate",
       "literal_root_pointers": [
         "#/$defs/OriginalApplicationPauseSource",
@@ -131,6 +143,8 @@
         "#/$defs/OriginalBrowserTransitionSource",
         "#/$defs/OriginalChatMoveSource",
         "#/$defs/OriginalCoordinationAppendSource",
+        "#/$defs/OriginalDebugSessionSource",
+        "#/$defs/OriginalEvalSessionSource",
         "#/$defs/OriginalGoalCancelSource",
         "#/$defs/OriginalGoalStartSource",
         "#/$defs/OriginalGoalUpdateSource",
@@ -243,6 +257,22 @@
       "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalChatMoveSource",
       "input_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
       "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.debug.session.application@1.0.0",
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-139",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalDebugSessionSource",
+      "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+      "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    },
+    {
+      "interface_id": "owner.eval.session.application@1.0.0",
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-140",
+      "source_root_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalEvalSessionSource",
+      "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+      "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
       "current_or_retained_role": "original_current_and_retained_exact"
     },
     {
@@ -702,6 +732,192 @@
       ],
       "retention_policy_refs": [
         "RP-AUTHORITY-INDEFINITE"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.debug_session.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.debug.session.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.debug.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.debug.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.debug.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.debug.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.debug.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.debug.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.debug.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.debug.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.debug.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.debug.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1"
+        }
+      ],
+      "physical_family_ids": [
+        "dev_session_record_application"
+      ],
+      "event_selectors": [],
+      "reader_ids": [
+        "debug_session_broker.application.read"
+      ],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-DEBUG-30D"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    },
+    {
+      "graph_id": "app.eval_session.v1",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "owner.eval.session.application@1.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "owner.eval.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "owner.eval.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "owner.eval.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "owner.eval.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "owner.eval.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "owner.eval.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "owner.eval.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "owner.eval.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "owner.eval.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "owner.eval.session.application@1.0.0",
+          "input_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1",
+          "output_root_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1"
+        }
+      ],
+      "physical_family_ids": [
+        "eval_session_record_application"
+      ],
+      "event_selectors": [],
+      "reader_ids": [
+        "eval_session_broker.application.read"
+      ],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-DEBUG-30D"
       ],
       "adoption_disposition": "specified_unimplemented"
     },
@@ -1912,5 +2128,5 @@
       "adoption_disposition": "specified_unimplemented"
     }
   ],
-  "graph_sha256": "507e2cc8a45c3af77788b37127ad578ed8009fec1f4474fd5815bee4d2b0a010"
+  "graph_sha256": "ff188b13c910f4ff3b10fee4227fecf07c1a39e7d7a9d09749c38b0df37285b8"
 }
