@@ -3972,8 +3972,8 @@
     if (d.purposeFromComposer && composerText(ctx) === d.purposeFromComposer) clearComposerText(ctx);
     RTC.draft = null;
     /* M3: attachCardToThread armed the flight and the start exit (focus goes to the composer, 6.7, IMPACT A1-36) */
-    ctx.closeDialog();
-    if (ctx.renderConversation) ctx.renderConversation(); else ctx.renderApp();
+    if (ctx.renderConversation) { ctx.closeDialog({render:false}); ctx.renderConversation(); }
+    else { ctx.closeDialog(); ctx.renderApp(); }
     return true;
   });
 

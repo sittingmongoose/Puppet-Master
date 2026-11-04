@@ -453,7 +453,7 @@
   }
 
   function openDialog(d){ state.dialog=d; renderOverlays(); }
-  function closeDialog(){ if(state.dialog?.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom}; state.dialog=null; renderOverlays(); }
+  function closeDialog(o){ if(state.dialog?.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom}; state.dialog=null; if(!o||o.render!==false)renderOverlays(); }
   /* The concept had no clipboard write at all -- copy-message and copy-mermaid
      only raised a toast. Async Clipboard first, execCommand second (file://
      pages without a secure context still need it), and an honest failure
@@ -2761,7 +2761,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      stage using the existing scroll/FLIP owner; leave shell/editor/history alone. */
   function renderConversationUpdate(){
     const stage=document.querySelector('#pmRoot .chat-stage');
-    if(!HOSTED||!stage||state.editorRevealed){renderApp();return;}
+    if(!HOSTED||!stage||state.editorRevealed||state.workGate){renderApp();return;}
     syncActivityDomain();
     if(activityDocked()!==activityDockLayout){renderApp();return;}
     if(!patchScope(stage,renderChat())){renderApp();return;}
