@@ -1,3 +1,4 @@
+import {paintedText} from '../helpers/painted-text.mjs';
 // Stream F shell state regressions; run on both normal and opaque-origin surfaces.
 export const tests = {
  async 'SW31 every CLI installer exposes failure examples'(t) {
@@ -99,6 +100,8 @@ export const tests = {
   for (const look of ['nier-light','friendly-dark']) {
    f=await t.app.open();
    await t.app.look(look); await f.locator('#o55np-reboot').waitFor({state:'hidden'});
+   await f.evaluate(()=>O55.studio.looks.setReduced(true));
+   if(t.args.helpSelftest==='transparent') await f.addStyleTag({content:'#pm7ob-explainer .pst-bt-on, #pm7ob-explainer .pst-bt-off, #pm7ob-explainer .o55-explainer-w {opacity:0!important}'});
    for (const id of ['ai','ai-none','c-review','c-pair','c-ready','s-kind','s-wait','s-confirm','s-ready','away-setup']) {
     await f.evaluate(() => O55.studio.open('onboarding'));
     const row=f.locator(`#pmds-sheet [data-pmds-do="open-screen"][data-arg="${id}"]`);
@@ -120,6 +123,11 @@ export const tests = {
     await t.check(`${look} ${id} help note visible`,await f.locator('#pm7ob-explainer').isVisible());
     const words=f.locator('#pm7ob-explainer .pst-bt-on, #pm7ob-explainer .o55-explainer-w').first();
     await t.check(`${look} ${id} help note has rendered body text`,await words.isVisible()&&(await words.innerText()).trim().length>0);
+    const opacity=await words.evaluate(e=>{const walk=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let count=0,n;while((n=walk.nextNode())){if(!n.textContent.trim())continue;count++;for(let p=n.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(s.display==='none'||s.visibility!=='visible'||Number(s.opacity)===0)return false;}}return count>0;});
+    await t.check(`${look} ${id} body text subtree has visible opacity`,opacity);
+    const bodyPaint=await paintedText(words);
+    t.log(JSON.stringify({look,id,bodyPaint}));
+    await t.check(`${look} ${id} body text paints ink`,bodyPaint.count>=3&&bodyPaint.minimum>=3,JSON.stringify(bodyPaint));
     if(['c-pair','s-wait'].includes(id)) await t.crop(`${look}-${id}-help`,'#pm7ob-explainer','Rendered help body stays visible on the pairing and discovery screens');
 
     await f.evaluate(() => O55.ui.close());
