@@ -185,13 +185,14 @@ def append_current(before, value, event):
     require(len(_CODEC.binding_bytes(value['payload'])) <= 16384, 'inline_payload_too_large')
     key = [scope_partition(row['project_id']), event, value['idempotency_key']]
     require(state['dedupe_key'] == key, 'scope_partition_mismatch')
+    # Terminal retries disclose an original too, so start custody must precede that return.
+    require(suffix == 'started' or custody(state, 'started'), 'start_receipt_missing')
     if state['original'] is not None:
         original = state['original']['full_value']
         require(original_matches(state['original'], original) and envelope_validator().is_valid(original)
                 and all(original[k] == value[k] for k in producer_fields), 'original_value_changed')
         return state, deepcopy(original)
     require(row['phase'] == ('accepted' if suffix == 'started' else 'effect_committed'), 'wrong_phase')
-    require(suffix == 'started' or custody(state, 'started'), 'start_receipt_missing')
     state['original'] = retained(value)
     state['append_count'] += 1
     return state, deepcopy(value)
@@ -469,7 +470,14 @@ def run_writers(fixtures, families):
     for family in fixtures['writer_families']:
         event = family['event_type']; assert event in families and event not in counts
         cases = family['cases']; names = [c['name'] for c in cases]
-        assert len(names) == len(set(names)) and {event + ':' + n for n in required} <= set(names)
+        own_required = set(required)
+        if event.endswith('.completed'):
+            own_required |= {phase + '-retry-start-' + defect
+                             for phase in ('effect_committed', 'completed', 'failed_effect', 'failed_completed')
+                             for defect in ('missing', 'changed-hash', 'changed-value', 'not-flushed')}
+            own_required |= {phase + '-retry-original-with-start'
+                             for phase in ('effect_committed', 'completed', 'failed_effect', 'failed_completed')}
+        assert len(names) == len(set(names)) and {event + ':' + n for n in own_required} <= set(names)
         states = family['states']; counts[event] = 0
         for case in cases:
             state = patch(states[case['initial']], case.get('edits', []))
