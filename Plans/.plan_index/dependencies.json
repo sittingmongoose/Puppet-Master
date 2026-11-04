@@ -2226,6 +2226,7 @@
     "F3-467",
     "F3-469",
     "DL-230",
+    "DL-301",
     "DR-084",
     "DR-085",
     "DR-089",
@@ -29426,6 +29427,11 @@
       "edge_type": "depends_on",
       "from": "DL-300",
       "to": "DL-292"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-301",
+      "to": "DL-228"
     },
     {
       "edge_type": "depends_on",
@@ -111294,6 +111300,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "DL-301",
+      "to": "SSYS-010"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "DP-063",
       "to": "ATS-018"
     },
@@ -117208,7 +117219,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T18:40:21Z",
+  "generated_at_utc": "2026-11-04T18:46:51Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -152344,6 +152355,23 @@
         "heading_level": 3,
         "heading_line": 21037,
         "line": 21039,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "theme_scheme_ruling_20261104",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-301",
+      "reasoning_tier": "high",
+      "risk_class": "appearance_choice_or_compatibility_drift",
+      "source_location": {
+        "heading": "DL-301 - Theme Chooses A Family And One Control Chooses The Scheme",
+        "heading_level": 3,
+        "heading_line": 21108,
+        "line": 21110,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -243374,12 +243402,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18748,
+    "depends_on_edge_count": 18749,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21956,
-    "node_count": 7421,
+    "edge_count": 21958,
+    "node_count": 7422,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 3208,
+    "unblocks_edge_count": 3209,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

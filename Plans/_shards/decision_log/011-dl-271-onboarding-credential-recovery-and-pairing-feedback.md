@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L19639-L21106
+Source lines: L19639-L21153
 
-Source SHA256: `d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd`
+Source SHA256: `8e6918a8b03559fa695a1642c58a6b23665d4baf816b5bba88f3aff5899a2c14`
 
 ---
 
@@ -1476,3 +1476,50 @@ owner_hints:
   - Plans/Permissions_System.md
   - Plans/Contracts_V0.md
 ```
+
+### DL-301 - Theme Chooses A Family And One Control Chooses The Scheme
+
+```yaml
+plan_unit_id: DL-301
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared, 2026-11-04: "We don't need light and dark next to each theme, since it's at the top with auto. So just the 1 control."
+  Theme offers only Basic, Friendly, Retro, Glass and NieR. One Light / Dark / Auto control chooses the scheme for every family. A family pick preserves that scheme, including Auto. The title-bar quick switch retains its existing five-family and single-scheme separation. The older Basic light/dark control is no longer offered, including in advanced Settings.
+  This supersedes exactly the DL-228 amendment in SSYS-010 that read: "picking a named variant, such as Glass Light, while Theme Mode is Auto commits that variant and its mode as one SSYS-009 transaction, even when the variant is already the stored value, so the mode leaves Auto". Visible family picks now preserve Auto. The ten composite storage values remain compatible, existing per-Project selections survive reload, and no data migration is introduced. The older Basic scheme value remains compatibility input; theme-mode decides the scheme. SSYS-009's atomic pair, refusal behavior and Settings ownership remain binding.
+gui_related: true
+gui_classification_reason: Defines the visible theme choices and the single scheme control.
+split_recommended: false
+depends_on: [DL-228]
+unblocks: [SSYS-010]
+acceptance_criteria:
+- Theme offers five family names and no light/dark variants; exactly one scheme choice offers Light, Dark and Auto.
+- Every family works in both schemes and Auto; family changes preserve the scheme and existing per-Project selections survive reload.
+- The superseded DL-228 sentence is identified exactly; ten composite storage values remain compatible without migration.
+validation_surfaces:
+- Settings Theme and scheme controls, title-bar quick switch, Project reload and Auto OS appearance changes.
+risk_class: appearance_choice_or_compatibility_drift
+reasoning_tier: high
+context_scope: theme_scheme_ruling_20261104
+implementation_surfaces:
+- Plans/Settings_System.md
+- Plans/settings_inventory.json
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "Jared's verbatim SW-04 ruling, 2026-11-04, implementation lane task in T3; /mnt/Cursor/share/puppet-master/2026-11-04-program/streams/F/theme/REPORT.md"
+- "pm-fo-lead mail 1104184345-2f61: Plans owner authorizes DL-301 and narrow DL-228 supersession"
+preserved_exact_tokens:
+- "We don't need light and dark next to each theme, since it's at the top with auto. So just the 1 control."
+- Light / Dark / Auto
+- DL-228
+negative_constraints:
+- Do not change the ten composite storage values, add a migration or remove the title-bar quick switch.
+owner_hints:
+- Plans/Settings_System.md#SSYS-010
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/Decision_Log.md#DL-228
