@@ -4573,7 +4573,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24472,
+      "line_count": 24483,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 361,
       "plan_unit_ids": [
@@ -5298,10 +5298,11 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "008b36653188d779e89eb19911a2f244f48746a6def1d3f323858773f1399a71",
+      "sha256": "5fdee1aeaa308480b2730bab69e4c7cbba4d1f2c446496d0f8a2c9048b5835d8",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 361
+        "accepted": 360,
+        "retired": 1
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -21506,7 +21507,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T17:00:41Z",
+  "generated_at_utc": "2026-11-04T17:04:04Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21520,8 +21521,8 @@
     "plan_unit_count": 7421,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7204,
-      "retired": 194,
+      "accepted": 7203,
+      "retired": 195,
       "superseded": 23
     },
     "unit_type_counts": {
