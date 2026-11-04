@@ -293,6 +293,28 @@ def archive_joins(payload, source):
             and all(obj[key] == payload[key] for obj in [before, after, request]
                     for key in ['thread_id', 'computer_id', 'scope', 'operation_id']))
 
+def semantic_body_mutation(record, event):
+    """One schema-valid result fact, preserving all envelope identity copies."""
+    schema = json.loads((ROOT/'Plans/dch_event_payloads'/
+                         (event.replace('.', '_')+'.schema.json')).read_text())
+    validator = Draft202012Validator(schema, format_checker=FormatChecker())
+    p = record['payload']
+    fields = schema['$defs'][p['scope']['scope_kind']]['properties']
+    identity_fields = {'schema_id','schema_version','scope','operation_id','thread_id',
+                       'computer_id','actor_ref','ts'}
+    for key, old in p.items():
+        if key in identity_fields or not isinstance(old, str):
+            continue
+        definition = fields[key]
+        choices = definition.get('enum', [old+':changed'])
+        for value in choices:
+            if value == old:
+                continue
+            candidate = copy.deepcopy(p); candidate[key] = value
+            if validator.is_valid(candidate):
+                return candidate
+    raise AssertionError('No independent semantic-body fixture for '+event)
+
 def main():
     contracts = json.loads((ROOT/'Plans/dch_event_contracts.json').read_text())['rows']
     fixtures = json.loads((ROOT/'Plans/dch_event_contract_fixtures.json').read_text())
@@ -322,7 +344,7 @@ def main():
     def finish():
         print(json.dumps({'status':'pass' if not failures else 'fail','checks':checks,'failures':failures,
                           'per_family':per_family,'native_execution':'NOT_RUN',
-                          'coverage':'Static ten-standing-check suite: append, transport, retry, registry parity, complete schema-reference closure, populated histories, retained-original lookup and checkpoint relations. Source/access adapters are synthetic. Native process, receipt, CRC, full-source coverage, redb CAS, durability, custody and withdrawal are NOT_RUN.'},indent=2))
+                          'coverage':'Static standing checks 1-10; check 11 is supplied by pm_dch_guard_proofs.py: append, transport, retry, registry parity, complete schema-reference closure, populated histories, retained-original lookup and checkpoint relations. Source/access adapters are synthetic. Native process, receipt, CRC, full-source coverage, redb CAS, durability, custody and withdrawal are NOT_RUN.'},indent=2))
         return bool(failures)
     # Preflight every selected schema before validating a single instance. In
     # particular an empty history must not conceal an unresolved reference.
@@ -404,7 +426,7 @@ def main():
                 check(not validator.is_valid(invalid),event+': no fabricated exit-code outcome')
             ids.append(identity(event, p))
             for field in case['missing_fields']:
-                invalid=copy.deepcopy(p); del invalid[field]
+                invalid=copy.deepcopy(case.get('missing_field_bases',{}).get(field,p)); del invalid[field]
                 check(not validator.is_valid(invalid), event+': missing '+field)
             for name in ['extra_field','wrong_version','scope_mismatch']:
                 invalid=copy.deepcopy(p)
@@ -439,8 +461,14 @@ def main():
         check(case['storage_instance_id']==STORAGE_INSTANCE,event+': actual Storage fixture instance')
         check(envelope.is_valid(record) and joins(record,event) and record['payload']==case['valid'], event+': envelope and source joins')
         for key in ['event_type','event_id','idempotency_key','payload_schema_id','scope_kind','project_id','thread_id','actor_ref','occurred_at_utc','payload_ref','run_id','node_id','attempt_id']:
-            invalid=copy.deepcopy(record);invalid[key]='wrong'
-            check(not joins(invalid,event),event+': envelope mismatch '+key)
+            if key=='payload_ref':
+                reference=next(o for o in case['transport_oracles'] if o['name']=='authorized_payload_reference')
+                invalid=copy.deepcopy(reference['record']);parts=invalid['payload_ref'].split(':');parts[2]='c'*64
+                invalid['payload_ref']=':'.join(parts)
+                check(not joins(invalid,event,reference['source']),event+': envelope mismatch '+key)
+            else:
+                invalid=copy.deepcopy(record);invalid[key]='wrong'
+                check(not joins(invalid,event),event+': envelope mismatch '+key)
         for key in ['event_id','idempotency_key']:
             invalid=copy.deepcopy(record);invalid[key]+='\n'
             check(not joins(invalid,event),event+': identifier trailing LF '+key)
@@ -463,12 +491,13 @@ def main():
         for key in SEMANTIC_FIELDS:
             retry=copy.deepcopy(record)
             old=retry[key]
-            if key=='payload': retry[key]['actor_ref']='pmref:fixture:semantic_mutation'
+            if key=='payload': retry[key]=semantic_body_mutation(record,event)
             elif key=='migration': retry[key]['migration_id']='changed'
             elif key=='producer_sequence_id': retry[key]=7
             elif key=='scope_kind': retry[key]='application' if old=='project' else 'project'
             elif key=='project_id': retry[key]='other_project'
             else: retry[key]='changed' if old is None else str(old)+':changed'
+            if key=='actor_ref': retry['payload']['actor_ref']=retry['actor_ref']
             check(retry_outcome(record,retry)=='conflict',event+': semantic commitment '+key)
         retry=copy.deepcopy(record);retry['event_id']+='changed'
         check(retry_outcome(record,retry)=='conflict',event+': global event-ID integrity')
@@ -544,7 +573,7 @@ def main():
         # exercised independently even though preflight also requires equality.
         for kind, definition in [('selected',schema),('registered',entry['value_schema'])]:
             actual=Draft202012Validator(definition,format_checker=FormatChecker())
-            for name,value in [('current',case['valid']),('populated history',case['with_history'])]:
+            for name,value in [('current',case['valid']),('populated history',case['with_history']),('maximum history',case['maximum_history'])]:
                 check(actual.is_valid(value) and checkpoint_joins(value,case['source'],row,case['key']),
                       case['event_type']+': '+kind+' checkpoint '+name+' positive')
                 trailing_lf_checks(value,definition,actual,case['event_type']+': '+kind+' checkpoint '+name)
@@ -554,7 +583,7 @@ def main():
             if name=='wrong_consumer': invalid['consumer_id']='sibling'
             if name=='wrong_projector': invalid['projector_id']='sibling'
             if name=='missing_source_token': del invalid['source_token']
-            if name=='four_generations': invalid['history']=[{}, {}, {}]
+            if name=='four_generations': invalid=copy.deepcopy(case['negative_values'][name])
             check(not validator.is_valid(invalid), case['event_type']+': '+name)
         for oracle in case['join_oracles']:
             combined={'value':case['valid'],'source':case['source'],'key':case['key']}

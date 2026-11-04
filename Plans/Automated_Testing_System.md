@@ -7247,6 +7247,8 @@ Review rounds 2 and 3 require all ten standing checks for every one of the seven
 
 Review round 3 requires exact object equality between every materialized DCH checkpoint value_schema and its selected same-ID/version schema. Both definitions independently validate current and populated-history positives and reject trailing LF in every patterned current/history identifier, digest and retirement timestamp. Schema closure is independent of which fixture branches execute; an unresolved reference fails the checker as a structured failure. scripts/pm_dch_event_regressions.py supplies a separate full-checker negative for each of the ten standing checks in each family, plus the original F1-F3 and first Astra B1-B5 regressions. Retained historical lookup verifies the original encoded event commitment, original edition, scope/identity and current source/access evidence; current lifecycle or worktree state does not redefine the historical event. This fixture witness is synthetic and grants neither native proof nor admission. Manual archive remains manual under DL-287; the Stop record question remains unprepared.
 
+Review round 4 requires standing check 11 across the complete DCH lane: construct each negative from an accepted case and change exactly one contract fact; keep every observational copy and every unrelated identity, encoded commitment and source/publication witness coherent. Generation-limit negatives contain three schema-valid retired entries beyond the valid two-entry history. Unsupported historical editions carry the independently supplied commitment of those exact retained bytes; forged-byte negatives remain separate. Terminal-test event-identity negatives change the terminal payload started_event_id and preserve the valid started source. For every acceptance guard, remove only that guard in an in-memory test variant, require its own negatives to become accepted, and require all other negatives to remain rejected for their own defects; restore the guard before the next row. The retained guard-removal table identifies the exact guard, negatives that flip, negatives that remain rejected and any equivalent schema/semantic copies removed together. A masked negative, unproved guard, unexpected exception or incomplete table fails acceptance. scripts/pm_dch_guard_proofs.py supplies this static proof alongside the complete ordinary checker and regression runner. No production guard may be weakened. Native execution remains NOT_RUN.
+
 ```yaml
 plan_unit_id: ATS-305
 unit_type: requirement
@@ -7305,7 +7307,22 @@ canonical_text: '### ATS-305 — DCH
   B1-B5 regressions. Retained historical lookup verifies the original encoded event commitment, original
   edition, scope/identity and current source/access evidence; current lifecycle or worktree state does
   not redefine the historical event. This fixture witness is synthetic and grants neither native proof
-  nor admission. Manual archive remains manual under DL-287; the Stop record question remains unprepared.'
+  nor admission. Manual archive remains manual under DL-287; the Stop record question remains unprepared.
+
+
+  Review round 4 requires standing check 11 across the complete DCH lane: construct each negative from
+  an accepted case and change exactly one contract fact; keep every observational copy and every unrelated
+  identity, encoded commitment and source/publication witness coherent. Generation-limit negatives contain
+  three schema-valid retired entries beyond the valid two-entry history. Unsupported historical editions
+  carry the independently supplied commitment of those exact retained bytes; forged-byte negatives remain
+  separate. Terminal-test event-identity negatives change the terminal payload started_event_id and preserve
+  the valid started source. For every acceptance guard, remove only that guard in an in-memory test variant,
+  require its own negatives to become accepted, and require all other negatives to remain rejected for
+  their own defects; restore the guard before the next row. The retained guard-removal table identifies
+  the exact guard, negatives that flip, negatives that remain rejected and any equivalent schema/semantic
+  copies removed together. A masked negative, unproved guard, unexpected exception or incomplete table
+  fails acceptance. scripts/pm_dch_guard_proofs.py supplies this static proof alongside the complete ordinary
+  checker and regression runner. No production guard may be weakened. Native execution remains NOT_RUN.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on: []
@@ -7317,10 +7334,14 @@ acceptance_criteria:
   outcome cases applicable to this exact family; native evidence remains NOT_RUN.
 - All ten standing-check mutations fail the full checker for each prepared family; selected/registered
   schemas agree exactly, every reference resolves and populated histories are exercised.
+- 'Standing check 11 passes for every lane guard: one contract defect per negative, coherent copies and
+  unrelated commitments, own negatives accepted only when that guard is removed, all others still rejected;
+  retain the complete guard-removal table.'
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm_dch_event_regressions.py
+- python3 scripts/pm_dch_guard_proofs.py --out <guard-proof.json>
 risk_class: event_authority_contract
 reasoning_tier: high
 context_scope: event_authority_dch
