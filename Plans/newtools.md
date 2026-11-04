@@ -1218,7 +1218,7 @@ This subsection is authoritative wherever §14.7 still reads like a PAT-only con
   - validated account identity
   - degraded reason when capability is partial
 - Namespace/repository discovery and repository creation MUST use the validated effective capability set; the app MUST NOT assume browser login or PAT implies full management access.
-- If publish is requested and the target repository does not exist, repository creation MUST be guarded by an explicit confirmation that shows namespace, repository, and privacy. This confirmation is mandatory and cannot be bypassed by YOLO/autonomy behavior.
+- If publish is requested and the target repository does not exist, repository creation MUST follow PS-146/147 authority with the actual namespace, repository, and privacy and a private default. In Regular, explicit confirmation is mandatory when exact-effect approval is absent. Admitted YOLO/autonomy behavior or an exact build grant uses the same creation writer with typed mode/grant authority, without another ordinary yes or a fabricated human confirmation. Capability, trust, FileSafe, secrets, currentness and unknown-effect reconciliation remain required.
 - Successful publish produces `docker_publish_result`; successful follow-on XML generation / template repo update produces `unraid_template_result`.
 
 #### Canonical doctor / preflight additions for DockerHub + Unraid
@@ -1278,7 +1278,7 @@ This addendum expands §14.7 so Docker support is first-class rather than limite
 1. Detect whether the active project is Docker-related.
 2. Resolve `requested_auth_mode` and validate `effective_capabilities`.
 3. Allow browser/device login or PAT-based auth, with PAT remaining the recommended explicit path.
-4. If push is requested and the target repository is missing, gate repository creation behind a mandatory confirmation dialog that shows namespace, repository name, and privacy. This step cannot be bypassed by YOLO/autonomy modes.
+4. If push is requested and the target repository is missing, evaluate PS-146/147 authority for creation, showing namespace, repository name, and privacy with a private default. Regular uses its mandatory confirmation dialog when exact-effect approval is absent; admitted YOLO/autonomy modes or an exact build grant use the same writer with typed authority and no fabricated human confirmation.
 5. Build with `docker buildx build`.
 6. Run containers for preview/testing when requested and surface user-facing access points when available.
 7. Push to DockerHub using the selected namespace/repository/tag set.
@@ -7824,7 +7824,7 @@ plan_unit_id: N2-140
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Namespace/repository discovery and repository creation MUST use the validated effective capability set; the app MUST NOT assume browser login or PAT implies full management access. If publish is requested and the target repository does not exist, repository creation is guarded by an explicit confirmation showing namespace, repository, and privacy; this confirmation is mandatory and cannot be bypassed by YOLO/autonomy behavior.
+canonical_text: Namespace/repository discovery and repository creation MUST use the validated effective capability set; the app MUST NOT assume browser login or PAT implies full management access. If publish is requested and the target repository does not exist, repository creation follows PS-146/147 with the actual namespace, repository, and privacy and a private default. Regular requires explicit confirmation, mandatory when exact-effect approval is absent; admitted YOLO/autonomy behavior or an exact build grant invokes the same writer with typed authority, without another ordinary yes or a fabricated human confirmation. Capability, trust, FileSafe, secrets, currentness and unknown-effect reconciliation remain required.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
 split_recommended: true
@@ -7860,7 +7860,7 @@ preserved_exact_tokens:
 - YOLO/autonomy behavior
 negative_constraints:
 - The app MUST NOT assume browser login or PAT implies full management access.
-- Repository creation confirmation is mandatory and cannot be bypassed by YOLO/autonomy behavior.
+- Repository creation requires PS-146/147 authority; Regular confirmation is mandatory when exact-effect approval is absent. Admitted YOLO/autonomy behavior or an exact build grant never fabricates human approval and retains capability, trust, FileSafe, secrets and currentness checks.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -8241,7 +8241,7 @@ plan_unit_id: N2-148
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: The expanded DockerHub flow detects whether the active project is Docker-related, resolves requested_auth_mode, validates effective_capabilities, allows browser/device login or PAT-based auth with PAT remaining the recommended explicit path, and gates missing-repository creation behind a mandatory confirmation dialog showing namespace, repository name, and privacy that cannot be bypassed by YOLO/autonomy modes.
+canonical_text: Detect whether the active project is Docker-related, resolve requested_auth_mode, validate effective_capabilities, and allow browser/device login or PAT-based auth, with PAT remaining the recommended explicit path. Missing-repository creation follows PS-146/147, showing namespace, repository name, and privacy with a private default. Regular uses its mandatory confirmation dialog when exact-effect approval is absent; admitted YOLO/autonomy modes or an exact build grant invokes the same writer with typed authority, without another ordinary yes or a fabricated human confirmation. Capability, trust, FileSafe, secrets, currentness and unknown-effect reconciliation remain required.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
 split_recommended: false
@@ -8277,7 +8277,7 @@ preserved_exact_tokens:
 - privacy
 - YOLO/autonomy modes
 negative_constraints:
-- Missing-repository creation confirmation cannot be bypassed by YOLO/autonomy modes.
+- Missing-repository creation requires PS-146/147 authority; absent Regular approval asks, while admitted YOLO/autonomy modes or an exact build grant proceeds through the same writer without fabricated human approval. Capability, trust, FileSafe, secrets and currentness checks remain required.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []

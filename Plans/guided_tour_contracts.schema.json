@@ -3273,6 +3273,17 @@
       }
     },
     "guided_tour_terminal_result": {
+      "description": "Closed Project-v3/application-v1 result union; historical Project request/result shapes retain their original meaning.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3"
+        },
+        {
+          "$ref": "#/$defs/guided_tour_terminal_result_application_v1"
+        }
+      ]
+    },
+    "guided_tour_terminal_result_v3": {
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -3928,6 +3939,209 @@
           "maxLength": 256
         }
       }
+    },
+    "guided_tour_terminal_result_application_v1": {
+      "description": "DL-287 application-scoped Skip/Finish result. The historical Project v3 result is preserved separately; no Project or Planning Wizard work is fabricated. These static contract results grant no native authority.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "action_id",
+        "tour_session_id",
+        "project_id",
+        "step",
+        "status",
+        "target_label",
+        "layout_disposition",
+        "layout_selection_source",
+        "captured_state_ref",
+        "restoration",
+        "practice_content_removed",
+        "landing",
+        "completion_reported",
+        "domain_work_started",
+        "approval_granted",
+        "evidence_scope",
+        "production_receipt_claim",
+        "result_revision",
+        "scope",
+        "thread_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.guided_tour.terminal_result.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "action_id": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/action_id"
+        },
+        "tour_session_id": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/tour_session_id"
+        },
+        "project_id": {
+          "type": "null"
+        },
+        "step": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/step"
+        },
+        "status": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/status"
+        },
+        "target_label": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/target_label"
+        },
+        "layout_disposition": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/layout_disposition"
+        },
+        "layout_selection_source": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/layout_selection_source"
+        },
+        "captured_state_ref": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/captured_state_ref"
+        },
+        "restoration": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/restoration"
+        },
+        "practice_content_removed": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/practice_content_removed"
+        },
+        "landing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "real_planning_wizard",
+            "committed_project_selected",
+            "focus_ref",
+            "no_project_chat"
+          ],
+          "properties": {
+            "real_planning_wizard": {
+              "type": "boolean"
+            },
+            "committed_project_selected": {
+              "type": "boolean"
+            },
+            "focus_ref": {
+              "$ref": "#/$defs/nullable_safe_ref"
+            },
+            "no_project_chat": {
+              "type": "boolean"
+            }
+          }
+        },
+        "completion_reported": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/completion_reported"
+        },
+        "domain_work_started": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/domain_work_started"
+        },
+        "approval_granted": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/approval_granted"
+        },
+        "evidence_scope": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/evidence_scope"
+        },
+        "production_receipt_claim": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/production_receipt_claim"
+        },
+        "result_revision": {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/properties/result_revision"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              },
+              "required": [
+                "scope_kind"
+              ]
+            }
+          ]
+        },
+        "thread_id": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/allOf/0"
+        },
+        {
+          "x-rule": "finish_lands_at_no_project_chat_without_work",
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.guided_tour.finish"
+              }
+            },
+            "required": [
+              "action_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "step": {
+                "const": "planning_wizard"
+              },
+              "status": {
+                "enum": [
+                  "completed",
+                  "recovery_required"
+                ]
+              },
+              "target_label": {
+                "const": "Finish tour"
+              },
+              "landing": {
+                "properties": {
+                  "real_planning_wizard": {
+                    "const": false
+                  },
+                  "committed_project_selected": {
+                    "const": false
+                  },
+                  "focus_ref": {
+                    "$ref": "#/$defs/safe_ref"
+                  },
+                  "no_project_chat": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/allOf/2"
+        },
+        {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/allOf/3"
+        },
+        {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/allOf/4"
+        },
+        {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/allOf/5"
+        },
+        {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/allOf/6"
+        },
+        {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/allOf/7"
+        },
+        {
+          "$ref": "#/$defs/guided_tour_terminal_result_v3/allOf/8"
+        }
+      ]
     }
   }
 }

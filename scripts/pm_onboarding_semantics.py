@@ -134,9 +134,18 @@ def onboarding_semantic_failures(definition: str, value: Any) -> list[str]:
         elif disposition != "not_applicable":
             if row.get("project_id") is not None:
                 failures.append("onboarding_uncommitted_draft_claims_project_identity")
-            if any(row[field] in {"active", "ready", "skipped"}
+            if disposition != "deferred" and any(row[field] in {"active", "ready", "skipped"}
                    for field in ("provider_phase_status", "free_models_phase_status")):
                 failures.append("onboarding_provider_phase_before_project_commit")
+        if disposition == "deferred":
+            if row["path_kind"] != "guided_setup" or binding is not None:
+                failures.append("onboarding_application_provider_claims_project_commit")
+            if any(row[field] in {"active", "ready"}
+                   for field in ("provider_phase_status", "free_models_phase_status")) and not row.get("app_auth_binding_ref"):
+                failures.append("onboarding_application_provider_binding_missing")
+            draft = row.get("setup_draft")
+            if draft is not None and draft["project_mode"] != "later":
+                failures.append("onboarding_application_provider_without_explicit_later")
         if stage == "ready" and row["path_kind"] == "guided_setup" and disposition not in {"committed", "deferred"}:
             failures.append("onboarding_ready_without_commit_or_explicit_project_defer")
         for phase in ("provider", "free_models"):
@@ -161,6 +170,13 @@ def onboarding_semantic_failures(definition: str, value: Any) -> list[str]:
                 expected = "provider_setup" if phase == "postcommit_provider" else "free_models_setup"
                 if stage != expected or not committed or branch["project_commit_ref"] != binding["binding_id"]:
                     failures.append("onboarding_provider_branch_without_exact_commit")
+            elif phase in {"application_provider", "application_free_models"}:
+                expected = "provider_setup" if phase == "application_provider" else "free_models_setup"
+                if (stage != expected or disposition != "deferred" or binding is not None
+                        or branch["project_commit_ref"] is not None or branch["precommit_authorization_ref"] is not None):
+                    failures.append("onboarding_application_provider_branch_without_later")
+                if not row.get("app_auth_binding_ref") or branch.get("app_auth_binding_ref") != row.get("app_auth_binding_ref"):
+                    failures.append("onboarding_application_provider_branch_binding_mismatch")
             else:
                 failures.append("onboarding_active_owner_branch_without_phase")
             if branch["owner_command_id"] != branch["pending_owner_action_id"]:
@@ -198,6 +214,8 @@ def onboarding_semantic_failures(definition: str, value: Any) -> list[str]:
                       "continuation_generation"):
             if returned[field] != value[field]:
                 failures.append("onboarding_return_" + field + "_mismatch")
+        if returned.get("app_auth_binding_ref") != value.get("app_auth_binding_ref"):
+            failures.append("onboarding_return_app_auth_binding_ref_mismatch")
         if returned["expected_revision"] != value["revision"]:
             failures.append("onboarding_return_expected_revision_mismatch")
     if definition == "onboarding_action_request":
@@ -320,7 +338,54 @@ def onboarding_precommit_join_failures(request, authorization, owner_request, cu
     return sorted(set(failures))
 
 
-def onboarding_action_join_failures(current, request, result):
+def onboarding_application_auth_join_failures(current, request, binding, *, resolved_binding_ref):
+    """Join an N15 flow to the actual Multi-Account app binding, never a ref alone.
+
+    The owner must still authenticate current broker/permission evidence. These
+    comparisons are static causality checks and confer no native authority.
+    """
+    failures = []
+    context = request["local_context"]
+    from pm_ui_command_response import owner_result_digest
+
+    draft = current.get("setup_draft") or {}
+    if (current["project_disposition"] != "deferred" or current.get("project_id") is not None
+            or current["project_commit_binding"] is not None
+            or draft.get("project_mode") != "later"
+            or current["review_confirmation"] != "person_confirmed_reviewed_plan"
+            or current["reviewed_setup_plan_revision"] != current["queued_setup_plan_revision"]
+            or current["approved_setup_plan_sha256"] != owner_result_digest(draft)):
+        failures.append("onboarding_application_auth_without_reviewed_later")
+    if not resolved_binding_ref or resolved_binding_ref != context.get("app_auth_binding_ref") or resolved_binding_ref != current.get("app_auth_binding_ref"):
+        failures.append("onboarding_application_auth_binding_ref_mismatch")
+    if binding is None:
+        return sorted(set(failures + ["onboarding_application_auth_owner_binding_missing"]))
+    scope = binding.get("scope", {})
+    if (scope.get("scope_kind") != "application" or scope.get("scope_partition") != "app"
+            or any(field not in scope or scope[field] is not None
+                   for field in ("project_id", "project_home_server_id", "named_plan_id"))):
+        failures.append("onboarding_application_auth_scope_mismatch")
+    returned = current.get("return_context") or {}
+    for field in ("server_id", "execution_host_id", "execution_environment_id", "initiating_client_id"):
+        if not returned.get(field) or returned[field] != binding.get(field):
+            failures.append("onboarding_application_auth_" + field + "_mismatch")
+    if scope.get("server_id") != binding.get("server_id"):
+        failures.append("onboarding_application_auth_scope_server_mismatch")
+    if binding.get("server_id") != draft.get("server_ref"):
+        failures.append("onboarding_application_auth_draft_server_mismatch")
+    if binding.get("provider_id") != context["selection_ref"]:
+        failures.append("onboarding_application_auth_provider_mismatch")
+    if binding.get("operation_id") != context["owner_operation_ref"] or not binding.get("operation_id"):
+        failures.append("onboarding_application_auth_operation_mismatch")
+    if binding.get("return_context_ref") != returned.get("return_context_id"):
+        failures.append("onboarding_application_auth_return_context_mismatch")
+    if not binding.get("protected_broker_evidence"):
+        failures.append("onboarding_application_auth_protected_broker_missing")
+    return sorted(set(failures))
+
+
+def onboarding_action_join_failures(current, request, result, *, application_auth_binding=None,
+                                    resolved_app_auth_binding_ref=None):
     """Check local request/result causality against the prior session snapshot."""
     failures = []
     for field in ("onboarding_session_id", "continuation_generation"):
@@ -336,6 +401,11 @@ def onboarding_action_join_failures(current, request, result):
         failures.append("onboarding_action_result_revision_mismatch")
     if result["status"] == "applied":
         after = result["continuation_snapshot"]
+        if request["local_context"]["owner_phase"] in {"application_provider", "application_free_models"}:
+            failures.extend(onboarding_application_auth_join_failures(
+                current, request, application_auth_binding, resolved_binding_ref=resolved_app_auth_binding_ref))
+            if after is not None and after.get("app_auth_binding_ref") != current.get("app_auth_binding_ref"):
+                failures.append("onboarding_application_auth_result_binding_mismatch")
         if current["project_disposition"] == "committed" and after is not None:
             if after["project_commit_binding"] != current["project_commit_binding"] or after["project_disposition"] != "committed":
                 failures.append("onboarding_navigation_discards_committed_project")
