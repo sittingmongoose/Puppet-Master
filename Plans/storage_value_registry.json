@@ -126500,6 +126500,2963 @@
           "Plans/storage-plan.md#SP-671"
         ]
       }
+    },
+    {
+      "family_id": "persona_created_operation",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "persona_created_operation.v1:{storage_instance_id}:{scope_key}:{operation_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.persona_created_operation.v1",
+      "value_schema_ref": "Plans/dg6b_event_contracts.schema.json#/$defs/persona_created_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-672",
+      "producer": [
+        "handlers::persona::create; specified_unimplemented; admission/retention gate closed",
+        "handlers::persona::duplicate; existing distinct-ID route; same closed gate"
+      ],
+      "consumers": [
+        "consumer.persona_created.history@1.0.0",
+        "handlers::persona::create recovery"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "effect_receipt_ref"
+      ],
+      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "migration": "Explicit compatible successor; no legacy native writer.",
+      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "refs_only; no PERSONA.md body, prompt, credentials, raw export/import or snapshot content.",
+      "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.persona_created_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "event_type": {
+            "const": "persona.created"
+          },
+          "scope_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "actor_ref": {
+            "type": "string",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "maxLength": 512
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "operation_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "subject_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "ts": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "redaction_profile": {
+                "const": "refs_only"
+              },
+              "scope": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_id",
+                  "schema_version",
+                  "scope_kind",
+                  "scope_partition",
+                  "project_id",
+                  "project_home_server_id",
+                  "named_plan_id",
+                  "server_id"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "const": "pm.workflow_scope.v2"
+                  },
+                  "schema_version": {
+                    "const": "2.0.0"
+                  },
+                  "scope_kind": {
+                    "enum": [
+                      "application",
+                      "project"
+                    ]
+                  },
+                  "scope_partition": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "project_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "project_home_server_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "named_plan_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "server_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "project_id": {
+                          "const": null
+                        },
+                        "project_home_server_id": {
+                          "const": null
+                        },
+                        "named_plan_id": {
+                          "const": null
+                        },
+                        "scope_partition": {
+                          "const": "app"
+                        }
+                      }
+                    },
+                    "else": {
+                      "properties": {
+                        "project_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "project_home_server_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "scope_partition": {
+                          "type": "string",
+                          "pattern": "^project~[A-Za-z0-9_-]+$"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "command_id": {
+                "enum": [
+                  "cmd.persona.create",
+                  "cmd.persona.duplicate"
+                ]
+              },
+              "result_status": {
+                "enum": [
+                  "created",
+                  "duplicated"
+                ]
+              },
+              "persona_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "home_kind": {
+                "enum": [
+                  "library",
+                  "project"
+                ]
+              },
+              "home_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "home_project_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "project_version_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reach_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "source_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_revision": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "expected_owner_revision": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "content_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "owner_request_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "owner_result_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "owner_readback_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "client_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "return_context_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              }
+            },
+            "required": [
+              "schema_version",
+              "operation_id",
+              "storage_instance_id",
+              "subject_ref",
+              "revision",
+              "ts",
+              "redaction_profile",
+              "scope",
+              "command_id",
+              "result_status",
+              "persona_id",
+              "home_kind",
+              "home_ref",
+              "home_project_id",
+              "project_version_id",
+              "reach_ref",
+              "source_id",
+              "source_revision",
+              "source_sha256",
+              "expected_owner_revision",
+              "content_sha256",
+              "owner_request_ref",
+              "owner_result_ref",
+              "owner_readback_ref",
+              "client_id",
+              "return_context_ref"
+            ],
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "home_kind": {
+                      "const": "library"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "home_project_id": {
+                      "const": null
+                    },
+                    "project_version_id": {
+                      "const": null
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "home_project_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "project_version_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "effect_committed",
+              "appended",
+              "withdrawn"
+            ]
+          },
+          "effect_receipt_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key"
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ]
+      }
+    },
+    {
+      "family_id": "persona_deleted_operation",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "persona_deleted_operation.v1:{storage_instance_id}:{scope_key}:{operation_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.persona_deleted_operation.v1",
+      "value_schema_ref": "Plans/dg6b_event_contracts.schema.json#/$defs/persona_deleted_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-672",
+      "producer": [
+        "handlers::persona::delete; specified_unimplemented; admission/retention gate closed"
+      ],
+      "consumers": [
+        "consumer.persona_deleted.history@1.0.0",
+        "handlers::persona::delete recovery"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "effect_receipt_ref"
+      ],
+      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "migration": "Explicit compatible successor; no legacy native writer.",
+      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "refs_only; no PERSONA.md body, prompt, credentials, raw export/import or snapshot content.",
+      "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.persona_deleted_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "event_type": {
+            "const": "persona.deleted"
+          },
+          "scope_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "actor_ref": {
+            "type": "string",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "maxLength": 512
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "operation_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "subject_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "ts": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "redaction_profile": {
+                "const": "refs_only"
+              },
+              "scope": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_id",
+                  "schema_version",
+                  "scope_kind",
+                  "scope_partition",
+                  "project_id",
+                  "project_home_server_id",
+                  "named_plan_id",
+                  "server_id"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "const": "pm.workflow_scope.v2"
+                  },
+                  "schema_version": {
+                    "const": "2.0.0"
+                  },
+                  "scope_kind": {
+                    "enum": [
+                      "application",
+                      "project"
+                    ]
+                  },
+                  "scope_partition": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "project_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "project_home_server_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "named_plan_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "server_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "project_id": {
+                          "const": null
+                        },
+                        "project_home_server_id": {
+                          "const": null
+                        },
+                        "named_plan_id": {
+                          "const": null
+                        },
+                        "scope_partition": {
+                          "const": "app"
+                        }
+                      }
+                    },
+                    "else": {
+                      "properties": {
+                        "project_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "project_home_server_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "scope_partition": {
+                          "type": "string",
+                          "pattern": "^project~[A-Za-z0-9_-]+$"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "command_id": {
+                "const": "cmd.persona.delete"
+              },
+              "result_status": {
+                "const": "deleted"
+              },
+              "persona_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "home_kind": {
+                "enum": [
+                  "library",
+                  "project"
+                ]
+              },
+              "home_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "home_project_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "project_version_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reach_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "source_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_revision": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "expected_owner_revision": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "content_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "owner_request_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "owner_result_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "owner_readback_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "client_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "return_context_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              }
+            },
+            "required": [
+              "schema_version",
+              "operation_id",
+              "storage_instance_id",
+              "subject_ref",
+              "revision",
+              "ts",
+              "redaction_profile",
+              "scope",
+              "command_id",
+              "result_status",
+              "persona_id",
+              "home_kind",
+              "home_ref",
+              "home_project_id",
+              "project_version_id",
+              "reach_ref",
+              "source_id",
+              "source_revision",
+              "source_sha256",
+              "expected_owner_revision",
+              "content_sha256",
+              "owner_request_ref",
+              "owner_result_ref",
+              "owner_readback_ref",
+              "client_id",
+              "return_context_ref"
+            ],
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "home_kind": {
+                      "const": "library"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "home_project_id": {
+                      "const": null
+                    },
+                    "project_version_id": {
+                      "const": null
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "home_project_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "project_version_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "effect_committed",
+              "appended",
+              "withdrawn"
+            ]
+          },
+          "effect_receipt_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key"
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ]
+      }
+    },
+    {
+      "family_id": "persona_exported_operation",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "persona_exported_operation.v1:{storage_instance_id}:{scope_key}:{operation_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.persona_exported_operation.v1",
+      "value_schema_ref": "Plans/dg6b_event_contracts.schema.json#/$defs/persona_exported_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-672",
+      "producer": [
+        "handlers::persona::export; specified_unimplemented; admission/retention gate closed"
+      ],
+      "consumers": [
+        "consumer.persona_exported.history@1.0.0",
+        "handlers::persona::export recovery"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "effect_receipt_ref"
+      ],
+      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "migration": "Explicit compatible successor; no legacy native writer.",
+      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "refs_only; no PERSONA.md body, prompt, credentials, raw export/import or snapshot content.",
+      "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.persona_exported_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "event_type": {
+            "const": "persona.exported"
+          },
+          "scope_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "actor_ref": {
+            "type": "string",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "maxLength": 512
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "operation_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "subject_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "ts": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "redaction_profile": {
+                "const": "refs_only"
+              },
+              "scope": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_id",
+                  "schema_version",
+                  "scope_kind",
+                  "scope_partition",
+                  "project_id",
+                  "project_home_server_id",
+                  "named_plan_id",
+                  "server_id"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "const": "pm.workflow_scope.v2"
+                  },
+                  "schema_version": {
+                    "const": "2.0.0"
+                  },
+                  "scope_kind": {
+                    "enum": [
+                      "application",
+                      "project"
+                    ]
+                  },
+                  "scope_partition": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "project_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "project_home_server_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "named_plan_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "server_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "project_id": {
+                          "const": null
+                        },
+                        "project_home_server_id": {
+                          "const": null
+                        },
+                        "named_plan_id": {
+                          "const": null
+                        },
+                        "scope_partition": {
+                          "const": "app"
+                        }
+                      }
+                    },
+                    "else": {
+                      "properties": {
+                        "project_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "project_home_server_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "scope_partition": {
+                          "type": "string",
+                          "pattern": "^project~[A-Za-z0-9_-]+$"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "command_id": {
+                "const": "cmd.persona.export"
+              },
+              "result_status": {
+                "const": "exported"
+              },
+              "persona_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "home_kind": {
+                "enum": [
+                  "library",
+                  "project"
+                ]
+              },
+              "home_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "home_project_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "project_version_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reach_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "source_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_revision": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "expected_owner_revision": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "content_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "owner_request_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "owner_result_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "owner_readback_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "client_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "return_context_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "export_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              }
+            },
+            "required": [
+              "schema_version",
+              "operation_id",
+              "storage_instance_id",
+              "subject_ref",
+              "revision",
+              "ts",
+              "redaction_profile",
+              "scope",
+              "command_id",
+              "result_status",
+              "persona_id",
+              "home_kind",
+              "home_ref",
+              "home_project_id",
+              "project_version_id",
+              "reach_ref",
+              "source_id",
+              "source_revision",
+              "source_sha256",
+              "expected_owner_revision",
+              "content_sha256",
+              "owner_request_ref",
+              "owner_result_ref",
+              "owner_readback_ref",
+              "client_id",
+              "return_context_ref",
+              "export_ref"
+            ],
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "home_kind": {
+                      "const": "library"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "home_project_id": {
+                      "const": null
+                    },
+                    "project_version_id": {
+                      "const": null
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "home_project_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "project_version_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "effect_committed",
+              "appended",
+              "withdrawn"
+            ]
+          },
+          "effect_receipt_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key"
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ]
+      }
+    },
+    {
+      "family_id": "persona_imported_operation",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "persona_imported_operation.v1:{storage_instance_id}:{scope_key}:{operation_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.persona_imported_operation.v1",
+      "value_schema_ref": "Plans/dg6b_event_contracts.schema.json#/$defs/persona_imported_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-672",
+      "producer": [
+        "handlers::persona::import; specified_unimplemented; admission/retention gate closed"
+      ],
+      "consumers": [
+        "consumer.persona_imported.history@1.0.0",
+        "handlers::persona::import recovery"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "effect_receipt_ref"
+      ],
+      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "migration": "Explicit compatible successor; no legacy native writer.",
+      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "refs_only; no PERSONA.md body, prompt, credentials, raw export/import or snapshot content.",
+      "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.persona_imported_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "event_type": {
+            "const": "persona.imported"
+          },
+          "scope_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "actor_ref": {
+            "type": "string",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "maxLength": 512
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "operation_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "subject_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "ts": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "redaction_profile": {
+                "const": "refs_only"
+              },
+              "scope": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_id",
+                  "schema_version",
+                  "scope_kind",
+                  "scope_partition",
+                  "project_id",
+                  "project_home_server_id",
+                  "named_plan_id",
+                  "server_id"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "const": "pm.workflow_scope.v2"
+                  },
+                  "schema_version": {
+                    "const": "2.0.0"
+                  },
+                  "scope_kind": {
+                    "enum": [
+                      "application",
+                      "project"
+                    ]
+                  },
+                  "scope_partition": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "project_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "project_home_server_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "named_plan_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "server_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "project_id": {
+                          "const": null
+                        },
+                        "project_home_server_id": {
+                          "const": null
+                        },
+                        "named_plan_id": {
+                          "const": null
+                        },
+                        "scope_partition": {
+                          "const": "app"
+                        }
+                      }
+                    },
+                    "else": {
+                      "properties": {
+                        "project_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "project_home_server_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "scope_partition": {
+                          "type": "string",
+                          "pattern": "^project~[A-Za-z0-9_-]+$"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "command_id": {
+                "const": "cmd.persona.import"
+              },
+              "result_status": {
+                "const": "imported"
+              },
+              "persona_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "home_kind": {
+                "enum": [
+                  "library",
+                  "project"
+                ]
+              },
+              "home_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "home_project_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "project_version_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reach_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "source_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_revision": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "expected_owner_revision": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "content_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "owner_request_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "owner_result_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "owner_readback_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "client_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "return_context_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "import_receipt_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              }
+            },
+            "required": [
+              "schema_version",
+              "operation_id",
+              "storage_instance_id",
+              "subject_ref",
+              "revision",
+              "ts",
+              "redaction_profile",
+              "scope",
+              "command_id",
+              "result_status",
+              "persona_id",
+              "home_kind",
+              "home_ref",
+              "home_project_id",
+              "project_version_id",
+              "reach_ref",
+              "source_id",
+              "source_revision",
+              "source_sha256",
+              "expected_owner_revision",
+              "content_sha256",
+              "owner_request_ref",
+              "owner_result_ref",
+              "owner_readback_ref",
+              "client_id",
+              "return_context_ref",
+              "import_receipt_ref"
+            ],
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "home_kind": {
+                      "const": "library"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "home_project_id": {
+                      "const": null
+                    },
+                    "project_version_id": {
+                      "const": null
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "home_project_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "project_version_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "effect_committed",
+              "appended",
+              "withdrawn"
+            ]
+          },
+          "effect_receipt_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key"
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ]
+      }
+    },
+    {
+      "family_id": "persona_selected_operation",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "persona_selected_operation.v1:{storage_instance_id}:{scope_key}:{operation_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.persona_selected_operation.v1",
+      "value_schema_ref": "Plans/dg6b_event_contracts.schema.json#/$defs/persona_selected_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-672",
+      "producer": [
+        "handlers::persona::select; specified_unimplemented; admission/retention gate closed"
+      ],
+      "consumers": [
+        "consumer.persona_selected.history@1.0.0",
+        "handlers::persona::select recovery"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "effect_receipt_ref"
+      ],
+      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "migration": "Explicit compatible successor; no legacy native writer.",
+      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "refs_only; no PERSONA.md body, prompt, credentials, raw export/import or snapshot content.",
+      "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.persona_selected_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "event_type": {
+            "const": "persona.selected"
+          },
+          "scope_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "actor_ref": {
+            "type": "string",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "maxLength": 512
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "operation_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "subject_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "ts": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "redaction_profile": {
+                "const": "refs_only"
+              },
+              "scope": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_id",
+                  "schema_version",
+                  "scope_kind",
+                  "scope_partition",
+                  "project_id",
+                  "project_home_server_id",
+                  "named_plan_id",
+                  "server_id"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "const": "pm.workflow_scope.v2"
+                  },
+                  "schema_version": {
+                    "const": "2.0.0"
+                  },
+                  "scope_kind": {
+                    "enum": [
+                      "application",
+                      "project"
+                    ]
+                  },
+                  "scope_partition": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "project_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "project_home_server_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "named_plan_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "server_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "project_id": {
+                          "const": null
+                        },
+                        "project_home_server_id": {
+                          "const": null
+                        },
+                        "named_plan_id": {
+                          "const": null
+                        },
+                        "scope_partition": {
+                          "const": "app"
+                        }
+                      }
+                    },
+                    "else": {
+                      "properties": {
+                        "project_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "project_home_server_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "scope_partition": {
+                          "type": "string",
+                          "pattern": "^project~[A-Za-z0-9_-]+$"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "command_id": {
+                "const": "cmd.persona.select"
+              },
+              "result_status": {
+                "const": "selected"
+              },
+              "persona_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "home_kind": {
+                "enum": [
+                  "library",
+                  "project"
+                ]
+              },
+              "home_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "home_project_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "project_version_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reach_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "source_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_revision": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "expected_owner_revision": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "content_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "owner_request_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "owner_result_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "owner_readback_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "client_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "return_context_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "requested_persona": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "effective_persona": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "persona_selection_source": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "selection_reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "persona_override_scope": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "persona_override_owner_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "runtime_snapshot_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "runtime_snapshot_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "selection_target_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              }
+            },
+            "required": [
+              "schema_version",
+              "operation_id",
+              "storage_instance_id",
+              "subject_ref",
+              "revision",
+              "ts",
+              "redaction_profile",
+              "scope",
+              "command_id",
+              "result_status",
+              "persona_id",
+              "home_kind",
+              "home_ref",
+              "home_project_id",
+              "project_version_id",
+              "reach_ref",
+              "source_id",
+              "source_revision",
+              "source_sha256",
+              "expected_owner_revision",
+              "content_sha256",
+              "owner_request_ref",
+              "owner_result_ref",
+              "owner_readback_ref",
+              "client_id",
+              "return_context_ref",
+              "requested_persona",
+              "effective_persona",
+              "persona_selection_source",
+              "selection_reason",
+              "persona_override_scope",
+              "persona_override_owner_id",
+              "runtime_snapshot_ref",
+              "runtime_snapshot_sha256",
+              "selection_target_ref"
+            ],
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "home_kind": {
+                      "const": "library"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "home_project_id": {
+                      "const": null
+                    },
+                    "project_version_id": {
+                      "const": null
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "home_project_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "project_version_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "effect_committed",
+              "appended",
+              "withdrawn"
+            ]
+          },
+          "effect_receipt_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key"
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ]
+      }
+    },
+    {
+      "family_id": "persona_updated_operation",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "persona_updated_operation.v1:{storage_instance_id}:{scope_key}:{operation_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.persona_updated_operation.v1",
+      "value_schema_ref": "Plans/dg6b_event_contracts.schema.json#/$defs/persona_updated_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-672",
+      "producer": [
+        "handlers::persona::update; specified_unimplemented; admission/retention gate closed"
+      ],
+      "consumers": [
+        "consumer.persona_updated.history@1.0.0",
+        "handlers::persona::update recovery"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "effect_receipt_ref"
+      ],
+      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "migration": "Explicit compatible successor; no legacy native writer.",
+      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "refs_only; no PERSONA.md body, prompt, credentials, raw export/import or snapshot content.",
+      "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.persona_updated_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "event_type": {
+            "const": "persona.updated"
+          },
+          "scope_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "actor_ref": {
+            "type": "string",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "maxLength": 512
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "operation_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "subject_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "ts": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "redaction_profile": {
+                "const": "refs_only"
+              },
+              "scope": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_id",
+                  "schema_version",
+                  "scope_kind",
+                  "scope_partition",
+                  "project_id",
+                  "project_home_server_id",
+                  "named_plan_id",
+                  "server_id"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "const": "pm.workflow_scope.v2"
+                  },
+                  "schema_version": {
+                    "const": "2.0.0"
+                  },
+                  "scope_kind": {
+                    "enum": [
+                      "application",
+                      "project"
+                    ]
+                  },
+                  "scope_partition": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "project_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "project_home_server_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "named_plan_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "server_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "project_id": {
+                          "const": null
+                        },
+                        "project_home_server_id": {
+                          "const": null
+                        },
+                        "named_plan_id": {
+                          "const": null
+                        },
+                        "scope_partition": {
+                          "const": "app"
+                        }
+                      }
+                    },
+                    "else": {
+                      "properties": {
+                        "project_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "project_home_server_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        "scope_partition": {
+                          "type": "string",
+                          "pattern": "^project~[A-Za-z0-9_-]+$"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "command_id": {
+                "const": "cmd.persona.update"
+              },
+              "result_status": {
+                "const": "updated"
+              },
+              "persona_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "home_kind": {
+                "enum": [
+                  "library",
+                  "project"
+                ]
+              },
+              "home_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "home_project_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "project_version_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reach_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "source_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_revision": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "expected_owner_revision": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "content_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "owner_request_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "owner_result_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "owner_readback_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              "client_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "return_context_ref": {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              }
+            },
+            "required": [
+              "schema_version",
+              "operation_id",
+              "storage_instance_id",
+              "subject_ref",
+              "revision",
+              "ts",
+              "redaction_profile",
+              "scope",
+              "command_id",
+              "result_status",
+              "persona_id",
+              "home_kind",
+              "home_ref",
+              "home_project_id",
+              "project_version_id",
+              "reach_ref",
+              "source_id",
+              "source_revision",
+              "source_sha256",
+              "expected_owner_revision",
+              "content_sha256",
+              "owner_request_ref",
+              "owner_result_ref",
+              "owner_readback_ref",
+              "client_id",
+              "return_context_ref"
+            ],
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "home_kind": {
+                      "const": "library"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "home_project_id": {
+                      "const": null
+                    },
+                    "project_version_id": {
+                      "const": null
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "home_project_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "project_version_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "effect_committed",
+              "appended",
+              "withdrawn"
+            ]
+          },
+          "effect_receipt_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key"
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-672"
+        ]
+      }
     }
   ],
   "storage_profile": {
@@ -128793,6 +131750,48 @@
         "storage_group": "coordination_and_storage",
         "encoding_target": "messagepack_canonical",
         "encoding_note": "New DL-045 original operation custody; owner SP-337 ref-externalization above 16 KiB. Pending retention does not activate writer.",
+        "max_value_bytes": 16384
+      },
+      "persona_created_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "New DL-045 original Persona owner-result custody; SP-337 ref-externalization above 16 KiB. Pending retention does not activate writer.",
+        "max_value_bytes": 16384
+      },
+      "persona_deleted_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "New DL-045 original Persona owner-result custody; SP-337 ref-externalization above 16 KiB. Pending retention does not activate writer.",
+        "max_value_bytes": 16384
+      },
+      "persona_exported_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "New DL-045 original Persona owner-result custody; SP-337 ref-externalization above 16 KiB. Pending retention does not activate writer.",
+        "max_value_bytes": 16384
+      },
+      "persona_imported_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "New DL-045 original Persona owner-result custody; SP-337 ref-externalization above 16 KiB. Pending retention does not activate writer.",
+        "max_value_bytes": 16384
+      },
+      "persona_selected_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "New DL-045 original Persona owner-result custody; SP-337 ref-externalization above 16 KiB. Pending retention does not activate writer.",
+        "max_value_bytes": 16384
+      },
+      "persona_updated_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "New DL-045 original Persona owner-result custody; SP-337 ref-externalization above 16 KiB. Pending retention does not activate writer.",
         "max_value_bytes": 16384
       }
     },

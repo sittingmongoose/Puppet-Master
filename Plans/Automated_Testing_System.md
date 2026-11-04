@@ -7280,3 +7280,44 @@ Each following family owns its own cases in Plans/dg6b_event_contract_fixtures.j
 - `plugin.tool.registered`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
 
 For `plugin.hook.blocked` (PLUG-131), ATS-335 also requires positive cases for `pre_tool_invoke`, `pre_attempt_start`, `pre_node_dispatch` and schema/semantic rejection of `post_tool_invoke` and `post_attempt_complete` Block-shaped observations. Such observations never block execution or append this event. The full DG6B checker executes these negatives. Native observation/dispatch proof remains NOT_RUN.
+
+
+<a id="ATS-336"></a>
+### ATS-336 - DG6B Persona exact-family oracle obligations
+
+```yaml
+plan_unit_id: ATS-336
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  DG6B Persona exact-family oracle obligations. Newly authored exact-family technical contracts under DL-045, prepared without admission;
+  existing P-060, UCC-214, CV-365 and canonical runtime identity govern behavior.
+gui_related: false
+gui_classification_reason: Defines persisted owner contracts, not new visual presentation.
+depends_on: [DL-045, SP-672, CV-691]
+unblocks: []
+acceptance_criteria:
+- Exact-family positive and negative oracles pass; admission and retention remain separately gated.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+- `persona.created`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN.
+
+- `persona.deleted`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN.
+
+- `persona.exported`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN.
+
+- `persona.imported`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN.
+
+- `persona.selected`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN.
+
+- `persona.updated`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN.

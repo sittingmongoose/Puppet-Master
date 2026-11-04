@@ -3811,3 +3811,213 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Personas.md#P-060, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+<a id="P-120"></a>
+### P-120 - persona.created prepared event contract
+
+```yaml
+plan_unit_id: P-120
+unit_type: contract
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  persona.created prepared event contract. Newly authored exact-family technical contracts under DL-045, prepared without admission;
+  existing P-060, UCC-214, CV-365 and canonical runtime identity govern behavior.
+gui_related: false
+gui_classification_reason: Defines persisted owner contracts, not new visual presentation.
+depends_on: [DL-045, P-060, CV-365, SP-672]
+unblocks: []
+acceptance_criteria:
+- Exact-family positive and negative oracles pass; admission and retention remain separately gated.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Personas.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+**Newly authored owner contract for `persona.created` at payload version `1.0.0`.** Per-family search of current top-level Plans Markdown/JSON/JSONL and the exact command/schema/storage owners found the selected `persona_create_request_v2`/`persona_create_result_v2` behavior and generic receipt/index definitions, but no exact-family closed event schema, operation identity, receipt adoption or named operating reader. Search queries, negative counts, matching lines and source hashes are pinned in the DG6B fix-round report. Reuse those existing definitions first. This family remains **non-emitting, prepared without admission** until separate registration and retention resolution.
+
+Producer: **handlers::persona::create (or the existing handlers::persona::duplicate distinct-ID route)**. Observe only the successful created result of cmd.persona.create, or duplicated result of cmd.persona.duplicate. PERSONA.md validates before the whole definition is committed and read back at its chosen home. No-project create chooses Your library; a Project version requires an actual Project. Duplicate uses a new non-reserved persona_id and exact source ID/revision/hash; it is not the same-ID save-as-override action. Protected IDs and folder/ID mismatch refuse before effect. New create preserves the absent or complete source evidence in its original request; duplicate requires all three source fields.
+
+The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/persona_created` (closed root, version 1.0.0), routed by CV-691 with this family’s individual SP-672 subsection. Bind scope to the original selected WorkflowScopeV2 request and actual owning Server, not focus or a Computer mirror. `home_kind`, `home_ref`, `home_project_id`, `project_version_id`, reach, source hashes, owner revision, Client and return refs come from authenticated original request/result custody. Runtime identity uses only the canonical names in section 10; legacy `_id` fields are migration/source-lineage aliases and cannot be parallel fields. The event stores refs and hashes, never PERSONA.md body, prompts, credentials, or arbitrary output. Refs require current source authorization and deletion checks. These technical bindings change no feature, scope choice, deletion policy or retention class.
+
+
+<a id="P-121"></a>
+### P-121 - persona.deleted prepared event contract
+
+```yaml
+plan_unit_id: P-121
+unit_type: contract
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  persona.deleted prepared event contract. Newly authored exact-family technical contracts under DL-045, prepared without admission;
+  existing P-060, UCC-214, CV-365 and canonical runtime identity govern behavior.
+gui_related: false
+gui_classification_reason: Defines persisted owner contracts, not new visual presentation.
+depends_on: [DL-045, P-060, CV-365, SP-672]
+unblocks: []
+acceptance_criteria:
+- Exact-family positive and negative oracles pass; admission and retention remain separately gated.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Personas.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+**Newly authored owner contract for `persona.deleted` at payload version `1.0.0`.** Per-family search of current top-level Plans Markdown/JSON/JSONL and the exact command/schema/storage owners found the selected `persona_delete_request_v2`/`persona_delete_result_v2` behavior and generic receipt/index definitions, but no exact-family closed event schema, operation identity, receipt adoption or named operating reader. Search queries, negative counts, matching lines and source hashes are pinned in the DG6B fix-round report. Reuse those existing definitions first. This family remains **non-emitting, prepared without admission** until separate registration and retention resolution.
+
+Producer: **handlers::persona::delete**. Observe only the confirmed deleted result of cmd.persona.delete for the exact mutable whole version at expected_owner_revision. A protected core built-in cannot be deleted. Deleting an eligible Project version removes only that version and reveals the library version, as P-060 and section 4.1 specify; deleting the library record follows the existing owner rule. Capture the original removed revision/hash and readback receipt, never invent a replacement Persona or body lifetime. Event history is metadata, not authority to delete linked content or other versions.
+
+The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/persona_deleted` (closed root, version 1.0.0), routed by CV-691 with this family’s individual SP-672 subsection. Bind scope to the original selected WorkflowScopeV2 request and actual owning Server, not focus or a Computer mirror. `home_kind`, `home_ref`, `home_project_id`, `project_version_id`, reach, source hashes, owner revision, Client and return refs come from authenticated original request/result custody. Runtime identity uses only the canonical names in section 10; legacy `_id` fields are migration/source-lineage aliases and cannot be parallel fields. The event stores refs and hashes, never PERSONA.md body, prompts, credentials, or arbitrary output. Refs require current source authorization and deletion checks. These technical bindings change no feature, scope choice, deletion policy or retention class.
+
+
+<a id="P-122"></a>
+### P-122 - persona.exported prepared event contract
+
+```yaml
+plan_unit_id: P-122
+unit_type: contract
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  persona.exported prepared event contract. Newly authored exact-family technical contracts under DL-045, prepared without admission;
+  existing P-060, UCC-214, CV-365 and canonical runtime identity govern behavior.
+gui_related: false
+gui_classification_reason: Defines persisted owner contracts, not new visual presentation.
+depends_on: [DL-045, P-060, CV-365, SP-672]
+unblocks: []
+acceptance_criteria:
+- Exact-family positive and negative oracles pass; admission and retention remain separately gated.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Personas.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+**Newly authored owner contract for `persona.exported` at payload version `1.0.0`.** Per-family search of current top-level Plans Markdown/JSON/JSONL and the exact command/schema/storage owners found the selected `persona_export_request_v2`/`persona_export_result_v2` behavior and generic receipt/index definitions, but no exact-family closed event schema, operation identity, receipt adoption or named operating reader. Search queries, negative counts, matching lines and source hashes are pinned in the DG6B fix-round report. Reuse those existing definitions first. This family remains **non-emitting, prepared without admission** until separate registration and retention resolution.
+
+Producer: **handlers::persona::export**. Observe only the exported result of cmd.persona.export for the exact authorized whole definition/revision/hash. export_ref identifies the already committed redacted export artifact and its original receipt; event replay cannot create, overwrite or disclose that export. Source access and redaction are checked on export and again on every body read. No artificial Project, write lease for mere inspection, credential, raw body, or trust grant is implied.
+
+The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/persona_exported` (closed root, version 1.0.0), routed by CV-691 with this family’s individual SP-672 subsection. Bind scope to the original selected WorkflowScopeV2 request and actual owning Server, not focus or a Computer mirror. `home_kind`, `home_ref`, `home_project_id`, `project_version_id`, reach, source hashes, owner revision, Client and return refs come from authenticated original request/result custody. Runtime identity uses only the canonical names in section 10; legacy `_id` fields are migration/source-lineage aliases and cannot be parallel fields. The event stores refs and hashes, never PERSONA.md body, prompts, credentials, or arbitrary output. Refs require current source authorization and deletion checks. These technical bindings change no feature, scope choice, deletion policy or retention class.
+
+
+<a id="P-123"></a>
+### P-123 - persona.imported prepared event contract
+
+```yaml
+plan_unit_id: P-123
+unit_type: contract
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  persona.imported prepared event contract. Newly authored exact-family technical contracts under DL-045, prepared without admission;
+  existing P-060, UCC-214, CV-365 and canonical runtime identity govern behavior.
+gui_related: false
+gui_classification_reason: Defines persisted owner contracts, not new visual presentation.
+depends_on: [DL-045, P-060, CV-365, SP-672]
+unblocks: []
+acceptance_criteria:
+- Exact-family positive and negative oracles pass; admission and retention remain separately gated.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Personas.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+**Newly authored owner contract for `persona.imported` at payload version `1.0.0`.** Per-family search of current top-level Plans Markdown/JSON/JSONL and the exact command/schema/storage owners found the selected `persona_import_request_v2`/`persona_import_result_v2` behavior and generic receipt/index definitions, but no exact-family closed event schema, operation identity, receipt adoption or named operating reader. Search queries, negative counts, matching lines and source hashes are pinned in the DG6B fix-round report. Reuse those existing definitions first. This family remains **non-emitting, prepared without admission** until separate registration and retention resolution.
+
+Producer: **handlers::persona::import**. Observe only the imported result of cmd.persona.import after exact source verification, protected-ID/schema/folder validation, destination CAS, whole-record apply and authenticated readback. source_id/source_revision/source_sha256 and import_receipt_ref bind the original accepted input and result. Library home and Project whole version retain their actual destinations. Copy/apply does not install executable code, transfer credentials, grant trust, or permit a per-field merge; compensation remains the existing Settings/Persona owner action, never an event replay.
+
+The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/persona_imported` (closed root, version 1.0.0), routed by CV-691 with this family’s individual SP-672 subsection. Bind scope to the original selected WorkflowScopeV2 request and actual owning Server, not focus or a Computer mirror. `home_kind`, `home_ref`, `home_project_id`, `project_version_id`, reach, source hashes, owner revision, Client and return refs come from authenticated original request/result custody. Runtime identity uses only the canonical names in section 10; legacy `_id` fields are migration/source-lineage aliases and cannot be parallel fields. The event stores refs and hashes, never PERSONA.md body, prompts, credentials, or arbitrary output. Refs require current source authorization and deletion checks. These technical bindings change no feature, scope choice, deletion policy or retention class.
+
+
+<a id="P-124"></a>
+### P-124 - persona.selected prepared event contract
+
+```yaml
+plan_unit_id: P-124
+unit_type: contract
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  persona.selected prepared event contract. Newly authored exact-family technical contracts under DL-045, prepared without admission;
+  existing P-060, UCC-214, CV-365 and canonical runtime identity govern behavior.
+gui_related: false
+gui_classification_reason: Defines persisted owner contracts, not new visual presentation.
+depends_on: [DL-045, P-060, CV-365, SP-672]
+unblocks: []
+acceptance_criteria:
+- Exact-family positive and negative oracles pass; admission and retention remain separately gated.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Personas.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+**Newly authored owner contract for `persona.selected` at payload version `1.0.0`.** Per-family search of current top-level Plans Markdown/JSON/JSONL and the exact command/schema/storage owners found the selected `persona_select_request_v2`/`persona_select_result_v2` behavior and generic receipt/index definitions, but no exact-family closed event schema, operation identity, receipt adoption or named operating reader. Search queries, negative counts, matching lines and source hashes are pinned in the DG6B fix-round report. Reuse those existing definitions first. This family remains **non-emitting, prepared without admission** until separate registration and retention resolution.
+
+Producer: **handlers::persona::select**. Observe only the selected result of cmd.persona.select for the original explicit Settings resolver target. P-060 supplies Everywhere, Computer, optional Project and thread defaults; Models supplies requested/effective resolution. A No-project target admits only library reach that includes No project; Only these projects refuses there. The existing persona_select_result_v2 remains the exact selected closed owner result. Its authenticated owner_result_ref resolves the newly authored closed persona_selected_resolution record (CV-691), preserving operation_id/persona_id/result/selection-target joins. That frozen record and the event use requested_persona, effective_persona, persona_selection_source, selection_reason, persona_override_scope, persona_override_owner_id and runtime_snapshot_ref/runtime_snapshot_sha256. These fields are not added to the pinned generic command result root. The snapshot carries the complete canonical applied/skipped controls and applicable execution identity. Metadata selection has no invented run/thread; an actual execution context must carry its real joins. History and conversion never recompute an earlier selection from current Settings.
+
+The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/persona_selected` (closed root, version 1.0.0), routed by CV-691 with this family’s individual SP-672 subsection. Bind scope to the original selected WorkflowScopeV2 request and actual owning Server, not focus or a Computer mirror. `home_kind`, `home_ref`, `home_project_id`, `project_version_id`, reach, source hashes, owner revision, Client and return refs come from authenticated original request/result custody. Runtime identity uses only the canonical names in section 10; legacy `_id` fields are migration/source-lineage aliases and cannot be parallel fields. The event stores refs and hashes, never PERSONA.md body, prompts, credentials, or arbitrary output. Refs require current source authorization and deletion checks. These technical bindings change no feature, scope choice, deletion policy or retention class.
+
+
+<a id="P-125"></a>
+### P-125 - persona.updated prepared event contract
+
+```yaml
+plan_unit_id: P-125
+unit_type: contract
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  persona.updated prepared event contract. Newly authored exact-family technical contracts under DL-045, prepared without admission;
+  existing P-060, UCC-214, CV-365 and canonical runtime identity govern behavior.
+gui_related: false
+gui_classification_reason: Defines persisted owner contracts, not new visual presentation.
+depends_on: [DL-045, P-060, CV-365, SP-672]
+unblocks: []
+acceptance_criteria:
+- Exact-family positive and negative oracles pass; admission and retention remain separately gated.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Personas.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+**Newly authored owner contract for `persona.updated` at payload version `1.0.0`.** Per-family search of current top-level Plans Markdown/JSON/JSONL and the exact command/schema/storage owners found the selected `persona_update_request_v2`/`persona_update_result_v2` behavior and generic receipt/index definitions, but no exact-family closed event schema, operation identity, receipt adoption or named operating reader. Search queries, negative counts, matching lines and source hashes are pinned in the DG6B fix-round report. Reuse those existing definitions first. This family remains **non-emitting, prepared without admission** until separate registration and retention resolution.
+
+Producer: **handlers::persona::update**. Observe only the updated result of cmd.persona.update after expected_owner_revision CAS, full PERSONA.md validation, whole-record commit to the actual home, and authenticated readback. Computer mirrors are read-only. A library Save writes the settings home; creating a same-ID Project version is the separate save-as-override route. Record the exact previous revision/hash and resulting revision/hash; stale CAS or protected-ID shadowing refuses before mutation. A retry never reapplies a patch, creates a Project version, or changes frozen runs.
+
+The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/persona_updated` (closed root, version 1.0.0), routed by CV-691 with this family’s individual SP-672 subsection. Bind scope to the original selected WorkflowScopeV2 request and actual owning Server, not focus or a Computer mirror. `home_kind`, `home_ref`, `home_project_id`, `project_version_id`, reach, source hashes, owner revision, Client and return refs come from authenticated original request/result custody. Runtime identity uses only the canonical names in section 10; legacy `_id` fields are migration/source-lineage aliases and cannot be parallel fields. The event stores refs and hashes, never PERSONA.md body, prompts, credentials, or arbitrary output. Refs require current source authorization and deletion checks. These technical bindings change no feature, scope choice, deletion policy or retention class.

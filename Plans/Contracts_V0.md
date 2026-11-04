@@ -24522,3 +24522,46 @@ node_compile_hint: {mode: contract_only, create_worknodes: false}
 - `plugin.permission.override`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_permission_override`, version `1.0.0`, semantic owner `PLUG-136`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
 - `plugin.tool.collision`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_tool_collision`, version `1.0.0`, semantic owner `PLUG-137`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
 - `plugin.tool.registered`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_tool_registered`, version `1.0.0`, semantic owner `PLUG-138`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+
+
+<a id="CV-691"></a>
+### CV-691 - DG6B Persona payload routes prepared without admission
+
+```yaml
+plan_unit_id: CV-691
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  DG6B Persona payload routes prepared without admission. Newly authored exact-family technical contracts under DL-045, prepared without admission;
+  existing P-060, UCC-214, CV-365 and canonical runtime identity govern behavior.
+gui_related: false
+gui_classification_reason: Defines persisted owner contracts, not new visual presentation.
+depends_on: [DL-045, SP-672, CV-365]
+unblocks: []
+acceptance_criteria:
+- Exact-family positive and negative oracles pass; admission and retention remain separately gated.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+- `persona.created`: closed payload `Plans/dg6b_event_contracts.schema.json#/$defs/persona_created`, version `1.0.0`, semantic owner `P-120`, individual persistence `SP-672`. Selected command request/result are `persona_create_request_v2`/`persona_create_result_v2` in shared_integration_runtime; closed operation and exact source/scope/runtime joins are mandatory. Schema binding grants no membership.
+
+- `persona.deleted`: closed payload `Plans/dg6b_event_contracts.schema.json#/$defs/persona_deleted`, version `1.0.0`, semantic owner `P-121`, individual persistence `SP-672`. Selected command request/result are `persona_delete_request_v2`/`persona_delete_result_v2` in shared_integration_runtime; closed operation and exact source/scope/runtime joins are mandatory. Schema binding grants no membership.
+
+- `persona.exported`: closed payload `Plans/dg6b_event_contracts.schema.json#/$defs/persona_exported`, version `1.0.0`, semantic owner `P-122`, individual persistence `SP-672`. Selected command request/result are `persona_export_request_v2`/`persona_export_result_v2` in shared_integration_runtime; closed operation and exact source/scope/runtime joins are mandatory. Schema binding grants no membership.
+
+- `persona.imported`: closed payload `Plans/dg6b_event_contracts.schema.json#/$defs/persona_imported`, version `1.0.0`, semantic owner `P-123`, individual persistence `SP-672`. Selected command request/result are `persona_import_request_v2`/`persona_import_result_v2` in shared_integration_runtime; closed operation and exact source/scope/runtime joins are mandatory. Schema binding grants no membership.
+
+- `persona.selected`: closed payload `Plans/dg6b_event_contracts.schema.json#/$defs/persona_selected`, version `1.0.0`, semantic owner `P-124`, individual persistence `SP-672`. Selected command request/result are `persona_select_request_v2`/`persona_select_result_v2` in shared_integration_runtime; closed operation and exact source/scope/runtime joins are mandatory. Schema binding grants no membership.
+
+- `persona.updated`: closed payload `Plans/dg6b_event_contracts.schema.json#/$defs/persona_updated`, version `1.0.0`, semantic owner `P-125`, individual persistence `SP-672`. Selected command request/result are `persona_update_request_v2`/`persona_update_result_v2` in shared_integration_runtime; closed operation and exact source/scope/runtime joins are mandatory. Schema binding grants no membership.
+
+For `persona.selected` only, `Plans/dg6b_event_contracts.schema.json#/$defs/persona_selected_resolution` is the newly authored closed ref-only resolution evidence behind the selected v2 result’s authenticated `owner_result_ref`. Its logical schema_id is `pm.persona.selected_resolution.v1`, version 1.0.0. It binds original operation_id/persona_id/result/selection-target and the canonical requested/effective identity with the frozen complete runtime snapshot ref/hash. Current readers authenticate and join this record; aliases, missing frozen evidence or conflicting identity quarantine. The existing selected-whole shared_integration_runtime resource and legacy Project definitions remain byte-identical; no source-graph hash is restamped and no runtime identity is recomputed.
