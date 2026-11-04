@@ -138477,7 +138477,8 @@
               "account_id",
               "billing_entity_id",
               "provider_account_ref",
-              "accepted_partial"
+              "accepted_partial",
+              "parent_run_id"
             ],
             "properties": {
               "observation_ref": {
@@ -138578,6 +138579,18 @@
               },
               "accepted_partial": {
                 "type": "boolean"
+              },
+              "parent_run_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               }
             }
           },
@@ -139358,6 +139371,11 @@
                       "subscription_covered",
                       "unknown"
                     ]
+                  },
+                  "parent_run_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
                   }
                 }
               },
@@ -139495,10 +139513,23 @@
             "type": "object",
             "additionalProperties": false,
             "required": [
-              "provider_attempt_ref"
+              "provider_attempt_ref",
+              "parent_run_id"
             ],
             "properties": {
               "provider_attempt_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "parent_run_id": {
                 "anyOf": [
                   {
                     "type": "string",
@@ -140320,6 +140351,11 @@
                         "subscription_covered",
                         "unknown"
                       ]
+                    },
+                    "parent_run_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
                     }
                   }
                 },
@@ -147816,7 +147852,8 @@
               "account_id",
               "billing_entity_id",
               "provider_account_ref",
-              "accepted_partial"
+              "accepted_partial",
+              "parent_run_id"
             ],
             "properties": {
               "observation_ref": {
@@ -147917,6 +147954,18 @@
               },
               "accepted_partial": {
                 "type": "boolean"
+              },
+              "parent_run_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               }
             }
           },
@@ -148697,6 +148746,11 @@
                       "subscription_covered",
                       "unknown"
                     ]
+                  },
+                  "parent_run_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
                   }
                 }
               },
@@ -148834,10 +148888,23 @@
             "type": "object",
             "additionalProperties": false,
             "required": [
-              "provider_attempt_ref"
+              "provider_attempt_ref",
+              "parent_run_id"
             ],
             "properties": {
               "provider_attempt_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "parent_run_id": {
                 "anyOf": [
                   {
                     "type": "string",
@@ -149785,6 +149852,11 @@
                         "subscription_covered",
                         "unknown"
                       ]
+                    },
+                    "parent_run_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
                     }
                   }
                 },
