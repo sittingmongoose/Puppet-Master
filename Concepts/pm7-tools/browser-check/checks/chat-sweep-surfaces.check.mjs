@@ -7,10 +7,10 @@ export const tests={
    await f.evaluate(()=>{PM56_COLLAB.openConfigure('chat_room');PM56_APP.ctx().openDialog({type:'collab-configure'});});
    await t.page.waitForTimeout(700);
    const sheet=f.locator('#pmOverlayRoot .pmx-sheet').last();
-   const controls=sheet.locator(t.args.fields?'input[data-collab-input="name"],input.pmx-row-job':'button,input:not([readonly]),select');
+   const controls=sheet.locator(t.args.fields?'input[data-collab-input="name"],input.pmx-row-job:not([readonly])':'button,input:not([readonly]),select');
    const count=await controls.count();let unchanged=[];
    for(let i=0;i<count;i++){
-    const b=controls.nth(i); if(!await b.isVisible()||!await b.isEnabled()||await b.getAttribute('aria-hidden')==='true')continue;
+    const b=controls.nth(i); if(!await b.isVisible()||!await b.isEnabled()||await b.getAttribute('aria-hidden')==='true'||await b.getAttribute('readonly')!==null)continue;
     await t.page.mouse.move(0,0);await t.page.waitForTimeout(180);
     const style=e=>{const host=e.closest('label,.input-wrap')||e;return [host,...host.querySelectorAll('span,svg')].map(n=>{const c=getComputedStyle(n);return [c.backgroundColor,c.borderColor,c.outlineColor,c.outlineWidth,c.outlineStyle,c.boxShadow,c.color,c.textDecorationLine].join('|')}).join('~')};
     const before=await b.evaluate(style);await b.hover({timeout:1500}).catch(()=>{});await t.page.waitForTimeout(250);

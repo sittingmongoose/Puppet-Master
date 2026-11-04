@@ -729,7 +729,7 @@
     if (!pipOn('strings')) { strings = ''; ctl = ''; signStr = ''; }
     var body = '<g class="pmx-pip-card">' + signStr + sign + '</g>' + strings + pup + ctl;
     v = '<span class="pmx-pip-host" data-k="pip-host" data-pip-kind="' + esc(kind) + '" data-pip-mood="' + esc(mood) + '" aria-hidden="true">' +
-      '<svg class="pmx-pip-host-svg pmx-pip" data-fam="' + fam + '" data-sway="' + (pipOn('sway-and-physics') ? 1 : 0) + '" viewBox="0 0 ' + PIP_HOST.w + ' ' + PIP_HOST.h + '" width="' + R(PIP_HOST.w * PIP_HOST.k) + '" height="' + R(PIP_HOST.h * PIP_HOST.k) + '" overflow="visible" focusable="false">' +
+      '<svg class="pmx-pip-host-svg pmx-pip" data-fam="' + fam + '" data-sway="' + (pipOn('sway-and-physics') ? 1 : 0) + '" data-shine="' + (pipOn('cheeks-and-shine') ? 1 : 0) + '" viewBox="0 0 ' + PIP_HOST.w + ' ' + PIP_HOST.h + '" width="' + R(PIP_HOST.w * PIP_HOST.k) + '" height="' + R(PIP_HOST.h * PIP_HOST.k) + '" overflow="visible" focusable="false">' +
       '<g class="pmx-pip-lift"><g class="pmx-pip-rig">' + body + '</g></g></svg></span>';
     v = K.roleStyles(v);
     if (++pipMemoN > 800) { pipMemo = Object.create(null); pipMemoN = 0; }
