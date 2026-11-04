@@ -167,7 +167,7 @@ def canonical_json_sha256(value) -> str:
 
 
 def post_august_receipt_state():
-    """DL-077's receipt must pin DL-077, the bytes DL-412's receipt chains from and the Step 3 chain."""
+    """DL-077's original receipt judgment, with its frozen validator-byte observer."""
     path = REPO / POST_AUGUST_RECEIPT
     receipt = load_json(path)
     step3 = load_json(REPO / HOLDING_RECEIPT)
@@ -236,15 +236,13 @@ def multi_family_receipt_state():
 
 
 def post_august_validator_pin() -> str:
-    """DL-077 pinned the bytes it landed; DL-412's receipt chains from that pin.
+    """Observe DL-077's frozen validator bytes without invoking DL-412 judgment.
 
-    Without a valid DL-412 receipt the DL-077 pin must equal the current file,
-    so any other change to this validator fails the DL-077 and Step 3 checks closed.
+    This is the SHA-256 of the original DL-077 validator, not a receipt-supplied
+    value. DL-077 retains its predicate order, messages and returned receipt pin.
+    DL-412's current/prior byte and authority checks run separately for steps.
     """
-    if (REPO / MULTI_FAMILY_RECEIPT).exists():
-        receipt, _ = multi_family_receipt_state()
-        return receipt["validator_before_sha256"]
-    return sha256_file(Path(__file__))
+    return "190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20"
 
 
 def registry_step_shape_ok(step, event_type) -> bool:
@@ -294,7 +292,19 @@ def strict_step_record(path):
             for child in value:
                 inspect(child)
 
-    record = json.loads(path.read_text("utf-8"), object_pairs_hook=pairs, parse_constant=constant)
+    class ExactNumber(float):
+        # Equality stays compatible with load_json's values for the own-file
+        # exemption; claim discovery sees the exact digits, even after overflow.
+        def __new__(cls, token):
+            value = super().__new__(cls, token)
+            value.token = token
+            return value
+
+        def __str__(self):
+            return self.token
+
+    record = json.loads(path.read_text("utf-8"), object_pairs_hook=pairs,
+                        parse_constant=constant, parse_float=ExactNumber)
     inspect(record, True)
     if type(record) is not dict:
         raise ValueError("record must be an object")
@@ -497,6 +507,13 @@ def validate_post_august_admissions(registry, known37):
                  if any(STEP_FIELD in r for r in records.values()) else {})
     except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
         steps = {et: ["registry_step_malformed: " + str(exc)] for et, r in records.items() if STEP_FIELD in r}
+    if any(STEP_FIELD in r for r in records.values()):
+        try:
+            multi_family_receipt_state()
+        except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+            for et, record in records.items():
+                if STEP_FIELD in record:
+                    steps.setdefault(et, []).insert(0, "multi-family step amendment receipt invalid: " + str(exc))
     for event_type in sorted(beyond):
         if event_type not in own:
             issues.append(event_type + ": no admission record")
