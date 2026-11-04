@@ -1,119 +1,104 @@
-# DG6B — review round 1 completed, prepared without admission
+# DG6B — review round 2, prepared without admission
 
-Branch: `plans/ea-w2-plugins-personas-github-20261104`. Reviewed head: `92c1c9ce7c7b79e451a5d668792a8f9b84388d02`. Contract head assessed: `4a09cd518f49f55d72cf80bd3388482d2a433ec4`; self-grade commit: `e2d1d2d7afd6bb505c7684074544663b3865ccc1`. The final report commit changes no contract. This is static specification work; native execution is **NOT_RUN**.
+Branch: `plans/ea-w2-plugins-personas-github-20261104`. Reviewed head: `cbdf6f207a6ec2beb96592617e36dfad5b9c367a`. Contract head assessed: `40ecf4877d9ff212320dd22b87c1c3a4ceac047c`. Worker: DG6B-FIX2, stream E, VM. Native execution is **NOT_RUN**.
 
-All **19/19** families now have ten PASS cells, membership ABSENT, retention PARTIAL. No family is emitting or admitted. All 19 dispositions are `UNDISPOSITIONED`, with `PREPARED_WITHOUT_ADMISSION` and prospective writer roles distinguished. RT still owns the exact retention assignment; separate Event Authority integration owns admission. No product question remains from Q1/Q2.
+All four Astra blocking findings are fixed. All 19 families now have **10 PASS / membership ABSENT / retention PARTIAL**, restoring the 58 cells lowered by the independent review. This is a self-grade of prepared contracts, not admission or native readiness. No family emits until its separate retention and admission gates close.
 
-## Review round 1: findings and responses
+## Review round 2: findings and responses
 
-- **B1 — fixed (`4a09cd518f49f55d72cf80bd3388482d2a433ec4`).** Q1 was an invalid stop based on UCC-147's historical summary. Verified current canon directly: P-060 at `Plans/Personas.md:3718`, No-project library creation at `Plans/Personas.md:227`, UCC-214 at `Plans/UI_Command_Catalog.md:18105`, CV-365 at `Plans/Contracts_V0.md:24018`, and selected create/delete/export/import/select/update request/result pointers in `Plans/projects_refresh_command_bindings.json`. Those per-command definitions already resolve through `persona_owner_request_v2`, `persona_owner_result_v2` and WorkflowScopeV2 in unchanged `Plans/shared_integration_runtime.schema.json`. Current canon decides Everywhere/settings-home library, read-only Computer mirrors, whole Project versions and real Server application scope with null Project joins. Six exact-family contracts now occupy P-120..125, each with its own SP-672 subsection, closed schema/value, source-result/receipt/identity/consumer/replay/withdrawal and positive/negative oracles. The adjacent historical command-summary precedence repair is at `Plans/UI_Command_Catalog.md:8553`; historical Project schema bytes remain unchanged. Verify with `python3 scripts/pm-dg6b-event-contracts.py` (19 pass) and `python3 scripts/pm-projects-refresh-contracts.py` (pass).
-- **B2 — fixed (`4a09cd518f49f55d72cf80bd3388482d2a433ec4`).** Q2 was an invalid stop. Personas section 10 at `Plans/Personas.md:431` and Contracts runtime identity at `Plans/Contracts_V0.md:443` already mandate requested_persona/effective_persona, with `_id` names migration/source-lineage aliases only. The stale select summary now uses canonical naming. P-124 at `Plans/Personas.md:3957`, CV-691 at `Plans/Contracts_V0.md:24554` and the closed `persona_selected`/`persona_selected_resolution` schemas bind the selected v2 result's authenticated owner_result_ref to frozen original resolution and complete runtime snapshot refs/hashes. The pinned selected-whole command schema/source graph remain byte-identical; no hash restamping. No dual canonical fields or historical Settings recomputation. The full checker rejects `_id` aliases, missing frozen evidence, mismatched effective identity/snapshot, and No-project reach violations.
-- **B3 — fixed (`e2d1d2d7afd6bb505c7684074544663b3865ccc1`).** The 13 `CURRENT_WRITER` dispositions were incorrect for unadmitted preparations. All 19 rows now use UNDISPOSITIONED with explicit prepared/non-emitting status and a separate prospective role. Membership/retention remain ABSENT/PARTIAL. Exact current quote ranges and file hashes were mechanically verified for every cell and disposition evidence. See `reports/event-authority-20261104/DG6B.self-grade.json:15` and `fix1/regrade-before-after.json`.
-- **B4 — fixed (`f3a514b041d4d99ffd7036097d98ae8b6b8db312`).** PLUG-131 at `Plans/Plugins_System.md:4728` now explicitly adopts the existing hook restriction at `Plans/Plugins_System.md:624`: only pre_tool_invoke/pre_attempt_start/pre_node_dispatch may block. Closed payload and stored operation schemas reject observation-only hooks; fixtures and the full checker contain positives for all three allowed hooks and negatives for post_tool_invoke/post_attempt_complete. ATS-335 carries the same obligation. No observation hook gains runtime blocking authority.
+- **B1 — fixed (`40ecf4877d9ff212320dd22b87c1c3a4ceac047c`).** All 19 application contracts now use CV-366 exactly: `application@1:{hex(server_id)}:{hex(owner_operation_id)}`. The genuine original Server and owner operation come from independent original-source custody, with no normalization or truncation. Application keys have 19..4111 characters for the declared scalar-ID bounds. Closed operation schemas distinguish application from Project keys; actual Server and selected replay policy are required fields. Event ID algorithms and Project key recipes are preserved; test storage IDs now use the same UUID as the adopted generic checkpoint. Every family tests old family:SHA256 keys, wrong Server, odd/uppercase hex, trailing LF and maximum four-byte Unicode identities. Location: `Plans/storage-plan.md:29515`; exact routes in CV-690/CV-691. Verify with the full checker and the 19 legacy-key / 19 trailing-LF mutation runs.
+- **B2 — fixed (`40ecf4877d9ff212320dd22b87c1c3a4ceac047c`).** Every individual SP-670/SP-671/SP-672 subsection selects `replay_policy=dedupe_by_idempotency_key`; normal append/retry rejects `projector_replay_only` as `replay_only_not_appendable`. The oracle validates canonical pm.event.v0 2.0.0 EventRecords, original source/actor/account/Server/scope/receipt joins, original caller semantics and excluded Storage metadata. All eight plugin families have real encoded-Project positives; five auth families remain application-only; all six Personas retain real Project positives. Independent plugin source receipts prevent the exact eight review substitutions. SP-337 tests 16383/16384/16385 byte transport stages, BLAKE3/size/media/byte integrity and durable authorized refs; a schema-valid 16385-byte auth body passes referenced and fails inline. Generic nine-field durable-token storage joins reject mismatches and persisted snapshot IDs; anchored identifiers use absolute end guards, including borrowed checkpoint patterns, with LF negatives. Locations: `Plans/storage-plan.md:29517`, `scripts/pm-dg6b-event-contracts.py:279`, `scripts/pm-dg6b-event-contracts.py:365`. Verify stock full checker (19 rows, 83 positives, 475 negatives) and external full-checker mutations (105 required nonzero exits).
+- **B3 — fixed (`40ecf4877d9ff212320dd22b87c1c3a4ceac047c`).** Selected payload, stored operation and frozen resolution permit only thread/run/node/attempt/actor override scope, tied to the corresponding actual runtime lineage. Metadata-only selection uses null scope/owner with no invented execution IDs; application/Project workflow scope is distinct. A coherent tier/tier_id source is rejected, even when payload, frozen body and resolution agree. Five actual lineage-owner positives and a coherent wrong-lineage negative run through the full checker; exact canonical requested/effective names and snapshot protections remain. Location: `Plans/Personas.md:3993`; closed selected/resolution schemas in `Plans/dg6b_event_contracts.schema.json`. The independent review-tier mutation now exits nonzero.
+- **B4 — fixed (`40ecf4877d9ff212320dd22b87c1c3a4ceac047c`).** `source.writer_current` is the event-writer fence for every Persona, including export. The independent `definition_writer_current` models the definition-write lease. Export may read an authorized read-only source/Computer mirror with that lease false while its event writer is current; event writer withdrawal always refuses. Both the exact withdrawn-writer review mutation and a distinct read-only export positive run through the full checker. Location: `Plans/Personas.md:3921`; ATS-336 and the export fixture row carry the same independent fence.
+
+No finding is disputed or stopped for Jared. No product choice was made. Retention assignment and family admission remain integration work.
 
 ## Family grades before and after
 
-P = PASS; A = ABSENT; p = PARTIAL. Every after row is ten P, A for membership, p for retention. This is prepared depth, not complete normative admission.
+Before is the Astra re-grade, not the rejected prior self-grade. P=PASS, p=PARTIAL, C=CONFLICT, A=ABSENT. After is prepared depth only.
 
-| Family | Before review fix | Current owner | After |
+| Family | Before | After | Append + / - |
 |---|---|---|---|
-| `auth.github.authenticated` | 10 P / 1 A / 1 p | `GAAAF-077` | 10 P / 1 A / 1 p |
-| `auth.github.device_code.issued` | 10 P / 1 A / 1 p | `GAAAF-078` | 10 P / 1 A / 1 p |
-| `auth.github.disconnected` | 10 P / 1 A / 1 p | `GAAAF-079` | 10 P / 1 A / 1 p |
-| `auth.github.failed` | 10 P / 1 A / 1 p | `GAAAF-080` | 10 P / 1 A / 1 p |
-| `auth.github.token.polling` | 10 P / 1 A / 1 p | `GAAAF-081` | 10 P / 1 A / 1 p |
-| `plugin.hook.blocked` | 10 P / 1 A / 1 p | `PLUG-131` | 10 P / 1 A / 1 p |
-| `plugin.hook.error` | 10 P / 1 A / 1 p | `PLUG-132` | 10 P / 1 A / 1 p |
-| `plugin.hook.invoked` | 10 P / 1 A / 1 p | `PLUG-133` | 10 P / 1 A / 1 p |
-| `plugin.load_failed` | 10 P / 1 A / 1 p | `PLUG-134` | 10 P / 1 A / 1 p |
-| `plugin.loaded` | 10 P / 1 A / 1 p | `PLUG-135` | 10 P / 1 A / 1 p |
-| `plugin.permission.override` | 10 P / 1 A / 1 p | `PLUG-136` | 10 P / 1 A / 1 p |
-| `plugin.tool.collision` | 10 P / 1 A / 1 p | `PLUG-137` | 10 P / 1 A / 1 p |
-| `plugin.tool.registered` | 10 P / 1 A / 1 p | `PLUG-138` | 10 P / 1 A / 1 p |
-| `persona.created` | Stopped Q1 | `P-120` | 10 P / 1 A / 1 p |
-| `persona.deleted` | Stopped Q1 | `P-121` | 10 P / 1 A / 1 p |
-| `persona.exported` | Stopped Q1 | `P-122` | 10 P / 1 A / 1 p |
-| `persona.imported` | Stopped Q1 | `P-123` | 10 P / 1 A / 1 p |
-| `persona.selected` | Stopped Q1/Q2 | `P-124` | 10 P / 1 A / 1 p |
-| `persona.updated` | Stopped Q1 | `P-125` | 10 P / 1 A / 1 p |
+| `auth.github.authenticated` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 4 / 24 |
+| `auth.github.device_code.issued` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 3 / 23 |
+| `auth.github.disconnected` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 3 / 23 |
+| `auth.github.failed` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 3 / 23 |
+| `auth.github.token.polling` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 3 / 23 |
+| `plugin.hook.blocked` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 7 / 26 |
+| `plugin.hook.error` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 4 / 26 |
+| `plugin.hook.invoked` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 4 / 26 |
+| `plugin.load_failed` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 4 / 26 |
+| `plugin.loaded` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 4 / 26 |
+| `plugin.permission.override` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 4 / 26 |
+| `plugin.tool.collision` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 4 / 26 |
+| `plugin.tool.registered` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 4 / 26 |
+| `persona.created` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 5 / 25 |
+| `persona.deleted` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 4 / 25 |
+| `persona.exported` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 5 / 25 |
+| `persona.imported` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 4 / 25 |
+| `persona.selected` | 6 P / 4 p / 1 C / 1 A | 10 P / 1 p / 1 A | 10 / 26 |
+| `persona.updated` | 7 P / 3 p / 1 C / 1 A | 10 P / 1 p / 1 A | 4 / 25 |
 
-Aggregate cells before: 130 PASS, 43 ABSENT, 25 PARTIAL, 30 CONFLICT. After: **190 PASS, 19 ABSENT, 19 PARTIAL, zero CONFLICT**. Six earlier Persona CONFLICT stops are replaced by current-canon technical contracts. The 13 earlier preparations retain their twelve cell grades. Native execution remains NOT_RUN for every family.
+Aggregate before: **132 PASS, 58 PARTIAL, 19 CONFLICT, 19 ABSENT**; after: **190 PASS, 19 PARTIAL, 19 ABSENT, zero CONFLICT**. All dispositions remain UNDISPOSITIONED / PREPARED_WITHOUT_ADMISSION. Retention is PENDING_RETENTION_DECISION in every operation row. No registry bytes, retention policy, Decision Log entry or governance lock changed.
 
-## Newly authored bindings and per-family search evidence
+## Newly authored bindings, search and premise checks
 
-DL-045 explicitly includes all 19 exact names; the current feature/name/scope premises were re-read. Current P-060, UCC-214, CV-365, selected per-command v2 definitions and canonical runtime identity are reused; generic first-receipt custody and index/checkpoint definitions are adopted by name. No sibling binding supplies any family's contract.
+Each of the nineteen exact-family append/retry/original-source bindings is a newly authored owner contract under DL-045's existing nineteen-name scope. The per-family search independently covered live top-level Plans Markdown/JSON/JSONL, the exact owner, selected command/schema resources, EventRecord, CV-366, SP-337 and SP-278. Existing owner behavior, Server/scope/operation custody, first receipt and generic consumer/checkpoint definitions were reused. The original family-specific replay selection and canonical application key were absent; the thirteen non-Persona fixture rows also lacked independent frozen source inputs. Full matches, negative counts and source hashes are in fix2/canon-search.json. No new feature, consumer, filtered projection, checkpoint owner, retention class or deletion policy is introduced.
 
-For each of the six Persona families independently, the search covered live top-level `Plans/*.md`, `*.json`, `*.jsonl`, then exact semantic/command/schema owners and SP-278/SP-286/CV-339/SP-291/SP-336/storage_value_registry. Existing source behavior and selected command editions were found. Each exact event payload definition, operation key and named consumer had zero pre-draft definition matches. The full per-family matches, queries, negative counts, selected routes, source hashes and search head are in the pinned `fix1/persona-canon-search.json`. The earlier 13-family `canon-search.json` and `base-source-hashes.json` remain the original evidence; their conclusions were rechecked, not inferred from the survey.
+Fetched origin/main `16acf7594a3fe8559af89491b895f440b314b99e` was checked directly: CV-366, EventRecord replay rules, Personas section 10, P-060, SP-337 and SP-278 are unchanged from the reviewed branch's reused definitions (six byte comparisons). No premise failed. Prior DL-045 authority and the selected owner behavior still apply; no additional historical answer is applied. Historical shared command/schema/source-graph resources remain byte-identical.
 
-| Family | Exact new producer binding (existing handler) | New consumer/version | New operation value |
-|---|---|---|---|
-| `persona.created` | `handlers::persona::create / handlers::persona::duplicate (distinct-ID route)` | `consumer.persona_created.history@1.0.0` | `persona_created_operation.v1` |
-| `persona.deleted` | `handlers::persona::delete` | `consumer.persona_deleted.history@1.0.0` | `persona_deleted_operation.v1` |
-| `persona.exported` | `handlers::persona::export` | `consumer.persona_exported.history@1.0.0` | `persona_exported_operation.v1` |
-| `persona.imported` | `handlers::persona::import` | `consumer.persona_imported.history@1.0.0` | `persona_imported_operation.v1` |
-| `persona.selected` | `handlers::persona::select` | `consumer.persona_selected.history@1.0.0` | `persona_selected_operation.v1` |
-| `persona.updated` | `handlers::persona::update` | `consumer.persona_updated.history@1.0.0` | `persona_updated_operation.v1` |
+**IDs used:** no new PlanUnit IDs minted. Existing SP-670..672, CV-690..691, ATS-335..336 and P-122/P-124 are amended; the nineteen original family owner IDs remain GAAAF-077..081, PLUG-131..138 and P-120..125. No allocation beyond the lane blocks.
 
-Each new family independently defines its exact v1 closed payload and stored operation, original source/result/readback custody, compact-JSON/SHA-256 event identity, explicit SP-286/CV-339/SP-291/SP-336 adoption, transition barriers, current authorization/deletion/redaction, coherent restore, compatibility and writer/reader withdrawal. Scope keys are compact JSON `[server_id, scope_partition]` from the original selected WorkflowScopeV2 request, preserving the real owning Server even in application scope. Source operation IDs are durably allocated before effect and recovered from original custody. No source effect is replayed.
+## Standing checks and verification
 
-Each named consumer independently adopts SP-278 and reuses `projector.storage.event_record_index@1.0.0`, `event_record_index.v2@eig_<generation>` and `event_record_index_checkpoint`; it introduces no additional filtered projection/checkpoint. Persisted tokens are DL-076's nine-field durable projection, with no persisted redb_snapshot_id. `persona_selected_resolution` is closed frozen source evidence referenced by the existing authenticated owner result, not a new command or generic result-root edition.
+| Standing check | Result across all nineteen |
+|---|---|
+| Current-writer replay-only refusal | Exact replay_only_not_appendable negative per family; 19 independent full-run refusal mutations |
+| Application idempotency | Exact CV-366 keys, real original Server/operation joins, complete UTF-8 bounds and negative legacy keys |
+| Project partition | All 14 eligible families have project~ encoded positives; raw, project: and LF partitions refuse; five auth families refuse Project scope |
+| SP-337 transport | All 19 exercise 16 KiB byte stages and authenticated reference integrity/durability; a schema-valid oversized full auth envelope also exercises both paths |
+| Identifier LF | Owned schema absolute-end guards; borrowed checkpoint guards without modifying shared owner resources; payload/operation/token/key negatives |
+| Retry comparison | Only caller-owned envelope semantics; Storage sequence/observed/persisted metadata changes preserve the digest; correlation change conflicts |
+| Checkpoint storage identity | Every adopted durable-token positive joins the actual event payload/source storage UUID; both token and source-selection mismatches refuse |
+| Negative exit oracle | 105 separate full-checker bad-positive mutations require nonzero exits and the expected error; unexpected success fails the harness |
 
-The earlier 13 producer/consumer/operation bindings remain those in GAAAF-077..081, PLUG-131..138 and the individual SP-670/671 subsections, with B4's exact hook restriction. Their consumers remain `consumer.<exact_name_with_underscores>.history@1.0.0` and operations `<exact_name_with_underscores>_operation.v1`. No operation/profile row outside the hook clarification or six new Persona rows changed.
-
-## Retention, premise checks and open items
-
-All 19 histories and operation values carry `PENDING_RETENTION_DECISION`. Candidate classes are the existing Case L-3 audit/receipt authority, non-authority security diagnostics and ordinary telemetry at storage-plan.md:17399–17417. No class, lifetime, cardinality or deletion rule was selected. Linked bodies and the generic index/checkpoint retain their existing policies. Pending remains materially incomplete and blocks activation.
-
-- DL-045's technical-authoring scope and reserved product decisions remain current. Q1/Q2 failed only because the prior search missed current selected scope and canonical identity; no new owner answer is needed.
-- DL-076 still requires nine durable token fields and excludes live redb_snapshot_id; every consumer explicitly adopts it.
-- DL-270's SP-336 sync amendment is adopted with current first-receipt custody; superseded extra-sync ordering is not restored.
-- No old retention answer was applied or extended. RT assignment, later admission and native proof remain open integration work.
-- Auth multi-cohort census pins are unchanged. No exclusion/application record, registry append, admission, Decision Log, governance/frozen-validator edit or main push occurred.
-
-## IDs and shared-file hunks
-
-New: **P-120..P-125, SP-672, CV-691, ATS-336**. Existing lane IDs retained: SP-670/671, CV-690, ATS-335, GAAAF-077..081, PLUG-131..138; B4 edits PLUG-131 and ATS-335. The new owner IDs start 60 above main's P-060. Every fetched origin branch was scanned before allocation; all new IDs were free and shared IDs stay inside the assigned blocks. `fix1/id-scan.json` records maxima and collision-free candidates.
-
-Shared additions: SP-672 has six separate complete family subsections; CV-691 has six exact routes and the frozen-resolution proof; ATS-336 has six family oracle obligations; storage_value_registry appends six operation/profile rows. UCC-147 gets a narrow historical-summary precedence/naming correction. Existing shared rows are neither reordered nor reflowed. The B4 hook payload/value enum is tightened. Shards and index are regenerated, never hand-edited; changed shard owners are confined to the edited source documents/registry. Currentness edition's 15 copied files hash-match the shared source before generation. No governance lock/evidence/graph hash is refreshed.
-
-## Checks
+The generic token tests exercise the adopted storage-identity boundary, not native source/publication validity. Byte-stage boundary inputs are synthetic before family dispatch; the schema-valid oversized auth envelope separately proves that transport is wired into append validation. Static fixture booleans do not admit native writers. Native crash/receipt/sync/backup/access enforcement remains NOT_RUN.
 
 | Command/check | Exit | Result |
 |---|---:|---|
-| `python3 scripts/pm-dg6b-event-contracts.py` | 0 | 19 families PASS; no admission |
-| `python3 scripts/pm-projects-refresh-contracts.py` | 0 | 707 cases; 602 static semantic expectations; source graph PASS |
-| `python3 -m unittest discover -s tests -p test_pm_primary_command_catalog.py` | 0 | 19 tests PASS |
-| `python3 scripts/pm-github-project-integration.py` | 0 | PASS; admitted_events=0 |
-| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | PASS |
-| `python3 scripts/pm-plan-index.py generate` | 0 | Top-level status=pass |
-| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | PASS |
-| `python3 scripts/pm-plan-index.py validate` | 0 | Parsed top-level status=pass |
-| `python3 scripts/pm-storage-profile-check.py` | 1 | Identical 41 pre-existing missing-profile errors; zero added |
-| Six new storage rows against registry JSON Schema | 0 | PASS |
-| Full DG6B schema meta-validation | 0 | PASS |
-| Quote/range/file-hash and disposition verification | 0 | All 19 rows / all 12 cells PASS |
-| Unrelated definitions/rows/profiles/pins preservation | 0 | PASS |
-| `git diff --check` | 0 | PASS |
+| `python3 scripts/pm-dg6b-event-contracts.py` | 0 | pass; 19 families / 83 positive envelopes / 475 negative envelopes |
+| `python3 full-checker-mutations.py (external evidence harness)` | 0 | pass; 105 expected nonzero checker exits, zero unexpected success |
+| `python3 scripts/pm-projects-refresh-contracts.py` | 0 | pass; selected Persona command/source graph unchanged |
+| `python3 scripts/pm-github-project-integration.py` | 0 | pass; zero admitted events |
+| `python3 -m unittest discover -s tests -p test_pm_primary_command_catalog.py` | 0 | 19 tests OK |
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | top-level pass; edited owners only |
+| `python3 scripts/pm-plan-index.py generate` | 0 | parsed top-level pass |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | top-level pass |
+| `python3 scripts/pm-plan-index.py validate` | 0 | parsed top-level pass; native readiness remains blocked |
+| `python3 scripts/pm-storage-profile-check.py` | 1 | same 41 pre-existing errors; byte-identical result to fix1 |
+| `DG6B schema / 19 storage rows / unchanged policies and protected files` | 0 | pass |
+| `Current-main premise comparison` | 0 | six canonical reused bindings byte-identical |
+| `git diff --check` | 0 | pass |
 
-No check was weakened. B4 adds its observation-hook negatives; B1/B2 add family-specific source/scope/home/CAS/frozen-resolution negatives and run them through the full checker. Schema/source-graph, registry and command tests are static only. Native crash/receipt/backup/GUI proof remains NOT_RUN. The fixed branch was pushed after each logical commit; this round takes no landing lock and never lands or pushes main.
+The storage-profile exit 1 is byte-identical to the prior 41-error baseline; no profile rule was relaxed. No checker rule was weakened. All original negative cases remain enforced. Source changes this round are four Markdown owners (Storage, Contracts, Personas, Testing), the DG6B schema/fixtures, nineteen existing operation value schemas, and the DG6B checker. Generated shard owners match exactly those four documents plus storage_value_registry; all index changes come from the generator. The 15 ignored currentness files were copied and SHA-256 verified before generation. No tests, admission records, registry rows, Decision Log, frozen validators, Spec Lock, auto-decisions or governance evidence were edited.
 
 ## Evidence and handoff
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/persona-canon-search.json` — SHA-256 `5ce6dc75026a50fe11216729a66dcdf5b140583c3514c838433640af4de75ab7`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/id-scan.json` — SHA-256 `423da811b8ab1c3b4bc82d40531aa6eecbad5a71b25f906e7a047d26a1f4258a`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/currentness-sha256.json` — SHA-256 `bff89fc88c53bba8f8f10d8c971bbaafcf44533863363b102767089c02d89e9f`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/contracts-check.json` — SHA-256 `59bed2768407ce45280791dcb6a4787228ef8e39c60750038599b3fd991f97e2`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/projects-refresh-check.json` — SHA-256 `4962cbe4d503cfbd8b08d838876e64f23c66baf537e1e65923b9061220f6c5b0`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/github-integration-check.json` — SHA-256 `d6370eef47f2855ff7d3d37acba01579b929f056779c82f58c2fe300215dd9a9`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/primary-command-tests.txt` — SHA-256 `11103e3d35eec7764f949a5e70dd9302f5f6996442820cf852aa5caf83285f80`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/generation-exits.json` — SHA-256 `9ce690335ecebd06cd3f08b2d9c096b0b3a7a535c528acc72bbf44b864a71e14`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/index-validate.json` — SHA-256 `d6dc809202cfef0749ce6e19a65f337d76167483a6698f28bc740df19815c36f`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/storage-profile-check.json` — SHA-256 `20d617a35312ae64ad5334a8c80d12c87d9e059c9974f737c1242b7474faa7ca`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/persona-storage-rows-schema.json` — SHA-256 `7851c2c9ec94fecf841b3d49120fc9513c782dce1ad5cc716d99d9df280b17f5`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/scope-preservation-check.json` — SHA-256 `b83580e7da2fed3868b620224d3def708c41ff9e2ae182fec614284edac92752`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix1/regrade-before-after.json` — SHA-256 `8814dd7c56246e98112e0c8507c46d88dfae9c00d8c0a6ed20d9109bf37642c4`
-- Prior evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/canon-search.json` — SHA-256 `fbe65c695f3a6ef9b1c1e79d47ceee064aed54d402aba9f204dc3e6246d809c1`
-- Prior evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/base-source-hashes.json` — SHA-256 `56a8ce3109a7bc72045d65222cf1eedbbb3f02ac47a7324a9a9d6d7ee9baeff5`
-- Prior evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/storage-profile-baseline.json` — SHA-256 `89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b`
+All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/`:
 
-Report and self-grade are copied to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/`; fix-round check outputs are under `fix1/`. The sparse fix worktree `/home/sittingmongoose/pm-worktrees/DG6B-fix1` is removed after the final report push. The earlier DG6B worktree belongs to the lead and is untouched. All four findings are fixed; no stopped owner question remains. Retention and admission remain separate integration gates.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/checks-manifest.json` — SHA-256 `41bcf63828921348b78603e6117c7563a6452f3f0d97e2e0a420f6d344214343`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/canon-search.json` — SHA-256 `15480fb2a7e557c8de121d501ffa019c8be9696a4571be3ad4bb0e9e254e5c53`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/premise-currentness.json` — SHA-256 `e79861a4e8d5368f801d6bd3ea851179e557dc3c2096d1aba090e384e1ee8153`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/currentness-copy.json` — SHA-256 `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/checker.json` — SHA-256 `4548c6cdb874847b1991ec0913e811cfd732538802e95bbd0aba8a8e6b095794`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/full-checker-mutations.py` — SHA-256 `015375be719821f4a1263334528f6b25c49bd9c3054700a9b28f2a60851c4397`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/full-checker-mutations.json` — SHA-256 `b754bcdf9a6d4679dbe86d080770d6a894d1162b15e290ca65dd54afb45cadef`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/schema-scope-preservation.json` — SHA-256 `538d7dd59828763e44f0154a9c8333eee929a8f47ae6bade49c5ce6d1710e9d8`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/regrade-before-after.json` — SHA-256 `cd572803155359eb93dab60ab1e600bc4618f8d49d0acbf343209ba925e4e885`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/index-validate.json` — SHA-256 `338b3f56dec49f3e6dbddbdb0ce2318c4b9d7744e55d46a3562c79694137c6e8`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/shards-check.json` — SHA-256 `33cb9b8c10db2203344cc688318f015820d90975f38191273efde494a722c738`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/storage-profile.json` — SHA-256 `20d617a35312ae64ad5334a8c80d12c87d9e059c9974f737c1242b7474faa7ca`
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix2/self-grade-validation.json` — SHA-256 `9c78ca71741ee956c2aa332f773be880290c0c142b7dd7ac2dcf56565fc1c540`
+
+Report and self-grade are copied to the DG6B drafts root. Both commits are pushed to the lane branch. The required sparse fix worktree is removed after the report push; no main push, landing lock, admission or governance seal occurs. The lead's earlier worktrees are untouched. Open integration items: retention assignment, individual admission and native proof only.
