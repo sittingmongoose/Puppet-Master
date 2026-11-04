@@ -1,88 +1,76 @@
-# DT-FIX2 — Event Authority review round 2
+# DT-FIX3 — Event Authority review round 3
 
-Branch: `plans/ea-w2-tools-gates-approvals-20261104`. Reviewed head: `66b49694f95aabf8d167c16ca8c55535ecc3dfaf`. Assessed implementation head: `6c7135af06e1703ec83780495d6e13d1f0d20d32`. The following publication changes reports only. Worktree `/home/sittingmongoose/pm-worktrees/DT-fix2` is removed after publication is pushed.
+Branch: `plans/ea-w2-tools-gates-approvals-20261104`. Reviewed head: `7d6b73958a57c612a58bf26d72035c09b22109b4`. Assessed implementation head: `5851ccc170ec0743a5a920b652df14d145c1247a`. The following publication changes reports only. Assigned detached worktree `/home/sittingmongoose/pm-worktrees/DT-fix3` is removed after publication is pushed.
 
-**All eight standing checks pass across all 17 drafted families.** The complete checker passes **5,191 assertions**. Its fault-injection companion performs **137 complete checker runs**: one clean baseline plus 136 separately targeted family/check faults; all 136 faults report `fail` and return checker exit code 1. Checks 1..7 use 119 in-process calls to the complete main; check 8 uses 17 real failing subprocesses. Every run checks all 17 families and all 5,191 assertions. The clean baseline is one additional in-process run. A separate full-main probe returning success despite reported failures is refused by the actual harness predicate for every family.
+**All ten standing checks pass for all seventeen drafted families.** The clean checker passes **5,225 assertions**. Six bounded groups run all 17 targeted families without reducing any full checker's family or assertion coverage: **261 complete-main calls**, six clean baselines and 255 injected faults. Every fault reports fail and returns 1. Of these calls, 193 validate all 17 families/all 5,225 assertions, including 17 real failing subprocesses; the other 68 stop with structured schema-reference failures before fixtures, as required. The four check-9 injection locations and three check-10 fault variants run separately for every family.
 
-**Preparation: 0/18 at the independent review → 16/18 after repair**, under WAVE2's explicit retention exception. All 17 drafted policy populations pass the standing checks; the whole `tool.denied` family retains its FileSafe producer/transition conflicts, and `tool.custom_headless.skipped` stays undrafted and stopped. Membership remains ABSENT throughout. Native execution remains NOT_RUN; original-owner, payload-pack and SP-278 authentication remain assumed adapters, never native proof.
+**Preparation: 0/18 at independent cycle 3 → 16/18 after repair**, under WAVE2's retention exception. All seventeen drafted populations pass the ten standing checks. Whole-family `tool.denied` retains its FileSafe producer/transition conflicts; `tool.custom_headless.skipped` remains undrafted and stopped. Membership remains ABSENT. Native execution remains NOT_RUN. Original-owner, payload-pack and SP-278 authentication remain assumed adapters.
 
-## Review round 2: findings and responses
+## Review round 3: findings and responses
 
-- **F1 — stopped for Jared; round-1 fence carried (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: CV-610 / SP-590 / ATS-295 and the `tool.denied` source/non-emission oracles. Cause: Tools and FileSafe disagree about emission. Fix already carried: only policy/user denial is prepared; FileSafe returns `owner_conflict_stopped` with no append. Exact question remains: **Should FileSafe blocks emit tool.denied, reconciling Tools.md:1496 (do not emit tool.denied for FileSafe blocks) with FileSafe.md:2839-2846 (Align tool.denied emission with filesafe_blocked)?** No product answer is adopted.
-- **F2 — fixed in round 1, reverified (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: CV-610 and both source/schema editions. Cause: original denial mapping/episode joins were missing. Carried fix: canonical reason, ordered actions, nullable failure class, permission snapshot, headless flag, executed-at-all and episode/scope joins. Full positive and negative source oracles still run.
-- **F3 — fixed independently for all three gates in round 1, reverified (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: CV-605..607 / SP-585..587. Cause: unbound numeric scores. Carried fix: exact original Executor dispatch tuple/ref, threshold and actual numeric-result joins. Each family's scored positives and source negatives still run.
-- **F4 — fixed in round 1, reverified (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: CV-614 and both Usage source definitions/mirrors. Cause: absent account identities could not survive the required before record. Carried fix: required nullable source slots, payload omission of proven absence and exact known-identity joins. Project/application absence and fabrication oracles still run.
-- **F5 — fixed in round 1, reverified (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: CV-613 / SP-593 / ATS-296. Cause: omitted web variants and batch lineage. Carried fix: typed operation context, refs/counters, actual owner result, parent/URL-child identity and aggregate joins. All source and batch oracles still run; no new family is authored.
-- **F6 — binding repair carried and reverified (`b20c80659d413cfe9344fdc5365beddf693b72e8`); residual stops unchanged.** Where: the exact retention table below, route-map bindings, fixture binding oracles and 24 source rows. Cause: prior blanket policy questions. Existing operational/runtime assignments, SP-349 counterparts and decided Usage setting/totals remain bound. Exactly three narrow runless product questions plus Usage's technical adapter remain fenced. No new duration, anchor or deletion policy is chosen.
-- **F7 — fixed (A: `4148c3d2cbb57b0d71542e4ccaa7011ff4bf568a`).** Where: `Plans/dt_event_contracts.schema.json:156` (checkpoint hash), `:1292` (config hash), `:6170` (Usage hash), all 58 definitions and 41 Storage mirrors; `scripts/pm-dt-event-contracts.py:113`. Cause: Python `$` accepts a trailing LF. Fix: 217 hashes and 17 generation IDs gain exact lengths; seven variable Project-partition patterns gain a portable full-string end guard. Every populated patterned identifier in every base/variant source/payload/checkpoint gets a trailing-LF negative. Coherent current-token/prefix changes and coherent config/Usage payload-source joins refuse. Restoring the reviewed schemas/mirrors yields 899 failures across all 17 families in the full checker; exit 1. Verify `f7-regression-rejection.json`, `schema-mirrors.json`, normal DT main and standing fault 5.
-- **F8 — fixed (B: `ea4a395b9e703a2bae3541d097f16a892be603c2`).** Where: `scripts/pm-dt-event-contracts.py:79` and `:652`; every family's `retry_oracle`. Cause: `sha(event)` included Storage-assigned metadata in the semantic comparison. Fix: RFC 8785 canonical JSON over exactly the 21 CV-EventRecord caller fields. All 51 independent sequence/observed/persisted changes return the complete original event and receipt, with one stored entry. All 357 caller-field mutations change the digest and conflict when compared under the original stored model key, without append; these isolate digest sensitivity, while normal admission/identity joins are tested separately. Pinned semantic bytes/digests are separate from the unchanged full-value receipt and exact-u64 source commitments. Verify DT main and standing fault 6; the checker requires `jsonschema` and `rfc8785`.
+- **F1 — stopped for Jared; existing fence reverified (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: CV-610/SP-590/ATS-295 and `denial_emission`. Cause: Tools and FileSafe disagree about emission. Existing fix: policy/user denial prepares; FileSafe returns `owner_conflict_stopped`, full source validation returns `transition_refused`, and no append occurs. Exact question unchanged: **Should FileSafe blocks emit tool.denied, reconciling Tools.md:1496 (do not emit tool.denied for FileSafe blocks) with FileSafe.md:2839-2846 (Align tool.denied emission with filesafe_blocked)?** No product answer is adopted.
+- **F2 — fixed previously (`b20c80659d413cfe9344fdc5365beddf693b72e8`), reverified.** Where: CV-610 and both source editions. Cause: missing denial mapping/episode joins. Fix: canonical reason, nullable inapplicable failure class, ordered actions, headless/snapshot/executed-at-all and exact episode joins. All thirteen authored source negatives and independent action-order/snapshot/sequence/scope/class mutations refuse as expected.
+- **F3 — fixed previously (`b20c80659d413cfe9344fdc5365beddf693b72e8`), reverified independently for all three gates.** Where: CV-605..607/SP-585..587. Cause: unbound numeric results. Fix: original dispatch tuple/ref/threshold/result joins. All 21 authored negatives and twelve independent join mutations match. Original `score=123.5, score_threshold=-77` without context is `schema_refused` for each gate.
+- **F4 — fixed previously (`b20c80659d413cfe9344fdc5365beddf693b72e8`), reverified.** Where: CV-614 and both Usage source editions. Cause: absent account identities failed capture. Fix: nullable proven-absence slots and exact identity joins. All eight authored negatives match; each of three account identities independently accepts proven absence and refuses fabrication in Project and application scope.
+- **F5 — fixed previously (`b20c80659d413cfe9344fdc5365beddf693b72e8`), reverified.** Where: CV-613/SP-593/ATS-296. Cause: missing web variants and batch lineage. Fix: map/read/extract/research contexts and exact parent/URL-child joins. All sixteen authored negatives and all nine batch cases match, including omitted/duplicate child, wrong parent/tool/batch/run, aggregate and missing attempt refusals.
+- **F6 — previous binding repair (`b20c80659d413cfe9344fdc5365beddf693b72e8`) reverified; residual stops unchanged.** Where: route-map retention bindings, source rows and the retained table below. Cause: blanket policy questions. Fix: preserve decided operational/runtime/SP-349/Usage bindings and fence the remaining narrow dependencies. All seven isolated retention-binding corruptions fail the complete checker/return 1. Every authored retention expectation matches; no new duration, anchor or deletion policy is chosen.
+- **F7 — fixed previously (`4148c3d2cbb57b0d71542e4ccaa7011ff4bf568a`), reverified.** Where: all guarded identifier rules and `identifier_checks`. Cause: Python `$` accepts trailing LF. Fix: exact lengths/full-string guards. All 349 concrete identifier LF mutations refuse, including coherent checkpoint and config/Usage hash cases. Full checker faults restoring false LF publication fail for every family.
+- **F8 — fixed previously (`ea4a395b9e703a2bae3541d097f16a892be603c2`), reverified.** Where: `producer_semantic_bytes/digest` and retry oracles. Cause: complete-event hashing included Storage metadata. Fix: exact RFC 8785 bytes over the owner's 21 caller fields. All 51 metadata mutations preserve the full original event/receipt and one entry; all 357 caller-field mutations conflict. Full checker faults restoring whole-event hashing fail for every family.
+- **F9 — fixed (A: `691a07e85d`).** Where: `scripts/pm-dt-event-contracts.py:36` and `:707`; `scripts/pm-dt-standing-checks.py:47` and `:126`. Cause: fixture-directed validation skipped unresolved references in unused branches. Fix: resolve all references across the complete DT and EventRecord documents and all 41 DT Storage mirrors before fixture validation, traversing unused definitions/properties/alternatives with resource roots, nested IDs, anchors and external-bundle context. A broken reference produces structured fail/return 1. Each family's timestamp alternative, optional property, unused definition and Storage mirror injection independently fails. Both independent cycle-3 F9 reproduction scripts now refuse all seventeen mutations; valid target/visited controls pass. Root/local/external/anchor/nested-ID controls pass, and unused external dependency failure is detected. No schema is weakened.
 
-## Standing-check 7 follow-up
+**Standing check 7 storage refusal — prior fix `6c7135af06e1703ec83780495d6e13d1f0d20d32` reverified.** All 51 one-field mismatches and all seventeen coherent foreign-storage checkpoint/token/source-selection/reference substitutions return `source_changed`. Positive checkpoint identities still equal their original event source. Every full-checker fault that falsely publishes coherent foreign Storage fails.
 
-**Fixed (C: `6c7135af06e1703ec83780495d6e13d1f0d20d32`).** Where: `scripts/pm-dt-event-contracts.py:444` and each checkpoint case's `context.source_storage_instance_id`. Cause: the existing three one-field mismatch checks passed, but coherently replacing all three checkpoint/token/source-selection storage IDs and refs could still publish. Fix: compare to the original event source's Storage identity supplied by the already-assumed adapter. This is an existing owner join from SP-580..596/SP-278, not a new storage authority, product feature or authentication claim. All 17 such coherent mutations returned `published` before the repair and now return `source_changed`; all 51 single-field mismatches still refuse. `check7-before-after.json` records both revisions. No owner prose or PlanUnit ID was added.
+**Standing check 10 — fixed (B: `1eb7e19160`).** Where: `scripts/pm-dt-event-contracts.py:547`, `:571` and every family's `historical_reader_oracle` in `Plans/dt_event_contract_fixtures.json`. Cause: no explicit retained-history oracle. Fix: inspect the authenticated immutable original source/event closure using its original captured prerequisites, with current disclosure guards. All seventeen retained base events survive changed live prerequisites that would refuse a current transition, and unavailable live state; every Project/application/operation variant also survives. Verified referenced payloads survive; unverified/changed pack bodies, withdrawn families, forged events/source records/Storage metadata, missing source, unsupported readers and current access/tombstone refusals return unavailable with zero append/effect. Separate full-checker faults for live-state gating, withdrawn acceptance and forged acceptance fail for every family. This tests existing per-family SP-580..596 read/custody semantics; no new runtime binding, authentication proof, writer admission or product answer is authored.
 
 ## Per-family standing checks
 
-A = F7 commit `4148c3d2cb`; B = F8 commit `ea4a395b9e`; C = storage-identity/oracle commit `6c7135af06`. Each cell is a verified full-checker negative run, as recorded individually in `fix2/standing-negative-runs.json`. No standing-check cell remains open.
+A = F9 commit `691a07e85d`; B = historical-oracle commit `1eb7e19160`. `5851ccc170` adds repeatable bounded family groups; every full checker continues to validate all seventeen families. Each table cell is verified by a separate full-main fault and its expected failure boundary. No standing-check cell remains open.
 
-| Family | 1 replay | 2 app key | 3 partition | 4 payload | 5 LF | 6 retry | 7 storage | 8 exit |
-|---|---|---|---|---|---|---|---|---|
-| `approval.requested` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
-| `approval.granted` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
-| `approval.denied` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
-| `approval.timeout` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
-| `config.migrated` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
-| `gate.evaluation_started` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
-| `gate.failed` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
-| `gate.passed` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
-| `requirements.clarification_requested` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
-| `run.background_enqueued` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
-| `tool.denied` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
-| `tool.execution_completed` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
-| `tool.execution_started` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
-| `tool.invoked` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
-| `usage.event` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
-| `worktree.created` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
-| `worktree.deleted` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
+| Family | 1 replay | 2 app key | 3 partition | 4 payload | 5 LF | 6 retry | 7 storage | 8 exit | 9 refs | 10 history |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `approval.requested` | pass | pass* | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `approval.granted` | pass | pass* | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `approval.denied` | pass | pass* | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `approval.timeout` | pass | pass* | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `config.migrated` | pass | pass | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `gate.evaluation_started` | pass | pass* | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `gate.failed` | pass | pass* | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `gate.passed` | pass | pass* | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `requirements.clarification_requested` | pass | pass* | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `run.background_enqueued` | pass | pass | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `tool.denied` | pass | pass | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `tool.execution_completed` | pass | pass | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `tool.execution_started` | pass | pass | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `tool.invoked` | pass | pass | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `usage.event` | pass | pass | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `worktree.created` | pass | pass* | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
+| `worktree.deleted` | pass | pass* | pass | pass | pass | pass | pass | pass | fixed A | fixed B |
 
-*Project-only family: CV-366 app-key construction is inapplicable; the negative instead proves application-scope append is refused. All seven app-capable families and all eight app positives exercise exact CV-366 keys and coherent literal-ID/wrong-server/wrong-prefix refusals.*
-
-## Negative cases and full-checker rejection
-
-| Check | Authored negative per family | Full checker result |
-|---|---|---|
-| 1 | Current writer accepts `projector_replay_only`; separate writer/retry refusal cases and zero-effect retry expectations remain in main. | Each targeted false acceptance fails and exits 1. |
-| 2 | Accept wrong `application:` prefix on an authentic app source; Project-only writer accepts forbidden app scope. Normal oracles also cover literal IDs and wrong server hex. | Each targeted bypass fails and exits 1. |
-| 3 | Accept raw Project ID after coherently recomputing prepared-source commitment. Project base and variant positives must use encoded `project~`. | Each targeted bypass fails and exits 1. |
-| 4 | Accept an inline body above 16 KiB. Normal cases also cover verified reference success and unverified/changed resolved-body refusal. | Each targeted bypass fails and exits 1. |
-| 5 | Publish a trailing-LF anchor hash with coherent current-token and verified-prefix copies; all actual patterned-value LF cases also run. | Each targeted bypass fails and exits 1; restoring old schemas also fails all families. |
-| 6 | Restore full-event hashing, which falsely conflicts on Storage metadata changes. Each caller-owned field independently changes the digest/conflicts. | Each targeted regression fails and exits 1. |
-| 7 | Publish a coherent foreign-storage token; normal cases also change checkpoint/token/source-selection identity independently. | Each targeted bypass fails and exits 1. |
-| 8 | Corrupt the family's pinned identity oracle in a real subprocess. Also simulate reported failures with a success return code and apply the actual harness guard. | All 17 real subprocesses report fail/exit 1; all 17 zero-exit substitutions are refused. |
+*Project-only family: application-key construction is inapplicable; attempted application append explicitly refuses. All seven app-capable families/eight application positives retain exact CV-366 byte formatting and literal-ID/wrong-server/wrong-prefix refusals.*
 
 ## Per-family grades before and after
 
-Before is the complete independent cycle-2 re-grade. Values are PASS cells out of twelve, not admission/native-execution grades. The 36 distinct F7/F8 cells return PARTIAL → PASS; every other status is carried. Totals: **146 PASS / 43 PARTIAL / 25 ABSENT / 2 CONFLICT → 182 PASS / 7 PARTIAL / 25 ABSENT / 2 CONFLICT**. All 216 cells and 294 quote records resolve against current files.
+Before is the independent cycle-3 regrade. Only the seventeen `positive_negative_oracles` cells return PARTIAL → PASS. **165 PASS / 24 PARTIAL / 25 ABSENT / 2 CONFLICT → 182 PASS / 7 PARTIAL / 25 ABSENT / 2 CONFLICT** across all 216 cells. All 328 current quote records and declared source hashes match the implementation head. Counts are normative self-grades, not admission or native-execution grades.
 
-| Family | Before | After | Remaining non-PASS cells |
+| Family | Before PASS/12 | After PASS/12 | Remaining non-PASS cells |
 |---|---:|---:|---|
-| `approval.requested` | 9 | 11 | membership_version ABSENT |
-| `approval.granted` | 9 | 11 | membership_version ABSENT |
-| `approval.denied` | 9 | 11 | membership_version ABSENT |
-| `approval.timeout` | 9 | 11 | membership_version ABSENT |
-| `config.migrated` | 8 | 11 | membership_version ABSENT |
-| `gate.evaluation_started` | 9 | 11 | membership_version ABSENT |
-| `gate.failed` | 9 | 11 | membership_version ABSENT |
-| `gate.passed` | 9 | 11 | membership_version ABSENT |
-| `requirements.clarification_requested` | 8 | 10 | membership_version ABSENT; retention PARTIAL |
-| `run.background_enqueued` | 9 | 11 | membership_version ABSENT |
-| `tool.denied` | 7 | 9 | membership_version ABSENT; producer CONFLICT; transitions CONFLICT |
-| `tool.execution_completed` | 9 | 11 | membership_version ABSENT |
-| `tool.execution_started` | 9 | 11 | membership_version ABSENT |
-| `tool.invoked` | 9 | 11 | membership_version ABSENT |
-| `usage.event` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
-| `worktree.created` | 8 | 10 | membership_version ABSENT; retention PARTIAL |
-| `worktree.deleted` | 8 | 10 | membership_version ABSENT; retention PARTIAL |
+| `approval.requested` | 10 | 11 | membership_version ABSENT |
+| `approval.granted` | 10 | 11 | membership_version ABSENT |
+| `approval.denied` | 10 | 11 | membership_version ABSENT |
+| `approval.timeout` | 10 | 11 | membership_version ABSENT |
+| `config.migrated` | 10 | 11 | membership_version ABSENT |
+| `gate.evaluation_started` | 10 | 11 | membership_version ABSENT |
+| `gate.failed` | 10 | 11 | membership_version ABSENT |
+| `gate.passed` | 10 | 11 | membership_version ABSENT |
+| `requirements.clarification_requested` | 9 | 10 | membership_version ABSENT; retention PARTIAL |
+| `run.background_enqueued` | 10 | 11 | membership_version ABSENT |
+| `tool.denied` | 8 | 9 | membership_version ABSENT; producer CONFLICT; transitions CONFLICT |
+| `tool.execution_completed` | 10 | 11 | membership_version ABSENT |
+| `tool.execution_started` | 10 | 11 | membership_version ABSENT |
+| `tool.invoked` | 10 | 11 | membership_version ABSENT |
+| `usage.event` | 9 | 10 | membership_version ABSENT; retention PARTIAL |
+| `worktree.created` | 9 | 10 | membership_version ABSENT; retention PARTIAL |
+| `worktree.deleted` | 9 | 10 | membership_version ABSENT; retention PARTIAL |
 | `tool.custom_headless.skipped` | 1 | 1 | membership_version ABSENT; producer PARTIAL; closed_payload_schema ABSENT; scope_identity ABSENT; replay_idempotency PARTIAL; retention ABSENT; redaction_custody ABSENT; transitions PARTIAL; consumers_checkpoints ABSENT; compatibility_withdrawal ABSENT; positive_negative_oracles ABSENT |
 
 ## Retention adjudication — exact populations
@@ -109,43 +97,36 @@ All pending facets preserve source/receipt/reference closure and existing holds.
 
 **Disposition: STOPPED.** No DT writer, schema, reset rule or duplicate Doctor contract is authored. The prior recommendation remains unadopted; this fix round makes no recommendation or decision.
 
-## Premises, bindings, IDs and scope
 
-Current CV-EventRecord defines exactly the caller-field digest and compatibility-only replay policy used by this repair; both owner passages match fetched origin/main. Ten relevant semantic owner documents are byte-identical to the reviewed head. `current-premises.json` records hashes. Round-1 owner searches and separately authored per-family bindings remain in `DT-binding-search.json`; none is replaced with sibling inference. No old owner answer is extended. The failed assumptions repaired here were LF-safe `$` matching, whole-EventRecord retry comparison and sufficient pairwise Storage identity equality.
+## Scope, IDs and validation
 
-No owner prose is edited. The checkpoint adapter now exposes the already-required source Storage identity explicitly; its authenticity remains assumed. Newly authored runtime/native bindings: none. **New IDs used: none. Existing IDs remain CV-600..616, SP-580..596, ATS-290..298; allocated unused tails remain unused.**
+Existing product stops and exact questions remain unchanged. Usage's setting-driven retention-policy adapter remains technical PARTIAL debt with deletion/admission disabled. All pending facets retain source/receipt/reference closure and holds.
 
-Only DT schema/fixtures/checkers, their 41 existing Storage registry schema mirrors, the generated `storage_value_registry` shard group, index timestamps and DT reports change in round 2. Existing policies/profiles and all non-DT registry row values are unchanged. No admission, event-family registry append, Decision Log change, governance reseal, protected artifact, .gitignore or test-file change, landing lock, main push, subagent, mailbox registration or message. The source clone was briefly checked out/sparsified by an initial wrong-directory command, then restored to its exact original main ref/full-checkout state with its pre-existing untracked directory preserved; all task work is in the assigned detached worktree.
+No owner prose, payload/source/checkpoint schema, Storage registry, Event family registry, Decision Log, protected governance artifact, `.gitignore` or repository test file changes in round 3. No new runtime/native binding or old owner answer is adopted. Existing per-family binding-search evidence remains in `DT-binding-search.json`. **New IDs: none. Existing IDs: CV-600..616, SP-580..596, ATS-290..298; unused allocation tails remain unused.** Branch pushes only; no main push, landing lock, reseal, admission or subagent. Disk/memory prerequisites were 111 GB/14 GB before worktree creation; later checks stayed above the 50 GB/6 GB limits.
 
-## Validation
-
-| Command/check | Exit | Result |
+| Verification | Exit | Result |
 |---|---:|---|
-| `python3 scripts/pm-dt-event-contracts.py` | 0 | 5,191 assertions / 17 families; all standing observations match. |
-| `python3 scripts/pm-dt-standing-checks.py` | 0 | 137 complete runs; 136 individual faults refused with status fail/exit 1; 17 actual failing subprocesses. |
-| Full checker with reviewed schemas/mirrors restored in memory | 1 | Expected refusal, all 17 families, 899 assertions fail. |
-| Full checker forced to return zero despite failure + actual harness predicate | 0 (probe) | All 17 standing-exit cases fail; actual harness rejects the success code for each. |
-| DT meta-schema + Storage registry schema + exact mirrors | 0 | 58 definitions / 41 mirrors; unrelated rows/policies/profiles unchanged. |
-| `python3 scripts/pm-storage-recovery-contracts.py --self-test` | 0 | 22 checks pass. |
-| `python3 scripts/pm-storage-profile-check.py` | 1 | Same 41 baseline errors; exact baseline/current report equality, zero additions/removals. |
-| Required currentness edition copy | 0 | All 15 SHA-256 hashes match shared edition. |
-| Shard generation/check | 0 | First generation changes only Storage registry shards; final regeneration is byte-identical. |
-| Committed shard tree | 0 | Every manifest, index and referenced shard exists at the implementation head with its exact SHA-256. |
-| Index generation/validation | 0 | Top-level pass; final generation differs from prior generated index only by four timestamps. |
-| Grade/source evidence | 0 | All 216 cells / 294 quote records match; reviewed owner prose unchanged. |
-| Scope audit and `git diff --check` | 0 | Protected files unchanged; no new IDs, owner prose or admission. |
+| DT baseline | 0 | 17 families, 5,225 assertions, all ten observations match. |
+| Full standing companion in six disjoint groups | 0 each | 261 complete-main calls: six clean baselines, all 255 faults fail/return 1; includes 17 real failing subprocesses. |
+| Adapted cycle-3 independent probes and explicit assertions | 0 | F1–F8 regressions, 68 Storage refusals, 349 LF / 51 metadata / 357 producer mutations and zero-exit rejection all pass. |
+| Original timestamp/optional-reference reproductions | 0 probes; 1 child checkers | All 34 independent F9 mutations now refuse; resolver controls pass. |
+| Seven retention-binding mutations | 0 probe; 1 child checkers | All seven exact bindings detected; retention vectors and original gate counterexamples match. |
+| Shard generate/check | 0 | 99 docs / 3,267 shards; generation produces no repository change. |
+| Index validate | 0 | Parsed top-level status pass; no failures. No owner markdown changed, so index generation is unnecessary. |
+| Storage recovery self-test | 0 | All 22 checks pass. |
+| Currentness copy | 0 | All 15 ignored edition hashes match the shared copy. |
+| Grade/source/scope audits | 0 | 216 cells / 328 exact current quotes; original owner/schema/registry bytes unchanged. |
+| `git diff --check` | 0 | No whitespace errors. |
 
-Every command result and code is indexed in `DT-checks.json`; retained check artifacts have exact paths and SHA-256 in `DT-evidence-sha256.json`. Copies of this report and self-grade overwrite `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/DT.md` and `DT-self-grade.json`. Round-2 evidence is under that directory's `fix2/`. No aggregate governance or native-runtime pass is claimed.
+Commands, expected child failure codes, exact evidence paths and SHA-256 are in `DT-checks.json` and `DT-evidence-sha256.json`. Copies of this report and self-grade overwrite `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/DT.md` and `DT-self-grade.json`. Round-3 evidence is under that directory's `fix3/`. No aggregate governance or native-runtime pass is claimed.
 
-## Retained evidence
+## Principal retained evidence
 
 | Exact artifact path | SHA-256 |
 |---|---|
-| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/dt.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/dt.json) | `4da40907bf34b4181ef2f7392e0fe10630219828a698a352c100c38c3937b6ca` |
-| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/standing-negative-runs.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/standing-negative-runs.json) | `ecc367444369331192625c7e33d6a05cc1c93104304a2b1edbcc14802b4071b2` |
-| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/success-exit-negative.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/success-exit-negative.json) | `afa70e2a286de74b7a09c381f2165abc1285b48f48609571d573821cac9a36ff` |
-| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-regression-rejection.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-regression-rejection.json) | `894266aa3bb446849e6a846e778c9a353cd72d6954e682baa95815898be2b346` |
-| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/check7-before-after.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/check7-before-after.json) | `fc2d83e3ee29fea25a96ed75e9586c368dbe3cad89b30f53bb396bc689a3d5e1` |
-| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/schema-mirrors.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/schema-mirrors.json) | `a9f7291ced72da61b75ba68e7c28da974efb43345ad8d428e85ec0eb4ec1b1e0` |
-| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/grade-evidence-check.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/grade-evidence-check.json) | `8bb83aaca3532dc4418069eae5468c40bf0d7e8c401725921172fe69a52eec4e` |
-| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/committed-shards-check.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/committed-shards-check.json) | `0ccab6628a30ceb82cd306f6b2de8e68a9e8c0bc0c83e3e7ca45383a2a550f1a` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/standing-negative-runs.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/standing-negative-runs.json) | `25f26a1ecdb992157cb1bdaaa15aef282c2669d7ff7cc66fa20e688e0f61c344` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/earlier-regression-summary.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/earlier-regression-summary.json) | `9af59b81bc29739a546dbac81a99c36eebe2752ce08eff6693705cdc103a86ad` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/historical-readers.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/historical-readers.json) | `c0ba66352917cbc693ed93f99ffddb26cdfe8201587ec84b4232c086152556d8` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/reference-branch-mutations.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/reference-branch-mutations.json) | `ed8dbeb2c43e937070f250d922f945bca83339d42033ec893993b5d30f55d23c` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/reference-mutations.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/reference-mutations.json) | `4d6f95f05beb5f986e7764be4b37d44c02e949074b2541b84e9a7e50e083fc73` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/grade-evidence-check.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/grade-evidence-check.json) | `97d87b2ecb23162d7896b3e78f2a2cf503cd30e901fa24efa37e27812bfd01ab` |
