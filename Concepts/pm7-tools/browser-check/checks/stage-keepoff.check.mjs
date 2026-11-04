@@ -4,7 +4,9 @@
 // confirmation ring, and fails on:
 //  - NieR Light and Dark at 740x768 (the banner: NieR's box at the top over the props' column): a prop under the box or
 //    its PIP tab while Safe's Add one is hovered and left, Add one is pressed and Back is pressed, Safe with an online copy
-//    settles (the cloud), and Creating lowers its blocks (each went down behind the tab and the box);
+//    settles (the cloud), and Creating lowers its blocks (each went down behind the tab and the box), with three blocks
+//    and with four (an online copy signed in by the concept's stand-in owner), and the settled four-block stack stands
+//    below the box and its tab;
 //  - Glass Dark, Basic Light, Friendly Light and Retro Dark at 1920x1080, 1390x900 and 860x768: a prop under the bubble
 //    on Name > Safe > Add one > Back > Review (a leaving prop rose through the bubble, or the next words' bubble moved onto
 //    a prop still fading out);
@@ -121,6 +123,25 @@ async function nier(t, mode) {
 		await f.waitForTimeout(8000);
 		S = await result(t, f);
 		await t.check(`${tag}: Creating lowers its blocks clear of the box and the PIP tab`, reached && S.blocks > 0 && S.hits.length === 0, `${reached ? 'creating' : 'did not reach Creating'}, ${S.frames} frames, ${S.blocks} block samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
+		// Creating with four blocks: an online copy, signed in by the concept's stand-in owner (no real account), the whole
+		// route sampled, then the settled stack measured (the onb lane's carried 'box over the top block by 5-7 px')
+		f = await openAt(t, mode, look, [740, 768], 'name');
+		await nameIt(t, f);
+		let ok4 = (await next(t, f, 'safe')) && (await point(t, f, mode, 'online')) && (await point(t, f, mode, 'pick', 'github'));
+		ok4 = ok4 && (await next(t, f, 'online-signin')) && (await point(t, f, mode, 'signIn'));
+		ok4 = ok4 && (await f.waitForFunction(() => (window.O55.S.sess.signin || {}).state === 'done', null, { timeout: 20000 }).then(() => true, () => false));
+		ok4 = ok4 && (await next(t, f, 'review')) && (await next(t, f, 'creating'));
+		await f.waitForTimeout(14000);
+		const set = await f.evaluate(() => {
+			const st = document.querySelector('#pm-o55-onboarding .pst'), b = st.querySelector('.pst-bubble'), tab = b && b.querySelector(':scope > .pst-bn');
+			const blocks = [...st.querySelectorAll('.pst-prop[data-kind="block"]')].filter((p) => +p.getAttribute('opacity') > 0.05).map((p) => p.getBoundingClientRect());
+			const box = b.getBoundingClientRect(), tb = tab ? tab.getBoundingClientRect() : box, bottom = Math.max(box.bottom, tb.bottom);
+			const top = blocks.length ? Math.min(...blocks.map((r) => r.top)) : null;
+			return { n: blocks.length, top, bottom, left: Math.min(box.left, tb.left) };
+		});
+		S = await result(t, f);
+		await t.check(`${tag}: Creating with an online copy (four blocks) lowers them clear of the box and the PIP tab`, ok4 && set.n >= 4 && S.hits.length === 0, `${ok4 ? 'creating' : 'the online-copy route did not reach Creating'}, ${set.n} blocks, ${S.frames} frames, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: the settled four-block stack stands below the box and its tab`, set.n >= 4 && set.top >= set.bottom - 0.5, `top block at ${set.top == null ? '-' : Math.round(set.top)} px, box and tab end at ${Math.round(set.bottom)} px`);
 	}
 }
 

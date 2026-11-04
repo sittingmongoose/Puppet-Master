@@ -12,7 +12,9 @@
 //    no bake ran and the last frost made, another size's, stayed on stretched until something baked again: FO-38 too);
 //    this also keeps the check above from passing on no writes;
 //  - once it has, the scrim beside the window reads as frost, not as the app: its painted pixels are smooth (mean step
-//    between neighbours under 4 levels; the sharp app reads 9-11).
+//    between neighbours under 4 levels; the sharp app reads 9-11);
+//  - back at a size, the scrim beside the window paints as it did the first time at that size (mean difference under 3
+//    levels), not another size's frost stretched.
 // Both surfaces (a normal page and T3's sandbox) unless --set sandbox picks one. Headless: it resizes the window.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/glass-frost-resize.check.mjs --set page=<build>
 
@@ -52,6 +54,7 @@ async function frost(t, mode) {
 			};
 		});
 		await f.waitForTimeout(1500);
+		const firstLook = new Map();
 		for (const [w, h] of SIZES) {
 			const tag = `glass-${scheme} ${mode} ${w}x${h}`;
 			const mark = await f.evaluate(() => window.__fo38.length);
@@ -68,6 +71,14 @@ async function frost(t, mode) {
 				const img = await t.pixels({ x: off.x + 6, y: off.y + Math.max(40, box.top), width: Math.floor(box.left) - 14, height: Math.max(40, Math.floor(box.bottom - Math.max(40, box.top)) - 40) });
 				const rough = roughness(img);
 				await t.check(`${tag}: the scrim beside the window reads as frost (mean step ${rough.toFixed(2)} < 4)`, rough < 4, `mean step ${rough.toFixed(2)} levels`);
+				const was = firstLook.get(`${w}x${h}`);
+				if (!was) firstLook.set(`${w}x${h}`, img);
+				else {
+					let d = 0, n = 0; const N = Math.min(was.data.length, img.data.length);
+					for (let i = 0; i < N; i += 4) { d += Math.abs(was.data[i] - img.data[i]) + Math.abs(was.data[i + 1] - img.data[i + 1]) + Math.abs(was.data[i + 2] - img.data[i + 2]); n += 3; }
+					const md = n ? d / n : 0;
+					await t.check(`${tag}: back at this size, the scrim paints as at its first visit (mean difference ${md.toFixed(2)} < 3)`, was.width === img.width && was.height === img.height && md < 3, `${was.width}x${was.height} then ${img.width}x${img.height}, mean difference ${md.toFixed(2)} levels`);
+				}
 			}
 		}
 		await f.evaluate(() => { delete window.__fo38; });
