@@ -5,6 +5,7 @@ import hashlib
 import json
 import base64
 import re
+import importlib.util
 from functools import lru_cache
 try:
     from blake3 import blake3
@@ -176,6 +177,8 @@ ADMISSION_GATES = (
 REBUILD_GATES = (
     'originals_present', 'source_current', 'coverage_complete', 'schema_supported',
     'current_frontier_verified', 'cas_matches',
+    'reader_enabled', 'permission_current', 'source_present', 'deletion_clear',
+    'hold_allows_disclosure',
 )
 
 
@@ -283,11 +286,19 @@ def resolved_payload(event, schema, storage=None):
     return body if Draft202012Validator(schema, format_checker=FORMATS).is_valid(body) else None
 
 
-def valid_event(row, event, original):
+def envelope_valid(event):
     envelope = json.loads((ROOT / 'Plans/event_record.schema.json').read_text())
+    return Draft202012Validator(envelope, format_checker=FORMATS).is_valid(event)
+
+
+def custody_valid(custody):
+    schema = json.loads((ROOT / 'Plans/event_append_receipt_contracts.schema.json').read_text())
+    return Draft202012Validator(dict(schema, **{'$ref': '#/$defs/custody_v2'}), format_checker=FORMATS).is_valid(custody)
+
+
+def valid_event(row, event, original):
     payload_schema = json.loads((ROOT / row['schema']).read_text())
-    ev = Draft202012Validator(envelope, format_checker=FORMATS)
-    if not ev.is_valid(event):
+    if not envelope_valid(event):
         return False
     payload = resolved_payload(event, payload_schema, original.get('payload_storage'))
     if payload is None:
@@ -363,13 +374,10 @@ def publication(row, state):
 
 def resolve_original(row, incoming, authority):
     """Immutable semantic replay can outlive owner request/source handles."""
-    schema = json.loads((ROOT / 'Plans/event_append_receipt_contracts.schema.json').read_text())
-    validator = Draft202012Validator(dict(schema, **{'$ref': '#/$defs/custody_v2'}), format_checker=FORMATS)
-    if not validator.is_valid(authority['stored_custody']) or not authority['protected_authority_current']:
+    if not custody_valid(authority['stored_custody']) or not authority['protected_authority_current']:
         return None
-    envelope = json.loads((ROOT / 'Plans/event_record.schema.json').read_text())
     payload_schema = json.loads((ROOT / row['schema']).read_text())
-    if not Draft202012Validator(envelope, format_checker=FORMATS).is_valid(authority['stored_event']):
+    if not envelope_valid(authority['stored_event']):
         return None
     if resolved_payload(authority['stored_event'], payload_schema, authority.get('payload_storage')) is None:
         return None
@@ -449,7 +457,7 @@ def checkpoint_matches_original(state):
     checkpoint = state.get('new_checkpoint', {})
     token = checkpoint.get('durable_read_token')
     selected = state.get('selected_live_token')
-    original = state['original_operation']
+    original = state['retained_authority']
     if not token_matches_original(token, original, durable=True) or not token_matches_original(selected, original):
         return False
     return (
@@ -458,14 +466,32 @@ def checkpoint_matches_original(state):
     )
 
 
+def retained_event_valid(row, event, authority, selected):
+    """Read Storage's protected original, without replaying live owner admission.
+
+    The selected source observation is from Storage, not the supplied payload.
+    Full-value resolution authenticates Storage-assigned metadata as well as
+    producer bytes. Compatibility replay-only history never becomes appendable.
+    """
+    if not envelope_valid(event):
+        return False
+    schema = json.loads((ROOT / row['schema']).read_text())
+    return (
+        event['event_type'] == row['event_type']
+        and event['payload_schema_id'] == schema['$id']
+        and authority['source_selection'] == selected['source_selection']
+        and resolve_full_value(row, event, authority) is not None
+    )
+
+
 def reader_result(row, state):
     return 'available' if (
         state['reader_enabled'] and state['permission_current'] and state['source_present']
         and state['deletion_clear'] and state['hold_allows_disclosure']
         and state['version'] == '1.0.0' and state['current_frontier_verified']
-        and token_matches_original(state['live_token'], state['original_operation'])
+        and token_matches_original(state['live_token'], state['retained_authority'])
         and state['live_token'] == state['selected_token']
-        and valid_event(row, state['event'], state['original_operation'])
+        and retained_event_valid(row, state['event'], state['retained_authority'], state['live_token'])
     ) else 'unavailable'
 
 
@@ -473,7 +499,7 @@ def rebuild_publication(row, state):
     old = copy.deepcopy(state['old_publication'])
     if not all(state[k] for k in REBUILD_GATES):
         return old
-    if not valid_event(row, state['event'], state['original_operation']):
+    if state['version'] != '1.0.0' or not retained_event_valid(row, state['event'], state['retained_authority'], state['selected_live_token']):
         return old
     if not checkpoint_matches_original(state):
         return old
@@ -590,6 +616,8 @@ def run_exact_family(row):
         decision, result, effects = current_retry(row, incoming, row['receipt_authority'])
         check(decision == case['expected'] and effects == 0, case['case_id'])
         check((result is not None) == (case['expected'] == 'return_original_without_effect'), case['case_id'] + ': original receipt only')
+        if result is not None:
+            check(result == (row['receipt_authority']['original_append_result'], row['receipt_authority']['first_append_receipt']), case['case_id'] + ': Storage original metadata only')
     check(any(c['event_overrides'].get('replay_policy') == 'projector_replay_only' for c in row['writer_retry_cases']), 'authored replay-only retry negative')
     for case in row['publication_receipt_cases']:
         state = patched(row['publication_positive'], case['patches'])
@@ -665,7 +693,7 @@ def run_exact_family(row):
         state = patched(state, case.get('patches', []))
         before = copy.deepcopy(state)
         result = rebuild_publication(row, state)
-        expected = state['old_publication'] if case['expected'] == 'preserve_old' else {'rows': [event], 'checkpoint': state['new_checkpoint']}
+        expected = state['old_publication'] if case['expected'] == 'preserve_old' else {'rows': [state['event']], 'checkpoint': state['new_checkpoint']}
         check(result == expected, case['case_id'])
         check(state == before, case['case_id'] + ': no domain effects')
     checkpoint_cases = {c['case_id'] for c in row['rebuild_cases'] if c['expected'] == 'preserve_old'}
@@ -723,9 +751,13 @@ def event_receipt_fields(row):
     return row['publication_positive']['first_append_receipt'].keys()
 
 
-def main():
+def main(guard_first=None):
     fixtures = json.loads((ROOT / 'Plans/small_owner_event_fixtures.json').read_text())
     assert len(fixtures['families']) == len(FAMILY_BINDINGS) and {r['event_type'] for r in fixtures['families']} == set(FAMILY_BINDINGS)
+    spec = importlib.util.spec_from_file_location('dm_guard_oracles', ROOT / 'scripts/pm-small-owner-guard-audit.py')
+    guard_oracles = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(guard_oracles)
+    isolation_count = guard_oracles.normal_checks(globals(), fixtures, guard_first)
     reference_count = 0
     schema_paths = {r['schema'] for r in fixtures['families']} | {
         'Plans/event_record.schema.json', 'Plans/event_record_index_checkpoint.schema.json',
@@ -739,7 +771,7 @@ def main():
     golden = json.loads((ROOT / 'Plans/event_append_receipt_full_value_fixtures.json').read_text())
     assert full_value_preimage(golden['base_original_event']).hex() == golden['commitment_preimage_hex']
     assert hashlib.sha256(full_value_preimage(golden['base_original_event'])).hexdigest() == golden['commitment_sha256']
-    count = 2 + len(schema_paths) + reference_count + settings_count
+    count = 2 + len(schema_paths) + reference_count + settings_count + isolation_count
     for row in fixtures['families']:
         event = row['event_type']
         schema = json.loads((ROOT / row['schema']).read_text())
