@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32310-L32966
+Source lines: L32246-L32901
 
-Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
+Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
 
 ---
 
@@ -85,8 +85,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Shell elements carrying the sheen treatment, approximately 40 shell elements, keep their place as hover
-  targets: the sheen class marks them into the F3-465 merged hover system, which owns their whole hover look
-  and motion. The former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift,
+  targets: their shared presentation role enrolls them in the F3-465 merged hover system, which owns their whole hover look and motion. The former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift,
   border and glow) are retired in favour of F3-465 (DL-171), and no sheen element carries a hover-lift or
   glow of its own. Hover is driven by event delegation from a shared pointer handler and executed through
   compositor-friendly writes rather than per-frame style writes. Amended 2026-10-16 (SSYS-054/SP-333): the

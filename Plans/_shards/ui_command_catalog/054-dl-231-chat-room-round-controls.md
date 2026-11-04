@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L17421-L17839
 
-Source SHA256: `883503817fdd219659abe4620782e9827282f38e16626ebacf478dcb16f55c0c`
+Source SHA256: `7b467b43baf897393cd88e21c11194dd66ee829975f02701893e6910b94bc137`
 
 ---
 
@@ -142,7 +142,7 @@ canonical_text: 'The chat port adds producers to existing commands and local act
   kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and
   shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control
   or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not
-  puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional
+  puppet strings. The one shared person-silhouette renderer owned by F3-594 serves crew diagrams, cast plates, run cards and rosters. Optional
   agent strings and the single Pip primitive retain their existing meaning.'
 gui_related: true
 gui_classification_reason: Maps hosted chat controls to existing commands, Settings transactions and local
@@ -177,12 +177,11 @@ acceptance_criteria:
   own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet
   head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s
   materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
-  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
-  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer owned by F3-594 serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
   retain their existing meaning.'
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-- python3 scripts/pm-plan-index.py validate
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
 risk_class: hosted_chat_owner_drift
 reasoning_tier: high
 context_scope: chat56_pmconcept7_port
@@ -203,6 +202,7 @@ source_lineage:
   source; not native or final visual verification)
 - 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
   source evidence, not native APIs.'
+- "DL-260 source lineage only (no product API or implementation obligation): ppYou/PX_YOU/pnYou were the concept person-rendering helpers and pixel table; the shared product renderer is owned by F3-594."
 preserved_exact_tokens:
 - cmd.agents.open_thread
 - cmd.editor.close_tab

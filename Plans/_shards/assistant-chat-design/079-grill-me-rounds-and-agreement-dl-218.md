@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L28284-L29058
+Source lines: L28284-L29056
 
-Source SHA256: `862ab87feb831a9071ed3c7ff1bf1338731b169058e50ed38a1a9b76554ae06c`
+Source SHA256: `286c122ca3de84e4f6e7e3bfc7e476e3732a05f2be6594add4ee6244789f01f2`
 
 ---
 
@@ -293,14 +293,11 @@ canonical_text: >-
   uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu
   plate. Friendly/Glass context ring is continuous, antialiased and never segmented by broken transforms.
   All ten looks, widths 860/1024/1280/~1390/1920, narrow/short, Reduced Motion and drag budgets are
-  acceptance surfaces. G9/C5, PM7 Step4 final-source reconciliation, 2026-10-30: the activity lane report and
-  pm7-port/css/20-controls.css resolve PM7-C5-CONTEXT-RING. The conic background tiled into a 1 px faint
-  border (Friendly 6 percent, Glass 9 percent alpha), exposing slivers; Glass’s clear --surface middle disc
-  exposed the meter as a pie. The hosted Basic/Friendly/Glass owner now draws the meter on its own ::before
-  layer, cut to an approximately 3 px ring with a radial mask; the
-  middle is the header’s ground and no gradient tiles into the border. Retro/NieR retain their own drawings.
-  This records the reported concept cause/drawing rule; native continuous antialiased rendering at actual
-  widths/DPR/Reduced Motion remains acceptance, not certification by this source note. G1 B (Jared
+  acceptance surfaces. G9/C5: the shared presentation owner draws the Basic/Friendly/Glass context meter as
+  a continuous antialiased ring approximately 3 px thick. Its middle matches the header ground, with no
+  tiled gradient slivers at the border or meter fill leaking into the middle. Retro/NieR retain their own
+  drawings. Actual widths, device pixel ratios and Reduced Motion remain native acceptance surfaces;
+  concept diagnosis or a static drawing is not certification. G1 B (Jared
   2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action
   (binding chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and
   reprojects the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only:
@@ -327,11 +324,11 @@ acceptance_criteria:
 - Glass Activity/History/attachment plates use the same menu token, and C5 remains an explicit measured acceptance/investigation
   until the GUI report records its fix.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)
-- 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
-- python3 scripts/pm7-build-check.py
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
+  - Concepts/background-activity/opus-5.5/HANDOFF.md
+  - future 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
+  - scripts/pm7-build-check.py
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -345,6 +342,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/background-activity/opus-5.5/README.md
 - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- "DL-260 source lineage only (no product stylesheet, selector or implementation obligation): the activity lane report and pm7-port/css/20-controls.css resolved PM7-C5-CONTEXT-RING; a conic background tiled into a faint 1 px border (Friendly 6 percent, Glass 9 percent alpha), while a clear --surface disc exposed the meter as a pie. The concept repair used an isolated ::before layer and radial mask; native rendering must satisfy the shared visual invariant."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

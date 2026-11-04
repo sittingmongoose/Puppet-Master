@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30299-L31392
+Source lines: L30242-L31332
 
-Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
+Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
 
 ---
 
@@ -115,16 +115,12 @@ node_compile_hint:
   mode: per_family_theme_token_contract
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): --pm6-rb-shadow-hard was the concept CSS alias for the Retro hard offset shadow in the Theme Token Tables. The per-variant shadow values remain spec data, with no CSS-property-name obligation."
 - "Plans/FinalGUISpec.md:978"
 - "Plans/FinalGUISpec.md:7491"
 - "Plans/FinalGUISpec.md:7699"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
-preserved_exact_tokens:
-- "--accent-primary"
-- "--accent-primary-rgb"
-- "--graph-pending"
-- "--diff-added-bg"
-- "--ease-default"
+preserved_exact_tokens: []
 negative_constraints:
 - "Do not derive theme token values at runtime; per-variant tables carry precomputed constants."
 compatibility_only_notes:
@@ -417,6 +413,7 @@ node_compile_hint:
   mode: friendly_family_ingredients_and_font_rules
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): The former Friendly cozy CSS hooks were --pm6-cozy-mint, --pm6-cozy-sky, --pm6-cozy-coral, --pm6-cozy-lav, --pm6-cozy-butter, --pm6-cozy-card-base, --pm6-cozy-mix, --pm6-cozy-border-mix, --pm6-cozy-chrome, --pm6-cozy-chrome-border, --pm6-cozy-field, --pm6-cozy-dot, --pm6-cozy-glow-mint, --pm6-cozy-glow-lav, --pm6-cozy-glow-sky. Their colors, surface/border mix ratios, dot geometry and static corner glows remain product design values; these browser aliases and color-mix/gradient implementations are not product API or custom-property obligations."
 - Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
 - Plans/Decision_Log.md#DL-161 (owner request, 2026-10-09)
 - 'Plans/Decision_Log.md#DL-161 (owner follow-ups, 2026-10-09 and 2026-10-10: scripts and the code face)'
@@ -610,7 +607,7 @@ Source since 2026-10-08 (DL-151): PMConcept7's retro-dark, `Concepts/PMConcept7.
 | Graph | `--graph-planning` | `#9db4d0` |
 | Graph | `--graph-gating` | `#d8b93c` |
 | Elevation | `--shadow` | `3px 3px 0 rgba(107,118,84,.55)` |
-| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(107,118,84,.55)` |
+| Elevation | Hard offset shadow | `3px 3px 0 rgba(107,118,84,.55)` |
 | Elevation | `--elev-1` | `2px 2px 0 rgba(74,83,58,.68)` |
 | Elevation | `--elev-2` | `3px 3px 0 rgba(107,118,84,.56)` |
 | Elevation | `--elev-3` | `5px 5px 0 rgba(107,118,84,.5)` |
@@ -666,7 +663,7 @@ Source since 2026-10-08 (DL-151): PMConcept7's retro-light, `Concepts/PMConcept7
 | Graph | `--graph-planning` | `#42A5F5` |
 | Graph | `--graph-gating` | `#AB47BC` |
 | Elevation | `--shadow` | `3px 3px 0 rgba(26,26,26,.30)` |
-| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(26,26,26,.30)` |
+| Elevation | Hard offset shadow | `3px 3px 0 rgba(26,26,26,.30)` |
 | Elevation | `--elev-1` | `2px 2px 0 rgba(26,26,26,.22)` |
 | Elevation | `--elev-2` | `3px 3px 0 rgba(26,26,26,.30)` |
 | Elevation | `--elev-3` | `5px 5px 0 rgba(26,26,26,.30)` |
@@ -1081,24 +1078,24 @@ Mesh/Depth/Minimal, including the former mesh default below, are historical sour
 | `depth` | Container carries the base sky plus blur; two parallax wrappers `.pm6-par-far` and `.pm6-par-near` (inset `-8%`); far wrapper `::before` billow layer; six cloud puffs `.pm6-gbg-shape` (three far, three near) | `blur(14px) saturate(1.15)` dark, `blur(14px) saturate(1.12)` light (on the container) | Far billow drift `pm-sky-drift 160s`; puff float `pm-float` with per-shape `--float-dur` of `100s`, `84s`, `72s` (far) and `68s`, `76s`, `64s` (near); pointer parallax `translate3d(calc(var(--par-x, 0) * 4px), calc(var(--par-y, 0) * 2px), 0)` far and `translate3d(calc(var(--par-x, 0) * 10px), calc(var(--par-y, 0) * 6px), 0)` near; all killed under reduced motion | Base sky, far billow layer, and near puff layer baked as separate pre-blurred bitmaps so `--par-x`/`--par-y` offsets still apply per layer |
 | `minimal` | Base gradient sky only (`.pm6-gbg-minimal`), no billow layers | none (static gradients, no filter) | none (static) | One flat gradient bitmap per variant |
 
-#### Friendly cozy pastel hooks (02-css-tokens.part.html:477-492, 536-551)
+#### Friendly category palette and material values (F3-426/F3-430)
 
-| Token | friendly-dark | friendly-light |
+| Presentation role | friendly-dark | friendly-light |
 |---|---|---|
-| `--pm6-cozy-mint` | `#6FDABC` | `#5FD0B0` |
-| `--pm6-cozy-sky` | `#6FC6E8` | `#5AB9E0` |
-| `--pm6-cozy-coral` | `#FFAD93` | `#FF9E80` |
-| `--pm6-cozy-lav` | `#C3B1E4` | `#B39DDB` |
-| `--pm6-cozy-butter` | `#FFD97F` | `#FFD166` |
-| `--pm6-cozy-card-base` | `#2A2731` | `#FFFFFF` |
-| `--pm6-cozy-mix` | `14%` | `11%` |
-| `--pm6-cozy-border-mix` | `34%` | `30%` |
-| `--pm6-cozy-chrome` | `rgba(40,36,48,.60)` | `rgba(255,255,255,.65)` |
-| `--pm6-cozy-chrome-border` | `rgba(255,255,255,.08)` | `rgba(255,255,255,.85)` |
-| `--pm6-cozy-field` | `rgba(255,255,255,.06)` | `rgba(255,255,255,.70)` |
-| `--pm6-cozy-dot` | `rgba(190,180,210,.06)` | `rgba(122,109,140,.10)` |
-| `--pm6-cozy-glow-mint` | `rgba(95,208,176,.10)` | `rgba(95,208,176,.16)` |
-| `--pm6-cozy-glow-lav` | `rgba(179,157,219,.12)` | `rgba(179,157,219,.18)` |
-| `--pm6-cozy-glow-sky` | `rgba(90,185,224,.09)` | `rgba(90,185,224,.14)` |
+| Mint category pastel | `#6FDABC` | `#5FD0B0` |
+| Sky category pastel | `#6FC6E8` | `#5AB9E0` |
+| Coral category pastel | `#FFAD93` | `#FF9E80` |
+| Lavender category pastel | `#C3B1E4` | `#B39DDB` |
+| Butter category pastel | `#FFD97F` | `#FFD166` |
+| Category surface base | `#2A2731` | `#FFFFFF` |
+| Category surface mix | `14%` | `11%` |
+| Category border mix | `34%` | `30%` |
+| Frosted chrome fill | `rgba(40,36,48,.60)` | `rgba(255,255,255,.65)` |
+| Frosted chrome border | `rgba(255,255,255,.08)` | `rgba(255,255,255,.85)` |
+| Field fill | `rgba(255,255,255,.06)` | `rgba(255,255,255,.70)` |
+| Dot-grid ink | `rgba(190,180,210,.06)` | `rgba(122,109,140,.10)` |
+| Mint corner glow | `rgba(95,208,176,.10)` | `rgba(95,208,176,.16)` |
+| Lavender corner glow | `rgba(179,157,219,.12)` | `rgba(179,157,219,.18)` |
+| Sky corner glow | `rgba(90,185,224,.09)` | `rgba(90,185,224,.14)` |
 
-The friendly ground (10x-pm6-css-global.part.html:139-147) composes the dot grid as `radial-gradient(var(--pm6-cozy-dot) 1px, transparent 1.5px) 0 0 / 18px 18px` over three pastel corner glows and `var(--background)`; the dot-grid tile size `18px` is the F3-430 preserved token. Category pastels are consumed via `color-mix()` against `--pm6-cozy-card-base` with `--pm6-cozy-mix` and `--pm6-cozy-border-mix` ratios (runtime-derived in concept; precompute per F3-431).
+The Friendly ground has 1 px ink dots fading to transparent by 1.5 px, repeated on an 18px by 18px grid over three static pastel corner glows and the background. The dot-grid tile size `18px` remains F3-430's preserved token. Category surfaces and borders combine the category pastel with the surface base using the table's surface and border mix percentages. All resulting per-variant colors are precomputed through F3-431; the native theme owner chooses its implementation tokens.

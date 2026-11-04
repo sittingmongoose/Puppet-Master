@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31394-L32308
+Source lines: L31334-L32244
 
-Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
+Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
 
 ---
 
@@ -908,10 +908,6 @@ preserved_exact_tokens:
 - "settings_suggestions_dismissed:v1"
 - "theme:v1"
 - "activity_bar_order:v1"
-- "pm.theme"
-- "pm.glassBg"
-- "pm.glassAlpha"
-- "pm.activity_bar_order:v2"
 negative_constraints:
 - "Do not register any new storage keys in this addendum other than glass_background_mode:v1, glass_alpha:v1, settings_recents:v1, and settings_suggestions_dismissed:v1; canonical keys remain theme:v1 and activity_bar_order:v1."
 - "Do not promote the concept localStorage names pm.theme, pm.glassBg, pm.glassAlpha, or pm.activity_bar_order:v2 as canonical keys; they are demo shims preserved as lineage only."

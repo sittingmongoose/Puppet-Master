@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30108-L30297
+Source lines: L30057-L30240
 
-Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
+Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
 
 ---
 
@@ -94,11 +94,7 @@ canonical_text: >-
   The chat composer lays out with attach plus the ELI5, YOLO, and CREW toggles on the left
   rail, and the rewind FAB followed by icon-only send and stop controls (inline SVG glyphs)
   on the right with an extra gap between rewind and send. The header selector row renders
-  Persona, Model, and Mode as equal-shrink slots whose labels ellipsize when narrow. The
-  floating chat window enforces a minimum and default width floor of 380px via
-  max(380px, min(var(--floating-chat-w), 40vw)) so the selector row is not clipped on first
-  open. The docked #chatPanel mount and the floating #floatingChat mount render both layouts
-  from the shared chat template of the unified component.
+  Persona, Model, and Mode as equal-shrink slots whose labels ellipsize when narrow. The desktop app’s popped-out chat window enforces a minimum and default width floor of 380px so the selector row is not clipped on first open. The docked Assistant Chat side panel and the popped-out window render both layouts from the unified chat component’s shared template (F3-420/F3-637).
   Amended 2026-10-09 (DL-180): the chat no longer floats inside the window or the page. This 380px floor now holds only
   for the chat's popped-out window in the desktop app (F3-504, F3-637), which the user sizes and places above it; the
   chat column's own width is F3-637's.
@@ -124,15 +120,13 @@ node_compile_hint:
   mode: composer_selector_row_and_floating_width_floor
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): #chatPanel and #floatingChat were browser concept mount selectors; max(380px, min(var(--floating-chat-w), 40vw)) was its retired in-page width expression. Native presentation retains the 380px desktop-window floor and the shared chat component."
 - "Plans/FinalGUISpec.md:10800"
 - "Plans/FinalGUISpec.md:10582"
 - "Plans/assistant-chat-design.md:186"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
 - "380px"
-- "40vw"
-- "#chatPanel"
-- "#floatingChat"
 - "ELI5"
 - "YOLO"
 - "CREW"

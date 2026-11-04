@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5463-L27041
+Source lines: L5444-L27010
 
-Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
+Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
 
 ---
 
@@ -10996,11 +10996,7 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Concept lineage from `Concepts/PuppetMasterDashComp.html` narrows wizard binder placement
-  without making that concept file a live owner: the left rail contains `wizard-doc-pill`,
-  central content is `wizard-binder-view`, the top toolbar is `wizard-binder-toolbar`,
-  annotation UI is right-side/drawer/overlay, and chat remains the separate `#chatPanel` /
-  `chatPanel` side panel with `ContextChipStrip` send-to-chat chips.
+  The shared binder review surface keeps document switching and status in the left rail, document content in the centre, and review controls in the top toolbar. Annotation management uses a right-side rail, drawer or content overlay; the left document rail and a separate browser-style annotation modal cannot host it. Assistant Chat remains a separate side panel with its own thread list, composer, queued-intervention strip, footer and context-usage display; ContextChipStrip supplies the composer’s ephemeral send-to-chat chips.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves concept-lineage placement constraints without making the concept file a
@@ -11025,21 +11021,13 @@ node_compile_hint:
   mode: binder_review_placement_and_chat_separation
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): Concepts/PuppetMasterDashComp.html used /PuppetMasterDashComp.html, wizard-doc-pill, wizard-binder-view, wizard-binder-toolbar, annotation-review, #chatPanel/chatPanel and queued-intervention markup. F3-199 retains placement and chat separation without those DOM identities."
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0133"
 preserved_exact_tokens:
-- "Concepts/PuppetMasterDashComp.html"
-- "/PuppetMasterDashComp.html"
-- "wizard-doc-pill"
-- "wizard-binder-view"
-- "wizard-binder-toolbar"
-- "annotation-review"
-- "#chatPanel"
-- "chatPanel"
-- "queued-intervention"
 - "send-to-chat"
 - "ContextChipStrip"
 negative_constraints:
-- "Annotation UI must not live in the left document rail or in a browser-style `annotation-review` modal."
+- "Annotation UI must not live in the left document rail or in a separate browser-style annotation modal."
 - "Chat must remain a separate side panel, not embedded inside the binder review surface."
 compatibility_only_notes: []
 stale_retired_dispositions: []

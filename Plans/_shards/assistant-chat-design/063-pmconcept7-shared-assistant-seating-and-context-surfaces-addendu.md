@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24998-L25100
+Source lines: L24998-L25099
 
-Source SHA256: `862ab87feb831a9071ed3c7ff1bf1338731b169058e50ed38a1a9b76554ae06c`
+Source SHA256: `286c122ca3de84e4f6e7e3bfc7e476e3732a05f2be6594add4ee6244789f01f2`
 
 ---
 
@@ -47,7 +47,7 @@ canonical_text: >-
   effective window/tokens, cache hit, and source composition; its click menu is local and
   offers Compact Now plus More Details. Compact Now alone dispatches
   cmd.chat.compact_context and updates ring/detail projections coherently, while More
-  Details reuses the existing open/focus/close thread Context Detail Pane commands and
+  Details reuses cmd.chat.open_thread_context_details and the existing focus/close commands and
   Curated/Raw routing, fallback, cache, limits, compaction-state, and history views. No
   Assistant clone, app-wide Usage substitute, second detail drawer, or second context
   store is permitted.
@@ -71,8 +71,8 @@ acceptance_criteria:
   - No second Assistant component, controller, transcript store, context store, or page-local detail drawer is created.
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plans-verify.py
+  - scripts/pm-plan-index.py
 risk_class: shared_assistant_identity_or_context_projection_drift
 reasoning_tier: high
 context_scope: pm7_commands_wiring_dry_assistant
@@ -91,6 +91,7 @@ source_lineage:
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/assistant-chat-design.md#ACD-500"
+  - "DL-260 source lineage only (no product API or implementation obligation): chatPanel and chatResizer were concept DOM identities; the shared Assistant component, resize ownership and state continuity remain product requirements."
 preserved_exact_tokens:
   - Compact Now
   - More Details
@@ -98,8 +99,6 @@ preserved_exact_tokens:
   - Raw
   - cmd.chat.compact_context
   - cmd.chat.open_thread_context_details
-  - chatPanel
-  - chatResizer
 negative_constraints:
   - Do not clone or fork Assistant state when changing pages or hosts.
   - Do not dispatch compaction from hover or menu disclosure.

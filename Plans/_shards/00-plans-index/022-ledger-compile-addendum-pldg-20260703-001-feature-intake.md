@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L5375-L6178
+Source lines: L5375-L6184
 
-Source SHA256: `35dcca5cb0872c351c11326317703d71b439d9913be7f82355aa295bfc97a3be`
+Source SHA256: `e3a607bf5f71d7f45bd31200d1effda0d968bc5681c9ef005dd23edea58b9704`
 
 ---
 
@@ -400,6 +400,8 @@ owner_hints: [Plans/00-plans-index.md, Plans/Commands_System.md, Plans/UI_Comman
 
 ### PMConcept7 tweak wave 8 — 2026-08-15 (kebab ink canon, chat dock back, drag snap, scroll kill)
 
+**Source lineage only (DL-260/DL-280):** This dated wave record describes the retired browser concept. Its selectors, functions, classes, style variables and implementation repairs impose no current product work or validation obligation. Current product behavior remains with the referenced live owner units.
+
 Four re-diagnosed behaviors sealed with dated wave-8 dispositions; the user
 rejected all four wave-7 items and each re-diagnosis found wave 7 had missed
 the real mechanism, so several wave-7 claims are superseded:
@@ -463,6 +465,8 @@ surface). No WorkNodes, NodeSeeds, executable queues, final node manifests,
 or production build tasks were created.
 
 ### PMConcept7 tweak wave 7 — 2026-08-14 (kebab seats, chat menu, drag occlusion, scroll lock)
+
+**Source lineage only (DL-260/DL-280):** This dated wave record describes the retired browser concept. Its selectors, functions, classes, style variables and implementation repairs impose no current product work or validation obligation. Current product behavior remains with the referenced live owner units.
 
 Four verified behaviors sealed with dated wave-7 dispositions:
 
@@ -575,6 +579,8 @@ NodeSeeds, executable queues, implementation files, runtime artifacts, or
 production build tasks.
 
 ### PMConcept7 tweak wave 3 — 2026-08-13 (third same-day wave)
+
+**Source lineage only (DL-260/DL-280):** This dated wave record describes the retired browser concept. Its selectors, functions, classes, style variables and implementation repairs impose no current product work or validation obligation. Current product behavior remains with the referenced live owner units.
 
 Third same-day wave over the tweak-wave-2 canon, with dated wave-3
 dispositions. Owner-doc changes:

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42472-L43168
+Source lines: L42428-L43123
 
-Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
+Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
 
 ---
 
@@ -19,7 +19,7 @@ plan_unit_id: F3-590
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Every icon control in the assistant chat names itself through the shared PMHoverTag of F3-523, never
+canonical_text: 'Every icon control in the assistant chat names itself through the shared hover-help overlay of F3-523, never
   through a native title (DL-145). This includes the controls the concept used to title natively: the editor''s Return
   to chat and its tabs, the model picker''s provider rail and favourite stars, the history drawer''s status marks and
   resize handle, thread-search result actions, the thread-operation dialog''s close, the Schedule Message send-time track,
@@ -75,10 +75,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
 preserved_exact_tokens:
-  - "PMHoverTag"
-  - "native title"
-  - "deliberate dwell"
-  - "Previews are the one exception"
+- "native title"
+- "deliberate dwell"
+- "Previews are the one exception"
 negative_constraints:
   - "Do not restate or change F3-523's thresholds in this unit."
   - "Do not open a hover tag inside an open activity bar domain preview, and do not extend the preview exception to any other surface."
@@ -369,8 +368,7 @@ canonical_text: >-
   product implementation. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone,
   head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings,
   holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the
-  plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast
-  plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing
+  plate’s result/topology, not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing
   meaning.
 gui_related: true
 gui_classification_reason: Defines how every agent is drawn in the assistant chat and the wand module sheets.
@@ -391,7 +389,7 @@ acceptance_criteria:
   - "Every role prop is distinguishable in grayscale at the sizes the surfaces use."
   - "Optional sheet Pip motion uses the shared bounded rig and parts; run cards/views retain their scoped one-shot/live-work budget, and Reduced Motion keeps state feedback with no nonessential travel."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
 validation_surfaces:
 - "scripts/pm-shard-plans.py"
 - "scripts/pm-plan-index.py"
@@ -405,6 +403,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): ppYou, PX_YOU and pnYou were concept person-drawing adapters and small-size maps, not native product API or primitive identities. F3-594 owns the shared person-silhouette renderer."
 - Plans/Decision_Log.md#DL-218
 - Plans/Decision_Log.md#DL-149
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe
@@ -471,7 +470,7 @@ canonical_text: 'One cast plate grammar draws every collaboration graph, in the 
   crown/hat. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in
   each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection
   to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings.
-  The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings
+  The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings
   and the single Pip primitive retain their existing meaning. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus
   emphasis begins only at an actual control in its affects region, including an embedded plate control; plain text, empty
   space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow
@@ -501,8 +500,7 @@ acceptance_criteria:
   by this unit.
 - 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
   materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
-  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
-  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
   retain their existing meaning. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only
   at an actual control in its affects region, including an embedded plate control; plain text, empty space and the picture
   alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in
@@ -531,6 +529,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): ppYou, PX_YOU and pnYou were concept person-drawing adapters and small-size maps, not native product API or primitive identities. F3-594 owns the shared person-silhouette renderer."
 - Plans/Decision_Log.md#DL-218
 - Plans/Decision_Log.md#DL-149
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe

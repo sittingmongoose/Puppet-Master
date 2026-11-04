@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26989-L27713
+Source lines: L26988-L27713
 
-Source SHA256: `862ab87feb831a9071ed3c7ff1bf1338731b169058e50ed38a1a9b76554ae06c`
+Source SHA256: `286c122ca3de84e4f6e7e3bfc7e476e3732a05f2be6594add4ee6244789f01f2`
 
 ---
 
@@ -42,8 +42,8 @@ canonical_text: 'The dock is a composer-adjacent surface of at most three one-li
   per-reply files row replace the stream footer pill''s helpers and files chips (ACD-482, DL-129). Amended 2026-10-29
   (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes to live runs; both are views
   of the same owner identity, not duplicate attention. Process stop differs from reply Stop; delivery never wakes a stopped
-  thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): One shared work dock provider reads the selected thread’s owner-projected process, agent and scheduled items. needsYou
-  items are needs lines with Review, live processes are live lines with current time, and the next pending scheduled
+  thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): One shared work dock provider reads the selected thread’s owner-projected process, agent and scheduled items. Items requiring input or review
+  are needs lines with Review, live processes are live lines with current time, and the next pending scheduled
   run is comingup. These items have no transcript card to wait offscreen for; existing transcript-backed providers retain
   their visibility rules. Visible work times update through the shared tick owner. Review/Show for a process or scheduled
   item reuses cmd.chat.processes.open with that exact item selected; an agent Review selects its existing Subagents Activity
@@ -96,6 +96,7 @@ source_lineage:
   - "Plans/Decision_Log.md DL-231 (a finished Chat Room round is no longer the user's move, 2026-10-21)"
   - "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
   - "DL-260 source lineage only (no product API or implementation obligation): activity-panel.js registered PM56_PMX.dock.provide(workDock) over PM_WORK and patched [data-work-time]; these were concept provider/DOM spellings."
+  - "DL-260 source lineage only (no product API or implementation obligation): needsYou was a concept work predicate; the owner AttentionItem projection supplies the product needs tone."
 preserved_exact_tokens:
   - "dock"
   - "AttentionItem"

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L278-L1262
+Source lines: L278-L1243
 
-Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
+Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
 
 ---
 
@@ -692,7 +692,7 @@ acceptance_criteria:
 - Every new vertical or horizontal scrollport enrolls in the shared four-edge dissolve system with no-overflow and reduced-motion handling.
 - "The landing preview projects the target geometry (the share F3-630's insertion rule gives a panel split from a panel edge band or the centre's outer edge, or the tab's slot in the destination strip) and re-seats only when the resolved target (an edge band, a strip, the outer edge or the \"+N\" list) or the insertion index changes; a pickup still inside its source panel resolves to the source placement, a panel expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the panel or tab (amended 2026-10-09, DL-180; F3-630)."
 - "Every split resizes by adjacent-pair transfer on its own dividers and keeps its own proportions; the row-dock size.cross_basis_px track is retired (amended 2026-10-09, DL-180; F3-630)."
-- A candidate drop target must survive two consecutive resolved frames before the placeholder re-seats; a surface carrying data-pm-home-flip is invisible to the drag hit-test; auto-scroll does not re-apply without actual scroll or pointer movement; and the placeholder's previewed width equals the proportional share the post-commit normalizeMainRowBases re-sum would grant (wave 3, 2026-08-13).
+- A candidate drop target must survive two consecutive resolved frames before the placeholder re-seats; moving or reflowing surfaces are excluded from the drag hit-test; auto-scroll does not re-apply without actual scroll or pointer movement; and the placeholder's previewed geometry equals the destination geometry computed by F3-630's current layout owner (two-frame stability retained from wave 3, 2026-08-13; DL-180).
 - "Drop targeting reads only latched geometry: every panel's edge bands and strip and the centre's outer edge band freeze at pickup, and no drop-target resolution reads the painted element stack, so approaching a panel edge produces exactly one target transition and one landing preview per approach (wave 4, 2026-08-13; amended 2026-10-09, DL-180; F3-630)."
 - "A divider drag transfers pixels between the two panels it separates only (+N/-N exactly), other panels are untouched, and commit produces no settle flash; each panel stops at its own minimum (F3-635, never less than 280 x 120 px) and a panel dragged below half its minimum collapses to its strip, and no Home surface floats (amended 2026-10-09, DL-180; F3-630)."
 - "At render, boot, and window resize the split tree's proportions fill the centre with no dead space and a degenerate persisted layout self-heals on normalization; host caps and host_full are retired (amended 2026-10-09, DL-180; F3-630)."
@@ -711,6 +711,7 @@ node_compile_hint:
   mode: home_gesture_transaction
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): --pm-home-pad-y and --pm-home-gap-y were prototype spacing properties; the retained workspace uses semantic spacing with 2 px vertical padding, not those custom-property spellings."
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/01_REQUIREMENTS.jsonl
 - "DL-260 source lineage only (no product API or implementation obligation): The retired Home prototype used PM_EDGE, PM_DRAGEND, pm-resizing, data-pm-home-flip, normalizeMainRowBases, buildDockLatch, syncHostGeometry, layoutBands and .pm-home-host/pm6-bottom-scroll/.pm-edge-band selectors. The August 2026 browser fixes and measured scroll values document that retired implementation only; F3-630/635/636 and DR-066 govern current panel/tab behavior."
 preserved_exact_tokens: [pointercancel, lostpointercapture, four-edge scroll dissolve]
@@ -884,8 +885,7 @@ canonical_text: >-
   CONTRAST canon - the shape-on editor pane's own background is --ed-cap-bg (the rail-over-canvas composite), so
   the rounded-away canvas corner reveals a visibly darker backdrop; a corner exposing a same-tone backdrop reads
   as no corner (user-reported: the radius was applying at 18 px yet invisible). Strip heights re-tune with this
-  dated disposition: editor 40 to 35 px and dashboard 36 to 31 px (--ed-strip-h, --pm6-editor-tabs-h,
-  --pm6-dash-head-h; the resizer column top follows 44 to 39 px), with the minimap/code alignment verified
+  dated disposition: editor 40 to 35 px and dashboard 36 to 31 px (the resizer column top follows 44 to 39 px), with the minimap/code alignment verified
   intact under the new tokens. Sixth follow-up (2026-08-14, both found by watched inspection): the fourth
   follow-up's animated border-radius canvas corner is RETIRED with cause - the canvas slides UNDER the
   translucent rail (the scroll frost), so the area's true box corner is invisible and a border-radius there
@@ -893,36 +893,14 @@ canonical_text: >-
   construction for the VISIBLE emergence line, now filled with var(--ed-rail-solid) - the old --ed-cap-bg
   composite fill was the invisibility cause, not the wedge architecture - at 18 px (20 friendly) width by 16 px
   height (--ed-corner-ry 12 to 16; --ed-canvas-rx-max 18 default / 20 friendly), and the shape-on pane
-  background stays --ed-rail-solid. Dashboard retro is UNBLOCKED: the dashboard pill neutralization uses
-  !important, and important declarations beat CSS animations, so all background-based retro effects were dead on
-  dashboard tabs (the DOS blink rendered as an empty box - its non-important color applied while its background
-  lost); effect-classed tabs ([class*="pm-retro"]) now escape the important rule via :not() and receive a
-  normal-weight twin that keeps the pill suppressed without outranking keyframes. Seventh follow-up
-  (2026-08-14): the sixth follow-up's exemption left the dashboard CRT fill dead through a SPECIFICITY TIE - the
-  effect rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin, later in the
-  assembled cascade, won the tie for plain background declarations (phosphor survived only through its
-  keyframes, which sit above the normal cascade). All fourteen retro effect selectors now include .ed-shape-on,
-  weighing (0,6,0) and outranking the twin; the tied (0,5,0) effect selectors are retired with this dated
-  disposition. Watched verification: the phosphor block, the DOS full inversion, and the CRT scanline wipe all
-  paint on dashboard tabs. The editor minimap is the ONLY code-pane scrollbar - native scrollbars are suppressed
+  background stays --ed-rail-solid. The shared tab presentation owner keeps the Retro phosphor block, DOS full inversion and CRT scanline wipe visible on dashboard and editor tabs. Neutralizing the ordinary tab plate must not suppress an effect’s foreground, fill or background. The editor minimap is the ONLY code-pane scrollbar - native scrollbars are suppressed
   - and the minimap band aligns with the frosted rail via margin rather than padding, retiring the wave-2
   scrollbar-track-margin exclusion with this dated disposition. Amended 2026-08-15 (wave 8), SNAP-WHILE-DRAGGING
   CONTRACT: this unit's 1:1 canon above ("direct dragging is one-to-one with the pointer and corner values are
   derived from the tab position in the same frame with no independent easing") and its negative constraint
   against easing corner values independently of the tab position were being VIOLATED by the shipped build, and
-  are restored rather than retired. The violation was structural, not decorative: grabbing a NON-ACTIVE tab
-  flips the strip's active key, so sync() read the lastActive change as a selection, set animate = true and
-  sprang the plate across over roughly 12 frames while the carried tab painted nothing, and sub-0.5 px
-  pointermoves then parked in the spring-preservation early return and held that state indefinitely. Contract
-  with this dated disposition: ANY EDSHAPE sync taken while the strip contains a .tab.dragging child must SNAP -
-  draggingLive is computed immediately after the lastActive update, it forces animate = false, and the
-  spring-preservation guard is qualified by "&& !draggingLive" so the snap branch cancels the in-flight rAF,
-  jumps x and w to target, zeroes velocities and paints in the activating frame. Click, snap and keyboard
-  SELECTION springs are explicitly unaffected, as is the release settle owned by the reorder gesture. Measured:
-  worst plate-versus-tab lag 0.00 px over 2,615 samples of a deliberately slow non-active drag; 18 distinct
-  monotonic intermediates on a click-to-select, no overshoot. Also with this dated disposition, a per-theme
-  silhouette SKIN is added under the wave-6 skin family: glass gains a drag-scoped frost, [data-theme^="glass"]
-  .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape { opacity: .92; } - slightly see-through but never
+  are restored rather than retired. Picking up a non-active tab first updates the shared active-tab state. During any live reorder, its carried label, silhouette position and width, and contact corners resolve from the same current pointer position in the activating frame, without independent selection easing. Activation cancels any in-flight selection animation, zeros residual velocities and snaps the plate to its target; even sub-0.5 px moves cannot preserve an old spring or leave the underlying tab exposed. Click, snap and keyboard selection springs remain unchanged, as does the reorder owner’s release settle. Also with this dated disposition, a per-theme
+  silhouette SKIN is added under the wave-6 skin family: Glass uses 0.92 silhouette opacity during the drag only, slightly see-through but never
   legible, honouring the user's "like a blur" request. The drag plate adds no independent backdrop blur; F3-652
   owns its Liquid Glass material and optics budget, superseding the former one-blur-per-pane cap. The
   steady-state plate remains fully opaque in all ten themes; measured live at .92 mid-drag in glass-dark and 1
@@ -971,6 +949,9 @@ node_compile_hint:
   mode: contact_aware_editor_tab_silhouette
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): The browser’s drag-scoped Glass selector was an adapter to the retained 0.92 drag opacity: glass gains a drag-scoped frost, [data-theme^=\"glass\"] .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape { opacity: .92; } -"
+- "DL-260 source lineage only (no product API or implementation obligation): The prototype snap-while-dragging repair and measured samples below are source evidence, not a required EDSHAPE/sync/draggingLive/animation-frame API: The violation was structural, not decorative: grabbing a NON-ACTIVE tab flips the strip's active key, so sync() read the lastActive change as a selection, set animate = true and sprang the plate across over roughly 12 frames while the carried tab painted nothing, and sub-0.5 px pointermoves then parked in the spring-preservation early return and held that state indefinitely. Contract with this dated disposition: ANY EDSHAPE sync taken while the strip contains a .tab.dragging child must SNAP - draggingLive is computed immediately after the lastActive update, it forces animate = false, and the spring-preservation guard is qualified by \"&& !draggingLive\" so the snap branch cancels the in-flight rAF, jumps x and w to target, zeroes velocities and paints in the activating frame. Click, snap and keyboard SELECTION springs are explicitly unaffected, as is the release settle owned by the reorder gesture. Measured: worst plate-versus-tab lag 0.00 px over 2,615 samples of a deliberately slow non-active drag; 18 distinct monotonic intermediates on a click-to-select, no overshoot."
+- "DL-260 source lineage only (no product API or implementation obligation): The historical browser repair used --pm6-editor-tabs-h/--pm6-dash-head-h and the following CSS precedence changes; these are not native product code requirements: Dashboard retro is UNBLOCKED: the dashboard pill neutralization uses !important, and important declarations beat CSS animations, so all background-based retro effects were dead on dashboard tabs (the DOS blink rendered as an empty box - its non-important color applied while its background lost); effect-classed tabs ([class*=\"pm-retro\"]) now escape the important rule via :not() and receive a normal-weight twin that keeps the pill suppressed without outranking keyframes. Seventh follow-up (2026-08-14): the sixth follow-up's exemption left the dashboard CRT fill dead through a SPECIFICITY TIE - the effect rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin, later in the assembled cascade, won the tie for plain background declarations (phosphor survived only through its keyframes, which sit above the normal cascade). All fourteen retro effect selectors now include .ed-shape-on, weighing (0,6,0) and outranking the twin; the tied (0,5,0) effect selectors are retired with this dated disposition. Watched verification: the phosphor block, the DOS full inversion, and the CRT scanline wipe all paint on dashboard tabs."
 - "Concepts/PMConcept7.html (source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens: ["20", "10", "8", "13", "12", "clamp", "squircle", "--ed-lp", "--ed-rp"]
 negative_constraints:

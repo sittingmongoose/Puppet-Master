@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L772-L902
+Source lines: L772-L901
 
-Source SHA256: `234c6a51684685af993718739ffc4f8a9aaddabef01da87e281c3f84d6f346d5`
+Source SHA256: `f8c41680e0a9903af9f21707be5df785c8ec66c6ce5b528e6a8172dd27bf7857`
 
 ---
 
@@ -43,7 +43,7 @@ The shared Assistant has one DOM/native component identity and one thread/contex
 re-seat that same node between its saved Home host and the right-side global host for other primary pages.
 `cmd.panel.switch` controls visibility; re-parenting is local shell projection and must preserve node
 identity, active thread, draft, transcript, attachments, context state, Context Detail Pane state, and
-focus-return target. A second `chatPanel`, `chatResizer`, Assistant controller, transcript store, or context
+focus-return target. A second Assistant panel, resize controller, Assistant controller, transcript store, or context
 store is a wiring failure.
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/DRY_Rules.md, ContractName:Plans/assistant-chat-design.md
@@ -66,7 +66,7 @@ canonical_text: >-
   cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject and retains the
   event ref as correlation. Home preset sizing normalizes to resize_surface, and shell
   wiring re-seats one shared Assistant node/store between Home and global hosts without
-  cloning or losing thread/context continuity. Amended 2026-10-09 (DL-180): the same
+  cloning or losing thread/context continuity; cmd.panel.switch controls visibility. Amended 2026-10-09 (DL-180): the same
   transaction carries every panel and tab gesture of the universal panels (a tab drag, a
   panel move, a divider, a fold); the chat never moves inside the window, Pop out into its
   own window is its only relocation, and the same node/store serves that window. Usage
@@ -100,8 +100,8 @@ acceptance_criteria:
   - "A tab drag, a panel move, a divider drag and a fold each follow this transaction: one changed release dispatches one command and emits one workspace.layout_changed; cancel, no change and failure dispatch nothing (amended 2026-10-09, DL-180)."
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plans-verify.py
+  - scripts/pm-plan-index.py
 risk_class: pm7_preview_cleanup_or_shared_assistant_identity_drift
 reasoning_tier: high
 context_scope: pm7_commands_wiring_dry_assistant
@@ -119,12 +119,11 @@ source_lineage:
   - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+  - "DL-260 source lineage only (no product API or implementation obligation): chatPanel and chatResizer were concept DOM identities; the shared Assistant component, resize ownership and state continuity remain product requirements."
 preserved_exact_tokens:
   - pointercancel
   - cmd.workspace_layout.resize_surface
   - cmd.panel.switch
-  - chatPanel
-  - chatResizer
 negative_constraints:
   - Do not dispatch or persist pointer-preview frames.
   - Do not leave pointer capture, pending animation frames, portals, ghosts, placeholders, or transient listeners after commit or cancel.

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29855-L30106
+Source lines: L29824-L30055
 
-Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
+Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
 
 ---
 
@@ -86,7 +86,7 @@ canonical_text: >-
   chrome-reduced to the message stream, composer, and quick-reply chips with gated send.
   Stream and footer content resolve per thread, and context boxes are
   thread-scoped. The unified component is consumed by wizard embedding and promoted surfaces,
-  and the separate `#chatPanel` side panel mount remains canonical.
+  and the separate Assistant Chat side panel remains canonical.
 gui_related: true
 gui_classification_reason: This unit defines visible chat component mounts and per-instance chrome presentation.
 split_recommended: false
@@ -95,7 +95,7 @@ unblocks: []
 acceptance_criteria:
 - "Docked panel, floating window, and wizard-embedded chat instances render from one chat component, template, and state source distinguished only by chrome flags."
 - "Embedded mode keeps the message stream, composer, quick-reply chips, and gated send while omitting thread rail, thread search, issues and worktree indicators, persona and model selectors, mode strip, and panel toggles."
-- "The separate #chatPanel side panel mount remains canonical and is not replaced by embedded instances."
+- "The separate Assistant Chat side panel remains canonical and is not replaced by embedded instances."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -110,16 +110,16 @@ node_compile_hint:
   mode: chat_component_unification_and_embedded_chrome_flags
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): #chatPanel was the browser concept’s docked chat mount selector. F3-420 requires a separate Assistant Chat side panel rendered by the shared component, not that mount identity."
 - "Plans/FinalGUISpec.md:2092"
 - "Plans/assistant-chat-design.md"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-- "#chatPanel"
 - "quick-reply chips"
 - "embedded"
 - "floating"
 negative_constraints:
-- "Chat must remain available as the separate side panel; embedded instances must not replace the #chatPanel mount."
+- "Chat must remain available as the separate side panel; embedded instances must not replace the Assistant Chat side panel."
 compatibility_only_notes:
 - "Slint portability: per-instance chrome flags map to conditional widget composition; embedded chat chrome requires no arbitrary-content backdrop blur or SVG filters, color styling is precomputed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
@@ -145,11 +145,7 @@ canonical_text: >-
   visible. When the tab strip overflows its width, a width-aware "+N more" overflow chip
   collects non-active tabs into a picker with per-item close, keeping the active tab visible.
   Non-file tabs, including thread context detail tabs and browser preview tabs, participate in
-  the same close and overflow behavior. Amended 2026-08-13 - tab drag-reorder is canonical
-  and persists on all four editor panes: pane 1 through the open-tab model, panes 2 through 4
-  through strip-owned order lists reasserted by every fitter and mirrored to the Home
-  overlay's buffer order via the pm6:ed-tab-order event; a newly opened tab inserts at its
-  model index. The +N more chip and its picker render in the shared app portal-menu family
+  the same close and overflow behavior. Tab drag-reorder persists through the shared panel/tab layout owner, and every strip projection and overflow fitter respects that committed order; a newly opened tab inserts at its model index (F3-630/F3-631). The +N more chip and its picker render in the shared app portal-menu family
   (portal recipe, sprout-in opening, neutral chip treatment) rather than as a bespoke pill.
   Amended 2026-08-13 (tweak wave) - the dedicated per-pane close glyph on editor panels is
   retired; the kebab menu's Close Panel row is the single pane-close affordance. Pane-close
@@ -167,10 +163,7 @@ canonical_text: >-
   CONTENT box, so padding reserve can never be occupied by tabs; the actions-cluster
   reserve has a 44 px floor covering the kebab column and grip lane even when the
   cluster is empty. Extended (final wave-3 build): the overflow condition itself is
-  content-box child-edge measurement at all three fitter sites
-  (edStripContentOverflows: rightmost in-flow child edge vs clientWidth minus the
-  padding-right reserve, skipping the actions span, the shape layer, and
-  display:none children) - the naive scrollWidth comparison is retired with this
+  content-box child-edge measurement at every shared overflow-fitting site (the rightmost visible in-flow tab edge against the available content width after the trailing actions/grip reserve, excluding controls, decorative shape layers and hidden children) - the naive scrollWidth comparison is retired with this
   dated disposition because scrollWidth equals clientWidth on a non-overflowing
   strip, which collapsed all tabs into the picker. Amended 2026-08-13 (wave 4) - the
   HTML5 drag-and-drop reorder mechanism is retired (and with it the wave-3
@@ -187,21 +180,7 @@ canonical_text: >-
   Amended 2026-08-15 (wave 8) - the wave-7 drag-cover fix stands (opacity 1 and
   the z 39 / z 40 sandwich are unchanged) but was INCOMPLETE: it addressed the
   plate's opacity and stacking, not the mechanism that still exposed the tab
-  underneath. That mechanism was the GRAB-SPRING. Grabbing a NON-ACTIVE tab
-  flips the strip's active key, so EDSHAPE.sync() consumed the lastActive change
-  as a selection event, set animate = true and SPRUNG the travelling plate
-  across the strip over roughly 12 frames while the carried tab itself paints
-  nothing (its background is transparent under .ed-shape-on) - the tab beneath
-  showed through for the whole flight. Worse, pointermoves smaller than 0.5 px
-  landed in the spring-preservation early-return guard, which held that hole
-  open indefinitely on slow, careful drags. It was also a live violation of the
-  1:1-no-independent-easing canon this unit shares with F3-505. The fix, with
-  this dated disposition: sync() computes
-  draggingLive = Boolean(strip.querySelector('.tab.dragging')) immediately after
-  the lastActive update and forces animate = false whenever it is true, and the
-  spring-preservation guard gains "&& !draggingLive" so the snap branch runs -
-  cancelling the in-flight rAF, jumping x and w to target, zeroing both
-  velocities and painting - in the same frame the gesture activates. Selection
+  underneath. The shared tab owner must treat pickup as a live drag before resolving a selection change. In the activating frame it cancels any in-flight selection spring, snaps the plate’s position and width to the carried tab, zeros both residual velocities and paints the fused silhouette without independent easing. Sub-0.5 px pointer moves cannot retain a stale spring or expose the tab underneath. Selection
   springs are untouched, release settle is untouched (the reorder gesture still
   owns the 160 ms settle transition plus its per-frame snap ride), and retro
   themes already forced animate = false. Verified live: worst plate-versus-tab
@@ -227,7 +206,7 @@ acceptance_criteria:
 - "The \"+N\" list opens in the one overlay root with no bespoke accent glow (F3-633, DR-067; amended 2026-10-09, DL-180)."
 - "\"+N\" follows F3-631's width cascade and F3-633, fitting live on tab add and remove, and a newly opened tab stays visible (amended 2026-10-09, DL-180; the chip-left-of-actions placement is lineage)."
 - "Tab drag-reorder animates: no native drag ghost, the dragged tab tracks the pointer transform-only with its layout at the insertion slot, reduced motion is instant, and the silhouette stays at the insertion slot throughout; as of wave 4 the gesture is pointer-capture (4 px threshold, 1:1 translateX glide, 220 ms neighbour FLIP, 200 ms low-bounce settle), works identically in Safari, survives its first re-slot, and defers the model re-render to settle-end."
-- "Grabbing a NON-ACTIVE tab never springs the travelling plate: any EDSHAPE sync while the strip contains .tab.dragging snaps in-frame, so the plate never lags the carried tab and never exposes the tab underneath (worst lag 0.00 px over 2,615 slow-drag samples), while click-to-select springs still travel (18 monotonic intermediate positions, no overshoot) (wave 8, 2026-08-15)."
+- "Grabbing a non-active tab cancels selection easing and snaps the fused plate to its current position and width in the activating frame, with zero residual velocities and zero plate-versus-tab lag, even on sub-0.5 px moves; click-to-select still travels monotonically with no overshoot and the reorder release settle remains unchanged (F3-505/F3-631)."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -241,6 +220,7 @@ node_compile_hint:
   mode: editor_tab_close_pane_close_and_tab_overflow
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): edStripContentOverflows was a concept content-box measurement helper and pm6:ed-tab-order its local synchronization event. Neither is a product API/event obligation. The old EDSHAPE/sync/draggingLive spring repair was: That mechanism was the GRAB-SPRING. Grabbing a NON-ACTIVE tab flips the strip's active key, so EDSHAPE.sync() consumed the lastActive change as a selection event, set animate = true and SPRUNG the travelling plate across the strip over roughly 12 frames while the carried tab itself paints nothing (its background is transparent under .ed-shape-on) - the tab beneath showed through for the whole flight. Worse, pointermoves smaller than 0.5 px landed in the spring-preservation early-return guard, which held that hole open indefinitely on slow, careful drags. It was also a live violation of the 1:1-no-independent-easing canon this unit shares with F3-505. The fix, with this dated disposition: sync() computes draggingLive = Boolean(strip.querySelector('.tab.dragging')) immediately after the lastActive update and forces animate = false whenever it is true, and the spring-preservation guard gains \"&& !draggingLive\" so the snap branch runs - cancelling the in-flight rAF, jumping x and w to target, zeroing both velocities and painting - in the same frame the gesture activates."
 - "Plans/FinalGUISpec.md:1653-1656"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:

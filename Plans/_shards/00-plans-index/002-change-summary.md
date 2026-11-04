@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L76-L265
 
-Source SHA256: `35dcca5cb0872c351c11326317703d71b439d9913be7f82355aa295bfc97a3be`
+Source SHA256: `e3a607bf5f71d7f45bd31200d1effda0d968bc5681c9ef005dd23edea58b9704`
 
 ---
 
@@ -22,7 +22,7 @@ Source SHA256: `35dcca5cb0872c351c11326317703d71b439d9913be7f82355aa295bfc97a3be
 - 2026-10-30: Jared's G2 follow-up approves widen-first Activity Detail, then docking/squeezing at the column limit while at least 360 px of messages remain, and full-height cover below that. His F3-1 follow-up replaces Jared #19's control-clearance rule: every page stages notices tight under the title bar at the bell with the theme-menu gap, permitting covered controls/chat head; entering cards take no clicks and Reduced Motion settles instantly. The lead’s explicit open-inbox exception retains --pmn-push below the bell-anchored inbox (bf5115d9d9), recorded separately from Jared’s quoted answer. DL-254 and DL-228 amend existing owners, bindings and static presentation fixtures; no new command, setting or native certification. The final gates/dry pass follows the lead's new GUI head.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-254, ContractName:Plans/Decision_Log.md#DL-228, ContractName:Plans/FinalGUISpec.md#F3-447, ContractName:Plans/FinalGUISpec.md#F3-535, ContractName:Plans/assistant-chat-design.md#ACD-506
 
-- 2026-10-30: PM7 final-review N1/N2 corrections keep reused Browser/Terminal/Scheduling Touch contracts with their actual owners and scope Teacher versus Work thread availability/return by consumer. Final GUI f99ad183d2 names PM_BUSY.drag/idle admission and gives shared Stop/Quit checkboxes distinct states. G2 squeeze and F3-1 toast placement are superseded by Jared’s later 2026-10-30 follow-ups recorded above. No third review, new command, native-proof promotion or reseal.
+- 2026-10-30: PM7 final-review N1/N2 corrections keep reused Browser/Terminal/Scheduling Touch contracts with their actual owners and scope Teacher versus Work thread availability/return by consumer. Final GUI f99ad183d2 aligns shared drag/idle motion admission with ACD-475 and gives shared Stop/Quit checkboxes distinct states. G2 squeeze and F3-1 toast placement are superseded by Jared’s later 2026-10-30 follow-ups recorded above. No third review, new command, native-proof promotion or reseal.
   ContractRef: ContractName:Plans/Commands_System.md#CS-106, ContractName:Plans/Wiring_Matrix.md#WM-097, ContractName:Plans/UI_Command_Catalog.md#UCC-135, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/FinalGUISpec.md#F3-665
 
 - 2026-10-30: PM7 companion review fix1 (D7/D8/D13, G4/D10, S1/S2/S6, A5/PC2) separates local owner selection from thread/page opening, closes Copy/port/schedule-cancel/Rerun dispositions, adds reverse control and preset parity guards, closes local payload branches, and names the chat Working dots face. Exact Project/System visibility tokens and the title lane’s final 1.95 s Working export manifest are reconciled; no GUI edit or native-proof promotion.

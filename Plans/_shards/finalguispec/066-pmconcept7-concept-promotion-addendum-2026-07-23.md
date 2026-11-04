@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32968-L33802
+Source lines: L32903-L33734
 
-Source SHA256: `2d4c1f4221fc5b277fa14cb5f51490ae165280f20f26c595689519347afa6041`
+Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
 
 ---
 
@@ -425,18 +425,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every hoverable card, row, tile and icon in PMConcept7, the Usage plates included, runs one merged magnet and
+  Every hoverable product card, row, tile and icon, the Usage plates included, runs one merged magnet and
   spotlight hover system (PMH, DL-171). It replaces both the PM8 magnet, ring, wash and bloom and the Usage
   page's own plate lift and pointer sheen, and DR-072 makes it the single owner of the hover grammar. One shared
   self-suspending animation driver rides the single merged document pointer-move handler that F3-446 owns; no element has a pointer-move listener of its own. The driver runs only
   while a spring is unsettled, the NieR reticle travels, or a pointer or scroll change is pending, so it stops
   once a pointer resting on a box has settled, and nothing animates at idle except the explicitly approved
   Friendly breathing ring while a control is hovered. Box rects are read when the hover enters a scope and after
-  a scroll, a resize or a change inside that scope, never for every box on every frame. Targets are the
-  outermost match of the set: markup that opts in with `data-pmh` (its value names the kind, card, row, tile or
-  icon, and an empty value means card), every sheen-treated element, and the listed card, row, tile and icon
-  classes. `data-pmh="off"` takes an element out of the set even when its class matches, and nothing inside
-  `[data-pm-hover-exempt]` is a target or hovers one. Nested targets resolve to the outer box, and overlaying
+  a scroll, a resize or a change inside that scope, never for every box on every frame. DR-072's shared hover owner enrolls targets by semantic kind: card, row, tile, icon or small control; an enrolled target with no explicit kind uses card. Shared presentation roles, including sheen-treated surfaces, may enroll eligible targets, but an explicit opt-out overrides role enrollment. An exempt subtree admits no hover targets and cannot activate an ancestor target. Resolve the outermost eligible target through this owner, without requiring DOM attributes or CSS classes. Nested targets resolve to the outer box, and overlaying
   panels do not light boxes beneath them (occlusion). Intensity is one continuous field: 0 at the bleed distance
   outside a box, partial at its edge and full a short ramp inside, with no snap at edges, so a neighbour inside
   the bleed catches the light on its near edge and gets no magnet and no plate. In Basic, Friendly and Glass the
@@ -501,7 +497,7 @@ split_recommended: false
 depends_on: [F3-446, DL-171]
 unblocks: [DR-072]
 acceptance_criteria:
-  - "Every card, row, tile and icon target in PMConcept7, the Usage plates included, takes its hover from this one system; no surface keeps a second hover engine, a `.pm-sheen:hover` lift or glow, or a pointer sheen of its own."
+  - "Every product card, row, tile and icon target, the Usage plates included, takes its hover from this one system; no surface keeps a second hover engine, a `.pm-sheen:hover` lift or glow, or a pointer sheen of its own."
   - "One shared driver services every target through the single merged document pointer-move handler and adds no pointer-move listener; two seconds after the pointer leaves there is no hover-owned animation frame or running hover animation, and a pointer resting still adds no hover work after settling except the approved Friendly control ring, which stops on leave or hide."
   - "In Basic, Friendly and Glass the magnet moves a hovered card at most about 2.5 px at an edge, through the standalone translate channel only; icons and the Usage plates never move."
   - "The pointer light is a small soft pool, about 90 to 100 px in radius on cards, revealing a pre-painted sheen and hairline under the content; the emitted glow is restrained as in the current PMH reference, pre-painted, opacity-only, and stays at the box's rest rect while the box leans."
@@ -509,7 +505,7 @@ acceptance_criteria:
   - "Retro shows Raise (a 2 px hard-cut rise on a 3 to 5 px hard shadow whose far edge stays put, then a 1 px phosphor rule one 33 ms tick later, released in the reverse order) and NieR shows Lock-on (four 8 px ink corners stepping closed in two steps over 90 ms, then an ink line at .6, cutting between cards), gated by the brackets part with the ink-line fallback; neither shows a soft light, glow, blur, lean or neighbour light."
   - "Under Reduced Motion there is no magnet, travel, pointer-following light or neighbour light, and every family shows its hover state instantly; on a software-rendered path the field, light and plate are off and the magnet stops."
   - "A hover writes no inherited custom property and restyles no subtree beyond the hovered box and its lit neighbours, and no box-shadow or filter animates on a large element."
-  - "`data-pmh` opts markup in with a kind, `data-pmh=\"off\"` opts it out, nothing inside `[data-pm-hover-exempt]` hovers, and editor/terminal text has no card magnet; strip/header small controls use the shared control marker and resize dividers use F3-657."
+  - "DR-072/F3-465 enrolls targets by semantic kind, defaults unspecified enrolled kinds to card, honors explicit opt-out over role enrollment, and exempts a subtree from targeting or activating an ancestor; editor/terminal text has no card magnet, strip/header small controls use the shared control marker, and resize dividers use F3-657."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
   - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465/PMH shared hover light on registered edge-glow objects, including Usage/Home widgets, cards, tiles and rows. Remove the independent sheet-wide lg-shine/light, pointer listener and stale data-lg-lit. Its central sheen is at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5 percent); edge glow is unchanged. Plain panels, bars and dialog ground do not light merely because the pointer crosses them. Retro and NieR retain their non-soft-light forms and existing Reduced Motion, software and gesture holds."
 validation_surfaces:
@@ -524,6 +520,7 @@ node_compile_hint:
   mode: magnet_spotlight_hover_system
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): data-pmh (including its empty/default-card and off forms), data-pm-hover-exempt, and the concept class selector list were browser enrollment hooks. Product kind enrollment, opt-out and subtree exemptions belong to DR-072/F3-465."
 - Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)
 - Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
 - Concepts/onboarding/opus-5.5/src/js/18-hover.js and src/css/22-hover.css (the PMH engine and its look; concept
