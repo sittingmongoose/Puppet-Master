@@ -212,8 +212,12 @@
           }
         },
         "priority": {
-          "type": "string",
-          "minLength": 1
+          "enum": [
+            "low",
+            "normal",
+            "high",
+            "urgent"
+          ]
         },
         "content": {
           "type": "string",

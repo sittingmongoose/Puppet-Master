@@ -7259,6 +7259,20 @@ canonical_text: >-
   edition drift, foreign Server/thread/crew/run/operation/message joins and false Run anchors.
   OSI-699 tests a new attempt after failure, blockage and interruption independently, with terminal,
   permission, parent-ceiling, Stop, deadline, resume/reroute/replacement and attempt-counter refusals.
+  All twenty-five families have full selected EventRecord@2.0.0 append/retry and joined generic
+  checkpoint/read-token vectors. Reject replay_only_not_appendable before append or retry; compare
+  each recorded project~ partition with its actual Project encoding. Use the exact EventRecord
+  producer-semantic RFC8785 field set, exclude Storage sequence/observed/persisted metadata, return
+  the original complete result on equal semantics and reject changed caller semantics without append.
+  Run every family's S1..S8 authored failure (each requires exit 1); success-labelled failures reject.
+  Enforce the complete inline MessagePack payload budget, exact ASCII/multibyte boundaries and
+  valid external SP-337 pack bytes, digest/length/media and bytes/index durability witnesses.
+  Missing/forged references, foreign Storage checkpoints, every changed token member, source/index
+  mismatch and a nonmatching append's frontier advance refuse. Enforce the phase count predicate,
+  retry counter/cause/current-source join, truncation ordering and existing board priority enum on
+  the actual selected payload. Validate full closed application originals/input/wrappers for every
+  board contract, including missing/foreign fields. Application posted-message subject/priority
+  source is STOPPED under OSI-681/SP-720; an expected fail-closed oracle never certifies that producer.
   Native obligations remain NOT_RUN per family: race the exact producer predicate with cancellation,
   commit referenced content before append, crash before and after first receipt, resolve full value on
   uncertain acknowledgment, reject same-key changed semantics, replay without its semantic effect,

@@ -9,6 +9,7 @@ import re
 from pathlib import Path
 from datetime import datetime
 from jsonschema import Draft202012Validator, FormatChecker
+import pm_orchestrator_event_oracles as oracles
 
 ROOT = Path(__file__).resolve().parents[1]
 UTC_FORMAT = FormatChecker()
@@ -66,26 +67,8 @@ def board_join_errors(case):
     """Exact source/append/run joins, using supplied canonical-source fixtures only."""
     payload, source, envelope = case['payload'], case['source'], case['envelope']
     errors = []
-    for field in ('scope', 'storage_instance_id', 'server_id', 'thread_id', 'crew_id', 'run_id', 'operation_id'):
-        if source.get(field) != payload.get(field):
-            errors.append('source_' + field)
+    errors += oracles.board_source_errors(case, ROOT, UTC_FORMAT)
     app = payload['scope'] == 'application'
-    if app:
-        if 'project_id' in payload or 'project_id' in source:
-            errors.append('fabricated_project')
-        if source.get('edition') != 'pm.application_source.coordination_append.v1@1.0.0':
-            errors.append('source_edition')
-        if source.get('interface') != 'storage.coordination_append.application@1.0.0':
-            errors.append('append_interface')
-        if source.get('message_schema') != 'pm.coordination.agent_message.application.v1@1.0.0':
-            errors.append('message_edition')
-    else:
-        if source.get('project_id') != payload['project_id']:
-            errors.append('source_project_id')
-        if source.get('interface') != 'storage.coordination_append.v1@1.0.0':
-            errors.append('append_interface')
-        if source.get('edition') != 'original_project_coordination_source':
-            errors.append('source_edition')
     expected_partition = ('app' if app else 'project~' + base64.urlsafe_b64encode(
         payload['project_id'].encode()).decode().rstrip('='))
     if envelope.get('scope_partition') != expected_partition:
@@ -93,12 +76,12 @@ def board_join_errors(case):
     for field in ('scope', 'run_id', 'thread_id', 'occurred_at_utc', 'project_id'):
         if envelope.get(field) != payload.get(field):
             errors.append('envelope_' + field)
+    if envelope.get('replay_policy') != 'dedupe_by_idempotency_key':
+        errors.append('replay_only_not_appendable' if envelope.get('replay_policy') == 'projector_replay_only'
+                      else 'family_current_replay_policy')
     key, event_id = identity(case['event_type'], payload)
     if envelope.get('idempotency_key') != key or envelope.get('event_id') != event_id:
         errors.append('identity')
-    messages = payload.get('message_ids', [payload.get('message_id')])
-    if source.get('message_ids') != messages:
-        errors.append('message_source')
     terminal = case.get('terminal_run')
     if terminal is not None:
         for field in ('scope', 'storage_instance_id', 'server_id', 'thread_id', 'crew_id', 'run_id', 'project_id'):
@@ -145,11 +128,16 @@ def board_storage_checks(schema, fixtures, storage, owner):
             assert token in section, (family, token)
             checks += 1
     for case in fixtures['board_storage_cases']:
+        selected = [c for c in fixtures['event_cases'] if c['case_id'] == case['event_case_id']]
+        assert len(selected) == 1 and selected[0]['logical_payload'] == case['payload'], 'board_full_append_payload_join'
+        assert not oracles.transport_errors(selected[0]['event'], case['payload'], selected[0]['payload_packs']), 'board_full_append_transport'
         validator.validate(case['payload'])
-        assert not board_join_errors(case), (case['event_type'], board_join_errors(case))
+        expected_errors = (['application_post_subject_priority_unavailable'] if
+                           case['event_type'] == BOARD[0] and case['payload']['scope'] == 'application' else [])
+        assert board_join_errors(case) == expected_errors, (case['event_type'], board_join_errors(case))
         # No terminal source yet is a valid append, but cannot make expiry eligible.
         no_anchor = copy.deepcopy(case); no_anchor['terminal_run'] = None
-        assert not board_join_errors(no_anchor)
+        assert board_join_errors(no_anchor) == expected_errors
         checks += 3
         for target, field in [('source', 'server_id'), ('source', 'thread_id'), ('source', 'crew_id'),
                               ('source', 'run_id'), ('source', 'operation_id'), ('source', 'edition'),
@@ -158,7 +146,7 @@ def board_storage_checks(schema, fixtures, storage, owner):
                               ('envelope', 'idempotency_key'), ('terminal_run', 'run_id'),
                               ('terminal_run', 'server_id'), ('terminal_run', 'kind')]:
             bad = copy.deepcopy(case); bad[target][field] = 'foreign'
-            assert board_join_errors(bad), (case['event_type'], target, field)
+            assert set(board_join_errors(bad)) - set(expected_errors), (case['event_type'], target, field)
             checks += 1
         for field in ('schema_id', 'crew_id', 'run_id'):
             bad = copy.deepcopy(case['payload']); bad.pop(field)
@@ -169,8 +157,23 @@ def board_storage_checks(schema, fixtures, storage, owner):
         checks += 1
         if case['payload']['scope'] == 'application':
             bad = copy.deepcopy(case); bad['source']['project_id'] = 'fabricated'
-            assert board_join_errors(bad)
+            assert set(board_join_errors(bad)) - set(expected_errors)
             checks += 1
+        for target in ('source', 'wrapper') if case['payload']['scope'] == 'application' else ('source',):
+            for field in list(case[target]):
+                bad = copy.deepcopy(case); del bad[target][field]
+                assert set(board_join_errors(bad)) - set(expected_errors), (case['event_type'], target, field)
+                checks += 1
+            bad = copy.deepcopy(case); bad[target]['foreign_field'] = 'foreign'
+            assert set(board_join_errors(bad)) - set(expected_errors)
+            checks += 1
+        for field in list(case['source']['original_input']):
+            bad = copy.deepcopy(case); del bad['source']['original_input'][field]
+            assert set(board_join_errors(bad)) - set(expected_errors), (case['event_type'], 'input', field)
+            checks += 1
+        bad = copy.deepcopy(case); bad['source']['original_input']['foreign_field'] = 'foreign'
+        assert set(board_join_errors(bad)) - set(expected_errors)
+        checks += 1
     return checks
 
 def main():
@@ -216,6 +219,7 @@ def main():
             checks += 1
         baseline = identity(case['event_type'], payload)
         assert baseline == (case['identity']['idempotency_key'], case['identity']['event_id'])
+        assert case['identity']['scope_partition'] == oracles.partition(payload), ('scope_partition', case['event_type'])
         if case['scope'] == 'application':
             # Independently decode CV-366 fields rather than accepting any opaque hash.
             prefix, server_hex, operation_hex = baseline[0].split(':')
@@ -271,7 +275,9 @@ def main():
         assert token in retry_section, token
         checks += 1
     checks += board_storage_checks(schema, fixtures, storage, owner)
-    print(json.dumps({'status': 'pass', 'families': len(fixtures['contracts']), 'checks': checks, 'native': 'NOT_RUN'}))
+    import sys
+    checks += oracles.check_oracles(fixtures, schema, sys.modules[__name__])
+    print(json.dumps({'status': 'pass', 'families': len(fixtures['contracts']), 'checks': checks, 'native': 'NOT_RUN', 'stopped_facets': ['crew.board_message_posted/application: subject and priority source unavailable']}))
 
 if __name__ == '__main__':
     main()
