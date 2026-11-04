@@ -123,7 +123,7 @@ export const tests = {
     const words=f.locator('#pm7ob-explainer .pst-bt-on, #pm7ob-explainer .o55-explainer-w').first();
     await t.check(`${look} ${id} help note has rendered body text`,await words.isVisible()&&(await words.innerText()).trim().length>0);
     // The four paints must sample the same completed text, rather than different typing frames.
-    await f.waitForFunction(()=>{const e=document.querySelector('#pm7ob-explainer');return e&&!e.classList.contains('typing')&&!e.querySelector('.typing');});
+    await f.waitForFunction(()=>{const e=document.querySelector('#pm7ob-explainer');return e&&!e.matches('.typing,.o55-writing')&&!e.querySelector('.typing,.o55-writing');});
     const opacity=await words.evaluate(e=>{const walk=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let count=0,n;while((n=walk.nextNode())){if(!n.textContent.trim())continue;count++;for(let p=n.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(s.display==='none'||s.visibility!=='visible'||Number(s.opacity)===0)return false;}}return count>0;});
     await t.check(`${look} ${id} body text subtree has visible opacity`,opacity);
     const bodyPaint=await paintedText(words);
