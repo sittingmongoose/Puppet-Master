@@ -111,16 +111,6 @@
   },
   {
    "check": "audit-governance",
-   "count": 1,
-   "error": "buildability_gate_report_stale_or_not_canonical",
-   "fingerprints": [
-    "c6f2600bdef5"
-   ],
-   "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-   "subcheck": "implementation_readiness"
-  },
-  {
-   "check": "audit-governance",
    "count": 2,
    "error": "event_denominator_unresolved",
    "fingerprints": [
@@ -154,7 +144,7 @@
    "count": 1,
    "error": "implementation_readiness_self_tests_failed",
    "fingerprints": [
-    "278ef94b633b"
+    "c02693b13dac"
    ],
    "path": "scripts/pm-implementation-readiness.py",
    "subcheck": "implementation_readiness"
@@ -204,36 +194,6 @@
    ],
    "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
    "subcheck": "plan_migration"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "forbidden_context_compaction_event_family",
-   "fingerprints": [
-    "e43c09e39e87"
-   ],
-   "path": "",
-   "subcheck": "pm7_gui_fixtures"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "missing_pm7_invalid_command_fixtures",
-   "fingerprints": [
-    "0bd711c39c41"
-   ],
-   "path": "",
-   "subcheck": "pm7_gui_fixtures"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "missing_pm7_valid_command_fixtures",
-   "fingerprints": [
-    "49aae096cffa"
-   ],
-   "path": "",
-   "subcheck": "pm7_gui_fixtures"
   },
   {
    "check": "run-gates",
@@ -296,16 +256,6 @@
   },
   {
    "check": "run-gates",
-   "count": 1,
-   "error": "buildability_gate_report_stale_or_not_canonical",
-   "fingerprints": [
-    "c6f2600bdef5"
-   ],
-   "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-   "subcheck": "validate_implementation_readiness"
-  },
-  {
-   "check": "run-gates",
    "count": 2,
    "error": "event_denominator_unresolved",
    "fingerprints": [
@@ -339,7 +289,7 @@
    "count": 1,
    "error": "implementation_readiness_self_tests_failed",
    "fingerprints": [
-    "278ef94b633b"
+    "c02693b13dac"
    ],
    "path": "scripts/pm-implementation-readiness.py",
    "subcheck": "validate_implementation_readiness"
@@ -389,41 +339,11 @@
    ],
    "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
    "subcheck": "validate_plan_migration"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "forbidden_context_compaction_event_family",
-   "fingerprints": [
-    "e43c09e39e87"
-   ],
-   "path": "",
-   "subcheck": "validate_pm7_gui_fixtures"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "missing_pm7_invalid_command_fixtures",
-   "fingerprints": [
-    "0bd711c39c41"
-   ],
-   "path": "",
-   "subcheck": "validate_pm7_gui_fixtures"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "missing_pm7_valid_command_fixtures",
-   "fingerprints": [
-    "49aae096cffa"
-   ],
-   "path": "",
-   "subcheck": "validate_pm7_gui_fixtures"
   }
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 230,
+   "failure_total": 226,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
@@ -431,16 +351,12 @@
      "sampled": 100
     },
     "implementation_readiness": {
-     "reported": 24,
-     "sampled": 24
+     "reported": 23,
+     "sampled": 23
     },
     "plan_migration": {
      "reported": 2,
      "sampled": 2
-    },
-    "pm7_gui_fixtures": {
-     "reported": 3,
-     "sampled": 3
     }
    }
   },
@@ -455,7 +371,7 @@
    }
   },
   "run-gates": {
-   "failure_total": 230,
+   "failure_total": 226,
    "status": "fail",
    "subchecks": {
     "validate_audit_closure": {
@@ -463,30 +379,26 @@
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "reported": 24,
-     "sampled": 24
+     "reported": 23,
+     "sampled": 23
     },
     "validate_plan_migration": {
      "reported": 2,
      "sampled": 2
-    },
-    "validate_pm7_gui_fixtures": {
-     "reported": 3,
-     "sampled": 3
     }
    }
   }
  },
- "commit": "9fa4018fb091bd86d36cbaa791ef726b72f8b162",
+ "commit": "8663a8e1571c66bba3966aba908e2456386e4039",
  "export_buckets": [],
  "max_fingerprints_per_bucket": 200,
  "readiness_audit_inputs": {
   "files": {
-   "Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json": "8c277ba2a4c5c752dadb2da0636f698b938b8f7bd94adacae78090341aeec566",
+   "Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json": "fb0d586f853de9941b419499bdf92965c46fc23aba96e5339e27fea66903f1a6",
    "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json": "e465ad91876fde4cf9fe8d5c75e3a75d01565fa8c8e630ad8cc23622fce4b9b4",
    "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl": "9b4a6c425659df0ae8a2f690c4f75fc67b825c94234ac26f2305cf0c8b66e747",
    "Plans/.audits/event-authority-2026-08-13-currentness/README.md": "a16af5dc4c0bc2954ef50bee707f43abfae6b8f79c7a696e0eb92a1637640308",
-   "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json": "7e54ba80e607e3384fb0862a9363f2c6abc258ae4c3cf17666560280237e5471",
+   "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json": "605f8185d957222830679784c73d128f0f9c4fa67dc985fe152596c52decc192",
    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/EXPECTED_252_EVENT_TYPES.tsv": "d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541",
    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e",
    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294",
@@ -500,8 +412,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-04T04:29:38Z",
- "run_dir": "Plans/.plan_migration/pds-20261104-002-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-04T07:27:07Z",
+ "run_dir": "Plans/.plan_migration/pds-20261104-003-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
