@@ -75,3 +75,12 @@ Checks and this report are copied to `/mnt/Cursor/PuppetMaster-Evidence/event-au
 - **index-validate.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/index-validate.json`, SHA-256 `020570393b20489bfdb40e482f7ae7de92a175d45f9f898d20517a508cb696ee`.
 - **shared-runtime-check.txt:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/shared-runtime-check.txt`, SHA-256 `979a75cb0dbc609ddcbecd4c5e3b0f95ff6cad592869415a92af69a31f066ec7`.
 - **shared-runtime-input-diff.txt:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/shared-runtime-input-diff.txt`, SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+
+## Review round 1: findings and responses
+
+Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DDBG-sol/REVIEW.md` (Sol 6.1 max, NOT_READY, 7 families pass as prepared). Fixes by the stream E lead.
+
+1. **Blocking, fixed in `5271b83e9e`.** `debug.investigation.started` accepted any string for `requested_mode_overlay` and `effective_mode_overlay`, and its positive fixture used `scrubbed`/`scrubbed`/`ask`. `Plans/debug_investigation_event_payloads.schema.json` `#/$defs/started` now closes both fields to the enum in `Plans/assistant-chat-design.md` ("Canonical enum closure", line 2669) and adds two if/then rules from section 1.0B/1.0C: requested `debug` implies effective `debug`; effective `debug` resolves to `regular` or `yolo`, never `ask` or `plan`. The fixture carries `debug`/`debug`/`regular`. `scripts/pm-debug-investigation-events.py` adds six forbidden-tuple negative cases (unknown overlay twice, requested debug with effective plan, debug+ask twice, debug+plan) and two legal-tuple positives (`debug`/`debug`/`yolo`; `none`/`none`/`ask`). Verify: the checker prints PASS at this head; with the previous schema restored it prints FAIL on exactly the six new cases. Self-grade: `closed_payload_schema` and `positive_negative_oracles` for `started` stay PASS with the review's downgrade and this fix recorded.
+2. **Note, unchanged.** `debug.investigation.state_changed` stays held for Jared ('failed' as a lifecycle state, or which existing state receives the six outcomes); the review confirms the hold is genuine.
+3. **Note, unchanged.** Retention (`PENDING_RETENTION_DECISION`) and admission remain explicit gates.
+4. **Note, unchanged.** The shared-runtime materialization failure is pre-existing on `main`.
