@@ -1772,7 +1772,11 @@
         "event_sequence"
       ],
       "legacy_alias": "run.scheduler_analysis",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
       "transition": "one pending wake set -> one scored pass, before dispatch; first recovery wake is startup_recovered. Select at most available_slots using the canonical score order, retain every nonselected ready node and its exclusion reason. Legacy non_selected is import-only.",
       "new_binding_status": "newly_authored_owner_contract",
       "new_stored_value_families": [],
