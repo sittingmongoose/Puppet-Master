@@ -1,0 +1,287 @@
+{
+  "event_type": "filesafe.command_denied",
+  "family_id": null,
+  "family_revision": null,
+  "prepared_payload_version": "2.0.0",
+  "registry_pointer": null,
+  "disposition": "CURRENT_WRITER",
+  "disposition_qualification": "Owner-specified behavior only; no native writer or admission enabled.",
+  "disposition_evidence": [
+    {
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-550",
+      "line_start": 24511,
+      "line_end": 24511,
+      "quote": "**Producer and transition.**",
+      "excerpt_sha256": "ee1d0a638e1624393c06de0b82057a27503f09f98cecc617f1ce225d0529eeb1",
+      "file_sha256": "1ba8d6d4160b3d1cf8072a6f8dc8a157cc36033a579e443067f51df2cbf52d7a",
+      "quote_check": "exact"
+    }
+  ],
+  "outcome": "register (prepared draft; depth incomplete)",
+  "pass_count": 7,
+  "normative_depth_complete": false,
+  "native_execution": "NOT_RUN",
+  "current_owner_units": [
+    "CV-550",
+    "SP-550",
+    "ATS-275",
+    "F2-213",
+    "CV-366",
+    "SP-278",
+    "SP-286"
+  ],
+  "cells": {
+    "membership_version": {
+      "status": "ABSENT",
+      "representation": "absent",
+      "finding": "No registry admission written; exact family absent. Prepared payload version is 2.0.0, not an admitted revision.",
+      "evidence": [
+        {
+          "path": "Plans/event_family_registry.json",
+          "unit": "registry",
+          "line_start": 8,
+          "line_end": 8,
+          "quote": "\"families\"",
+          "excerpt_sha256": "e510f9df8653db3671748148a273e8fb3daa6b9d0724d787638baae7131d986f",
+          "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": null,
+      "change": "new",
+      "change_reason": "First DF self-grade of new prepared contract; survey findings are leads only."
+    },
+    "owner_doc": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "Exact new owner text governs this family; the current FileSafe semantic owner remains unchanged.",
+      "evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-550",
+          "line_start": 24509,
+          "line_end": 24509,
+          "quote": "**Newly authored owner contract",
+          "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
+          "file_sha256": "1ba8d6d4160b3d1cf8072a6f8dc8a157cc36033a579e443067f51df2cbf52d7a",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": null,
+      "change": "new",
+      "change_reason": "First DF self-grade of new prepared contract; survey findings are leads only."
+    },
+    "producer": {
+      "status": "PARTIAL",
+      "representation": "exact_normative_owner",
+      "finding": "Producer and ordered first receipt are named, but CV-366 requires an exact application original-source resource/method graph. This draft has not materialized that graph; no native-source closure is claimed.",
+      "evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-550",
+          "line_start": 24511,
+          "line_end": 24511,
+          "quote": "**Producer and transition.**",
+          "excerpt_sha256": "ee1d0a638e1624393c06de0b82057a27503f09f98cecc617f1ce225d0529eeb1",
+          "file_sha256": "1ba8d6d4160b3d1cf8072a6f8dc8a157cc36033a579e443067f51df2cbf52d7a",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": null,
+      "change": "new",
+      "change_reason": "First DF self-grade of new prepared contract; survey findings are leads only."
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "Closed 2.0.0 payload has Project/application positives and missing-field/extension negatives. WorkflowScopeV2 is referenced intact.",
+      "evidence": [
+        {
+          "path": "Plans/event_payloads/filesafe_command_denied_v2.schema.json",
+          "unit": "CV-550",
+          "line_start": 3,
+          "line_end": 3,
+          "quote": "\"additionalProperties\": false",
+          "excerpt_sha256": "4fe655e121901a2a09025263b26e06f69e0ca93dd03150f78ec63bbf08fa421a",
+          "file_sha256": "7c0dd99bd38d3cba1f9ace9652ad98b9bd503e058ec83c146ab712d7e8c126bb",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": null,
+      "change": "new",
+      "change_reason": "First DF self-grade of new prepared contract; survey findings are leads only."
+    },
+    "scope_identity": {
+      "status": "PARTIAL",
+      "representation": "exact_normative_owner",
+      "finding": "Identity and scope joins are explicit; payload tests exercise partitions and Project/null scope. Complete original-source/envelope join fixtures and application source graph are still missing.",
+      "evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-550",
+          "line_start": 24513,
+          "line_end": 24513,
+          "quote": "**Scope and joins.**",
+          "excerpt_sha256": "356c919262c63b2dd5a2bad6965f8004d148d8c38b97a2dbd521e7b09142b16d",
+          "file_sha256": "1ba8d6d4160b3d1cf8072a6f8dc8a157cc36033a579e443067f51df2cbf52d7a",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": null,
+      "change": "new",
+      "change_reason": "First DF self-grade of new prepared contract; survey findings are leads only."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "Family-specific dedupe tuple, deterministic event identity, same-operation original-result replay and changed-digest refusal are explicitly required; effects cannot replay.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-550",
+          "line_start": 29523,
+          "line_end": 29523,
+          "quote": "**Identity and replay.**",
+          "excerpt_sha256": "034db3a68c887aa6cc2b0edc84154ffc1cc637de2a1eaa4193ac07fca6897749",
+          "file_sha256": "d8eeabcf58f630756737316db88a3924c2585048956968e1a07bebfda68829cc",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": null,
+      "change": "new",
+      "change_reason": "First DF self-grade of new prepared contract; survey findings are leads only."
+    },
+    "retention": {
+      "status": "PARTIAL",
+      "representation": "exact_normative_owner",
+      "finding": "PENDING_RETENTION_DECISION: RT must decide exact event-history assignment. Source-body policy is independently preserved and not copied to history.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-550",
+          "line_start": 29529,
+          "line_end": 29529,
+          "quote": "**Retention.**",
+          "excerpt_sha256": "e3b37dea46eb5c037336ebd0ac01fbdaa25d40ee8eb0f60d13fc6970139ccfba",
+          "file_sha256": "d8eeabcf58f630756737316db88a3924c2585048956968e1a07bebfda68829cc",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": null,
+      "change": "new",
+      "change_reason": "First DF self-grade of new prepared contract; survey findings are leads only."
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "Family-specific source custody, off-worktree snapshots, current read access/deletion and coherent backup/restore are required; no inline bodies/secrets.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-550",
+          "line_start": 29527,
+          "line_end": 29527,
+          "quote": "**Redaction and custody.**",
+          "excerpt_sha256": "8296c6aac065df812febb80a254a528c45dd22d35e8bcd8004a440343a19647d",
+          "file_sha256": "d8eeabcf58f630756737316db88a3924c2585048956968e1a07bebfda68829cc",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": null,
+      "change": "new",
+      "change_reason": "First DF self-grade of new prepared contract; survey findings are leads only."
+    },
+    "transitions": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "Own transition and ordering preserve current denial/override/snapshot/restore semantics; passive replay has no side effect.",
+      "evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-550",
+          "line_start": 24511,
+          "line_end": 24511,
+          "quote": "**Producer and transition.**",
+          "excerpt_sha256": "ee1d0a638e1624393c06de0b82057a27503f09f98cecc617f1ce225d0529eeb1",
+          "file_sha256": "1ba8d6d4160b3d1cf8072a6f8dc8a157cc36033a579e443067f51df2cbf52d7a",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": null,
+      "change": "new",
+      "change_reason": "First DF self-grade of new prepared contract; survey findings are leads only."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "Exact ephemeral history consumer adopts SP-278 by name, none_required family checkpoint and existing generic checkpoint/CAS/read token/rebuild; no new stored values.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-550",
+          "line_start": 29525,
+          "line_end": 29525,
+          "quote": "**Exact consumer and checkpoint.**",
+          "excerpt_sha256": "c24eda101413e36fba51ca3419bd8f48dd9b7412408bd931bbcb152dc6a87ff6",
+          "file_sha256": "d8eeabcf58f630756737316db88a3924c2585048956968e1a07bebfda68829cc",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": null,
+      "change": "new",
+      "change_reason": "First DF self-grade of new prepared contract; survey findings are leads only."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "Own writer cutoff, pending-operation reconciliation, history-reader fence, retained old dispatch and verified successor rebuild are explicit.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-550",
+          "line_start": 29531,
+          "line_end": 29531,
+          "quote": "**Withdrawal and rebuild.**",
+          "excerpt_sha256": "de37570b4c3d81147182c5b59fa0fbebea4c6b2277b590040a69dab7ce530304",
+          "file_sha256": "d8eeabcf58f630756737316db88a3924c2585048956968e1a07bebfda68829cc",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": null,
+      "change": "new",
+      "change_reason": "First DF self-grade of new prepared contract; survey findings are leads only."
+    },
+    "positive_negative_oracles": {
+      "status": "PARTIAL",
+      "representation": "exact_normative_owner",
+      "finding": "Own payload/identity fixtures pass, but full EventRecord joins, authentic original source, retry conflict, receipt recovery and withdrawal need executable contract cases. Native obligations are authored NOT_RUN; NOT_RUN alone does not lower this grade.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "unit": "ATS-275",
+          "line_start": 7271,
+          "line_end": 7271,
+          "quote": "Native obligations",
+          "excerpt_sha256": "db352e0e55bf74e6eae30afac285bc00036d84400a00528f8faddb8307c859f7",
+          "file_sha256": "41ef06ad0b74e88fae09cf0d0a75111448862e1b01f97dcc2ad079a047d186c7",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": null,
+      "change": "new",
+      "change_reason": "First DF self-grade of new prepared contract; survey findings are leads only."
+    }
+  },
+  "remaining_gaps": [
+    "TECHNICAL: materialize and verify exact per-family CV-366 application original-source resource/method graph before depth PASS.",
+    "TECHNICAL: add full EventRecord/source join fixtures and executable original-result/conflicting retry, receipt/crash and withdrawal cases; current checker is payload/scope/identity only.",
+    "RETENTION: RT to resolve PENDING_RETENTION_DECISION before admission.",
+    "ADMISSION: registry membership intentionally ABSENT."
+  ],
+  "static_checks_seen": [
+    "python3 scripts/pm_filesafe_event_contracts.py"
+  ],
+  "notes": "No exclusion and no owner-conflict/product answer invented. This is a disclosed incomplete technical draft for lead review, not an admission-ready contract.",
+  "grading_batch": "DF_self_grade"
+}
