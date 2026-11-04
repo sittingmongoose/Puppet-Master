@@ -2216,11 +2216,18 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.in
   uses Contracts 7.3A; summaries do not replace target identity. A started event supplies no permission
   to mutate. The resolved mode tuple obeys assistant-chat-design sections 1.0A, 1.0B, 1.0C and its
   canonical enum closure: requested/effective overlays are none, plan, deep_plan, debug, interview,
-  brainstorm or crew. As required by Run_Modes requested/effective owner projection, normalized overlays
-  agree. plan/deep_plan use runtime plan only, preserving deep_plan; debug/interview/brainstorm/crew use
-  regular or explicit-opt-in yolo, never ask or plan. none permits ask, regular or explicit-opt-in yolo;
-  Run_Modes also permits none with plan for non-primary entrypoints. Planning remains read-only; approved
-  execution clears its planning overlay and uses regular/yolo. Ask has effective none. The fixture envelope
+  brainstorm or crew. Debug selection persists debug/debug and resolves to regular by default or yolo
+  only by explicit opt-in, never ask or plan (Chat 1.0B/1.0C). Effective plan/deep_plan uses runtime plan
+  and remains read-only, preserving deep_plan. Crew launched from plan remains read-only with runtime
+  plan (Chat section 15 and Run_Modes 9.5); the specialized-overlay regular row in Chat 1.0C governs
+  execution with standard approvals, not every launch. Approval is required before planning hands off
+  to execution; that execution reuses approved plan/TODO state under regular/yolo, never plan (Chat 1.0A).
+  Approval alone does not specify overlay clearing. Chat 29.1 separately resolves explicit ask/inspect
+  to effective none/ask, explicit plan to plan/plan, explicit deep plan to deep_plan/plan, and explicit
+  agent to the normal execution posture while clearing planning overlays. These owners resolve each
+  request; this family does not impose universal requested/effective equality, infer other legal or
+  forbidden tuples, or import the scope-specific run.started owner projection as its launch authority.
+  A structurally accepted tuple alone proves neither a launch predicate nor mutation permission. The fixture envelope
   and owner projections prove actual Project/investigation and optional thread/run joins, not a changed
   identity preimage. A payload-only Project mismatch refuses before any append or receipt.
 

@@ -3,7 +3,6 @@
 import copy
 import base64
 import hashlib
-import itertools
 import json
 from pathlib import Path
 from jsonschema import Draft202012Validator
@@ -11,11 +10,36 @@ from jsonschema import Draft202012Validator
 ROOT = Path(__file__).resolve().parents[1]
 HELD_EVENT = 'debug.investigation.instrumentation_state_changed'
 
+
+def writer_policy_refusal(case):
+    policy = case['envelope']['replay_policy']
+    if policy == 'projector_replay_only':
+        return 'replay_only_not_appendable'
+    if policy != 'dedupe_by_idempotency_key':
+        return 'writer_policy_mismatch'
+    return None
+
+
+def semantic_digest(case):
+    # Contracts EventRecord producer_semantic_digest, not the Storage receipt
+    # digest. These are bounded JSON vectors, not a native RFC 8785 codec proof.
+    fields = ('scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id',
+              'attempt_id', 'actor_ref', 'requested_account_ref',
+              'effective_account_ref', 'occurred_at_utc', 'producer_sequence_id',
+              'correlation_id', 'causation_event_id', 'parent_event_id',
+              'idempotency_key', 'payload_schema_id', 'payload_ref',
+              'redaction_profile', 'migration')
+    body = {key: case['envelope'].get(key) for key in fields}
+    body.update(event_type=case['event_type'], payload=case['payload'])
+    return hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True,
+                                     separators=(',', ':')).encode()).hexdigest()
+
+
 def candidate_refusal(case, validator):
     """Static candidate model; envelope/owner are projections, not new schemas."""
     payload, envelope, owner = case['payload'], case['envelope'], case['owner_record']
-    if envelope['replay_policy'] == 'projector_replay_only':
-        return 'replay_only_not_appendable'
+    if reason := writer_policy_refusal(case):
+        return reason
     if not validator.is_valid(payload):
         return 'invalid_payload'
     project = case['project_id']
@@ -33,6 +57,13 @@ def candidate_refusal(case, validator):
             return 'project_scope_mismatch'
         if key in payload and payload[key] != owner.get(key):
             return 'project_scope_mismatch'
+    if case['event_type'] == 'debug.investigation.started':
+        resolution = case['mode_resolution']  # fixture projection, not payload
+        if payload['runtime_mode'] == 'yolo' and not resolution['explicit_yolo']:
+            return 'explicit_yolo_required'
+        if (resolution['from_planning'] and payload['runtime_mode'] in ('regular', 'yolo')
+                and not resolution['approval_received']):
+            return 'planning_approval_required'
     if (case['event_type'] == 'debug.investigation.context_item_state_changed'
             and payload['previous_state'] == payload['state']):
         return 'no_op'
@@ -60,8 +91,8 @@ def identity(event, project, payload):
     return 'debug:' + digest, 'evt_debug_' + digest
 
 def refusal(case, admitted=False, retention='PENDING_RETENTION_DECISION', withdrawn=False):
-    if case['envelope']['replay_policy'] == 'projector_replay_only':
-        return 'replay_only_not_appendable'
+    if reason := writer_policy_refusal(case):
+        return reason
     if withdrawn:
         return 'withdrawn'
     if not admitted:
@@ -104,32 +135,26 @@ def main():
             check(not validator.is_valid(bad), event + ': closed payload/version')
             checks += 1
         if name == 'started':
-            # Full closed matrix after canonical normalization, not Debug alone.
-            # Run_Modes also permits none/plan for non-primary entrypoints.
-            modes = ('ask', 'plan', 'regular', 'yolo')
-            overlays = ('none', 'plan', 'deep_plan', 'debug', 'interview', 'brainstorm', 'crew')
-            legal = {'none': modes, 'plan': ('plan',), 'deep_plan': ('plan',),
-                     'debug': ('regular', 'yolo'), 'interview': ('regular', 'yolo'),
-                     'brainstorm': ('regular', 'yolo'), 'crew': ('regular', 'yolo')}
-            for requested, effective, runtime in itertools.product(overlays, overlays, modes):
-                probe = dict(payload, requested_mode_overlay=requested, effective_mode_overlay=effective, runtime_mode=runtime)
-                expected = requested == effective and runtime in legal[effective]
-                check(validator.is_valid(probe) == expected, event + ': canonical mode matrix ' + json.dumps([requested, effective, runtime]))
+            # Cases cite the workflow owner that supplies the resolution. The
+            # closed schema does not purport to classify every enum product.
+            for resolution in case['mode_cases']:
+                probe = patched_case(case, resolution['patches'])
+                check(bool(resolution['source_ref']), event + ': resolution source')
+                check(candidate_refusal(probe, validator) == resolution['expected_refusal'],
+                      event + ': owner resolution ' + resolution['case'])
                 checks += 1
+            debug_payload = dict(payload, requested_mode_overlay='debug',
+                                 effective_mode_overlay='debug', runtime_mode='regular')
             mode_negatives = [
-                dict(payload, requested_mode_overlay='not_a_mode'),
-                dict(payload, effective_mode_overlay='scrubbed'),
-                dict(payload, requested_mode_overlay='debug', effective_mode_overlay='plan'),
-                dict(payload, effective_mode_overlay='debug', runtime_mode='ask'),
-                dict(payload, effective_mode_overlay='debug', runtime_mode='plan'),
-                dict(payload, requested_mode_overlay='debug', effective_mode_overlay='debug', runtime_mode='ask'),
+                dict(debug_payload, requested_mode_overlay='not_a_mode'),
+                dict(debug_payload, effective_mode_overlay='scrubbed'),
+                dict(debug_payload, effective_mode_overlay='plan'),
+                dict(debug_payload, runtime_mode='ask'),
+                dict(debug_payload, runtime_mode='plan'),
+                dict(debug_payload, runtime_mode='invented'),
             ]
             for bad in mode_negatives:
-                check(not validator.is_valid(bad), event + ': forbidden mode tuple ' + json.dumps([bad['requested_mode_overlay'], bad['effective_mode_overlay'], bad['runtime_mode']]))
-                checks += 1
-            check(payload['requested_mode_overlay'] == payload['effective_mode_overlay'] == 'debug' and payload['runtime_mode'] in ('regular', 'yolo'), event + ': positive case is a legal resolved Debug tuple')
-            for ok in [dict(payload, runtime_mode='yolo'), dict(payload, requested_mode_overlay='none', effective_mode_overlay='none', runtime_mode='ask')]:
-                check(validator.is_valid(ok), event + ': legal mode tuple accepted ' + json.dumps([ok['requested_mode_overlay'], ok['effective_mode_overlay'], ok['runtime_mode']]))
+                check(not validator.is_valid(bad), event + ': forbidden Debug/enum tuple')
                 checks += 1
         if name == 'context_item_state_changed':
             no_op = patched_case(case, {'payload.state': payload['previous_state']})
@@ -152,8 +177,12 @@ def main():
             checks += 2
         bad_scope = patched_case(case, {'payload.project_id': 'other-project'}) if name == 'started' else patched_case(case, {'envelope.project_id': 'other-project'})
         check(candidate_refusal(bad_scope, validator) == 'project_scope_mismatch', event + ': concrete Project join refusal')
-        replay_only = patched_case(case, {'envelope.replay_policy': 'projector_replay_only'})
-        check(refusal(replay_only, admitted=True, retention='resolved') == 'replay_only_not_appendable', event + ': current append/retry refuses reader-only policy')
+        for policy, reason in [('projector_replay_only', 'replay_only_not_appendable'),
+                               ('append_once', 'writer_policy_mismatch'),
+                               ('dedupe_by_event_id', 'writer_policy_mismatch')]:
+            bad_policy = patched_case(case, {'envelope.replay_policy': policy})
+            check(refusal(bad_policy, admitted=True, retention='resolved') == reason,
+                  event + ': current append/retry refuses ' + policy)
         check(bool(case.get('native_oracles')) and all(o.get('execution_status') == 'NOT_RUN' for o in case['native_oracles']), event + ': authored native obligations retained, NOT_RUN')
         original_key, original_id = identity(event, case['project_id'], payload)
         check([original_key, original_id] == case['expected_identity'], event + ': exact identity vector')
@@ -164,10 +193,21 @@ def main():
         changed = dict(payload, **{case['mutation_field']:case['mutation_value']})
         check(validator.is_valid(changed), event + ': changed-body vector must stay schema-valid')
         check(identity(event, case['project_id'], changed) == (original_key, original_id), event + ': retry identity')
-        digest = lambda p: hashlib.sha256(json.dumps(p, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
-        check(digest(changed) != digest(payload), event + ': semantic digest conflict')
-        custody = {original_key:(digest(payload), 'original-synced-receipt')}
-        check(custody[original_key] == (digest(copy.deepcopy(payload)), 'original-synced-receipt'), event + ': lost ACK original custody')
+        changed_case = dict(case, payload=changed)
+        check(semantic_digest(changed_case) != semantic_digest(case), event + ': semantic digest conflict')
+        custody = {original_key:(semantic_digest(case), 'original-synced-receipt')}
+        check(custody[original_key] == (semantic_digest(copy.deepcopy(case)), 'original-synced-receipt'), event + ': lost ACK original custody')
+        # Field-selection probes isolate digest equality; changing a scope/key
+        # is not claimed to be a schema-valid retry under the same identity.
+        for retry in case.get('retry_cases', []):
+            probe = patched_case(case, retry['patches'])
+            same = semantic_digest(probe) == semantic_digest(case)
+            check(retry['expected_result'] in ('original_receipt', 'semantic_digest_changed'),
+                  event + ': closed digest-field oracle result')
+            check(same == (retry['expected_result'] == 'original_receipt'),
+                  event + ': retry ' + retry['case'])
+        # This is a transient-reader fixture assertion, not a new checkpoint.
+        check(held or case.get('family_checkpoint') == 'none_required', event + ': no durable family checkpoint')
         check(refusal(case) == 'unregistered', event + ': admission refusal')
         check(refusal(case, admitted=True) == 'retention_unresolved', event + ': retention refusal')
         check(refusal(case, admitted=True, retention='resolved', withdrawn=True) == 'withdrawn', event + ': withdrawal refusal')
