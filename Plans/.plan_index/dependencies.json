@@ -4366,6 +4366,7 @@
     "PDS-022",
     "0PI-057",
     "PDS-015",
+    "PLS-025",
     "PSMERA-008",
     "WS-004",
     "WS-005",
@@ -53276,6 +53277,16 @@
       "edge_type": "depends_on",
       "from": "PLS-024",
       "to": "PLS-020"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-025",
+      "to": "PDS-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-025",
+      "to": "PLS-012"
     },
     {
       "edge_type": "depends_on",
@@ -117208,7 +117219,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T18:13:25Z",
+  "generated_at_utc": "2026-11-04T18:15:14Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -205679,6 +205690,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "semantic_audit_closure",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-025",
+      "reasoning_tier": "high",
+      "risk_class": "governance_integrity",
+      "source_location": {
+        "heading": "PLS-025 - Closure Re-Audit Records And Anchor-Scoped Evidence Hashes",
+        "heading_level": 3,
+        "heading_line": 1545,
+        "line": 1547,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plugins_system_generated_tail_batch_211",
       "gui_related": false,
       "owner_doc": "Plans/Plugins_System.md",
@@ -243374,10 +243402,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18748,
+    "depends_on_edge_count": 18750,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21956,
-    "node_count": 7421,
+    "edge_count": 21958,
+    "node_count": 7422,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

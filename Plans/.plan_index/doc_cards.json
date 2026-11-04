@@ -14455,10 +14455,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 22,
+        "False": 23,
         "True": 2
       },
-      "heading_count": 38,
+      "heading_count": 40,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.audits/_semantic_closure_registry.jsonl",
@@ -14511,9 +14511,9 @@
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 1539,
+      "line_count": 1615,
       "path": "Plans/Planning_Ledger_System.md",
-      "plan_unit_count": 24,
+      "plan_unit_count": 25,
       "plan_unit_ids": [
         "PLS-001",
         "PLS-002",
@@ -14538,7 +14538,8 @@
         "PLS-021",
         "PLS-022",
         "PLS-023",
-        "PLS-024"
+        "PLS-024",
+        "PLS-025"
       ],
       "reasoning_tiers": [
         "high",
@@ -14556,6 +14557,7 @@
         "fable_residual_ledger_service_boundary_drift",
         "false_completion",
         "governance_boundary",
+        "governance_integrity",
         "implementation_readiness",
         "migration_compatibility",
         "owner_drift",
@@ -14568,16 +14570,16 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "508c272f4a31e0da417a42794fbcd51d233c4873cf7bc9a9c7752b496eb24d8f",
+      "sha256": "ff00e83d946ec4402128d0228c55a8e709589e57f2d232c1fa3499a930eac5e4",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 24
+        "accepted": 25
       },
       "title": "Planning Ledger System",
       "unit_type_counts": {
         "constraint": 1,
         "decision": 1,
-        "requirement": 21,
+        "requirement": 22,
         "schema_contract": 1
       },
       "validation_surfaces": [
@@ -14607,6 +14609,7 @@
         "Repeated external audits reuse closed findings unless upstream content, PM coverage, or source family changed.",
         "future bootstrap ledger validate matrix checks",
         "python3 -m unittest tests/test_pm_audit_closure.py",
+        "python3 scripts/pm-audit-closure.py self-test",
         "python3 scripts/pm-audit-closure.py validate",
         "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix",
         "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl",
@@ -14617,6 +14620,7 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-audit-closure",
         "python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
         "python3 scripts/pm-shard-plans.py --check",
@@ -21506,7 +21510,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T18:13:25Z",
+  "generated_at_utc": "2026-11-04T18:15:14Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21514,13 +21518,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3630,
+      "False": 3631,
       "True": 3791
     },
-    "plan_unit_count": 7421,
+    "plan_unit_count": 7422,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7204,
+      "accepted": 7205,
       "retired": 194,
       "superseded": 23
     },
@@ -21590,7 +21594,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5614,
+      "requirement": 5615,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
