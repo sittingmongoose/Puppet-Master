@@ -1,0 +1,1220 @@
+{
+  "status": "pass",
+  "implementation_commit": "be654d70037b1e79b3d694469a5e32b031da2b3f",
+  "guard_count": 88,
+  "isolated_negative_pairs": 2033,
+  "acceptance_flips": 2090,
+  "unrelated_flips": 0,
+  "baseline_assertions": 10124,
+  "whole_checker_mutants": 88,
+  "rows": [
+    {
+      "guard": "D01",
+      "rule": "decode: EVENT_VALIDATOR",
+      "negatives_that_flip": [
+        "envelope_extension"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "d4dd1241a5261fce403907d50dc4f21c787d7c80dc9e485520a5d3b64b9961bd"
+    },
+    {
+      "guard": "D02",
+      "rule": "decode: row['payload_schema_id']",
+      "negatives_that_flip": [
+        "family",
+        "payload_schema"
+      ],
+      "flip_count": 38,
+      "other_negatives_still_rejected": 1995,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "49dd55a1b6e4c97098dd98164c2b0bc8af4ad4ecdc0715536942e18d917c25cf"
+    },
+    {
+      "guard": "D03",
+      "rule": "decode: event['scope_kind']",
+      "negatives_that_flip": [
+        "redaction",
+        "replay"
+      ],
+      "flip_count": 38,
+      "other_negatives_still_rejected": 1995,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "4e912a9411cc4311d5690157633c639643f1a5cda4acb2f96de5e8ae8083a03c"
+    },
+    {
+      "guard": "D04",
+      "rule": "decode: len(rfc8785.dumps(payload))",
+      "negatives_that_flip": [
+        "inline_size"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "47c90a840b8755cb0f0cb6a5dca7f51b67dd040d7ace37ec86bb8c9da61d62ac"
+    },
+    {
+      "guard": "D05",
+      "rule": "decode/stored: exact pack media and reference grammar",
+      "negatives_that_flip": [
+        "media"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "04864c98306e659e5e1044addf57037b09711f34bd967ad87acf6d55486d3373"
+    },
+    {
+      "guard": "D06",
+      "rule": "decode: event['payload'] != {}",
+      "negatives_that_flip": [
+        "placeholder"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "d012ace809e0dcd2bc9f847162c1e3b2bb4268e2ffce7ef34d37e3d621f6e382"
+    },
+    {
+      "guard": "D07",
+      "rule": "decode: not source or",
+      "negatives_that_flip": [
+        "pack_not_durable",
+        "pack_unauthorized"
+      ],
+      "flip_count": 38,
+      "other_negatives_still_rejected": 1995,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "3c9cb81f8ca1c743f8a26f5d168c48a64eed4181d6a770697c44215461bad6d6"
+    },
+    {
+      "guard": "D08",
+      "rule": "decode: len(body) != int(size)",
+      "negatives_that_flip": [
+        "byte_size"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "e91478c8210279dfeb04b420504fa45aefc9e4d4f9a4d0595b3ba499b5d19ba4"
+    },
+    {
+      "guard": "D09",
+      "rule": "decode: blake3(body).hexdigest() != digest",
+      "negatives_that_flip": [
+        "same_size_digest"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "99d4c697e6ce227cfd15ff074ae1733b97caa8a75b3ac349a151152bf91801c0"
+    },
+    {
+      "guard": "D10",
+      "rule": "canonical JSON: unique members and canonical serialization (same encoding rule)",
+      "negatives_that_flip": [
+        "duplicate_member",
+        "whitespace"
+      ],
+      "flip_count": 38,
+      "other_negatives_still_rejected": 1995,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "121ec194e7d6ccb07652dc75d4102cd4a464c139e7a319f30e4c29d0221176ba"
+    },
+    {
+      "guard": "D11",
+      "rule": "decode: len(body) <= INLINE_LIMIT",
+      "negatives_that_flip": [
+        "unnecessary_pack"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "a17d1285670c57dadd7884967f3d0fdd9cc58b4bb6780fb838d300a630f09561"
+    },
+    {
+      "guard": "D12",
+      "rule": "decode: validator(schema",
+      "negatives_that_flip": [
+        "logical_extension"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "b6e855b9ccc4770cb5b3e150f0fb23eefdbb50cf9267eaadf0952a327a9b8a92"
+    },
+    {
+      "guard": "D13",
+      "rule": "decode: payload['project_id'] != event['project_id']",
+      "negatives_that_flip": [
+        "project_join"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "857044ca39a30b43bc3b3546b081a950c9006286ad0800304e116f64d94a3969"
+    },
+    {
+      "guard": "D14",
+      "rule": "decode: payload.get(field)",
+      "negatives_that_flip": [
+        "attempt_id",
+        "node_id",
+        "run_id",
+        "thread_id"
+      ],
+      "flip_count": 76,
+      "other_negatives_still_rejected": 1957,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "542e3ea0b2415c360a33563d80558528ecbda6a172bedbf41957033d3dce8298"
+    },
+    {
+      "guard": "D15",
+      "rule": "decode: payload['created_at_utc']",
+      "negatives_that_flip": [
+        "authored_time"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "df2d35229cc4492998fbfe44eb9f4c45076a929f6aac709c13e0b5a578088947"
+    },
+    {
+      "guard": "D16",
+      "rule": "decode: payload['actor_ref']",
+      "negatives_that_flip": [
+        "actor"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "d1b5a33b5a7cd484dbf18bc8deceea36895b53264da1568bbe59546ddd725f7e"
+    },
+    {
+      "guard": "D17",
+      "rule": "decode: event['idempotency_key']",
+      "negatives_that_flip": [
+        "identity"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "4fe45514bdde374aa43c8d2591990dc49f0a16fd7e98a1d0cd2f47abc2513325"
+    },
+    {
+      "guard": "D18",
+      "rule": "decode: point['project_id']",
+      "negatives_that_flip": [
+        "point_project"
+      ],
+      "flip_count": 1,
+      "other_negatives_still_rejected": 2032,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "84f5e94209bacc1580b113674116a7a0ba19581e488d8ecca0df0a6df8d793e7"
+    },
+    {
+      "guard": "H01",
+      "rule": "inspect: source['withdrawn']",
+      "negatives_that_flip": [
+        "unauthorized",
+        "withdrawn"
+      ],
+      "flip_count": 38,
+      "other_negatives_still_rejected": 1995,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "15335fc5801bbe043221f69f22773588cc97da17596ce3706a39da60cdcccbcb"
+    },
+    {
+      "guard": "H02",
+      "rule": "inspect: source['source_valid']",
+      "negatives_that_flip": [
+        "forged_receipt",
+        "forged_source"
+      ],
+      "flip_count": 38,
+      "other_negatives_still_rejected": 1995,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "0052815b5682283be98ac27262b7a865beff72fac2e31c82490dc45ae203d0e4"
+    },
+    {
+      "guard": "H03",
+      "rule": "inspect: source['project_id']",
+      "negatives_that_flip": [
+        "family",
+        "project"
+      ],
+      "flip_count": 38,
+      "other_negatives_still_rejected": 1995,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "e06fc6e8bbc0b83cc1ff5f93c5514bd75f650578ad194ad985cfedc30e298300"
+    },
+    {
+      "guard": "H04",
+      "rule": "inspect: source['original_payload']",
+      "negatives_that_flip": [
+        "changed_original"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "1b21dc4c238074172f8ff61d2f0ec47e25d06d909d6e4c82af18d33f23a5c766"
+    },
+    {
+      "guard": "H06",
+      "rule": "resolve_history: not full_value_matches",
+      "negatives_that_flip": [
+        "authenticated_custody"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "62b71b65a2c300617b97d1980f5274f8eed260200e166e7fcbb7b27d4b9c5f10"
+    },
+    {
+      "guard": "H05",
+      "rule": "explicit supported historical decoder selection",
+      "negatives_that_flip": [
+        "decoder_selection"
+      ],
+      "flip_count": 2,
+      "other_negatives_still_rejected": 2031,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "4582893c836147ce93d4b0ccc8adbf168e1b8249594a13899fcd55727f48090d"
+    },
+    {
+      "guard": "F01",
+      "rule": "full_value_matches: stored_event_valid",
+      "negatives_that_flip": [
+        "invalid_issued_custody",
+        "schema"
+      ],
+      "flip_count": 38,
+      "other_negatives_still_rejected": 1995,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [
+        "A07"
+      ],
+      "mutant_sha256": "8acc02e9e7d495e72aaf78bd8394bb39b4b3fbdeb8212a39c33f7646d0f5b847"
+    },
+    {
+      "guard": "F02",
+      "rule": "full_value_matches: value_bytes(candidate) == value_bytes(stored)",
+      "negatives_that_flip": [
+        "original_value_bytes"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "ccdf22b078ba5e7146a543505725911df757bf5677d3f337827398bc3cbb57da"
+    },
+    {
+      "guard": "F03",
+      "rule": "full_value_matches: custody['scope_partition'] == scope_partition(candidate['project_id'])",
+      "negatives_that_flip": [
+        "partition"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "76e333cf4acbe145940defbda79872a0cdb7c2ca7057f7dd00bc1077f5a96cd9"
+    },
+    {
+      "guard": "F04",
+      "rule": "full_value_matches: custody['event_type'] == candidate['event_type']",
+      "negatives_that_flip": [
+        "custody_family"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "b2441b82273bfa381f09462d759974571317fc305449dd6787c65b8d2786f22e"
+    },
+    {
+      "guard": "F05",
+      "rule": "full_value_matches: custody['idempotency_key'] == candidate['idempotency_key']",
+      "negatives_that_flip": [
+        "custody_key"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "da9933e6014fa7f76630087d57d77e2399a62a01afda241cfd5b97bf0724495d"
+    },
+    {
+      "guard": "F06",
+      "rule": "full_value_matches: receipt['sequence_id'] == candidate['sequence_id']",
+      "negatives_that_flip": [
+        "receipt_sequence"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "81e7960e499509dbcd0510880ac4b830b15a1c778050def8b8380c8dab613e74"
+    },
+    {
+      "guard": "F07",
+      "rule": "full_value_matches: result['original_segment_ref'] == custody['original_segment_ref']",
+      "negatives_that_flip": [
+        "segment_reference"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "0c2d4b614dd31262cdd233322c0547f656b16789093eaa64976051c884a15d23"
+    },
+    {
+      "guard": "F08",
+      "rule": "full_value_matches: commitment(candidate) == custody['original_event_value_commitment'] == result['original_event_value_commitment']",
+      "negatives_that_flip": [
+        "full_commitment",
+        "result_commitment"
+      ],
+      "flip_count": 38,
+      "other_negatives_still_rejected": 1995,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "1f87161f3f5b9d60869dd104b21614da649129d3406a5953e04e2b289fa1778d"
+    },
+    {
+      "guard": "F09",
+      "rule": "full_value_matches: semantic_digest(candidate) == custody['producer_semantic_digest']",
+      "negatives_that_flip": [
+        "semantic_commitment"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "c6d580fcce015cc165292dd74ab6321392ff429edd776be856864eac71bc49eb"
+    },
+    {
+      "guard": "F10",
+      "rule": "full_value_matches: receipt == custody['first_append_receipt']",
+      "negatives_that_flip": [
+        "receipt_copy"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "fd2c482f704b14e2d64445ff55a43b1f27b73911c0c99426426d77f39fea5f39"
+    },
+    {
+      "guard": "F11",
+      "rule": "full_value_matches: receipt['event_id'] == candidate['event_id'] == custody['event_id']",
+      "negatives_that_flip": [
+        "custody_event",
+        "receipt_event",
+        "shipped_wrong_custody_event"
+      ],
+      "flip_count": 57,
+      "other_negatives_still_rejected": 1976,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [
+        "C06:shipped_wrong_custody_event"
+      ],
+      "mutant_sha256": "c0cd8636a0f3d606c7002b789a1c9afd939b207a298229c2aa607d0f4a2b0147"
+    },
+    {
+      "guard": "F12",
+      "rule": "full_value_matches: result == original['result']",
+      "negatives_that_flip": [
+        "original_result"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "2486e338aef087384a6e358f7fa4b06976a53ffbf8a1183da74974f43b46e612"
+    },
+    {
+      "guard": "F13",
+      "rule": "full_value_matches: custody == original['custody']",
+      "negatives_that_flip": [
+        "authenticated_custody",
+        "original_custody"
+      ],
+      "flip_count": 38,
+      "other_negatives_still_rejected": 1995,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [
+        "H06"
+      ],
+      "mutant_sha256": "771d7594d76fe042b260c1d09b734ad2472eab33d1559351dcc7bd8f9e5394c1"
+    },
+    {
+      "guard": "V01",
+      "rule": "stored_event_valid: EVENT_VALIDATOR",
+      "negatives_that_flip": [
+        "event_extension"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "05ca04fdf370e9e7316d2632fb6d487bf6366321969eba099e824198b5cf4b92"
+    },
+    {
+      "guard": "V02",
+      "rule": "stored_event_valid: event['scope_kind']",
+      "negatives_that_flip": [
+        "replay"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "075f96cb29c76bc7ede00a512ada9f182ffd7ffb81d3a69d31e3c05316feb9c6"
+    },
+    {
+      "guard": "V03",
+      "rule": "stored_event_valid: bool(PACK_REF.fullmatch(event['payload_ref']))",
+      "negatives_that_flip": [
+        "pack_ref"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "beb536effe86e5d7089a8b85dc5e766618e776244cdc269a46b84987a6557a64"
+    },
+    {
+      "guard": "V04",
+      "rule": "stored_event_valid: event['payload'] == {}",
+      "negatives_that_flip": [
+        "pack_placeholder"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "e2d6181411a020e15b3b8c445295d612905d627e2e36c248934ac735fad894a6"
+    },
+    {
+      "guard": "V05",
+      "rule": "stored_event_valid: len(rfc8785.dumps(event['payload'])) <= INLINE_LIMIT",
+      "negatives_that_flip": [
+        "inline_size"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "b8eb5071c5b3d4dbb967f44bf58584a3018fb9a3be0eb5af5c9678aab6ad1383"
+    },
+    {
+      "guard": "V06",
+      "rule": "stored_event_valid: validator(load(row['payload_schema_ref']), validation=validation).is_valid(event['payload'])",
+      "negatives_that_flip": [
+        "logical_schema"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "4d025d06ffe61198027b19f0e847fa2e12c81520b8dcc876cc20e41685d9f2bd"
+    },
+    {
+      "guard": "V07",
+      "rule": "stored_event_valid: \n    return False",
+      "negatives_that_flip": [
+        "unknown_dispatch"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "eb99bb8a025ae8568193d5d70205abd703b5cbb3d805ac116d79a4b1bbdcf164"
+    },
+    {
+      "guard": "A01",
+      "rule": "append: not admission",
+      "negatives_that_flip": [
+        "not_admitted"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "d6da96d6320925c6ad408e765ee9d76dc0370b0003b4b8a527aaca2591dfc1ba"
+    },
+    {
+      "guard": "A02",
+      "rule": "append: not source_valid",
+      "negatives_that_flip": [
+        "dedupe_unavailable",
+        "source_invalid"
+      ],
+      "flip_count": 38,
+      "other_negatives_still_rejected": 1995,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "03347fde1e4afb8bc9475a940e47f0a12b078be6ea743cdcadace71109878ba7"
+    },
+    {
+      "guard": "A03",
+      "rule": "append: replay policy before dedupe (both refusal branches)",
+      "negatives_that_flip": [
+        "append_once_retry",
+        "dedupe_by_event_id_retry",
+        "projector_replay_only_retry"
+      ],
+      "flip_count": 57,
+      "other_negatives_still_rejected": 1976,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "a7eb0beafb76b49186a42b828e09ad8729b2e99aef69f46ab21b53cb9ec174ff"
+    },
+    {
+      "guard": "A04",
+      "rule": "append: event['event_id'] in self.global_ids",
+      "negatives_that_flip": [
+        "global_event_conflict"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "956969e9df0bd354d461cceb7739bd53bbddb660df04cadbd65f62114866f346"
+    },
+    {
+      "guard": "A05",
+      "rule": "append: original['custody']['producer_semantic_digest'] == digest",
+      "negatives_that_flip": [
+        "scoped_semantic_conflict"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "946626fd30bf48a8bc78ea9f7f2090cf2752eccf846519f321a32bc209a6c90f"
+    },
+    {
+      "guard": "A06",
+      "rule": "append: EVENT_VALIDATOR",
+      "negatives_that_flip": [
+        "retry_envelope_extension"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "8257836322ae3095969e30280a9554014fce6e8a655981a7e156f5d136430cb2"
+    },
+    {
+      "guard": "A07",
+      "rule": "append: not full_value_matches",
+      "negatives_that_flip": [
+        "invalid_issued_custody"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "8f5c3b90c8f9fe083360fa06005c453ee2aba7924439a791cbf54f143cc74201"
+    },
+    {
+      "guard": "P01",
+      "rule": "policies_match: row.get('index_retention_policy_ref') == index_policy",
+      "negatives_that_flip": [
+        "index"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "f1eacff127f2cc94619792b9aca39ec2cf7588ecae1706bb8b1c6854e2bfb484"
+    },
+    {
+      "guard": "P02",
+      "rule": "policies_match: row.get('checkpoint_retention_policy_ref') == checkpoint_policy",
+      "negatives_that_flip": [
+        "checkpoint"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "7721d769b06b47d2ea8b1cf71310308e7955347ca999adb1b0e2e9e93c7c04f6"
+    },
+    {
+      "guard": "P03",
+      "rule": "policies_match: 'derived_retention_policy_ref' not in row",
+      "negatives_that_flip": [
+        "conflated"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "f72aad0077dfc0dbdcd2f6c8d157cfd3df2c3ec3b2b46cca45fc07e606c7f5ff"
+    },
+    {
+      "guard": "C01",
+      "rule": "checkpoint: schema/key route and resolved checkpoint target",
+      "negatives_that_flip": [
+        "available_wrong_schema_target",
+        "route",
+        "shipped_wrong_key_route"
+      ],
+      "flip_count": 57,
+      "other_negatives_still_rejected": 1976,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "4c2f9d0b51d625cf347f84d49da4de420c0594cf977fb0a4d7f5d63e748264c2"
+    },
+    {
+      "guard": "C02",
+      "rule": "checkpoint_matches: validator(schema, 'checkpoint')",
+      "negatives_that_flip": [
+        "schema"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "2dbfdb6ef823b23836059559bbeedf7a0fa666288c6c86becd40321c8accd586"
+    },
+    {
+      "guard": "C03",
+      "rule": "checkpoint store/key identities, including repeated token store/key joins",
+      "negatives_that_flip": [
+        "shipped_wrong_checkpoint_store",
+        "shipped_wrong_custody_store",
+        "shipped_wrong_source_store",
+        "shipped_wrong_store_key",
+        "shipped_wrong_token_store",
+        "storage"
+      ],
+      "flip_count": 114,
+      "other_negatives_still_rejected": 1919,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "82521647359d4c84615a73cd032eefbaec90ebd48857d3768e93ff7086334c60"
+    },
+    {
+      "guard": "C04",
+      "rule": "checkpoint live selection/verification/snapshot, including the repeated token snapshot join",
+      "negatives_that_flip": [
+        "shipped_unverified_source",
+        "shipped_wrong_anchor_store",
+        "shipped_wrong_frontier_store",
+        "shipped_wrong_live_snapshot",
+        "shipped_wrong_token_source_store",
+        "snapshot",
+        "verified"
+      ],
+      "flip_count": 133,
+      "other_negatives_still_rejected": 1900,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "8f6e0d82e3ffbb98dd6dcc0aa719ab267c61902e5f2521ed192730f4ed9a6c86"
+    },
+    {
+      "guard": "C05",
+      "rule": "checkpoint_matches: generation != expected_generation",
+      "negatives_that_flip": [
+        "shipped_wrong_frontier",
+        "shipped_wrong_pointer",
+        "token_commitment"
+      ],
+      "flip_count": 57,
+      "other_negatives_still_rejected": 1976,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "6d723849a105481b6210e54fc320d2e792186a0989fd9b86ffadb88f29a1b1e7"
+    },
+    {
+      "guard": "C06",
+      "rule": "checkpoint_matches: not full_value_matches",
+      "negatives_that_flip": [
+        "shipped_wrong_custody_event",
+        "shipped_wrong_event",
+        "source_event"
+      ],
+      "flip_count": 57,
+      "other_negatives_still_rejected": 1976,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "abe349f6f59dddf633d302e7224e2d470b25583188c56484e9709f80389aa5e7"
+    },
+    {
+      "guard": "C07",
+      "rule": "checkpoint_matches: source['scope_partition']",
+      "negatives_that_flip": [
+        "partition",
+        "shipped_wrong_locator",
+        "shipped_wrong_partition"
+      ],
+      "flip_count": 57,
+      "other_negatives_still_rejected": 1976,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "82857c12b1ab54e3324bfa560a4007449810755f93808e1d9129cb6f2b18d64c"
+    },
+    {
+      "guard": "C08",
+      "rule": "checkpoint_matches: selection['current_bytes_sha256']",
+      "negatives_that_flip": [
+        "current_bytes",
+        "manifest_bytes",
+        "shipped_wrong_source_selection"
+      ],
+      "flip_count": 57,
+      "other_negatives_still_rejected": 1976,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "86646abc38073fdf1cb5f5d05d5fefa1af58b2024542c71b62b4a87d12a35b26"
+    },
+    {
+      "guard": "C09",
+      "rule": "checkpoint_matches: anchor['source_selection'] != selection",
+      "negatives_that_flip": [
+        "coverage"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "fe39fdcce29f7897c11c4f3b4ae310adb4f7a5ed41d186b5ab53354d738b5304"
+    },
+    {
+      "guard": "C10",
+      "rule": "checkpoint_matches: coverage['last_frame']",
+      "negatives_that_flip": [
+        "last_frame"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "4302a47c541c2c78f87cbd199bd438cb900b1a538c45b67d0775458ed4aba061"
+    },
+    {
+      "guard": "C11",
+      "rule": "checkpoint_matches: segment['scan_start_offset']",
+      "negatives_that_flip": [
+        "segment"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "61e5720ac91556adfa45478c0f606021b48338fa8222d3769211994452ee012f"
+    },
+    {
+      "guard": "C12",
+      "rule": "checkpoint_matches: bundle['datasets'] == {token['index_dataset_name']: dataset}",
+      "negatives_that_flip": [
+        "dataset",
+        "shipped_missing_dataset"
+      ],
+      "flip_count": 38,
+      "other_negatives_still_rejected": 1995,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "ae209487cf9c9028f386c057e1021127d57593e2bf11c659edf6ec39065a34c6"
+    },
+    {
+      "guard": "C13",
+      "rule": "checkpoint_matches: frontier['index_row_count'] == 1",
+      "negatives_that_flip": [
+        "row_count"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "3ceea56435f9e9db7da805007a89c736c46749878b7f8ac02f77556a7fa45d46"
+    },
+    {
+      "guard": "C14",
+      "rule": "checkpoint_matches: frontier['index_row_set_sha256'] == binding_digest(dict(\n                    domain='pm.event_index.row_set.v1', entries=[dict(key=row_key, value=expected_row)]))",
+      "negatives_that_flip": [
+        "row_set_digest"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "6667ec827ebe233ace0b1a66a0f2b1ee9edc9f2ae35e8714f3f84e6c30b6f976"
+    },
+    {
+      "guard": "O01",
+      "rule": "observation_admissible: source['proof_valid']",
+      "negatives_that_flip": [
+        "predecessor_complete",
+        "proof_valid",
+        "snapshot_current"
+      ],
+      "flip_count": 3,
+      "other_negatives_still_rejected": 2030,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "678f0a492e368a3fcbd05909d35adc1817931163b2d7ff813bfb79918bdb0cac"
+    },
+    {
+      "guard": "O02",
+      "rule": "observation_admissible: candidate['correlation_id'] != grouping_identity",
+      "negatives_that_flip": [
+        "grouping"
+      ],
+      "flip_count": 1,
+      "other_negatives_still_rejected": 2032,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "54752e56afe04433f5a2ac22c7f019e9ad028cbb96db3aa590be5ac7b73c49a9"
+    },
+    {
+      "guard": "O03",
+      "rule": "observation_admissible: payload['type_payload'] != source",
+      "negatives_that_flip": [
+        "source_snapshot"
+      ],
+      "flip_count": 1,
+      "other_negatives_still_rejected": 2032,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "10c44f06c685a619f1b380b452d8c92082808851d7f0efa88cdbdd507958c401"
+    },
+    {
+      "guard": "O04",
+      "rule": "observation_admissible: candidate['producer_sequence_id'] == 0 and candidate['parent_event_id'] is None",
+      "negatives_that_flip": [
+        "first_parent_event_id",
+        "first_producer_sequence_id"
+      ],
+      "flip_count": 2,
+      "other_negatives_still_rejected": 2031,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "ec66679046ee11ba2626c805601ebe1558aa3bbf593beadd65a6fea5cc29442c"
+    },
+    {
+      "guard": "O05",
+      "rule": "observation_admissible: payload['artifact_id'] !=",
+      "negatives_that_flip": [
+        "artifact_id",
+        "project_id",
+        "record_ref",
+        "record_sha256",
+        "restore_point_id",
+        "source_branch_id",
+        "source_message_id",
+        "source_thread_id"
+      ],
+      "flip_count": 8,
+      "other_negatives_still_rejected": 2025,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "d9d20660a0c529009f310cce0b067a7185112974416b6043559971851882e724"
+    },
+    {
+      "guard": "O06",
+      "rule": "observation_admissible: payload['type_payload'] == old['type_payload']",
+      "negatives_that_flip": [
+        "unchanged"
+      ],
+      "flip_count": 1,
+      "other_negatives_still_rejected": 2032,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "8d6543937dc05e0d3d6044fb88d1d860ae533324335d7ed1d7ca401d88ca6d61"
+    },
+    {
+      "guard": "O07",
+      "rule": "observation_admissible: old_status != 'available'",
+      "negatives_that_flip": [
+        "terminal_reopen"
+      ],
+      "flip_count": 1,
+      "other_negatives_still_rejected": 2032,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "b1acf2a47c31237a7385a7532aebda682d1f7996a616933cf23f3f6702e5b2f5"
+    },
+    {
+      "guard": "O08",
+      "rule": "observation_admissible: candidate['producer_sequence_id'] == previous['producer_sequence_id'] + 1",
+      "negatives_that_flip": [
+        "0",
+        "2"
+      ],
+      "flip_count": 2,
+      "other_negatives_still_rejected": 2031,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "2a28818516e03a7ece908bec1fdf933b01e893522c71e66d25c47c3aa087bb49"
+    },
+    {
+      "guard": "O09",
+      "rule": "observation_admissible: candidate['parent_event_id'] == previous['event_id']",
+      "negatives_that_flip": [
+        "predecessor"
+      ],
+      "flip_count": 1,
+      "other_negatives_still_rejected": 2032,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "0767607396ada61c2cd90ab25c20762a5400722d0c1da3c16794c1881870fd04"
+    },
+    {
+      "guard": "O10",
+      "rule": "observation_admissible: candidate['correlation_id'] == previous['correlation_id']",
+      "negatives_that_flip": [
+        "prior_group"
+      ],
+      "flip_count": 1,
+      "other_negatives_still_rejected": 2032,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "f1676e6a0b4a631afd7f45df6f249ba441b718aa05b8cd10e55b96e9fae5be18"
+    },
+    {
+      "guard": "S01",
+      "rule": "whole-document schema references, including optional/unvisited definitions",
+      "negatives_that_flip": [
+        "unresolved_optional"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "83a86ab5ac5760e8b298618a775a7029bfa8e1acb5ababbd6e4377b378e36fa9"
+    },
+    {
+      "guard": "S02",
+      "rule": "exact_pattern: re.search(pattern, instance) and re.fullmatch(pattern, instance) is None",
+      "negatives_that_flip": [
+        "identifier_LF"
+      ],
+      "flip_count": 1,
+      "other_negatives_still_rejected": 2032,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "596cee60ffa650652e76dfc5ff2512ed850f30b677989b639a61efe46709bdf7"
+    },
+    {
+      "guard": "S04",
+      "rule": "exact_pattern_properties: re.search(pattern, key) and re.fullmatch(pattern, key) is None",
+      "negatives_that_flip": [
+        "identifier_key_LF"
+      ],
+      "flip_count": 1,
+      "other_negatives_still_rejected": 2032,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "bb6752c8fe41d0c6e61548878efcd1acf925b30dbbba176f5fbd3cbf903a19c8"
+    },
+    {
+      "guard": "S03",
+      "rule": "current-writer provider hash overlay",
+      "negatives_that_flip": [
+        "provider_hash"
+      ],
+      "flip_count": 2,
+      "other_negatives_still_rejected": 2031,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "4aa98d0e94dbf86c49851fa99b3336a594e8779610bbc4035c68f8a2a5c6f697"
+    },
+    {
+      "guard": "S05",
+      "rule": "rejected:     return False",
+      "negatives_that_flip": [
+        "success_is_not_failure"
+      ],
+      "flip_count": 1,
+      "other_negatives_still_rejected": 2032,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "7abd6310d5b82caec16b1d5555656ed06366f8b540e8ccf52e61beada5b61ac6"
+    },
+    {
+      "guard": "I01",
+      "rule": "identity: type(revision)",
+      "negatives_that_flip": [
+        "boolean_observation_revision",
+        "fractional_observation_revision",
+        "missing_observation_revision",
+        "negative_observation_revision"
+      ],
+      "flip_count": 4,
+      "other_negatives_still_rejected": 2029,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "09d7b1a5fcc98cbc8a6d2af6e4024c93412db2368bca0654ff81672e17587ebe"
+    },
+    {
+      "guard": "I02",
+      "rule": "value_bytes: not math.isfinite",
+      "negatives_that_flip": [
+        "infinite_value",
+        "nan_value",
+        "negative_infinite_value"
+      ],
+      "flip_count": 3,
+      "other_negatives_still_rejected": 2030,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "da7c56e17dba06c30b72d98747817dcfe17fdd8629e76ebd040139927bc4d5f5"
+    },
+    {
+      "guard": "I03",
+      "rule": "value_bytes: type(value) not in",
+      "negatives_that_flip": [
+        "unsupported_binary"
+      ],
+      "flip_count": 1,
+      "other_negatives_still_rejected": 2032,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "60393f8fc09c9d45dc50e1eafba72b06fe028da72f5e42d4ce17ef0cc97cc419"
+    },
+    {
+      "guard": "S06",
+      "rule": "validator: validation not in",
+      "negatives_that_flip": [
+        "unsupported_validation_profile"
+      ],
+      "flip_count": 1,
+      "other_negatives_still_rejected": 2032,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "8a3aaef30411c87ebd3a56007ea60afba444b1bf20211b1a509281f3e33c3ac2"
+    },
+    {
+      "guard": "H07",
+      "rule": "inspect: return 'metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs'",
+      "negatives_that_flip": [
+        "deleted_body_refs"
+      ],
+      "flip_count": 19,
+      "other_negatives_still_rejected": 2014,
+      "unrelated_flips": 0,
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "44cc8b402201a584eb10059efcb7a2a42ba0627e789af5901019b0ae158b2565"
+    }
+  ],
+  "native_execution": "NOT_RUN",
+  "admission": "NONE"
+}

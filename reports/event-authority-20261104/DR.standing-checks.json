@@ -1,9 +1,9 @@
 {
   "schema_id": "pm.runtime_artifact.standing_check_report.v1",
-  "implementation_commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
+  "implementation_commit": "be654d70037b1e79b3d694469a5e32b031da2b3f",
   "status": "pass",
   "families": 19,
-  "standing_checks": 10,
+  "standing_checks": 11,
   "native_execution": "NOT_RUN",
   "rows": [
     {
@@ -12,65 +12,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 291
+      "family_assertions": 501
     },
     {
       "event_type": "runtime_artifact.artifact_version",
@@ -78,65 +84,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 315
+      "family_assertions": 525
     },
     {
       "event_type": "runtime_artifact.before_after_snapshot",
@@ -144,65 +156,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 339
+      "family_assertions": 549
     },
     {
       "event_type": "runtime_artifact.browser_recording",
@@ -210,65 +228,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 291
+      "family_assertions": 501
     },
     {
       "event_type": "runtime_artifact.code_diff",
@@ -276,65 +300,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 291
+      "family_assertions": 501
     },
     {
       "event_type": "runtime_artifact.context_snapshot",
@@ -342,65 +372,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 315
+      "family_assertions": 525
     },
     {
       "event_type": "runtime_artifact.cost_usage",
@@ -408,65 +444,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
-          "status": "pass",
-          "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 404
+      "family_assertions": 646
     },
     {
       "event_type": "runtime_artifact.document",
@@ -474,65 +516,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 315
+      "family_assertions": 525
     },
     {
       "event_type": "runtime_artifact.evidence",
@@ -540,65 +588,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 315
+      "family_assertions": 525
     },
     {
       "event_type": "runtime_artifact.failed_attempts",
@@ -606,65 +660,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 291
+      "family_assertions": 501
     },
     {
       "event_type": "runtime_artifact.hitl_approval",
@@ -672,65 +732,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 291
+      "family_assertions": 501
     },
     {
       "event_type": "runtime_artifact.implementation_plan",
@@ -738,65 +804,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 291
+      "family_assertions": 501
     },
     {
       "event_type": "runtime_artifact.reasoning_summary",
@@ -804,65 +876,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 291
+      "family_assertions": 501
     },
     {
       "event_type": "runtime_artifact.restore_point",
@@ -870,65 +948,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 357
+      "family_assertions": 615
     },
     {
       "event_type": "runtime_artifact.screenshot",
@@ -936,65 +1020,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 315
+      "family_assertions": 525
     },
     {
       "event_type": "runtime_artifact.subagent_lineage",
@@ -1002,65 +1092,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 291
+      "family_assertions": 501
     },
     {
       "event_type": "runtime_artifact.suggested_next_steps",
@@ -1068,65 +1164,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 291
+      "family_assertions": 501
     },
     {
       "event_type": "runtime_artifact.tool_llm_trace",
@@ -1134,65 +1236,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
-          "status": "pass",
-          "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 404
+      "family_assertions": 646
     },
     {
       "event_type": "runtime_artifact.validation_test",
@@ -1200,65 +1308,71 @@
         "1": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Inline/packed fresh, retry and alternate-ID projector_replay_only refusal.",
+          "negative_case": "Inline/packed fresh/retry/alternate-ID replay-only refusal before dedupe; fixed policy variants refuse.",
           "open_reason": null
         },
         "2": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exact CV-366 and malformed application keys are refused by these Project-only editions; no app writer is certified.",
+          "negative_case": "Exact CV-366 and malformed application keys refuse in every Project edition; no application writer is certified.",
           "open_reason": null
         },
         "3": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Independently encoded project~ partition and refusal of self-consistent raw partitions.",
+          "negative_case": "Independently encoded project~ writer/custody/checkpoint identities; raw partitions refuse.",
           "open_reason": null
         },
         "4": {
           "status": "pass",
           "commit": null,
-          "negative_case": "16,383/16,384/16,385/17,000-byte routes, stored oversize and missing/corrupt/unauthorized pack negatives.",
+          "negative_case": "Exact 16 KiB routing boundaries and integrity/availability checks; reachable same-size digest corruption isolates BLAKE3.",
           "open_reason": null
         },
         "5": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All adopted exact identifiers/digests and trailing-LF negatives; exact provider-hash nullable 71-character guard for cost_usage/tool_llm_trace.",
+          "negative_case": "Full-match identifiers and exact nullable provider hashes; all malformed/LF schema/decode/append/stored-copy regressions refuse.",
           "open_reason": null
         },
         "6": {
           "status": "pass",
           "commit": null,
-          "negative_case": "All 21 caller-semantic fields bind retries; all three Storage assignments are excluded and bind original full-value proof.",
+          "negative_case": "All 21 caller semantic fields bind retries; all three Storage assignments remain excluded and bind full original values.",
           "open_reason": null
         },
         "7": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Per-family actual-shaped checkpoint/token/source positive and twenty independent mismatches.",
+          "negative_case": "Every matching checkpoint positive and every shipped mismatch; derived generation/token/dataset observations rebound when not targeted.",
           "open_reason": null
         },
         "8": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Exit code zero does not satisfy a failure oracle; success substituted for a failure expectation makes the full checker fail.",
+          "negative_case": "Success exit zero cannot satisfy a failure oracle; substituted success expectations fail.",
           "open_reason": null
         },
         "9": {
-          "status": "fixed",
-          "commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
-          "negative_case": "Whole-document reference preflight plus optional/unused/external document/fragment/dependency negatives; removing preflight and injecting unresolved refs fail the full checker.",
+          "status": "pass",
+          "commit": null,
+          "negative_case": "Whole-schema preflight resolves every ref, including optional/unused/external routes; guard removal and exact Astra injections fail.",
           "open_reason": null
         },
         "10": {
           "status": "pass",
           "commit": null,
-          "negative_case": "Authenticated retained history survives current live-state changes/body deletion; withdrawn reader and forged source/receipt negatives refuse.",
+          "negative_case": "Independent authenticated original custody survives live-state changes and body deletion; withdrawal/forged source/receipt/custody still refuse.",
+          "open_reason": null
+        },
+        "11": {
+          "status": "fixed",
+          "commit": "935a89543b01f212ea868e342dcc32ca4ed3858d",
+          "negative_case": "Whole-lane causal matrix: baseline valid/negative pairs, every guard removed in memory, all its own negatives accepted, all other isolated negatives rejected.",
           "open_reason": null
         }
       },
-      "family_assertions": 291
+      "family_assertions": 501
     }
   ]
 }
