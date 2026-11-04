@@ -1419,5 +1419,42 @@ export const tests = {
           t.log(`24 ${kind}: plan ${JSON.stringify(place)}; handoff files label "${out.filesLabel}"; ${refs.length} stored references checked`);
         }
         const hits = rawIn(texts, refs); if (hits.length) bad.push(`24 ${kind}: a raw locator is shown: ${hits.join(' | ')}`); });
+  },
+  /* 4b (fo-kit, 2026-11-04; reported as the pane drifting about 0.3 px a frame, fields "harness only"): a card under a
+     resting pointer stays still. After Review > Edit name > Change, the click leaves the pointer on the Change link and the
+     files sheet opens with a card under it; the card's own hover lift (10-window.css .o55-card:hover translateY(-1px), a
+     0.18 s transition) carried its bottom edge past a pointer resting within 1 px of it and back, and the card trembled
+     0.3-0.9 px for as long as the pointer rested (Basic Light 1920x1080: the click left it 0.51 px inside the 'custom'
+     card's bottom edge). In Basic, Friendly and Glass (Retro and NieR have no lift): the pointer where the click left it,
+     then 0.5 px inside the bottom edge of each card of the sheet in turn; each card under it holds one position over 90
+     frames (rAF reads of its box) and is still on compositor frames (t.still). Fails on main be4766513f. */
+  async 'row 25 · a card under a resting pointer stays still: after Review > Edit name > Change, with the pointer where the click left it and 0.5 px inside each files-sheet card\'s bottom edge, in Basic, Friendly and Glass (4b)'(t) {
+    const SAMPLE = ([n]) => new Promise((res) => { const e = document.querySelector('[data-kit-still="1"]'), seen = []; const tick = () => { const r = e.getBoundingClientRect(); seen.push(r.x.toFixed(2) + ',' + r.y.toFixed(2)); if (seen.length < n) requestAnimationFrame(tick); else res({ n: seen.length, distinct: [...new Set(seen)], transform: getComputedStyle(e).transform }); }; requestAnimationFrame(tick); });
+    const mark = (A, [x, y]) => A.frame().evaluate(([x, y]) => { document.querySelectorAll('[data-kit-still]').forEach((e) => e.removeAttribute('data-kit-still')); const h = document.elementFromPoint(x, y), c = h && h.closest('.o55-sheet[data-open="true"] .o55-card');
+      if (!c) return null; c.setAttribute('data-kit-still', '1'); return (c.getAttribute('data-o55-do') || '') + ':' + (c.getAttribute('data-arg') || ''); }, [x, y]);
+    for (const look of [['basic', 'light'], ['friendly', 'light'], ['glass', 'light']]) {
+      SELFTEST = t.args.selftest || ''; const A = onboardingApp(t), bad = [], label = `25 ${look.join(' ')}`;
+      await A.boot({ look }); await A.toSafe('Notes'); await toReview(A); await A.click('edit', 'name', 'name');
+      /* (the frame's offset in the window: page.mouse speaks window coordinates, the page its own) */
+      const fe = A.frame() === t.page.mainFrame() ? null : await A.frame().frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
+      const ch = await A.frame().locator('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="change"]').first().boundingBox();
+      const at = [ch.x - off.x + ch.width / 2, ch.y - off.y + ch.height / 2];
+      await A.click('change'); await A.waitFor(() => !!document.querySelector('.o55-sheet[data-open="true"]'), null, 4000).catch(() => {}); await A.sleep(1500);
+      const judge = async (where) => { await A.sleep(900); const r = await A.frame().evaluate(SAMPLE, [90]);
+        t.log(`${label} ${where}: ${r.distinct.length} position(s) in ${r.n} frames${r.distinct.length > 1 ? ' (' + r.distinct.slice(0, 6).join(' | ') + ')' : ''}, transform ${r.transform}`);
+        if (r.distinct.length > 1) bad.push(`${where}: the card moved under a resting pointer, ${r.distinct.length} positions in ${r.n} frames`);
+        await t.still('[data-kit-still="1"]', `${label} ${where}: still on compositor frames`, { ms: 1200 }); };
+      const under = await mark(A, at);
+      if (under) await judge(`pointer where the click on Change left it (${at.map((v) => v.toFixed(2)).join(', ')}), on ${under}`); else t.log(`${label}: no card under the pointer where the click on Change left it`);
+      /* each card's rest box, with the pointer away */
+      await t.page.mouse.move(2, 2); await A.sleep(700);
+      const cards = await A.frame().evaluate(() => [...document.querySelectorAll('.o55-sheet[data-open="true"] .o55-card')].filter((c) => c.getClientRects().length).map((c) => { const r = c.getBoundingClientRect(); return { id: (c.getAttribute('data-o55-do') || '') + ':' + (c.getAttribute('data-arg') || ''), x: r.left + r.width / 2, y: r.bottom - 0.5, transform: getComputedStyle(c).transform }; }));
+      if (!cards.length) bad.push('the files sheet shows no card');
+      /* (the card is found at that point while it rests, before the pointer comes: a lift that moves its box would take it away) */
+      for (const c of cards) { const got = await mark(A, [c.x, c.y]);
+        if (got !== c.id) { bad.push(`0.5 px inside ${c.id}'s bottom edge, at rest, is ${got || 'nothing'}`); continue; }
+        await t.page.mouse.move(off.x + c.x, off.y + c.y); await judge(`pointer 0.5 px inside ${c.id}'s bottom edge`); await t.page.mouse.move(2, 2); await A.sleep(500); }
+      t.log(label + (bad.length ? '\n  ' + bad.join('\n  ') : ': clean')); await t.check(label, !bad.length, bad.join(' | ').slice(0, 1500));
+    }
   }
 };
