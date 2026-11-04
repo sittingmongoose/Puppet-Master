@@ -1,4 +1,5 @@
 import { onboardingApp } from '../helpers/onboarding-fields.mjs';
+import { LOOKS, WIDTHS } from '../browser-check.config.mjs';
 // NAS way in and the places Review names (stream F, lane fields, 2026-11-04), by real clicks on both surfaces
 // (`--set sandbox=0`, `--set sandbox=1`):
 // - FO-48 and the Use-SSH switch: a Home NAS that runs Puppet Master, Use SSH instead, then Back to the device step. The
@@ -30,16 +31,25 @@ const FIND = () => {
 };
 const find = (A) => A.frame().evaluate(FIND);
 const fromBegin = async (A, sub) => { await A.click('pick', 'this'); await A.click('next', undefined, 'begin'); await A.click('pick', 'existing'); await A.click('sub', sub); };
+/* one NAS step walked as a person does: trust, the key found, a sign-in, the install, a pairing, a folder (any device) */
+const nasStep = async (A, s) => {
+  if (s.screen === 'nas-identity') { if (await A.has('trust')) await A.click('trust'); else await pressOn(A); }
+  else if (s.screen === 'nas-key') { await A.waitFor(() => { const n = O55.S.sess.nas || {}; return Object.entries(O55.S.sess.ops || {}).some(([k, v]) => k.startsWith('keys:' + n.device) && v.state === 'done'); }, null, 8000).catch(() => {}); await A.waitEnabled('next').catch(() => {}); await pressOn(A); }
+  else if (s.screen === 'nas-signin') { if (await A.frame().locator('#o55f-user').count()) await A.fill('o55f-user', 'jared'); if (await A.frame().locator('#o55f-pw').count()) await A.fill('o55f-pw', 'correct horse'); await pressOn(A); }
+  else if (s.screen === 'nas-install' || s.screen === 'nas-pmpair') { await A.waitFor(() => { const b = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary'); return b && !b.disabled && b.getAttribute('aria-disabled') !== 'true'; }, null, 20000); await pressOn(A); }
+  else if (s.screen === 'nas-folder') {
+    if (await A.has('cd', '/volume1/projects')) await A.click('cd', '/volume1/projects');
+    else { const c = s.buttons.filter((b) => b.action === 'cd' && b.arg).sort((a, b) => b.arg.length - a.arg.length)[0]; if (c) await A.click('cd', c.arg); }
+    await A.click('use');
+  }
+  else return false;
+  return true;
+};
 const throughNas = async (A) => {
   for (let i = 0; i < 14; i++) {
     const s = await A.snap();
-    if (['name', 'review', 'like', 'safe'].includes(s.screen)) return;
-    if (s.screen === 'nas-identity') { if (await A.has('trust')) await A.click('trust'); else await pressOn(A); }
-    else if (s.screen === 'nas-key') { await A.waitFor(() => Object.entries(O55.S.sess.ops || {}).some(([k, v]) => k.startsWith('keys:nas-home') && v.state === 'done'), null, 8000); await A.waitEnabled('next').catch(() => {}); await pressOn(A); }
-    else if (s.screen === 'nas-signin') { if (await A.frame().locator('#o55f-user').count()) await A.fill('o55f-user', 'jared'); if (await A.frame().locator('#o55f-pw').count()) await A.fill('o55f-pw', 'correct horse'); await pressOn(A); }
-    else if (s.screen === 'nas-install' || s.screen === 'nas-pmpair') { await A.waitFor(() => { const b = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary'); return b && !b.disabled && b.getAttribute('aria-disabled') !== 'true'; }, null, 20000); await pressOn(A); }
-    else if (s.screen === 'nas-folder') { if (await A.has('cd', '/volume1/projects')) await A.click('cd', '/volume1/projects'); await A.click('use'); }
-    else await pressOn(A);
+    if (['name', 'review', 'like', 'safe', 'protect'].includes(s.screen)) return;
+    if (!(await nasStep(A, s))) await pressOn(A);
     await A.sleep(900);
   }
 };
@@ -70,7 +80,55 @@ const backRun = async (A) => { const seq = [];
   for (let i = 0; i < 40; i++) { const s = await screen(A); seq.push(s); if (s === 'welcome') break;
     if (!(await A.frame().locator(L + '[data-o55-do="back"]').filter({ visible: true }).count())) break; await pressBack(A); if ((await screen(A)) === s) await pressBack(A); }
   return seq; };
-async function flow(t, label, fn, opts) { const A = onboardingApp(t), bad = []; await A.boot(opts); await fn(A, bad); t.log(label + (bad.length ? '\n  ' + bad.join('\n  ') : ': clean')); await t.check(label, !bad.length, bad.join(' | ').slice(0, 1500)); }
+/* each element the new words sit in, scrolled into view: inside the window's viewport, on top at its centre, its text not
+   cut by itself or a clipping ancestor */
+const SEEN = (which) => {
+  const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), out = [];
+  const els = which === 'ssh' ? [...(l ? l.querySelectorAll('.o55-note') : [])].filter((x) => /SSH/.test(x.textContent))
+    : ['begins', 'files'].map((k) => l && l.querySelector(`[data-key="rv-${k}"] .o55-revv`)).filter(Boolean);
+  if (!els.length || (which === 'review' && els.length < 2)) return ['the words are not on the screen'];
+  for (const el of els) {
+    el.scrollIntoView({ block: 'center', inline: 'nearest' });
+    const r = el.getBoundingClientRect(), name = `"${el.textContent.trim().slice(0, 40)}"`;
+    if (r.width < 4 || r.height < 4) { out.push(name + ' has no size'); continue; }
+    if (r.left < -0.5 || r.top < -0.5 || r.right > innerWidth + 0.5 || r.bottom > innerHeight + 0.5) out.push(`${name} outside the viewport ${JSON.stringify([r.left, r.top, r.right, r.bottom].map(Math.round))}`);
+    const hit = document.elementFromPoint(r.left + r.width / 2, r.top + Math.min(r.height / 2, 8));
+    if (!hit || !(el.contains(hit) || hit.contains(el))) out.push(`${name} covered by ${hit ? hit.className || hit.tagName : 'nothing'}`);
+    if (el.scrollWidth > el.clientWidth + 1) out.push(`${name} cut sideways`);
+    for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+      const cs = getComputedStyle(p); if (!/hidden|clip|auto|scroll/.test(cs.overflowX + cs.overflowY)) continue;
+      const q = p.getBoundingClientRect(); if (r.left < q.left - 0.5 || r.right > q.right + 0.5 || r.top < q.top - 0.5 || r.bottom > q.bottom + 0.5) { out.push(`${name} cut by ${p.className || p.tagName}`); break; }
+    }
+  }
+  return out;
+};
+/* the wizard's own look switch: the kit's t.app.look changes the app's theme, which the open wizard holds (rail-chip) */
+const wizLook = async (t, A, look) => { const [fam, mode] = look.split('-'), f = A.frame();
+  await f.evaluate(([fm, m]) => window.O55.ui.applyLook(fm, m), [fam, mode]);
+  const ok = await f.waitForFunction(([fm, m]) => { const th = document.documentElement.getAttribute('data-theme') || '', nier = document.documentElement.getAttribute('data-o55-nier') === 'on';
+    return (fm === 'nier' ? nier : !nier && th.startsWith(fm + '-')) && th.endsWith('-' + m); }, [fam, mode], { timeout: 20000 }).then(() => true).catch(() => false);
+  await A.sleep(1200); await t.page.mouse.move(2, 2);
+  return t.check(`look ${look} applied in the wizard`, ok, await f.evaluate(() => document.documentElement.getAttribute('data-theme') + ' nier ' + document.documentElement.getAttribute('data-o55-nier')));
+};
+/* from Review: Create, then on to Ready; a backup's NAS steps are walked when asked, Protect's other steps left for later */
+const toReady = async (A, { backupNas = false } = {}) => {
+  await A.waitEnabled('commit'); await A.click('commit', undefined, 'creating');
+  for (let i = 0; i < 45; i++) {
+    const s = await A.snap(); if (s.screen === 'ready') return true;
+    if (s.screen === 'protect') {
+      const b = await A.frame().evaluate(() => ({ done: (O55.S.sess.backup || {}).done || [], dest: (O55.S.sess.backup || {}).dest || null }));
+      if (backupNas && b.dest === 'nas' && !b.done.includes('signin')) { await A.waitEnabled(s.primary && s.primary.action || 'next').catch(() => {}); await pressOn(A); }
+      else if (await A.has('later')) await A.click('later'); else await pressOn(A);
+    }
+    else if (s.screen === 'ai' && s.primary && s.primary.disabled && await A.has('skip')) await A.click('skip');
+    else if (!(await nasStep(A, s))) { await A.waitEnabled(s.primary && s.primary.action || 'next').catch(() => {}); await pressOn(A); }
+    await A.sleep(900);
+  }
+  return (await A.snap()).screen === 'ready';
+};
+const READY = () => { const e = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-key="sum-project"] .o55-revv'); return { screen: O55.S.sess.screen, project: e ? e.textContent.trim() : null, filesAt: O55.review.filesAt(O55.S), nas: (O55.S.sess.nas || {}).purpose || null, nasDevice: (O55.S.sess.nas || {}).device || null }; };
+/* (a flow that throws fails as itself, and the flows after it still run) */
+async function flow(t, label, fn, opts) { const A = onboardingApp(t), bad = []; await A.boot(opts); try { await fn(A, bad); } catch (e) { bad.push('threw: ' + String(e && e.message || e).split('\n')[0].slice(0, 300)); } t.log(label + (bad.length ? '\n  ' + bad.join('\n  ') : ': clean')); await t.check(label, !bad.length, bad.join(' | ').slice(0, 1500)); }
 
 export const tests = {
   async 'FO-48 · a Home NAS that runs Puppet Master: Use SSH instead, Back to the device step, the card says SSH; another card picked and not continued; back to pairing by another device, then this one'(t) {
@@ -149,6 +207,31 @@ export const tests = {
         await pressBack(A); if ((await screen(A)) !== 'review') bad.push('Back from Name opened by Edit went to ' + (await screen(A)));
       });
   },
+  /* the new words in every look and size the plan names: shown whole, on top, unclipped, and nothing on the screen
+     overflows (--set looks=basic-light,nier-dark for some looks) */
+  async 'FO-48 and FO-47 words in all ten looks at 860, 1024, 1280, 1390, 1920, 740 and 1280x500: whole, on top, no overflow'(t) {
+    const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS, sizes = [...WIDTHS.map((w) => [w, 1080]), [740, 1000], [1280, 500]];
+    const sweep = async (A, label, finder) => {
+      for (const look of looks) {
+        await wizLook(t, A, look);
+        for (const [w, h] of sizes) {
+          await t.viewport(w, h); await A.sleep(500);
+          const bad = await A.frame().evaluate(SEEN, finder);
+          await t.check(`${label} ${look} ${w}x${h}: shown whole and on top`, !bad.length, bad.join(' | '));
+          await t.noOverflow(`${label} ${look} ${w}x${h}: the screen does not overflow`, { scope: '.o55-pane > .o55-layer:not(.o55-out)' }); /* (the screen's own layer: the rail's labels clip at 740 and NieR's stage scrolls a clipped data stream, neither touched here) */
+        }
+      }
+      await t.viewport(1920, 1080);
+    };
+    let A = onboardingApp(t); await A.boot({ scenario: 'fresh+homeNasPm' });
+    await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await cards(A);
+    await A.click('device', 'nas-home'); await pressOn(A); await A.screen('nas-pmpair');
+    await A.click('useSsh', undefined, 'nas-identity'); await pressBack(A); await A.screen('nas-find');
+    await sweep(A, 'FO-48 note', 'ssh');
+    A = onboardingApp(t); await A.boot(); await toNasProject(A); await A.screen('review');
+    const saved = await closeAndRead(A); saved.nas.key = 'k-ed'; await resumeRecord(A, JSON.stringify(saved)); await A.screen('review'); await settle(A);
+    await sweep(A, 'FO-47 Review', 'review');
+  },
   async 'B-6SR-T-1 · a completed new Server, Computer kept unchanged from Review twice: its discovery card says it is set up, as the confirmation does'(t) {
     await flow(t, 'B-6SR-T-1', async (A, bad) => {
       await toNewServer(A);
@@ -163,6 +246,116 @@ export const tests = {
         if (!done) bad.push(`edit ${i}: the confirmation does not say Already done`);
         await onToReview(A);
       }
+    });
+  },
+  async 'SW-05 · Ready names where a Project kept on Home NAS has its files, beside where the work happens (a source, a files place)'(t) {
+    for (const [kind, establish] of [['source', toNasProject], ['files place', toNameNas]])
+      await flow(t, 'SW-05 ' + kind, async (A, bad) => {
+        await establish(A); await A.screen('review');
+        if (!(await toReady(A))) { bad.push('never reached Ready: on ' + (await A.snap()).screen); return; }
+        const r = await A.frame().evaluate(READY);
+        if (!r.project || !/Home NAS/.test(r.project) || !/This computer/.test(r.project)) bad.push(`SW-05 ${kind}: Ready's Project row reads "${r.project}"`);
+        if (/\{|undefined|null/.test(r.project || '')) bad.push(`SW-05 ${kind}: raw text in "${r.project}"`);
+      });
+  },
+  async 'SW-33 · files on Media server over SSH, a backup on Home NAS set up on Protect (its NAS steps reuse the picker): Ready and the files place still name Media server'(t) {
+    await flow(t, 'SW-33', async (A, bad) => {
+      await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await cards(A);
+      await A.click('device', 'nas-media'); if (await A.has('checkAgain')) await A.click('checkAgain');
+      await A.waitEnabled('next'); await pressOn(A); await throughNas(A);
+      for (let i = 0; i < 6 && (await A.snap()).screen !== 'safe'; i++) { const s = await A.snap(); if (s.screen === 'name' && !(await A.frame().evaluate(() => O55.S.sess.drafts.main.project_name))) await A.fill('o55f-name', 'Media notes'); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(600); }
+      if ((await A.snap()).screen !== 'safe') { bad.push('never reached Safe: on ' + (await A.snap()).screen); return; }
+      await A.click('backup'); await A.click('bdest', 'nas'); await A.click('sheet-close').catch(() => {}); await A.sleep(400);
+      await onToReview(A); await A.screen('review');
+      const before = await A.frame().evaluate(ROWS);
+      if (!/Media server/.test(before.files || '')) bad.push('control: Review does not name Media server: ' + JSON.stringify(before));
+      if (!(await toReady(A, { backupNas: true }))) { bad.push('never reached Ready: on ' + (await A.snap()).screen); return; }
+      const r = await A.frame().evaluate(READY);
+      if (r.nas !== 'dest' || r.nasDevice !== 'nas-home') t.log('SW-33: the NAS session at Ready is ' + JSON.stringify([r.nas, r.nasDevice]) + ' (the backup steps did not reuse it?)');
+      if (!/Media server/.test(r.filesAt || '') || /Home NAS/.test(r.filesAt || '')) bad.push(`SW-33: after the backup's NAS steps the files place reads "${r.filesAt}"`);
+      if (!/Media server/.test(r.project || '') || /Home NAS/.test(r.project || '')) bad.push(`SW-33: Ready's Project row reads "${r.project}"`);
+    });
+  },
+  async 'SW-37 · SMB or NFS chosen while the device scan is still running: the tab stays chosen and its shares show (clicks at 0-1150 ms)'(t) {
+    const delays = t.args.delays ? String(t.args.delays).split(',').map(Number) : [0, 250, 500, 800, 1000, 1150];
+    for (const v of ['smb', 'nfs']) for (const ms of delays)
+      await flow(t, `SW-37 ${v} at ${ms} ms`, async (A, bad) => {
+        await fromBegin(A, 'device');
+        const f = A.frame();
+        await f.locator(L + '.o55-foot .o55-primary').first().click();
+        await f.waitForFunction(() => O55.S.sess.screen === 'nas-find' && !!document.querySelector('.o55-pane > .o55-layer:not(.o55-out)[data-screen="nas-find"] [data-o55-do="method"]'), null, { timeout: 15000 });
+        await A.sleep(ms);
+        const at = await f.evaluate((v) => { const b = document.querySelector(`.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="method"][data-arg="${v}"]`), r = b.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, scan: ((O55.S.sess.ops || {})['discover:ssh'] || {}).state || 'none' }; }, v);
+        const box = await f.locator(`${L}[data-o55-do="method"][data-arg="${v}"]`).first().boundingBox();
+        await t.page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+        await A.sleep(1600);
+        const r = await f.evaluate((v) => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), tab = l.querySelector(`[data-o55-do="method"][data-arg="${v}"]`);
+          return { method: (O55.S.sess.nas || {}).method || null, checked: tab && (tab.getAttribute('aria-checked') || tab.getAttribute('aria-pressed')), shares: l.querySelectorAll('[data-o55-do="share"]').length, scan: ((O55.S.sess.ops || {})['discover:ssh'] || {}).state || 'none' }; }, v);
+        t.log(`SW-37 ${v} at ${ms} ms: scan at the click ${at.scan}; then ${JSON.stringify(r)}`);
+        if (r.method !== v || r.checked !== 'true' || r.shares < 1) bad.push(`SW-37 ${v} clicked at ${ms} ms (scan ${at.scan}): ${JSON.stringify(r)}`);
+      });
+  },
+  async 'SW-37 · where the method tabs sit while the device scan runs and after it lists the devices (measured every frame, all ten looks at 1390 and 740)'(t) {
+    const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS, sizes = t.args.sizes ? String(t.args.sizes).split(',').map((x) => x.split('x').map(Number)) : [[1390, 1080], [740, 1000]];
+    for (const [w, h] of sizes) for (const look of looks)
+      await flow(t, `SW-37 tabs ${look} ${w}x${h}`, async (A, bad) => {
+        await t.viewport(w, h); await wizLook(t, A, look); await fromBegin(A, 'device');
+        const f = A.frame();
+        await f.locator(L + '.o55-foot .o55-primary').first().click();
+        const r = await f.evaluate(() => new Promise((res) => { const out = []; let doneAt = null; const t0 = performance.now();
+          const tick = () => { const S = O55.S, l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)[data-screen="nas-find"]'), b = l && l.querySelector('[data-o55-do="method"][data-arg="nfs"]');
+            const st = ((S.sess.ops || {})['discover:ssh'] || {}).state || 'none';
+            if (b && !l.classList.contains('o55-hold')) { const q = b.getBoundingClientRect(); out.push([Math.round(performance.now() - t0), st, Math.round(q.top * 10) / 10, Math.round(q.left * 10) / 10]); }
+            if (st === 'done' && doneAt === null) doneAt = performance.now();
+            if (doneAt !== null && performance.now() - doneAt > 1200) return res(out); if (performance.now() - t0 > 8000) return res(out);
+            requestAnimationFrame(tick); };
+          requestAnimationFrame(tick); }));
+        const run = r.filter((x) => x[1] === 'running'), done = r.filter((x) => x[1] === 'done');
+        const last = (a) => a[a.length - 1], dy = run.length && done.length ? Math.round((last(done)[2] - last(run)[2]) * 10) / 10 : null;
+        t.log(`SW-37 tabs ${look} ${w}x${h}: last top while scanning ${run.length ? last(run)[2] : '-'}, settled after ${done.length ? last(done)[2] : '-'}, moved ${dy} px; frames ${r.length}`);
+        if (dy === null) bad.push('the scan was not seen running and done: ' + JSON.stringify(r.slice(0, 6)));
+        else if (Math.abs(dy) > 0.5) bad.push(`SW-37: the method tabs move ${dy} px when the scan lists the devices`);
+      });
+    await t.viewport(1920, 1080);
+  },
+  async 'SW-39 · constructed states: nas-folder with no device, an unreadable place reference, an install no key reference names, a sign-in made for another address'(t) {
+    await flow(t, 'SW-39 nas-folder with no device', async (A, bad) => {
+      await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await cards(A);
+      /* constructed: held on nas-folder with no device chosen, as a jump that opens it does (S.openedAt) */
+      await A.frame().evaluate(() => { const S = O55.S; S.sess.nas.device = null; S.openedAt = 'nas-folder'; S.sess.screen = 'nas-folder'; O55.ui.transition('fwd'); }); await A.sleep(1500);
+      const r = await A.frame().evaluate(() => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), p = l && l.querySelector('.o55-foot .o55-primary');
+        const was = JSON.stringify([S0().at || null, O55.S.sess.drafts.main.project_source_ref || '', O55.S.sess.drafts.main.storage_location || '']); O55.ui.act('cd', '/volume1/x'); O55.ui.act('use', null);
+        const now = JSON.stringify([S0().at || null, O55.S.sess.drafts.main.project_source_ref || '', O55.S.sess.drafts.main.storage_location || '']);
+        return { screen: O55.S.sess.screen, text: l ? l.innerText : '', disabled: !!p && (p.disabled || p.getAttribute('aria-disabled') === 'true'), reason: p ? p.getAttribute('data-disabled-reason') || '' : '', wrote: was === now ? null : was + ' > ' + now }; function S0() { return O55.S.sess.nas || {}; } });
+      if (r.screen !== 'nas-folder' || !/Choose the device first/.test(r.text)) bad.push('no device: the screen does not say so: ' + JSON.stringify({ screen: r.screen, text: r.text.slice(0, 200) }));
+      if (!r.disabled || !/device/.test(r.reason)) bad.push('no device: Continue is not refused with a reason: ' + JSON.stringify(r));
+      if (r.wrote) bad.push('no device: its actions wrote ' + r.wrote);
+      const draft = await A.frame().evaluate(() => O55.S.sess.drafts.main.project_source_ref || '');
+      if (draft) bad.push('no device: a source was written: ' + draft);
+    });
+    await flow(t, 'SW-39 an unreadable place reference', async (A, bad) => {
+      const out = await A.frame().evaluate(() => ['folder:/home/x/y', 'sshp:server-this:0a1b2c3d/volume1/projects', 'webdav://nas/x'].map((r) => O55.nas.placeLabel(O55.S, r)));
+      if (out.some((x) => /:|sshp|webdav|folder/.test(x))) bad.push('an unreadable reference is shown as it is: ' + JSON.stringify(out));
+    });
+    await flow(t, 'SW-39 an install the plan names no key for', async (A, bad) => {
+      await toNasProject(A); await A.screen('review');
+      const saved = await closeAndRead(A); if (!saved || !saved.nas) { bad.push('no saved NAS record'); return; }
+      /* constructed, as a record from before installs were stamped: no installedFor, and no ssh-key reference in the plan */
+      delete saved.nas.installedFor; delete saved.nas.trustedFor;
+      saved.drafts.main.source_access_authorization_refs = (saved.drafts.main.source_access_authorization_refs || []).filter((r) => !/^ssh-key:/.test(r));
+      await resumeRecord(A, JSON.stringify(saved)); await A.sleep(800);
+      const st = await A.frame().evaluate(() => { const n = O55.S.sess.nas || {}; return { installed: !!n.installed, installedFor: n.installedFor || null }; });
+      if (st.installed || st.installedFor) bad.push('an install no key reference names was bound on resume: ' + JSON.stringify(st));
+    });
+    await flow(t, 'SW-39 a sign-in made for another address', async (A, bad) => {
+      await A.toSafe('Notes'); await A.click('online', undefined, 'online-service'); await A.service('github', 'hosted'); await A.signIn();
+      await A.frame().evaluate(() => { O55.S.sess.signin.instance_key = 'github||https://other.example'; O55.S.save(); O55.ui.refresh(); }); await A.sleep(600);
+      const r = await A.frame().evaluate(() => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), p = l.querySelector('.o55-foot .o55-primary');
+        return { screen: O55.S.sess.screen, stale: !!l.querySelector('[data-key="signin-stale"]'), disabled: !!p && (p.disabled || p.getAttribute('aria-disabled') === 'true'), reason: p ? p.getAttribute('data-disabled-reason') || '' : '' }; });
+      if (r.screen !== 'online-signin' || !r.stale || !r.disabled || !/another address/.test(r.reason)) bad.push('a sign-in for another address: ' + JSON.stringify(r));
+      const pb = await A.frame().locator(L + '.o55-foot .o55-primary').first().boundingBox(); await t.page.mouse.click(pb.x + pb.width / 2, pb.y + pb.height / 2); await A.sleep(600);
+      const after = await A.frame().evaluate(() => ({ screen: O55.S.sess.screen, shown: [...document.querySelectorAll('.o55-reason-show')].map((x) => x.textContent.trim()) }));
+      if (after.screen !== 'online-signin' || !after.shown.some((x) => /another address/.test(x))) bad.push('Continue on it: ' + JSON.stringify(after));
     });
   },
   async 'Muse note · a Puppet Master NAS paired for the files place, with trusted set (constructed): no SSH key, sign-in or install step on the path'(t) {
