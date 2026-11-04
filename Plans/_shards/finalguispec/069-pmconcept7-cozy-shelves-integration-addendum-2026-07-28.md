@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35553-L35757
+Source lines: L35568-L35773
 
-Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
+Source SHA256: `9dac730e10cfcc426ed0bfbe21fb8fca7e801acb648d9efa2760be95c5dc2bce`
 
 ---
 
@@ -71,14 +71,14 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The F3-471 width envelope (240 minimum, 280 default, 480 maximum) is applied to
-  the PM7 shell: --files-panel-w defaults to 280px, the narrow-range 220px floors
-  become 240px (220 remains the adversarial test-only width and is not a product
-  floor), the side-panel-slot clamp becomes min-width 240px and max-width
-  min(480px, 50vw), the drag resizer caps at 480px, and the former !important
-  220px narrow-viewport override now resolves through the 240px floor. The
-  data-wtier attribute is computed on the slot by measure (min under 250px, mid
-  through 400px, wide above) and gates layout chrome only, never label text per
-  F3-480's measure-based fitting rule.
+  the product shell's panel host: its default width is 280px, its minimum is
+  240px and its maximum is the lesser of 480px and half the viewport width,
+  with the same bounds on drag resize and narrow viewports. The 220px width
+  remains an adversarial test-only case and is never a product floor. The
+  panel presentation owner derives layout tiers from measured host width
+  (min under 250px, mid from 250px through 400px, wide above 400px). Tiers gate
+  layout chrome only. Labels fit by measurement under F3-480, with the later
+  F3-620 amendment controlling left-rail fitting.
 gui_related: true
 gui_classification_reason: This unit pins the user-visible side panel width behavior of the PM7 shell to the ratified envelope.
 split_recommended: false
@@ -86,11 +86,12 @@ depends_on: [F3-471, F3-497]
 unblocks: []
 acceptance_criteria:
 - "The side panel defaults to 280px, clamps between 240px and 480px (viewport permitting), and no 220px product floor remains in the shell."
-- "data-wtier on the slot reflects the measured width and gates only layout chrome."
+- "The panel host's measured width selects min below 250px, mid from 250px through 400px and wide above 400px; these tiers gate layout chrome only."
+- "The viewport clamp is the lesser of 480px and half the viewport width; label fitting remains measurement-based under F3-480 and F3-620."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: pm7_cozy_shelves_integration
@@ -100,14 +101,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/FinalGUISpec.md (F3-471 width envelope pin)"
+- "DL-260/DL-280 source lineage only (no product DOM, CSS or exact-token obligation): --files-panel-w, the side-panel-slot CSS clamp and !important narrow-viewport repair, and data-wtier were concept implementations of the retained panel width and chrome-tier rules."
 preserved_exact_tokens:
 - "240"
 - "280"
 - "480"
-- "data-wtier"
 negative_constraints:
 - "Do not reintroduce a 220px product floor; 220 remains adversarial test-only."
-- "Do not gate label text on data-wtier; labels shorten by measure only (F3-480)."
+- "Do not gate label text on layout tiers; labels fit by measure under F3-480 and the later F3-620 left-rail amendment."
 compatibility_only_notes:
 - "Slint: the same clamp constants apply to the Slint panel host; measure-based fitting maps to layout re-evaluation, not width-class breakpoints."
 stale_retired_dispositions: []

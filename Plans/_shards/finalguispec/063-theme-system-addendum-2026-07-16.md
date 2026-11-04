@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30242-L31332
+Source lines: L30242-L31346
 
-Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
+Source SHA256: `9dac730e10cfcc426ed0bfbe21fb8fca7e801acb648d9efa2760be95c5dc2bce`
 
 ---
 
@@ -278,7 +278,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Glass themes expose a user-facing transparency control bound to --glass-alpha. Defaults are
+  Glass themes expose a user-facing transparency control bound to the shared Glass transparency scalar. Defaults are
   .60 for glass-dark and .55 for glass-light. Values clamp per theme: .35 through .85 for
   glass-dark and .45 through .88 for glass-light. Changes apply live to every alpha-driven
   glass fill and persist at glass_alpha:v1. The slider is a glass-only setting and renders
@@ -294,14 +294,14 @@ split_recommended: false
 depends_on: [F3-427, F3-444]
 unblocks: []
 acceptance_criteria:
-- "The --glass-alpha control defaults to .60 on glass-dark and .55 on glass-light."
+- "The Glass transparency control defaults to .60 on glass-dark and .55 on glass-light."
 - "Values clamp to .35 through .85 on glass-dark and .45 through .88 on glass-light."
 - "Slider changes apply live to alpha-driven glass fills and persist at glass_alpha:v1."
 - "The slider is glass-only."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -311,11 +311,11 @@ node_compile_hint:
   mode: glass_alpha_transparency_slider
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product CSS or exact-token obligation): --glass-alpha was the concept paint scalar; current Glass transparency remains owned by SSYS-010 and F3-652, with existing storage compatibility names unchanged."
 - "Plans/FinalGUISpec.md:964"
 - "Plans/FinalGUISpec.md:2292"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-- "--glass-alpha"
 - ".60"
 - ".55"
 - ".35"
@@ -533,6 +533,12 @@ owner_hints:
 Settings appearance overrides (2026-09-27): the per-variant tables below are what every variant renders while no appearance setting has been changed. Settings appearance rows (size, text size, line spacing, animation speed, spacing, padding, border width, corner roundness, scrollbar width, app font, high contrast, focus outline, Retro textures, accent) apply as overrides over the active variant's table, write nothing while unchanged, remove exactly what they wrote on reset, and use precomputed per-mode accent values; `Plans/Settings_System.md#SSYS-041` owns that model and this unit's no-runtime-colour-derivation rule still applies.
 
 ### Theme Token Tables (F3-426 spec data)
+
+The shared theme owner retains the token roles and literal design values below. CSS selectors, source-part
+labels, root/local cascade descriptions and browser paint-expression syntax in these tables are
+**source_lineage only (DL-260/DL-280)**, with no product DOM, CSS or exact-token obligation. Product renderers
+resolve the corresponding roles and values through F3-426/F3-431 and the current presentation owners; later
+Glass, Wallpaper, tab and editor amendments remain authoritative.
 
 Values below are transcribed verbatim from the concept CSS: `Concepts/pm6-build/parts/02-css-tokens.part.html` (root contract :28-66, theme blocks :140-552, glass background stage :554-733), `Concepts/pm6-build/parts/03-css-glass-a.part.html` (:19-49, :59-153), `Concepts/pm6-build/parts/04-css-glass-b.part.html` (:11-56, :138-196), `Concepts/pm6-build/parts/10x-pm6-css-global.part.html` (:139-176 friendly chrome), `Concepts/pm6-build/parts/10-css-settings.part.html` (:580-590, :912-940), and `Concepts/pm6-build/parts/29-js-settings-engine.part.html` (:60-86 alpha clamps). Values containing `calc()`, `color-mix()`, or `var()` chains are runtime-derived in concept; precompute per F3-431. Since 2026-10-08 the retro-dark and retro-light tables carry PMConcept7's retro values instead (DL-151; see the dated note after F3-426).
 
@@ -1005,7 +1011,11 @@ The concept shows seven diff-tint custom properties per variant for six variants
 
 Companion editor treatments carried in the same span (04-css-glass-b.part.html:144-196), for completeness of the :138-196 extraction:
 
-| Family scope | Rule | Value |
+This is a concept selector/declaration inventory. The shared appearance owner retains the matching minimap,
+change-mark, viewport-indicator and current-line design values; the selector and CSS declaration spellings are
+source lineage only. F3-505/F3-631/F3-639/F3-647 govern current tab and editor presentation.
+
+| Family scope | Source selector (lineage only) | Design value / source declaration |
 |---|---|---|
 | glass-dark | `.editor-minimap` | `background: rgba(16,10,32,0.5); border-left: 1px solid rgba(255,255,255,0.04);` |
 | glass-dark | `.minimap-heat-strip` | `box-shadow: none;` |
@@ -1057,7 +1067,11 @@ Lineage (amended 2026-10-17, DL-228): this table records the 2026-07 PM6 parts. 
 
 #### Backdrop-filter budget (F3-431 enumeration)
 
-| Scope | Surface | Filter | Concept source |
+Concept selectors and filter syntax in this inventory are source lineage for F3-431's renderer remediation,
+not required product markup or paint APIs. The stated surface/material values and native popup capability
+boundary remain with F3-431/F3-582 and the later F3-652 Glass owner.
+
+| Scope | Surface / concept selector (lineage only) | Material value / source filter | Source or product owner |
 |---|---|---|---|
 | Glass themes | `.app-shell` | `blur(34px) saturate(160%)` | 03-css-glass-a.part.html:71-72 |
 | Glass themes | `.floating-chat` | `blur(34px) saturate(160%)` | 03-css-glass-a.part.html:148-149 |

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31334-L32244
+Source lines: L31348-L32258
 
-Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
+Source SHA256: `9dac730e10cfcc426ed0bfbe21fb8fca7e801acb648d9efa2760be95c5dc2bce`
 
 ---
 
@@ -573,7 +573,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer; the glass alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10, DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies on change with no reload. The concept's interface-density live-apply hook had no consumer and is demo residue excluded from this canonical wiring map. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Existing theme:v1/glass_alpha:v1 names are compatibility/reader bindings, not additional independent writers; SP-348 owns level storage.
+  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer; the glass alpha setting drives the shared Glass transparency scalar within the per-theme clamps of F3-429 and persists at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10, DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies on change with no reload. The concept's interface-density live-apply hook had no consumer and is demo residue excluded from this canonical wiring map. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Existing theme:v1/glass_alpha:v1 names are compatibility/reader bindings, not additional independent writers; SP-348 owns level storage.
 gui_related: true
 gui_classification_reason: This unit defines visible live-apply bindings between settings and shell surfaces.
 split_recommended: false
@@ -587,8 +587,8 @@ acceptance_criteria:
 - The interface-density hook is excluded from the wiring map as demo residue and gains no canonical binding.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -598,6 +598,7 @@ node_compile_hint:
   mode: settings_live_apply_wiring_map
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product CSS or exact-token obligation): --glass-alpha was the concept paint scalar; current Glass transparency remains owned by SSYS-010 and F3-652, with existing storage compatibility names unchanged."
 - Plans/FinalGUISpec.md:1329
 - Plans/FinalGUISpec.md:2291
 - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
@@ -607,7 +608,6 @@ preserved_exact_tokens:
 - "theme:v1"
 - "glass_background_mode:v1"
 - "glass_alpha:v1"
-- "--glass-alpha"
 negative_constraints:
 - "Do not promote the concept's interface-density hook into the live-apply wiring map; it had no consumer and is demo residue."
 compatibility_only_notes:

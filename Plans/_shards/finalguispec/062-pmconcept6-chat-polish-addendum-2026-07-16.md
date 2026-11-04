@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30057-L30240
+Source lines: L30059-L30240
 
-Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
+Source SHA256: `9dac730e10cfcc426ed0bfbe21fb8fca7e801acb648d9efa2760be95c5dc2bce`
 
 ---
 
@@ -24,9 +24,8 @@ canonical_text: >-
   the stream wrap: content-sized at max-content with a max-width of the stream minus side
   margins, single-row nowrap layout with tight padding. The stream is see-through around the
   pill: the message stream extends behind the pill, stream content may scroll beneath it, and
-  no opaque band or full-width strip renders around the pill. A stack-height variable
-  (--chat-footer-stack-height) and a footer inset (--chat-footer-inset, computed as footer
-  height plus bottom offset plus 8px clearance) reserve bottom content space inside the
+  no opaque band or full-width strip renders around the pill. The shared chat layout owner measures the footer stack and computes a bottom inset
+  from footer height plus bottom offset plus 8px clearance, reserving bottom content space inside the
   scrollport (a content inset, not a scrollport shrink) so the newest row clears the pill when
   pinned, and position the jump-to-latest control above the pill at a higher z-order. The
   jump-to-latest control stays hidden until the stream is scrolled away from the bottom by
@@ -45,14 +44,14 @@ depends_on: [F3-131, F3-189, F3-420, DL-184]
 unblocks: []
 acceptance_criteria:
 - "The footer pill floats centered over the stream, sized to its content with no fixed side gutters, in both the docked panel and the floating window; the stream is visible around and beneath the pill, with no opaque band or full-width strip."
-- "The bottom content inset tracks measured footer height through --chat-footer-stack-height and --chat-footer-inset (footer height plus bottom offset plus 8px clearance) inside the scrollport, and stream content may scroll beneath the pill."
+- "The bottom content inset tracks measured footer height through the shared chat layout owner (footer height plus bottom offset plus 8px clearance) inside the scrollport, and stream content may scroll beneath the pill."
 - "The jump-to-latest control renders above the footer pill at a higher z-order, appears only when scrolled more than 24px away from the bottom, and returns the stream to the latest message."
 - "Pinned-to-bottom reserve changes re-scroll so the newest content stays visible above the pill; stream children do not flex-shrink."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 - "The footer has no capsule shape in any look (amended 2026-10-09, DL-184; F3-648)."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -62,12 +61,11 @@ node_compile_hint:
   mode: chat_footer_pill_and_jump_to_latest_geometry
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product CSS or exact-token obligation): --chat-footer-stack-height and --chat-footer-inset were concept measurement/paint bridges; F3-422 retains the footer reserve arithmetic and scroll behavior through the shared chat layout owner."
 - "Plans/FinalGUISpec.md:13639"
 - "Plans/assistant-chat-design.md:4086"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-- "--chat-footer-stack-height"
-- "--chat-footer-inset"
 - "max-content"
 - "24"
 - "8px"

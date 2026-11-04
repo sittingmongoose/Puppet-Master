@@ -221,7 +221,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "e3a607bf5f71d7f45bd31200d1effda0d968bc5681c9ef005dd23edea58b9704",
+      "sha256": "b4bcd48a1debc9400d00f32f37649ef2c1e43fe38efaab38fc4ea946d7dfbd69",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 69
@@ -7944,7 +7944,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 50354,
+      "line_count": 50370,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 662,
       "plan_unit_ids": [
@@ -8755,7 +8755,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e",
+      "sha256": "9dac730e10cfcc426ed0bfbe21fb8fca7e801acb648d9efa2760be95c5dc2bce",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 653,
@@ -8852,7 +8852,6 @@
         "Verify F3-621's shared rail dropdowns, tab switches and theme-family motion, including reduced motion.",
         "Verify F3-623's distinct Git/Jujutsu tab strips, engine-switch placement and fitting of the longest label.",
         "Verify the F3-524 and TCME-007 evidence obligations, including native execution and independent actual-pixel/frame review; concept/static success alone is insufficient.",
-        "Verify the contact-aware tab silhouette, drag tracking, join geometry, opacity and reduced-motion behavior against F3-505 and F3-631.",
         "Verify the existing F3-521/PWIZ Guided Tour lifecycle, mounted-owner observations, focus, Skip restoration and completion disposition; concept simulation is not native or final visual acceptance.",
         "Verify the existing F3-598 acceptance for NieR onboarding/Tour presentation, installed parts, reduced motion and look changes.",
         "Verify the existing F3-599 sound-kit, shared-player, explicit-preview, sound-setting and reduced-motion acceptance.",
@@ -8889,6 +8888,7 @@
         "future Verify the native pop-out and web-client boundaries of F3-504/F3-637, including one chat instance and no web-client Chat Pop out.",
         "future Verify transactional panel/tab gestures: no dispatch during preview, one changed-release command, exact cancel restoration, stable identity and reduced-motion behavior.",
         "future cached/offline, scoped-check, stale-return, remediation-return, accessibility, and ten-theme tests",
+        "future contact-aware tab silhouette acceptance: drag tracking, join geometry, opacity and reduced-motion behavior against F3-505 and F3-631.",
         "future first-run provider wizard screen-order and copy fixtures",
         "future gate-list responsive and accessibility fixtures",
         "future hover census, pointer/keyboard/Escape/grace/collision/zoom/theme/transparency/reduced-motion tests",
@@ -8903,6 +8903,7 @@
         "future native protected-entry, permission/currentness race, cancellation/focus, accessibility, capture-exclusion, and owner-dispatch tests",
         "future panel transition producer, append/dedupe/replay/recovery, and projector fixtures",
         "future protected-handoff/no-capture and immutable-snapshot exact-return fixtures",
+        "future replacement executable cases under ATS-075/076; cases for the retired four-panel Home model do not prove this row.",
         "future responsive and overflow checks for compact provider rows",
         "future ten-theme, Reduced Motion, interruption, reversal, and short-window film review",
         "future verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal, accessibility and short-window behavior.",
@@ -17693,7 +17694,7 @@
         "future shared Rust interface model and sole owner services; no implementation claimed",
         "future typed Settings owner projections"
       ],
-      "line_count": 5645,
+      "line_count": 5647,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 60,
       "plan_unit_ids": [
@@ -17814,7 +17815,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "4e2e63896203b6621490b064c1cd90bee45ad105588fd6ec156a58b472b1ed43",
+      "sha256": "1652ab14825f790df6f90ac25938bc88f8bdf91aefc496d81fafad9d8c6beabd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 60
@@ -20052,7 +20053,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 19643,
+      "line_count": 19644,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 197,
       "plan_unit_ids": [
@@ -20335,7 +20336,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "7b467b43baf897393cd88e21c11194dd66ee829975f02701893e6910b94bc137",
+      "sha256": "65ff10c2d213bd0be25d930c588f591a5d324a2ef6bd2f47c37e717d20e44e99",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 195,
@@ -20475,7 +20476,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 3401,
+      "line_count": 3403,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 41,
       "plan_unit_ids": [
@@ -20561,7 +20562,7 @@
         "version_exact_opener_drift",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "f8c41680e0a9903af9f21707be5df785c8ec66c6ce5b528e6a8172dd27bf7857",
+      "sha256": "1bb2689a68934137661ab94c681f63ad0789be26580c1e33f264295872f894c3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 41
@@ -21061,7 +21062,7 @@
         "future UI command dispatcher fixtures",
         "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 9105,
+      "line_count": 9106,
       "path": "Plans/Wiring_Matrix.md",
       "plan_unit_count": 83,
       "plan_unit_ids": [
@@ -21193,7 +21194,7 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "1d15955dbbaf4f0ecb562232e37eaf96f921b268887ce5f6e6ce604fe6977e22",
+      "sha256": "3819f6ec249a5245d6ea0b61a8aa574ecd65cb2cf84f00db2a3beb0b6bdf5bf1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 83
@@ -21534,7 +21535,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T21:13:54Z",
+  "generated_at_utc": "2026-11-04T21:57:41Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

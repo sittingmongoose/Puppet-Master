@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32903-L33734
+Source lines: L32918-L33749
 
-Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
+Source SHA256: `9dac730e10cfcc426ed0bfbe21fb8fca7e801acb648d9efa2760be95c5dc2bce`
 
 ---
 
@@ -48,11 +48,10 @@ canonical_text: 'The title-bar bell and unread stack sit between page tabs and s
   branding become Pip; completion notices route through this alert owner and never add a second affordance. A4 A, Jared
   2026-10-30; joined PM7 review fix 4c49e10567: Friendly’s notification tile draws one decorative 24 px shared Pip mark. The item’s severity maps through the existing status/mood owner: info→idle, success→complete, warn→waiting,
   error→failed. Its kind glyph remains beside the title; the tile is no additional control. Other looks retain their kind-glyph tile. Toasts, banners and inbox rows repaint through the same shared notification presentation owner when the look changes. F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page;
-  its first card uses the theme selector menu''s resting top while the inbox is closed (#themeMenuWrap bottom plus MENU_GAP,
-  6 px in 70b30f482f), not title-bar bottom plus that gap. It may cover controls and the chat head. F3-447 owns that
+  its first card uses the theme selector menu''s resting top while the inbox is closed (the resting bottom of the theme selector control plus the shared 6 px menu gap), not title-bar bottom plus that gap. It may cover controls and the chat head. F3-447 owns that
   anchor, the lead''s open-inbox push exception and the entry/exit click guard on every page (F3-5), including Usage''s
   local pointer styling; no per-page or control-clearance placement survives. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed
-  on 2026-10-31 that staged toasts stay below the open bell inbox through the existing --pmn-push; it is his ruling,
+  on 2026-10-31 that staged toasts stay below the open bell inbox through the shared inbox owner’s measured stage offset; it is his ruling,
   not an unresolved lead exception. Closed-inbox theme-menu resting-top placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
@@ -70,7 +69,7 @@ acceptance_criteria:
   material since the 2026-10-15 publication, and Reduced Motion removes spatial/typing effects.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
 - "scripts/pm-plan-migration.py"
@@ -84,6 +83,7 @@ node_compile_hint:
   mode: title_bar_notification_stack_and_count_badge
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)
 - Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
 - /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
@@ -152,8 +152,7 @@ canonical_text: 'Clicking the title-bar notification stack expands a sprout inbo
   deduplicated/coalesced by work identity and completion generation, with one durable notice and its existing transient
   treatment. Agent delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live notification inbox consumes DR-079’s shared menu lifecycle, including open/close and size changes. Alert content/acknowledgment/routing/focus
   remain here and in F3-453; no separate per-look inbox motion owner is exempted. A retired source panel is not evidence of live-inbox closure. F3-1, Jared 2026-10-30, with the lead''s explicit 2026-10-30 open-inbox exception (mail 1030131044-4c44,
-  preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage sits under it via the existing
-  --pmn-push offset. When closed the stage returns tight below the title bar at the bell, aligned to the theme menu’s
+  preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage sits under it via the shared inbox owner’s measured stage offset. When closed the stage returns tight below the title bar at the bell, aligned to the theme menu’s
   resting top under its selector wrapper (F3-447). No chat-head or control-clearance offset is added. The existing inbox
   owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead''s ruling, not an added quote
   from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only after the shared menu owner has opened the inbox and restored its layout visibility, on first open and every reopen. Read its resting layout height, never
@@ -161,7 +160,7 @@ canonical_text: 'Clicking the title-bar notification stack expands a sprout inbo
   Recompute after content/height changes and window resize, and clear the offset on close. Preserve the existing gap
   (8 px in this concept), menu-sprout ownership and the one stage; no page-local timer, list or persisted geometry is
   added. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox
-  through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top
+  through the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top
   placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
@@ -180,7 +179,7 @@ acceptance_criteria:
 - The inbox list bottom fade starts at 96% and bottom padding keeps card bottoms unclipped.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
 - "scripts/pm-plan-migration.py"
@@ -194,6 +193,7 @@ node_compile_hint:
   mode: notification_inbox_sprout_panel_and_kind_action_rows
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
 - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
 - "DL-260 source lineage only (no product API or implementation obligation): #pmnPanel, retired #rsPanel and PM6_SPROUT were concept inbox selectors/lifecycle adapters; native presentation keeps the resting-height measurement and shared menu owner."

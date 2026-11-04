@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L7520-L7907
+Source lines: L7520-L7908
 
-Source SHA256: `1d15955dbbaf4f0ecb562232e37eaf96f921b268887ce5f6e6ce604fe6977e22`
+Source SHA256: `3819f6ec249a5245d6ea0b61a8aa574ecd65cb2cf84f00db2a3beb0b6bdf5bf1`
 
 ---
 
@@ -271,8 +271,7 @@ canonical_text: 'B1/B2/B6, S1–S9, D1–D14, G1–G10. pm7_control_bindings.jso
   Resources Time reuses ui.work_panel.sort. No new production row or Touch action is created by these producers;
   the Q22 census has 479 records, with 61 source-anchored producer families after QA2 family-control alignment;
   the three retired checkbox rows remain non_dispatch tombstones. D7/D8/D13, PM7 companion review fix1, 2026-10-30:
-  the reverse work-detail census discovers emitted data-work-act values and act.* button labels, including
-  both goto destinations and scheduled Cancel versus process Stop, and requires their binding/owner dispositions.
+  the reverse work-detail census covers every rendered action, including both owner-navigation destinations and scheduled Cancel versus process Stop, and requires each action’s binding/owner disposition through the existing UCC-210/UIW-045 owners.
   It covers Copy command, Open port, Rerun, actual Open thread/Open surface and local owner selection; forward
   token counts alone are not closure. Existing owner commands receive producer/Touch coverage, never a new
   native handler or evidence promotion. D7/D8/D13, PM7 final-review direct correction, 2026-10-30 (Astra r2
@@ -305,7 +304,7 @@ canonical_text: 'B1/B2/B6, S1–S9, D1–D14, G1–G10. pm7_control_bindings.jso
   available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment
   identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or
   service-control authority. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts
-  stay below the open bell inbox through the existing --pmn-push; it is his ruling, not an unresolved lead
+  stay below the open bell inbox through the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead
   exception. Closed-inbox theme-menu resting-top placement and entry/exit click guards remain.
 
 
@@ -352,7 +351,7 @@ acceptance_criteria:
   Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope
   creates no Stop/Restart/Stop all or service-control authority.'
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell
-  inbox through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu
+  inbox through the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu
   resting-top placement and entry/exit click guards remain.'
 - Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
   refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
@@ -372,6 +371,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or implementation obligation): data-work-act, act.* and goto were concept action-emission spellings used by the source audit; product coverage follows the actual Work controls and their declared owner bindings."
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)

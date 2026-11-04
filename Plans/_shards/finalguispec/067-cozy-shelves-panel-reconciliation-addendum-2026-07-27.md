@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33736-L34441
+Source lines: L33751-L34456
 
-Source SHA256: `8f657b7dbfce6e9a2d1f08ced840d31a4d9a9f61e53bf6e0e1391a4bf65eb72e`
+Source SHA256: `9dac730e10cfcc426ed0bfbe21fb8fca7e801acb648d9efa2760be95c5dc2bce`
 
 ---
 
@@ -623,12 +623,12 @@ unblocks: []
 acceptance_criteria:
 - "No rail-panel popup is ever clipped by a panel scroller, accordion clip wrapper, or transform containing block; the Slint surface for every such popup is PopupWindow."
 - "Opening an expander rotates exactly one chevron (its own header chevron); nested collapsed rows inside an open ancestor keep right-pointing chevrons."
-- "Label shortening decisions are made by measurement against available width via the declared fit ladder; no label truncation decision keys off the min/mid/wide tier attribute."
+- "Label shortening decisions are made by measurement against available width via the declared fit ladder; no label truncation decision keys off the min/mid/wide layout tier."
 - "Panel activation animates once and leaves no persistent animation on the active view; accordion remeasure never runs on continuous drag frames."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -642,11 +642,11 @@ source_lineage:
 - "Plans/Decision_Log.md#DL-162 (owner decision, 2026-10-09; amends (3) for the left rail)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)"
+- "DL-260/DL-280 source lineage only (no product DOM or exact-token obligation): data-fit recorded the concept's measured label-fit choice; F3-480 and the later F3-620 left-rail amendment own product fitting."
 preserved_exact_tokens:
 - "PopupWindow"
-- "data-fit"
 negative_constraints:
-- "Do not re-clip popups inside panel scrollers; do not decide label truncation from width-tier attributes; do not leave persistent enter animations on active views."
+- "Do not re-clip popups inside panel scrollers; do not decide label truncation from layout tiers; do not leave persistent enter animations on active views."
 compatibility_only_notes:
 - "Slint portability: popup layering via PopupWindow; label variants precomputed and chosen by measured width; enter animation is a one-shot property animation; no arbitrary-content backdrop blur, no SVG filters, precomputed color math."
 stale_retired_dispositions:
