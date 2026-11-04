@@ -6,11 +6,11 @@ export default async function(t){
   await t.app.look(look);
   for(const reducedMotion of ['reduce','no-preference']){
    await t.emulate({reducedMotion});
-   for(const w of [740,860,1024,1280,1390,1920]){
-    await t.viewport(w,900);
+   for(const [w,h] of (t.args.shortOnly?[[1280,500]]:[...[740,860,1024,1280,1390,1920].map(w=>[w,900]),[1280,500]])){
+    await t.viewport(w,h);
     await f.evaluate(()=>{PMW.chatCol.setWidth(760);PM56_DEMO.openActivity('subagents','agent-schema');});
     const r=await f.evaluate(()=>({w:document.querySelector('#pmRoot .chat-stage').getBoundingClientRect().width,cover:!!document.querySelector('#pmRoot .activity-panel.cover')}));
-    await t.check(`${look} ${reducedMotion} ${w} messages >=360 or covered`,r.cover||r.w>=360);
+    await t.check(`${look} ${reducedMotion} ${w}x${h} messages >=360 or covered`,r.cover||r.w>=360);
    }
   }
  }
