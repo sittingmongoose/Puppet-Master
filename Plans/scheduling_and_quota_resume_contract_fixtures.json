@@ -3915,6 +3915,690 @@
       "expected_schema_valid": false,
       "semantic_checks": [],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-schedule-app-logical",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.schedule.application.v1",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "storage_instance_id": "storage-a",
+        "server_id": "server-a",
+        "thread_id": "thread-a",
+        "schedule_id": "ref:schedule_id",
+        "revision": 1,
+        "target_kind": "scheduled_message",
+        "target_ref": "ref:target_ref",
+        "target_revision": 1,
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "frozen_text_ref": null,
+        "frozen_attachment_refs": [],
+        "frozen_runtime_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "window_ref": "ref:window_ref",
+        "timezone": "ref:timezone",
+        "dst_policy_ref": "ref:dst_policy_ref",
+        "missed_policy_ref": "ref:missed_policy_ref",
+        "quota_consent_ref": null,
+        "next_occurrence_ref": null,
+        "occurrence_idempotency_ref": "ref:occurrence_idempotency_ref",
+        "scope_stop_epoch": 1,
+        "task_stop_epoch": 1,
+        "state": "scheduled",
+        "source_commit_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-schedule-app-wrapper",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleStorageApplicationV1",
+      "record": {
+        "schema_id": "pm.storage_value.execution_schedule.application.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "storage-a",
+        "server_id": "server-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "record": {
+          "schema_id": "pm.execution.schedule.application.v1",
+          "schema_version": "1.0.0",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "server_id": "server-a",
+          "thread_id": "thread-a",
+          "schedule_id": "ref:schedule_id",
+          "revision": 1,
+          "target_kind": "scheduled_message",
+          "target_ref": "ref:target_ref",
+          "target_revision": 1,
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "frozen_text_ref": null,
+          "frozen_attachment_refs": [],
+          "frozen_runtime_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "window_ref": "ref:window_ref",
+          "timezone": "ref:timezone",
+          "dst_policy_ref": "ref:dst_policy_ref",
+          "missed_policy_ref": "ref:missed_policy_ref",
+          "quota_consent_ref": null,
+          "next_occurrence_ref": null,
+          "occurrence_idempotency_ref": "ref:occurrence_idempotency_ref",
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "state": "scheduled",
+          "source_commit_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          }
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "native_unavailable_until_source_adoption"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-schedule-reject-project-logical",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1",
+      "record": {
+        "schema_id": "pm.execution.schedule.application.v1",
+        "schema_version": "1.0.0",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "storage_instance_id": "storage-a",
+        "server_id": "server-a",
+        "thread_id": "thread-a",
+        "schedule_id": "ref:schedule_id",
+        "revision": 1,
+        "target_kind": "scheduled_message",
+        "target_ref": "ref:target_ref",
+        "target_revision": 1,
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "frozen_text_ref": null,
+        "frozen_attachment_refs": [],
+        "frozen_runtime_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "window_ref": "ref:window_ref",
+        "timezone": "ref:timezone",
+        "dst_policy_ref": "ref:dst_policy_ref",
+        "missed_policy_ref": "ref:missed_policy_ref",
+        "quota_consent_ref": null,
+        "next_occurrence_ref": null,
+        "occurrence_idempotency_ref": "ref:occurrence_idempotency_ref",
+        "scope_stop_epoch": 1,
+        "task_stop_epoch": 1,
+        "state": "scheduled",
+        "source_commit_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-schedule-reject-mixed-wrapper",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleStorageApplicationV1",
+      "record": {
+        "schema_id": "pm.storage_value.execution_schedule.application.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "storage-a",
+        "server_id": "server-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "record": {
+          "schema_id": "pm.execution.schedule.application.v1",
+          "schema_version": "1.0.0",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "server_id": "server-a",
+          "thread_id": "thread-a",
+          "schedule_id": "ref:schedule_id",
+          "revision": 1,
+          "target_kind": "scheduled_message",
+          "target_ref": "ref:target_ref",
+          "target_revision": 1,
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "frozen_text_ref": null,
+          "frozen_attachment_refs": [],
+          "frozen_runtime_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "window_ref": "ref:window_ref",
+          "timezone": "ref:timezone",
+          "dst_policy_ref": "ref:dst_policy_ref",
+          "missed_policy_ref": "ref:missed_policy_ref",
+          "quota_consent_ref": null,
+          "next_occurrence_ref": null,
+          "occurrence_idempotency_ref": "ref:occurrence_idempotency_ref",
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "state": "scheduled",
+          "source_commit_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          }
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "refuse_scope_join"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-schedule-reject-server_id-join",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleStorageApplicationV1",
+      "record": {
+        "schema_id": "pm.storage_value.execution_schedule.application.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "storage-a",
+        "server_id": "server-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "record": {
+          "schema_id": "pm.execution.schedule.application.v1",
+          "schema_version": "1.0.0",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "server_id": "other-server_id",
+          "thread_id": "thread-a",
+          "schedule_id": "ref:schedule_id",
+          "revision": 1,
+          "target_kind": "scheduled_message",
+          "target_ref": "ref:target_ref",
+          "target_revision": 1,
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "frozen_text_ref": null,
+          "frozen_attachment_refs": [],
+          "frozen_runtime_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "window_ref": "ref:window_ref",
+          "timezone": "ref:timezone",
+          "dst_policy_ref": "ref:dst_policy_ref",
+          "missed_policy_ref": "ref:missed_policy_ref",
+          "quota_consent_ref": null,
+          "next_occurrence_ref": null,
+          "occurrence_idempotency_ref": "ref:occurrence_idempotency_ref",
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "state": "scheduled",
+          "source_commit_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          }
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "refuse_scope_join"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-schedule-reject-storage_instance_id-join",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleStorageApplicationV1",
+      "record": {
+        "schema_id": "pm.storage_value.execution_schedule.application.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "storage-a",
+        "server_id": "server-a",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "record": {
+          "schema_id": "pm.execution.schedule.application.v1",
+          "schema_version": "1.0.0",
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "other-storage_instance_id",
+          "server_id": "server-a",
+          "thread_id": "thread-a",
+          "schedule_id": "ref:schedule_id",
+          "revision": 1,
+          "target_kind": "scheduled_message",
+          "target_ref": "ref:target_ref",
+          "target_revision": 1,
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "frozen_text_ref": null,
+          "frozen_attachment_refs": [],
+          "frozen_runtime_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "window_ref": "ref:window_ref",
+          "timezone": "ref:timezone",
+          "dst_policy_ref": "ref:dst_policy_ref",
+          "missed_policy_ref": "ref:missed_policy_ref",
+          "quota_consent_ref": null,
+          "next_occurrence_ref": null,
+          "occurrence_idempotency_ref": "ref:occurrence_idempotency_ref",
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "state": "scheduled",
+          "source_commit_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          }
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.exact_owner_graph",
+          "expected": "refuse_scope_join"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-Goal_storage_body_application_v1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/Goal_storage_body_application_v1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-goal-run-cancelled_application_payload_v1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/goal-run-cancelled_application_payload_v1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-goal-run-started_application_payload_v1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/goal-run-started_application_payload_v1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-ExecutionScheduleApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ExecutionScheduleApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-QuotaResumeConsentApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/QuotaResumeConsentApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-HomeLayoutApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/HomeLayoutApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-RuntimeArtifactApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/RuntimeArtifactApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-GoalRunBlockedEventApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalRunBlockedEventApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-GoalBlockedEventApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalBlockedEventApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-GoalCancelledEventApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCancelledEventApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-GoalCompletedEventApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCompletedEventApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-GoalCreatedEventApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCreatedEventApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-GoalEvidenceCapturedEventApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalEvidenceCapturedEventApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-GoalReceiptRecordedEventApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalReceiptRecordedEventApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-GoalToolCheckRecordedEventApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalToolCheckRecordedEventApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-scope-audit-GoalUpdatedEventApplicationV1",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AppOnlyScopeAuditV1",
+      "record": {
+        "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalUpdatedEventApplicationV1"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "scope.app_only_schema",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }

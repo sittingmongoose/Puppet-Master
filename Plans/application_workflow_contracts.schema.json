@@ -28,7 +28,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "storage_instance_id": {
           "type": "string",
@@ -2489,7 +2500,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "project_id": {
           "const": null
@@ -2590,7 +2612,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "project_id": {
           "const": null
@@ -6055,7 +6088,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "storage_instance_id": {
           "type": "string",
@@ -6215,7 +6259,18 @@
       ],
       "properties": {
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "server_id": {
           "type": "string",
@@ -7322,7 +7377,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "storage_instance_id": {
           "type": "string",
@@ -7400,7 +7466,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "storage_instance_id": {
           "type": "string",
@@ -10872,7 +10949,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "project_id": {
           "const": null
@@ -11197,7 +11285,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "project_id": {
           "const": null
@@ -11298,7 +11397,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "project_id": {
           "const": null
@@ -11399,7 +11509,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "project_id": {
           "const": null
@@ -11500,7 +11621,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "project_id": {
           "const": null
@@ -11601,7 +11733,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "project_id": {
           "const": null
@@ -11702,7 +11845,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "project_id": {
           "const": null
@@ -11803,7 +11957,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "project_id": {
           "const": null
@@ -11904,7 +12069,18 @@
           "const": "1.0.0"
         },
         "scope": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
         },
         "project_id": {
           "const": null

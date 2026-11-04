@@ -240,12 +240,26 @@ def scope_failures(record):
                     expected = 'project~' + base64.urlsafe_b64encode(project.encode()).decode().rstrip('=') if isinstance(project, str) else None
                     if not project or s.get('scope_partition') != expected:
                         failures.append('project_partition_mismatch')
+            if isinstance(s, dict) and 'server_id' in value and value['server_id'] != s.get('server_id'):
+                failures.append('server_scope_mismatch')
             app = value.get('application_context')
             if isinstance(app, dict):
                 if 'project_id' in value and value['project_id'] is not None:
                     failures.append('application_outer_project')
                 if 'thread_id' in value and value['thread_id'] != app.get('thread_id'):
                     failures.append('application_thread_mismatch')
+            # A physical wrapper and its logical record share exact custody.
+            # Context-only records carry their logical scope inside application_context.
+            inner = value.get('record')
+            if isinstance(inner, dict):
+                inner_context = inner.get('application_context', {})
+                inner_scope = inner.get('scope', inner_context.get('scope'))
+                if isinstance(s, dict) and isinstance(inner_scope, dict) and s != inner_scope:
+                    failures.append('wrapper_record_scope_mismatch')
+                for field in ('server_id', 'storage_instance_id'):
+                    inner_value = inner.get(field, inner_context.get(field))
+                    if field in value and inner_value is not None and value[field] != inner_value:
+                        failures.append('wrapper_record_' + field + '_mismatch')
             for child in value.values():
                 visit(child)
         elif isinstance(value, list):
@@ -679,6 +693,11 @@ def semantic_outcome(predicate, record, corpus, pack, case):
         return record['outcome']
     if predicate == 'automation.final_dispatch':
         return publication_outcome(record)
+    if predicate == 'scope.app_only_schema':
+        schema = corpus.resolve(record['schema_ref'])
+        scope = schema['properties']['scope']
+        return 'accept' if any(part.get('properties', {}).get('scope_kind', {}).get('const') == 'application'
+                               for part in scope.get('allOf', [])) else 'refuse'
     if predicate == 'scope.exact_owner_graph':
         return 'refuse_scope_join' if scope_failures(record) else 'native_unavailable_until_source_adoption'
     if predicate == 'bindings.unique_identity_owner_handler_pointer_scope_and_return':
