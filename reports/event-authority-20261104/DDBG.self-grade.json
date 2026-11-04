@@ -27,9 +27,10 @@
       "Plans/Contracts_V0.md": "2df76a4314cdec361b2012727f7f96675a0897c2249bd601f764ee44ee96593d",
       "Plans/storage-plan.md": "9ce00ba0f6a4a0d2429a7980f37574fd485ba7495a4911e402a73dfa9ad2ce0f",
       "Plans/Automated_Testing_System.md": "51ab8e0fb08c8aec4e24330b06d12097109e99102ea189e3e40e8cad87c891ca",
-      "Plans/debug_investigation_event_payloads.schema.json": "8d30988c91a2ca610c4b5b4b1da30c6a45166a992b188903b49dd4f54265f1c1",
-      "Plans/debug_investigation_event_fixtures.json": "37355f31326b80a0fd156150a00f83a4c63ff1f60fec42918b1e4771c24d28ea"
-    }
+      "Plans/debug_investigation_event_payloads.schema.json": "37d682d42daaf8f1d5a15b0fa76c521089eb0117b41f06d314395545f832a4fd",
+      "Plans/debug_investigation_event_fixtures.json": "fd243210be0bdc4bade4567d200ec3396dd212978fbe751e81dd1ee9d5349dd3"
+    },
+    "review_round_1_fix_commit": "5271b83e9e65347d1b0e22e9a719837a006b7919"
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -1425,11 +1426,18 @@
               "line_start": 364,
               "line_end": 364,
               "quote": "\"$id\": \"pm.debug_investigation.started.schema.v1\""
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "Canonical enum closure; 1.0B Debug Mode contract",
+              "line_start": 2669,
+              "line_end": 2669,
+              "quote": "`requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew`"
             }
           ],
           "prior": null,
-          "change": "new",
-          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+          "change": "review_round_1",
+          "change_reason": "DDBG Sol review round 1 finding 1 downgraded this cell to PARTIAL (overlays accepted any string; positive fixture used scrubbed overlays with runtime ask). Fixed in 5271b83e9e65347d1b0e22e9a719837a006b7919: closed overlay enum and Debug runtime-resolution if/then rules in the started schema, legal debug/debug/regular fixture, six forbidden-tuple negative cases in scripts/pm-debug-investigation-events.py that fail against the previous schema."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1561,11 +1569,18 @@
               "line_start": 2232,
               "line_end": 2232,
               "quote": "history or sibling records. Positive/negative oracles are the started cases in Plans/debug_investigation_event_fixtures.json"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "Canonical enum closure; 1.0B Debug Mode contract",
+              "line_start": 2669,
+              "line_end": 2669,
+              "quote": "`requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew`"
             }
           ],
           "prior": null,
-          "change": "new",
-          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+          "change": "review_round_1",
+          "change_reason": "DDBG Sol review round 1 finding 1 downgraded this cell to PARTIAL (overlays accepted any string; positive fixture used scrubbed overlays with runtime ask). Fixed in 5271b83e9e65347d1b0e22e9a719837a006b7919: closed overlay enum and Debug runtime-resolution if/then rules in the started schema, legal debug/debug/regular fixture, six forbidden-tuple negative cases in scripts/pm-debug-investigation-events.py that fail against the previous schema."
         }
       },
       "pass_count": 10,
