@@ -94,6 +94,22 @@ POST_AUGUST_REQUIRED = (
 )
 HEX64 = re.compile(r"[0-9a-f]{64}")
 
+# DL-412 (Jared, 2026-11-04, E-CARDS-1 item 4c, option B): the third receipted
+# change. A record may describe a truthful registry step that added several
+# families at once (registry_step_event_types); every family of that step still
+# needs its own complete record naming the same step. Everything else as DL-077.
+MULTI_FAMILY_RECEIPT = "reports/event-authority-20261104/seal-check-multifamily-step-receipt.json"
+MULTI_FAMILY_AUTHORITY = "Plans/Decision_Log.md#DL-412"
+MULTI_FAMILY_RECEIPT_SCHEMA = "pm.assurance.event_authority.multi_family_step_change.v1"
+MULTI_FAMILY_AUTHOR = "claude-opus-5.5:ea-ca-seal-20261104"
+MULTI_FAMILY_REQUIRED = (
+    b"approve all except 4c B",
+    b"a truthful step that added several families at once",
+    b"Each family still needs its own record",
+    b"578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696",
+)
+STEP_FIELD = "registry_step_event_types"
+
 
 def holding_authority_bytes(path: Path) -> bytes:
     """Pin only the canonical DL-039 body, not unrelated Decision Log edits."""
@@ -150,7 +166,7 @@ def canonical_json_sha256(value) -> str:
 
 
 def post_august_receipt_state():
-    """DL-077's receipt must pin DL-077, the current validator bytes and the Step 3 chain."""
+    """DL-077's receipt must pin DL-077, the bytes DL-412's receipt chains from and the Step 3 chain."""
     path = REPO / POST_AUGUST_RECEIPT
     receipt = load_json(path)
     step3 = load_json(REPO / HOLDING_RECEIPT)
@@ -162,7 +178,7 @@ def post_august_receipt_state():
             or receipt.get("authority_ref") != POST_AUGUST_AUTHORITY
             or receipt.get("authority_section_sha256") != section_hash
             or receipt.get("validator_before_sha256") != step3.get("validator_after_sha256")
-            or receipt.get("validator_after_sha256") != sha256_file(Path(__file__))
+            or receipt.get("validator_after_sha256") != post_august_validator_pin()
             or receipt.get("record_dir") != POST_AUGUST_RECORD_DIR
             or receipt.get("record_schema_id") != POST_AUGUST_RECORD_SCHEMA
             or receipt.get("author_task") != POST_AUGUST_AUTHOR
@@ -187,13 +203,113 @@ def holding_validator_pin() -> str:
     return sha256_file(Path(__file__))
 
 
+def multi_family_receipt_state():
+    """DL-412's receipt must pin DL-412, the current validator bytes and the DL-077 chain."""
+    path = REPO / MULTI_FAMILY_RECEIPT
+    receipt = load_json(path)
+    dl077 = load_json(REPO / POST_AUGUST_RECEIPT)
+    section_hash = hashlib.sha256(
+        decision_section_bytes(ROOT / "Decision_Log.md", "DL-412", MULTI_FAMILY_REQUIRED)
+    ).hexdigest()
+    lander = receipt.get("lander_task") if isinstance(receipt, dict) else None
+    prior = receipt.get("prior_receipt") if isinstance(receipt, dict) else None
+    if (not isinstance(receipt, dict) or not isinstance(dl077, dict)
+            or receipt.get("schema_id") != MULTI_FAMILY_RECEIPT_SCHEMA
+            or receipt.get("authority_ref") != MULTI_FAMILY_AUTHORITY
+            or receipt.get("authority_section_sha256") != section_hash
+            or receipt.get("validator_before_sha256") != dl077.get("validator_after_sha256")
+            or receipt.get("validator_after_sha256") != sha256_file(Path(__file__))
+            or not isinstance(prior, dict)
+            or prior.get("path") != POST_AUGUST_RECEIPT
+            or prior.get("sha256") != sha256_file(REPO / POST_AUGUST_RECEIPT)
+            or receipt.get("record_dir") != POST_AUGUST_RECORD_DIR
+            or receipt.get("record_schema_id") != POST_AUGUST_RECORD_SCHEMA
+            or receipt.get("author_task") != MULTI_FAMILY_AUTHOR
+            or not isinstance(lander, str) or not lander.strip()
+            or receipt.get("seal_applier_forbidden_tasks") != sorted({MULTI_FAMILY_AUTHOR, lander})
+            or receipt.get("seal_authorized") is not False
+            or receipt.get("admission_authorized") is not False
+            or receipt.get("contract_depth_complete") is not False):
+        raise ValueError("multi-family step amendment receipt identity, authority or hash mismatch")
+    return receipt, sha256_file(path)
+
+
+def post_august_validator_pin() -> str:
+    """DL-077 pinned the bytes it landed; DL-412's receipt chains from that pin.
+
+    Without a valid DL-412 receipt the DL-077 pin must equal the current file,
+    so any other change to this validator fails the DL-077 and Step 3 checks closed.
+    """
+    if (REPO / MULTI_FAMILY_RECEIPT).exists():
+        receipt, _ = multi_family_receipt_state()
+        return receipt["validator_before_sha256"]
+    return sha256_file(Path(__file__))
+
+
+def registry_step_shape_ok(step, event_type) -> bool:
+    """DL-412: a multi-family step lists two or more distinct event types, sorted, including its own."""
+    return (isinstance(step, list) and len(step) >= 2
+            and all(isinstance(e, str) and e for e in step)
+            and step == sorted(set(step)) and event_type in step)
+
+
+def registry_step_states(record):
+    """The (revision, sha256, family_count) before and after a record's step, or None if malformed."""
+    sides = []
+    for side in ("registry_before", "registry_after"):
+        value = record.get(side)
+        if (not isinstance(value, dict)
+                or not isinstance(value.get("revision"), str) or not value["revision"]
+                or not HEX64.fullmatch(str(value.get("sha256", "")))
+                or type(value.get("family_count")) is not int):
+            return None
+        sides.append((value["revision"], value["sha256"], value["family_count"]))
+    return tuple(sides)
+
+
+def registry_step_problems(records, own, beyond) -> dict:
+    """DL-412: a registry step that added several families counts only as a whole.
+
+    Every family the step lists needs its own record naming the same before and
+    after registry states and the same list; no other record may name that
+    step's before and after SHA-256; and every member's record must be complete
+    on its own. Returns {event_type: [problem]}; empty when no record lists a step.
+    """
+    shas = lambda s: (s[0][1], s[1][1])
+    states = {et: registry_step_states(r) for et, r in records.items()}
+    multi = {et: r for et, r in records.items()
+             if STEP_FIELD in r and registry_step_shape_ok(r.get(STEP_FIELD), et) and states[et]}
+    out = {}
+    for et, record in sorted(multi.items()):
+        if et not in own:
+            continue
+        step = record[STEP_FIELD]
+        claimants = {e for e, s in states.items() if s and shas(s) == shas(states[et])}
+        mismatched = {m for m in step if m not in beyond or m not in multi
+                      or multi[m][STEP_FIELD] != step or states[m] != states[et]}
+        mismatched |= claimants - set(step)
+        if mismatched:
+            out.setdefault(et, []).append("registry_step_partial:" + ",".join(sorted(mismatched)))
+            continue
+        failing = sorted(m for m in step if m != et and own.get(m))
+        if failing:
+            out.setdefault(et, []).append("registry_step_member_incomplete:" + ",".join(failing))
+    for et, record in sorted(records.items()):
+        if (et in own and STEP_FIELD not in record and states[et]
+                and any(shas(states[m]) == shas(states[et]) for m in multi)):
+            out.setdefault(et, []).append("registry_step_partial:" + et)
+    return out
+
+
 def admission_record_problems(record, family) -> list:
     """Every problem with one DL-077 admission record; empty means complete."""
     problems = []
     event_type = record.get("event_type")
     if record.get("schema_id") != POST_AUGUST_RECORD_SCHEMA:
         problems.append("schema_id")
-    if record.get("implementation_receipt_sha256") != sha256_file(REPO / POST_AUGUST_RECEIPT):
+    multi = STEP_FIELD in record
+    receipt_path = REPO / (MULTI_FAMILY_RECEIPT if multi else POST_AUGUST_RECEIPT)
+    if record.get("implementation_receipt_sha256") != sha256_file(receipt_path):
         problems.append("implementation_receipt_sha256")
     if record.get("family_id") != family.get("family_id"):
         problems.append("family_id")
@@ -205,7 +321,7 @@ def admission_record_problems(record, family) -> list:
         if record.get("decision_section_sha256") != hashlib.sha256(section).hexdigest():
             problems.append("decision_section_sha256")
         named = re.search(rb"(?<![A-Za-z0-9_.])" + re.escape(str(event_type)).encode() + rb"(?![A-Za-z0-9_]|\.[A-Za-z0-9_])", section)
-        if match.group(1) in ("DL-077", "DL-078") or not named:
+        if match.group(1) in ("DL-077", "DL-078", "DL-412") or not named:
             problems.append("decision_ref_not_for_family")
     sides_ok = True
     for side in ("registry_before", "registry_after"):
@@ -216,10 +332,18 @@ def admission_record_problems(record, family) -> list:
                 or type(value.get("family_count")) is not int):
             problems.append(side)
             sides_ok = False
-    if sides_ok:
+    step = record.get(STEP_FIELD)
+    step_ok = not multi or registry_step_shape_ok(step, event_type)
+    if not step_ok:
+        problems.append(STEP_FIELD)
+    if sides_ok and not multi:
         before, after = record["registry_before"], record["registry_after"]
         if after["family_count"] != before["family_count"] + 1 or after["sha256"] == before["sha256"]:
             problems.append("registry_before_after_not_exactly_one_family")
+    elif sides_ok and step_ok:
+        before, after = record["registry_before"], record["registry_after"]
+        if after["family_count"] != before["family_count"] + len(step) or after["sha256"] == before["sha256"]:
+            problems.append("registry_before_after_not_exactly_step_families")
     if record.get("registry_row_sha256") != canonical_json_sha256(family):
         problems.append("registry_row_sha256")
     depth = record.get("depth_assessment")
@@ -277,15 +401,24 @@ def validate_post_august_admissions(registry, known37):
             issues.append(path.name + ": admission record name, event type or uniqueness mismatch")
             continue
         records[event_type] = record
+    own = {}
     for event_type in sorted(beyond):
         record = records.get(event_type)
         if record is None:
-            issues.append(event_type + ": no admission record")
             continue
         try:
-            problems = admission_record_problems(record, live[event_type])
+            own[event_type] = admission_record_problems(record, live[event_type])
         except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
-            problems = ["malformed: " + str(exc)]
+            own[event_type] = ["malformed: " + str(exc)]
+    try:
+        steps = registry_step_problems(records, own, beyond)
+    except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+        steps = {et: ["registry_step_malformed: " + str(exc)] for et, r in records.items() if STEP_FIELD in r}
+    for event_type in sorted(beyond):
+        if event_type not in own:
+            issues.append(event_type + ": no admission record")
+            continue
+        problems = own[event_type] + steps.get(event_type, [])
         if problems:
             issues.extend(event_type + ": " + p for p in problems)
         else:
@@ -1680,10 +1813,15 @@ def main() -> int:
         "by_bucket": dict(Counter(r.get("bucket") for r in ledger)),
         "by_disposition": dict(Counter(r.get("disposition") for r in ledger)),
     }
+    try:
+        _, multi_family_receipt_sha = multi_family_receipt_state()
+    except (OSError, ValueError, TypeError, KeyError, AttributeError):
+        multi_family_receipt_sha = None
     pins = {
         "holding_bucket_change_receipt_sha256": sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None,
         "holding_authority_source_sha256": sha256_file(ROOT / "Decision_Log.md") if (ROOT / "Decision_Log.md").exists() else None,
         "post_august_admission_receipt_sha256": post_august_receipt_sha,
+        "multi_family_step_receipt_sha256": multi_family_receipt_sha,
         "known37_sha256": sha256_file(K37),
         "cohort_pins_sha256": sha256_file(COHORT),
         "denominator_sha256": sha256_file(DENOM),
