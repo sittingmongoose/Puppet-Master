@@ -570,7 +570,7 @@ class ReplayOracle:
         self.executed_effects = 0
 
     def consume(self, event, producer, context, *, payload_store=None):
-        if self.contract_failures(event, producer, context, payload_store=payload_store):
+        if self.contract_failures(event, producer, context, payload_store=payload_store, historical=True):
             return "quarantined_without_checkpoint_advance"
         identity = event["event_id"]
         owner = envelope_oracle()
@@ -587,7 +587,7 @@ class ReplayOracle:
         self.transition_ids[transition] = identity
         self.checkpoint = event["sequence_id"]
         self.projected_count += 1
-        body, _ = body_route.resolved_body(event, payload_store)
+        body, _ = body_route.resolved_body(event, payload_store, historical=True)
         subject = body["context"]
         if subject["browser_page_id"] is not None:
             key = (subject["project_id"], subject["browser_workspace_id"], subject["browser_page_id"])
