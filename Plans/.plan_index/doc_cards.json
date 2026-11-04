@@ -1987,7 +1987,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7268,
+      "line_count": 7278,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 78,
       "plan_unit_ids": [
@@ -2140,7 +2140,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "b20bd984b4a2bf71b88fd6ca8568ea9ec3d2e2a9186e66b784e544533575d4f4",
+      "sha256": "f061e18456a46990c3926d8c38bf1f28c50dea324b4d1c0deba858eac8ee6cbb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 77,
@@ -12580,7 +12580,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 33264,
+      "line_count": 33270,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 466,
       "plan_unit_ids": [
@@ -13497,7 +13497,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "63e17732b53eb739e96fbd8697cb9b89475f1b00800805c96a586c2898b5d4ee",
+      "sha256": "dd21f711108a3d492d7911a4fcf10b603e22945722cc0f04069ce2ef993fb3ba",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 465,
@@ -18597,10 +18597,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 231,
+        "False": 234,
         "True": 110
       },
-      "heading_count": 817,
+      "heading_count": 820,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18695,9 +18695,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 29478,
+      "line_count": 29601,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 341,
+      "plan_unit_count": 344,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -19039,7 +19039,10 @@
         "SP-350",
         "SP-351",
         "SP-352",
-        "SP-353"
+        "SP-353",
+        "SP-720",
+        "SP-721",
+        "SP-722"
       ],
       "reasoning_tiers": [
         "high",
@@ -19057,6 +19060,7 @@
         "dry_method_provenance_storage_gap",
         "duplicate_first_acknowledgement_or_lost_canonical_receipt_authority",
         "durable_contract_claim_without_physical_family_or_nonpersisted_boundary",
+        "event_authority",
         "event_record_storage_boundary_drift",
         "event_source_and_checkpoint_authority_drift",
         "eventrecord_scope_legacy_dedupe_drift",
@@ -19162,10 +19166,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db",
+      "sha256": "5f3ee059c099a9dc734f46172c08067883366c393fc0734abdacb3b9669e6c6d",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 337,
+        "accepted": 340,
         "retired": 3,
         "superseded": 1
       },
@@ -19176,7 +19180,7 @@
         "migration": 1,
         "migration_contract": 2,
         "owner_boundary": 2,
-        "requirement": 277,
+        "requirement": 280,
         "schema_contract": 23,
         "security_contract": 1,
         "storage_contract": 27,
@@ -19429,6 +19433,7 @@
         "python3 scripts/pm-implementation-readiness.py validate-case-l",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-onboarding-contracts.py --check",
+        "python3 scripts/pm-orchestrator-event-contracts.py",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -21537,7 +21542,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T17:59:54Z",
+  "generated_at_utc": "2026-11-04T18:38:30Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21545,13 +21550,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3656,
+      "False": 3659,
       "True": 3791
     },
-    "plan_unit_count": 7447,
+    "plan_unit_count": 7450,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7230,
+      "accepted": 7233,
       "retired": 194,
       "superseded": 23
     },
@@ -21621,7 +21626,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5640,
+      "requirement": 5643,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,

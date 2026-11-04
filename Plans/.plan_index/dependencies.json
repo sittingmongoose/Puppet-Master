@@ -6852,6 +6852,9 @@
     "GRS-086",
     "OSI-439",
     "SQR-019",
+    "SP-720",
+    "SP-721",
+    "SP-722",
     "SMPFS-001",
     "SMPFS-144",
     "SP-352",
@@ -82395,6 +82398,96 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-720",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-720",
+      "to": "OSI-681"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-720",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-720",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-720",
+      "to": "SP-320"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-720",
+      "to": "SP-351"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-721",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-721",
+      "to": "OSI-682"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-721",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-721",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-721",
+      "to": "SP-320"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-721",
+      "to": "SP-351"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-722",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-722",
+      "to": "OSI-683"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-722",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-722",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-722",
+      "to": "SP-320"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-722",
+      "to": "SP-351"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -117609,7 +117702,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T17:59:54Z",
+  "generated_at_utc": "2026-11-04T18:38:30Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -203064,7 +203157,7 @@
         "heading": "OSI-681 — crew.board_message_posted",
         "heading_level": 3,
         "heading_line": 32206,
-        "line": 32226,
+        "line": 32228,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203080,8 +203173,8 @@
       "source_location": {
         "heading": "OSI-682 — crew.board_message_read",
         "heading_level": 3,
-        "heading_line": 32252,
-        "line": 32270,
+        "heading_line": 32254,
+        "line": 32274,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203097,8 +203190,8 @@
       "source_location": {
         "heading": "OSI-683 — crew.board_messages_archived",
         "heading_level": 3,
-        "heading_line": 32296,
-        "line": 32314,
+        "heading_line": 32300,
+        "line": 32320,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203114,8 +203207,8 @@
       "source_location": {
         "heading": "OSI-684 — parser.error",
         "heading_level": 3,
-        "heading_line": 32340,
-        "line": 32360,
+        "heading_line": 32346,
+        "line": 32366,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203131,8 +203224,8 @@
       "source_location": {
         "heading": "OSI-685 — phase.force_completed",
         "heading_level": 3,
-        "heading_line": 32386,
-        "line": 32404,
+        "heading_line": 32392,
+        "line": 32410,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203148,8 +203241,8 @@
       "source_location": {
         "heading": "OSI-686 — subagent.budget_warning",
         "heading_level": 3,
-        "heading_line": 32430,
-        "line": 32448,
+        "heading_line": 32436,
+        "line": 32454,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203165,8 +203258,8 @@
       "source_location": {
         "heading": "OSI-687 — subagent.cancelled",
         "heading_level": 3,
-        "heading_line": 32474,
-        "line": 32492,
+        "heading_line": 32480,
+        "line": 32498,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203182,8 +203275,8 @@
       "source_location": {
         "heading": "OSI-688 — subagent.completed",
         "heading_level": 3,
-        "heading_line": 32518,
-        "line": 32536,
+        "heading_line": 32524,
+        "line": 32542,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203199,8 +203292,8 @@
       "source_location": {
         "heading": "OSI-689 — subagent.context_warning",
         "heading_level": 3,
-        "heading_line": 32562,
-        "line": 32580,
+        "heading_line": 32568,
+        "line": 32586,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203216,8 +203309,8 @@
       "source_location": {
         "heading": "OSI-690 — subagent.escalated",
         "heading_level": 3,
-        "heading_line": 32606,
-        "line": 32624,
+        "heading_line": 32612,
+        "line": 32630,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203233,8 +203326,8 @@
       "source_location": {
         "heading": "OSI-691 — subagent.failed",
         "heading_level": 3,
-        "heading_line": 32650,
-        "line": 32668,
+        "heading_line": 32656,
+        "line": 32674,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203250,8 +203343,8 @@
       "source_location": {
         "heading": "OSI-692 — subagent.message_received",
         "heading_level": 3,
-        "heading_line": 32694,
-        "line": 32712,
+        "heading_line": 32700,
+        "line": 32718,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203267,8 +203360,8 @@
       "source_location": {
         "heading": "OSI-693 — subagent.message_sent",
         "heading_level": 3,
-        "heading_line": 32738,
-        "line": 32756,
+        "heading_line": 32744,
+        "line": 32762,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203284,8 +203377,8 @@
       "source_location": {
         "heading": "OSI-694 — subagent.model_switched",
         "heading_level": 3,
-        "heading_line": 32782,
-        "line": 32800,
+        "heading_line": 32788,
+        "line": 32806,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203301,8 +203394,8 @@
       "source_location": {
         "heading": "OSI-695 — subagent.output_truncated",
         "heading_level": 3,
-        "heading_line": 32826,
-        "line": 32844,
+        "heading_line": 32832,
+        "line": 32850,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203318,8 +203411,8 @@
       "source_location": {
         "heading": "OSI-696 — subagent.paused",
         "heading_level": 3,
-        "heading_line": 32870,
-        "line": 32888,
+        "heading_line": 32876,
+        "line": 32894,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203335,8 +203428,8 @@
       "source_location": {
         "heading": "OSI-697 — subagent.progress",
         "heading_level": 3,
-        "heading_line": 32914,
-        "line": 32932,
+        "heading_line": 32920,
+        "line": 32938,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203352,8 +203445,8 @@
       "source_location": {
         "heading": "OSI-698 — subagent.resumed",
         "heading_level": 3,
-        "heading_line": 32958,
-        "line": 32976,
+        "heading_line": 32964,
+        "line": 32982,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203369,8 +203462,8 @@
       "source_location": {
         "heading": "OSI-699 — subagent.retried",
         "heading_level": 3,
-        "heading_line": 33002,
-        "line": 33020,
+        "heading_line": 33008,
+        "line": 33026,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203386,8 +203479,8 @@
       "source_location": {
         "heading": "OSI-700 — subagent.spawned",
         "heading_level": 3,
-        "heading_line": 33046,
-        "line": 33064,
+        "heading_line": 33052,
+        "line": 33070,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203403,8 +203496,8 @@
       "source_location": {
         "heading": "OSI-701 — subagent.started",
         "heading_level": 3,
-        "heading_line": 33090,
-        "line": 33108,
+        "heading_line": 33096,
+        "line": 33114,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203420,8 +203513,8 @@
       "source_location": {
         "heading": "OSI-702 — subagent.timeout",
         "heading_level": 3,
-        "heading_line": 33134,
-        "line": 33152,
+        "heading_line": 33140,
+        "line": 33158,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203437,8 +203530,8 @@
       "source_location": {
         "heading": "OSI-703 — subagent.tool_called",
         "heading_level": 3,
-        "heading_line": 33178,
-        "line": 33196,
+        "heading_line": 33184,
+        "line": 33202,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -203454,8 +203547,8 @@
       "source_location": {
         "heading": "OSI-704 — subagent.tool_completed",
         "heading_level": 3,
-        "heading_line": 33222,
-        "line": 33240,
+        "heading_line": 33228,
+        "line": 33246,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -228911,6 +229004,57 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "exact_event_family",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-720",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "SP-720 — crew.board_message_posted canonical coordination member",
+        "heading_level": 3,
+        "heading_line": 29481,
+        "line": 29495,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "exact_event_family",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-721",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "SP-721 — crew.board_message_read canonical coordination member",
+        "heading_level": 3,
+        "heading_line": 29522,
+        "line": 29536,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "exact_event_family",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-722",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "SP-722 — crew.board_messages_archived canonical coordination member",
+        "heading_level": 3,
+        "heading_line": 29563,
+        "line": 29577,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -244217,10 +244361,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18823,
+    "depends_on_edge_count": 18841,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22031,
-    "node_count": 7447,
+    "edge_count": 22049,
+    "node_count": 7450,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

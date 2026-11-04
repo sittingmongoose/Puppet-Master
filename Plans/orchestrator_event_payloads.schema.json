@@ -205,11 +205,45 @@
         },
         "subject": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+          }
         },
         "priority": {
           "type": "string",
           "minLength": 1
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 16384,
+          "format": "pm-utf8-body-16k",
+          "not": {
+            "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+          }
+        },
+        "content_ref": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "blake3_id",
+            "byte_size",
+            "media_type"
+          ],
+          "properties": {
+            "blake3_id": {
+              "type": "string",
+              "pattern": "^blake3:[0-9a-f]{64}$"
+            },
+            "byte_size": {
+              "type": "integer",
+              "minimum": 16385
+            },
+            "media_type": {
+              "const": "text/plain; charset=utf-8"
+            }
+          }
         }
       },
       "allOf": [
@@ -232,6 +266,28 @@
                 "project_id"
               ]
             }
+          }
+        }
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "content"
+          ],
+          "not": {
+            "required": [
+              "content_ref"
+            ]
+          }
+        },
+        {
+          "required": [
+            "content_ref"
+          ],
+          "not": {
+            "required": [
+              "content"
+            ]
           }
         }
       ]
@@ -423,7 +479,11 @@
         },
         "archive_reason": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+          }
         }
       },
       "allOf": [
@@ -2407,7 +2467,9 @@
         "parent_thread_id",
         "requested_runtime_ref",
         "effective_runtime_ref",
-        "permission_snapshot_ref"
+        "permission_snapshot_ref",
+        "retry_cause",
+        "prior_attempt_number"
       ],
       "properties": {
         "schema_id": {
@@ -2489,6 +2551,17 @@
         "permission_snapshot_ref": {
           "type": "string",
           "minLength": 1
+        },
+        "retry_cause": {
+          "enum": [
+            "failure",
+            "blockage",
+            "interruption"
+          ]
+        },
+        "prior_attempt_number": {
+          "type": "integer",
+          "minimum": 1
         }
       },
       "allOf": [

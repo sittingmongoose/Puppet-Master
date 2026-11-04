@@ -81,6 +81,8 @@ FAMILIES = (
 )
 SEVEN = tuple(event_type for event_type, _definition, _entry in FAMILIES)
 MIRROR = "coordination.debug_mirror_exported"
+BOARD_FAMILIES = ("crew.board_message_posted", "crew.board_message_read", "crew.board_messages_archived")
+BOARD_PAYLOAD_PATH = "Plans/orchestrator_event_payloads.schema.json"
 TERMINAL = ("coordination.agent_unregistered", "coordination.agent_crashed", "coordination.agent_aborted")
 DEF_BY_TYPE = {event_type: definition for event_type, definition, _entry in FAMILIES}
 DEF_BY_TYPE[MIRROR] = "debug_mirror_exported"
@@ -783,6 +785,13 @@ def event_records_bundle(root: Path = ROOT) -> dict[str, Any]:
         definition.pop("$schema", None)
         definition.pop("$id", None)
         bundle_defs[name] = rewrite_refs(definition, mapping)
+    # SP-720..722 append three exact board members. Never relax or replace an
+    # existing agent definition, its codec, or its own closed member selection.
+    board_defs = load(BOARD_PAYLOAD_PATH, root)["$defs"]
+    for event_type in BOARD_FAMILIES:
+        name = event_type.replace(".", "_")
+        members.append(name)
+        bundle_defs[name] = copy.deepcopy(board_defs[name])
     return {
         "$id": "pm.storage_value.coordination_event_records.v1",
         "$comment": (
@@ -790,7 +799,9 @@ def event_records_bundle(root: Path = ROOT) -> dict[str, Any]:
             "2.3.1): one closed member per key shape, in key-shape order, copied from "
             "Plans/coordination_event_payloads.schema.json with its $schema and $id removed and its references "
             "made local. A stored value is the EventRecord payload; the envelope's payload_schema_id names its "
-            "member, so members carry no stored schema_id."
+            "member, so the original eight members carry no stored schema_id. SP-720..722 append the three "
+            "closed board members from Plans/orchestrator_event_payloads.schema.json, retaining their own "
+            "literal stored schema_id and scope editions. The composition identity is never stored."
         ),
         "oneOf": [{"$ref": f"#/$defs/{name}"} for name in members],
         "$defs": bundle_defs,
@@ -839,19 +850,19 @@ def expected_svr_rows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
         "storage_kind": "seglog",
         "status": "materialized",
         "tier": "later_gui_or_feature_projection",
-        "key_shape": " | ".join(list(SEVEN) + [MIRROR]),
+        "key_shape": " | ".join(list(SEVEN) + [MIRROR] + list(BOARD_FAMILIES)),
         "value_schema_id": "pm.storage_value.coordination_event_records.v1",
         "value_schema_ref": PAYLOAD_PATH,
         "owner_doc": SP320,
-        "producer": [APPEND],
-        "consumers": [PROJECTOR + "@" + VERSION],
+        "producer": [APPEND, "storage.coordination_append.application@1.0.0"],
+        "consumers": [PROJECTOR + "@" + VERSION, "projector.storage.event_record_index@1.0.0"],
         "schema_version": VERSION,
         "encoding": "seglog_messagepack",
         "required_fields": records_required,
         "optional_fields": records_optional,
         "nullable_fields": [],
         "replay_behavior": (
-            "Coordination EventRecords replay in canonical seglog order through "
+            "Original agent coordination EventRecords replay in canonical seglog order through "
             "storage.coordination_projector.v1@1.0.0 only (SP-320). The dedupe identity is (scope_partition, "
             "event_type, idempotency_key), with idempotency_key "
             "coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, whose "
@@ -859,14 +870,19 @@ def expected_svr_rows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
             "original event and its first AppendReceipt through storage.first_append_receipt.resolve.v2, and "
             "the same identity with a different digest is idempotency_conflict. A stale revision returns "
             "coordination_conflict. Replay rebuilds projection rows only and never re-runs scheduling, "
-            "prompts, notifications, mirror writes, commands or appends."
+            "prompts, notifications, mirror writes, commands or appends. SP-720..722 board members use their "
+            "own OSI-681..683 identities: Project do1 and CV-366 application@1 keys, the unchanged Storage "
+            "lifetime tuple and SP-286 full-value first receipts. Board history uses the generic event index "
+            "only, never the agent lifecycle reducer, and never posts, acknowledges or archives on replay."
         ),
         "migration": (
             "Legacy active-agents.json and .puppet-master/state/*.json coordination paths are compatibility or "
             "debug mirror inputs only, never migration authority; new writers append EventRecord values through "
             "storage.coordination_append.v1@1.0.0. StorageMigrationCoordinator installs the family through the "
             "actual migration graph and ceilings, and no store-version integer is invented. A later payload "
-            "version needs a new CV-353 definition and version; readers reject an unsupported one."
+            "version needs a new CV-353 definition and version; readers reject an unsupported one. "
+            "SP-720..722 prepare only the three explicit board members from the Orchestrator schema; "
+            "their Project/app source editions are adopted independently without event admission."
         ),
         "retention_compaction": (
             "Exact RP-COORDINATION-180D@1.0.0, the structured retention_policy_ref, which governs this text "
@@ -877,22 +893,31 @@ def expected_svr_rows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
             "appended at registration, on an actual change and at termination, and heartbeats are runtime "
             "liveness, not records (OSI-438). coordination.debug_mirror_exported is not admitted, and its anchor "
             "is settled in its own landing. Projections, checkpoints and mirrors are rebuildable from seglog "
-            "and keep their own policies."
+            "and keep their own policies. Each SP-720..722 board member joins its actual same-scope "
+            "Server/thread/crew/run to the first durable terminal canonical Run record; an unresolved "
+            "completion is ineligible for expiry. Board archive is visibility only. The DL-085 assignment "
+            "remains on origin/plans/ea-storage-retention-20261104; its Q1/Q3 are integration follow-ups."
         ),
         "redaction_no_secret_rule": (
-            "Only IDs, refs, hashes, enums, integers, timestamps and CV-353's bounded status and operation "
+            "Original agent members: only IDs, refs, hashes, enums, integers, timestamps and CV-353's bounded status and operation "
             "text. No prompt, model output, file content, diff, tool argument, command line, environment value, "
             "credential, provider token, OAuth value, account identifier or local absolute path; path_ref is "
             "the normalized project-relative path and path_hash its SHA-256 (SP-320). The planned registry rows "
             "reject unhandled secrets, and current Project and thread permission and deletion tombstones gate "
-            "every read."
+            "every read. Board members instead adopt OSI-299/OSI-681..683 and SP-720..722: posted events "
+            "carry sanitized subject and at most 16 KiB UTF-8 content or a verified SP-337 BLAKE3/byte-size/"
+            "media-type reference; reads carry acknowledgement identities; archives carry bounded sanitized "
+            "archive_reason. This explicit board exception never relaxes an agent member. Redact before "
+            "commit; inline and referenced text require current same-source access/deletion/hold fences."
         ),
         "legacy_canonical_crosswalk_status": (
             "Materialized in place by SP-320 (DL-045) from the CV-353 payload definitions, as a nonstored keyed "
             "value composition with one member per key shape (Plans/storage-plan.md section 2.3.1). "
             "Materializing admits no event: every coordination family stays quarantined before append or "
             "projection, and absent from the event family registry, until its own Storage admission landing. "
-            "coordination.debug_mirror_exported is prepared, not admitted, and has no producer here."
+            "coordination.debug_mirror_exported is prepared, not admitted, and has no producer here. "
+            "SP-720..722 append each exact board key/member, with original AgentCoordinator source, "
+            "application counterpart and run anchor. Board members remain prepared without admission."
         ),
         "compatibility_key_shapes": [],
         "recovery_disposition": {

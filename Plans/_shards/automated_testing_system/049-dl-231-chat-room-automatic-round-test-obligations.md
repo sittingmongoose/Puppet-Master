@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7268
+Source lines: L6715-L7278
 
-Source SHA256: `b20bd984b4a2bf71b88fd6ca8568ea9ec3d2e2a9186e66b784e544533575d4f4`
+Source SHA256: `f061e18456a46990c3926d8c38bf1f28c50dea324b4d1c0deba858eac8ee6cbb`
 
 ---
 
@@ -539,6 +539,16 @@ canonical_text: >-
   add an unknown field, change schema version, use a foreign scope, zero occurrence, invalid UTC,
   absent Project identity or fabricated application Project. Every negative refuses.
   Identity vectors preserve a retry and distinguish operation, occurrence, Server, thread, run and family.
+  OSI-681..683 and OSI-686..704 application vectors decode CV-366's exact application@1 Server and
+  original-operation observation component; the incompatible do1 application key refuses. Project
+  identity and project~base64url partitions remain exact. Same identity with changed full semantics
+  conflicts. OSI-681 tests inline content at 16,384 UTF-8 bytes, oversized ASCII and multibyte text,
+  missing/both body representations, closed SP-337 BLAKE3/byte-size/media-type references and secrets.
+  Each board family validates both scope editions against its actual coordination_event_records
+  member (SP-720..722), preserving all old members and rejecting missing members, source/append
+  edition drift, foreign Server/thread/crew/run/operation/message joins and false Run anchors.
+  OSI-699 tests a new attempt after failure, blockage and interruption independently, with terminal,
+  permission, parent-ceiling, Stop, deadline, resume/reroute/replacement and attempt-counter refusals.
   Native obligations remain NOT_RUN per family: race the exact producer predicate with cancellation,
   commit referenced content before append, crash before and after first receipt, resolve full value on
   uncertain acknowledgment, reject same-key changed semantics, replay without its semantic effect,
