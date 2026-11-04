@@ -7,7 +7,7 @@
 // (a ResizeObserver, after the frame's callbacks, the last thing before paint): the shown bubble (opacity over 0.05, with
 // words; NieR's dialogue box at the stage's foot is not placed by the stage and is left out) must overlap neither Pip's
 // head nor its control bar as painted (2 px tolerance). `--set looks=a,b`; `--set sandbox=1` for T3's sandbox;
-// `--set motion=reduce`. Headless or `--record`. About 4 minutes.
+// `--set motion=reduce`; `--set size=740x900` (headless). Headless or `--record`. About 3 minutes.
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const FRAMES = 60;
 
@@ -42,10 +42,14 @@ const collect = (f) => f.evaluate(() => window.__pbc.p);
 const hit = (a, b, g = 2) => !!(a && b) && a[0] + g < b[2] && b[0] + g < a[2] && a[1] + g < b[3] && b[1] + g < a[3];
 
 export default async function (t) {
+	// --set size=740x900: the narrow strip or the short one (headless: a recording keeps 1920x1080)
+	const size = /^(\d+)x(\d+)$/.exec(String(t.args.size || ''));
+	if (size) await t.viewport(+size[1], +size[2]);
 	const f = await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
 	await f.waitForFunction(() => { const h = document.querySelector('#pm-o55-onboarding .o55-stage'); return !!(h && h.__pipStage && h.__pipStage.gHead); }, null, { timeout: 60000 });
 	await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });
 	await f.evaluate(installSampler);
+	t.log(`window ${await t.page.evaluate(() => innerWidth + 'x' + innerHeight)}, stage layout ${await f.evaluate(() => document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.layoutName)}`);
 	const quiet = () => f.waitForFunction(() => !window.O55.S.vt && !(window.O55.nierLook && window.O55.nierLook.busy && window.O55.nierLook.busy()) && !(window.PM_THEME_TRANSITION && window.PM_THEME_TRANSITION.busy && window.PM_THEME_TRANSITION.busy()), null, { timeout: 30000 }).catch(() => {});
 	const go = async (id) => { await f.evaluate((sid) => window.O55.ui.go(sid, { noHistory: true }), id); await quiet(); await f.waitForTimeout(500); return f.evaluate(() => window.O55.S.sess.screen); };
 	const bad = [], rows = [];
