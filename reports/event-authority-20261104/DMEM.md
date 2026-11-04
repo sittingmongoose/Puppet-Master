@@ -1,6 +1,6 @@
 # DMEM draft report — 2026-11-04
 
-Branch: `plans/ea-w2-memory-maintenance-20261104`. Assessed source head: `8115886fdacafb9d489d2e779dac2040375c1ba6`. Base: `be4766513ff71776346fc73b84f2542990f955af`. A later report-only commit contains this report and self-grade.
+Branch: `plans/ea-w2-memory-maintenance-20261104`. Assessed source head: `c4eaa00998a8b7334778e6ec02a56b782d907001`. Base: `be4766513ff71776346fc73b84f2542990f955af`. A later report-only commit contains this report and self-grade.
 
 ## Outcome
 
