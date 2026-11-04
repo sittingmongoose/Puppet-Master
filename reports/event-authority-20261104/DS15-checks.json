@@ -1,0 +1,61 @@
+[
+  {
+    "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/shard-generate.log",
+    "sha256": "51f90d9686394a874dcb747e703ac8d30600168c5045904d78aa3f228f033c87"
+  },
+  {
+    "command": "python3 scripts/pm-plan-index.py generate",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/index-generate.log",
+    "sha256": "88d0257b4d3440403288b00565841b926b296c0e677f68eed6ef4c6812068c20"
+  },
+  {
+    "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/shard-check.log",
+    "sha256": "7fd4132d67fb6c69830ff7ddfdd4c58572ef3596ad4dc9db7389955f9e55dac3"
+  },
+  {
+    "command": "python3 scripts/pm-plan-index.py validate",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/index-validate-final.log",
+    "sha256": "1cd1461eb4b5f7a220e178bc949105e22c8ff3447b4abe4a60d001f5166d8975"
+  },
+  {
+    "command": "python3 scripts/pm-ds15-event-contracts.py",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/targeted-check.log",
+    "sha256": "cdfea6bce92edea179c5c94a205e75a55b51ff5def01b0ab1b4dc3c0fe0ad4ab"
+  },
+  {
+    "command": "python3 scripts/pm-implementation-readiness.py validate-case-l",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/case-l-check.log",
+    "sha256": "fad47380afd0cb99acc0934478d2b891696f76679a0ed378747d875e24229388"
+  },
+  {
+    "command": "storage registry JSON Schema + self-grade exact quotes",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/schema-evidence-check.log",
+    "sha256": "260738e5a1348f38505aa04bb98362996a133c2c4e5564b4006d4047386b89d3"
+  },
+  {
+    "command": "git diff --check",
+    "exit_code": 0
+  },
+  {
+    "command": "initial index validate (overlapped unfinished generation)",
+    "exit_code": 1,
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/index-validate.log",
+    "resolution": "Rerun only after generation settled; final top-level pass."
+  }
+]

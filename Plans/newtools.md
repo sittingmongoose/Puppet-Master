@@ -9106,3 +9106,339 @@ ContractRef: ContractName:Plans/newtools.md#N2-157, ContractName:Plans/storage-p
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+
+### N2-217 — doctor.custom_headless.checked 1.0.0 — newly authored owner contract, prepared without admission.
+
+```yaml
+{
+  "plan_unit_id": "N2-217",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/newtools.md",
+  "canonical_text": "doctor.custom_headless.checked 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: all top-level Plans/*.md, Plans/*.json and scripts/*.py at base be4766513f; exact-family matches are preserved in the DS15 external search evidence. Existing newtools section 12.6 (Doctor) or 14.1/14.3/14.4 (live) supplies behavior; no exact versioned producer/consumer/checkpoint/identity/withdrawal definition was found for doctor.custom_headless.checked. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.\nProducer: CheckRegistry Doctor custom-headless detection. Each actual Doctor invocation records exactly one detection outcome after config inspection. Valid registers CustomHeadlessTool; invalid warns and skips; absent skips cleanly. The event records the outcome, never authorizes an executable.\nScope and identity: project_only; resolve the actual Project before work, never fabricate a Run for Doctor. EventRecord.project_id equals payload.project_id; live payload.run_id equals the actual EventRecord.run_id. Stable original event_id is allocated once and retained with the frozen original payload. Idempotency key is sha256(canonical MessagePack array [\"doctor.custom_headless.checked\", \"1.0.0\", actual project_id, doctor_invocation_id]); the ordered tuple is unambiguous, never delimiter concatenation. Changed bytes at the same identity refuse. Browser optional fields are paired, require an ordinary actual BrowserSession, and never accept AuthBrowserSession.\nPayload: Plans/ds15_doctor_custom_headless_checked.schema.json is the exact closed 1.0.0 payload. Refs are opaque owner-resolved non-secret identifiers, never local absolute paths, credentials, executable arguments or raw content. For started, artifact_root/display_target name owner refs, not raw filesystem paths; session_id resolves the actual driver session (a PID alone is insufficient).\nOrdering and custody: explicitly adopt SP-286 / CV-339 and its full-value v2 successor, plus Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Validate current exact family admission, actual source/producer/codec, root/dedupe and migration custody before original work; registry absence fences it today. Freeze producer fields only after authentic outcome/body commit; append through the admitted single writer; retain the original first AppendReceipt and full frozen value under SP-286 before any success/terminal publication. Lost acknowledgement returns the original receipt, event_id and payload; recovery inspects original outcome custody and never repeats a launch, step, artifact creation or detection just to recreate history. Uncertain outcome stays fenced. SP-286 owns receipt storage; this family creates no separate canonical receipt family.\nReplay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical event/receipt is mandatory for retry, not a caller hash or present-day reconstruction.\nConsumer: reader.ds15.doctor_custom_headless_checked.v1@1.0.0, operating as Doctor detection outcome reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and DL-076's nine-field durable token. Its checkpoint key is projector.checkpoint.ds15.doctor_custom_headless_checked:{project_id}, closed value Plans/ds15_doctor_custom_headless_checked_checkpoint.schema.json. It captures CURRENT-selected complete generic-index coverage, scans the entire selected sequence range with exact Project/type filter in canonical sequence order, then CASes the complete previous checkpoint and new value in one redb transaction. through_sequence_id is the last globally scanned sequence, last_event_id the last matching event. No checkpoint is created until a first matching event; gaps and filter-completeness failures refuse advance. The live redb_snapshot_id is rejoined for each read/advance/recovery and never persisted. Changed token, source, admission, access, deletion or installed reader at the final owner guard preserves the old checkpoint. Operating reads resolve original events from SP-278 rather than duplicate bodies into a new projection table. Rebuild uses a fresh complete captured source; missing retained prefix returns unavailable, never silent zero/reset or fabricated currentness.\nRedaction/custody: the actual Project original seglog/first-receipt owner holds original event bytes; source config, target, artifact and finalization bodies stay with their existing owners. Coherent backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebuildable from that authority and grants no access. Every read rechecks current Project/run/thread permissions and source deletion/tombstones before following any ref. Deleted or denied sources return unavailable without copying bodies into history. No raw probe/config, page, cookies, prompts, screenshot bytes, output or secret is stored in this payload.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for this event AND its checkpoint. Case L-3 candidates are approval/receipt/audit authority (indefinite), Runtime/run/node/attempt (365 days after completion, only where an actual Run exists), ordinary telemetry (90 days); these are candidates, not assignments. No expiry/count eviction, source retention extension or deletion rule is authorized by this draft. Do not admit until RT resolves both assignments.\nCompatibility and withdrawal: only exact 1.0.0 readers/writers; reject unknown payload/value version before effect or checkpoint. No deployed predecessor or lazy alias migration is presumed. A version change requires independently reviewed schema/codec and owner migration. Withdrawal first fences new writer admissions at an actual committed source frontier under Storage coordinator exclusion; drain and retain already admitted original receipts, then fence reader/checkpoint advance at that frontier. In-flight old reader CAS fails after withdrawal. Preserve original records under their eventual policy; mark existing checkpoint withdrawn, never reset it as current. Reinstall requires current owner authorization and complete rebuild against a fresh SP-278 selection; old publication/permissions cannot authorize it.\nOracles: ATS-320 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, receipt loss, retry no-effect, complete filtered scan/CAS races, current authorization/deletion, backup/restore loss, forced-visible failure, and writer/reader withdrawal fences must be exercised independently before implementation claims. Native execution NOT_RUN; static fixtures prove no native behavior.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/newtools.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "N2-217"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/newtools.md"
+  ]
+}
+```
+
+
+### N2-218 — tool.custom_headless.skipped 1.0.0 — newly authored owner contract, prepared without admission.
+
+```yaml
+{
+  "plan_unit_id": "N2-218",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/newtools.md",
+  "canonical_text": "tool.custom_headless.skipped 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: all top-level Plans/*.md, Plans/*.json and scripts/*.py at base be4766513f; exact-family matches are preserved in the DS15 external search evidence. Existing newtools section 12.6 (Doctor) or 14.1/14.3/14.4 (live) supplies behavior; no exact versioned producer/consumer/checkpoint/identity/withdrawal definition was found for tool.custom_headless.skipped. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.\nProducer: CheckRegistry Doctor absent-key detection. Only the first Doctor invocation for the actual Project may emit this event, and only when tools.custom_headless is absent. Later invocations do not emit it, including after a key appears and is removed. This defines first per Project, not per process, config revision or account.\nScope and identity: project_only; resolve the actual Project before work, never fabricate a Run for Doctor. EventRecord.project_id equals payload.project_id; live payload.run_id equals the actual EventRecord.run_id. Stable original event_id is allocated once and retained with the frozen original payload. Idempotency key is sha256(canonical MessagePack array [\"tool.custom_headless.skipped\", \"1.0.0\", actual project_id, project_id]); the ordered tuple is unambiguous, never delimiter concatenation. Changed bytes at the same identity refuse. Browser optional fields are paired, require an ordinary actual BrowserSession, and never accept AuthBrowserSession.\nPayload: Plans/ds15_tool_custom_headless_skipped.schema.json is the exact closed 1.0.0 payload. Refs are opaque owner-resolved non-secret identifiers, never local absolute paths, credentials, executable arguments or raw content. For started, artifact_root/display_target name owner refs, not raw filesystem paths; session_id resolves the actual driver session (a PID alone is insufficient).\nOrdering and custody: explicitly adopt SP-286 / CV-339 and its full-value v2 successor, plus Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Validate current exact family admission, actual source/producer/codec, root/dedupe and migration custody before original work; registry absence fences it today. Freeze producer fields only after authentic outcome/body commit; append through the admitted single writer; retain the original first AppendReceipt and full frozen value under SP-286 before any success/terminal publication. Lost acknowledgement returns the original receipt, event_id and payload; recovery inspects original outcome custody and never repeats a launch, step, artifact creation or detection just to recreate history. Uncertain outcome stays fenced. SP-286 owns receipt storage; this family creates no separate canonical receipt family.\nReplay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical event/receipt is mandatory for retry, not a caller hash or present-day reconstruction.\nConsumer: reader.ds15.tool_custom_headless_skipped.v1@1.0.0, operating as Doctor detection evidence reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and DL-076's nine-field durable token. Its checkpoint key is projector.checkpoint.ds15.tool_custom_headless_skipped:{project_id}, closed value Plans/ds15_tool_custom_headless_skipped_checkpoint.schema.json. It captures CURRENT-selected complete generic-index coverage, scans the entire selected sequence range with exact Project/type filter in canonical sequence order, then CASes the complete previous checkpoint and new value in one redb transaction. through_sequence_id is the last globally scanned sequence, last_event_id the last matching event. No checkpoint is created until a first matching event; gaps and filter-completeness failures refuse advance. The live redb_snapshot_id is rejoined for each read/advance/recovery and never persisted. Changed token, source, admission, access, deletion or installed reader at the final owner guard preserves the old checkpoint. Operating reads resolve original events from SP-278 rather than duplicate bodies into a new projection table. Rebuild uses a fresh complete captured source; missing retained prefix returns unavailable, never silent zero/reset or fabricated currentness.\nRedaction/custody: the actual Project original seglog/first-receipt owner holds original event bytes; source config, target, artifact and finalization bodies stay with their existing owners. Coherent backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebuildable from that authority and grants no access. Every read rechecks current Project/run/thread permissions and source deletion/tombstones before following any ref. Deleted or denied sources return unavailable without copying bodies into history. No raw probe/config, page, cookies, prompts, screenshot bytes, output or secret is stored in this payload.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for this event AND its checkpoint. Case L-3 candidates are approval/receipt/audit authority (indefinite), Runtime/run/node/attempt (365 days after completion, only where an actual Run exists), ordinary telemetry (90 days); these are candidates, not assignments. No expiry/count eviction, source retention extension or deletion rule is authorized by this draft. Do not admit until RT resolves both assignments.\nCompatibility and withdrawal: only exact 1.0.0 readers/writers; reject unknown payload/value version before effect or checkpoint. No deployed predecessor or lazy alias migration is presumed. A version change requires independently reviewed schema/codec and owner migration. Withdrawal first fences new writer admissions at an actual committed source frontier under Storage coordinator exclusion; drain and retain already admitted original receipts, then fence reader/checkpoint advance at that frontier. In-flight old reader CAS fails after withdrawal. Preserve original records under their eventual policy; mark existing checkpoint withdrawn, never reset it as current. Reinstall requires current owner authorization and complete rebuild against a fresh SP-278 selection; old publication/permissions cannot authorize it.\nOracles: ATS-321 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, receipt loss, retry no-effect, complete filtered scan/CAS races, current authorization/deletion, backup/restore loss, forced-visible failure, and writer/reader withdrawal fences must be exercised independently before implementation claims. Native execution NOT_RUN; static fixtures prove no native behavior.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/newtools.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "N2-218"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/newtools.md"
+  ]
+}
+```
+
+
+### N2-219 — live.session.started 1.0.0 — newly authored owner contract, prepared without admission.
+
+```yaml
+{
+  "plan_unit_id": "N2-219",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/newtools.md",
+  "canonical_text": "live.session.started 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: all top-level Plans/*.md, Plans/*.json and scripts/*.py at base be4766513f; exact-family matches are preserved in the DS15 external search evidence. Existing newtools section 12.6 (Doctor) or 14.1/14.3/14.4 (live) supplies behavior; no exact versioned producer/consumer/checkpoint/identity/withdrawal definition was found for live.session.started. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.\nProducer: Unified live-visualization orchestrator launch hook. After successful target launch, record its actual target identity before reporting session start to chat. Do not emit on failed preflight or failed launch. An exact replay cannot launch a target again.\nScope and identity: project_only; resolve the actual Project before work, never fabricate a Run for Doctor. EventRecord.project_id equals payload.project_id; live payload.run_id equals the actual EventRecord.run_id. Stable original event_id is allocated once and retained with the frozen original payload. Idempotency key is sha256(canonical MessagePack array [\"live.session.started\", \"1.0.0\", actual project_id, live_session_id]); the ordered tuple is unambiguous, never delimiter concatenation. Changed bytes at the same identity refuse. Browser optional fields are paired, require an ordinary actual BrowserSession, and never accept AuthBrowserSession.\nPayload: Plans/ds15_live_session_started.schema.json is the exact closed 1.0.0 payload. Refs are opaque owner-resolved non-secret identifiers, never local absolute paths, credentials, executable arguments or raw content. For started, artifact_root/display_target name owner refs, not raw filesystem paths; session_id resolves the actual driver session (a PID alone is insufficient).\nOrdering and custody: explicitly adopt SP-286 / CV-339 and its full-value v2 successor, plus Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Validate current exact family admission, actual source/producer/codec, root/dedupe and migration custody before original work; registry absence fences it today. Freeze producer fields only after authentic outcome/body commit; append through the admitted single writer; retain the original first AppendReceipt and full frozen value under SP-286 before any success/terminal publication. Lost acknowledgement returns the original receipt, event_id and payload; recovery inspects original outcome custody and never repeats a launch, step, artifact creation or detection just to recreate history. Uncertain outcome stays fenced. SP-286 owns receipt storage; this family creates no separate canonical receipt family.\nReplay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical event/receipt is mandatory for retry, not a caller hash or present-day reconstruction.\nConsumer: reader.ds15.live_session_started.v1@1.0.0, operating as Chat live_run_card started reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and DL-076's nine-field durable token. Its checkpoint key is projector.checkpoint.ds15.live_session_started:{project_id}, closed value Plans/ds15_live_session_started_checkpoint.schema.json. It captures CURRENT-selected complete generic-index coverage, scans the entire selected sequence range with exact Project/type filter in canonical sequence order, then CASes the complete previous checkpoint and new value in one redb transaction. through_sequence_id is the last globally scanned sequence, last_event_id the last matching event. No checkpoint is created until a first matching event; gaps and filter-completeness failures refuse advance. The live redb_snapshot_id is rejoined for each read/advance/recovery and never persisted. Changed token, source, admission, access, deletion or installed reader at the final owner guard preserves the old checkpoint. Operating reads resolve original events from SP-278 rather than duplicate bodies into a new projection table. Rebuild uses a fresh complete captured source; missing retained prefix returns unavailable, never silent zero/reset or fabricated currentness.\nRedaction/custody: the actual Project original seglog/first-receipt owner holds original event bytes; source config, target, artifact and finalization bodies stay with their existing owners. Coherent backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebuildable from that authority and grants no access. Every read rechecks current Project/run/thread permissions and source deletion/tombstones before following any ref. Deleted or denied sources return unavailable without copying bodies into history. No raw probe/config, page, cookies, prompts, screenshot bytes, output or secret is stored in this payload.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for this event AND its checkpoint. Case L-3 candidates are approval/receipt/audit authority (indefinite), Runtime/run/node/attempt (365 days after completion, only where an actual Run exists), ordinary telemetry (90 days); these are candidates, not assignments. No expiry/count eviction, source retention extension or deletion rule is authorized by this draft. Do not admit until RT resolves both assignments.\nCompatibility and withdrawal: only exact 1.0.0 readers/writers; reject unknown payload/value version before effect or checkpoint. No deployed predecessor or lazy alias migration is presumed. A version change requires independently reviewed schema/codec and owner migration. Withdrawal first fences new writer admissions at an actual committed source frontier under Storage coordinator exclusion; drain and retain already admitted original receipts, then fence reader/checkpoint advance at that frontier. In-flight old reader CAS fails after withdrawal. Preserve original records under their eventual policy; mark existing checkpoint withdrawn, never reset it as current. Reinstall requires current owner authorization and complete rebuild against a fresh SP-278 selection; old publication/permissions cannot authorize it.\nOracles: ATS-322 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, receipt loss, retry no-effect, complete filtered scan/CAS races, current authorization/deletion, backup/restore loss, forced-visible failure, and writer/reader withdrawal fences must be exercised independently before implementation claims. Native execution NOT_RUN; static fixtures prove no native behavior.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/newtools.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "N2-219"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/newtools.md"
+  ]
+}
+```
+
+
+### N2-220 — live.step.updated 1.0.0 — newly authored owner contract, prepared without admission.
+
+```yaml
+{
+  "plan_unit_id": "N2-220",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/newtools.md",
+  "canonical_text": "live.step.updated 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: all top-level Plans/*.md, Plans/*.json and scripts/*.py at base be4766513f; exact-family matches are preserved in the DS15 external search evidence. Existing newtools section 12.6 (Doctor) or 14.1/14.3/14.4 (live) supplies behavior; no exact versioned producer/consumer/checkpoint/identity/withdrawal definition was found for live.step.updated. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.\nProducer: Unified live-visualization orchestrator scenario progress hook. An existing launched session emits one immutable update per actual step observation. step_revision strictly increases per step_id; delivery retries keep the same revision. Completed sessions cannot publish a later update. This records observed pass/fail/progress and never executes the step.\nScope and identity: project_only; resolve the actual Project before work, never fabricate a Run for Doctor. EventRecord.project_id equals payload.project_id; live payload.run_id equals the actual EventRecord.run_id. Stable original event_id is allocated once and retained with the frozen original payload. Idempotency key is sha256(canonical MessagePack array [\"live.step.updated\", \"1.0.0\", actual project_id, live_session_id,step_id,step_revision]); the ordered tuple is unambiguous, never delimiter concatenation. Changed bytes at the same identity refuse. Browser optional fields are paired, require an ordinary actual BrowserSession, and never accept AuthBrowserSession.\nPayload: Plans/ds15_live_step_updated.schema.json is the exact closed 1.0.0 payload. Refs are opaque owner-resolved non-secret identifiers, never local absolute paths, credentials, executable arguments or raw content. For started, artifact_root/display_target name owner refs, not raw filesystem paths; session_id resolves the actual driver session (a PID alone is insufficient).\nOrdering and custody: explicitly adopt SP-286 / CV-339 and its full-value v2 successor, plus Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Validate current exact family admission, actual source/producer/codec, root/dedupe and migration custody before original work; registry absence fences it today. Freeze producer fields only after authentic outcome/body commit; append through the admitted single writer; retain the original first AppendReceipt and full frozen value under SP-286 before any success/terminal publication. Lost acknowledgement returns the original receipt, event_id and payload; recovery inspects original outcome custody and never repeats a launch, step, artifact creation or detection just to recreate history. Uncertain outcome stays fenced. SP-286 owns receipt storage; this family creates no separate canonical receipt family.\nReplay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical event/receipt is mandatory for retry, not a caller hash or present-day reconstruction.\nConsumer: reader.ds15.live_step_updated.v1@1.0.0, operating as Chat live_run_card step reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and DL-076's nine-field durable token. Its checkpoint key is projector.checkpoint.ds15.live_step_updated:{project_id}, closed value Plans/ds15_live_step_updated_checkpoint.schema.json. It captures CURRENT-selected complete generic-index coverage, scans the entire selected sequence range with exact Project/type filter in canonical sequence order, then CASes the complete previous checkpoint and new value in one redb transaction. through_sequence_id is the last globally scanned sequence, last_event_id the last matching event. No checkpoint is created until a first matching event; gaps and filter-completeness failures refuse advance. The live redb_snapshot_id is rejoined for each read/advance/recovery and never persisted. Changed token, source, admission, access, deletion or installed reader at the final owner guard preserves the old checkpoint. Operating reads resolve original events from SP-278 rather than duplicate bodies into a new projection table. Rebuild uses a fresh complete captured source; missing retained prefix returns unavailable, never silent zero/reset or fabricated currentness.\nRedaction/custody: the actual Project original seglog/first-receipt owner holds original event bytes; source config, target, artifact and finalization bodies stay with their existing owners. Coherent backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebuildable from that authority and grants no access. Every read rechecks current Project/run/thread permissions and source deletion/tombstones before following any ref. Deleted or denied sources return unavailable without copying bodies into history. No raw probe/config, page, cookies, prompts, screenshot bytes, output or secret is stored in this payload.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for this event AND its checkpoint. Case L-3 candidates are approval/receipt/audit authority (indefinite), Runtime/run/node/attempt (365 days after completion, only where an actual Run exists), ordinary telemetry (90 days); these are candidates, not assignments. No expiry/count eviction, source retention extension or deletion rule is authorized by this draft. Do not admit until RT resolves both assignments.\nCompatibility and withdrawal: only exact 1.0.0 readers/writers; reject unknown payload/value version before effect or checkpoint. No deployed predecessor or lazy alias migration is presumed. A version change requires independently reviewed schema/codec and owner migration. Withdrawal first fences new writer admissions at an actual committed source frontier under Storage coordinator exclusion; drain and retain already admitted original receipts, then fence reader/checkpoint advance at that frontier. In-flight old reader CAS fails after withdrawal. Preserve original records under their eventual policy; mark existing checkpoint withdrawn, never reset it as current. Reinstall requires current owner authorization and complete rebuild against a fresh SP-278 selection; old publication/permissions cannot authorize it.\nOracles: ATS-323 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, receipt loss, retry no-effect, complete filtered scan/CAS races, current authorization/deletion, backup/restore loss, forced-visible failure, and writer/reader withdrawal fences must be exercised independently before implementation claims. Native execution NOT_RUN; static fixtures prove no native behavior.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/newtools.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "N2-220"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/newtools.md"
+  ]
+}
+```
+
+
+### N2-221 — live.artifact.created 1.0.0 — newly authored owner contract, prepared without admission.
+
+```yaml
+{
+  "plan_unit_id": "N2-221",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/newtools.md",
+  "canonical_text": "live.artifact.created 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: all top-level Plans/*.md, Plans/*.json and scripts/*.py at base be4766513f; exact-family matches are preserved in the DS15 external search evidence. Existing newtools section 12.6 (Doctor) or 14.1/14.3/14.4 (live) supplies behavior; no exact versioned producer/consumer/checkpoint/identity/withdrawal definition was found for live.artifact.created. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.\nProducer: Unified live-visualization orchestrator runtime artifact completion hook. Only after the runtime artifact pipeline has committed the actual artifact and its original receipt may this event link artifact_ref. One artifact_id identifies one immutable completion. This event neither duplicates runtime_artifact authority nor grants body access; a missing artifact admission fences publication.\nScope and identity: project_only; resolve the actual Project before work, never fabricate a Run for Doctor. EventRecord.project_id equals payload.project_id; live payload.run_id equals the actual EventRecord.run_id. Stable original event_id is allocated once and retained with the frozen original payload. Idempotency key is sha256(canonical MessagePack array [\"live.artifact.created\", \"1.0.0\", actual project_id, live_session_id,artifact_id]); the ordered tuple is unambiguous, never delimiter concatenation. Changed bytes at the same identity refuse. Browser optional fields are paired, require an ordinary actual BrowserSession, and never accept AuthBrowserSession.\nPayload: Plans/ds15_live_artifact_created.schema.json is the exact closed 1.0.0 payload. Refs are opaque owner-resolved non-secret identifiers, never local absolute paths, credentials, executable arguments or raw content. For started, artifact_root/display_target name owner refs, not raw filesystem paths; session_id resolves the actual driver session (a PID alone is insufficient).\nOrdering and custody: explicitly adopt SP-286 / CV-339 and its full-value v2 successor, plus Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Validate current exact family admission, actual source/producer/codec, root/dedupe and migration custody before original work; registry absence fences it today. Freeze producer fields only after authentic outcome/body commit; append through the admitted single writer; retain the original first AppendReceipt and full frozen value under SP-286 before any success/terminal publication. Lost acknowledgement returns the original receipt, event_id and payload; recovery inspects original outcome custody and never repeats a launch, step, artifact creation or detection just to recreate history. Uncertain outcome stays fenced. SP-286 owns receipt storage; this family creates no separate canonical receipt family.\nReplay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical event/receipt is mandatory for retry, not a caller hash or present-day reconstruction.\nConsumer: reader.ds15.live_artifact_created.v1@1.0.0, operating as Chat live_run_card artifact reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and DL-076's nine-field durable token. Its checkpoint key is projector.checkpoint.ds15.live_artifact_created:{project_id}, closed value Plans/ds15_live_artifact_created_checkpoint.schema.json. It captures CURRENT-selected complete generic-index coverage, scans the entire selected sequence range with exact Project/type filter in canonical sequence order, then CASes the complete previous checkpoint and new value in one redb transaction. through_sequence_id is the last globally scanned sequence, last_event_id the last matching event. No checkpoint is created until a first matching event; gaps and filter-completeness failures refuse advance. The live redb_snapshot_id is rejoined for each read/advance/recovery and never persisted. Changed token, source, admission, access, deletion or installed reader at the final owner guard preserves the old checkpoint. Operating reads resolve original events from SP-278 rather than duplicate bodies into a new projection table. Rebuild uses a fresh complete captured source; missing retained prefix returns unavailable, never silent zero/reset or fabricated currentness.\nRedaction/custody: the actual Project original seglog/first-receipt owner holds original event bytes; source config, target, artifact and finalization bodies stay with their existing owners. Coherent backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebuildable from that authority and grants no access. Every read rechecks current Project/run/thread permissions and source deletion/tombstones before following any ref. Deleted or denied sources return unavailable without copying bodies into history. No raw probe/config, page, cookies, prompts, screenshot bytes, output or secret is stored in this payload.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for this event AND its checkpoint. Case L-3 candidates are approval/receipt/audit authority (indefinite), Runtime/run/node/attempt (365 days after completion, only where an actual Run exists), ordinary telemetry (90 days); these are candidates, not assignments. No expiry/count eviction, source retention extension or deletion rule is authorized by this draft. Do not admit until RT resolves both assignments.\nCompatibility and withdrawal: only exact 1.0.0 readers/writers; reject unknown payload/value version before effect or checkpoint. No deployed predecessor or lazy alias migration is presumed. A version change requires independently reviewed schema/codec and owner migration. Withdrawal first fences new writer admissions at an actual committed source frontier under Storage coordinator exclusion; drain and retain already admitted original receipts, then fence reader/checkpoint advance at that frontier. In-flight old reader CAS fails after withdrawal. Preserve original records under their eventual policy; mark existing checkpoint withdrawn, never reset it as current. Reinstall requires current owner authorization and complete rebuild against a fresh SP-278 selection; old publication/permissions cannot authorize it.\nOracles: ATS-324 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, receipt loss, retry no-effect, complete filtered scan/CAS races, current authorization/deletion, backup/restore loss, forced-visible failure, and writer/reader withdrawal fences must be exercised independently before implementation claims. Native execution NOT_RUN; static fixtures prove no native behavior.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/newtools.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "N2-221"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/newtools.md"
+  ]
+}
+```
+
+
+### N2-222 — live.session.completed 1.0.0 — newly authored owner contract, prepared without admission.
+
+```yaml
+{
+  "plan_unit_id": "N2-222",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/newtools.md",
+  "canonical_text": "live.session.completed 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: all top-level Plans/*.md, Plans/*.json and scripts/*.py at base be4766513f; exact-family matches are preserved in the DS15 external search evidence. Existing newtools section 12.6 (Doctor) or 14.1/14.3/14.4 (live) supplies behavior; no exact versioned producer/consumer/checkpoint/identity/withdrawal definition was found for live.session.completed. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.\nProducer: Unified live-visualization orchestrator finalization hook. Only after the actual manifest.json, summary.md and checks.json are finalized and durably committed may the session complete. Exactly one completion per live_session_id; later step/artifact observations cannot reopen it. Completion does not declare that all checks passed.\nScope and identity: project_only; resolve the actual Project before work, never fabricate a Run for Doctor. EventRecord.project_id equals payload.project_id; live payload.run_id equals the actual EventRecord.run_id. Stable original event_id is allocated once and retained with the frozen original payload. Idempotency key is sha256(canonical MessagePack array [\"live.session.completed\", \"1.0.0\", actual project_id, live_session_id]); the ordered tuple is unambiguous, never delimiter concatenation. Changed bytes at the same identity refuse. Browser optional fields are paired, require an ordinary actual BrowserSession, and never accept AuthBrowserSession.\nPayload: Plans/ds15_live_session_completed.schema.json is the exact closed 1.0.0 payload. Refs are opaque owner-resolved non-secret identifiers, never local absolute paths, credentials, executable arguments or raw content. For started, artifact_root/display_target name owner refs, not raw filesystem paths; session_id resolves the actual driver session (a PID alone is insufficient).\nOrdering and custody: explicitly adopt SP-286 / CV-339 and its full-value v2 successor, plus Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Validate current exact family admission, actual source/producer/codec, root/dedupe and migration custody before original work; registry absence fences it today. Freeze producer fields only after authentic outcome/body commit; append through the admitted single writer; retain the original first AppendReceipt and full frozen value under SP-286 before any success/terminal publication. Lost acknowledgement returns the original receipt, event_id and payload; recovery inspects original outcome custody and never repeats a launch, step, artifact creation or detection just to recreate history. Uncertain outcome stays fenced. SP-286 owns receipt storage; this family creates no separate canonical receipt family.\nReplay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical event/receipt is mandatory for retry, not a caller hash or present-day reconstruction.\nConsumer: reader.ds15.live_session_completed.v1@1.0.0, operating as Chat live_run_card completion reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and DL-076's nine-field durable token. Its checkpoint key is projector.checkpoint.ds15.live_session_completed:{project_id}, closed value Plans/ds15_live_session_completed_checkpoint.schema.json. It captures CURRENT-selected complete generic-index coverage, scans the entire selected sequence range with exact Project/type filter in canonical sequence order, then CASes the complete previous checkpoint and new value in one redb transaction. through_sequence_id is the last globally scanned sequence, last_event_id the last matching event. No checkpoint is created until a first matching event; gaps and filter-completeness failures refuse advance. The live redb_snapshot_id is rejoined for each read/advance/recovery and never persisted. Changed token, source, admission, access, deletion or installed reader at the final owner guard preserves the old checkpoint. Operating reads resolve original events from SP-278 rather than duplicate bodies into a new projection table. Rebuild uses a fresh complete captured source; missing retained prefix returns unavailable, never silent zero/reset or fabricated currentness.\nRedaction/custody: the actual Project original seglog/first-receipt owner holds original event bytes; source config, target, artifact and finalization bodies stay with their existing owners. Coherent backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebuildable from that authority and grants no access. Every read rechecks current Project/run/thread permissions and source deletion/tombstones before following any ref. Deleted or denied sources return unavailable without copying bodies into history. No raw probe/config, page, cookies, prompts, screenshot bytes, output or secret is stored in this payload.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for this event AND its checkpoint. Case L-3 candidates are approval/receipt/audit authority (indefinite), Runtime/run/node/attempt (365 days after completion, only where an actual Run exists), ordinary telemetry (90 days); these are candidates, not assignments. No expiry/count eviction, source retention extension or deletion rule is authorized by this draft. Do not admit until RT resolves both assignments.\nCompatibility and withdrawal: only exact 1.0.0 readers/writers; reject unknown payload/value version before effect or checkpoint. No deployed predecessor or lazy alias migration is presumed. A version change requires independently reviewed schema/codec and owner migration. Withdrawal first fences new writer admissions at an actual committed source frontier under Storage coordinator exclusion; drain and retain already admitted original receipts, then fence reader/checkpoint advance at that frontier. In-flight old reader CAS fails after withdrawal. Preserve original records under their eventual policy; mark existing checkpoint withdrawn, never reset it as current. Reinstall requires current owner authorization and complete rebuild against a fresh SP-278 selection; old publication/permissions cannot authorize it.\nOracles: ATS-325 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, receipt loss, retry no-effect, complete filtered scan/CAS races, current authorization/deletion, backup/restore loss, forced-visible failure, and writer/reader withdrawal fences must be exercised independently before implementation claims. Native execution NOT_RUN; static fixtures prove no native behavior.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/newtools.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "N2-222"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/newtools.md"
+  ]
+}
+```
+
+
+### N2-223 — live.session.degraded 1.0.0 — newly authored owner contract, prepared without admission.
+
+```yaml
+{
+  "plan_unit_id": "N2-223",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/newtools.md",
+  "canonical_text": "live.session.degraded 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: all top-level Plans/*.md, Plans/*.json and scripts/*.py at base be4766513f; exact-family matches are preserved in the DS15 external search evidence. Existing newtools section 12.6 (Doctor) or 14.1/14.3/14.4 (live) supplies behavior; no exact versioned producer/consumer/checkpoint/identity/withdrawal definition was found for live.session.degraded. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.\nProducer: Unified live-visualization orchestrator preflight/fallback hook. Record an actual capability loss for this live visualization occurrence, including prelaunch fallback. auto may fall back under section 14.3; forced_visible fails fast without launching a replacement. The event does not authorize fallback and must match requested/effective mode facts.\nScope and identity: project_only; resolve the actual Project before work, never fabricate a Run for Doctor. EventRecord.project_id equals payload.project_id; live payload.run_id equals the actual EventRecord.run_id. Stable original event_id is allocated once and retained with the frozen original payload. Idempotency key is sha256(canonical MessagePack array [\"live.session.degraded\", \"1.0.0\", actual project_id, live_session_id,degradation_revision]); the ordered tuple is unambiguous, never delimiter concatenation. Changed bytes at the same identity refuse. Browser optional fields are paired, require an ordinary actual BrowserSession, and never accept AuthBrowserSession.\nPayload: Plans/ds15_live_session_degraded.schema.json is the exact closed 1.0.0 payload. Refs are opaque owner-resolved non-secret identifiers, never local absolute paths, credentials, executable arguments or raw content. For started, artifact_root/display_target name owner refs, not raw filesystem paths; session_id resolves the actual driver session (a PID alone is insufficient).\nOrdering and custody: explicitly adopt SP-286 / CV-339 and its full-value v2 successor, plus Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Validate current exact family admission, actual source/producer/codec, root/dedupe and migration custody before original work; registry absence fences it today. Freeze producer fields only after authentic outcome/body commit; append through the admitted single writer; retain the original first AppendReceipt and full frozen value under SP-286 before any success/terminal publication. Lost acknowledgement returns the original receipt, event_id and payload; recovery inspects original outcome custody and never repeats a launch, step, artifact creation or detection just to recreate history. Uncertain outcome stays fenced. SP-286 owns receipt storage; this family creates no separate canonical receipt family.\nReplay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical event/receipt is mandatory for retry, not a caller hash or present-day reconstruction.\nConsumer: reader.ds15.live_session_degraded.v1@1.0.0, operating as Chat live_run_card capability reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and DL-076's nine-field durable token. Its checkpoint key is projector.checkpoint.ds15.live_session_degraded:{project_id}, closed value Plans/ds15_live_session_degraded_checkpoint.schema.json. It captures CURRENT-selected complete generic-index coverage, scans the entire selected sequence range with exact Project/type filter in canonical sequence order, then CASes the complete previous checkpoint and new value in one redb transaction. through_sequence_id is the last globally scanned sequence, last_event_id the last matching event. No checkpoint is created until a first matching event; gaps and filter-completeness failures refuse advance. The live redb_snapshot_id is rejoined for each read/advance/recovery and never persisted. Changed token, source, admission, access, deletion or installed reader at the final owner guard preserves the old checkpoint. Operating reads resolve original events from SP-278 rather than duplicate bodies into a new projection table. Rebuild uses a fresh complete captured source; missing retained prefix returns unavailable, never silent zero/reset or fabricated currentness.\nRedaction/custody: the actual Project original seglog/first-receipt owner holds original event bytes; source config, target, artifact and finalization bodies stay with their existing owners. Coherent backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebuildable from that authority and grants no access. Every read rechecks current Project/run/thread permissions and source deletion/tombstones before following any ref. Deleted or denied sources return unavailable without copying bodies into history. No raw probe/config, page, cookies, prompts, screenshot bytes, output or secret is stored in this payload.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for this event AND its checkpoint. Case L-3 candidates are approval/receipt/audit authority (indefinite), Runtime/run/node/attempt (365 days after completion, only where an actual Run exists), ordinary telemetry (90 days); these are candidates, not assignments. No expiry/count eviction, source retention extension or deletion rule is authorized by this draft. Do not admit until RT resolves both assignments.\nCompatibility and withdrawal: only exact 1.0.0 readers/writers; reject unknown payload/value version before effect or checkpoint. No deployed predecessor or lazy alias migration is presumed. A version change requires independently reviewed schema/codec and owner migration. Withdrawal first fences new writer admissions at an actual committed source frontier under Storage coordinator exclusion; drain and retain already admitted original receipts, then fence reader/checkpoint advance at that frontier. In-flight old reader CAS fails after withdrawal. Preserve original records under their eventual policy; mark existing checkpoint withdrawn, never reset it as current. Reinstall requires current owner authorization and complete rebuild against a fresh SP-278 selection; old publication/permissions cannot authorize it.\nOracles: ATS-326 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, receipt loss, retry no-effect, complete filtered scan/CAS races, current authorization/deletion, backup/restore loss, forced-visible failure, and writer/reader withdrawal fences must be exercised independently before implementation claims. Native execution NOT_RUN; static fixtures prove no native behavior.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/newtools.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "N2-223"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/newtools.md"
+  ]
+}
+```

@@ -24483,3 +24483,339 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Contracts_V0
 | app eligibility error additions | application_automation_paused, app_automation_pause_unavailable; existing Project error tokens and codecs remain untouched. No alias equates the two scopes. |
 
 The selected app request union accepts only an authenticated user actor. A malformed or non-user request still returns the owner’s refusal without fabricating a structurally valid user input. Changed canonical pause record, its epoch and original result custody commit under one internal whole-value CAS/write/readback; retries that observe the already desired value return the current unchanged record with no new epoch. An unavailable result may not reconstruct pause from an event, Setting or absence. The physical wrapper/key/retention and never-born birth proof are defined only in SP-352.
+
+
+### CV-660 — doctor.custom_headless.checked closed payload.
+
+```yaml
+{
+  "plan_unit_id": "CV-660",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "doctor.custom_headless.checked closed payload.\nExact schema pm.ds15.doctor_custom_headless_checked.payload.v1 at Plans/ds15_doctor_custom_headless_checked.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_doctor_custom_headless_checked_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-217, with Plans/storage-plan.md#SP-640. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-660"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-661 — tool.custom_headless.skipped closed payload.
+
+```yaml
+{
+  "plan_unit_id": "CV-661",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "tool.custom_headless.skipped closed payload.\nExact schema pm.ds15.tool_custom_headless_skipped.payload.v1 at Plans/ds15_tool_custom_headless_skipped.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_tool_custom_headless_skipped_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-218, with Plans/storage-plan.md#SP-641. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-661"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-662 — live.session.started closed payload.
+
+```yaml
+{
+  "plan_unit_id": "CV-662",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "live.session.started closed payload.\nExact schema pm.ds15.live_session_started.payload.v1 at Plans/ds15_live_session_started.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_session_started_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-219, with Plans/storage-plan.md#SP-642. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-662"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-663 — live.step.updated closed payload.
+
+```yaml
+{
+  "plan_unit_id": "CV-663",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "live.step.updated closed payload.\nExact schema pm.ds15.live_step_updated.payload.v1 at Plans/ds15_live_step_updated.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_step_updated_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-220, with Plans/storage-plan.md#SP-643. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-663"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-664 — live.artifact.created closed payload.
+
+```yaml
+{
+  "plan_unit_id": "CV-664",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "live.artifact.created closed payload.\nExact schema pm.ds15.live_artifact_created.payload.v1 at Plans/ds15_live_artifact_created.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_artifact_created_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-221, with Plans/storage-plan.md#SP-644. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-664"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-665 — live.session.completed closed payload.
+
+```yaml
+{
+  "plan_unit_id": "CV-665",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "live.session.completed closed payload.\nExact schema pm.ds15.live_session_completed.payload.v1 at Plans/ds15_live_session_completed.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_session_completed_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-222, with Plans/storage-plan.md#SP-645. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-665"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-666 — live.session.degraded closed payload.
+
+```yaml
+{
+  "plan_unit_id": "CV-666",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "live.session.degraded closed payload.\nExact schema pm.ds15.live_session_degraded.payload.v1 at Plans/ds15_live_session_degraded.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_session_degraded_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-223, with Plans/storage-plan.md#SP-646. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-666"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
