@@ -18151,6 +18151,147 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "divergent-joined-generation-exceeds-ceiling",
+          "changes": [
+            {
+              "path": "payload/remediation_generation",
+              "value": 99
+            },
+            {
+              "path": "capture/transition/observed_payload",
+              "value": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 99,
+                "replan_generation": 1,
+                "finding_refs": [],
+                "resolution": "fixed"
+              }
+            },
+            {
+              "path": "capture/records/lineage/body",
+              "value": {
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 99,
+                "child_terminal": "settled",
+                "evidence_commit": "durable",
+                "state": "active",
+                "generation": 1,
+                "ceiling": 3,
+                "child_result": "done"
+              }
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "ea8f472cd16c94a285da64dabb03f3b1f1b9679f343f4e6807e27dd8af63a4a3"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "divergent-normalized-generation",
+          "changes": [
+            {
+              "path": "payload/remediation_generation",
+              "value": 1
+            },
+            {
+              "path": "capture/transition/observed_payload",
+              "value": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 1,
+                "replan_generation": 1,
+                "finding_refs": [],
+                "resolution": "fixed"
+              }
+            },
+            {
+              "path": "capture/records/lineage/body",
+              "value": {
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 1,
+                "child_terminal": "settled",
+                "evidence_commit": "durable",
+                "state": "active",
+                "generation": 2,
+                "ceiling": 3,
+                "child_result": "done"
+              }
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "d347df463150379e48ecf23e9e1512e04d8013fd14bb7675b217bdacc178d445"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "at-actual-generation-ceiling",
+          "changes": [
+            {
+              "path": "payload/remediation_generation",
+              "value": 3
+            },
+            {
+              "path": "capture/transition/observed_payload",
+              "value": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 3,
+                "replan_generation": 1,
+                "finding_refs": [],
+                "resolution": "fixed"
+              }
+            },
+            {
+              "path": "capture/records/lineage/body",
+              "value": {
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 3,
+                "child_terminal": "settled",
+                "evidence_commit": "durable",
+                "state": "active",
+                "generation": 3,
+                "ceiling": 3,
+                "child_result": "done"
+              }
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "df1a7be16819cd1161975ff2a76463fb234020b32f3968be1e82d5264cc6a7bc"
+            }
+          ],
+          "expected": "accept"
         }
       ],
       "traces": [
@@ -19781,6 +19922,147 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "divergent-joined-generation-exceeds-ceiling",
+          "changes": [
+            {
+              "path": "payload/remediation_generation",
+              "value": 99
+            },
+            {
+              "path": "capture/transition/observed_payload",
+              "value": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 99,
+                "replan_generation": 1,
+                "finding_refs": [],
+                "parent_failure_class": "provider_transient"
+              }
+            },
+            {
+              "path": "capture/records/lineage/body",
+              "value": {
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 99,
+                "parent_classification": "recorded",
+                "child_admission": "accepted",
+                "state": "classified_failure",
+                "generation": 1,
+                "ceiling": 3,
+                "child_result": "done"
+              }
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "a6287eada0784652d807be9c0faf9020999bfd979fb4d182f289daf2b06fef08"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "divergent-normalized-generation",
+          "changes": [
+            {
+              "path": "payload/remediation_generation",
+              "value": 1
+            },
+            {
+              "path": "capture/transition/observed_payload",
+              "value": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 1,
+                "replan_generation": 1,
+                "finding_refs": [],
+                "parent_failure_class": "provider_transient"
+              }
+            },
+            {
+              "path": "capture/records/lineage/body",
+              "value": {
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 1,
+                "parent_classification": "recorded",
+                "child_admission": "accepted",
+                "state": "classified_failure",
+                "generation": 2,
+                "ceiling": 3,
+                "child_result": "done"
+              }
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "9fc4b92fd6b46f4ab347d503ba2bed86cf3423e90092f4fbcadcc732c9a126b8"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "at-actual-generation-ceiling",
+          "changes": [
+            {
+              "path": "payload/remediation_generation",
+              "value": 3
+            },
+            {
+              "path": "capture/transition/observed_payload",
+              "value": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 3,
+                "replan_generation": 1,
+                "finding_refs": [],
+                "parent_failure_class": "provider_transient"
+              }
+            },
+            {
+              "path": "capture/records/lineage/body",
+              "value": {
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 3,
+                "parent_classification": "recorded",
+                "child_admission": "accepted",
+                "state": "classified_failure",
+                "generation": 3,
+                "ceiling": 3,
+                "child_result": "done"
+              }
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "dadacdefb68d4e095d290d1389dc54bd79a3153fd12c4d500574979ee323958c"
+            }
+          ],
+          "expected": "accept"
         }
       ],
       "traces": [

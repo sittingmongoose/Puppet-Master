@@ -177,6 +177,8 @@ def validate_capture(contract, payload, capture):
         require(payload['child_attempt_id'] == records['child_attempt']['body']['attempt_id'], 'child attempt record')
         require(payload['remediation_root_id'] == records['root']['body']['remediation_root_id'], 'remediation root record')
         require(lineage['generation'] <= lineage['ceiling'], 'remediation ceiling')
+        require(lineage['generation'] == lineage['remediation_generation'], 'normalized remediation generation')
+        require(payload['remediation_generation'] <= lineage['ceiling'], 'joined remediation generation ceiling')
         if name == 'remediation.resolved' and payload['resolution'] == 'fixed':
             require(lineage['child_result'] == 'done', 'fixed without successful child')
     if name in ('run.node_backoff_started', 'run.node_backoff_expired', 'run.node_retry_scheduled'):
