@@ -1,0 +1,1328 @@
+{
+  "schema_version": "1.0.0",
+  "oracle_unit": "Plans/Automated_Testing_System.md#ATS-212",
+  "claim": "Static synthetic cases authored on 2026-11-04 (DL-080, DL-045 depth). The writers are listed (EP-200) but not installable on any existing birth; nothing here is native, installation or readiness evidence. Prepared without admission: the registry rows still select v2.",
+  "checker": "python3 scripts/pm_goal_run_stop_block_oracles.py",
+  "native_workflow_statuses": [
+    "ready",
+    "running",
+    "provisional_success",
+    "verifying",
+    "failed_verification",
+    "repairing",
+    "certified",
+    "failed",
+    "blocked",
+    "cancelled",
+    "stopped"
+  ],
+  "families": {
+    "goal_run.stopped": {
+      "owner_units": [
+        "EP-200",
+        "GRS-200",
+        "GRS-202",
+        "SP-426",
+        "SP-428",
+        "CV-420"
+      ],
+      "payload_schema": "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
+      "payload_cases": [
+        {
+          "id": "pause_resumable_at_safe_point",
+          "valid": true,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
+          }
+        },
+        {
+          "id": "abort_not_resumable",
+          "valid": true,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": false
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
+          }
+        },
+        {
+          "id": "resumable_without_safe_point",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
+          }
+        },
+        {
+          "id": "child_settlement_present",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [
+                "child_goal:2"
+              ],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
+          }
+        },
+        {
+          "id": "missing_settlement_refs",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
+          }
+        },
+        {
+          "id": "v2_goal_revision_cas",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4",
+            "expected_goal_revision": 2
+          }
+        },
+        {
+          "id": "parent_goal_id_present",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4",
+            "parent_goal_id": "goal:0"
+          }
+        },
+        {
+          "id": "missing_idempotency_key",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4
+          }
+        },
+        {
+          "id": "missing_goal_run_revision",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
+          }
+        },
+        {
+          "id": "unknown_stop_reason",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "paused_by_user",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
+          }
+        }
+      ],
+      "identity_cases": [
+        {
+          "id": "pause_identity",
+          "inputs": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_run_id": "run:1",
+            "expected_goal_run_revision": 3,
+            "operation_id": "op:pause:1"
+          },
+          "event_id": "goal_run.stopped.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4",
+          "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4",
+          "valid": true
+        },
+        {
+          "id": "abort_same_revision_distinct",
+          "inputs": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_run_id": "run:1",
+            "expected_goal_run_revision": 3,
+            "operation_id": "op:abort:1"
+          },
+          "event_id": "goal_run.stopped.v1:3c548a982c6632b71eb64b0cf0116379206f945515088378704f981b73fe8530",
+          "idempotency_key": "goal_run.stopped.writer.v1:3c548a982c6632b71eb64b0cf0116379206f945515088378704f981b73fe8530",
+          "valid": true
+        },
+        {
+          "id": "fresh_id_on_retry",
+          "inputs": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_run_id": "run:1",
+            "expected_goal_run_revision": 3,
+            "operation_id": "op:pause:1"
+          },
+          "event_id": "goal_run.stopped.v1:1111111111111111111111111111111111111111111111111111111111111111",
+          "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4",
+          "valid": false
+        },
+        {
+          "id": "blocked_domain_reused",
+          "inputs": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_run_id": "run:1",
+            "expected_goal_run_revision": 3,
+            "operation_id": "op:pause:1"
+          },
+          "event_id": "goal_run.stopped.v1:68240f0d58b4e2d75b75179cf5a4085173cfe26db001f17c18a49edbd4bf30f4",
+          "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4",
+          "valid": false
+        }
+      ],
+      "source_status_cases": [
+        {
+          "id": "from_ready",
+          "source_status": "ready",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_running",
+          "source_status": "running",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_provisional_success",
+          "source_status": "provisional_success",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_verifying",
+          "source_status": "verifying",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_failed_verification",
+          "source_status": "failed_verification",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_repairing",
+          "source_status": "repairing",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_certified",
+          "source_status": "certified",
+          "new_evidence": false,
+          "legal": false
+        },
+        {
+          "id": "from_failed",
+          "source_status": "failed",
+          "new_evidence": false,
+          "legal": false
+        },
+        {
+          "id": "from_blocked",
+          "source_status": "blocked",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_cancelled",
+          "source_status": "cancelled",
+          "new_evidence": false,
+          "legal": false
+        },
+        {
+          "id": "from_stopped",
+          "source_status": "stopped",
+          "new_evidence": true,
+          "legal": true
+        },
+        {
+          "id": "stopped_again_without_evidence",
+          "source_status": "stopped",
+          "new_evidence": false,
+          "legal": false
+        }
+      ],
+      "still_open": [
+        "fresh Workflow source edition that installs owner.executor.workflow_run.stop.v1",
+        "native settlement, append and projector evidence"
+      ]
+    },
+    "goal_run.blocked": {
+      "owner_units": [
+        "EP-200",
+        "GRS-201",
+        "GRS-202",
+        "SP-427",
+        "SP-428",
+        "CV-421"
+      ],
+      "payload_schema": "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
+      "payload_cases": [
+        {
+          "id": "permission_block",
+          "valid": true,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb"
+          }
+        },
+        {
+          "id": "approval_block_no_mutation",
+          "valid": true,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "approval_required",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb"
+          }
+        },
+        {
+          "id": "empty_actions",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb"
+          }
+        },
+        {
+          "id": "unknown_action",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "skip_node"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb"
+          }
+        },
+        {
+          "id": "unknown_reason",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "rate_limited",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb"
+          }
+        },
+        {
+          "id": "missing_block_receipt",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ]
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb"
+          }
+        },
+        {
+          "id": "v2_goal_revision_cas",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb",
+            "expected_goal_revision": 2
+          }
+        },
+        {
+          "id": "parent_goal_id_present",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb",
+            "parent_goal_id": "goal:0"
+          }
+        },
+        {
+          "id": "missing_idempotency_key",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4
+          }
+        }
+      ],
+      "identity_cases": [
+        {
+          "id": "block_identity",
+          "inputs": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_run_id": "run:1",
+            "expected_goal_run_revision": 3,
+            "operation_id": "op:block:1"
+          },
+          "event_id": "goal_run.blocked.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb",
+          "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb",
+          "valid": true
+        },
+        {
+          "id": "reblock_new_revision",
+          "inputs": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_run_id": "run:1",
+            "expected_goal_run_revision": 4,
+            "operation_id": "op:block:1"
+          },
+          "event_id": "goal_run.blocked.v1:8dc1d3eabf439a4cff0f52a75a13cfd682525e236977839c9c6e4ad1025de275",
+          "idempotency_key": "goal_run.blocked.writer.v1:8dc1d3eabf439a4cff0f52a75a13cfd682525e236977839c9c6e4ad1025de275",
+          "valid": true
+        },
+        {
+          "id": "key_from_stopped_domain",
+          "inputs": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_run_id": "run:1",
+            "expected_goal_run_revision": 3,
+            "operation_id": "op:block:1"
+          },
+          "event_id": "goal_run.blocked.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb",
+          "idempotency_key": "goal_run.blocked.writer.v1:e4cdf444612837165c753298fc1e3492da74aaeed90538ddf77b571fd522f763",
+          "valid": false
+        }
+      ],
+      "source_status_cases": [
+        {
+          "id": "from_ready",
+          "source_status": "ready",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_running",
+          "source_status": "running",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_provisional_success",
+          "source_status": "provisional_success",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_verifying",
+          "source_status": "verifying",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_failed_verification",
+          "source_status": "failed_verification",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_repairing",
+          "source_status": "repairing",
+          "new_evidence": false,
+          "legal": true
+        },
+        {
+          "id": "from_certified",
+          "source_status": "certified",
+          "new_evidence": false,
+          "legal": false
+        },
+        {
+          "id": "from_failed",
+          "source_status": "failed",
+          "new_evidence": false,
+          "legal": false
+        },
+        {
+          "id": "from_blocked",
+          "source_status": "blocked",
+          "new_evidence": true,
+          "legal": true
+        },
+        {
+          "id": "from_cancelled",
+          "source_status": "cancelled",
+          "new_evidence": false,
+          "legal": false
+        },
+        {
+          "id": "from_stopped",
+          "source_status": "stopped",
+          "new_evidence": false,
+          "legal": false
+        },
+        {
+          "id": "blocked_again_without_evidence",
+          "source_status": "blocked",
+          "new_evidence": false,
+          "legal": false
+        }
+      ],
+      "still_open": [
+        "fresh Workflow source edition that installs owner.executor.workflow_run.block.v1",
+        "native block receipt, append and projector evidence"
+      ]
+    }
+  },
+  "wiring_cases": [
+    {
+      "id": "pause_reaches_stop_writer",
+      "command_id": "cmd.orchestrator.pause",
+      "handler": "handlers::orchestrator::pause",
+      "family": "goal_run.stopped",
+      "writer": "owner.executor.workflow_run.stop.v1"
+    },
+    {
+      "id": "abort_reaches_stop_writer",
+      "command_id": "cmd.runtime.abort_run",
+      "handler": "handlers::runtime::abort_run",
+      "family": "goal_run.stopped",
+      "writer": "owner.executor.workflow_run.stop.v1"
+    },
+    {
+      "id": "skip_node_emits_no_stop",
+      "command_id": "cmd.runtime.skip_node",
+      "handler": "handlers::runtime::skip_node",
+      "family": null,
+      "writer": null
+    },
+    {
+      "id": "block_has_no_command",
+      "command_id": null,
+      "handler": "executor scheduler",
+      "family": "goal_run.blocked",
+      "writer": "owner.executor.workflow_run.block.v1"
+    }
+  ],
+  "projection_cases": [
+    {
+      "id": "start_block_stop_cancel",
+      "qualifying_birth": true,
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.stopped",
+          "goal_run_revision": 3,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.cancelled",
+          "goal_run_revision": 4,
+          "payload_major": 3
+        }
+      ],
+      "expected": {
+        "outcome": "advanced",
+        "status": "cancelled",
+        "revision": 4
+      }
+    },
+    {
+      "id": "reblock_higher_revision",
+      "qualifying_birth": true,
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 3,
+          "payload_major": 3
+        }
+      ],
+      "expected": {
+        "outcome": "advanced",
+        "status": "blocked",
+        "revision": 3
+      }
+    },
+    {
+      "id": "revision_skip_halts",
+      "qualifying_birth": true,
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.stopped",
+          "goal_run_revision": 3,
+          "payload_major": 3
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      }
+    },
+    {
+      "id": "certified_after_stop_halts",
+      "qualifying_birth": true,
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.stopped",
+          "goal_run_revision": 2,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.certified",
+          "goal_run_revision": 3,
+          "payload_major": 3
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 2,
+        "status": "stopped",
+        "revision": 2
+      }
+    },
+    {
+      "id": "block_after_stop_halts",
+      "qualifying_birth": true,
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.stopped",
+          "goal_run_revision": 2,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 3,
+          "payload_major": 3
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 2,
+        "status": "stopped",
+        "revision": 2
+      }
+    },
+    {
+      "id": "v2_stopped_row_halts",
+      "qualifying_birth": true,
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.stopped",
+          "goal_run_revision": 2,
+          "payload_major": 2
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      }
+    },
+    {
+      "id": "replanned_still_halts",
+      "qualifying_birth": true,
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.replanned",
+          "goal_run_revision": 3,
+          "payload_major": 3
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 2,
+        "status": "blocked",
+        "revision": 2
+      }
+    },
+    {
+      "id": "v7_birth_keeps_grs085_halt",
+      "qualifying_birth": false,
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      }
+    },
+    {
+      "id": "cancel_from_started_unchanged",
+      "qualifying_birth": false,
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3
+        },
+        {
+          "event_type": "goal_run.cancelled",
+          "goal_run_revision": 2,
+          "payload_major": 3
+        }
+      ],
+      "expected": {
+        "outcome": "advanced",
+        "status": "cancelled",
+        "revision": 2
+      }
+    }
+  ],
+  "native_status": "NOT_RUN"
+}
