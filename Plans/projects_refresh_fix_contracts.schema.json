@@ -825,7 +825,7 @@
         },
         "image_digest": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^sha256:[0-9a-f]{64}$"
         },
         "tags": {
           "type": "array",
@@ -927,7 +927,7 @@
         },
         "image_digest": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^sha256:[0-9a-f]{64}$"
         },
         "tags": {
           "type": "array",
@@ -1019,7 +1019,7 @@
         },
         "image_digest": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^sha256:[0-9a-f]{64}$"
         },
         "tags": {
           "type": "array",
@@ -1121,7 +1121,7 @@
         },
         "image_digest": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^sha256:[0-9a-f]{64}$"
         },
         "tags": {
           "type": "array",
@@ -1558,7 +1558,7 @@
         },
         "image_digest": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^sha256:[0-9a-f]{64}$"
         },
         "tags": {
           "type": "array",
@@ -1660,7 +1660,7 @@
         },
         "image_digest": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^sha256:[0-9a-f]{64}$"
         },
         "tags": {
           "type": "array",
