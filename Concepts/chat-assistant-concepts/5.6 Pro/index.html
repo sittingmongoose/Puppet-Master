@@ -65914,9 +65914,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   function snapshot() { var out = {}; Object.keys(players).forEach(function (k) { var p = players[k]; out[k] = { log: p.log.slice(), errors: p.errors.slice(), waiting: !!p.waiting, held: p.held || '', current: p.current || null }; }); return out; }
 
   if (E && E.chainAction) E.chainAction('reset-all', function () { stopAll('reset'); return false; });
-  /* a Start in Demo Studio (any example's, including the ones that don't use this player) ends the recording playing now;
-     capture phase, so it runs before the new example's own Start */
-  document.addEventListener('click', function (e) { var t = e.target && e.target.closest && e.target.closest('.demo-dialog .demo-trigger'); if (t) stopAll('another example'); }, true);
+  /* app.js's demo dispatcher stops the old player before starting a gallery action. */
   window.PM56_RECPLAY = { play: play, step: step, seen: seen, viaWand: viaWand, press: press, reveal: reveal, hover: hover, rest: rest, choose: choose, type: type, typeInFrame: typeInFrame, steady: steady, find: find, shown: shown, wait: wait, after: after, cancel: cancel, now: now, stopAll: stopAll, snapshot: snapshot, players: players, HOLD_SAY: HOLD_SAY, COMPOSER: COMPOSER };
 })();
 
@@ -72865,7 +72863,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
  E.slot('composerBelow',c=>guide(c));
  // The observer supplies the first document row for discovery, sources and the Plan alike.
  E.slot('afterRender',(c,info)=>{if((info?.phase||c.phase)!=='app')return;const html=guide(c,true),host=document.querySelector('.editor-body'),old=host?.querySelector(':scope > .deep14-guide');if(!html){old?.remove();return;}if(old)old.outerHTML=html;else host?.insertAdjacentHTML('afterbegin',html);});
- E.action('b14-start',(c,b)=>{const gallery=!!b.closest?.('.demo-dialog .demo-trigger');stop();seed(c,b.dataset.flow);if(gallery)playback(sessions.get(c.state.selectedThread));return true;});
+ E.action('b14-start',(c,b)=>{const gallery=!!c.demo||!!b.closest?.('.demo-dialog .demo-trigger');stop();seed(c,b.dataset.flow);if(gallery)playback(sessions.get(c.state.selectedThread));return true;});
  E.action('b14-replay',c=>{const flow=sessions.get(c.thread.id)?.flow;stop();seed(c,flow);playback(sessions.get(c.state.selectedThread));return true;});
  E.action('b14-hide-guide',c=>{const s=sessions.get(c.thread.id);if(s)s.guide=false;stop();refresh();return true;});
  const withRun=(a,fn)=>E.action(a,(c,b)=>{const r=engine.get(b.dataset.run);if(r)fn(c,r,b);return true;});
@@ -73061,7 +73059,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
  // Capture the actual proposal owner’s identity after Send; decisions remain on its ordinary controls.
  document.addEventListener('click',e=>{if(!playing||!e.target.closest?.(sel('send')))return;const s=playing;queueMicrotask(()=>{if(s!==playing)return;const proposals=Object.values(RT.goals.proposals).filter(p=>p.token.goalId===G.get(s.threadId)?.id);s.proposals=proposals.map(p=>p.id);});});
  E.chainAction('goal-cancel-edit',()=>{if(playing)playing.editCancelled=true;return false;});
- E.action('b15-start',(c,b)=>{const gallery=!!b.closest?.('.demo-dialog .demo-trigger');stop();seed(c,b.dataset.flow);if(gallery)playback(work.sessions[c.state.selectedThread]);return true;});
+ E.action('b15-start',(c,b)=>{const gallery=!!c.demo||!!b.closest?.('.demo-dialog .demo-trigger');stop();seed(c,b.dataset.flow);if(gallery)playback(work.sessions[c.state.selectedThread]);return true;});
  E.action('b15-replay',c=>{const flow=work.sessions[c.thread.id]?.flow;stop();seed(c,flow);playback(work.sessions[c.state.selectedThread]);return true;});
  E.action('b15-hide-guide',c=>{if(work.sessions[c.thread.id])work.sessions[c.thread.id].guide=false;stop();refresh();return true;});
  E.chainAction('reset-all',()=>{stop();return false;});
@@ -86252,6 +86250,19 @@ suggested path                    migration 0043, reversible</div></div></sectio
     renderApp();
   }
 
+  // Demo actions share the module chains with real gallery controls. Their origin
+  // is explicit; callers pass values rather than creating a hidden DOM control.
+  function runDemoAction(action, data, button, event){
+    const values=Object.fromEntries(Object.entries(data||{}).map(([k,v])=>[k,String(v)]));
+    values.action=action;
+    const control=button||{dataset:values};
+    if(action!=='reset-all') window.PM56_RECPLAY?.stopAll('another example');
+    if(extRun(action,control,event,{demo:true})) return true;
+    if(action==='reset-all'){globalReset();return true;}
+    if(action==='demo-trigger'){runDemoTrigger(values.trigger||'');return true;}
+    return extRunAfter(action,control,event,{demo:true});
+  }
+
   /* F0b: the clicked menu row's rect, written on #pmOverlayRoot BEFORE any action runs
      closeMenu() (DESIGN-SPEC 4.5 origin, brief D.5). A sheet opened from the wand grows from
      that row; pmx-system.css reads --pmx-from-x/-y (the row's centre) and -w/-h. This also
@@ -86300,6 +86311,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(!btn){if(state.menu&&!e.target.closest('.overlay-menu,.lens-dock'))closeMenu();return;}
     const a=btn.dataset.action;
     if(!acked&&holdForAck(e,btn,a)) return;
+    if(btn.closest('.demo-dialog')&&(btn.classList.contains('demo-trigger')||a==='reset-all')){runDemoAction(a,btn.dataset,btn,e);return;}
     /* Stop (send-stop.js): the second click of a double-click on Send lands on the Stop it became, so a click with
        detail > 1 is never a stop (a time window would also swallow a fast deliberate stop); a stop-run click is the
        one "stopped" signal (a turn, goal or plan that ends any other way has "finished"). Before the module actions,
@@ -87077,6 +87089,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
       render:()=>renderApp(), renderOverlays:()=>renderOverlays(), savePrefs:()=>savePrefs(),
       openEditor:(id,o)=>openEditor(id,o), closeEditor:(id)=>closeEditor(id),
       editorTabLabel:(id)=>editorTabLabel(id), renderEditorBodyFor:(id)=>renderEditorBodyFor(id),
+      demoAction:(action,data)=>runDemoAction(action,data),
       demoTriggerGroups:()=>demoTriggerGroups(), demoFamilies:families,
       activeThread:()=>activeThread(), switchThread:(id)=>switchThread(id), compose:hostedCompose, reveal:hostedReveal,
       closeMenu:()=>closeMenu(), openMenu:(t,a,x)=>openMenu(t,a,x), toast:(t,d)=>toast(t,d),

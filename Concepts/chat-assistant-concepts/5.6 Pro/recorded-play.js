@@ -330,8 +330,6 @@
   function snapshot() { var out = {}; Object.keys(players).forEach(function (k) { var p = players[k]; out[k] = { log: p.log.slice(), errors: p.errors.slice(), waiting: !!p.waiting, held: p.held || '', current: p.current || null }; }); return out; }
 
   if (E && E.chainAction) E.chainAction('reset-all', function () { stopAll('reset'); return false; });
-  /* a Start in Demo Studio (any example's, including the ones that don't use this player) ends the recording playing now;
-     capture phase, so it runs before the new example's own Start */
-  document.addEventListener('click', function (e) { var t = e.target && e.target.closest && e.target.closest('.demo-dialog .demo-trigger'); if (t) stopAll('another example'); }, true);
+  /* app.js's demo dispatcher stops the old player before starting a gallery action. */
   window.PM56_RECPLAY = { play: play, step: step, seen: seen, viaWand: viaWand, press: press, reveal: reveal, hover: hover, rest: rest, choose: choose, type: type, typeInFrame: typeInFrame, steady: steady, find: find, shown: shown, wait: wait, after: after, cancel: cancel, now: now, stopAll: stopAll, snapshot: snapshot, players: players, HOLD_SAY: HOLD_SAY, COMPOSER: COMPOSER };
 })();
