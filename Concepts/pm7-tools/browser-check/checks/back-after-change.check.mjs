@@ -438,7 +438,7 @@ const SEL = () => { const l = document.querySelector('.o55-pane > .o55-layer:not
    person's click lands, and this row judges what the click does */
 const clickOrSend = async (A, sel) => { const el = A.frame().locator(sel).filter({ visible: true }).first(); await el.click({ timeout: 4000 }).catch(async () => { await el.dispatchEvent('click'); }); await A.sleep(300); };
 /* another value on the screen, not continued: a card or switch not chosen, else a field typed differently */
-const pickOther = async (A, which = 'first') => {
+const pickOther = async (A, which = 'first', revealed = false) => {
   /* Read choices after the screen's own entrance completes; an entering card can still have opacity zero. */
   await A.frame().waitForFunction(() => !document.querySelector('.o55-pane > .o55-layer.o55-entering, .o55-pane > .o55-layer.o55-hold, .o55-pane > .o55-layer.o55-out'), null, { timeout: 8000 });
   const c = await A.frame().evaluate((which) => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), sheet = [...document.querySelectorAll('.o55-sheet[data-open="true"]')].find((x) => !x.closest('.o55-out')) || null;
@@ -455,8 +455,12 @@ const pickOther = async (A, which = 'first') => {
     return f ? { field: f.id, value: f.value } : null; }, which);
   if (!c) {
     /* A found Server is the only card on s-wait. Its address link exposes a real editable alternative. */
-    if (which === 'first' && (await A.snap()).screen === 's-wait' && await A.has('manualOn')) {
-      await A.click('manualOn'); return pickOther(A, which);
+    if (!revealed && which === 'first' && (await A.snap()).screen === 's-wait' && await A.has('manualOn')) {
+      await A.click('manualOn'); return pickOther(A, which, true);
+    }
+    /* GitHub is the only card until Other services is expanded. Reveal it, then require an actual choice. */
+    if (!revealed && which === 'first' && (await A.snap()).screen === 'online-service' && await A.has('others')) {
+      await A.click('others'); return pickOther(A, which, true);
     }
     return null;
   }
