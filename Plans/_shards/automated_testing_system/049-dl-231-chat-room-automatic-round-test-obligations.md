@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7277
+Source lines: L6715-L7281
 
-Source SHA256: `e294b01a249efa144eecbc056b3200fd4c37077253b8d46d68601b885234162e`
+Source SHA256: `13e7e7f16338c37a31a6aebdd6211d9849f882ee4be0803befeeedbd7016864e`
 
 ---
 
@@ -537,6 +537,10 @@ canonical_text: |-
   Newly authored static oracles for the eight exact families in Plans/memory_maintenance_contracts.json. Run python3 scripts/pm_memory_maintenance_events.py against Plans/memory_maintenance_event_fixtures.json, payload/operation schemas and Plans/memory_maintenance_rebuild_target.schema.json. Boundary cases retain all original schema/admission/permission/source/withdrawal checks and additionally supply concrete phase-valid operation rows and retained synthetic full event values. They compare the complete original payload, including frozen timestamp, status/ref/hash, not asserted proof Booleans. Invalid completed rows with null start/terminal/outcome are rejected by the closed operation schemas.
 
   Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement, settled effect, terminal append and terminal-row advancement, lost acknowledgement, retry and replay. Trace expectations are separately authored full operation snapshots, retained originals and effect/selector counters; the checker computes transitions and rejects repeated effect attempts, conflicting original outcomes and repeated swaps. Lexical and semantic traces separately interrupt durable target preparation and selector publication and compare the complete prepared descriptor/selected target, including post-swap/pre-effect recovery. Negative descriptors cover wrong target identity/manifest/source/prior selector, unsafe or mismatched artifacts and unprepared publication. A mutated succeeded/failed result with unchanged original custody must fail for every completed family.
+
+  Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking, its own exact payload definition URI and dedupe_by_idempotency_key policy. Positive append and identical retry return the retained full-value original with one append and no maintenance effect; scoped dedupe keys use the encoded project~ partition. Both fresh append and retry with projector_replay_only refuse replay_only_not_appendable with no output, append or effect. Unsupported/missing envelope fields, wrong payload dispatch, Project/correlation/causation joins, trailing-LF event names and raw Project partitions are negative cases. Compatibility reader shapes are never accepted as current writers. The reduced phase-model values remain explicitly synthetic and are not canonical envelopes or physical receipts.
+
+  Completed recovery has separate permission-revoked and family-withdrawn negative traces for every exact family, requiring no output and unchanged durable state; authorized recovery returns the original value. All four started gates distinguish lawful accepted pre-append admission from recorded receipt/later phases and reject missing original start custody through completed state. Post-completion retry and recovery with lost start custody refuse rather than infer proof from terminal IDs. Schema-level trailing-LF negatives cover every lane-owned patterned identifier, including nested target inventories/selectors and operation schema copies in the storage registry.
 
   These are a static contract model and adversarial fixtures. They do not execute MemoryMaintenance, authenticate real SP-286 receipts, validate physical SeglogFrameV2 bytes or prove redb/filesystem atomicity/flush, native crash recovery, backup/restore or read-time deletion/permission races. Those native obligations remain NOT_RUN. Static success confers no Event Authority, retention assignment or deletion policy. Monthly summary/prune rows remain held for Jared and have no executable payload definition.
 gui_related: false

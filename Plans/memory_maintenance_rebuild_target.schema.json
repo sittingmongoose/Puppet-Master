@@ -19,15 +19,21 @@
         },
         "target_id": {
           "type": "string",
-          "pattern": "^memtarget_[0-9a-f]{64}$"
+          "pattern": "^memtarget_[0-9a-f]{64}$",
+          "minLength": 74,
+          "maxLength": 74
         },
         "source_revision_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "manifest_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "artifacts": {
           "type": "array",
@@ -50,12 +56,14 @@
               },
               "relative_name": {
                 "type": "string",
-                "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$",
+                "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
                 "maxLength": 256
               },
               "sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
               },
               "byte_length": {
                 "type": "integer",
@@ -71,7 +79,9 @@
             "string",
             "null"
           ],
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         }
       }
     },
@@ -92,15 +102,21 @@
         },
         "target_id": {
           "type": "string",
-          "pattern": "^memtarget_[0-9a-f]{64}$"
+          "pattern": "^memtarget_[0-9a-f]{64}$",
+          "minLength": 74,
+          "maxLength": 74
         },
         "source_revision_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "manifest_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "artifacts": {
           "type": "array",
@@ -124,12 +140,14 @@
               },
               "relative_name": {
                 "type": "string",
-                "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$",
+                "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
                 "maxLength": 256
               },
               "sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
               },
               "byte_length": {
                 "type": "integer",
@@ -175,7 +193,9 @@
             "string",
             "null"
           ],
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         }
       }
     },
@@ -229,15 +249,21 @@
             },
             "target_id": {
               "type": "string",
-              "pattern": "^memtarget_[0-9a-f]{64}$"
+              "pattern": "^memtarget_[0-9a-f]{64}$",
+              "minLength": 74,
+              "maxLength": 74
             },
             "source_revision_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             },
             "manifest_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             },
             "artifacts": {
               "type": "array",
@@ -260,12 +286,14 @@
                   },
                   "relative_name": {
                     "type": "string",
-                    "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$",
+                    "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
                     "maxLength": 256
                   },
                   "sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
                   },
                   "byte_length": {
                     "type": "integer",
@@ -281,7 +309,9 @@
                 "string",
                 "null"
               ],
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             }
           }
         }
@@ -337,15 +367,21 @@
             },
             "target_id": {
               "type": "string",
-              "pattern": "^memtarget_[0-9a-f]{64}$"
+              "pattern": "^memtarget_[0-9a-f]{64}$",
+              "minLength": 74,
+              "maxLength": 74
             },
             "source_revision_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             },
             "manifest_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             },
             "artifacts": {
               "type": "array",
@@ -369,12 +405,14 @@
                   },
                   "relative_name": {
                     "type": "string",
-                    "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$",
+                    "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
                     "maxLength": 256
                   },
                   "sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
                   },
                   "byte_length": {
                     "type": "integer",
@@ -420,7 +458,9 @@
                 "string",
                 "null"
               ],
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             }
           }
         }

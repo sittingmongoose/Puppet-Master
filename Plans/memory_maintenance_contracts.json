@@ -24,7 +24,9 @@
         "AMS-100",
         "SP-630",
         "CV-650"
-      ]
+      ],
+      "replay_policy": "dedupe_by_idempotency_key",
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_completed"
     },
     {
       "event_type": "memory.dedup_sweep.started",
@@ -46,7 +48,9 @@
         "AMS-101",
         "SP-631",
         "CV-651"
-      ]
+      ],
+      "replay_policy": "dedupe_by_idempotency_key",
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_started"
     },
     {
       "event_type": "memory.index.lexical.rebuild.completed",
@@ -68,7 +72,9 @@
         "AMS-102",
         "SP-632",
         "CV-652"
-      ]
+      ],
+      "replay_policy": "dedupe_by_idempotency_key",
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_lexical_rebuild_completed"
     },
     {
       "event_type": "memory.index.lexical.rebuild.started",
@@ -90,7 +96,9 @@
         "AMS-103",
         "SP-633",
         "CV-653"
-      ]
+      ],
+      "replay_policy": "dedupe_by_idempotency_key",
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_lexical_rebuild_started"
     },
     {
       "event_type": "memory.index.semantic.rebuild.completed",
@@ -112,7 +120,9 @@
         "AMS-104",
         "SP-634",
         "CV-654"
-      ]
+      ],
+      "replay_policy": "dedupe_by_idempotency_key",
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_semantic_rebuild_completed"
     },
     {
       "event_type": "memory.index.semantic.rebuild.started",
@@ -134,7 +144,9 @@
         "AMS-105",
         "SP-635",
         "CV-655"
-      ]
+      ],
+      "replay_policy": "dedupe_by_idempotency_key",
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_semantic_rebuild_started"
     },
     {
       "event_type": "memory.verification_sweep.completed",
@@ -156,7 +168,9 @@
         "AMS-106",
         "SP-636",
         "CV-656"
-      ]
+      ],
+      "replay_policy": "dedupe_by_idempotency_key",
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_completed"
     },
     {
       "event_type": "memory.verification_sweep.started",
@@ -178,7 +192,9 @@
         "AMS-107",
         "SP-637",
         "CV-657"
-      ]
+      ],
+      "replay_policy": "dedupe_by_idempotency_key",
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_started"
     }
   ],
   "blocked_rows": [
